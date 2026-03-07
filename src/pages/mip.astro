@@ -397,12 +397,12 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
           <span class="term" data-key="etologiczne-mapy">etologiczne mapy akcji</span>
           <span class="term" data-key="sieci-strukturalne">sieci strukturalne</span>
           <span class="term" data-key="sieci-funkcjonalne">sieci funkcjonalne</span>
+          <span class="term" data-key="SMN">SMN</span>
+          <span class="term" data-key="VIS">VIS</span>
           <span class="term" data-key="DAN">DAN</span>
           <span class="term" data-key="VAN">VAN</span>
           <span class="term" data-key="CEN">CEN</span>
           <span class="term" data-key="DMN">DMN</span>
-          <span class="term" data-key="SMN">SMN</span>
-          <span class="term" data-key="VIS">VIS</span>
         </div>
       </div>
     </div>
@@ -418,7 +418,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
       <div class="block">
         <p class="block-label">Kontekst</p>
-        <p class="arc-text">Rozszerzenie schematu ciała przez narzędzia (Maravita &amp; Iriki) spotyka się z motoryką jako predykcją (Adams et al.). Macie już słownik anatomiczny z Sesji 2 &mdash; SPL, IPS, IPL, SSC &mdash; który pozwala czytać Maravita precyzyjnie. Artykuł Adamsa i współpracowników pokazuje jak predykcje generowane w MC (pod wpływem precykcji z DAN) przekładają się na zmianę proprioepcji ciała. Ciało nie kończy się na skórze &mdash; kończy się tam, gdzie kończą się kompetencje sieci do wyuczonego używania narzędzi.</p>
+        <p class="arc-text">Rozszerzenie schematu ciała przez narzędzia (Maravita &amp; Iriki) spotyka się z motoryką jako predykcją (Adams et al.). Macie już słownik anatomiczny z Sesji 2 &mdash; SPL, IPS, IPL, SSC &mdash; który pozwala czytać Maravita precyzyjnie. Artykuł Adamsa i współpracowników pokazuje jak predykcje generowane w MC (pod wpływem predykcji z DAN) przekładają się na zmianę propriocepcji ciała. Ciało nie kończy się na skórze &mdash; kończy się tam, gdzie kończą się kompetencje sieci do wyuczonego używania narzędzi.</p>
       </div>
 
       <div class="block">
@@ -497,15 +497,15 @@ const DEFS = {
   "predykcja": ["predykcja", "Aktywne generowanie przez mózg hipotez o nadchodzących informacjach zanim do niego dotrą. Percepcja nie jest rejestrowaniem świata — jest weryfikowaniem tych hipotez. Surfer na fali, nie lustro."],
   "blad-predykcyjny": ["błąd predykcyjny", "Różnica między tym, czego sieć się spodziewała, a tym, co faktycznie nadeszło. Sygnał bottom-up korygujący model. BMW zajeżdżające drogę generuje duży błąd predykcyjny — i dotrenowuje sieć."],
   "afordancje": ["afordancje", "Możliwości do działania istniejące w relacji między organizmem a środowiskiem — nie w przedmiocie ani w świecie, lecz między nimi. Ten sam kamień: zabawka, siedzisko lub budulec zależnie od aktora i kontekstu."],
-  "etologiczne-mapy": ["etologiczne mapy akcji", "Przestrzenna organizacja możliwości działania zakodowana w korze — nie mapa anatomii ciała, lecz mapa tego, co ciało może zrobić. Region obrony twarzy, region dosięgania, region manipulacji."],
+  "etologiczne-mapy": ["etologiczne mapy akcji", "Przestrzenna organizacja możliwości działania zakodowana w korze — nie mapa anatomii ciała, lecz mapa tego, co ciało może zrobić. Region obrony twarzy, region dosięgania, region manipulacji (Graziano 2016)."],
   "sieci-strukturalne": ["sieci strukturalne", "Sieci definiowane przez fizyczne połączenia aksonalne między obszarami — \"kable\" mózgu widoczne w traktografii DTI. Stabilne, zmieniają się wolno przez plastyczność."],
   "sieci-funkcjonalne": ["sieci funkcjonalne", "Sieci definiowane przez korelacje aktywności w czasie (fMRI resting-state) — obszary \"rozmawiające ze sobą\" niezależnie od tego, czy są bezpośrednio połączone. Dynamiczne, zależne od stanu."],
+  "SMN": ["SMN — sieć somatomotoryczna", "Somatomotor Network. Kora ruchowa (MC) i somatosensoryczna (SSC). Koordynuje wykonywanie ruchów i odbieranie informacji czuciowych z ciała. Najściślej sprzężona z sygnałami proprioceptywnymi i dotykowymi."],
+  "VIS": ["VIS — sieć wzrokowa", "Visual Network. Obustronnie obejmuje pierwszo- i drugorzędową korę wzrokową (V1, V2) oraz wyższe obszary potyliczne. Przetwarza informację wzrokową od podstawowej detekcji krawędzi po złożone rozpoznawanie obiektów."],
   "DAN": ["DAN — grzbietowa sieć uwagi", "Dorsal Attention Network. SPL, IPS, FEF, IFJ. Aktywna uwaga top-down: spodziewa się obiektów w konkretnych miejscach. Tłumi VAN podczas skupionego działania."],
   "VAN": ["VAN — brzuszna sieć uwagi", "Ventral Attention Network (Sieć istotności / SAL). Prawostronna, zawiera TPJ i korę czołową. Alarm bottom-up: przerywa DAN gdy pojawia się niespodziewany, ważny bodziec."],
   "CEN": ["CEN — sieć kontroli wykonawczej", "Central Executive Network. DLPFC i tylna kora ciemieniowa. Zarządza pamięcią roboczą, planowaniem i hamowaniem reakcji. Wkracza gdy błąd predykcyjny wymaga strategicznej odpowiedzi."],
-  "DMN": ["DMN — sieć domyślna", "Default Mode Network. mPFC, PCC, zakręt kątowy, hipokamp. Aktywna w spoczynku: narracja o sobie, planowanie przyszłości, rozumienie innych. Model \"Ciebie\" — najdalej od zmysłów."],
-  "SMN": ["SMN — sieć somatomotoryczna", "],
-  "VIS": ["VIS — sieć wzrokowa", "],
+  "DMN": ["DMN — sieć domyślna", "Default Mode Network. mPFC, PCC, zakręt kątowy, hipokamp. Aktywna w spoczynku: narracja o sobie, planowanie przyszłości, rozumienie innych. Model \"Ciebie\" — najdalej od zmysłów."]
 };
 
 const popover = document.getElementById('termPopover');
