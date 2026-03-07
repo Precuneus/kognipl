@@ -1,0 +1,74 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  activePage?: string;
+}
+
+const { title = 'kogni.pl', activePage = '' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="candle-ambient"></div>
+
+<header class="site-header">
+  <a href="/" class="logo">kogni<span>.</span>pl</a>
+  <nav class="site-nav">
+    <a href="/" class={activePage === 'start' ? 'active' : ''}>Start</a>
+    <a href="/kik" class={activePage === 'kik' ? 'active' : ''}>KiK UwB</a>
+    <a href="/kursy" class={activePage === 'kursy' ? 'active' : ''}>Kursy</a>
+    <a href="/kontakt" class={activePage === 'kontakt' ? 'active' : ''}>Kontakt</a>
+  </nav>
+</header>
+
+<slot />
+
+<footer class="site-footer">
+  <div class="compass-small">
+    <svg viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="46" stroke="#6b6358" stroke-width="0.5" opacity="0.3"/>
+      <path d="M50 6 L52.5 44 L50 40 L47.5 44 Z" fill="#a09888" opacity="0.4"/>
+      <path d="M50 94 L52.5 56 L50 60 L47.5 56 Z" fill="#6b6358" opacity="0.3"/>
+      <path d="M6 50 L44 47.5 L40 50 L44 52.5 Z" fill="#6b6358" opacity="0.3"/>
+      <path d="M94 50 L56 47.5 L60 50 L56 52.5 Z" fill="#6b6358" opacity="0.3"/>
+      <circle cx="50" cy="50" r="2" fill="#a09888" opacity="0.4"/>
+    </svg>
+  </div>
+  <p class="footer-name">Olgierd Borowiecki</p>
+  <p class="footer-faculty">Wydział Filozofii i Kognitywistyki</p>
+  <p class="footer-info">
+    Uniwersytet w Białymstoku &ensp;·&ensp; <a href="mailto:o.borowiecki@uwb.edu.pl">o.borowiecki@uwb.edu.pl</a>
+  </p>
+</footer>
+
+<!-- Candlelight card tracking (shared) -->
+<script>
+  document.querySelectorAll('.glow-card').forEach(card => {
+    const light = card.querySelector('.card-light');
+    const glow = card.querySelector('.card-border-glow');
+    if (!light || !glow) return;
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) + 'px';
+      const y = (e.clientY - rect.top) + 'px';
+      light.style.setProperty('--light-x', x);
+      light.style.setProperty('--light-y', y);
+      glow.style.setProperty('--light-x', x);
+      glow.style.setProperty('--light-y', y);
+    });
+  });
+</script>
+
+</body>
+</html>

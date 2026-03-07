@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import PasswordGate from '../components/PasswordGate.astro';
+const HASH = "2728ca17b7eeb44389e3601218ebd0d76aedda367554c19ef5935d49021b2bd6";
+---
+<Base title="KiK UwB - kogni.pl" activePage="kik">
+
+<style is:global>
+  .kik-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+  .kik-page h1 {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .kik-page .meta {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-dim);
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 48px;
+  }
+  .kik-page h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 40px 0 16px;
+  }
+  .kik-page p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+  .kik-page p + p { margin-top: 12px; }
+  .back-link {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    margin-bottom: 32px;
+    transition: color 0.3s;
+  }
+  .back-link:hover { color: var(--warm-glow); }
+</style>
+
+<PasswordGate title="KiK UwB" subtitle="Kognitywistyka i Komunikacja" passwordHash={HASH} sessionKey="kik">
+  <div class="kik-page">
+    <a href="/kursy" class="back-link">&larr; Kursy</a>
+    <h1>KiK UwB</h1>
+    <p class="meta">Informacje ogólne dla studentów kognitywistyki</p>
+
+    <h2>Konsultacje</h2>
+    <p>Treść w przygotowaniu.</p>
+
+    <h2>Regulamin studiów</h2>
+    <p>Treść w przygotowaniu.</p>
+
+    <h2>Prace dyplomowe</h2>
+    <p>Treść w przygotowaniu.</p>
+
+    <h2>Przydatne linki</h2>
+    <p>Treść w przygotowaniu.</p>
+  </div>
+</PasswordGate>
+
+</Base>

@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Kontakt - kogni.pl" activePage="kontakt">
+
+<style is:global>
+  .kontakt {
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 80px 24px;
+    text-align: center;
+  }
+  .kontakt h1 {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s ease-out both;
+  }
+  .kontakt-card {
+    border: 1px solid var(--border-subtle);
+    padding: 40px 32px;
+    background: var(--bg-card);
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s ease-out 0.15s both;
+  }
+  .kontakt-name {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .kontakt-role {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+  .kontakt-line {
+    width: 32px;
+    height: 1px;
+    background: var(--border-warm);
+    margin: 0 auto 20px;
+  }
+  .kontakt-detail {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 2;
+  }
+  .kontakt-detail a {
+    color: var(--text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: all 0.3s;
+  }
+  .kontakt-detail a:hover {
+    color: var(--warm-glow);
+    border-color: rgba(232, 168, 76, 0.3);
+  }
+</style>
+
+<div class="kontakt">
+  <h1>Kontakt</h1>
+
+  <div class="kontakt-card">
+    <div class="kontakt-name">Olgierd Borowiecki</div>
+    <div class="kontakt-role">asystent naukowo-dydaktyczny</div>
+    <div class="kontakt-line"></div>
+    <div class="kontakt-detail">
+      <a href="mailto:o.borowiecki@uwb.edu.pl">o.borowiecki@uwb.edu.pl</a><br>
+      Wydział Filozofii i Kognitywistyki<br>
+      Uniwersytet w Białymstoku<br>
+      Plac NZS 1, 15-420 Białystok
+    </div>
+  </div>
+</div>
+
+</Base>

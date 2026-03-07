@@ -1,0 +1,790 @@
+---
+import Base from '../layouts/Base.astro';
+import PasswordGate from '../components/PasswordGate.astro';
+
+const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
+---
+<Base title="Wstęp do kognitywistyki II - kogni.pl" activePage="kursy">
+
+<style is:global>
+  .course-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  .back-link {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    margin-bottom: 32px;
+    transition: color 0.3s;
+  }
+  .back-link:hover { color: var(--warm-glow); }
+
+  .course-page h1 {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .course-page .meta {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-dim);
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 48px;
+  }
+
+  .session-badge {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--warm-glow);
+    border: 1px solid var(--warm-glow);
+    padding: 4px 12px;
+    margin-bottom: 20px;
+  }
+  .session-header { text-align: center; margin-bottom: 48px; }
+  .session-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    margin-top: 12px;
+  }
+  .session-subtitle {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .course-page h2 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 48px 0 16px;
+    letter-spacing: 0.5px;
+  }
+  .course-page h3 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 32px 0 12px;
+    letter-spacing: 0.3px;
+  }
+
+  .course-page p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.85;
+    margin-bottom: 16px;
+  }
+  .course-page strong { font-weight: 500; color: var(--text-primary); }
+  .course-page em { font-style: italic; }
+  .course-page ul { padding-left: 20px; margin: 12px 0 16px; }
+  .course-page li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 8px;
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 40px 0;
+  }
+
+  /* ── Formula box (centered, prominent) ── */
+  .formula-box {
+    background: var(--warm-glow-soft);
+    border: 1px solid var(--border-warm);
+    padding: 20px 28px;
+    margin: 28px auto;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+    max-width: 420px;
+  }
+
+  /* ── Network cascade ── */
+  .network-cascade { margin: 20px 0 28px; }
+  .cascade-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .cascade-step:last-child { border-bottom: none; }
+  .cascade-num {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--warm-glow);
+    min-width: 32px;
+    padding-top: 2px;
+    flex-shrink: 0;
+  }
+  .cascade-content { flex: 1; }
+  .cascade-name {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+  .cascade-abbr {
+    font-weight: 300;
+    color: var(--text-dim);
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    margin-left: 6px;
+  }
+  .cascade-desc {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  /* ── Niche cards ── */
+  .niche-cards { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 24px; }
+  .niche-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-left: 2px solid var(--warm-glow);
+    padding: 14px 18px;
+  }
+  .niche-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--warm-glow);
+    margin-bottom: 5px;
+  }
+  .niche-card p {
+    font-size: 13px;
+    margin-bottom: 0;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+  .niche-card strong { font-weight: 500; color: var(--text-primary); }
+
+  /* ── Debate columns ── */
+  .debate-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 20px 0 24px;
+  }
+  @media (max-width: 560px) { .debate-grid { grid-template-columns: 1fr; } }
+  .debate-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    padding: 18px;
+  }
+  .debate-card.continuity { border-top: 2px solid var(--warm-glow); }
+  .debate-card.uniqueness { border-top: 2px solid rgba(150, 150, 210, 0.5); }
+  .debate-side {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+  .debate-author {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  .debate-card ul { padding-left: 14px; margin: 0; }
+  .debate-card li {
+    font-size: 13px;
+    line-height: 1.65;
+    margin-bottom: 7px;
+    color: var(--text-secondary);
+  }
+  .debate-card p { font-size: 13px; margin-bottom: 0; line-height: 1.7; color: var(--text-secondary); }
+  .debate-card strong { font-weight: 500; color: var(--text-primary); }
+
+  /* ── Language tracts ── */
+  .tract-list { margin: 16px 0 20px; }
+  .tract-row {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .tract-row:last-child { border-bottom: none; }
+  .tract-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--warm-glow);
+    min-width: 88px;
+    flex-shrink: 0;
+  }
+  .tract-path {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    letter-spacing: 0.2px;
+  }
+  .tract-path .arrow { color: var(--text-dim); margin: 0 3px; }
+
+  /* ── Figure ── */
+  .figure-block {
+    margin: 28px 0 32px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    padding: 16px;
+  }
+  .figure-block img {
+    width: 100%;
+    display: block;
+  }
+  .figure-block figcaption {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* ── Table ── */
+  .course-page table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-family: var(--font-body);
+    font-size: 13px;
+  }
+  .course-page th {
+    font-weight: 500;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 11px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-warm);
+    text-align: left;
+  }
+  .course-page td {
+    padding: 10px 14px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .course-page tr:last-child td { border-bottom: none; }
+  .level-tag {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--warm-glow);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  /* ── Single video ── */
+  .video-block { margin: 36px 0; }
+  .video-label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .video-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-subtle);
+  }
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    background: rgba(0,0,0,0.3);
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+  .video-caption {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-dim);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ── Video grid (senses) ── */
+  .video-grid-label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 32px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .video-grid-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-subtle);
+  }
+  .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 8px; }
+  .video-grid-item { display: block; }
+  .video-grid-solo { max-width: 50%; margin: 12px 0 0; }
+  @media (max-width: 560px) {
+    .video-grid { grid-template-columns: 1fr; }
+    .video-grid-solo { max-width: 100%; }
+  }
+
+  /* ── Questions ── */
+  .question-list { margin: 0; padding: 0; list-style: none; }
+  .question-list li {
+    display: flex;
+    gap: 20px;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .question-list li:first-child { border-top: 1px solid var(--border-subtle); }
+  .question-num {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--warm-glow);
+    letter-spacing: 1px;
+    min-width: 24px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+
+  /* ── Bibliography ── */
+  .bibliography { margin-top: 48px; }
+  .bib-item {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 12px;
+    padding-left: 20px;
+    text-indent: -20px;
+  }
+  .bib-item a {
+    color: var(--warm-glow);
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+  .bib-item a:hover { opacity: 1; }
+  .bib-item em { font-style: italic; }
+</style>
+
+<PasswordGate
+  title="Wstęp do kognitywistyki II"
+  subtitle="Semestr letni 2025/2026"
+  passwordHash={HASH}
+  sessionKey="wstep-2"
+>
+  <div class="course-page">
+    <a href="/kursy" class="back-link">&larr; Kursy</a>
+    <h1>Wstęp do kognitywistyki II</h1>
+    <p class="meta">ćwiczenia · I rok · semestr letni 2025/2026 · 30h</p>
+
+    <div class="session-header">
+      <div class="session-badge">Sesja 1</div>
+      <div class="session-title">Ewolucja i poznanie zwierząt</div>
+      <div class="session-subtitle">Predykcja · Afordancja · Shared Intentionality</div>
+    </div>
+
+    <!-- ==================== PODSTAWOWE POJĘCIA ==================== -->
+    <h2>Podstawowe pojęcia</h2>
+
+    <h3>Mózg i doświadczenie</h3>
+    <p>Czytasz płynnie te słowa dzięki dekadom treningu swoich sieci neuronowych. Gdyby ktoś skanował Ci mózg, widziałby wzorce aktywności elektrycznej, przepływ krwi, sygnały BOLD w fMRI. Z boku widać Twoje oczy poruszające się wzdłuż tekstu, wyraz twarzy, może skinienie głową. Od środka... po prostu czytasz. Doświadczasz znaczenia tekstu.</p>
+    <p>Dwie perspektywy: od wewnątrz i z zewnątrz. Od tego zaczynamy ten kurs.</p>
+
+    <hr class="section-divider" />
+
+    <h3>Model</h3>
+    <p>Doświadczana "rzeczywistość" to model powstały w wyniku wielu lat treningu Twoich biologicznych sieci neuronowych. Doświadczasz modelu generowanego przez aktywność swojego mózgu. Treść doświadczenia to model. Uszkodzenie zakrętu wrzecionowatego wykasuje twarze z treści Twojego doświadczenia; uszkodzenie V5/MT sprawi, że odświeżanie rzeczywistości zwolni do kilku klatek na sekundę; uszkodzenie prawej kory ciemieniowej tymczasowo wymaże lewą stronę doświadczenia.</p>
+    <p>Model powstał podczas lat treningu. Wiesz, czym skutkuje zaburzenie treningu podczas okresów krytycznych.</p>
+    <p>"Ty" też jesteś modelem. Jesteś historią swoich wcześniejszych doświadczeń, opowieścią, jaką kultywujesz w swojej spójnej narracji tłumaczącej Twoje życie. Jak myślisz o sobie, jak się zmieniasz, czy masz jedno czy wiele żyć? Możliwe, że jesteś pomocną i życzliwą osobą, ale uszkodzenie mózgu może sprawić, że zmienisz się diametralnie, jak Phineas Gage. W innych przypadkach tożsamość może zniknąć całkiem - demencja uniemożliwia tworzenie spójnej narracji o sobie i zapamiętywanie swojej historii. "Ty" to też model.</p>
+    <p>Jedyne co zostaje, to interakcja między "Ty" a "rzeczywistością". Między Twoją perspektywą a treścią. Na tym styku jest doświadczanie. To wydaje się najbardziej prawdziwe, uniwersalne. Ale niebezpiecznie oddala się w kierunku filozofii.</p>
+    <p>Wróćmy więc do modeli. Modele są predyktywne.</p>
+
+    <hr class="section-divider" />
+
+    <h3>Predykcja</h3>
+    <p>Sieci neuronowe nie czekają na informacje ze świata, żeby potem zareagować. Sieci cały czas aktywnie przewidują przyszłe informacje. Są jak surferzy pokonujący fale - muszą przewidywać, co będzie za chwilę.</p>
+    <p>Prowadzisz samochód na autostradzie. Zmieniasz pasy, wyprzedzasz, jedziesz płynnie. Mimo prędkości wszystko jest... przewidywalne. Sterujesz swoim samochodem, wiesz, jak zareaguje na naciśnięcie pedałów, skręt kierownicy - Twoje sieci mózgowe są już wytrenowane. Nie to co na początku! Wtedy przecież nawet płynne ruszenie było wyzwaniem.</p>
+    <p>To jest predykcja: nieustanne generowanie hipotez o tym, co zaraz nastąpi. Percepcja nie jest rejestrowaniem świata. Percepcja to weryfikowanie hipotez o nim.</p>
+    <p>Nagle samochód przed Tobą zaczyna hamować. Automatycznie reagujesz. Wciskasz hamulec, odbijasz kierownicę, w międzyczasie zerkając w lusterko, czy pas obok jest wolny. Samochód przed Tobą zachował się niespodziewanie - zaskoczył Cię.</p>
+    <p>Załóżmy, że samochód przed Tobą to było BMW. Po kilku tygodniach sytuacja się powtarza. Kolejne BMW zaskakuje Cię na drodze i nagle zmienia pas, zajeżdżając Ci drogę. Po kilku tygodniach samochód za Tobą miga Ci długimi po oczach, znów BMW! Zaczynasz spodziewać się nieprzewidywalnych rzeczy, gdy spotykasz samochody tej marki na drodze. Wcześniejsze sytuacje dotrenowały Twoje sieci mózgowe.</p>
+    <p>Błędy predykcyjne to niespodziewane informacje, które wędrują w górę (bottom-up) i kształtują sieci tak, aby w przyszłości te informacje były już spodziewane (top-down). Cała historia ewolucyjna, kulturowa i indywidualna kształtuje architekturę sieci neuronowych.</p>
+
+    <hr class="section-divider" />
+
+    <h3>Informacja</h3>
+    <p>Skąd sieci mózgowe czerpią materiał do tych hipotez? Z trzech źródeł.</p>
+    <ul>
+      <li><strong>Eksterocepcja:</strong> wzrok, słuch, węch, smak, dotyk - sygnały o tym, co dzieje się na granicy ciała i świata.</li>
+      <li><strong>Propriocepcja:</strong> pozycja kończyn, napięcie mięśni, przyspieszenie liniowe i kątowe (z układu przedsionkowego) - sygnały o tym, jak ciało porusza się w przestrzeni.</li>
+      <li><strong>Interocepcja:</strong> bicie serca, oddech, głód, temperatura narządów - sygnały o stanie wnętrza ciała.</li>
+    </ul>
+
+    <div class="video-grid-label">Zmysły w działaniu</div>
+    <div class="video-grid">
+      <div class="video-grid-item">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/J0B_-lZFlL0" title="Zmysły 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="video-grid-item">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/ryGMI3SpxCE" title="Zmysły 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="video-grid-item">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/eQEaiZ2j9oc" title="Zmysły 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="video-grid-item">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/TbDFrbXiz2s?start=532" title="Zmysły 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="video-grid-solo">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/MgMNUne9j9c?start=566" title="Zmysły 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <p style="margin-top: 28px;">Przypomnij sobie artykuł "Predictions not commands" (Adams et al., 2013): sygnały zstępujące z kory ruchowej do rdzenia kręgowego mają cechy predykcji, nie rozkazów. Kora motoryczna nie wysyła instrukcji "skurcz mięsień X o Y procent." Wysyła przewidywanie: "spodziewam się takiego a takiego stanu proprioceptywnego." Rdzeń kręgowy minimalizuje błąd między oczekiwanym a aktualnym stanem ciała. Ruch wyłania się z tej minimalizacji. Innymi słowy - spodziewam się jakiejś konfiguracji ciała. A po chwili kolejnej. I kolejnej. Jak surfer na falach.</p>
+
+    <p>Pięć sieci tworzy hierarchię predykcji - od zmysłów do narracji o sobie:</p>
+
+    <div class="network-cascade">
+      <div class="cascade-step">
+        <div class="cascade-num">01</div>
+        <div class="cascade-content">
+          <div class="cascade-name">Pierwszorzędowe sieci <span class="cascade-abbr">wzrokowa · somatosensoryczna · słuchowa</span></div>
+          <div class="cascade-desc">Monitorują stan receptorów na ciele i tworzą przewidywania względem nadchodzących informacji. Jeśli samochód pojawia się zgodnie z predykcją, zaskoczenie jest małe.</div>
+        </div>
+      </div>
+      <div class="cascade-step">
+        <div class="cascade-num">02</div>
+        <div class="cascade-content">
+          <div class="cascade-name">Grzbietowa sieć uwagi <span class="cascade-abbr">DAN</span></div>
+          <div class="cascade-desc">Spodziewa się konkretnych obiektów w konkretnych miejscach. Kiedy samochód zaczyna niespodziewanie hamować, wzrasta błąd predykcyjny. DAN alarmuje siostrę.</div>
+        </div>
+      </div>
+      <div class="cascade-step">
+        <div class="cascade-num">03</div>
+        <div class="cascade-content">
+          <div class="cascade-name">Brzuszna sieć uwagi <span class="cascade-abbr">VAN</span></div>
+          <div class="cascade-desc">Działa jak alarm. Przerywa działanie DAN i reorientuje uwagę na niespodziewane informacje - na przykład to zajeżdżające drogę BMW. Zadaniem VAN jest dostosowanie się do nowych, nieprzewidzianych okoliczności.</div>
+        </div>
+      </div>
+      <div class="cascade-step">
+        <div class="cascade-num">04</div>
+        <div class="cascade-content">
+          <div class="cascade-name">Sieć kontroli <span class="cascade-abbr">CEN</span></div>
+          <div class="cascade-desc">Wkracza gdy błąd jest większy. Nie pyta już "co jest tutaj?", lecz "co z tym zrobić?" Jej predykcje są abstrakcyjne: "jeśli zahamuję teraz, zdążę."</div>
+        </div>
+      </div>
+      <div class="cascade-step">
+        <div class="cascade-num">05</div>
+        <div class="cascade-content">
+          <div class="cascade-name">Sieć domyślna <span class="cascade-abbr">DMN</span></div>
+          <div class="cascade-desc">Operuje najdalej od zmysłów. Jej model dotyczy Ciebie: kim jesteś, czego chcesz, co znaczy być kierowcą. Jeśli zdarzenie nie pasuje do tej narracji, błąd jest głęboki. To ten rodzaj błędu, który pamiętasz tygodniami i może zmienić Twój model Ciebie.</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <h3>Afordancja</h3>
+    <p>Afordancja nie jest w przedmiocie. Nie jest w Tobie. Jest <em>między wami</em>.</p>
+    <p>Ten sam kamień: turlanie dla dziecka, siedzenie dla zmęczonego wędrowca, budulec dla architekta. Kamień się nie zmienił. Zmieniła się relacja, kontekst, potrzeba.</p>
+    <ul>
+      <li><strong>Relacyjne:</strong> nie istnieją bez konkretnego organizmu.</li>
+      <li><strong>Kontekstualne:</strong> ten sam obiekt, inne możliwości w innych sytuacjach.</li>
+      <li><strong>Dynamiczne:</strong> zmieniają się wraz z predykcjami.</li>
+    </ul>
+
+    <div class="formula-box">
+      afordancje + motywacja = akcja
+    </div>
+
+    <p>Afordancje są więc możliwościami do działania. Są elementami modelu rzeczywistości, z którymi model "Ciebie" może wejść w interakcję.</p>
+    <p>Motywacja to nie abstrakcyjna siła napędowa. To konkretne przyciąganie: coś wydaje się atrakcyjne, przyjemne, warte zachodu. Zmęczony wędrowiec nie analizuje kamienia. Kamień go po prostu <em>przyciąga</em> jako miejsce odpoczynku, bo jego ciało tego właśnie chce.</p>
+
+    <hr class="section-divider" />
+
+    <h3>Nisze</h3>
+    <p>Makak bierze grabki. Wzrok, dotyk, słuch, propriocepcja. Do sieci mózgowych dociera mnóstwo zaskakujących informacji z receptorów. Sieci muszą wybudować modele, jak używać narzędzia. Po kilku tygodniach jego kora ciemieniowa rozrasta się fizycznie. Pola recepcyjne neuronów rozszerzają się na całą długość narzędzia. Grabki przestają być przedmiotem trzymanym w łapie. Stają się częścią ciała w wytrenowanych sieciach: somatomotorycznej, wzrokowej, uwagowej, kontroli.</p>
+    <p>Iriki i Taoka (2012) opisują trzy płaszczyzny, na których ta zmiana się odbywa:</p>
+
+    <div class="niche-cards">
+      <div class="niche-card">
+        <div class="niche-label">Nisza neuronalna</div>
+        <p>Architektura sieci mózgowych: które połączenia istnieją, jak silne są, jakie wzorce aktywności są możliwe. Makak po tygodniach ćwiczeń z grabkami ma inną niszę neuronalną niż makak bez narzędzi.</p>
+      </div>
+      <div class="niche-card">
+        <div class="niche-label">Nisza ekologiczna</div>
+        <p>Środowisko złożone z dostępnych afordancji. Makak używający grabek zmienia otoczenie, tworzy nowe relacje, które generują nowe błędy predykcyjne i nowe wymagania dla sieci. Bardziej dotyczy modeli w sieciach somatosensorycznej, wzrokowej, uwagowej.</p>
+      </div>
+      <div class="niche-card">
+        <div class="niche-label">Nisza poznawcza</div>
+        <p>Przestrzeń odleglejszych czasoprzestrzennie afordancji. Makak z rozszerzoną korą ciemieniową dosłownie widzi więcej możliwości działania: użycie narzędzi, odległy cel, interakcja społeczna. Bardziej dotyczy modeli w sieciach kontroli, domyślnej.</p>
+      </div>
+    </div>
+
+    <p>Trzy nisze nie są oddzielnymi poziomami. Są trzema opisami tego samego procesu: jak doświadczenie i sieci zwrotnie się kształtują.</p>
+
+    <!-- ==================== POZIOMY PREDYKCJI ==================== -->
+    <hr class="section-divider" />
+    <h2>Trzy ewolucyjne poziomy predykcji</h2>
+    <p>Sieci mózgowe przewidują na kilku poziomach jednocześnie.</p>
+    <p><strong>Poziom 1 - ciało i narzędzia</strong> (Iriki &amp; Taoka): Makak bierze grabki. Jego kora ciemieniowa musi nagle przewidywać trzy razy większą przestrzeń pełną nowych afordancji. Przestrzeń peripersonalna rozszerza się na koniec narzędzia. Narzędzia modyfikują dostępne możliwości do działania, tak jak nauczenie się jazdy samochodem modyfikuje, jak pewnie się czujesz za kierownicą i co jest osiągalne.</p>
+    <p><strong>Poziom 2 - emocje innych</strong> (de Waal, Goodall): Szympans widzi, że innemu szympansowi jest źle. Przewiduje jego ból i podchodzi pocieszyć. To jest empatia jako mechanizm predykcyjny - uniwersalny dla wielu gatunków.</p>
+    <p><strong>Poziom 3 - intencje innych</strong> (Tomasello): Szympans przewiduje, co inny zrobi. Człowiek przewiduje, co inny chce, żebym wiedział. Z tej różnicy wynika kumulatywna kultura: każde pokolenie zaczyna tam, gdzie skończyło poprzednie.</p>
+    <p>Poziom 3 ma dwa podpoziomy:</p>
+    <ul>
+      <li><strong>Podpoziom A - joint attention:</strong> "Skupiamy uwagę na tym samym." Trójstronna relacja: ja, ty, obiekt. Oboje wiemy, że oboje patrzymy. Szympansy to potrafią, choć słabiej niż ludzie.</li>
+      <li><strong>Podpoziom B - shared intentionality:</strong> "Mamy różne role w tym samym planie i oboje to rozumiemy." Tu pojawia się rekurencja: wiem że ty wiesz że ja wiem, i razem działamy na podstawie tej wzajemnej świadomości. Tutaj szympansy radzą sobie gorzej - zazwyczaj dominujący osobnik nie przyjmuje perspektywy współpracownika.</li>
+    </ul>
+
+    <div class="video-block">
+      <div class="video-label">Michael Tomasello · What Makes Us Human?</div>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/BNbeleWvXyQ"
+          title="Michael Tomasello - What Makes Us Human?"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <p class="video-caption">Tomasello o shared intentionality, joint attention i tym, co odróżnia człowieka od szympansa.</p>
+    </div>
+
+    <!-- ==================== SPÓR ==================== -->
+    <hr class="section-divider" />
+    <h2>Spór: ciągłość vs. przepaść</h2>
+    <p>Dwie strony sporu zgadzają się, że zwierzęta mają kulturę. Różnią się w ocenie mechanizmu.</p>
+
+    <div class="debate-grid">
+      <div class="debate-card continuity">
+        <div class="debate-side">Strona A</div>
+        <div class="debate-author">Frans de Waal &amp; Jane Goodall<br>ciągłość poznawcza</div>
+        <ul>
+          <li><strong>Szympansie wojny</strong> (Goodall, 1974-1978): skoordynowane rajdy, patrolowanie granic, koalicje taktyczne. Nie impuls, lecz planowanie.</li>
+          <li><strong>Kultura orek:</strong> techniki łowieckie przekazywane matrylinearnie. Każde stado ma własny dialekt wokalny. Menopauza ewolucyjnie uzasadniona - babcie jako depozytariuszki wiedzy.</li>
+          <li><strong>Kapucynki i niesprawiedliwość:</strong> odmowa współpracy gdy sąsiad dostaje nagrodę nieadekwatną do wysiłku. Poczucie nierówności jako mechanizm predykcyjny.</li>
+          <li><strong>Loose String Task:</strong> szympansy i słonie czekają na partnera - rozumieją współzależność ról.</li>
+        </ul>
+      </div>
+      <div class="debate-card uniqueness">
+        <div class="debate-side">Strona B</div>
+        <div class="debate-author">Michael Tomasello<br>ludzka wyjątkowość</div>
+        <p>Zwierzęta mają kulturę, ale nie budują na poprzednich pokoleniach w ten sam sposób. Przepaść leży między podpoziomem A a B: joint attention jest szeroko rozpowszechnione, shared intentionality właściwa jest ludzką specjalnością. Stąd naśladownictwo tak, kumulatywna kultura - słabiej.</p>
+        <div style="margin-bottom: 32px;"></div>
+        <p>Shared intentionality to coś precyzyjnego: wspólny model siebie i drugiej osoby względem punktu w przyszłości, wraz ze sposobem dotarcia do tego punktu. Oboje wiemy, gdzie idziemy, oboje wiemy, kto robi co po drodze, i oboje wiemy, że oboje to wiemy. To nie jest koordynacja - to wspólna narracja o przyszłości z rozpisanymi rolami. Szympansy koordynują. Ludzie planują razem.</p>
+      </div>
+    </div>
+
+    <div class="video-block">
+      <div class="video-label">Kultura orek · transmisja wiedzy przez pokolenia</div>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/lerPqQHZyTE"
+          title="Kultura orek"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- ==================== DMN ==================== -->
+    <hr class="section-divider" />
+    <h2>Callback do Neurokognitywistyki: DMN i ewolucja</h2>
+    <p>Gdzie w mózgach ludzi jest wspólna intencjonalność?</p>
+    <p>Wspólna intencjonalność wymaga modelowania intencji innych, a więc angażuje DMN, podsieć związaną z Teorią Umysłu (Theory of Mind - ToM). <strong>DMN.ToM</strong> to podsystem sieci domyślnej odpowiedzialny za mentalizację (pSTS, TPJp, TP). Innymi słowy: sieć modelowania cudzych umysłów.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Poziom</th>
+          <th>Treść predykcji</th>
+          <th>Sieć</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="level-tag">Poziom 1</span></td>
+          <td>ciało i narzędzia</td>
+          <td>sieć uwagi (DAN), obszary somatosensoryczne</td>
+        </tr>
+        <tr>
+          <td><span class="level-tag">Poziom 2</span></td>
+          <td>emocje innych</td>
+          <td>wyspa, ciało migdałowate</td>
+        </tr>
+        <tr>
+          <td><span class="level-tag">Poziom 3</span></td>
+          <td>intencje innych</td>
+          <td>DMN.ToM: pSTS, TPJp, TP, mPFC-PCC</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Garin i współpracownicy (2022) porównali sieć spoczynkową (DMN) u czterech gatunków (człowiek, makak, marmozeta, mysz lemur). U naczelnych niehominidowych mPFC i PCC są słabo połączone. U człowieka to kluczowe połączenie DMN. Ludzki DMN, z jego pętlą mPFC-PCC, pojawił się stosunkowo późno w ewolucji naczelnych. Może to sugerować, że główna oś DMN (myślenie o sobie) jest nowym ewolucyjnie nabytkiem i to właśnie odróżnia ludzi od innych zwierząt.</p>
+
+    <figure class="figure-block">
+      <img src="/images/garin2022_dmn.png" alt="Schemat połączeń DMN u człowieka i naczelnych niehominidowych (Garin et al., 2022)" />
+      <figcaption>Garin et al. (2022). U człowieka mPFC i PCC tworzą silną oś DMN (<em>Default mode</em>). U naczelnych niehominidowych ta oś jest słaba lub nieobecna - widoczne są natomiast sieci fronto-ciemieniowa i fronto-skroniowa.</figcaption>
+    </figure>
+
+    <h3>Neurony lustrzane</h3>
+    <p>Neurony lustrzane odkryto przypadkowo w korze przedruchowej makaka (obszar F5): neurony, które aktywowały się zarówno gdy małpa chwytała orzeszek, jak i gdy obserwowała, jak ktoś inny go chwyta. Nie reagowały na sam widok orzeszka ani na ruch bez celu. Reagowały na działanie skierowane ku celowi. U ludzi ich odpowiedniki znaleziono w obszarze Broki i dolnym płacie ciemieniowym (IPL).</p>
+    <p>Obszar Broki to węzeł sieci kontroli. IPL to obszar, gdzie sieć uwagi spotyka się z DMN.ToM w okolicach TPJ. Kiedy obserwujesz kogoś sięgającego po kubek, sieć uwagi kieruje wzrok, obszar Broki generuje predykcję działania ("sięga po kubek"), a IPL/TPJp aktualizuje model agenta ("chce się napić"). Trzy sieci, trzy poziomy predykcji, uruchomione jednocześnie przez jeden obserwowany ruch.</p>
+    <p>Neurony lustrzane nie są mechanizmem empatii ani odczytywania myśli. Są mechanizmem predykcji działania na poziomie motorycznym. Most między poziomem 1 a poziomem 3 jest zbudowany z kaskady: obszar Broki przewiduje ruch, IPL przewiduje cel ruchu, TPJp przewiduje intencję za celem. Każda warstwa dodaje jeden poziom abstrakcji.</p>
+
+    <!-- ==================== TEORIA UMYSŁU ==================== -->
+    <hr class="section-divider" />
+    <h3>Teoria umysłu</h3>
+    <p>Teoria umysłu to tworzenie modeli agentów: bytów, które mają własne przekonania, pragnienia i intencje. Na podstawie sygnałów DMN.ToM buduje model: co ta osoba wie, czego chce, co zaraz zrobi.</p>
+    <p>Grecki żeglarz na wzburzonym morzu robił dokładnie to samo. Odbierał sygnały sensoryczne: fale, wiatr, grzmot. Najlepszym modelem tłumaczącym te informacje zmysłowe był wściekły Posejdon. Mechanizm predykcyjny był identyczny jak przy modelowaniu człowieka. Różnił się tylko obiekt modelowania.</p>
+    <p>Bogowie, duchy, przodkowie: to modele agentów przekazywane kulturowo z pokolenia na pokolenie. Shared intentionality umożliwiła ich przechowywanie i transmisję: "my wszyscy wiemy, czego chce Posejdon, i wszyscy wiemy, że wszyscy wiemy." Nisza poznawcza rozszerzyła się poza świat fizyczny, w przestrzeń agentów niewidzialnych.</p>
+    <p>Model agenta to nie tylko obiekt wiedzy. To źródło afordancji. Posejdon oferował afordancje przebłagania: można było złożyć ofiarę, zmienić kurs, odmówić modlitwę. Te afordancje są równie realne dla sieci mózgowych jak afordancja kamienia dla zmęczonego wędrowca: generują motywację, kierują działaniem, kształtują decyzje.</p>
+
+    <!-- ==================== JĘZYK ==================== -->
+    <hr class="section-divider" />
+    <h3>Język: co jest wyjątkowe?</h3>
+    <p>Zwierzęta mają złożoną komunikację. Pszczoły: taniec waggle. Kanzi (szympans bonobo): setki symboli na klawiaturze, rozumienie angielskiego na poziomie 2-latka. Delfiny: indywidualne "imiona."</p>
+    <p>Co język ludzki ma ponad to?</p>
+    <ul>
+      <li><strong>Kombinatoryczność:</strong> skończony zbiór elementów (fonemy, morfemy) generuje nieskończoną liczbę znaczeń. Taniec waggle pszczoły ma stały repertuar gestów - nie można z nich zbudować nowego "zdania."</li>
+      <li><strong>Fikcja:</strong> można mówić o tym, czego nie ma w ogóle.</li>
+      <li><strong>Rekurencja:</strong> zdania w zdaniach, myśli o myślach.</li>
+    </ul>
+    <p>Słyszysz słowo "aksamit" i aktywują się reprezentacje dotykowe. "Cytryna" wywołuje skurcz ślinianek. Język angażuje jednocześnie wiele sieci sensorycznych - nie rejestruje świata, lecz go symuluje. Może odnosić się do przeszłości, przyszłości, prawdziwych i absurdalnych scenariuszy. Język to sposób na tworzenie wyobrażeniowych światów w głowie interlokutorów.</p>
+    <p>Język tworzy nową kategorię afordancji. Słowo "jutro" pozwala planować nieistniejącą chwilę. Słowo "sprawiedliwość" pozwala walczyć o abstrakcję. Szympans żyje w świecie afordancji fizycznych. Człowiek żyje jednocześnie w fizycznych i oderwanych od tu i teraz.</p>
+    <p>Generowanie złożonych wypowiedzi zaczyna się od sieci domyślnej: TP dostarcza wiedzę społeczno-semantyczną, OFC oznacza ją wartością emocjonalną. Stąd informacja biegnie trzema równoległymi torami do obszaru Broki:</p>
+
+    <div class="tract-list">
+      <div class="tract-row">
+        <div class="tract-label">Semantyczny</div>
+        <div class="tract-path">TP <span class="arrow">→</span> aMTG <span class="arrow">→</span> pMTG <span class="arrow">→</span> pęczek łukowaty <span class="arrow">→</span> IFG (BA45)</div>
+      </div>
+      <div class="tract-row">
+        <div class="tract-label">Fonologiczny</div>
+        <div class="tract-path">STG <span class="arrow">→</span> pęczek łukowaty <span class="arrow">→</span> IFG (BA44)</div>
+      </div>
+      <div class="tract-row">
+        <div class="tract-label">Wartościujący</div>
+        <div class="tract-path">TP <span class="arrow">→</span> OFC <span class="arrow">→</span> pęczek haczykowaty <span class="arrow">→</span> IFG (BA47/45)</div>
+      </div>
+    </div>
+
+    <p>Obszar Broki składa to wszystko w plan wypowiedzi i wysyła predykcję motoryczną do SMN (inferior): wargi, język, krtań. Powiedzenie czegoś to abstrakcyjne koncepty (TP + OFC) stopniowo ubierane w słowa (MTG, STG) i finalnie wypowiadane (IFG → SMN).</p>
+
+    <!-- ==================== PYTANIA ==================== -->
+    <hr class="section-divider" />
+    <div class="questions-section">
+      <h2>Pytania do przemyślenia</h2>
+      <ol class="question-list">
+        <li><span class="question-num">01</span>Sieć uwagi (DAN) wykrywa pieszego na przejściu. Opisz, co się dzieje krok po kroku, gdy pieszy nagle wybiega z boku. Które sieci się włączają i w jakiej kolejności?</li>
+        <li><span class="question-num">02</span>Czym różni się joint attention od shared intentionality? Dwoje szympansów i człowiek wspólnie wyciągają jedzenie ze skrzynki za pomocą liny - każdy musi pociągnąć swój koniec jednocześnie. Który podpoziom osiągają szympansy? Co by musiało się zmienić, żeby to był podpoziom B?</li>
+        <li><span class="question-num">03</span>De Waal i Tomasello obserwują te same zachowania szympansów i dochodzą do różnych wniosków. Jak to możliwe? Co sprawia, że ten sam dowód można odczytać na dwa sposoby?</li>
+        <li><span class="question-num">04</span>Co to jest błąd predykcyjny? Dlaczego mózg, który nigdy nie popełnia błędów predykcyjnych, nie mógłby się uczyć?</li>
+        <li><span class="question-num">05</span>Garin pokazał, że pętla mPFC-PCC jest słaba u naczelnych niehominidowych. Gdyby ta pętla była silna u szympansów - co konkretnie powinniśmy zaobserwować w ich zachowaniu społecznym, czego teraz nie obserwujemy?</li>
+        <li><span class="question-num">06</span>Kapucynka dostaje ogórek zamiast winogrona. Opisz jej reakcję jako błąd predykcyjny: co było predykcją, co było sygnałem sensorycznym, dlaczego to nie jest tylko "złość" i czym różni się mechanizm tej reakcji u kapucynki od mechanizmu u człowieka w analogicznej sytuacji?</li>
+        <li><span class="question-num">07</span>Tworzysz nowy język migowy z przyjacielem na własny użytek. Opisz, jak zmienia się twoja nisza neuronalna, poznawcza i ekologiczna w trakcie tego procesu.</li>
+        <li><span class="question-num">08</span>Dziecko uczy się jeździć na rowerze. Opisz ten proces jako trening sieci przez błędy predykcyjne: które sieci są zaangażowane, jakie błędy generują, jak zmienia się architektura niszy neuronalnej.</li>
+        <li><span class="question-num">09</span>Osoba dorastająca w kulturze, gdzie duchy przodków są realnie obecni w codziennym życiu, podejmuje decyzje uwzględniając ich "opinie." Opisz to zachowanie przez pryzmat teorii umysłu i afordancji.</li>
+        <li><span class="question-num">10</span>Grecki żeglarz modli się do Posejdona. Połącz teorię umysłu, afordancje i niszę poznawczą w jednym spójnym wyjaśnieniu tego zachowania.</li>
+        <li><span class="question-num">11</span>Neurony lustrzane znajdują się w obszarze Broki i IPL. Dlaczego te lokalizacje nie są przypadkowe? Połącz anatomię z funkcją i z poziomami predykcji.</li>
+        <li><span class="question-num">12</span>Ten sam las: dla myśliwego - teren łowiecki, dla botanika - obiekt badań, dla dziecka - plac zabaw, dla uciekiniera - kryjówka. Żadna z tych afordancji nie jest "w lesie." Gdzie są? Co to oznacza dla pytania, czy zwierzęta "widzą" świat tak samo jak my?</li>
+      </ol>
+    </div>
+
+    <!-- ==================== BIBLIOGRAFIA ==================== -->
+    <hr class="section-divider" />
+    <div class="bibliography">
+      <h2>Bibliografia</h2>
+      <p class="bib-item">Adams, R. A., Shipp, S., &amp; Friston, K. J. (2013). Predictions not commands: active inference in the motor system. <em>Brain Structure and Function, 218</em>(3), 611-643. <a href="https://doi.org/10.1007/s00429-012-0475-5" target="_blank">doi:10.1007/s00429-012-0475-5</a></p>
+      <p class="bib-item">de Waal, F. B. M. (2016). <em>Are We Smart Enough to Know How Smart Animals Are?</em> W. W. Norton &amp; Company.</p>
+      <p class="bib-item">Garin, C. M., et al. (2022). An evolutionary gap in primate default mode network organization. <em>Cell Reports, 39</em>(2), 110669. <a href="https://doi.org/10.1016/j.celrep.2022.110669" target="_blank">doi:10.1016/j.celrep.2022.110669</a></p>
+      <p class="bib-item">Gibson, J. J. (1979). <em>The Ecological Approach to Visual Perception</em>. Houghton Mifflin.</p>
+      <p class="bib-item">Goodall, J. (1986). <em>The Chimpanzees of Gombe: Patterns of Behavior</em>. Harvard University Press.</p>
+      <p class="bib-item">Iriki, A., &amp; Taoka, M. (2012). Triadic (ecological, neural, cognitive) niche construction. <em>Philosophical Transactions of the Royal Society B, 367</em>(1585), 10-23. <a href="https://doi.org/10.1098/rstb.2011.0190" target="_blank">doi:10.1098/rstb.2011.0190</a></p>
+      <p class="bib-item">Tomasello, M. (2019). <em>Becoming Human: A Theory of Ontogeny</em>. Harvard University Press.</p>
+    </div>
+
+  </div>
+</PasswordGate>
+
+</Base>

@@ -1,0 +1,662 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="kogni.pl" activePage="start">
+
+<style is:global>
+  /* === HERO IMAGE (fixed behind) === */
+  .hero-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+  }
+
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30vh;
+    background: linear-gradient(to bottom, transparent, var(--bg-deep) 80%);
+    pointer-events: none;
+  }
+
+  /* Spacer pushes content below hero image area */
+  .hero-spacer {
+    height: 20vh;
+  }
+
+  /* === ALL SCROLLING CONTENT === */
+  .scroll-content {
+    position: relative;
+    background: var(--bg-deep);
+    padding-bottom: 1px;
+  }
+
+  .scroll-content::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent 0%, rgba(14, 13, 11, 0.4) 40%, rgba(14, 13, 11, 0.8) 70%, var(--bg-deep) 100%);
+    pointer-events: none;
+  }
+
+  /* Title section (over hero image, no dark bg) */
+  .title-section {
+    text-align: center;
+    padding: 40px 24px 60px;
+    max-width: 820px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .title-section h1 {
+    font-family: var(--font-display);
+    font-size: 56px;
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 4px;
+    line-height: 1.1;
+    margin-bottom: 14px;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.9), 0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .title-section .subtitle {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.9);
+  }
+
+  @media (max-width: 768px) {
+    .title-section h1 { font-size: 38px; letter-spacing: 2px; }
+    .title-section .subtitle { font-size: 17px; }
+    .hero-spacer { height: 15vh; }
+  }
+  @media (max-width: 480px) {
+    .title-section h1 { font-size: 28px; }
+    .title-section .subtitle { font-size: 15px; }
+    .hero-spacer { height: 10vh; }
+  }
+
+  /* Territory section */
+  .territory { padding: 64px 0; }
+  .territory-intro {
+    max-width: 620px;
+    margin: 0 auto 56px;
+    text-align: center;
+    padding: 0 24px;
+  }
+  .territory-intro p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.9;
+  }
+  .territory-intro p + p { margin-top: 20px; }
+
+  .domain-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .domain-card { padding: 32px 24px 28px; }
+  .domain-icon { font-size: 28px; margin-bottom: 16px; display: block; opacity: 0.7; }
+  .domain-name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .domain-desc {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* Questions accordion */
+  .questions-section {
+    padding: 64px 0;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .question-item {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .question-item:first-child { border-top: 1px solid var(--border-subtle); }
+  .question-trigger {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    width: 100%;
+    padding: 20px 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s;
+  }
+  .question-trigger:hover { background: rgba(232, 168, 76, 0.03); }
+  .question-trigger .q-icon {
+    font-family: var(--font-display);
+    font-style: normal;
+    font-weight: 500;
+    color: var(--warm-glow);
+    opacity: 0.5;
+    font-size: 16px;
+    flex-shrink: 0;
+    transition: opacity 0.3s;
+  }
+  .question-item.open .question-trigger .q-icon { opacity: 0.8; }
+  .question-trigger .q-text {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    transition: color 0.3s;
+  }
+  .question-trigger:hover .q-text,
+  .question-item.open .question-trigger .q-text { color: var(--text-primary); }
+  .question-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .question-body-inner {
+    padding: 0 24px 28px 52px;
+  }
+  .q-voices {
+    margin-bottom: 20px;
+  }
+  .q-voices-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+  .q-voice {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding: 6px 0;
+    opacity: 0.75;
+  }
+  .q-voice::before {
+    content: '\201E';
+    color: var(--warm-glow);
+    opacity: 0.4;
+    margin-right: 4px;
+  }
+  .q-voice::after {
+    content: '\201D';
+    color: var(--warm-glow);
+    opacity: 0.4;
+    margin-left: 2px;
+  }
+  .q-areas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .q-area {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--warm-glow);
+    opacity: 0.6;
+    padding: 4px 10px;
+    border: 1px solid rgba(232, 168, 76, 0.15);
+    background: var(--warm-glow-soft);
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 40px 24px 80px;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .cta-text {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    line-height: 1.7;
+  }
+  .cta-links { display: flex; justify-content: center; gap: 32px; }
+  .cta-link {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 10px 24px;
+    border: 1px solid var(--border-subtle);
+    transition: all 0.3s;
+  }
+  .cta-link:hover {
+    color: var(--warm-glow);
+    border-color: rgba(232, 168, 76, 0.25);
+    background: var(--warm-glow-soft);
+  }
+  .cta-link.primary {
+    color: var(--warm-glow);
+    border-color: rgba(232, 168, 76, 0.2);
+    background: var(--warm-glow-soft);
+  }
+  .cta-link.primary:hover {
+    border-color: rgba(232, 168, 76, 0.4);
+    background: var(--warm-glow-mid);
+  }
+
+  @media (max-width: 768px) {
+    .domain-grid { grid-template-columns: 1fr; max-width: 480px; }
+    .cta-links { flex-direction: column; align-items: center; gap: 12px; }
+  }
+</style>
+
+<!-- Fixed hero background -->
+<div class="hero-bg">
+  <img src="/hero-bg.jpg" alt="Mapa kognitywistyki na biurku nawigatora" />
+</div>
+
+<!-- Spacer so content starts below hero image -->
+<div class="hero-spacer"></div>
+
+<!-- Title over the hero image (no dark bg) -->
+<div class="title-section">
+  <h1>Kognitywistyka</h1>
+  <p class="subtitle">Nauka o umyśle w mózgu.</p>
+</div>
+
+<!-- Dark content starts here, covering the hero -->
+<div class="scroll-content">
+
+<div class="divider"><span class="divider-icon">&#10038;</span></div>
+
+<!-- Territories -->
+<div class="territory">
+  <div class="territory-intro">
+    <p>Kognitywistyka łączy dyscypliny, szukając zrozumienia tego, jak tworzysz <i>swój model świata</i>, potocznie zwany rzeczywistością.</p>
+    <p>Każda dyscyplina oferuje inne narzędzia i inną perspektywę. Wspólnie tworzą mapę kognitywistyki.</p>
+  </div>
+
+  <p class="section-label">Dyscypliny</p>
+  <p class="section-title">Sześć dyscyplin, jedno pytanie: "Czym jest umysł?"</p>
+
+  <div class="domain-grid">
+    <div class="domain-card glow-card">
+      <div class="card-light"></div>
+      <div class="card-border-glow"></div>
+      <div class="glow-card-inner">
+        <span class="domain-icon">&#x1F9E0;</span>
+        <div class="domain-name">Neurobiologia</div>
+        <div class="domain-desc">Jak działają biologiczne sieci neuronowe napędzane neuroprzekaźnikami? Jak wygląda uczenie się i zapominanie w mózgu? Każda myśl, zachowanie i emocja to wzorzec aktywności bioelektrycznej mózgu.</div>
+      </div>
+    </div>
+    <div class="domain-card glow-card">
+      <div class="card-light"></div>
+      <div class="card-border-glow"></div>
+      <div class="glow-card-inner">
+        <span class="domain-icon">&#x1F4AD;</span>
+        <div class="domain-name">Filozofia umysłu</div>
+        <div class="domain-desc">Czym jest świadomość? Czy maszyna może myśleć? Nauka stawia pytania. Filozofia pyta, czy dobrze je postawiliśmy.</div>
+      </div>
+    </div>
+    <div class="domain-card glow-card">
+      <div class="card-light"></div>
+      <div class="card-border-glow"></div>
+      <div class="glow-card-inner">
+        <span class="domain-icon">&#x1F50D;</span>
+        <div class="domain-name">Psychologia poznawcza</div>
+        <div class="domain-desc">Twoja percepcja to konstrukcja rzeczywistości. Psychologia poznawcza bada, jak budujesz obraz świata, przechowujesz go w pamięci i podejmujesz na jego podstawie decyzje.</div>
+      </div>
+    </div>
+    <div class="domain-card glow-card">
+      <div class="card-light"></div>
+      <div class="card-border-glow"></div>
+      <div class="glow-card-inner">
+        <span class="domain-icon">&#x1F916;</span>
+        <div class="domain-name">Sztuczna inteligencja</div>
+        <div class="domain-desc">Nikt już nie wie czym jest AI i czy AI jest świadoma, cokolwiek to znaczy. AI wnioskuje i tworzy modele świata. Czy jesteśmy na drodze do stworzenia umysłów takich jak ludzkie?</div>
+      </div>
+    </div>
+    <div class="domain-card glow-card">
+      <div class="card-light"></div>
+      <div class="card-border-glow"></div>
+      <div class="glow-card-inner">
+        <span class="domain-icon">&#x1F5E3;</span>
+        <div class="domain-name">Lingwistyka</div>
+        <div class="domain-desc">Język kształtuje myślenie czy myślenie kształtuje język? Możliwe, że jedno i drugie. Lingwistyka szuka granicy między tym, co mówisz, a tym, co w ogóle możesz pomyśleć.</div>
+      </div>
+    </div>
+    <div class="domain-card glow-card">
+      <div class="card-light"></div>
+      <div class="card-border-glow"></div>
+      <div class="glow-card-inner">
+        <span class="domain-icon">&#x1F30D;</span>
+        <div class="domain-name">Antropologia</div>
+        <div class="domain-desc">Czy twój sposób myślenia jest wyłącznie twój? Kultura, ewolucja i biologia tworzą ramy, w których poznajesz. Antropologia pyta: co z tego jest ludzkie, a co tylko Twoje.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"><span class="divider-icon">&#9998;</span></div>
+
+<!-- Questions -->
+<div class="questions-section">
+  <p class="section-label">Pytania, które stawiamy</p>
+  <p class="section-title">Na granicy dyscyplin</p>
+
+  <div class="question-item">
+    <button class="question-trigger">
+      <span class="q-icon">&#10022;</span>
+      <span class="q-text">Skąd wiesz, że to co widzisz jest prawdziwe?</span>
+    </button>
+    <div class="question-body"><div class="question-body-inner">
+      <div class="q-voices">
+        <p class="q-voices-label">Tak pytali studenci</p>
+        <p class="q-voice">Czy jestem realna... Często robię coś i dopiero później mam moment derealizacji.</p>
+        <p class="q-voice">Co jeśli nic co się dzieje czy co widzę nie jest realne?</p>
+        <p class="q-voice">Czy jestem w matrixie?</p>
+        <p class="q-voice">Dlaczego ludzie z tej samej sytuacji wychodzą z zupełnie innymi wnioskami?</p>
+      </div>
+      <div class="q-areas">
+        <span class="q-area">Percepcja</span>
+        <span class="q-area">Filozofia umysłu</span>
+        <span class="q-area">Neurobiologia zmysłów</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="question-item">
+    <button class="question-trigger">
+      <span class="q-icon">&#10022;</span>
+      <span class="q-text">Dlaczego czasem sny wydają się bardziej realne niż rzeczywistość?</span>
+    </button>
+    <div class="question-body"><div class="question-body-inner">
+      <div class="q-voices">
+        <p class="q-voices-label">Tak pytali studenci</p>
+        <p class="q-voice">Co się dzieje w naszym mózgu kiedy śnimy? Dlaczego to wszystko wydaje się tak bardzo realne?</p>
+        <p class="q-voice">Skąd w śnie bierze się ta świadomość, że śnimy?</p>
+        <p class="q-voice">Czy niewidzący widzi swoje sny?</p>
+        <p class="q-voice">Czy sny faktycznie mogą mieć znaczenie? Czy sny prorocze to prawda czy zwykła bujda?</p>
+      </div>
+      <div class="q-areas">
+        <span class="q-area">Świadomość</span>
+        <span class="q-area">Neurobiologia snu</span>
+        <span class="q-area">Psychologia poznawcza</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="question-item">
+    <button class="question-trigger">
+      <span class="q-icon">&#10022;</span>
+      <span class="q-text">Czy twoje decyzje podejmujesz ty, czy twój mózg podejmuje je za ciebie?</span>
+    </button>
+    <div class="question-body"><div class="question-body-inner">
+      <div class="q-voices">
+        <p class="q-voices-label">Tak pytali studenci</p>
+        <p class="q-voice">Czy we mnie jest dusza czy to wszystko działanie mojego mózgu i wyobrażanie sobie błędnie że kieruje mną moje ja?</p>
+        <p class="q-voice">Czy jest jakiś mechanizm wychodzenia z błędnego koła i paraliżu decyzyjnego?</p>
+        <p class="q-voice">Ile w życiu mam siły sprawczej, a ile rzeczy to przypadek?</p>
+      </div>
+      <div class="q-areas">
+        <span class="q-area">Wolna wola</span>
+        <span class="q-area">Neuronauka decyzji</span>
+        <span class="q-area">Filozofia umysłu</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="question-item">
+    <button class="question-trigger">
+      <span class="q-icon">&#10022;</span>
+      <span class="q-text">Co sprawia, że nie możesz przestać scrollować, choć wiesz że powinieneś?</span>
+    </button>
+    <div class="question-body"><div class="question-body-inner">
+      <div class="q-voices">
+        <p class="q-voices-label">Tak pytali studenci</p>
+        <p class="q-voice">Gdy jestem zmęczona sięgam po reelsy. Jest to odruchowe. Próbowałam wszystkie znane mi metody i wciąż umiem się zasiedzieć wbrew mojej woli.</p>
+        <p class="q-voice">Wiem że muszę być konsekwentna, ale chęć zmiany zawsze jest mniej ważna od lenistwa i ciągłej prokrastynacji. Większość życia byłam sparaliżowana do działania.</p>
+        <p class="q-voice">Dlaczego jak myślę o wpisywaniu hasła do telefonu to zapominam numerki, ale jak zrobię to bez myślenia to automatycznie to robię?</p>
+      </div>
+      <div class="q-areas">
+        <span class="q-area">Nawyki</span>
+        <span class="q-area">Układ nagrody</span>
+        <span class="q-area">Pamięć proceduralna</span>
+        <span class="q-area">Psychologia motywacji</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="question-item">
+    <button class="question-trigger">
+      <span class="q-icon">&#10022;</span>
+      <span class="q-text">Dlaczego nie możesz poczuć tego, co czuje ktoś inny?</span>
+    </button>
+    <div class="question-body"><div class="question-body-inner">
+      <div class="q-voices">
+        <p class="q-voices-label">Tak pytali studenci</p>
+        <p class="q-voice">Nigdy nie będę wiedzieć w jaki sposób się ktoś czuje lub co ktoś myśli, bo nie jestem w stanie się połączyć z drugą osobą myślami.</p>
+        <p class="q-voice">To jak samotni jesteśmy przez to, że nasze receptory tylko odbierają świat i my jako świadomość nie możemy z nim wejść w pełną interakcję.</p>
+        <p class="q-voice">Ludzie są tak skomplikowani, że jednocześnie mnie to okropnie fascynuje, ale też trochę przeraża.</p>
+      </div>
+      <div class="q-areas">
+        <span class="q-area">Teoria umysłu</span>
+        <span class="q-area">Empatia</span>
+        <span class="q-area">Neurony lustrzane</span>
+        <span class="q-area">Izolacja epistemiczna</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="question-item">
+    <button class="question-trigger">
+      <span class="q-icon">&#10022;</span>
+      <span class="q-text">Kim właściwie jesteś, kiedy nikt nie patrzy?</span>
+    </button>
+    <div class="question-body"><div class="question-body-inner">
+      <div class="q-voices">
+        <p class="q-voices-label">Tak pytali studenci</p>
+        <p class="q-voice">Kim tak naprawdę jestem i czego tak naprawdę chcę?</p>
+        <p class="q-voice">Jaki jest rdzeń danego człowieka i jak to się dzieje, że okoliczności czasem nie są w stanie go zmienić?</p>
+        <p class="q-voice">Jak wiele można wyciąć z człowieka by nadal był człowiekiem?</p>
+        <p class="q-voice">Do czego dążę i jaka będę jak opanuję panujący we mnie chaos?</p>
+      </div>
+      <div class="q-areas">
+        <span class="q-area">Tożsamość</span>
+        <span class="q-area">Self</span>
+        <span class="q-area">Psychologia osobowości</span>
+        <span class="q-area">Filozofia umysłu</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="question-item">
+    <button class="question-trigger">
+      <span class="q-icon">&#10022;</span>
+      <span class="q-text">Czym jest wyobraźnia?</span>
+    </button>
+    <div class="question-body"><div class="question-body-inner">
+      <div class="q-voices">
+        <p class="q-voices-label">Tak pytali studenci</p>
+        <p class="q-voice">Nie wyobrażam sobie żyć w przyszłości, mnie tam nie ma.</p>
+        <p class="q-voice">Myślę o tym jak to by było wyjść ze swojego ciała i stanąć obok siebie i być obserwatorem rzeczywistości.</p>
+        <p class="q-voice">Czy możliwe jest stworzenie Portal Guna z gry Portal?</p>
+      </div>
+      <div class="q-areas">
+        <span class="q-area">Wyobraźnia</span>
+        <span class="q-area">Symulacja mentalna</span>
+        <span class="q-area">Prospection</span>
+        <span class="q-area">Default Mode Network</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="question-item">
+    <button class="question-trigger">
+      <span class="q-icon">&#10022;</span>
+      <span class="q-text">Dlaczego niektóre mózgi działają inaczej niż inne?</span>
+    </button>
+    <div class="question-body"><div class="question-body-inner">
+      <div class="q-voices">
+        <p class="q-voices-label">Tak pytali studenci</p>
+        <p class="q-voice">Czy mam ADHD?</p>
+        <p class="q-voice">Czy mózg jest w stanie przezwyciężyć choroby takie jak depresja lub zaburzenia odżywiania?</p>
+        <p class="q-voice">Czy da się wytrenować mózg żeby umieć uspokoić myśli na tyle, żeby nie przytłaczały?</p>
+        <p class="q-voice">Jak radzić sobie ze złością i innymi mocnymi negatywnymi emocjami w zdrowy sposób?</p>
+      </div>
+      <div class="q-areas">
+        <span class="q-area">Neuroróżnorodność</span>
+        <span class="q-area">Neuropsychologia kliniczna</span>
+        <span class="q-area">Plastyczność mózgu</span>
+        <span class="q-area">Regulacja emocji</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="question-item">
+    <button class="question-trigger">
+      <span class="q-icon">&#10022;</span>
+      <span class="q-text">Co dzieje się ze świadomością, kiedy mózg przestaje pracować?</span>
+    </button>
+    <div class="question-body"><div class="question-body-inner">
+      <div class="q-voices">
+        <p class="q-voices-label">Tak pytali studenci</p>
+        <p class="q-voice">Wszystko związane ze śmiercią przeraża mnie.</p>
+        <p class="q-voice">Co jeśli śmierć to po prostu moment, w którym budzisz się jako ktoś inny?</p>
+        <p class="q-voice">Czy podczas śmierci klinicznej wytwarza się DMT w szyszynce?</p>
+        <p class="q-voice">Celem życia nie jest przeżycie.</p>
+      </div>
+      <div class="q-areas">
+        <span class="q-area">Świadomość</span>
+        <span class="q-area">Doświadczenia z pogranicza śmierci</span>
+        <span class="q-area">Neurobiologia</span>
+        <span class="q-area">Filozofia umysłu</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="question-item">
+    <button class="question-trigger">
+      <span class="q-icon">&#10022;</span>
+      <span class="q-text">Po co żyjemy, skoro i tak wszyscy umrzemy?</span>
+    </button>
+    <div class="question-body"><div class="question-body-inner">
+      <div class="q-voices">
+        <p class="q-voices-label">Tak pytali studenci</p>
+        <p class="q-voice">Czy życie ma jakieś głębsze znaczenie, jeśli końcowo i tak wszyscy umrzemy, będą powstawać nowe pokolenia, a my zostaniemy zapomniani?</p>
+        <p class="q-voice">Pytanie jak wszystko powstało. Skąd my i wszechświat się wzięliśmy?</p>
+        <p class="q-voice">Każdy sam nadaje swojemu życiu sens. Możliwe, że znalezienie tej odpowiedzi to jest główny quest.</p>
+        <p class="q-voice">Co ma realny sens?</p>
+      </div>
+      <div class="q-areas">
+        <span class="q-area">Egzystencja</span>
+        <span class="q-area">Filozofia</span>
+        <span class="q-area">Psychologia sensu</span>
+        <span class="q-area">Antropologia</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="question-item">
+    <button class="question-trigger">
+      <span class="q-icon">&#10022;</span>
+      <span class="q-text">Czy świadomość jest obliczeniem, iluzją, czy czymś zupełnie innym?</span>
+    </button>
+    <div class="question-body"><div class="question-body-inner">
+      <div class="q-voices">
+        <p class="q-voices-label">Tak pytali studenci</p>
+        <p class="q-voice">Czy czas rzeczywiście płynie? Czy może stanowi iluzję ludzkiego umysłu?</p>
+        <p class="q-voice">Co to jest nic?</p>
+        <p class="q-voice">Kiedy człowiek stał się człowiekiem? Na jakim etapie ewolucji staliśmy się samoświadomi?</p>
+        <p class="q-voice">Nie twierdzę że wiem wszystko, ale obecnie nie ma najgłębszej i najbardziej absurdalnej rzeczy, bo wszystko co znam ma swoje miejsce w mojej głowie.</p>
+      </div>
+      <div class="q-areas">
+        <span class="q-area">Problem trudny</span>
+        <span class="q-area">Sztuczna inteligencja</span>
+        <span class="q-area">Neurobiologia świadomości</span>
+        <span class="q-area">Filozofia umysłu</span>
+      </div>
+    </div></div>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.question-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const body = item.querySelector('.question-body');
+      const inner = body.querySelector('.question-body-inner');
+      if (item.classList.contains('open')) {
+        body.style.maxHeight = '0';
+        item.classList.remove('open');
+      } else {
+        document.querySelectorAll('.question-item.open').forEach(other => {
+          other.classList.remove('open');
+          other.querySelector('.question-body').style.maxHeight = '0';
+        });
+        body.style.maxHeight = inner.scrollHeight + 'px';
+        item.classList.add('open');
+      }
+    });
+  });
+</script>
+
+<div class="divider"><span class="divider-icon">&#10038;</span></div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <p class="cta-text">Kognitywistykę możesz studiować na Wydziale Filozofii i Kognitywistyki Uniwersytetu w Białymstoku. Mapa czeka.</p>
+  <div class="cta-links">
+    <a href="/kursy" class="cta-link primary">Kursy</a>
+    <a href="/kontakt" class="cta-link">Kontakt</a>
+  </div>
+</div>
+
+</div><!-- end scroll-content -->
+
+</Base>

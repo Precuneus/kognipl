@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import PasswordGate from '../components/PasswordGate.astro';
+const HASH = "2728ca17b7eeb44389e3601218ebd0d76aedda367554c19ef5935d49021b2bd6";
+---
+<Base title="Neurokognitywistyka - kogni.pl" activePage="kursy">
+
+<style is:global>
+  .course-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+  .course-page h1 { font-family: var(--font-display); font-size: 36px; font-weight: 400; color: var(--text-primary); letter-spacing: 2px; margin-bottom: 8px; text-align: center; }
+  .course-page .meta { font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-dim); text-align: center; letter-spacing: 1px; margin-bottom: 48px; }
+  .course-page h2 { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--text-primary); margin: 40px 0 16px; }
+  .course-page p { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; }
+  .back-link { display: inline-block; font-family: var(--font-body); font-size: 12px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; margin-bottom: 32px; transition: color 0.3s; }
+  .back-link:hover { color: var(--warm-glow); }
+</style>
+
+<PasswordGate title="Neurokognitywistyka" subtitle="Semestr zimowy 2025/2026" passwordHash={HASH} sessionKey="neurocogni">
+  <div class="course-page">
+    <a href="/kursy" class="back-link">&larr; Kursy</a>
+    <h1>Neurokognitywistyka</h1>
+    <p class="meta">wykład · II rok · semestr zimowy 2025/2026 · 30h</p>
+    <h2>Opis kursu</h2>
+    <p>Biologiczne fundamenty poznania. Sieci neuronalne, neuroprzekaźniki, przypadki kliniczne.</p>
+    <h2>Harmonogram</h2>
+    <p>Treść w przygotowaniu.</p>
+    <h2>Zasady zaliczenia</h2>
+    <p>Treść w przygotowaniu.</p>
+  </div>
+</PasswordGate>
+
+</Base>

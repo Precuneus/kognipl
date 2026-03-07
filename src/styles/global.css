@@ -1,0 +1,315 @@
+/* =============================================
+   kogni.pl global styles
+   Dark scholar aesthetic, candlelight warmth
+   ============================================= */
+
+:root {
+  --bg-deep: #0e0d0b;
+  --bg-surface: #16140f;
+  --bg-card: #1c1a14;
+  --bg-card-hover: #23201a;
+  --border-subtle: rgba(180, 155, 100, 0.1);
+  --border-warm: rgba(180, 155, 100, 0.2);
+
+  --text-primary: #e2ddd4;
+  --text-secondary: #a09888;
+  --text-dim: #6b6358;
+
+  --warm-glow: #e8a84c;
+  --warm-glow-soft: rgba(232, 168, 76, 0.08);
+  --warm-glow-mid: rgba(232, 168, 76, 0.15);
+  --candle: #f0c060;
+  --accent-red: #a04030;
+  --accent-red-dim: rgba(160, 64, 48, 0.15);
+
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+
+/* === CANDLELIGHT AMBIENT === */
+.candle-ambient {
+  position: fixed;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 600px;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(240, 192, 96, 0.04) 0%,
+    rgba(232, 168, 76, 0.02) 30%,
+    rgba(200, 140, 60, 0.008) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: candleFlicker 8s ease-in-out infinite alternate;
+}
+
+@keyframes candleFlicker {
+  0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+  25% { opacity: 1; transform: translateX(-50%) scale(1.02); }
+  50% { opacity: 0.85; transform: translateX(-50%) scale(0.98); }
+  75% { opacity: 0.95; transform: translateX(-50%) scale(1.01); }
+  100% { opacity: 0.9; transform: translateX(-50%) scale(1); }
+}
+
+/* === HERO (image-based, styles in page) === */
+
+@keyframes glowPulse {
+  0% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+  100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+}
+
+/* === LAYOUT === */
+.page { max-width: 820px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.page-wide { max-width: 960px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+/* === HEADER === */
+.site-header {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 32px 24px 28px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(14, 13, 11, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+.logo span { color: var(--warm-glow); font-weight: 400; }
+
+.site-nav { display: flex; gap: 28px; }
+
+.site-nav a {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.site-nav a:hover, .site-nav a.active { color: var(--text-secondary); }
+
+.site-nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--warm-glow);
+  opacity: 0.5;
+}
+
+/* === DIVIDER === */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-warm), transparent);
+}
+
+.divider-icon { color: var(--text-dim); font-size: 14px; opacity: 0.5; }
+
+/* === SECTION LABELS === */
+.section-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+
+/* === CANDLELIGHT CARD (reusable) === */
+.glow-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.35s, background 0.35s, transform 0.35s, box-shadow 0.35s;
+}
+
+.glow-card .card-light {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  background: radial-gradient(
+    350px circle at var(--light-x, 50%) var(--light-y, 50%),
+    rgba(240, 192, 96, 0.1) 0%,
+    rgba(232, 168, 76, 0.04) 35%,
+    transparent 70%
+  );
+}
+
+.glow-card .card-border-glow {
+  position: absolute;
+  inset: -1px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  background: radial-gradient(
+    400px circle at var(--light-x, 50%) var(--light-y, 50%),
+    rgba(232, 168, 76, 0.2) 0%,
+    rgba(232, 168, 76, 0.05) 40%,
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+}
+
+.glow-card:hover {
+  border-color: var(--border-warm);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.glow-card:hover .card-light,
+.glow-card:hover .card-border-glow { opacity: 1; }
+
+.glow-card-inner { position: relative; z-index: 1; }
+
+/* === FOOTER === */
+.site-footer {
+  padding: 48px 24px 64px;
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto;
+  border-top: 1px solid #2a2520;
+  position: relative;
+  z-index: 1;
+}
+
+/* Full-width dark bg behind footer */
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: calc(100% + 50px);
+  background: var(--bg-deep);
+  z-index: -1;
+}
+
+.compass-small { width: 36px; height: 36px; margin: 0 auto 20px; opacity: 0.25; }
+.compass-small svg { width: 100%; height: 100%; }
+
+.footer-name {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+  opacity: 0.7;
+}
+
+.footer-faculty {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.footer-info {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--text-dim);
+  line-height: 2;
+}
+
+.footer-info a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: all 0.3s;
+}
+
+.footer-info a:hover {
+  color: var(--warm-glow);
+  border-color: rgba(232, 168, 76, 0.3);
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .site-nav { gap: 16px; }
+  .site-nav a { font-size: 11px; letter-spacing: 1px; }
+  .section-title { font-size: 24px; }
+}
+
+@media (max-width: 480px) {
+  .site-header { flex-direction: column; gap: 16px; }
+  .site-nav { flex-wrap: wrap; justify-content: center; }
+}

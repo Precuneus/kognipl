@@ -1,0 +1,256 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Kursy - kogni.pl" activePage="kursy">
+
+<style is:global>
+  .kursy-hero {
+    padding: 72px 0 56px;
+    text-align: center;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .kursy-hero h1 {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    animation: fadeUp 0.8s ease-out both;
+  }
+  .kursy-hero .subtitle {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--text-secondary);
+    animation: fadeUp 0.8s ease-out 0.15s both;
+  }
+
+  .semester-label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .semester-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 36px;
+    letter-spacing: 1px;
+  }
+
+  .course-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 820px;
+    margin: 0 auto 12px;
+    padding: 0 24px;
+  }
+  .course-card {
+    padding: 28px 24px 24px;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .course-numeral {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--warm-glow);
+    opacity: 0.35;
+    line-height: 1;
+    margin-bottom: 12px;
+    transition: opacity 0.35s;
+  }
+  .course-card:hover .course-numeral { opacity: 0.7; }
+  .course-name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+  .course-meta {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+  .course-desc {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .course-tag {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    margin-top: 16px;
+    border-radius: 1px;
+  }
+  .tag-spring {
+    color: var(--warm-glow);
+    background: var(--warm-glow-soft);
+    border: 1px solid rgba(232, 168, 76, 0.12);
+  }
+  .tag-winter {
+    color: var(--accent-red);
+    background: var(--accent-red-dim);
+    border: 1px solid rgba(160, 64, 48, 0.12);
+  }
+
+  .quill-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 48px auto 32px;
+    max-width: 820px;
+    color: var(--text-dim);
+    opacity: 0.5;
+  }
+  .quill-divider::before, .quill-divider::after {
+    content: '';
+    flex: 1;
+    max-width: 100px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border-warm), transparent);
+  }
+
+  .lock-hint {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text-dim);
+    text-align: center;
+    max-width: 820px;
+    margin: 40px auto 0;
+    padding: 0 24px;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 768px) {
+    .kursy-hero h1 { font-size: 34px; }
+    .course-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="kursy-hero">
+  <h1>Kursy</h1>
+  <p class="subtitle">Mapy umysłu i mózgu</p>
+</div>
+
+<div class="divider"><span class="divider-icon">&#10038;</span></div>
+
+<!-- Spring 2026 -->
+<div style="padding-top: 48px;">
+  <p class="semester-label">Semestr letni</p>
+  <p class="semester-title">2025 / 2026</p>
+
+  <div class="course-grid">
+    <a href="/wstep-2" class="course-card glow-card">
+      <div class="card-light"></div>
+      <div class="card-border-glow"></div>
+      <div class="glow-card-inner">
+        <div class="course-numeral">I</div>
+        <div class="course-name">Wstęp do kognitywistyki II</div>
+        <div class="course-meta">wykład · I rok · 30h</div>
+        <div class="course-desc">Kontynuacja podróży. Kontrowersje naukowe jako narzędzie poznania.</div>
+        <span class="course-tag tag-spring">Letni</span>
+      </div>
+    </a>
+
+    <a href="/mozg" class="course-card glow-card">
+      <div class="card-light"></div>
+      <div class="card-border-glow"></div>
+      <div class="glow-card-inner">
+        <div class="course-numeral">II</div>
+        <div class="course-name">Mózg i poznanie</div>
+        <div class="course-meta">wykład · II rok · 30h</div>
+        <div class="course-desc">Architektura neuronalna procesów poznawczych. Od synaps do sieci.</div>
+        <span class="course-tag tag-spring">Letni</span>
+      </div>
+    </a>
+
+    <a href="/design" class="course-card glow-card">
+      <div class="card-light"></div>
+      <div class="card-border-glow"></div>
+      <div class="glow-card-inner">
+        <div class="course-numeral">III</div>
+        <div class="course-name">Design Thinking</div>
+        <div class="course-meta">warsztat · II rok · 15h</div>
+        <div class="course-desc">Projektowanie rozwiązań metodą iteracyjną. Od problemu do prototypu.</div>
+        <span class="course-tag tag-spring">Letni</span>
+      </div>
+    </a>
+
+    <a href="/drugi-mozg" class="course-card glow-card">
+      <div class="card-light"></div>
+      <div class="card-border-glow"></div>
+      <div class="glow-card-inner">
+        <div class="course-numeral">IV</div>
+        <div class="course-name">Drugi mózg z AI</div>
+        <div class="course-meta">warsztat · I rok · 15h</div>
+        <div class="course-desc">Sztuczna inteligencja jako narzędzie rozszerzenia poznania.</div>
+        <span class="course-tag tag-spring">Letni</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="quill-divider"><span>&#9998;</span></div>
+
+  <!-- Winter 2025/2026 -->
+  <p class="semester-label">Semestr zimowy</p>
+  <p class="semester-title">2025 / 2026</p>
+
+  <div class="course-grid">
+    <a href="/wstep-1" class="course-card glow-card">
+      <div class="card-light"></div>
+      <div class="card-border-glow"></div>
+      <div class="glow-card-inner">
+        <div class="course-numeral">V</div>
+        <div class="course-name">Wstęp do kognitywistyki I</div>
+        <div class="course-meta">wykład · I rok · 30h</div>
+        <div class="course-desc">Pierwsza wyprawa. Czym jest umysł, czym jest poznanie, i dlaczego to ważne.</div>
+        <span class="course-tag tag-winter">Zimowy</span>
+      </div>
+    </a>
+
+    <a href="/neurocogni" class="course-card glow-card">
+      <div class="card-light"></div>
+      <div class="card-border-glow"></div>
+      <div class="glow-card-inner">
+        <div class="course-numeral">VI</div>
+        <div class="course-name">Neurokognitywistyka</div>
+        <div class="course-meta">wykład · II rok · 30h</div>
+        <div class="course-desc">Biologiczne fundamenty. Sieci neuronalne, neuroprzekaźniki, przypadki kliniczne.</div>
+        <span class="course-tag tag-winter">Zimowy</span>
+      </div>
+    </a>
+  </div>
+
+  <p class="lock-hint">Strony kursów wymagają hasła dostępu.</p>
+</div>
+
+<div style="height: 64px;"></div>
+
+</Base>
