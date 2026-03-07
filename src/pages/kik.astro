@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PasswordGate from '../components/PasswordGate.astro';
-const HASH = "2728ca17b7eeb44389e3601218ebd0d76aedda367554c19ef5935d49021b2bd6";
+const HASH = "a199dcd9555963d6631fcfd4dba346c6e5e83cc9c249d2363e7b62642e64a3c6";
 ---
 <Base title="KiK UwB - kogni.pl" activePage="kik">
 
@@ -16,7 +16,7 @@ const HASH = "2728ca17b7eeb44389e3601218ebd0d76aedda367554c19ef5935d49021b2bd6";
     margin-bottom: 8px;
     text-align: center;
   }
-  .kik-page .meta {
+  .kik-page .page-meta {
     font-family: var(--font-body);
     font-size: 12px;
     font-weight: 300;
@@ -25,53 +25,342 @@ const HASH = "2728ca17b7eeb44389e3601218ebd0d76aedda367554c19ef5935d49021b2bd6";
     letter-spacing: 1px;
     margin-bottom: 48px;
   }
-  .kik-page h2 {
+
+  /* Section navigation */
+  .kik-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 48px;
+    padding: 0 12px;
+  }
+  .kik-nav a {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid var(--border-subtle);
+    transition: all 0.3s;
+  }
+  .kik-nav a:hover {
+    color: var(--warm-glow);
+    border-color: rgba(232, 168, 76, 0.25);
+    background: var(--warm-glow-soft);
+  }
+
+  /* Section headings */
+  .kik-section {
+    margin-bottom: 56px;
+    scroll-margin-top: 32px;
+  }
+  .kik-section h2 {
     font-family: var(--font-display);
-    font-size: 22px;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .kik-section h3 {
+    font-family: var(--font-display);
+    font-size: 19px;
     font-weight: 500;
     color: var(--text-primary);
-    margin: 40px 0 16px;
+    margin: 32px 0 12px;
   }
-  .kik-page p {
+  .kik-section p {
     font-family: var(--font-body);
     font-size: 15px;
     font-weight: 300;
     color: var(--text-secondary);
     line-height: 1.8;
   }
-  .kik-page p + p { margin-top: 12px; }
-  .back-link {
-    display: inline-block;
+  .kik-section p + p { margin-top: 12px; }
+  .kik-section a {
+    color: var(--warm-glow);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(232, 168, 76, 0.2);
+    transition: border-color 0.3s;
+  }
+  .kik-section a:hover { border-color: var(--warm-glow); }
+
+  /* Lists */
+  .kik-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+  }
+  .kik-section ul li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    padding: 4px 0 4px 20px;
+    position: relative;
+  }
+  .kik-section ul li::before {
+    content: '\00b7';
+    position: absolute;
+    left: 4px;
+    color: var(--warm-glow);
+    opacity: 0.5;
+    font-size: 20px;
+  }
+  .kik-section ol {
+    padding: 0 0 0 24px;
+    margin: 12px 0;
+  }
+  .kik-section ol li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    padding: 4px 0;
+  }
+
+  /* Highlight box */
+  .kik-highlight {
+    border-left: 2px solid var(--warm-glow);
+    padding: 16px 20px;
+    margin: 20px 0;
+    background: rgba(232, 168, 76, 0.03);
+  }
+  .kik-highlight p {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  /* Links grid */
+  .links-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  @media (max-width: 520px) { .links-grid { grid-template-columns: 1fr; } }
+  .link-card {
+    display: block;
+    padding: 16px 20px;
+    border: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .link-card:hover {
+    border-color: rgba(232, 168, 76, 0.25);
+    background: var(--warm-glow-soft);
+  }
+  .link-card .link-title {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .link-card .link-desc {
     font-family: var(--font-body);
     font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+    font-weight: 300;
     color: var(--text-dim);
-    text-decoration: none;
-    margin-bottom: 32px;
-    transition: color 0.3s;
   }
-  .back-link:hover { color: var(--warm-glow); }
+
+  /* Divider */
+  .kik-divider {
+    text-align: center;
+    padding: 24px 0;
+    color: var(--warm-glow);
+    opacity: 0.2;
+    font-size: 14px;
+    letter-spacing: 12px;
+  }
 </style>
 
 <PasswordGate title="KiK UwB" subtitle="Kognitywistyka i Komunikacja" passwordHash={HASH} sessionKey="kik">
   <div class="kik-page">
-    <a href="/kursy" class="back-link">&larr; Kursy</a>
     <h1>KiK UwB</h1>
-    <p class="meta">Informacje ogólne dla studentów kognitywistyki</p>
+    <p class="page-meta">Informacje ogólne dla studentów kognitywistyki</p>
 
-    <h2>Konsultacje</h2>
-    <p>Treść w przygotowaniu.</p>
+    <nav class="kik-nav">
+      <a href="#studiowanie">Studiowanie 101</a>
+      <a href="#knk">Koło Naukowe</a>
+      <a href="#erasmus">Erasmus+</a>
+      <a href="#linki">Przydatne linki</a>
+    </nav>
 
-    <h2>Regulamin studiów</h2>
-    <p>Treść w przygotowaniu.</p>
+    <!-- ========== STUDIOWANIE 101 ========== -->
+    <div class="kik-section" id="studiowanie">
+      <h2>Studiowanie 101</h2>
 
-    <h2>Prace dyplomowe</h2>
-    <p>Treść w przygotowaniu.</p>
+      <p>Więc jesteś na studiach. Super. Masz dużo możliwości. Nowi znajomi, koło naukowe, wyjazdy, konferencje, staże... To może być świetny czas, najważniejsze jest jedno - przejmij inicjatywę i zacznij działać. Przede wszystkim musisz zrozumieć, że studia to nie szkoła średnia. Tutaj o wiele więcej zależy od Ciebie, wiele rzeczy jest opcjonalnych ale opłacalnych. Kognitywistyka daje niesamowite możliwości i to Ty wybierasz czy skorzystać z tych możliwości.</p>
 
-    <h2>Przydatne linki</h2>
-    <p>Treść w przygotowaniu.</p>
+      <h3>Jak się odnaleźć na studiach?</h3>
+
+      <p>Przede wszystkim, rozmawiaj i komunikuj, jeśli czegoś nie wiesz lub nie rozumiesz. W szkole średniej odpowiedzi były gotowe i całe sedno Twojej edukacji skupiało się na trafienie w klucz na maturze. Bez sensu. Teraz jest inaczej, masz kontrolę i to <a href="https://youtu.be/QUjYy4Ksy1E?si=N0wjRI-KMsHZa8R2" target="_blank">Ty wyznaczasz poprzeczkę.</a> Nauka kognitywistyki to w dużym stopniu błądzenie i szukanie odpowiedzi. Liczy się proces. Trafne pytania znaczą o wiele więcej niż gotowe odpowiedzi. Zadawaj jak najwięcej pytań. Sobie, znajomym, prowadzącym. Jeśli coś Ci się nie zgadza idź za tą intuicją i dociekaj. Myśl. Weryfikuj. Dociekaj.</p>
+
+      <h3>Czego się spodziewać na 1 roku?</h3>
+
+      <p>Mnóstwa nowości i rewolucji w głowie. Przede wszystkim, musisz zrozumieć, że teraz jesteś głównym charakterem swojego świata i masz wpływ na swoją przyszłość. Studia z kognitywistyki nie dadzą Ci gotowego rozwiązania. Musisz wziąć side questy i rozwijać się samodzielnie. Zaciekaw się przedmiotami, kołem naukowym, możliwościami. Rozmawiaj z ludźmi, pytaj, rozwijaj się. Przekonaj się czy to dla Ciebie. Może po roku uznasz, że wolisz inne studia. Albo po kilku miesiącach zdecydujesz, że studia nie są dla Ciebie. Albo odnajdziesz coś interesującego i Cię to wciągnie. Nie dowiesz się dopóki nie spróbujesz. Próbowanie wymaga działania. Więc działaj i nie zostawiaj decyzji na przyszłość. I scrolluj mniej.</p>
+
+      <h3>Jak może wyglądać Twój drugi rok?</h3>
+
+      <p>Zaczyna się drugi rok. Wracasz na uczelnię po zasłużonym wakacyjnym odpoczynku. Październik jest intensywny. Kompletujesz zaświadczenia do <a href="https://uwb.edu.pl/student/stypendia-kredyty/stypendia-studenci-3998" target="_blank">Stypendium Rektora</a>, z Twoją średnią powyżej 4,5 i osiągnięciami masz to stypendium w kieszeni = 1000 zł miesięcznie na koncie. Do tego dorzucasz drugi 1000 z <a href="https://uwb.edu.pl/student/stypendia-kredyty/kredyt-studencki" target="_blank">kredytu studenckiego</a>. Składasz też wniosek o <a href="https://www.radio.bialystok.pl/wiadomosci/index/id/253758" target="_blank">Stypendium Prezydenta Miasta Białegostoku</a> i w grudniu dostajesz jednorazowo 6000 zł. Ej, okazuje się, że nie musisz już pracować dorywczo i możesz skupić się na studiach. Masz więcej czasu na naukę, aktywność w kole naukowym, wyjazdy na konferencje, udział w projektach badawczych... Zaczynasz zbierać osiągnięcia do większych stypendiów, na horyzoncie na przyszły rok jest <a href="https://www.gov.pl/web/zdrowie/stypendia-ministra-dla-studentow-za-znaczace-osiagniecia-naukowe--sportowe-na-rok-akademicki-20252027" target="_blank">Stypendium Ministra dla Studentów</a> w wysokości 22 000 zł.</p>
+
+      <p>W międzyczasie, w październiku lub w marcu bierzesz udział w rekrutacji Erasmus+ i jedziesz na trzeci lub czwarty semestr na inną uczelnię w Europie. Wybierasz uczelnie mądrze, planując nie tylko przedmioty ale też jakie badania są tam robione. Przeglądasz laboratoria na stronie uczelni docelowej i znajdujesz coś interesującego. Piszesz maila, że chcesz przyjechać i popracować w labie. Przyznajesz, że nic nie umiesz ale będziesz tam pół roku i chcesz się nauczyć. Odpisują, że super - z ich perspektywy jesteś dodatkową pomocą przy rzeczach. A już samo to, że wykazujesz inicjatywę odróżnia Cię od 90% studentów. Jedziesz na wymianę i oprócz przedmiotów chodzisz do labu i pomagasz w badaniach. Efekty? Po pół roku życia w innym kraju rozumiesz świat inaczej. Naukowo? Masz potwierdzenie udziału w międzynarodowym projekcie badawczym. Takie projekty kończą się publikacjami, a po pół roku pracy w labie przyczyniasz się do powstania tej publikacji. Super, masz dwa duże osiągnięcia do Stypendium Ministra! I do <a href="https://www.mojestypendium.pl/" target="_blank">innych stypendiów.</a></p>
+
+      <p>Teraz wakacje? A może wakacje na Stażu Erasmus? Jedziesz na 6-10 tygodni do innego labu w Europie. Teraz masz już trochę doświadczenia więc pójdzie łatwiej. Powtarzasz schemat powyżej i zwiększasz swoje szanse na stypendia. A jak zdobędziesz jedno Stypendium Ministra to zbierasz punkty na następne.</p>
+
+      <div class="kik-highlight">
+        <p>Tak może wyglądać Twój drugi rok. To nie jest fikcja. To konkretna ścieżka, którą przeszli studenci przed Tobą.</p>
+      </div>
+    </div>
+
+    <div class="kik-divider">&#10038; &#10038; &#10038;</div>
+
+    <!-- ========== KOŁO NAUKOWE ========== -->
+    <div class="kik-section" id="knk">
+      <h2>Koło Naukowe Kognitywistów (KNK)</h2>
+
+      <p>KNK to studencka organizacja naukowa działająca przy Wydziale Filozofii i Kognitywistyki UwB. Jeśli chcesz robić coś więcej niż zaliczać przedmioty, tu jest twoje miejsce.</p>
+
+      <h3>Spotkania</h3>
+
+      <p>Spotykamy się we wtorki w sali 35B o g. 16:45. Schemat jest prosty: co dwa tygodnie spotkanie całego Koła, a co dwa tygodnie warsztaty z AI. Na spotkaniach ogólnych omawiamy bieżące projekty, planujemy wydarzenia i dyskutujemy o tym co nas akurat interesuje naukowo. Warsztaty z AI są bardziej hands-on: uczymy się korzystać z narzędzi, eksperymentujemy, testujemy.</p>
+
+      <h3>Co robimy?</h3>
+
+      <p>KNK organizuje wydarzenia naukowe dla studentów i nie tylko. Największe z nich to <a href="https://cyberbrain.pl" target="_blank">CYBER BRAIN</a> - coroczna impreza w ramach Tygodnia Mózgu, podczas której zapraszamy naukowców z całej Polski. Wykłady, dyskusje, kawiarnia naukowa. W 2026 roku mieliśmy dziesięcioro prelegentów z czterech różnych miast.</p>
+
+      <p>Poza wydarzeniami: wyjeżdżamy na konferencje naukowe, angażujemy się w projekty badawcze, prowadzimy warsztaty i integrujemy się na mniej formalnych wyjściach. Jeśli masz pomysł na projekt albo wydarzenie, KNK to miejsce żeby go zrealizować.</p>
+
+      <div class="kik-highlight">
+        <p>Śledź nas na <a href="https://facebook.com/knk.uwb" target="_blank">Facebooku</a> żeby być na bieżąco z wydarzeniami i aktywnościami Koła.</p>
+      </div>
+    </div>
+
+    <div class="kik-divider">&#10038; &#10038; &#10038;</div>
+
+    <!-- ========== ERASMUS ========== -->
+    <div class="kik-section" id="erasmus">
+      <h2>Erasmus+ 101</h2>
+
+      <h3>Kto może wziąć udział?</h3>
+
+      <p>Program dla wszystkich osób na studiach 1., 2. i 3. stopnia, z wyjątkiem osób na:</p>
+      <ul>
+        <li>ostatnim semestrze swoich studiów</li>
+        <li>pierwszym roku studiów 1 stopnia</li>
+        <li>pierwszym semestrze studiów 2 lub 3 stopnia</li>
+      </ul>
+
+      <p>Na Erasmusa możesz wyjechać na kilka sposobów: Studia, Praktyki lub BIP. W sumie masz 12 miesięcy mobilności na stopień studiów (12 m-cy na licencjat; nowe 12 m-cy na magisterkę; nowe 12 m-cy na doktoracie). Na przykład, możesz wyjechać na studia na 6 miesięcy i na praktyki na 4 miesiące. Albo na 10 miesięcy na studia, na 4 tygodnie na praktyki i na 5 dni na BIP.</p>
+
+      <h3>1. Studia</h3>
+
+      <p>Wyjeżdżasz na jedną z uczelni partnerskich na semestr. Jeśli zaczynasz od semestru zimowego to możesz przedłużyć wyjazd na drugi semestr. Albo możesz pojechać na semestr na uczelnię X, a na drugi semestr na uczelnię Y.</p>
+
+      <p>Wydział Filozofii i Kognitywistyki współpracuje z następującymi uczelniami zagranicznymi:</p>
+      <ol>
+        <li>Uniwersytet Johannesa Keplera w Linz</li>
+        <li>Uniwersytet w Tartu</li>
+        <li>Uniwersytet w Liège</li>
+        <li>Uniwersytet Ondokuz Mayis w Samsun</li>
+        <li>Uniwersytet w Ostrawie</li>
+        <li>Uniwersytet Josipa Juraja Strossmayera w Osijeku</li>
+        <li>Uniwersytet w Pardubicach</li>
+      </ol>
+
+      <h3>Rekrutacja</h3>
+
+      <p>Bierzesz udział w rekrutacji. Rekrutacja główna (MARZEC), rekrutacja uzupełniająca (PAŹDZIERNIK). W marcu zarekrutujesz się na semestr zimowy, w październiku na semestr letni.</p>
+
+      <p>Na rekrutację musisz przygotować aktualny formularz zgłoszeniowy na dany rok - dostępny na stronie. Wypełniasz ten formularz i przynosisz na początku marca / października do dziekanatu. Będzie ogłoszenie mailem o rekrutacji wraz z deadlinem na przyniesienie formularza i terminem rozmowy kwalifikacyjnej. Na rozmowie będzie ktoś z koordynatorów i ktoś z samorządu studentów, zapytamy o motywacje na wyjazd, zainteresowania, preferowaną uczelnię i porozmawiamy chwilę w języku w którym będą prowadzone zajęcia na uczelni docelowej. Po chwili dostaniesz wynik rozmowy i zapewne możesz już pakować walizkę na wyjazd!</p>
+
+      <p>Po pomyślnej rekrutacji skontaktuje się z Tobą Dział Wymiany Międzynarodowej i większość dokumentów załatwisz przez nich. Przeprowadzą Cię przez przygotowania krok po kroku. Ubezpieczenie, umowy itp. Z nami musisz jeszcze uzgodnić Learning Agreement.</p>
+
+      <h3>Learning Agreement</h3>
+
+      <p>Learning Agreement to dokument, w którym wpisujesz zamienniki przedmiotów z UwB które będziesz realizować na uczelni przyjmującej. Sprawdź stronę wydziału, wyślij maila, znajdź listę przedmiotów. Sprawdź swój program studiów i przedmioty jakie masz do zrealizowania w semestrze wyjazdu. Porównaj co brzmi podobnie z nazwy i opisu. Kilka porad:</p>
+      <ul>
+        <li>Poszukaj najpierw zamienników dla przedmiotów z Twojego semestru z UwB. Im więcej znajdziesz podobnych przedmiotów tym lepiej.</li>
+        <li>Dla niektórych przedmiotów nie znajdziesz zamienników, to normalne. Zapytaj przed wyjazdem prowadzących te przedmioty o warunki zaliczenia. Zdalny projekt, opracowanie materiału, prezentacja... Wyjdź z inicjatywą i wszystko da się ustalić.</li>
+        <li>W Learning Agreement powinno być około 30 pkt ECTS. Żeby dozbierać punkty możesz wpisać niektóre z przedmiotów na uczelni docelowej jako fakultety na UwB. Zobacz też w swoim programie studiów przedmioty na kolejne semestry. Być może tam jest coś, co jest podobne do oferty przedmiotów na uczelni docelowej? Jeśli tak to możesz je wpisać.</li>
+      </ul>
+
+      <p>Przygotowany Learning Agreement konsultujesz z koordynatorem wydziałowym Erasmus, zbierasz pieczątkę i większość przygotowań do wyjazdu masz już z głowy!</p>
+
+      <h3>Na miejscu</h3>
+
+      <p>Po przyjeździe na miejsce masz trochę czasu na rozejrzenie się w sytuacji. Możliwe, że niektóre przedmioty nie wystartowały. Albo są jakieś inne ciekawe przedmioty. Albo któryś przedmiot jest tak nudnie prowadzony, że zasypiasz. Zorientuj się w warunkach zaliczenia, zasadach na przedmiotach, sprawdź różnych prowadzących, wypytaj innych studentów co warto wybrać. Na wypadek takich sytuacji masz 30 dni na zmiany w Learning Agreement. Kontaktujesz się z koordynatorem i uzupełniasz część "during the mobility". Musisz "usunąć" niechciane przedmioty i "dodać" nowe. Zmiany zrobione, masz teraz przed sobą semestr zaplanowany przez siebie!</p>
+
+      <p>Pod koniec wyjazdu zdajesz przedmioty, zdobywasz Transcript of Records i wracasz do Polski. Semestr zaliczony, przygoda przeżyta. Well done.</p>
+
+      <div class="kik-highlight">
+        <p>Dodatkowa rada: Jeśli masz ambicje naukowe to oprócz przedmiotów zorientuj się jakie laboratoria / eksperymenty prowadzi przyjmująca uczelnia. Mogą być na innym wydziale. Jeśli znajdziesz coś, co Cię interesuje to pójdź tam i powiedz, że jesteś na Erasmusie i chcesz pomóc w badaniach bo ciekawi Cię to czy tamto i chcesz się nauczyć. Powinni zareagować entuzjastycznie i zaangażować Cię w coś. Jeśli to wypali to będziesz mieć udział w projekcie badawczym, a jeśli projekt prowadzi do publikacji to dogadaj się, żeby Cię dodać. Taka współpraca przełoży się później na stypendia i możliwości rozwoju naukowego.</p>
+      </div>
+
+      <h3>2. Praktyki</h3>
+
+      <p>Praktyki trwają od 2 tygodni do 12 miesięcy. W skrócie - jedziesz do laboratorium / firmy / urzędu i pracujesz tam. Idealny wyjazd na wakacyjną przerwę albo po studiach. W drugim przypadku to praktyki absolwenckie = załatwiasz wszystkie formalności przed obroną i jedziesz po skończeniu studiów.</p>
+
+      <p>Jak znaleźć miejsce? Tutaj wszystko zależy od Ciebie. Miejsce musi być związane z Twoim kierunkiem studiów. Poszukaj ciekawych laboratoriów. Sprawdź, gdzie pracują autorzy artykułów, które lubisz. Znajdź coś, co autentycznie Cię interesuje.</p>
+
+      <p>Jak już znajdziesz to piszesz maila do tego miejsca. "Dzień dobry, nic nie umiem ale chcę się nauczyć i przyjechać na X miesięcy na staż Erasmus." Warto też dodać, że jakiś artykuł Cię zaciekawił, coś było interesującego i ogólnie bardzo chcesz dołączyć do laboratorium. Powinni zareagować pozytywnie i jest duża szansa, że to będzie Twoje przyszłe miejsce wyjazdu! A jak się nie uda tam? To piszesz do kolejnego miejsca!</p>
+
+      <h3>3. BIP</h3>
+
+      <p>BIP to Blended Intensive Program. Jedziesz na kilka dni na specjalne warsztaty organizowane przez jedną z uczelni w Europie. Przed wyjazdem weźmiesz udział w części wirtualnej - szkoleniu lub przygotowaniu online. Ten program oferuje świetną formę wyjazdu i możliwość zdobycia doświadczenia za granicą.</p>
+
+      <h3>4. MOST</h3>
+
+      <p>Bonusowo, jak już jesteśmy przy wyjazdach, polecam również program MOST. Jedziesz na semestr lub dwa na inną uczelnię w Polsce, realizując tamtejsze przedmioty. Nie ma tutaj dopłat ale to świetna opcja na doświadczenie innego miasta, studiów na innym Uniwersytecie oraz nawiązanie cennych kontaktów.</p>
+    </div>
+
+    <div class="kik-divider">&#10038; &#10038; &#10038;</div>
+
+    <!-- ========== PRZYDATNE LINKI ========== -->
+    <div class="kik-section" id="linki">
+      <h2>Przydatne linki</h2>
+
+      <div class="links-grid">
+        <a href="https://filozofia.uwb.edu.pl/student/rozklady-zajec" class="link-card" target="_blank">
+          <div class="link-title">Rozkład zajęć</div>
+          <div class="link-desc">Rozkłady zajęć dla KiK UwB</div>
+        </a>
+        <a href="https://uwb.edu.pl/student/centrum-wsparcia/bezplatne-konsultacje-psychologiczne" class="link-card" target="_blank">
+          <div class="link-title">Pomoc psychologiczna</div>
+          <div class="link-desc">Darmowa pomoc dla studentów i pracowników</div>
+        </a>
+        <a href="https://uwb.edu.pl/student/stypendia-kredyty/stypendia-studenci-3998" class="link-card" target="_blank">
+          <div class="link-title">Stypendium Rektora</div>
+          <div class="link-desc">Stypendium za wyniki i osiągnięcia</div>
+        </a>
+        <a href="https://uwb.edu.pl/student/stypendia-kredyty/kredyt-studencki" class="link-card" target="_blank">
+          <div class="link-title">Kredyt studencki</div>
+          <div class="link-desc">Informacje o kredycie studenckim</div>
+        </a>
+        <a href="https://www.gov.pl/web/zdrowie/stypendia-ministra-dla-studentow-za-znaczace-osiagniecia-naukowe--sportowe-na-rok-akademicki-20252027" class="link-card" target="_blank">
+          <div class="link-title">Stypendium Ministra</div>
+          <div class="link-desc">22 000 zł za znaczące osiągnięcia</div>
+        </a>
+        <a href="https://www.mojestypendium.pl/" class="link-card" target="_blank">
+          <div class="link-title">Wyszukiwarka stypendiów</div>
+          <div class="link-desc">mojestypendium.pl</div>
+        </a>
+      </div>
+
+      <h3>Kontakt</h3>
+      <p>Koordynator wydziałowy Erasmus+: <a href="mailto:o.borowiecki@uwb.edu.pl">o.borowiecki@uwb.edu.pl</a></p>
+    </div>
+
   </div>
 </PasswordGate>
 
