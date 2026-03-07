@@ -17,6 +17,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
   .section-label { font-family: var(--font-body); font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 24px; opacity: 0.6; }
 
+  /* Session cards */
   .session { border: 1px solid var(--border-subtle); padding: 32px 28px; margin-bottom: 20px; position: relative; background: linear-gradient(135deg, rgba(28,26,20,0.6), rgba(14,13,11,0.8)); }
   .session::before { content: ''; position: absolute; inset: 5px; border: 1px solid rgba(232,168,76,0.04); pointer-events: none; }
   .session.upcoming { border-color: rgba(232,168,76,0.12); opacity: 0.82; }
@@ -27,12 +28,13 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
   .session-badge { font-family: var(--font-body); font-size: 9px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; border-radius: 1px; }
   .badge-done { color: var(--warm-glow); background: rgba(232,168,76,0.08); border: 1px solid rgba(232,168,76,0.12); }
   .badge-upcoming { color: var(--text-dim); background: rgba(160,152,136,0.06); border: 1px solid rgba(160,152,136,0.1); }
-  .badge-improv { color: var(--accent-red); background: rgba(160,64,48,0.08); border: 1px solid rgba(160,64,48,0.12); }
 
   .session-rule { border: none; border-top: 1px solid rgba(232,168,76,0.07); margin: 20px 0; }
+  .section-divider { border: none; border-top: 1px solid rgba(232,168,76,0.07); margin: 28px 0; }
 
   .zasada { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; padding-left: 16px; border-left: 2px solid rgba(232,168,76,0.2); }
 
+  /* Content blocks */
   .block { margin-bottom: 22px; }
   .block-label { font-family: var(--font-body); font-size: 10px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; opacity: 0.7; }
 
@@ -40,14 +42,43 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
   .topic-list li { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; padding-left: 16px; position: relative; margin-bottom: 5px; }
   .topic-list li::before { content: '\00B7'; position: absolute; left: 4px; color: var(--warm-glow); opacity: 0.5; }
 
+  /* Definitions prose */
+  .course-page h2 { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text-primary); margin: 36px 0 14px; letter-spacing: 0.5px; }
+  .course-page h3 { font-family: var(--font-display); font-size: 16px; font-weight: 500; color: var(--text-primary); margin: 24px 0 10px; letter-spacing: 0.3px; }
+  .course-page p { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.85; margin-bottom: 14px; }
+  .course-page strong { font-weight: 500; color: var(--text-primary); }
+  .course-page em { font-style: italic; }
+  .course-page ul { padding-left: 20px; margin: 10px 0 14px; }
+  .course-page ul li { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; margin-bottom: 6px; }
+
+  /* Network cascade (from wstęp) */
+  .network-cascade { margin: 16px 0 24px; }
+  .cascade-step { display: flex; gap: 16px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border-subtle); }
+  .cascade-step:last-child { border-bottom: none; }
+  .cascade-num { font-family: var(--font-body); font-size: 10px; font-weight: 600; letter-spacing: 1.5px; color: var(--warm-glow); min-width: 32px; padding-top: 2px; flex-shrink: 0; }
+  .cascade-content { flex: 1; }
+  .cascade-name { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 3px; }
+  .cascade-abbr { font-weight: 300; color: var(--text-dim); font-size: 11px; letter-spacing: 0.5px; margin-left: 6px; }
+  .cascade-desc { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-secondary); line-height: 1.65; }
+
+  /* Neuron diagram */
+  .neuron-parts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0 20px; }
+  .neuron-part { background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); padding: 12px 14px; }
+  .neuron-part-name { font-family: var(--font-body); font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--warm-glow); margin-bottom: 5px; opacity: 0.85; }
+  .neuron-part p { font-size: 13px; margin-bottom: 0; line-height: 1.65; color: var(--text-secondary); }
+
+  /* Term tags */
   .term-cloud { display: flex; flex-wrap: wrap; gap: 7px; }
   .term { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-secondary); background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 4px 10px; letter-spacing: 0.3px; }
 
+  /* Readings */
   .reading { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-secondary); line-height: 1.7; padding: 12px 16px; background: rgba(255,255,255,0.02); border-left: 2px solid rgba(232,168,76,0.15); margin-bottom: 8px; }
   .reading .reading-note { display: block; font-size: 11px; color: var(--text-dim); margin-top: 4px; font-style: italic; }
 
+  /* Arc block */
   .arc-text { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; }
 
+  /* Drawing exercise */
   .drawing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
   .drawing-cell { font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-secondary); background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); padding: 10px 12px; line-height: 1.65; }
   .drawing-cell strong { display: block; font-size: 10px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
@@ -57,6 +88,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
   @media (max-width: 600px) {
     .drawing-grid { grid-template-columns: 1fr; }
+    .neuron-parts { grid-template-columns: 1fr; }
     .session { padding: 22px 16px; }
   }
 </style>
@@ -76,7 +108,6 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
         <span class="session-numeral">1</span>
         <span class="session-title">Architektura i doświadczenie</span>
         <span class="session-badge badge-done">Odbyła się</span>
-        <span class="session-badge badge-improv">Improwizacja</span>
       </div>
       <hr class="session-rule">
       <p class="zasada">Architektura neuronalna kształtuje doświadczenie. Gdy architektura jest uszkodzona lub nie rozwinie się w odpowiednim oknie czasowym, doświadczenie jest fundamentalnie inne.</p>
@@ -109,18 +140,109 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
       <hr class="session-rule">
       <p class="zasada">Mózg nie rejestruje świata &mdash; aktywnie go przewiduje. Percepcja to weryfikowanie hipotez, a architektura sieci determinuje, jaki świat jest w ogóle dostępny do doświadczenia.</p>
 
-      <div class="block">
-        <p class="block-label">Budowa podstawowa</p>
-        <ul class="topic-list">
-          <li>Istota biała i istota szara</li>
-          <li>Kolumny korowe (cortical columns)</li>
-          <li>Linie orientacji (orientation selectivity)</li>
-        </ul>
+      <!-- DEFINITIONS -->
+      <h2>Podstawowe pojęcia</h2>
+
+      <h3>Istota biała i istota szara</h3>
+      <p>Mózg dzieli się na dwie tkanki widoczne gołym okiem. <strong>Istota szara</strong> (grey matter) to ciała komórkowe neuronów &mdash; tam zachodzi przetwarzanie informacji. <strong>Istota biała</strong> (white matter) to aksony owinięte mieliną, które łączą obszary szarej materii ze sobą. Kolor biały pochodzi właśnie od mieliny. Skrótowo: szara = przetwarza, biała = przesyła.</p>
+      <p>Kora mózgowa to cienka warstwa istoty szarej okrywająca mózg z zewnątrz. Pod nią &mdash; rozległe sieci istoty białej. W głębi &mdash; jądra podkorowe (kolejne skupiska istoty szarej: ciało migdałowate, jądra podstawy, wzgórze).</p>
+
+      <hr class="section-divider">
+
+      <h3>Budowa neuronu</h3>
+      <p>Neuron to podstawowa jednostka obliczeniowa mózgu. Odbiera sygnały, integruje je i &mdash; jeśli suma przekroczy próg &mdash; generuje potencjał czynnościowy, który wędruje do kolejnych neuronów.</p>
+      <div class="neuron-parts">
+        <div class="neuron-part">
+          <div class="neuron-part-name">Ciało komórki</div>
+          <p>Soma. Tu żyje jądro i maszyneria metaboliczna. Integruje wszystkie sygnały wejściowe.</p>
+        </div>
+        <div class="neuron-part">
+          <div class="neuron-part-name">Dendryty</div>
+          <p>Rozgałęzione wyrostki odbiorcze. Zbierają sygnały od tysięcy innych neuronów.</p>
+        </div>
+        <div class="neuron-part">
+          <div class="neuron-part-name">Akson</div>
+          <p>Pojedynczy długi wyrostek wyjściowy. Przewodzi potencjał czynnościowy do terminali. Mielina przyspiesza przewodzenie.</p>
+        </div>
+        <div class="neuron-part">
+          <div class="neuron-part-name">Synapsy</div>
+          <p>Miejsca kontaktu z innymi neuronami. Aksony kończą się terminalami synaptycznymi, które uwalniają neuroprzekaźniki do szczeliny synaptycznej.</p>
+        </div>
+        <div class="neuron-part">
+          <div class="neuron-part-name">Receptory</div>
+          <p>Białka błonowe na dendrytach i somie. Wiążą neuroprzekaźniki i otwierają kanały jonowe &mdash; wpuszczając lub blokując sygnał.</p>
+        </div>
       </div>
 
+      <hr class="section-divider">
+
+      <h3>Sieci mózgowe: strukturalne i funkcjonalne</h3>
+      <p><strong>Sieć strukturalna</strong> to mapa fizycznych połączeń: które obszary są połączone aksonami. Opisuje infrastrukturę &mdash; drogi, nie ruch. Bada się ją przez DTI (diffusion tensor imaging), które śledzi kierunek mieliny w istocie białej.</p>
+      <p><strong>Sieć funkcjonalna</strong> to mapa obszarów, które aktywują się <em>razem w czasie</em> &mdash; nawet jeśli nie są bezpośrednio połączone. Bada się ją przez fMRI spoczynkowe (resting-state): kto z kim koreluje aktywność, gdy mózg nic konkretnego nie robi. Sieć funkcjonalna opisuje ruch na drogach, nie same drogi.</p>
+      <p>Ta sama infrastruktura strukturalna może generować różne sieci funkcjonalne zależnie od stanu. Mózg to nie statyczna mapa &mdash; to dynamicznie rekonfigurujący się system predykcji.</p>
+
+      <hr class="section-divider">
+
+      <h3>Siedem sieci (Uddin 2019)</h3>
+      <div class="network-cascade">
+        <div class="cascade-step">
+          <div class="cascade-num">01</div>
+          <div class="cascade-content">
+            <div class="cascade-name">Somatomotoryczna <span class="cascade-abbr">SMN</span></div>
+            <div class="cascade-desc">Kora ruchowa (MC) i somatosensoryczna (SSC). Przewiduje i realizuje ruch, odbiera sygnały z ciała o pozycji i dotyku.</div>
+          </div>
+        </div>
+        <div class="cascade-step">
+          <div class="cascade-num">02</div>
+          <div class="cascade-content">
+            <div class="cascade-name">Wzrokowa <span class="cascade-abbr">VIS</span></div>
+            <div class="cascade-desc">V1 i wyższe obszary wzrokowe. Przetwarza informację wizualną od pierwszorzędowej kory po złożone reprezentacje obiektów i przestrzeni.</div>
+          </div>
+        </div>
+        <div class="cascade-step">
+          <div class="cascade-num">03</div>
+          <div class="cascade-content">
+            <div class="cascade-name">Somatosensoryczna / przedsionkowa <span class="cascade-abbr">SOM/VEST</span></div>
+            <div class="cascade-desc">Przetwarzanie propriocepcji i równowagi. Integruje informacje o pozycji ciała w przestrzeni z sygnałami z układu przedsionkowego.</div>
+          </div>
+        </div>
+        <div class="cascade-step">
+          <div class="cascade-num">04</div>
+          <div class="cascade-content">
+            <div class="cascade-name">Grzbietowa sieć uwagi <span class="cascade-abbr">DAN</span></div>
+            <div class="cascade-desc">SPL, IPS, IPL, FEF, IFJ. Kieruje uwagą wolicjonalnie: spodziewa się konkretnych obiektów w konkretnych miejscach. Uwaga odgórna (top-down).</div>
+          </div>
+        </div>
+        <div class="cascade-step">
+          <div class="cascade-num">05</div>
+          <div class="cascade-content">
+            <div class="cascade-name">Sieć istotności / brzuszna sieć uwagi <span class="cascade-abbr">SAL/VAN</span></div>
+            <div class="cascade-desc">Alarm dla niespodziewanych informacji. Przerywa działanie DAN i reorientuje uwagę oddolnie (bottom-up). Wyspa (insula) i ACC jako główne węzły.</div>
+          </div>
+        </div>
+        <div class="cascade-step">
+          <div class="cascade-num">06</div>
+          <div class="cascade-content">
+            <div class="cascade-name">Sieć kontroli wykonawczej <span class="cascade-abbr">CEN</span></div>
+            <div class="cascade-desc">DLPFC, IPL. Abstrakcyjna predykcja i planowanie: co z tym zrobić? Angażuje się gdy problem wymaga utrzymania informacji i elastycznych reguł.</div>
+          </div>
+        </div>
+        <div class="cascade-step">
+          <div class="cascade-num">07</div>
+          <div class="cascade-content">
+            <div class="cascade-name">Sieć domyślna <span class="cascade-abbr">DMN</span></div>
+            <div class="cascade-desc">mPFC, PCC, angular gyrus, hipokamp. Aktywna w spoczynku. Model Ciebie: kim jesteś, czego chcesz, co znaczą zdarzenia. Operuje najdalej od zmysłów.</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- TOPICS COVERED -->
       <div class="block">
-        <p class="block-label">System wzrokowy</p>
+        <p class="block-label">Omówione zagadnienia</p>
         <ul class="topic-list">
+          <li>Kolumny korowe (cortical columns) i linie orientacji (orientation selectivity)</li>
           <li>Fala elektromagnetyczna: spektrum, kosmos, podczerwień, teleskop Webba</li>
           <li>Pręciki i czopki (rods, cones) &mdash; receptory jako granica doświadczalnego świata</li>
           <li>Organizacja lewostronno-prawostronnej reprezentacji pola widzenia</li>
@@ -128,25 +250,11 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
           <li>Szlak brzuszny (ventral stream) &mdash; &bdquo;co to jest&rdquo;</li>
           <li>Blindsight: uszkodzenie V1, działanie bez świadomego widzenia</li>
           <li>Pacjentka DF: uszkodzenie V2, zaburzenie percepcji przy zachowanym działaniu</li>
-        </ul>
-      </div>
-
-      <div class="block">
-        <p class="block-label">Koncepty kluczowe</p>
-        <ul class="topic-list">
           <li><strong>Etologiczne mapy akcji (ethological action maps)</strong> &mdash; przestrzenna organizacja możliwości działania zakodowana w korze</li>
-          <li><strong>Teza tożsamości (identity thesis)</strong> &mdash; aktywność neuronalna <em>jest</em> doświadczeniem, nie powoduje go; dwie perspektywy na to samo zdarzenie: od wewnątrz i z zewnątrz</li>
+          <li><strong>Teza tożsamości (identity thesis)</strong> &mdash; aktywność neuronalna <em>jest</em> doświadczeniem, nie powoduje go; dwie perspektywy na to samo zdarzenie</li>
           <li><strong>Predykcja</strong> &mdash; mózg aktywnie przewiduje przyszłe informacje; percepcja = weryfikowanie hipotez o świecie</li>
           <li><strong>Błąd predykcyjny (prediction error)</strong> &mdash; niespodziewana informacja wędrująca bottom-up po hierarchii sieci</li>
           <li><strong>Afordancja</strong> &mdash; relacyjna, kontekstualna, dynamiczna; afordancja + motywacja = akcja</li>
-        </ul>
-      </div>
-
-      <div class="block">
-        <p class="block-label">Sieci mózgowe (Uddin 2019)</p>
-        <ul class="topic-list">
-          <li>Sieci strukturalne vs. funkcjonalne &mdash; różnica metodologiczna i ontologiczna</li>
-          <li>Siedem sieci makroskopowych: somatomotoryczna, wzrokowa, somatosensoryczna/przedsionkowa, uwagowa (DAN), istotności (SAL/VAN), kontroli (CEN), domyślna (DMN)</li>
         </ul>
       </div>
 
@@ -180,7 +288,11 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
         <div class="term-cloud">
           <span class="term">istota biała</span>
           <span class="term">istota szara</span>
-          <span class="term">budowa neuronu</span>
+          <span class="term">ciało komórki</span>
+          <span class="term">akson</span>
+          <span class="term">dendryty</span>
+          <span class="term">synapsy</span>
+          <span class="term">receptory</span>
           <span class="term">kolumny korowe</span>
           <span class="term">MC</span>
           <span class="term">SSC</span>
@@ -203,6 +315,11 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
           <span class="term">błąd predykcyjny</span>
           <span class="term">afordancja</span>
           <span class="term">etologiczne mapy akcji</span>
+          <span class="term">sieci strukturalne</span>
+          <span class="term">sieci funkcjonalne</span>
+          <span class="term">SMN</span>
+          <span class="term">VIS</span>
+          <span class="term">SOM/VEST</span>
           <span class="term">DAN</span>
           <span class="term">SAL/VAN</span>
           <span class="term">CEN</span>
