@@ -6,30 +6,240 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 <Base title="Mózg i poznanie - kogni.pl" activePage="kursy">
 
 <style is:global>
-  .course-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+  .course-page { max-width: 760px; margin: 0 auto; padding: 48px 24px 96px; }
+
   .course-page h1 { font-family: var(--font-display); font-size: 36px; font-weight: 400; color: var(--text-primary); letter-spacing: 2px; margin-bottom: 8px; text-align: center; }
-  .course-page .meta { font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-dim); text-align: center; letter-spacing: 1px; margin-bottom: 48px; }
-  .course-page h2 { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--text-primary); margin: 40px 0 16px; }
-  .course-page p, .course-page li { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; }
-  .course-page ul { padding-left: 20px; margin: 12px 0; }
-  .course-page li { margin-bottom: 6px; }
-  .back-link { display: inline-block; font-family: var(--font-body); font-size: 12px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; margin-bottom: 32px; transition: color 0.3s; }
+  .course-page .meta { font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-dim); text-align: center; letter-spacing: 1px; margin-bottom: 6px; }
+  .course-page .meta-sub { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-dim); text-align: center; letter-spacing: 0.5px; margin-bottom: 48px; opacity: 0.7; }
+
+  .back-link { display: inline-block; font-family: var(--font-body); font-size: 12px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; margin-bottom: 40px; transition: color 0.3s; }
   .back-link:hover { color: var(--warm-glow); }
+
+  .section-label { font-family: var(--font-body); font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 24px; opacity: 0.6; }
+
+  .session { border: 1px solid var(--border-subtle); padding: 32px 28px; margin-bottom: 20px; position: relative; background: linear-gradient(135deg, rgba(28,26,20,0.6), rgba(14,13,11,0.8)); }
+  .session::before { content: ''; position: absolute; inset: 5px; border: 1px solid rgba(232,168,76,0.04); pointer-events: none; }
+  .session.upcoming { border-color: rgba(232,168,76,0.12); opacity: 0.82; }
+
+  .session-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; flex-wrap: wrap; }
+  .session-numeral { font-family: var(--font-display); font-size: 28px; font-weight: 400; color: var(--warm-glow); opacity: 0.4; line-height: 1; }
+  .session-title { font-family: var(--font-display); font-size: 21px; font-weight: 500; color: var(--text-primary); letter-spacing: 0.5px; }
+  .session-badge { font-family: var(--font-body); font-size: 9px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; border-radius: 1px; }
+  .badge-done { color: var(--warm-glow); background: rgba(232,168,76,0.08); border: 1px solid rgba(232,168,76,0.12); }
+  .badge-upcoming { color: var(--text-dim); background: rgba(160,152,136,0.06); border: 1px solid rgba(160,152,136,0.1); }
+  .badge-improv { color: var(--accent-red); background: rgba(160,64,48,0.08); border: 1px solid rgba(160,64,48,0.12); }
+
+  .session-rule { border: none; border-top: 1px solid rgba(232,168,76,0.07); margin: 20px 0; }
+
+  .zasada { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; padding-left: 16px; border-left: 2px solid rgba(232,168,76,0.2); }
+
+  .block { margin-bottom: 22px; }
+  .block-label { font-family: var(--font-body); font-size: 10px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; opacity: 0.7; }
+
+  .topic-list { list-style: none; padding: 0; margin: 0; }
+  .topic-list li { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; padding-left: 16px; position: relative; margin-bottom: 5px; }
+  .topic-list li::before { content: '\00B7'; position: absolute; left: 4px; color: var(--warm-glow); opacity: 0.5; }
+
+  .term-cloud { display: flex; flex-wrap: wrap; gap: 7px; }
+  .term { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-secondary); background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 4px 10px; letter-spacing: 0.3px; }
+
+  .reading { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-secondary); line-height: 1.7; padding: 12px 16px; background: rgba(255,255,255,0.02); border-left: 2px solid rgba(232,168,76,0.15); margin-bottom: 8px; }
+  .reading .reading-note { display: block; font-size: 11px; color: var(--text-dim); margin-top: 4px; font-style: italic; }
+
+  .arc-text { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; }
+
+  .drawing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .drawing-cell { font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-secondary); background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); padding: 10px 12px; line-height: 1.65; }
+  .drawing-cell strong { display: block; font-size: 10px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
+
+  .ornament-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 40px 0 0; color: var(--text-dim); opacity: 0.3; }
+  .ornament-divider::before, .ornament-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--border-warm), transparent); }
+
+  @media (max-width: 600px) {
+    .drawing-grid { grid-template-columns: 1fr; }
+    .session { padding: 22px 16px; }
+  }
 </style>
 
 <PasswordGate title="Mózg i poznanie" subtitle="Semestr letni 2025/2026" passwordHash={HASH} sessionKey="mip">
   <div class="course-page">
     <a href="/kursy" class="back-link">&larr; Kursy</a>
     <h1>Mózg i poznanie</h1>
-    <p class="meta">wykład · II rok · semestr letni 2025/2026 · 30h</p>
-    <h2>Opis kursu</h2>
-    <p>Architektura neuronalna procesów poznawczych. Od synaps do sieci, od neuroprzekaźników do doświadczenia.</p>
-    <h2>Harmonogram</h2>
-    <p>Treść w przygotowaniu.</p>
-    <h2>Zasady zaliczenia</h2>
-    <p>Treść w przygotowaniu.</p>
-    <h2>Materiały</h2>
-    <p>Treść w przygotowaniu.</p>
+    <p class="meta">konwersatorium &middot; rok I, sem. 2 &middot; 30h &middot; 15 sesji</p>
+    <p class="meta-sub">Kognitywistyka i Komunikacja, studia II stopnia</p>
+
+    <p class="section-label">Sesje</p>
+
+    <!-- SESJA 1 -->
+    <div class="session">
+      <div class="session-header">
+        <span class="session-numeral">1</span>
+        <span class="session-title">Architektura i doświadczenie</span>
+        <span class="session-badge badge-done">Odbyła się</span>
+        <span class="session-badge badge-improv">Improwizacja</span>
+      </div>
+      <hr class="session-rule">
+      <p class="zasada">Architektura neuronalna kształtuje doświadczenie. Gdy architektura jest uszkodzona lub nie rozwinie się w odpowiednim oknie czasowym, doświadczenie jest fundamentalnie inne.</p>
+
+      <div class="block">
+        <p class="block-label">Omówione zagadnienia</p>
+        <ul class="topic-list">
+          <li><strong>Okresy krytyczne</strong> (critical/sensitive periods) &mdash; okno czasowe, w którym architektura neuronalna jest plastyczna i podatna na kształtowanie przez środowisko</li>
+          <li><strong>Hubel &amp; Wiesel:</strong> kotki, kolumny dominacji ocznej &mdash; zamknięcie jednego oka w okresie krytycznym trwale reorganizuje korę wzrokową</li>
+          <li><strong>Dzikie dziecko (feral child):</strong> brak bodźców językowych w okresie krytycznym &mdash; niemożność nabycia języka po jego zamknięciu</li>
+          <li><strong>Pacjentka DF (Goodale &amp; Milner):</strong> uszkodzenie szlaku brzusznego &mdash; nienaruszone działanie przy zaburzonej percepcji świadomej</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <p class="block-label">Lektura zadana</p>
+        <div class="reading">
+          Uddin, L. Q., et al. (2019). Towards a universal taxonomy of macro-scale functional human brain networks. <em>Brain Topography.</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- SESJA 2 -->
+    <div class="session">
+      <div class="session-header">
+        <span class="session-numeral">2</span>
+        <span class="session-title">Systemy sensoryczne i sieci mózgowe</span>
+        <span class="session-badge badge-done">Odbyła się</span>
+      </div>
+      <hr class="session-rule">
+      <p class="zasada">Mózg nie rejestruje świata &mdash; aktywnie go przewiduje. Percepcja to weryfikowanie hipotez, a architektura sieci determinuje, jaki świat jest w ogóle dostępny do doświadczenia.</p>
+
+      <div class="block">
+        <p class="block-label">Budowa podstawowa</p>
+        <ul class="topic-list">
+          <li>Istota biała i istota szara</li>
+          <li>Kolumny korowe (cortical columns)</li>
+          <li>Linie orientacji (orientation selectivity)</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <p class="block-label">System wzrokowy</p>
+        <ul class="topic-list">
+          <li>Fala elektromagnetyczna: spektrum, kosmos, podczerwień, teleskop Webba</li>
+          <li>Pręciki i czopki (rods, cones) &mdash; receptory jako granica doświadczalnego świata</li>
+          <li>Organizacja lewostronno-prawostronnej reprezentacji pola widzenia</li>
+          <li>Szlak grzbietowy (dorsal stream) &mdash; &bdquo;gdzie / jak działać&rdquo;</li>
+          <li>Szlak brzuszny (ventral stream) &mdash; &bdquo;co to jest&rdquo;</li>
+          <li>Blindsight: uszkodzenie V1, działanie bez świadomego widzenia</li>
+          <li>Pacjentka DF: uszkodzenie V2, zaburzenie percepcji przy zachowanym działaniu</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <p class="block-label">Koncepty kluczowe</p>
+        <ul class="topic-list">
+          <li><strong>Etologiczne mapy akcji (ethological action maps)</strong> &mdash; przestrzenna organizacja możliwości działania zakodowana w korze</li>
+          <li><strong>Teza tożsamości (identity thesis)</strong> &mdash; aktywność neuronalna <em>jest</em> doświadczeniem, nie powoduje go; dwie perspektywy na to samo zdarzenie: od wewnątrz i z zewnątrz</li>
+          <li><strong>Predykcja</strong> &mdash; mózg aktywnie przewiduje przyszłe informacje; percepcja = weryfikowanie hipotez o świecie</li>
+          <li><strong>Błąd predykcyjny (prediction error)</strong> &mdash; niespodziewana informacja wędrująca bottom-up po hierarchii sieci</li>
+          <li><strong>Afordancja</strong> &mdash; relacyjna, kontekstualna, dynamiczna; afordancja + motywacja = akcja</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <p class="block-label">Sieci mózgowe (Uddin 2019)</p>
+        <ul class="topic-list">
+          <li>Sieci strukturalne vs. funkcjonalne &mdash; różnica metodologiczna i ontologiczna</li>
+          <li>Siedem sieci makroskopowych: somatomotoryczna, wzrokowa, somatosensoryczna/przedsionkowa, uwagowa (DAN), istotności (SAL/VAN), kontroli (CEN), domyślna (DMN)</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <p class="block-label">Ćwiczenie rysunkowe</p>
+        <p style="font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-dim); margin-bottom: 12px;">Widok lateralny mózgu z trzema sieciami i ich strukturami.</p>
+        <div class="drawing-grid">
+          <div class="drawing-cell">
+            <strong>Somatomotoryczna</strong>
+            MC &mdash; kora ruchowa<br>SSC &mdash; kora somatosensoryczna
+          </div>
+          <div class="drawing-cell">
+            <strong>Wzrokowa</strong>
+            V1, V2<br>(z przypadków klinicznych)
+          </div>
+          <div class="drawing-cell">
+            <strong>Uwagi grzbietowej (DAN)</strong>
+            SPL, IPS, IPL<br>FEF, IFJ
+          </div>
+        </div>
+        <div class="drawing-grid" style="margin-top: 10px;">
+          <div class="drawing-cell">
+            <strong>Słuchowa</strong>
+            A1
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <p class="block-label">Pełna lista terminów</p>
+        <div class="term-cloud">
+          <span class="term">istota biała</span>
+          <span class="term">istota szara</span>
+          <span class="term">budowa neuronu</span>
+          <span class="term">kolumny korowe</span>
+          <span class="term">MC</span>
+          <span class="term">SSC</span>
+          <span class="term">SPL</span>
+          <span class="term">IPS</span>
+          <span class="term">IPL</span>
+          <span class="term">FEF</span>
+          <span class="term">IFJ</span>
+          <span class="term">A1</span>
+          <span class="term">V1</span>
+          <span class="term">V2</span>
+          <span class="term">pręciki</span>
+          <span class="term">czopki</span>
+          <span class="term">szlak grzbietowy</span>
+          <span class="term">szlak brzuszny</span>
+          <span class="term">blindsight</span>
+          <span class="term">okresy krytyczne</span>
+          <span class="term">teza tożsamości</span>
+          <span class="term">predykcja</span>
+          <span class="term">błąd predykcyjny</span>
+          <span class="term">afordancja</span>
+          <span class="term">etologiczne mapy akcji</span>
+          <span class="term">DAN</span>
+          <span class="term">SAL/VAN</span>
+          <span class="term">CEN</span>
+          <span class="term">DMN</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SESJA 3 -->
+    <div class="session upcoming">
+      <div class="session-header">
+        <span class="session-numeral">3</span>
+        <span class="session-title">Ciało, narzędzia i predykcja</span>
+        <span class="session-badge badge-upcoming">Za 2 tygodnie</span>
+      </div>
+      <hr class="session-rule">
+
+      <div class="block">
+        <p class="block-label">Łuk tematyczny</p>
+        <p class="arc-text">Rozszerzenie schematu ciała przez narzędzia (Maravita &amp; Iriki) spotyka się z motoryką jako predykcją (Adams et al.). Macie już słownik anatomiczny z Sesji 2 &mdash; SPL, IPS, IPL, SSC &mdash; który pozwala czytać Maravita precyzyjnie. Adams zamknie łuk: jeśli teza tożsamości jest prawdziwa, a mózg tylko przewiduje, to polecenia ruchowe <em>są</em> predykcjami. Ciało jest narzędziem rozszerzającym się przez środowisko &mdash; neuralna, ekologiczna i poznawcza nisza Iriki &amp; Taoki wynika naturalnie.</p>
+      </div>
+
+      <div class="block">
+        <p class="block-label">Lektury</p>
+        <div class="reading">
+          Maravita, A., &amp; Iriki, A. (2004). Tools for the body (schema). <em>Trends in Cognitive Sciences.</em>
+          <span class="reading-note">Czytacie w całości.</span>
+        </div>
+        <div class="reading">
+          Adams, R. A., Shipp, S., &amp; Friston, K. J. (2013). Predictions not commands: active inference in the motor system. <em>Brain Structure and Function.</em>
+          <span class="reading-note">Omawiacie z LLM.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ornament-divider"><span>&#9998;</span></div>
+
   </div>
 </PasswordGate>
 
