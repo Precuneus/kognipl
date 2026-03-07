@@ -26,11 +26,10 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
   .session-numeral { font-family: var(--font-display); font-size: 28px; font-weight: 400; color: var(--warm-glow); opacity: 0.4; line-height: 1; }
   .session-title { font-family: var(--font-display); font-size: 21px; font-weight: 500; color: var(--text-primary); letter-spacing: 0.5px; }
   .session-badge { font-family: var(--font-body); font-size: 9px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; border-radius: 1px; }
-  .badge-done { color: var(--warm-glow); background: rgba(232,168,76,0.08); border: 1px solid rgba(232,168,76,0.12); }
   .badge-upcoming { color: var(--text-dim); background: rgba(160,152,136,0.06); border: 1px solid rgba(160,152,136,0.1); }
 
   .session-rule { border: none; border-top: 1px solid rgba(232,168,76,0.07); margin: 20px 0; }
-  .section-divider { border: none; border-top: 1px solid rgba(232,168,76,0.07); margin: 28px 0; }
+  .section-divider { border: none; border-top: 1px solid var(--border-subtle); margin: 40px 0; }
 
   .zasada { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; padding-left: 16px; border-left: 2px solid rgba(232,168,76,0.2); }
 
@@ -42,17 +41,20 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
   .topic-list li { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; padding-left: 16px; position: relative; margin-bottom: 5px; }
   .topic-list li::before { content: '\00B7'; position: absolute; left: 4px; color: var(--warm-glow); opacity: 0.5; }
 
-  /* Definitions prose */
-  .course-page h2 { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text-primary); margin: 36px 0 14px; letter-spacing: 0.5px; }
-  .course-page h3 { font-family: var(--font-display); font-size: 16px; font-weight: 500; color: var(--text-primary); margin: 24px 0 10px; letter-spacing: 0.3px; }
-  .course-page p { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.85; margin-bottom: 14px; }
+  /* Definitions prose — same as wstęp */
+  .course-page h2 { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text-primary); margin: 48px 0 16px; letter-spacing: 0.5px; }
+  .course-page h3 { font-family: var(--font-display); font-size: 16px; font-weight: 500; color: var(--text-primary); margin: 32px 0 12px; letter-spacing: 0.3px; }
+  .course-page p { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.85; margin-bottom: 16px; }
   .course-page strong { font-weight: 500; color: var(--text-primary); }
   .course-page em { font-style: italic; }
-  .course-page ul { padding-left: 20px; margin: 10px 0 14px; }
-  .course-page ul li { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; margin-bottom: 6px; }
+  .course-page ul { padding-left: 20px; margin: 12px 0 16px; }
+  .course-page ul li { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; margin-bottom: 8px; }
 
-  /* Network cascade (from wstęp) */
-  .network-cascade { margin: 16px 0 24px; }
+  /* Formula box */
+  .formula-box { background: var(--warm-glow-soft); border: 1px solid var(--border-warm); padding: 20px 28px; margin: 28px auto; text-align: center; font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text-primary); letter-spacing: 1px; max-width: 420px; }
+
+  /* Network cascade */
+  .network-cascade { margin: 20px 0 28px; }
   .cascade-step { display: flex; gap: 16px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border-subtle); }
   .cascade-step:last-child { border-bottom: none; }
   .cascade-num { font-family: var(--font-body); font-size: 10px; font-weight: 600; letter-spacing: 1.5px; color: var(--warm-glow); min-width: 32px; padding-top: 2px; flex-shrink: 0; }
@@ -61,11 +63,25 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
   .cascade-abbr { font-weight: 300; color: var(--text-dim); font-size: 11px; letter-spacing: 0.5px; margin-left: 6px; }
   .cascade-desc { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-secondary); line-height: 1.65; }
 
-  /* Neuron diagram */
-  .neuron-parts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0 20px; }
-  .neuron-part { background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); padding: 12px 14px; }
-  .neuron-part-name { font-family: var(--font-body); font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--warm-glow); margin-bottom: 5px; opacity: 0.85; }
-  .neuron-part p { font-size: 13px; margin-bottom: 0; line-height: 1.65; color: var(--text-secondary); }
+  /* Niche cards */
+  .niche-cards { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 24px; }
+  .niche-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-left: 2px solid var(--warm-glow); padding: 14px 18px; }
+  .niche-label { font-family: var(--font-body); font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--warm-glow); margin-bottom: 5px; }
+  .niche-card p { font-size: 13px; margin-bottom: 0; line-height: 1.7; color: var(--text-secondary); }
+  .niche-card strong { font-weight: 500; color: var(--text-primary); }
+
+  /* Video */
+  .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: rgba(0,0,0,0.3); }
+  .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+  .video-grid-label { font-family: var(--font-body); font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin: 32px 0 14px; display: flex; align-items: center; gap: 10px; }
+  .video-grid-label::after { content: ''; flex: 1; height: 1px; background: var(--border-subtle); }
+  .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 8px; }
+  .video-grid-item { display: block; }
+  .video-grid-solo { max-width: 50%; margin: 12px 0 0; }
+  @media (max-width: 560px) {
+    .video-grid { grid-template-columns: 1fr; }
+    .video-grid-solo { max-width: 100%; }
+  }
 
   /* Term tags */
   .term-cloud { display: flex; flex-wrap: wrap; gap: 7px; }
@@ -88,7 +104,6 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
   @media (max-width: 600px) {
     .drawing-grid { grid-template-columns: 1fr; }
-    .neuron-parts { grid-template-columns: 1fr; }
     .session { padding: 22px 16px; }
   }
 </style>
@@ -107,7 +122,6 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
       <div class="session-header">
         <span class="session-numeral">1</span>
         <span class="session-title">Architektura i doświadczenie</span>
-        <span class="session-badge badge-done">Odbyła się</span>
       </div>
       <hr class="session-rule">
       <p class="zasada">Architektura neuronalna kształtuje doświadczenie. Gdy architektura jest uszkodzona lub nie rozwinie się w odpowiednim oknie czasowym, doświadczenie jest fundamentalnie inne.</p>
@@ -135,114 +149,166 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
       <div class="session-header">
         <span class="session-numeral">2</span>
         <span class="session-title">Systemy sensoryczne i sieci mózgowe</span>
-        <span class="session-badge badge-done">Odbyła się</span>
       </div>
       <hr class="session-rule">
       <p class="zasada">Mózg nie rejestruje świata &mdash; aktywnie go przewiduje. Percepcja to weryfikowanie hipotez, a architektura sieci determinuje, jaki świat jest w ogóle dostępny do doświadczenia.</p>
 
-      <!-- DEFINITIONS -->
       <h2>Podstawowe pojęcia</h2>
 
-      <h3>Istota biała i istota szara</h3>
-      <p>Mózg dzieli się na dwie tkanki widoczne gołym okiem. <strong>Istota szara</strong> (grey matter) to ciała komórkowe neuronów &mdash; tam zachodzi przetwarzanie informacji. <strong>Istota biała</strong> (white matter) to aksony owinięte mieliną, które łączą obszary szarej materii ze sobą. Kolor biały pochodzi właśnie od mieliny. Skrótowo: szara = przetwarza, biała = przesyła.</p>
-      <p>Kora mózgowa to cienka warstwa istoty szarej okrywająca mózg z zewnątrz. Pod nią &mdash; rozległe sieci istoty białej. W głębi &mdash; jądra podkorowe (kolejne skupiska istoty szarej: ciało migdałowate, jądra podstawy, wzgórze).</p>
+    <h3>Mózg i doświadczenie</h3>
+    <p>Czytasz płynnie te słowa dzięki dekadom treningu swoich sieci neuronowych. Gdyby ktoś skanował Ci mózg, widziałby wzorce aktywności elektrycznej, przepływ krwi, sygnały BOLD w fMRI. Z boku widać Twoje oczy poruszające się wzdłuż tekstu, wyraz twarzy, może skinienie głową. Od środka... po prostu czytasz. Doświadczasz znaczenia tekstu.</p>
+    <p>Dwie perspektywy: od wewnątrz i z zewnątrz. Od tego zaczynamy ten kurs.</p>
 
-      <hr class="section-divider">
+    <hr class="section-divider" />
 
-      <h3>Budowa neuronu</h3>
-      <p>Neuron to podstawowa jednostka obliczeniowa mózgu. Odbiera sygnały, integruje je i &mdash; jeśli suma przekroczy próg &mdash; generuje potencjał czynnościowy, który wędruje do kolejnych neuronów.</p>
-      <div class="neuron-parts">
-        <div class="neuron-part">
-          <div class="neuron-part-name">Ciało komórki</div>
-          <p>Soma. Tu żyje jądro i maszyneria metaboliczna. Integruje wszystkie sygnały wejściowe.</p>
-        </div>
-        <div class="neuron-part">
-          <div class="neuron-part-name">Dendryty</div>
-          <p>Rozgałęzione wyrostki odbiorcze. Zbierają sygnały od tysięcy innych neuronów.</p>
-        </div>
-        <div class="neuron-part">
-          <div class="neuron-part-name">Akson</div>
-          <p>Pojedynczy długi wyrostek wyjściowy. Przewodzi potencjał czynnościowy do terminali. Mielina przyspiesza przewodzenie.</p>
-        </div>
-        <div class="neuron-part">
-          <div class="neuron-part-name">Synapsy</div>
-          <p>Miejsca kontaktu z innymi neuronami. Aksony kończą się terminalami synaptycznymi, które uwalniają neuroprzekaźniki do szczeliny synaptycznej.</p>
-        </div>
-        <div class="neuron-part">
-          <div class="neuron-part-name">Receptory</div>
-          <p>Białka błonowe na dendrytach i somie. Wiążą neuroprzekaźniki i otwierają kanały jonowe &mdash; wpuszczając lub blokując sygnał.</p>
+    <h3>Model</h3>
+    <p>Doświadczana "rzeczywistość" to model powstały w wyniku wielu lat treningu Twoich biologicznych sieci neuronowych. Doświadczasz modelu generowanego przez aktywność swojego mózgu. Treść doświadczenia to model. Uszkodzenie zakrętu wrzecionowatego wykasuje twarze z treści Twojego doświadczenia; uszkodzenie V5/MT sprawi, że odświeżanie rzeczywistości zwolni do kilku klatek na sekundę; uszkodzenie prawej kory ciemieniowej tymczasowo wymaże lewą stronę doświadczenia.</p>
+    <p>Model powstał podczas lat treningu. Wiesz, czym skutkuje zaburzenie treningu podczas okresów krytycznych.</p>
+    <p>"Ty" też jesteś modelem. Jesteś historią swoich wcześniejszych doświadczeń, opowieścią, jaką kultywujesz w swojej spójnej narracji tłumaczącej Twoje życie. Jak myślisz o sobie, jak się zmieniasz, czy masz jedno czy wiele żyć? Możliwe, że jesteś pomocną i życzliwą osobą, ale uszkodzenie mózgu może sprawić, że zmienisz się diametralnie, jak Phineas Gage. W innych przypadkach tożsamość może zniknąć całkiem - demencja uniemożliwia tworzenie spójnej narracji o sobie i zapamiętywanie swojej historii. "Ty" to też model.</p>
+    <p>Jedyne co zostaje, to interakcja między "Ty" a "rzeczywistością". Między Twoją perspektywą a treścią. Na tym styku jest doświadczanie. To wydaje się najbardziej prawdziwe, uniwersalne. Ale niebezpiecznie oddala się w kierunku filozofii.</p>
+    <p>Wróćmy więc do modeli. Modele są predyktywne.</p>
+
+    <hr class="section-divider" />
+
+    <h3>Predykcja</h3>
+    <p>Sieci neuronowe nie czekają na informacje ze świata, żeby potem zareagować. Sieci cały czas aktywnie przewidują przyszłe informacje. Są jak surferzy pokonujący fale - muszą przewidywać, co będzie za chwilę.</p>
+    <p>Prowadzisz samochód na autostradzie. Zmieniasz pasy, wyprzedzasz, jedziesz płynnie. Mimo prędkości wszystko jest... przewidywalne. Sterujesz swoim samochodem, wiesz, jak zareaguje na naciśnięcie pedałów, skręt kierownicy - Twoje sieci mózgowe są już wytrenowane. Nie to co na początku! Wtedy przecież nawet płynne ruszenie było wyzwaniem.</p>
+    <p>To jest predykcja: nieustanne generowanie hipotez o tym, co zaraz nastąpi. Percepcja nie jest rejestrowaniem świata. Percepcja to weryfikowanie hipotez o nim.</p>
+    <p>Nagle samochód przed Tobą zaczyna hamować. Automatycznie reagujesz. Wciskasz hamulec, odbijasz kierownicę, w międzyczasie zerkając w lusterko, czy pas obok jest wolny. Samochód przed Tobą zachował się niespodziewanie - zaskoczył Cię.</p>
+    <p>Załóżmy, że samochód przed Tobą to było BMW. Po kilku tygodniach sytuacja się powtarza. Kolejne BMW zaskakuje Cię na drodze i nagle zmienia pas, zajeżdżając Ci drogę. Po kilku tygodniach samochód za Tobą miga Ci długimi po oczach, znów BMW! Zaczynasz spodziewać się nieprzewidywalnych rzeczy, gdy spotykasz samochody tej marki na drodze. Wcześniejsze sytuacje dotrenowały Twoje sieci mózgowe.</p>
+    <p>Błędy predykcyjne to niespodziewane informacje, które wędrują w górę (bottom-up) i kształtują sieci tak, aby w przyszłości te informacje były już spodziewane (top-down). Cała historia ewolucyjna, kulturowa i indywidualna kształtuje architekturę sieci neuronowych.</p>
+
+    <hr class="section-divider" />
+
+    <h3>Informacja</h3>
+    <p>Skąd sieci mózgowe czerpią materiał do tych hipotez? Z trzech źródeł.</p>
+    <ul>
+      <li><strong>Eksterocepcja:</strong> wzrok, słuch, węch, smak, dotyk - sygnały o tym, co dzieje się na granicy ciała i świata.</li>
+      <li><strong>Propriocepcja:</strong> pozycja kończyn, napięcie mięśni, przyspieszenie liniowe i kątowe (z układu przedsionkowego) - sygnały o tym, jak ciało porusza się w przestrzeni.</li>
+      <li><strong>Interocepcja:</strong> bicie serca, oddech, głód, temperatura narządów - sygnały o stanie wnętrza ciała.</li>
+    </ul>
+
+    <div class="video-grid-label">Zmysły w działaniu</div>
+    <div class="video-grid">
+      <div class="video-grid-item">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/J0B_-lZFlL0" title="Zmysły 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
       </div>
-
-      <hr class="section-divider">
-
-      <h3>Sieci mózgowe: strukturalne i funkcjonalne</h3>
-      <p><strong>Sieć strukturalna</strong> to mapa fizycznych połączeń: które obszary są połączone aksonami. Opisuje infrastrukturę &mdash; drogi, nie ruch. Bada się ją przez DTI (diffusion tensor imaging), które śledzi kierunek mieliny w istocie białej.</p>
-      <p><strong>Sieć funkcjonalna</strong> to mapa obszarów, które aktywują się <em>razem w czasie</em> &mdash; nawet jeśli nie są bezpośrednio połączone. Bada się ją przez fMRI spoczynkowe (resting-state): kto z kim koreluje aktywność, gdy mózg nic konkretnego nie robi. Sieć funkcjonalna opisuje ruch na drogach, nie same drogi.</p>
-      <p>Ta sama infrastruktura strukturalna może generować różne sieci funkcjonalne zależnie od stanu. Mózg to nie statyczna mapa &mdash; to dynamicznie rekonfigurujący się system predykcji.</p>
-
-      <hr class="section-divider">
-
-      <h3>Siedem sieci (Uddin 2019)</h3>
-      <div class="network-cascade">
-        <div class="cascade-step">
-          <div class="cascade-num">01</div>
-          <div class="cascade-content">
-            <div class="cascade-name">Somatomotoryczna <span class="cascade-abbr">SMN</span></div>
-            <div class="cascade-desc">Kora ruchowa (MC) i somatosensoryczna (SSC). Przewiduje i realizuje ruch, odbiera sygnały z ciała o pozycji i dotyku.</div>
-          </div>
-        </div>
-        <div class="cascade-step">
-          <div class="cascade-num">02</div>
-          <div class="cascade-content">
-            <div class="cascade-name">Wzrokowa <span class="cascade-abbr">VIS</span></div>
-            <div class="cascade-desc">V1 i wyższe obszary wzrokowe. Przetwarza informację wizualną od pierwszorzędowej kory po złożone reprezentacje obiektów i przestrzeni.</div>
-          </div>
-        </div>
-        <div class="cascade-step">
-          <div class="cascade-num">03</div>
-          <div class="cascade-content">
-            <div class="cascade-name">Somatosensoryczna / przedsionkowa <span class="cascade-abbr">SOM/VEST</span></div>
-            <div class="cascade-desc">Przetwarzanie propriocepcji i równowagi. Integruje informacje o pozycji ciała w przestrzeni z sygnałami z układu przedsionkowego.</div>
-          </div>
-        </div>
-        <div class="cascade-step">
-          <div class="cascade-num">04</div>
-          <div class="cascade-content">
-            <div class="cascade-name">Grzbietowa sieć uwagi <span class="cascade-abbr">DAN</span></div>
-            <div class="cascade-desc">SPL, IPS, IPL, FEF, IFJ. Kieruje uwagą wolicjonalnie: spodziewa się konkretnych obiektów w konkretnych miejscach. Uwaga odgórna (top-down).</div>
-          </div>
-        </div>
-        <div class="cascade-step">
-          <div class="cascade-num">05</div>
-          <div class="cascade-content">
-            <div class="cascade-name">Sieć istotności / brzuszna sieć uwagi <span class="cascade-abbr">SAL/VAN</span></div>
-            <div class="cascade-desc">Alarm dla niespodziewanych informacji. Przerywa działanie DAN i reorientuje uwagę oddolnie (bottom-up). Wyspa (insula) i ACC jako główne węzły.</div>
-          </div>
-        </div>
-        <div class="cascade-step">
-          <div class="cascade-num">06</div>
-          <div class="cascade-content">
-            <div class="cascade-name">Sieć kontroli wykonawczej <span class="cascade-abbr">CEN</span></div>
-            <div class="cascade-desc">DLPFC, IPL. Abstrakcyjna predykcja i planowanie: co z tym zrobić? Angażuje się gdy problem wymaga utrzymania informacji i elastycznych reguł.</div>
-          </div>
-        </div>
-        <div class="cascade-step">
-          <div class="cascade-num">07</div>
-          <div class="cascade-content">
-            <div class="cascade-name">Sieć domyślna <span class="cascade-abbr">DMN</span></div>
-            <div class="cascade-desc">mPFC, PCC, angular gyrus, hipokamp. Aktywna w spoczynku. Model Ciebie: kim jesteś, czego chcesz, co znaczą zdarzenia. Operuje najdalej od zmysłów.</div>
-          </div>
+      <div class="video-grid-item">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/ryGMI3SpxCE" title="Zmysły 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
       </div>
+      <div class="video-grid-item">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/eQEaiZ2j9oc" title="Zmysły 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="video-grid-item">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/TbDFrbXiz2s?start=532" title="Zmysły 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="video-grid-solo">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/MgMNUne9j9c?start=566" title="Zmysły 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
 
-      <hr class="section-divider">
+    <p style="margin-top: 28px;">Przypomnij sobie artykuł "Predictions not commands" (Adams et al., 2013): sygnały zstępujące z kory ruchowej do rdzenia kręgowego mają cechy predykcji, nie rozkazów. Kora motoryczna nie wysyła instrukcji "skurcz mięsień X o Y procent." Wysyła przewidywanie: "spodziewam się takiego a takiego stanu proprioceptywnego." Rdzeń kręgowy minimalizuje błąd między oczekiwanym a aktualnym stanem ciała. Ruch wyłania się z tej minimalizacji. Innymi słowy - spodziewam się jakiejś konfiguracji ciała. A po chwili kolejnej. I kolejnej. Jak surfer na falach.</p>
+
+    <p>Pięć sieci tworzy hierarchię predykcji - od zmysłów do narracji o sobie:</p>
+
+    <div class="network-cascade">
+      <div class="cascade-step">
+        <div class="cascade-num">01</div>
+        <div class="cascade-content">
+          <div class="cascade-name">Pierwszorzędowe sieci <span class="cascade-abbr">wzrokowa · somatosensoryczna · słuchowa</span></div>
+          <div class="cascade-desc">Monitorują stan receptorów na ciele i tworzą przewidywania względem nadchodzących informacji. Jeśli samochód pojawia się zgodnie z predykcją, zaskoczenie jest małe.</div>
+        </div>
+      </div>
+      <div class="cascade-step">
+        <div class="cascade-num">02</div>
+        <div class="cascade-content">
+          <div class="cascade-name">Grzbietowa sieć uwagi <span class="cascade-abbr">DAN</span></div>
+          <div class="cascade-desc">Spodziewa się konkretnych obiektów w konkretnych miejscach. Kiedy samochód zaczyna niespodziewanie hamować, wzrasta błąd predykcyjny. DAN alarmuje siostrę.</div>
+        </div>
+      </div>
+      <div class="cascade-step">
+        <div class="cascade-num">03</div>
+        <div class="cascade-content">
+          <div class="cascade-name">Brzuszna sieć uwagi <span class="cascade-abbr">VAN</span></div>
+          <div class="cascade-desc">Działa jak alarm. Przerywa działanie DAN i reorientuje uwagę na niespodziewane informacje - na przykład to zajeżdżające drogę BMW. Zadaniem VAN jest dostosowanie się do nowych, nieprzewidzianych okoliczności.</div>
+        </div>
+      </div>
+      <div class="cascade-step">
+        <div class="cascade-num">04</div>
+        <div class="cascade-content">
+          <div class="cascade-name">Sieć kontroli <span class="cascade-abbr">CEN</span></div>
+          <div class="cascade-desc">Wkracza gdy błąd jest większy. Nie pyta już "co jest tutaj?", lecz "co z tym zrobić?" Jej predykcje są abstrakcyjne: "jeśli zahamuję teraz, zdążę."</div>
+        </div>
+      </div>
+      <div class="cascade-step">
+        <div class="cascade-num">05</div>
+        <div class="cascade-content">
+          <div class="cascade-name">Sieć domyślna <span class="cascade-abbr">DMN</span></div>
+          <div class="cascade-desc">Operuje najdalej od zmysłów. Jej model dotyczy Ciebie: kim jesteś, czego chcesz, co znaczy być kierowcą. Jeśli zdarzenie nie pasuje do tej narracji, błąd jest głęboki. To ten rodzaj błędu, który pamiętasz tygodniami i może zmienić Twój model Ciebie.</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <h3>Afordancja</h3>
+    <p>Afordancja nie jest w przedmiocie. Nie jest w Tobie. Jest <em>między wami</em>.</p>
+    <p>Ten sam kamień: turlanie dla dziecka, siedzenie dla zmęczonego wędrowca, budulec dla architekta. Kamień się nie zmienił. Zmieniła się relacja, kontekst, potrzeba.</p>
+    <ul>
+      <li><strong>Relacyjne:</strong> nie istnieją bez konkretnego organizmu.</li>
+      <li><strong>Kontekstualne:</strong> ten sam obiekt, inne możliwości w innych sytuacjach.</li>
+      <li><strong>Dynamiczne:</strong> zmieniają się wraz z predykcjami.</li>
+    </ul>
+
+    <div class="formula-box">
+      afordancje + motywacja = akcja
+    </div>
+
+    <p>Afordancje są więc możliwościami do działania. Są elementami modelu rzeczywistości, z którymi model "Ciebie" może wejść w interakcję.</p>
+    <p>Motywacja to nie abstrakcyjna siła napędowa. To konkretne przyciąganie: coś wydaje się atrakcyjne, przyjemne, warte zachodu. Zmęczony wędrowiec nie analizuje kamienia. Kamień go po prostu <em>przyciąga</em> jako miejsce odpoczynku, bo jego ciało tego właśnie chce.</p>
+
+    <hr class="section-divider" />
+
+    <h3>Nisze</h3>
+    <p>Makak bierze grabki. Wzrok, dotyk, słuch, propriocepcja. Do sieci mózgowych dociera mnóstwo zaskakujących informacji z receptorów. Sieci muszą wybudować modele, jak używać narzędzia. Po kilku tygodniach jego kora ciemieniowa rozrasta się fizycznie. Pola recepcyjne neuronów rozszerzają się na całą długość narzędzia. Grabki przestają być przedmiotem trzymanym w łapie. Stają się częścią ciała w wytrenowanych sieciach: somatomotorycznej, wzrokowej, uwagowej, kontroli.</p>
+    <p>Iriki i Taoka (2012) opisują trzy płaszczyzny, na których ta zmiana się odbywa:</p>
+
+    <div class="niche-cards">
+      <div class="niche-card">
+        <div class="niche-label">Nisza neuronalna</div>
+        <p>Architektura sieci mózgowych: które połączenia istnieją, jak silne są, jakie wzorce aktywności są możliwe. Makak po tygodniach ćwiczeń z grabkami ma inną niszę neuronalną niż makak bez narzędzi.</p>
+      </div>
+      <div class="niche-card">
+        <div class="niche-label">Nisza ekologiczna</div>
+        <p>Środowisko złożone z dostępnych afordancji. Makak używający grabek zmienia otoczenie, tworzy nowe relacje, które generują nowe błędy predykcyjne i nowe wymagania dla sieci. Bardziej dotyczy modeli w sieciach somatosensorycznej, wzrokowej, uwagowej.</p>
+      </div>
+      <div class="niche-card">
+        <div class="niche-label">Nisza poznawcza</div>
+        <p>Przestrzeń odleglejszych czasoprzestrzennie afordancji. Makak z rozszerzoną korą ciemieniową dosłownie widzi więcej możliwości działania: użycie narzędzi, odległy cel, interakcja społeczna. Bardziej dotyczy modeli w sieciach kontroli, domyślnej.</p>
+      </div>
+    </div>
+
+    <p>Trzy nisze nie są oddzielnymi poziomami. Są trzema opisami tego samego procesu: jak doświadczenie i sieci zwrotnie się kształtują.</p>
+
+    <hr class="section-divider" />
 
       <!-- TOPICS COVERED -->
       <div class="block">
         <p class="block-label">Omówione zagadnienia</p>
         <ul class="topic-list">
+          <li>Istota biała i istota szara</li>
           <li>Kolumny korowe (cortical columns) i linie orientacji (orientation selectivity)</li>
+          <li>Budowa neuronu: ciało komórki, akson, dendryty, synapsy, receptory</li>
           <li>Fala elektromagnetyczna: spektrum, kosmos, podczerwień, teleskop Webba</li>
           <li>Pręciki i czopki (rods, cones) &mdash; receptory jako granica doświadczalnego świata</li>
           <li>Organizacja lewostronno-prawostronnej reprezentacji pola widzenia</li>
@@ -251,16 +317,13 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
           <li>Blindsight: uszkodzenie V1, działanie bez świadomego widzenia</li>
           <li>Pacjentka DF: uszkodzenie V2, zaburzenie percepcji przy zachowanym działaniu</li>
           <li><strong>Etologiczne mapy akcji (ethological action maps)</strong> &mdash; przestrzenna organizacja możliwości działania zakodowana w korze</li>
-          <li><strong>Teza tożsamości (identity thesis)</strong> &mdash; aktywność neuronalna <em>jest</em> doświadczeniem, nie powoduje go; dwie perspektywy na to samo zdarzenie</li>
-          <li><strong>Predykcja</strong> &mdash; mózg aktywnie przewiduje przyszłe informacje; percepcja = weryfikowanie hipotez o świecie</li>
-          <li><strong>Błąd predykcyjny (prediction error)</strong> &mdash; niespodziewana informacja wędrująca bottom-up po hierarchii sieci</li>
-          <li><strong>Afordancja</strong> &mdash; relacyjna, kontekstualna, dynamiczna; afordancja + motywacja = akcja</li>
+          <li><strong>Sieci strukturalne vs. funkcjonalne</strong> &mdash; różnica metodologiczna i ontologiczna; siedem sieci makroskopowych (Uddin 2019)</li>
         </ul>
       </div>
 
       <div class="block">
         <p class="block-label">Ćwiczenie rysunkowe</p>
-        <p style="font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-dim); margin-bottom: 12px;">Widok lateralny mózgu z trzema sieciami i ich strukturami.</p>
+        <p style="font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-dim); margin-bottom: 12px;">Widok lateralny mózgu z czterema sieciami i ich strukturami.</p>
         <div class="drawing-grid">
           <div class="drawing-cell">
             <strong>Somatomotoryczna</strong>
@@ -317,11 +380,8 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
           <span class="term">etologiczne mapy akcji</span>
           <span class="term">sieci strukturalne</span>
           <span class="term">sieci funkcjonalne</span>
-          <span class="term">SMN</span>
-          <span class="term">VIS</span>
-          <span class="term">SOM/VEST</span>
           <span class="term">DAN</span>
-          <span class="term">SAL/VAN</span>
+          <span class="term">VAN</span>
           <span class="term">CEN</span>
           <span class="term">DMN</span>
         </div>
