@@ -83,6 +83,45 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
     .video-grid-solo { max-width: 100%; }
   }
 
+  /* Term popover */
+  .term { cursor: pointer; transition: color 0.2s, border-color 0.2s; }
+  .term:hover { color: var(--warm-glow); border-color: rgba(232,168,76,0.4); }
+
+  .term-popover {
+    position: fixed;
+    z-index: 1000;
+    max-width: 280px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-warm);
+    padding: 14px 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .term-popover.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .term-popover-title {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--warm-glow);
+    margin-bottom: 7px;
+  }
+  .term-popover-body {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
   /* Term tags */
   .term-cloud { display: flex; flex-wrap: wrap; gap: 7px; }
   .term { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-secondary); background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 4px 10px; letter-spacing: 0.3px; }
@@ -326,41 +365,41 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
       <div class="block">
         <p class="block-label">Pełna lista terminów</p>
         <div class="term-cloud">
-          <span class="term">istota biała</span>
-          <span class="term">istota szara</span>
-          <span class="term">ciało komórki</span>
-          <span class="term">akson</span>
-          <span class="term">dendryty</span>
-          <span class="term">synapsy</span>
-          <span class="term">receptory</span>
-          <span class="term">kolumny korowe</span>
-          <span class="term">MC</span>
-          <span class="term">SSC</span>
-          <span class="term">SPL</span>
-          <span class="term">IPS</span>
-          <span class="term">IPL</span>
-          <span class="term">FEF</span>
-          <span class="term">IFJ</span>
-          <span class="term">A1</span>
-          <span class="term">V1</span>
-          <span class="term">V2</span>
-          <span class="term">pręciki</span>
-          <span class="term">czopki</span>
-          <span class="term">szlak grzbietowy</span>
-          <span class="term">szlak brzuszny</span>
-          <span class="term">blindsight</span>
-          <span class="term">okresy krytyczne</span>
-          <span class="term">teza tożsamości</span>
-          <span class="term">predykcja</span>
-          <span class="term">błąd predykcyjny</span>
-          <span class="term">afordancja</span>
-          <span class="term">etologiczne mapy akcji</span>
-          <span class="term">sieci strukturalne</span>
-          <span class="term">sieci funkcjonalne</span>
-          <span class="term">DAN</span>
-          <span class="term">VAN</span>
-          <span class="term">CEN</span>
-          <span class="term">DMN</span>
+          <span class="term" data-key="istota-biala">istota biała</span>
+          <span class="term" data-key="istota-szara">istota szara</span>
+          <span class="term" data-key="cialo-komorki">ciało komórki</span>
+          <span class="term" data-key="akson">akson</span>
+          <span class="term" data-key="dendryty">dendryty</span>
+          <span class="term" data-key="synapsy">synapsy</span>
+          <span class="term" data-key="receptory">receptory</span>
+          <span class="term" data-key="kolumny-korowe">kolumny korowe</span>
+          <span class="term" data-key="MC">MC</span>
+          <span class="term" data-key="SSC">SSC</span>
+          <span class="term" data-key="SPL">SPL</span>
+          <span class="term" data-key="IPS">IPS</span>
+          <span class="term" data-key="IPL">IPL</span>
+          <span class="term" data-key="FEF">FEF</span>
+          <span class="term" data-key="IFJ">IFJ</span>
+          <span class="term" data-key="A1">A1</span>
+          <span class="term" data-key="V1">V1</span>
+          <span class="term" data-key="V2">V2</span>
+          <span class="term" data-key="preciki">pręciki</span>
+          <span class="term" data-key="czopki">czopki</span>
+          <span class="term" data-key="szlak-grzbietowy">szlak grzbietowy</span>
+          <span class="term" data-key="szlak-brzuszny">szlak brzuszny</span>
+          <span class="term" data-key="blindsight">blindsight</span>
+          <span class="term" data-key="okresy-krytyczne">okresy krytyczne</span>
+          <span class="term" data-key="teza-tozsamosci">teza tożsamości</span>
+          <span class="term" data-key="predykcja">predykcja</span>
+          <span class="term" data-key="blad-predykcyjny">błąd predykcyjny</span>
+          <span class="term" data-key="afordancja">afordancja</span>
+          <span class="term" data-key="etologiczne-mapy">etologiczne mapy akcji</span>
+          <span class="term" data-key="sieci-strukturalne">sieci strukturalne</span>
+          <span class="term" data-key="sieci-funkcjonalne">sieci funkcjonalne</span>
+          <span class="term" data-key="DAN">DAN</span>
+          <span class="term" data-key="VAN">VAN</span>
+          <span class="term" data-key="CEN">CEN</span>
+          <span class="term" data-key="DMN">DMN</span>
         </div>
       </div>
     </div>
@@ -420,5 +459,92 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
   </div>
 </PasswordGate>
+
+<div class="term-popover" id="termPopover">
+  <div class="term-popover-title" id="termPopoverTitle"></div>
+  <div class="term-popover-body" id="termPopoverBody"></div>
+</div>
+
+<script>
+const DEFS = {
+  "istota-biala": ["istota biała", "Aksony otoczone mieliną — szybkie autostrady informacji łączące odległe obszary mózgu. Biała barwa pochodzi od tłuszczowej osłonki mielinowej przyspieszającej przewodzenie sygnałów."],
+  "istota-szara": ["istota szara", "Ciała komórek neuronów, dendryty i synapsy — tu odbywa się właściwe przetwarzanie. Kora mózgowa, jądra podstawy, wzgórze: wszystko zbudowane z istoty szarej."],
+  "cialo-komorki": ["ciało komórki (soma)", "Centrum metaboliczne neuronu. Zawiera jądro z DNA i produkuje białka potrzebne do działania całej komórki. Sygnały z dendrytów są tu sumowane."],
+  "akson": ["akson", "Pojedynczy długi wyrostek neuronu przewodzący sygnał wyjściowy (potencjał czynnościowy) w kierunku synapsy. Może mieć osłonkę mielinową, która wielokrotnie przyspiesza przewodzenie."],
+  "dendryty": ["dendryty", "Rozgałęzione wyrostki neuronu zbierające sygnały wejściowe od innych neuronów. Jeden neuron może mieć tysiące dendrytów — każdy to potencjalne wejście od innej komórki."],
+  "synapsy": ["synapsa", "Połączenie między neuronem a kolejną komórką. Sygnał elektryczny zamienia się tu w chemiczny (neuroprzekaźnik), przekracza szczelinę synaptyczną i znów staje się elektryczny."],
+  "receptory": ["receptory", "Białka na powierzchni dendrytów wiążące neuroprzekaźniki. Różne receptory reagują na różne substancje — to właśnie tu leki psychoaktywne wywierają swój efekt."],
+  "kolumny-korowe": ["kolumny korowe", "Pionowe jednostki organizacyjne kory mózgowej, ~100 neuronów przetwarzających ten sam rodzaj informacji. Kolumny orientacji w V1 reagują na kreski pod konkretnym kątem — odkrycie Hubela i Wiesela."],
+  "MC": ["MC — kora ruchowa (motor cortex)", "Pierwszorzędowa kora ruchowa w zakręcie przedśrodkowym. Wysyła sygnały do rdzenia kręgowego inicjując ruchy dowolne. Organizacja somatotopiczna — mapa ciała (homunkulus ruchowy)."],
+  "SSC": ["SSC — kora somatosensoryczna", "Pierwszorzędowa kora czuciowa w zakręcie zaśrodkowym. Odbiera informacje dotykowe, proprioceptywne i bólowe. Mapa ciała (homunkulus czuciowy) — usta i dłonie mają największą reprezentację."],
+  "SPL": ["SPL — płacik ciemieniowy górny", "Superior parietal lobule. Część DAN. Integruje informacje o pozycji ciała w przestrzeni i kieruje ruchami oczu oraz ręki. Kluczowy dla Maravity i Irikiego — rozszerza się przy użyciu narzędzi."],
+  "IPS": ["IPS — bruzda śródciemieniowa", "Intraparietal sulcus. Leży między SPL a IPL. Koduje przestrzenną lokalizację obiektów i koordynuje wzrokowo-ruchową integrację. Centralny węzeł DAN."],
+  "IPL": ["IPL — płacik ciemieniowy dolny", "Inferior parietal lobule. Zawiera zakręt kątowy i nadbrzeżny. Integruje informacje z wielu zmysłów; zaangażowany w rozumienie mowy, liczenie i reprezentację ciała."],
+  "FEF": ["FEF — pole czołowe oczu", "Frontal eye fields. Kontroluje dowolne ruchy oczu (sakady). Część DAN — kieruje uwagę wzrokową aktywnie, zanim jeszcze oczy się poruszą."],
+  "IFJ": ["IFJ — połączenie czołowo-ciemieniowe", "Inferior frontal junction. Węzeł przełączający uwagę między zadaniami. Część DAN, ściśle współpracuje z FEF przy targetowaniu obiektów w przestrzeni."],
+  "A1": ["A1 — pierwszorzędowa kora słuchowa", "Leży w zakręcie Heschla (górna część płata skroniowego). Tonotopiczna organizacja — różne częstotliwości dźwięku mapowane przestrzennie. Wejście dla przetwarzania mowy i muzyki."],
+  "V1": ["V1 — pierwszorzędowa kora wzrokowa", "Leży w biegunie potylicznym. Retinotopiczna mapa pola widzenia. Uszkodzenie powoduje ślepotę korową w odpowiedniej części pola — ale pozostawia blindsight."],
+  "V2": ["V2 — drugorzędowa kora wzrokowa", "Otacza V1, przetwarza dalej informacje o krawędziach, konturach i głębi. Uszkodzenie V2 (jak u pacjentki DF) zaburza świadome rozpoznawanie przy zachowanym prowadzeniu działania."],
+  "preciki": ["pręciki", "Fotoreceptory siatkówki wrażliwe na światło o niskim natężeniu — widzenie zmierzchowe i peryferyczne. Jeden rodzaj pigmentu: nie rozróżniają barw, ale wykrywają ruch na obrzeżach pola widzenia."],
+  "czopki": ["czopki", "Fotoreceptory skoncentrowane w dołku środkowym siatkówki. Trzy typy (S, M, L) umożliwiają widzenie barwne. Wymagają dobrego oświetlenia — stąd kolory zanikają w ciemności."],
+  "szlak-grzbietowy": ["szlak grzbietowy", "\"Gdzie / jak działać\" — biegnie z V1 przez korę ciemieniową do kory ruchowej. Przetwarza przestrzenną lokalizację obiektów i prowadzi działania w czasie rzeczywistym. Zachowany u pacjentki DF."],
+  "szlak-brzuszny": ["szlak brzuszny", "\"Co to jest\" — biegnie z V1 przez płat skroniowy do zakrętu wrzecionowatego. Rozpoznaje obiekty, twarze, słowa. Uszkodzony u pacjentki DF — nie może opisać obiektu, ale potrafi go chwycić."],
+  "blindsight": ["blindsight (ślepowidzenie)", "Zdolność do reagowania na bodźce wzrokowe w obszarze ślepoty korowej (uszkodzenie V1) bez świadomego doznania widzenia. Dowód na działanie szlaku grzbietowego poza świadomością."],
+  "okresy-krytyczne": ["okresy krytyczne", "Okna czasowe w rozwoju, gdy sieci neuronowe są szczególnie plastyczne i wrażliwe na doświadczenie. Zamknięcie jednego oka kota w tym okresie trwale reorganizuje kolumny dominacji ocznej (Hubel & Wiesel)."],
+  "teza-tozsamosci": ["teza tożsamości", "Filozoficzne stanowisko: stany mentalne są identyczne ze stanami mózgu — nie tylko korelują, ale są tym samym zjawiskiem opisanym z dwóch perspektyw. Fundament kursu."],
+  "predykcja": ["predykcja", "Aktywne generowanie przez mózg hipotez o nadchodzących informacjach zanim do niego dotrą. Percepcja nie jest rejestrowaniem świata — jest weryfikowaniem tych hipotez. Surfer na fali, nie lustro."],
+  "blad-predykcyjny": ["błąd predykcyjny", "Różnica między tym, czego sieć się spodziewała, a tym, co faktycznie nadeszło. Sygnał bottom-up korygujący model. BMW zajeżdżające drogę generuje duży błąd predykcyjny — i dotrenowuje sieć."],
+  "afordancja": ["afordancja", "Możliwość do działania istniejąca w relacji między organizmem a środowiskiem — nie w przedmiocie ani w umyśle, lecz między nimi. Ten sam kamień: zabawka, siedzisko lub budulec zależnie od aktora i kontekstu."],
+  "etologiczne-mapy": ["etologiczne mapy akcji", "Przestrzenna organizacja możliwości działania zakodowana w korze — nie mapa anatomii ciała, lecz mapa tego, co ciało może zrobić. Region obrony twarzy, region dosięgania, region manipulacji."],
+  "sieci-strukturalne": ["sieci strukturalne", "Sieci definiowane przez fizyczne połączenia aksonalne między obszarami — \"kable\" mózgu widoczne w traktografii DTI. Stabilne, zmieniają się wolno przez plastyczność."],
+  "sieci-funkcjonalne": ["sieci funkcjonalne", "Sieci definiowane przez korelacje aktywności w czasie (fMRI resting-state) — obszary \"rozmawiające ze sobą\" niezależnie od tego, czy są bezpośrednio połączone. Dynamiczne, zależne od stanu."],
+  "DAN": ["DAN — grzbietowa sieć uwagi", "Dorsal Attention Network. SPL, IPS, FEF, IFJ. Aktywna uwaga top-down: spodziewa się obiektów w konkretnych miejscach. Tłumi VAN podczas skupionego działania."],
+  "VAN": ["VAN — brzuszna sieć uwagi", "Ventral Attention Network (Sieć istotności / SAL). Prawostronna, zawiera TPJ i korę czołową. Alarm bottom-up: przerywa DAN gdy pojawia się niespodziewany, ważny bodziec."],
+  "CEN": ["CEN — sieć kontroli wykonawczej", "Central Executive Network. DLPFC i tylna kora ciemieniowa. Zarządza pamięcią roboczą, planowaniem i hamowaniem reakcji. Wkracza gdy błąd predykcyjny wymaga strategicznej odpowiedzi."],
+  "DMN": ["DMN — sieć domyślna", "Default Mode Network. mPFC, PCC, zakręt kątowy, hipokamp. Aktywna w spoczynku: narracja o sobie, planowanie przyszłości, rozumienie innych. Model \"Ciebie\" — najdalej od zmysłów."]
+};
+
+const popover = document.getElementById('termPopover');
+const popTitle = document.getElementById('termPopoverTitle');
+const popBody = document.getElementById('termPopoverBody');
+let active = null;
+
+document.querySelectorAll('.term[data-key]').forEach(el => {
+  el.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const key = el.dataset.key;
+    const def = DEFS[key];
+    if (!def) return;
+
+    if (active === el && popover.classList.contains('visible')) {
+      popover.classList.remove('visible');
+      active = null;
+      return;
+    }
+
+    popTitle.textContent = def[0];
+    popBody.textContent = def[1];
+
+    const rect = el.getBoundingClientRect();
+    const pw = 280;
+    let left = rect.left;
+    let top = rect.bottom + 8;
+
+    if (left + pw > window.innerWidth - 12) left = window.innerWidth - pw - 12;
+    if (left < 12) left = 12;
+    if (top + 120 > window.innerHeight) top = rect.top - 8 - popover.offsetHeight;
+
+    popover.style.left = left + 'px';
+    popover.style.top = top + 'px';
+    popover.classList.add('visible');
+    active = el;
+  });
+});
+
+document.addEventListener('click', () => {
+  popover.classList.remove('visible');
+  active = null;
+});
+</script>
 
 </Base>
