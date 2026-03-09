@@ -141,7 +141,17 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
   .ornament-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 40px 0 0; color: var(--text-dim); opacity: 0.3; }
   .ornament-divider::before, .ornament-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--border-warm), transparent); }
 
+  /* Figure images */
+  .fig-block { margin: 24px 0; }
+  .fig-block img { width: 100%; max-width: 600px; display: block; margin: 0 auto; border: 1px solid var(--border-subtle); }
+  .fig-block.fig-small img { max-width: 280px; }
+  .fig-block.fig-right { float: right; margin: 0 0 16px 24px; max-width: 240px; }
+  .fig-block.fig-right img { max-width: 100%; }
+  .fig-caption { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-dim); line-height: 1.6; margin-top: 8px; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto; }
+  .fig-caption .fig-source { display: block; font-size: 10px; margin-top: 4px; opacity: 0.7; }
+
   @media (max-width: 600px) {
+    .fig-block.fig-right { float: none; max-width: 100%; margin: 24px 0; }
     .drawing-grid { grid-template-columns: 1fr; }
     .session { padding: 22px 16px; }
   }
@@ -181,7 +191,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
           <p class="video-caption">Zsynchronizowany taniec maszynerii komórkowej.</p>
         </div>
 
-        <p style="font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px;"><strong>Hubel &amp; Wiesel:</strong> kotki, kolumny dominacji ocznej. Zamknięcie jednego oka w okresie krytycznym trwale reorganizuje korę wzrokową. Oko pozostaje zdrowe, ale korteks przestaje na nie odpowiadać.</p>
+        <p style="font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px;"><strong>Hubel &amp; Wiesel:</strong> kotki, kolumny dominacji ocznej. Zamknięcie jednego oka w okresie krytycznym trwale reorganizuje korę wzrokową. Oko pozostaje zdrowe, ale kora przestaje na nie odpowiadać.</p>
 
         <div class="video-block" style="margin: 20px 0;">
           <div class="video-label">Hubel &amp; Wiesel · odkrycie kolumn dominacji ocznej</div>
@@ -191,7 +201,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
           <p class="video-caption">Brak informacji wzrokowej z jednego oka w okresie krytycznym sprawi, że kora wzrokowa stanie się niezdolna do wychwytywania informacji.</p>
         </div>
 
-        <p style="font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px;"><strong>Dzikie dziecko (feral child):</strong> brak bodźców językowych w okresie krytycznym. Niemożność nabycia gramatyki języka po jego zamknięciu. Słownictwo można nabyć w każdym wieku. Strukturę zdaniową: tylko w oknie.</p>
+        <p style="font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px;"><strong>Dzikie dziecko (feral child):</strong> brak bodźców językowych w okresie krytycznym. Niemożność nabycia gramatyki języka po jego zamknięciu. Słownictwo można nabyć w każdym wieku. Strukturę zdaniową: tylko w okresie krytycznym.</p>
 
         <div class="video-block" style="margin: 20px 0;">
           <div class="video-label">Genie Wiley · tajemnica dzikiego dziecka (TLC, 2003)</div>
@@ -208,17 +218,24 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
           <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/-_VvS9MnfN8?start=237" title="Melvyn Goodale two visual systems" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
-          <p class="video-caption">DF nie potrafi opisać orientacji szczeliny. Ale wsunie kopertę bezbłędnie. Działanie i percepcja to dwa różne systemy.</p>
+          <p class="video-caption">Przypadek pacjentki DF pokazuje różnicę między brzusznym a grzbietowym szlakiem przetwarzania wzrokowego.</p>
         </div>
 
-        <p style="font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px;">Sieci nie decydują tylko o tym, co widzisz. Decydują też o tym, jak reagujesz na ból, krzywdę i piękno. Ten sam gest uderzenia może mieć zupełnie inną biologię w zależności od tego, kto uderza i dlaczego. Sapolsky to pokazuje. I robi to w sposób, który trudno potem zapomnieć.</p>
+        <div class="fig-block">
+          <img src="/images/mip/streams.jpg" alt="Szlak grzbietowy i brzuszny" loading="lazy">
+          <p class="fig-caption">Szlak grzbietowy (do kory ciemieniowej: „gdzie / jak działać") i brzuszny (do kory skroniowej: „co to jest") rozpoczynają się w korze potylicznej.
+            <span class="fig-source">OpenStax, CC BY 4.0, via Wikimedia Commons</span>
+          </p>
+        </div>
+
+        <p style="font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px;">Sieci decydują o tym, co widzisz i o tym jak reagujesz na ból, krzywdę i piękno. Ten sam gest uderzenia może mieć zupełnie inną biologię w zależności od tego, kto uderza i dlaczego.</p>
 
         <div class="video-block" style="margin: 20px 0;">
           <div class="video-label">Robert Sapolsky · The Biology of Our Best and Worst Selves (TED, 2017)</div>
           <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/ORthzIOEf30" title="Sapolsky TED Biology of Best and Worst" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
-          <p class="video-caption">Na dane zachowanie składa się mnogość przczyn osadzonych w przeszłości.</p>
+          <p class="video-caption">Na dane zachowanie składa się mnogość przyczyn osadzonych w przeszłości.</p>
         </div>
 
       </div>
@@ -250,6 +267,12 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
     <h3>Model</h3>
     <p>Doświadczana "rzeczywistość" to model powstały w wyniku wielu lat treningu Twoich biologicznych sieci neuronowych. Doświadczasz modelu generowanego przez aktywność swoich sieci mózgowych. Treść doświadczenia to model. Uszkodzenie zakrętu wrzecionowatego wykasuje twarze z treści Twojego doświadczenia; uszkodzenie V5/MT sprawi, że odświeżanie rzeczywistości zwolni do kilku klatek na sekundę; uszkodzenie prawej kory ciemieniowej tymczasowo wymaże lewą stronę doświadczenia.</p>
     <p>Model powstał podczas lat treningu. Wiesz, czym skutkuje zaburzenie treningu podczas okresów krytycznych.</p>
+    <div class="fig-block fig-right">
+      <img src="/images/mip/gage.jpg" alt="Czaszka Phineasa Gage'a z prętem ubijającym">
+      <p class="fig-caption">Czaszka Phineasa Gage'a z prętem ubijającym, 1850.
+        <span class="fig-source">Bigelow 1850, Public Domain</span>
+      </p>
+    </div>
     <p>"Ty" też jesteś modelem. Jesteś historią swoich wcześniejszych doświadczeń, opowieścią, jaką kultywujesz w swojej spójnej narracji tłumaczącej Twoje życie. Jak myślisz o sobie, jak się zmieniasz, czy masz jedno czy wiele żyć? Możliwe, że jesteś pomocną i życzliwą osobą, ale uszkodzenie mózgu może sprawić, że zmienisz się diametralnie, jak Phineas Gage. W innych przypadkach tożsamość może zniknąć całkiem - demencja uniemożliwia tworzenie spójnej narracji o sobie i zapamiętywanie swojej historii. "Ty" to też model.</p>
     <p>Jedyne co zostaje, to interakcja między "Ty" a "rzeczywistością". Między Twoją perspektywą a treścią. Na tym styku jest doświadczanie. To wydaje się najbardziej prawdziwe, uniwersalne. Ale niebezpiecznie oddala się w kierunku filozofii.</p>
     <p>Wróćmy więc do modeli. Modele są predyktywne.</p>
@@ -304,6 +327,13 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
     </div>
 
     <p style="margin-top: 28px;">Na powyższych filmikach widzisz jak funkcjonują zmysły. Każdy zmysł można sprowadzić do receptorów wrażliwych na określone zmiany ciśnienia, fali elektromagnetycznej czy przyspieszenia. Receptory to źródło sygnału bottom-up. Przykładowo, obejrzyj jak niesamowitą strukturą jest układ przedsionkowy.</p>
+
+    <div class="fig-block fig-small" style="margin: 28px auto;">
+      <img src="/images/mip/em-spectrum.jpg" alt="Spektrum elektromagnetyczne" loading="lazy">
+      <p class="fig-caption">Spektrum elektromagnetyczne. Światło widzialne to wąski wycinek, do którego nasze receptory mają dostęp.
+        <span class="fig-source">Philip Ronan, CC BY-SA 3.0, via Wikimedia Commons</span>
+      </p>
+    </div>
 
     <p>Przedyskutuj ze sztuczną inteligencją artykuł "Predictions not commands" (Adams et al., 2013): sygnały zstępujące z kory ruchowej do rdzenia kręgowego mają cechy predykcji, nie rozkazów. Kora motoryczna nie wysyła instrukcji "skurcz mięsień X o Y procent." Wysyła przewidywanie: "spodziewam się takiego a takiego stanu proprioceptywnego." Rdzeń kręgowy minimalizuje błąd między oczekiwanym a aktualnym stanem ciała. Ruch wyłania się z tej minimalizacji. Innymi słowy - spodziewam się jakiejś konfiguracji ciała. A po chwili kolejnej. I kolejnej. Jak surfer na falach.</p>
 
@@ -369,7 +399,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
       <!-- TOPICS COVERED -->
       <div class="block">
-        <p class="block-label">Omówione zagadnienia</p>
+        <p class="block-label">Wstęp do Kursu</p>
         <ul class="topic-list">
           <li>Istota biała i istota szara</li>
           <li>Kolumny korowe (cortical columns) i linie orientacji (orientation selectivity)</li>
@@ -389,6 +419,21 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
       <div class="block">
         <p class="block-label">Ćwiczenie rysunkowe</p>
         <p style="font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-dim); margin-bottom: 12px;">Widok lateralny mózgu z czterema sieciami i ich strukturami.</p>
+
+        <div class="fig-block">
+          <img src="/images/mip/neuron.jpg" alt="Budowa neuronu wielobiegunowego" loading="lazy">
+          <p class="fig-caption">Budowa neuronu wielobiegunowego: dendryty, ciało komórki, akson z osłonką mielinową, synapsy.
+            <span class="fig-source">Blausen Medical, CC BY 3.0, via Wikimedia Commons</span>
+          </p>
+        </div>
+
+        <div class="fig-block">
+          <img src="/images/mip/homunculus.jpg" alt="Homunkulus somatosensoryczny" loading="lazy">
+          <p class="fig-caption">Homunkulus somatosensoryczny Penfielda. Usta i dłonie mają największą reprezentację korową.
+            <span class="fig-source">OpenStax College, CC BY 3.0, via Wikimedia Commons</span>
+          </p>
+        </div>
+
         <div class="drawing-grid">
           <div class="drawing-cell">
             <strong>Somatomotoryczna</strong>
@@ -508,6 +553,14 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
       <div class="block">
         <p class="block-label">Nisze (Iriki &amp; Taoka, 2012)</p>
         <p class="arc-text" style="margin-bottom: 18px;">Makak bierze grabki. Po kilku tygodniach jego kora ciemieniowa rozrasta się fizycznie. Pola recepcyjne neuronów rozszerzają się na całą długość narzędzia. Grabki stają się częścią ciała. Iriki i Taoka opisują trzy płaszczyzny tej zmiany.</p>
+
+        <div class="fig-block">
+          <img src="/images/mip/iriki-fig1.jpg" alt="Iriki & Taoka 2012, Fig. 1" loading="lazy">
+          <p class="fig-caption">Trzy poziomy reprezentacji narzędzi: enaktywna, ikoniczna, symboliczna. Po prawej: ewolucja narzędzi jako eksternalizacja organów ciała.
+            <span class="fig-source">Iriki &amp; Taoka (2012), Fig. 1. CC BY, Phil Trans R Soc B.</span>
+          </p>
+        </div>
+
         <div class="niche-cards">
           <div class="niche-card">
             <div class="niche-label">Nisza neuronalna</div>
@@ -523,6 +576,13 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
           </div>
         </div>
         <p style="font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-dim); font-style: italic; margin-top: 12px;">Trzy nisze nie są oddzielnymi poziomami. Są trzema opisami tego samego procesu: jak doświadczenie i sieci zwrotnie się kształtują.</p>
+
+        <div class="fig-block">
+          <img src="/images/mip/iriki-fig2.jpg" alt="Iriki & Taoka 2012, Fig. 2" loading="lazy">
+          <p class="fig-caption">(a) Rozrost istoty szarej w korze ciemieniowej makaka po treningu z grabkami (VBM). (b) Homologiczne obszary u makaka i człowieka: BA 5, 7 (SPL) &rarr; AG, SMG (IPL, Brodmann 39, 40).
+            <span class="fig-source">Iriki &amp; Taoka (2012), Fig. 2. CC BY, Phil Trans R Soc B.</span>
+          </p>
+        </div>
       </div>
     </div>
 
