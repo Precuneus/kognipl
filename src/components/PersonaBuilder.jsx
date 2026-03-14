@@ -657,14 +657,15 @@ function generateSheet(data) {
   }
 
   // Personality Traits
-  const activeTraits = PERSONALITY_TRAITS.filter((t) => data.traits[t.key] && data.traits[t.key] !== 0);
+  const activeTraits = PERSONALITY_TRAITS.filter((t) => data.traits[t.key] && data.traits[t.key] !== 0 && data.traits[t.key] !== 3);
   if (activeTraits.length) {
     lines.push('--- Cechy osobowości ---');
     activeTraits.forEach((t) => {
       const val = data.traits[t.key]; // 1-5
-      const visual = [1, 2, 3, 4, 5].map((p) => (p === val ? '●' : '○')).join('');
-      const label = val === 3 ? ' [neutralny]' : '';
-      lines.push(`${t.left} ${visual} ${t.right}${label}`);
+      if (val === 1) lines.push(`${t.left}: zdecydowanie`);
+      else if (val === 2) lines.push(`${t.left}: raczej`);
+      else if (val === 4) lines.push(`${t.right}: raczej`);
+      else if (val === 5) lines.push(`${t.right}: zdecydowanie`);
     });
     lines.push('');
   }
