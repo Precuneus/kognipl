@@ -5,13 +5,13 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 const STORAGE_KEY = 'kogni-persona-builder';
 
 const PERSONALITY_TRAITS = [
-  { left: 'Cierpliwy', right: 'Impulsywny', key: 'patience' },
-  { left: 'Szczery', right: 'Dyplomatyczny', key: 'honesty' },
-  { left: 'Optymistyczny', right: 'Sceptyczny', key: 'optimism' },
-  { left: 'Kreatywny', right: 'Metodyczny', key: 'creativity' },
-  { left: 'Odważny', right: 'Ostrożny', key: 'boldness' },
-  { left: 'Ciekawski', right: 'Skupiony', key: 'curiosity' },
-  { left: 'Pedantyczny', right: 'Pragmatyczny', key: 'precision' },
+  { left: 'Cierpliwy', right: 'Impulsywny', key: 'patience', hint: 'Tempo myślenia. Czy AI zastanawia się przed odpowiedzią, czy strzela od razu? (Długość odpowiedzi ustawiasz osobno w sekcji II.)' },
+  { left: 'Szczery', right: 'Dyplomatyczny', key: 'honesty', hint: 'Ogólne podejście do prawdy. Jak bardzo łagodzi przekaz? (Jak konkretnie reaguje na Twoje błędy, ustawiasz w \u201eStyl feedbacku\u201d w sekcji V.)' },
+  { left: 'Optymistyczny', right: 'Sceptyczny', key: 'optimism', hint: 'Jak filtruje świat: szuka możliwości czy ryzyk? (Czy kwestionuje Twoje pomysły, ustawiasz osobno w \u201ePoziom wyzwania\u201d w sekcji IV.)' },
+  { left: 'Kreatywny', right: 'Metodyczny', key: 'creativity', hint: 'Czy preferuje nieszablonowe skojarzenia czy uporządkowane podejście? (Konkretny sposób myślenia, np. sokratyczny, ustawiasz w sekcji IV.)' },
+  { left: 'Odważny', right: 'Ostrożny', key: 'boldness', hint: 'Czy ryzykuje śmiałe tezy, czy trzyma się sprawdzonych informacji? (Jak reaguje, gdy nie zna odpowiedzi, ustawiasz w sekcji IV.)' },
+  { left: 'Ciekawski', right: 'Skupiony', key: 'curiosity', hint: 'Czy eksploruje wątki poboczne, czy trzyma się tematu? (Czy samo z siebie proponuje kierunki, ustawiasz w \u201eInicjatywa\u201d w sekcji V.)' },
+  { left: 'Pedantyczny', right: 'Pragmatyczny', key: 'precision', hint: 'Czy poprawia niedokładności i doprecyzowuje, czy przymyka oko i akceptuje \u201ewystarczająco dobre\u201d pojęcia? (Format odpowiedzi ustawiasz w sekcji VII.)' },
 ];
 
 const ANSWER_LENGTHS = ['Jednozdaniowe', 'Krótkie', 'Średnie', 'Szczegółowe', 'Wyczerpujące'];
@@ -507,11 +507,12 @@ function ChipMultiSelect({ label, hint, options, values, onChange }) {
   );
 }
 
-function BipolarSlider({ left, right, value, onChange }) {
+function BipolarSlider({ left, right, value, onChange, hint }) {
   // value: 0 = unset, 1-5 = position (1=strong left, 3=neutral, 5=strong right)
   const positions = [1, 2, 3, 4, 5];
   return (
-    <div style={s.sliderRow}>
+    <div>
+      <div style={s.sliderRow}>
       <span style={s.sliderLabel}>{left}</span>
       <div style={s.sliderTrack}>
         {positions.map((pos) => {
@@ -533,6 +534,8 @@ function BipolarSlider({ left, right, value, onChange }) {
         })}
       </div>
       <span style={{ ...s.sliderLabel, ...s.sliderLabelRight }}>{right}</span>
+      </div>
+      {hint && <div style={{ ...s.hint, marginTop: '4px', marginBottom: 0 }}>{hint}</div>}
     </div>
   );
 }
@@ -959,6 +962,7 @@ export default function PersonaBuilder() {
             key={trait.key}
             left={trait.left}
             right={trait.right}
+            hint={trait.hint}
             value={data.traits[trait.key] || 0}
             onChange={(v) => updateTrait(trait.key, v)}
           />
