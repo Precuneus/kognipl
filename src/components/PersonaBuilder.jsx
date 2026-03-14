@@ -35,7 +35,6 @@ const THINKING_VIS = ['Pokazuje rozumowanie', 'Tylko odpowiedzi'];
 
 const EMPTY_STATE = {
   name: '',
-  role: '',
   expertise: [],
   backstory: '',
   answerLength: '',
@@ -44,7 +43,7 @@ const EMPTY_STATE = {
   languages: '',
   emoji: '',
   humor: '',
-  traits: {}, // key -> value (-2 to 2, 0 = neutral)
+  traits: {}, // key -> value (0 = unset, 1-5 position)
   thinkingStyles: [],
   uncertainty: '',
   challengeLevel: '',
@@ -95,9 +94,6 @@ const s = {
     border: '1px solid rgba(226, 221, 212, 0.06)',
     overflow: 'hidden',
     transition: 'border-color 0.3s',
-  },
-  sectionHover: {
-    borderColor: 'rgba(232, 168, 76, 0.15)',
   },
   sectionHeader: {
     display: 'flex',
@@ -223,6 +219,7 @@ const s = {
     cursor: 'pointer',
     transition: 'all 0.2s',
     padding: 0,
+    outline: 'none',
   },
   sliderDotActive: {
     background: 'var(--warm-glow, #e8a84c)',
@@ -404,14 +401,9 @@ const s = {
 
 function Section({ number, title, children, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen);
-  const [hovered, setHovered] = useState(false);
 
   return (
-    <div
-      style={{ ...s.section, ...(hovered ? s.sectionHover : {}) }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
+    <div style={s.section}>
       <button
         style={s.sectionHeader}
         onClick={() => setOpen(!open)}
@@ -514,25 +506,21 @@ function ChipMultiSelect({ label, hint, options, values, onChange }) {
 }
 
 function BipolarSlider({ left, right, value, onChange }) {
-  // value: -2, -1, 0, 1, 2 (0 = neutral/unset)
-  const positions = [-2, -1, 0, 1, 2];
+  // value: 0 = unset, 1-5 = position (1=strong left, 3=neutral, 5=strong right)
+  const positions = [1, 2, 3, 4, 5];
   return (
     <div style={s.sliderRow}>
       <span style={s.sliderLabel}>{left}</span>
       <div style={s.sliderTrack}>
         {positions.map((pos) => {
-          const isActive = value !== undefined && value !== 0 && (
-            (value < 0 && pos <= value && pos < 0) ||
-            (value > 0 && pos >= value && pos > 0) ||
-            pos === value
-          );
-          const isCenter = pos === 0;
+          const isActive = value === pos;
+          const isCenter = pos === 3;
           return (
             <button
               key={pos}
               style={{
                 ...s.sliderDot,
-                ...(isCenter ? s.sliderDotCenter : {}),
+                ...(isCenter && !isActive ? s.sliderDotCenter : {}),
                 ...(isActive ? s.sliderDotActive : {}),
               }}
               onClick={() => onChange(value === pos ? 0 : pos)}
@@ -638,10 +626,9 @@ function generateSheet(data) {
   lines.push('');
 
   // Identity
-  const hasIdentity = data.name || data.role || data.expertise.length || data.backstory;
+  const hasIdentity = data.name || data.expertise.length || data.backstory;
   if (hasIdentity) {
     if (data.name) lines.push(`Imię: ${data.name}`);
-    if (data.role) lines.push(`Rola: ${data.role}`);
     if (data.expertise.length) lines.push(`Ekspertyza: ${data.expertise.join(', ')}`);
     if (data.backstory) lines.push(`Historia: ${data.backstory}`);
     lines.push('');
@@ -667,17 +654,10 @@ function generateSheet(data) {
   if (activeTraits.length) {
     lines.push('--- Cechy osobowości ---');
     activeTraits.forEach((t) => {
-      const val = data.traits[t.key];
-      const dots = [0, 0, 0, 0, 0]; // 5 positions
-      // val: -2,-1,0,1,2. Map to visual representation
-      // -2 = strong left, 2 = strong right
-      if (val < 0) {
-        for (let i = 0; i < Math.abs(val); i++) dots[i] = 1;
-      } else if (val > 0) {
-        for (let i = 4; i > 4 - val; i--) dots[i] = 1;
-      }
-      const visual = dots.map((d) => (d ? '●' : '○')).join('');
-      lines.push(`${t.left} ${visual} ${t.right}`);
+      const val = data.traits[t.key]; // 1-5
+      const visual = [1, 2, 3, 4, 5].map((p) => (p === val ? '●' : '○')).join('');
+      const label = val === 3 ? ' [neutralny]' : '';
+      lines.push(`${t.left} ${visual} ${t.right}${label}`);
     });
     lines.push('');
   }
@@ -743,7 +723,7 @@ function generateSheet(data) {
 }
 
 function isSheetEmpty(data) {
-  return !data.name && !data.role && data.expertise.length === 0 && !data.backstory &&
+  return !data.name && data.expertise.length === 0 && !data.backstory &&
     !data.answerLength && data.tone === 2 && !data.vocabLevel && !data.languages &&
     !data.emoji && !data.humor &&
     Object.values(data.traits).every((v) => !v || v === 0) &&
@@ -914,12 +894,6 @@ export default function PersonaBuilder() {
           value={data.name}
           onChange={(v) => update('name', v)}
           placeholder="np. Profesor Kora, Dr Watts, Yoda"
-        />
-        <TextInput
-          label="Rola / archetyp"
-          value={data.role}
-          onChange={(v) => update('role', v)}
-          placeholder="np. tutor, adwokat diabła, partner laboratoryjny"
         />
         <TextInput
           label="Obszary wiedzy"
