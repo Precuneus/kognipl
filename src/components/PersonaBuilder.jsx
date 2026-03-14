@@ -7,11 +7,11 @@ const STORAGE_KEY = 'kogni-persona-builder';
 const PERSONALITY_TRAITS = [
   { left: 'Cierpliwy', right: 'Impulsywny', key: 'patience' },
   { left: 'Szczery', right: 'Dyplomatyczny', key: 'honesty' },
-  { left: 'Pewny siebie', right: 'Skromny', key: 'confidence' },
   { left: 'Optymistyczny', right: 'Sceptyczny', key: 'optimism' },
-  { left: 'Współczujący', right: 'Zdystansowany', key: 'empathy' },
   { left: 'Kreatywny', right: 'Metodyczny', key: 'creativity' },
   { left: 'Odważny', right: 'Ostrożny', key: 'boldness' },
+  { left: 'Ciekawski', right: 'Skupiony', key: 'curiosity' },
+  { left: 'Pedantyczny', right: 'Pragmatyczny', key: 'precision' },
 ];
 
 const ANSWER_LENGTHS = ['Jednozdaniowe', 'Krótkie', 'Średnie', 'Szczegółowe', 'Wyczerpujące'];
@@ -220,6 +220,10 @@ const s = {
     transition: 'all 0.2s',
     padding: 0,
     outline: 'none',
+    WebkitAppearance: 'none',
+    MozAppearance: 'none',
+    appearance: 'none',
+    boxShadow: 'none',
   },
   sliderDotActive: {
     background: 'var(--warm-glow, #e8a84c)',
@@ -227,9 +231,7 @@ const s = {
     boxShadow: '0 0 8px rgba(232, 168, 76, 0.3)',
   },
   sliderDotCenter: {
-    width: '10px',
-    height: '10px',
-    opacity: 0.5,
+    opacity: 0.6,
   },
   repeatableRow: {
     display: 'flex',
@@ -403,7 +405,7 @@ function Section({ number, title, children, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <div style={s.section}>
+    <div style={{ ...s.section, ...(open ? { borderColor: 'rgba(226, 221, 212, 0.12)' } : {}) }}>
       <button
         style={s.sectionHeader}
         onClick={() => setOpen(!open)}
