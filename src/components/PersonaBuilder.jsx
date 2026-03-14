@@ -1037,7 +1037,7 @@ export default function PersonaBuilder() {
           label="Specjalne reguły"
           value={data.specialBehaviors}
           onChange={(v) => update('specialBehaviors', v)}
-          placeholder="Opisz specjalne reguły..."
+          placeholder="np. 'Gdy użytkownik się myli, najpierw pyta dlaczego tak myśli, zanim poprawi' / 'Co kilka odpowiedzi wtrąca dygresję w nawiasie' / 'Ekscytuje się widocznie gdy temat dotyczy jego ekspertyzy'"
         />
       </Section>
 
