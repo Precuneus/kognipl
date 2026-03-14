@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PasswordGate from '../components/PasswordGate.astro';
+import PersonaBuilder from '../components/PersonaBuilder.jsx';
 const HASH = "2728ca17b7eeb44389e3601218ebd0d76aedda367554c19ef5935d49021b2bd6";
 ---
 <Base title="Drugi mózg z AI - kogni.pl" activePage="kursy">
@@ -13,20 +14,61 @@ const HASH = "2728ca17b7eeb44389e3601218ebd0d76aedda367554c19ef5935d49021b2bd6";
   .course-page p { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; }
   .back-link { display: inline-block; font-family: var(--font-body); font-size: 12px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; margin-bottom: 32px; transition: color 0.3s; }
   .back-link:hover { color: var(--warm-glow); }
+
+  /* Tool section: wider than course content */
+  .tool-section { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .tool-intro { max-width: 720px; margin: 0 auto 32px; }
+  .tool-intro h2 { font-family: var(--font-display); font-size: 26px; font-weight: 400; color: var(--text-primary); letter-spacing: 1px; margin-bottom: 12px; }
+  .tool-intro p { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; }
+
+  .separator { width: 60px; height: 1px; background: var(--warm-glow); opacity: 0.3; margin: 56px auto; }
 </style>
 
 <PasswordGate title="Drugi mózg z AI" subtitle="Semestr letni 2025/2026" passwordHash={HASH} sessionKey="drugi-mozg">
+
   <div class="course-page">
     <a href="/kursy" class="back-link">&larr; Kursy</a>
     <h1>Drugi mózg z AI</h1>
     <p class="meta">warsztat · I rok · semestr letni 2025/2026 · 15h</p>
+
     <h2>Opis kursu</h2>
     <p>Sztuczna inteligencja jako narzędzie rozszerzenia poznania. Budowanie własnego systemu wiedzy.</p>
+
     <h2>Harmonogram</h2>
     <p>Treść w przygotowaniu.</p>
+
     <h2>Zasady zaliczenia</h2>
     <p>Treść w przygotowaniu.</p>
   </div>
+
+  <div class="separator"></div>
+
+  <!-- Persona Builder Tool -->
+  <div class="tool-section">
+    <div class="tool-intro">
+      <h2>Kreator Persony AI</h2>
+      <p>
+        Zbuduj swoją personę AI. Każde pole jest opcjonalne. Wypełnij to, co chcesz,
+        a po prawej stronie (na telefonie: przycisk na dole) zobaczysz kartę postaci
+        aktualizującą się na żywo. Gotową kartę skopiuj i wklej do swojego LLM-a
+        razem z meta-promptem poniżej.
+      </p>
+      <p style="font-size: 13px; opacity: 0.6; margin-top: 8px;">
+        Twoje odpowiedzi zapisują się automatycznie w przeglądarce. Możesz wrócić później i kontynuować.
+      </p>
+    </div>
+
+    <PersonaBuilder client:load />
+  </div>
+
+  <div class="separator"></div>
+
+  <!-- Meta-prompt section -->
+  <div class="course-page">
+    <h2>Krok 2: Meta-prompt</h2>
+    <p>Treść w przygotowaniu.</p>
+  </div>
+
 </PasswordGate>
 
 </Base>
