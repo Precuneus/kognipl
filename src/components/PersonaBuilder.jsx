@@ -405,7 +405,7 @@ function Section({ number, title, children, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <div style={{ ...s.section, ...(open ? { borderColor: 'rgba(226, 221, 212, 0.12)' } : {}) }}>
+    <div style={{ ...s.section, borderColor: open ? 'rgba(226, 221, 212, 0.12)' : 'rgba(226, 221, 212, 0.06)' }}>
       <button
         style={s.sectionHeader}
         onClick={() => setOpen(!open)}
