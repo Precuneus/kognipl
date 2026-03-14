@@ -971,8 +971,8 @@ export default function PersonaBuilder() {
       {/* Section 4: Reasoning Style */}
       <Section number="IV" title="Styl myślenia">
         <ChipMultiSelect
-          label="Jak myśli"
-          hint="Możesz wybrać kilka. Analitycznie = rozkłada na części. Sokratycznie = naprowadza pytaniami. Narracyjnie = opowiada historię. Skojarzeniowo = łączy odległe pomysły. Krok po kroku = prowadzi przez etapy."
+          label="Jak myśli (możesz wybrać kilka)"
+          hint="Analitycznie = rozkłada na części. Sokratycznie = naprowadza pytaniami. Narracyjnie = opowiada historię. Skojarzeniowo = łączy odległe pomysły. Krok po kroku = prowadzi przez etapy."
           options={THINKING_STYLES}
           values={data.thinkingStyles}
           onChange={(v) => update('thinkingStyles', v)}
