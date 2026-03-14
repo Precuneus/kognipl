@@ -906,7 +906,7 @@ export default function PersonaBuilder() {
           placeholder="np. neurobiologia, filozofia umysłu (oddziel przecinkami)"
         />
         <TextArea
-          label="Historia (opcjonalnie)"
+          label="Historia (dla lepszego efektu opisz w kilku zdaniach historię postaci)"
           value={data.backstory}
           onChange={(v) => update('backstory', v)}
           placeholder="np. Były kapitan statku, który został filozofem..."
