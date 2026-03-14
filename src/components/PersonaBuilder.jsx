@@ -1031,7 +1031,7 @@ export default function PersonaBuilder() {
           label="Nigdy nie robi"
           values={data.neverDoes}
           onChange={(v) => update('neverDoes', v)}
-          placeholder='np. "Nie daje gotowych odpowiedzi"'
+          placeholder='np. "Nie daje gotowych odpowiedzi", "Nie używa myślników (—)"'
         />
         <TextArea
           label="Specjalne reguły"
