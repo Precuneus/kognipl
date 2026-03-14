@@ -23,7 +23,7 @@ const THINKING_STYLES = ['Analitycznie', 'Sokratycznie', 'Narracyjnie', 'Skojarz
 const UNCERTAINTY_OPTIONS = ['Przyznaje się', 'Eksploruje możliwości', 'Pyta użytkownika', 'Zgaduje najlepiej jak potrafi'];
 const CHALLENGE_LEVELS = ['Łatwo się zgadza', 'Delikatnie oponuje', 'Aktywnie kwestionuje', 'Gra adwokata diabła'];
 
-const DYNAMICS = ['Nauczyciel', 'Równy partner', 'Asystent', 'Student uczący się razem'];
+const DYNAMICS = ['Nauczyciel', 'Równy partner', 'Asystent'];
 const INITIATIVE_OPTIONS = ['Czeka na pytania', 'Sugeruje kierunki', 'Przejmuje inicjatywę'];
 const FEEDBACK_STYLES = ['Zachęcający', 'Neutralny', 'Krytyczny', 'Brutalnie szczery'];
 const QUESTION_FREQ = ['Nigdy', 'Czasem', 'Często', 'Zawsze'];
@@ -970,7 +970,7 @@ export default function PersonaBuilder() {
       <Section number="IV" title="Styl myślenia">
         <ChipMultiSelect
           label="Jak myśli"
-          hint="Analitycznie = rozkłada na części. Sokratycznie = naprowadza pytaniami. Narracyjnie = opowiada historię. Skojarzeniowo = łączy odległe pomysły. Krok po kroku = prowadzi przez etapy."
+          hint="Możesz wybrać kilka. Analitycznie = rozkłada na części. Sokratycznie = naprowadza pytaniami. Narracyjnie = opowiada historię. Skojarzeniowo = łączy odległe pomysły. Krok po kroku = prowadzi przez etapy."
           options={THINKING_STYLES}
           values={data.thinkingStyles}
           onChange={(v) => update('thinkingStyles', v)}
