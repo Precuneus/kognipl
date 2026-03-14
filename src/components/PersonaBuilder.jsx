@@ -384,6 +384,15 @@ const s = {
     textAlign: 'right',
   },
   fieldGroup: {},
+  hint: {
+    fontSize: '12px',
+    fontWeight: 300,
+    fontStyle: 'italic',
+    color: 'var(--text-secondary, #a09888)',
+    opacity: 0.6,
+    lineHeight: 1.5,
+    marginBottom: '8px',
+  },
   customTraitRow: {
     display: 'grid',
     gridTemplateColumns: '140px 1fr',
@@ -457,10 +466,11 @@ function TextArea({ label, value, onChange, placeholder, rows = 3 }) {
   );
 }
 
-function PillSelector({ label, options, value, onChange }) {
+function PillSelector({ label, hint, options, value, onChange }) {
   return (
     <div>
       {label && <label style={s.label}>{label}</label>}
+      {hint && <div style={s.hint}>{hint}</div>}
       <div style={s.pillContainer}>
         {options.map((opt) => (
           <button
@@ -476,7 +486,7 @@ function PillSelector({ label, options, value, onChange }) {
   );
 }
 
-function ChipMultiSelect({ label, options, values, onChange }) {
+function ChipMultiSelect({ label, hint, options, values, onChange }) {
   const toggle = (opt) => {
     if (values.includes(opt)) {
       onChange(values.filter((v) => v !== opt));
@@ -487,6 +497,7 @@ function ChipMultiSelect({ label, options, values, onChange }) {
   return (
     <div>
       {label && <label style={s.label}>{label}</label>}
+      {hint && <div style={s.hint}>{hint}</div>}
       <div style={s.pillContainer}>
         {options.map((opt) => (
           <button
@@ -938,6 +949,7 @@ export default function PersonaBuilder() {
         />
         <PillSelector
           label="Poziom słownictwa"
+          hint="Od języka potocznego po naukowy żargon. 'Poetycki' = metafory, obrazy, swobodna forma."
           options={VOCAB_LEVELS}
           value={data.vocabLevel}
           onChange={(v) => update('vocabLevel', v)}
@@ -979,18 +991,21 @@ export default function PersonaBuilder() {
       <Section number="IV" title="Styl myślenia">
         <ChipMultiSelect
           label="Jak myśli"
+          hint="Analitycznie = rozkłada na części. Sokratycznie = naprowadza pytaniami. Narracyjnie = opowiada historię. Skojarzeniowo = łączy odległe pomysły. Krok po kroku = prowadzi przez etapy."
           options={THINKING_STYLES}
           values={data.thinkingStyles}
           onChange={(v) => update('thinkingStyles', v)}
         />
         <PillSelector
           label="Gdy nie wie"
+          hint="Co robi, gdy nie zna odpowiedzi? Przyznaje się otwarcie, spekuluje, pyta Ciebie, czy strzela z najlepszą intuicją?"
           options={UNCERTAINTY_OPTIONS}
           value={data.uncertainty}
           onChange={(v) => update('uncertainty', v)}
         />
         <PillSelector
           label="Poziom wyzwania"
+          hint="Czy zgadza się z Tobą, czy testuje Twoje pomysły? 'Adwokat diabła' = celowo argumentuje przeciw, żebyś musiał(a) bronić swojego stanowiska."
           options={CHALLENGE_LEVELS}
           value={data.challengeLevel}
           onChange={(v) => update('challengeLevel', v)}
@@ -1051,6 +1066,7 @@ export default function PersonaBuilder() {
       <Section number="VII" title="Forma odpowiedzi">
         <PillSelector
           label="Format"
+          hint="Proza = ciągły tekst. Listy = punktory i numeracje. Mieszany = oba. Co pasuje = AI sam decyduje."
           options={FORMAT_OPTIONS}
           value={data.formatPref}
           onChange={(v) => update('formatPref', v)}
@@ -1069,6 +1085,7 @@ export default function PersonaBuilder() {
         />
         <PillSelector
           label="Pokazuje tok myślenia"
+          hint="Czy widzisz, JAK AI doszło do odpowiedzi, czy dostajesz tylko gotowy wynik?"
           options={THINKING_VIS}
           value={data.thinkingVisibility}
           onChange={(v) => update('thinkingVisibility', v)}
