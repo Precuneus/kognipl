@@ -520,6 +520,7 @@ function BipolarSlider({ left, right, value, onChange }) {
           return (
             <button
               key={pos}
+              data-dot
               style={{
                 ...s.sliderDot,
                 ...(isCenter && !isActive ? s.sliderDotCenter : {}),
@@ -547,6 +548,7 @@ function ToneSlider({ value, onChange }) {
           {positions.map((pos) => (
             <button
               key={pos}
+              data-dot
               style={{
                 ...s.sliderDot,
                 ...(pos === 2 ? s.sliderDotCenter : {}),
@@ -1114,7 +1116,16 @@ export default function PersonaBuilder() {
   );
 
   return (
-    <div style={{ ...s.wrapper, ...(isDesktop ? s.wrapperDesktop : {}) }}>
+    <div style={{ ...s.wrapper, ...(isDesktop ? s.wrapperDesktop : {}) }} className="persona-builder">
+      <style>{`
+        .persona-builder button[data-dot]:focus,
+        .persona-builder button[data-dot]:focus-visible,
+        .persona-builder button[data-dot]:active {
+          outline: none !important;
+          box-shadow: none !important;
+          border-color: inherit;
+        }
+      `}</style>
       {form}
 
       {isDesktop ? (
