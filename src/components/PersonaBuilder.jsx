@@ -304,7 +304,7 @@ const s = {
   actions: {
     display: 'flex',
     gap: '12px',
-    marginTop: '8px',
+    marginTop: '12px',
   },
   copyBtn: {
     flex: 1,
@@ -749,23 +749,25 @@ function PreviewPanel({ data, onCopy, onReset, copied }) {
   const empty = isSheetEmpty(data);
 
   return (
-    <div style={s.previewBox}>
-      <div style={s.previewTitle}>
-        <span>Karta postaci</span>
-        {!empty && (
-          <span style={{ fontSize: '11px', fontWeight: 300, color: 'var(--text-secondary)', fontFamily: 'Inter, sans-serif' }}>
-            podgląd na żywo
-          </span>
+    <div>
+      <div style={s.previewBox}>
+        <div style={s.previewTitle}>
+          <span>Karta postaci</span>
+          {!empty && (
+            <span style={{ fontSize: '11px', fontWeight: 300, color: 'var(--text-secondary)', fontFamily: 'Inter, sans-serif' }}>
+              podgląd na żywo
+            </span>
+          )}
+        </div>
+
+        {empty ? (
+          <div style={s.previewEmpty}>
+            Zacznij wypełniać pola, a karta postaci pojawi się tutaj...
+          </div>
+        ) : (
+          <pre style={s.previewText}>{generateSheet(data)}</pre>
         )}
       </div>
-
-      {empty ? (
-        <div style={s.previewEmpty}>
-          Zacznij wypełniać pola, a karta postaci pojawi się tutaj...
-        </div>
-      ) : (
-        <pre style={s.previewText}>{generateSheet(data)}</pre>
-      )}
 
       <div style={s.actions}>
         <button
