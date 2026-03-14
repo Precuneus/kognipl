@@ -35,7 +35,7 @@ const THINKING_VIS = ['Pokazuje rozumowanie', 'Tylko odpowiedzi'];
 
 const EMPTY_STATE = {
   name: '',
-  expertise: [],
+  expertise: '',
   backstory: '',
   answerLength: '',
   tone: 2, // 0-4, center = neutral
@@ -633,10 +633,10 @@ function generateSheet(data) {
   lines.push('');
 
   // Identity
-  const hasIdentity = data.name || data.expertise.length || data.backstory;
+  const hasIdentity = data.name || data.expertise.trim() || data.backstory;
   if (hasIdentity) {
     if (data.name) lines.push(`Imię: ${data.name}`);
-    if (data.expertise.length) lines.push(`Ekspertyza: ${data.expertise.join(', ')}`);
+    if (data.expertise.trim()) lines.push(`Ekspertyza: ${data.expertise.split(',').map((s) => s.trim()).filter(Boolean).join(', ')}`);
     if (data.backstory) lines.push(`Historia: ${data.backstory}`);
     lines.push('');
   }
@@ -731,7 +731,7 @@ function generateSheet(data) {
 }
 
 function isSheetEmpty(data) {
-  return !data.name && data.expertise.length === 0 && !data.backstory &&
+  return !data.name && !data.expertise.trim() && !data.backstory &&
     !data.answerLength && data.tone === 2 && !data.vocabLevel && !data.languages &&
     !data.emoji && !data.humor &&
     Object.values(data.traits).every((v) => !v || v === 0) &&
@@ -818,6 +818,7 @@ export default function PersonaBuilder() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed.expertise)) parsed.expertise = parsed.expertise.join(', ');
         setData({ ...EMPTY_STATE, ...parsed });
       }
     } catch {
@@ -888,11 +889,6 @@ export default function PersonaBuilder() {
     }
   };
 
-  const expertiseAsText = data.expertise.join(', ');
-  const handleExpertiseChange = (text) => {
-    update('expertise', text.split(',').map((s) => s.trim()).filter(Boolean));
-  };
-
   const form = (
     <div style={s.formColumn}>
       {/* Section 1: Identity */}
@@ -905,8 +901,8 @@ export default function PersonaBuilder() {
         />
         <TextInput
           label="Obszary wiedzy"
-          value={expertiseAsText}
-          onChange={handleExpertiseChange}
+          value={data.expertise}
+          onChange={(v) => update('expertise', v)}
           placeholder="np. neurobiologia, filozofia umysłu (oddziel przecinkami)"
         />
         <TextArea
