@@ -1213,18 +1213,52 @@ function ProgressBarInner() {
   const [width, setWidth] = useState(0);
   const frameRef = useRef(null);
   const startRef = useRef(Date.now());
+  const stallsRef = useRef(null);
 
   useEffect(() => {
+    // Generate 3-4 random stall windows, each 1-2s, spread across 35s
+    const count = 3 + Math.floor(Math.random() * 2);
+    const stalls = [];
+    for (let i = 0; i < count; i++) {
+      const start = 3 + Math.random() * 28; // between 3s and 31s
+      const dur = 1 + Math.random();          // 1-2s
+      stalls.push({ start, end: start + dur, dur });
+    }
+    stalls.sort((a, b) => a.start - b.start);
+    // Remove overlaps
+    for (let i = 1; i < stalls.length; i++) {
+      if (stalls[i].start < stalls[i - 1].end) {
+        stalls[i].start = stalls[i - 1].end + 0.5;
+        stalls[i].end = stalls[i].start + stalls[i].dur;
+      }
+    }
+    const totalStall = stalls.reduce((s, p) => s + p.dur, 0);
+    stallsRef.current = { stalls, totalStall };
+
     startRef.current = Date.now();
     const tick = () => {
       const elapsed = (Date.now() - startRef.current) / 1000;
+      const { stalls: st, totalStall: ts } = stallsRef.current;
+
+      // Calculate stalled time up to now
+      let stalled = 0;
+      for (const p of st) {
+        if (elapsed >= p.end) {
+          stalled += p.dur;
+        } else if (elapsed >= p.start) {
+          stalled += (elapsed - p.start);
+        }
+      }
+
+      const effective = elapsed - stalled;
+      const effectiveTotal = 35 - ts;
+      // Map: first 10s effective = 0-50%, rest = 50-95%
+      const effectiveMid = effectiveTotal * (10 / 35);
       let pct;
-      if (elapsed <= 10) {
-        // 0-50% in first 10 seconds (linear)
-        pct = (elapsed / 10) * 50;
+      if (effective <= effectiveMid) {
+        pct = (effective / effectiveMid) * 50;
       } else {
-        // 50-95% over next 25 seconds (ease out)
-        const t = Math.min((elapsed - 10) / 25, 1);
+        const t = Math.min((effective - effectiveMid) / (effectiveTotal - effectiveMid), 1);
         pct = 50 + 45 * (1 - Math.pow(1 - t, 2));
       }
       setWidth(Math.min(pct, 95));
