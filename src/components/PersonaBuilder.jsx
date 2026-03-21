@@ -1216,12 +1216,12 @@ function ProgressBarInner() {
   const stallsRef = useRef(null);
 
   useEffect(() => {
-    // Generate 3-4 random stall windows, each 1-2s, spread across 35s
-    const count = 3 + Math.floor(Math.random() * 2);
+    // Generate 2-3 stalls, only in the 12-30s range (after bar is already moving)
+    const count = 2 + Math.floor(Math.random() * 2);
     const stalls = [];
     for (let i = 0; i < count; i++) {
-      const start = 3 + Math.random() * 28; // between 3s and 31s
-      const dur = 1 + Math.random();          // 1-2s
+      const start = 12 + Math.random() * 18;
+      const dur = 1 + Math.random();
       stalls.push({ start, end: start + dur, dur });
     }
     stalls.sort((a, b) => a.start - b.start);
@@ -1238,29 +1238,28 @@ function ProgressBarInner() {
     startRef.current = Date.now();
     const tick = () => {
       const elapsed = (Date.now() - startRef.current) / 1000;
-      const { stalls: st, totalStall: ts } = stallsRef.current;
-
-      // Calculate stalled time up to now
-      let stalled = 0;
-      for (const p of st) {
-        if (elapsed >= p.end) {
-          stalled += p.dur;
-        } else if (elapsed >= p.start) {
-          stalled += (elapsed - p.start);
-        }
-      }
-
-      const effective = elapsed - stalled;
-      const effectiveTotal = 35 - ts;
-      // Map: first 10s effective = 0-50%, rest = 50-95%
-      const effectiveMid = effectiveTotal * (10 / 35);
       let pct;
-      if (effective <= effectiveMid) {
-        pct = (effective / effectiveMid) * 50;
+
+      if (elapsed <= 10) {
+        // Phase 1: 0-50% in 10 seconds, always smooth (no stalls here)
+        pct = (elapsed / 10) * 50;
       } else {
-        const t = Math.min((effective - effectiveMid) / (effectiveTotal - effectiveMid), 1);
+        // Phase 2: 50-95% over remaining ~25s, with stalls
+        const { stalls: st, totalStall: ts } = stallsRef.current;
+        let stalled = 0;
+        for (const p of st) {
+          if (elapsed >= p.end) {
+            stalled += p.dur;
+          } else if (elapsed >= p.start) {
+            stalled += (elapsed - p.start);
+          }
+        }
+        const phase2Elapsed = (elapsed - 10) - stalled;
+        const phase2Total = 25 - ts;
+        const t = Math.min(Math.max(phase2Elapsed / phase2Total, 0), 1);
         pct = 50 + 45 * (1 - Math.pow(1 - t, 2));
       }
+
       setWidth(Math.min(pct, 95));
       frameRef.current = requestAnimationFrame(tick);
     };
