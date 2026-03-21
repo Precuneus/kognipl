@@ -769,9 +769,9 @@ const s = {
   },
   progressBarOuter: {
     width: '100%',
-    height: '3px',
+    height: '6px',
     background: 'rgba(139, 92, 246, 0.1)',
-    borderRadius: '2px',
+    borderRadius: '3px',
     overflow: 'hidden',
     marginBottom: '16px',
   },
@@ -1204,20 +1204,44 @@ function PreviewPanel({ data, onCopy, onReset, copied, onGenerate, isGenerating 
 function IndeterminateBar() {
   return (
     <div style={s.progressBarOuter}>
-      <style>{`
-        @keyframes pb-slide {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(250%); }
-        }
-      `}</style>
-      <div style={{
-        width: '40%',
-        height: '100%',
-        background: 'linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.6), transparent)',
-        borderRadius: '2px',
-        animation: 'pb-slide 1.5s ease-in-out infinite',
-      }} />
+      <ProgressBarInner />
     </div>
+  );
+}
+
+function ProgressBarInner() {
+  const [width, setWidth] = useState(0);
+  const frameRef = useRef(null);
+  const startRef = useRef(Date.now());
+
+  useEffect(() => {
+    startRef.current = Date.now();
+    const tick = () => {
+      const elapsed = (Date.now() - startRef.current) / 1000;
+      let pct;
+      if (elapsed <= 10) {
+        // 0-50% in first 10 seconds (linear)
+        pct = (elapsed / 10) * 50;
+      } else {
+        // 50-95% over next 25 seconds (ease out)
+        const t = Math.min((elapsed - 10) / 25, 1);
+        pct = 50 + 45 * (1 - Math.pow(1 - t, 2));
+      }
+      setWidth(Math.min(pct, 95));
+      frameRef.current = requestAnimationFrame(tick);
+    };
+    frameRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameRef.current);
+  }, []);
+
+  return (
+    <div style={{
+      width: `${width}%`,
+      height: '100%',
+      background: 'rgba(139, 92, 246, 0.6)',
+      borderRadius: '3px',
+      transition: 'width 0.3s linear',
+    }} />
   );
 }
 
@@ -1231,18 +1255,20 @@ function GeneratedOutputPanel({ isGenerating, generatedPrompt, generateError, on
   const isDone = generatedPrompt && !isGenerating;
 
   return (
-    <div style={s.generatedBox}>
-      <div style={s.generatedTitle}>
-        <span>System prompt</span>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+      <div style={s.generatedBox}>
+        <div style={s.generatedTitle}>
+          <span>System prompt</span>
+        </div>
+        {isWaiting && <IndeterminateBar />}
+        {generateError ? (
+          <div style={s.generatedError}>{generateError}</div>
+        ) : generatedPrompt ? (
+          <pre style={s.generatedText}>{generatedPrompt}{isGenerating ? '▊' : ''}</pre>
+        ) : (
+          <div style={s.generatedStatus}>Generuję system prompt...</div>
+        )}
       </div>
-      {isWaiting && <IndeterminateBar />}
-      {generateError ? (
-        <div style={s.generatedError}>{generateError}</div>
-      ) : generatedPrompt ? (
-        <pre style={s.generatedText}>{generatedPrompt}{isGenerating ? '▊' : ''}</pre>
-      ) : (
-        <div style={s.generatedStatus}>Łączę z modelem...</div>
-      )}
       <button
         style={{
           ...s.copyPromptBtn,
