@@ -696,8 +696,7 @@ const s = {
     border: '1px solid rgba(139, 92, 246, 0.2)',
     borderRadius: '8px',
     padding: '20px',
-    marginTop: '12px',
-    maxHeight: '400px',
+    maxHeight: '600px',
     overflowY: 'auto',
   },
   generatedTitle: {
@@ -748,6 +747,33 @@ const s = {
     letterSpacing: '0.5px',
     cursor: 'pointer',
     transition: 'all 0.2s',
+  },
+  copyPromptBtn: {
+    width: '100%',
+    padding: '12px 20px',
+    background: 'rgba(139, 92, 246, 0.15)',
+    border: '1px solid rgba(139, 92, 246, 0.6)',
+    borderRadius: '6px',
+    color: 'rgba(167, 139, 250, 1)',
+    fontFamily: 'Inter, sans-serif',
+    fontSize: '13px',
+    fontWeight: 400,
+    letterSpacing: '0.5px',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    marginTop: '12px',
+  },
+  copyPromptBtnDisabled: {
+    opacity: 0.3,
+    cursor: 'not-allowed',
+  },
+  progressBarOuter: {
+    width: '100%',
+    height: '3px',
+    background: 'rgba(139, 92, 246, 0.1)',
+    borderRadius: '2px',
+    overflow: 'hidden',
+    marginBottom: '16px',
   },
 };
 
@@ -1097,7 +1123,7 @@ function isSheetEmpty(data) {
 
 // ─── Preview Panel ──────────────────────────────────────────
 
-function PreviewPanel({ data, onCopy, onReset, copied, onGenerate, isGenerating, generatedPrompt, generateError, onCopyGenerated, generatedCopied }) {
+function PreviewPanel({ data, onCopy, onReset, copied, onGenerate, isGenerating }) {
   const empty = isSheetEmpty(data);
 
   return (
@@ -1169,32 +1195,65 @@ function PreviewPanel({ data, onCopy, onReset, copied, onGenerate, isGenerating,
           Wyczyść
         </button>
       </div>
+    </div>
+  );
+}
 
-      {(isGenerating || generatedPrompt || generateError) && (
-        <div style={s.generatedBox}>
-          <div style={s.generatedTitle}>
-            <span>System prompt</span>
-            {generatedPrompt && !isGenerating && (
-              <button
-                style={{
-                  ...s.copyGeneratedBtn,
-                  ...(generatedCopied ? { background: 'rgba(76, 175, 80, 0.15)', borderColor: '#4CAF50', color: '#4CAF50' } : {}),
-                }}
-                onClick={onCopyGenerated}
-              >
-                {generatedCopied ? '✓ Skopiowano!' : 'Kopiuj'}
-              </button>
-            )}
-          </div>
-          {generateError ? (
-            <div style={s.generatedError}>{generateError}</div>
-          ) : generatedPrompt ? (
-            <pre style={s.generatedText}>{generatedPrompt}{isGenerating ? '▊' : ''}</pre>
-          ) : (
-            <div style={s.generatedStatus}>Łączę z modelem...</div>
-          )}
-        </div>
+// ─── Progress Bar ────────────────────────────────────────────
+
+function IndeterminateBar() {
+  return (
+    <div style={s.progressBarOuter}>
+      <style>{`
+        @keyframes pb-slide {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(250%); }
+        }
+      `}</style>
+      <div style={{
+        width: '40%',
+        height: '100%',
+        background: 'linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.6), transparent)',
+        borderRadius: '2px',
+        animation: 'pb-slide 1.5s ease-in-out infinite',
+      }} />
+    </div>
+  );
+}
+
+// ─── Generated Output Panel ─────────────────────────────────
+
+function GeneratedOutputPanel({ isGenerating, generatedPrompt, generateError, onCopyGenerated, generatedCopied }) {
+  const hasContent = isGenerating || generatedPrompt || generateError;
+  if (!hasContent) return null;
+
+  const isWaiting = isGenerating && !generatedPrompt;
+  const isDone = generatedPrompt && !isGenerating;
+
+  return (
+    <div style={s.generatedBox}>
+      <div style={s.generatedTitle}>
+        <span>System prompt</span>
+      </div>
+      {isWaiting && <IndeterminateBar />}
+      {generateError ? (
+        <div style={s.generatedError}>{generateError}</div>
+      ) : generatedPrompt ? (
+        <pre style={s.generatedText}>{generatedPrompt}{isGenerating ? '▊' : ''}</pre>
+      ) : (
+        <div style={s.generatedStatus}>Łączę z modelem...</div>
       )}
+      <button
+        style={{
+          ...s.copyPromptBtn,
+          ...(!isDone ? s.copyPromptBtnDisabled : {}),
+          ...(generatedCopied ? { background: 'rgba(76, 175, 80, 0.15)', borderColor: '#4CAF50', color: '#4CAF50' } : {}),
+        }}
+        onClick={onCopyGenerated}
+        disabled={!isDone}
+      >
+        {generatedCopied ? '✓ Skopiowano!' : 'Kopiuj system prompt'}
+      </button>
     </div>
   );
 }
@@ -1597,6 +1656,14 @@ export default function PersonaBuilder() {
           </div>
         </div>
       </Section>
+
+      <GeneratedOutputPanel
+        isGenerating={isGenerating}
+        generatedPrompt={generatedPrompt}
+        generateError={generateError}
+        onCopyGenerated={handleCopyGenerated}
+        generatedCopied={generatedCopied}
+      />
     </div>
   );
 
@@ -1608,10 +1675,6 @@ export default function PersonaBuilder() {
       copied={copied}
       onGenerate={handleGenerate}
       isGenerating={isGenerating}
-      generatedPrompt={generatedPrompt}
-      generateError={generateError}
-      onCopyGenerated={handleCopyGenerated}
-      generatedCopied={generatedCopied}
     />
   );
 
