@@ -1554,22 +1554,22 @@ export default function PersonaBuilder() {
     const typePrefix = async () => {
       let i = 0;
       const len = prefix.length;
-      const baseDelay = 12;
+      const baseDelay = 4;
 
       while (i < len) {
-        // Variable chunk size: 2-4 chars
-        const chunk = Math.min(2 + Math.floor(Math.random() * 3), len - i);
+        // Variable chunk size: 4-8 chars
+        const chunk = Math.min(4 + Math.floor(Math.random() * 5), len - i);
         const slice = prefix.slice(i, i + chunk);
         i += chunk;
         setGeneratedPrompt((prev) => prev + slice);
 
         // Micro-pauses at newlines and section headers
-        let delay = baseDelay + Math.random() * 8;
-        if (slice.includes('\n')) delay += 40 + Math.random() * 60;
-        if (slice.includes('---')) delay += 100 + Math.random() * 150;
+        let delay = baseDelay + Math.random() * 3;
+        if (slice.includes('\n')) delay += 13 + Math.random() * 20;
+        if (slice.includes('---')) delay += 33 + Math.random() * 50;
 
-        // Random small hesitations (~4% chance)
-        if (Math.random() < 0.04) delay += 80 + Math.random() * 120;
+        // Random small hesitations (~3% chance)
+        if (Math.random() < 0.03) delay += 25 + Math.random() * 40;
 
         await new Promise(r => setTimeout(r, delay));
       }
