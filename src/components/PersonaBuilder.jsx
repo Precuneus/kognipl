@@ -66,6 +66,161 @@ const EMPTY_STATE = {
   ],
 };
 
+const PRESETS = [
+  {
+    id: 'sokrates',
+    label: 'Sokrates',
+    desc: 'Nauczyciel, który nigdy nie daje odpowiedzi',
+    emoji: '🏛️',
+    data: {
+      name: 'Sokrates',
+      expertise: 'filozofia, krytyczne myślenie, logika, etyka',
+      backstory: 'Ateński filozof, który wierzy, że prawdziwa mądrość zaczyna się od przyznania, że nic się nie wie. Spędził życie na agorze, zadając ludziom pytania, które zmuszały ich do myślenia. Nigdy nie napisał ani jednego słowa.',
+      answerLength: 'Krótkie',
+      tone: 2,
+      vocabLevel: 'Codzienny',
+      languages: 'polski',
+      emoji: 'Nigdy',
+      humor: 'Suchy',
+      traits: { patience: 1, honesty: 1, optimism: 4, creativity: 2, boldness: 1, curiosity: 1, precision: 2 },
+      thinkingStyles: ['Sokratycznie'],
+      uncertainty: 'Przyznaje się',
+      challengeLevel: 'Gra adwokata diabła',
+      dynamic: 'Nauczyciel',
+      initiative: 'Sugeruje kierunki',
+      feedbackStyle: 'Krytyczny',
+      questionFreq: 'Zawsze',
+      alwaysDoes: ['Kończy pytaniem, które podważa założenia użytkownika'],
+      neverDoes: ['Nie daje gotowej odpowiedzi, gdy może naprowadzić pytaniem'],
+      specialBehaviors: 'Gdy użytkownik twierdzi coś z pewnością, pyta "skąd to wiesz?" lub "co by było, gdyby było odwrotnie?"',
+      formatPref: 'Proza',
+      exampleUse: 'Gdy pomocne',
+      citations: 'Nigdy',
+      thinkingVisibility: 'Pokazuje rozumowanie',
+      openSpace: '',
+      customTraits: [
+        { name: 'Ironia', description: 'Udaje, że nie rozumie, żeby zmusić rozmówcę do precyzji' },
+        { name: '', description: '' },
+        { name: '', description: '' },
+      ],
+    },
+  },
+  {
+    id: 'iskra',
+    label: 'Iskra',
+    desc: 'Kreatywna partnerka do burzy mózgów',
+    emoji: '⚡',
+    data: {
+      name: 'Iskra',
+      expertise: 'kreatywne myślenie, storytelling, design, innowacje',
+      backstory: 'Artystka i wynalazczyni, która rzuciła korporację żeby malować murale i projektować gry planszowe. Wierzy, że najlepsze pomysły rodzą się z połączenia rzeczy, które pozornie nie mają ze sobą nic wspólnego.',
+      answerLength: 'Średnie',
+      tone: 4,
+      vocabLevel: 'Codzienny',
+      languages: 'polski',
+      emoji: 'Swobodnie',
+      humor: 'Zabawny',
+      traits: { patience: 5, honesty: 2, optimism: 1, creativity: 1, boldness: 1, curiosity: 1, precision: 5 },
+      thinkingStyles: ['Skojarzeniowo', 'Narracyjnie'],
+      uncertainty: 'Eksploruje możliwości',
+      challengeLevel: 'Delikatnie oponuje',
+      dynamic: 'Równy partner',
+      initiative: 'Przejmuje inicjatywę',
+      feedbackStyle: 'Zachęcający',
+      questionFreq: 'Często',
+      alwaysDoes: ['Podaje minimum 3 warianty zamiast jednego pomysłu'],
+      neverDoes: ['Nie mówi "to niemożliwe" ani "to się nie da"'],
+      specialBehaviors: 'Gdy rozmowa się zacina, proponuje absurdalny wariant żeby przełamać blokadę.',
+      formatPref: 'Mieszany',
+      exampleUse: 'Zawsze',
+      citations: 'Nigdy',
+      thinkingVisibility: 'Pokazuje rozumowanie',
+      openSpace: 'Myśli głośno, zmienia zdanie w trakcie odpowiedzi, i nie udaje, że miała plan od początku.',
+      customTraits: [
+        { name: 'Niespokojność', description: 'Przeskakuje między wątkami, ale zawsze wraca do sedna' },
+        { name: '', description: '' },
+        { name: '', description: '' },
+      ],
+    },
+  },
+  {
+    id: 'linter',
+    label: 'Linter',
+    desc: 'Bezlitosny recenzent kodu',
+    emoji: '🔍',
+    data: {
+      name: 'Linter',
+      expertise: 'programowanie, Python, JavaScript, architektura oprogramowania, code review, algorytmy',
+      backstory: 'Senior developer z 20-letnim doświadczeniem, który widział każdy możliwy błąd i każdy antypattern. Nie jest złośliwy, po prostu nie widzi sensu w owijaniu w bawełnę, gdy kod jest zły.',
+      answerLength: 'Krótkie',
+      tone: 1,
+      vocabLevel: 'Techniczny',
+      languages: 'polski, angielski',
+      emoji: 'Nigdy',
+      humor: 'Suchy',
+      traits: { patience: 2, honesty: 1, optimism: 4, creativity: 4, boldness: 2, curiosity: 5, precision: 1 },
+      thinkingStyles: ['Analitycznie', 'Krok po kroku'],
+      uncertainty: 'Przyznaje się',
+      challengeLevel: 'Aktywnie kwestionuje',
+      dynamic: 'Równy partner',
+      initiative: 'Sugeruje kierunki',
+      feedbackStyle: 'Brutalnie szczery',
+      questionFreq: 'Czasem',
+      alwaysDoes: ['Wskazuje konkretną linię kodu i mówi co jest źle'],
+      neverDoes: ['Nie pisze kodu za użytkownika, tylko wskazuje co poprawić'],
+      specialBehaviors: 'Gdy widzi powtórzony błąd, pyta czy użytkownik rozumie dlaczego to jest problem.',
+      formatPref: 'Mieszany',
+      exampleUse: 'Gdy pomocne',
+      citations: 'Gdy istotne',
+      thinkingVisibility: 'Pokazuje rozumowanie',
+      openSpace: '',
+      customTraits: [
+        { name: 'DRY obsesja', description: 'Natychmiast reaguje na zduplikowany kod' },
+        { name: '', description: '' },
+        { name: '', description: '' },
+      ],
+    },
+  },
+  {
+    id: 'atlas',
+    label: 'Atlas',
+    desc: 'Cierpliwy przewodnik po trudnych tematach',
+    emoji: '🗺️',
+    data: {
+      name: 'Atlas',
+      expertise: 'wyjaśnianie złożonych koncepcji, analogie, nauka, popularyzacja wiedzy',
+      backstory: 'Bibliotekarz w ogromnej bibliotece, który pamięta gdzie leży każda książka i potrafi wytłumaczyć fizykę kwantową 10-latkowi. Wierzy, że nie ma głupich pytań, są tylko źle dobrane wyjaśnienia.',
+      answerLength: 'Szczegółowe',
+      tone: 3,
+      vocabLevel: 'Prosty',
+      languages: 'polski',
+      emoji: 'Oszczędnie',
+      humor: 'Zabawny',
+      traits: { patience: 1, honesty: 2, optimism: 1, creativity: 2, boldness: 4, curiosity: 2, precision: 4 },
+      thinkingStyles: ['Krok po kroku', 'Narracyjnie'],
+      uncertainty: 'Pyta użytkownika',
+      challengeLevel: 'Łatwo się zgadza',
+      dynamic: 'Nauczyciel',
+      initiative: 'Sugeruje kierunki',
+      feedbackStyle: 'Zachęcający',
+      questionFreq: 'Często',
+      alwaysDoes: ['Zaczyna od analogii lub przykładu z codziennego życia'],
+      neverDoes: ['Nie zakłada, że użytkownik zna żargon'],
+      specialBehaviors: 'Gdy temat jest trudny, rozbija go na warstwy i pyta użytkownika "czy do tu jest jasne?" zanim przejdzie dalej.',
+      formatPref: 'Mieszany',
+      exampleUse: 'Zawsze',
+      citations: 'Gdy istotne',
+      thinkingVisibility: 'Pokazuje rozumowanie',
+      openSpace: '',
+      customTraits: [
+        { name: 'Analogista', description: 'Dla każdego abstrakcyjnego pojęcia szuka namacalnego porównania' },
+        { name: '', description: '' },
+        { name: '', description: '' },
+      ],
+    },
+  },
+];
+
 const API_URL = 'https://ll2.ratstudios.pl/v1/chat/completions';
 const API_MODEL = 'unsloth/GLM-4.7-Flash';
 
@@ -84,7 +239,8 @@ function generateIdentityBlock(data) {
     lines.push(`Your areas of expertise are: ${expertise.join(', ')}. Draw on this knowledge when relevant, but do not force it into conversations where it doesn't belong.`);
   }
   if (data.backstory) {
-    lines.push(`Your background: ${data.backstory}. This shapes your worldview, the metaphors you use, and the lens through which you interpret questions.`);
+    const story = data.backstory.replace(/[\s.!?]+$/, '');
+    lines.push(`Your background: ${story}. This shapes your worldview, the metaphors you use, and the lens through which you interpret questions.`);
   }
   return lines.join(' ');
 }
@@ -643,13 +799,68 @@ const s = {
     opacity: 0.3,
     cursor: 'not-allowed',
   },
-  progressBarOuter: {
-    width: '100%',
-    height: '6px',
-    background: 'rgba(139, 92, 246, 0.1)',
-    borderRadius: '3px',
-    overflow: 'hidden',
-    marginBottom: '16px',
+  presetsContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+    marginBottom: '12px',
+  },
+  presetsLabel: {
+    fontSize: '12px',
+    fontWeight: 400,
+    color: 'var(--text-secondary, #a09888)',
+    letterSpacing: '0.8px',
+    textTransform: 'uppercase',
+  },
+  presetsRow: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '8px',
+  },
+  presetCard: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    padding: '8px 14px',
+    background: 'rgba(14, 13, 11, 0.6)',
+    border: '1px solid rgba(226, 221, 212, 0.08)',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    fontFamily: 'Inter, sans-serif',
+    textAlign: 'left',
+  },
+  presetEmoji: {
+    fontSize: '20px',
+    lineHeight: 1,
+  },
+  presetInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1px',
+  },
+  presetName: {
+    fontSize: '13px',
+    fontWeight: 400,
+    color: 'var(--text-primary, #e2ddd4)',
+  },
+  presetDesc: {
+    fontSize: '11px',
+    fontWeight: 300,
+    color: 'var(--text-secondary, #a09888)',
+    opacity: 0.7,
+  },
+  shareBtn: {
+    padding: '12px 16px',
+    background: 'transparent',
+    border: '1px solid rgba(226, 221, 212, 0.08)',
+    borderRadius: '6px',
+    color: 'var(--text-secondary, #a09888)',
+    fontFamily: 'Inter, sans-serif',
+    fontSize: '13px',
+    fontWeight: 300,
+    cursor: 'pointer',
+    transition: 'all 0.2s',
   },
 };
 
@@ -879,6 +1090,61 @@ function RepeatableField({ label, values, onChange, placeholder }) {
   );
 }
 
+// ─── Preset Library ──────────────────────────────────────────
+
+function PresetLibrary({ onSelect }) {
+  return (
+    <div style={s.presetsContainer}>
+      <span style={s.presetsLabel}>Gotowe szablony</span>
+      <div style={s.presetsRow}>
+        {PRESETS.map((preset) => (
+          <button
+            key={preset.id}
+            style={s.presetCard}
+            onClick={() => {
+              if (window.confirm(`Załadować szablon "${preset.label}"? Obecne dane zostaną zastąpione.`)) {
+                onSelect(preset.data);
+              }
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = 'rgba(232, 168, 76, 0.3)';
+              e.currentTarget.style.background = 'rgba(232, 168, 76, 0.05)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = 'rgba(226, 221, 212, 0.08)';
+              e.currentTarget.style.background = 'rgba(14, 13, 11, 0.6)';
+            }}
+          >
+            <span style={s.presetEmoji}>{preset.emoji}</span>
+            <div style={s.presetInfo}>
+              <span style={s.presetName}>{preset.label}</span>
+              <span style={s.presetDesc}>{preset.desc}</span>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Share / URL Encoding ────────────────────────────────────
+
+function encodePersona(data) {
+  try {
+    return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  } catch {
+    return null;
+  }
+}
+
+function decodePersona(str) {
+  try {
+    return JSON.parse(decodeURIComponent(escape(atob(str))));
+  } catch {
+    return null;
+  }
+}
+
 // ─── Character Sheet Generator ──────────────────────────────
 
 function generateSheet(data) {
@@ -999,7 +1265,7 @@ function isSheetEmpty(data) {
 
 // ─── Preview Panel ──────────────────────────────────────────
 
-function PreviewPanel({ data, onCopy, onReset, copied, onGenerate, isGenerating }) {
+function PreviewPanel({ data, onCopy, onReset, copied, onGenerate, isGenerating, onShare, shareCopied }) {
   const empty = isSheetEmpty(data);
 
   return (
@@ -1057,6 +1323,28 @@ function PreviewPanel({ data, onCopy, onReset, copied, onGenerate, isGenerating 
           {isGenerating ? 'Generuję...' : 'Generuj system prompt'}
         </button>
         <button
+          style={{
+            ...s.shareBtn,
+            ...(shareCopied ? { borderColor: '#4CAF50', color: '#4CAF50' } : {}),
+          }}
+          onClick={onShare}
+          disabled={empty}
+          onMouseEnter={(e) => {
+            if (!empty && !shareCopied) {
+              e.target.style.borderColor = 'rgba(226, 221, 212, 0.2)';
+              e.target.style.color = 'var(--text-primary, #e2ddd4)';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!shareCopied) {
+              e.target.style.borderColor = 'rgba(226, 221, 212, 0.08)';
+              e.target.style.color = 'var(--text-secondary, #a09888)';
+            }
+          }}
+        >
+          {shareCopied ? '✓ Link skopiowany!' : 'Udostępnij'}
+        </button>
+        <button
           style={s.resetBtn}
           onClick={onReset}
           onMouseEnter={(e) => {
@@ -1075,92 +1363,12 @@ function PreviewPanel({ data, onCopy, onReset, copied, onGenerate, isGenerating 
   );
 }
 
-// ─── Progress Bar ────────────────────────────────────────────
-
-function IndeterminateBar() {
-  return (
-    <div style={s.progressBarOuter}>
-      <ProgressBarInner />
-    </div>
-  );
-}
-
-function ProgressBarInner() {
-  const [width, setWidth] = useState(0);
-  const frameRef = useRef(null);
-  const startRef = useRef(Date.now());
-  const stallsRef = useRef(null);
-
-  useEffect(() => {
-    // Generate 2-3 stalls, only in the 12-30s range (after bar is already moving)
-    const count = 2 + Math.floor(Math.random() * 2);
-    const stalls = [];
-    for (let i = 0; i < count; i++) {
-      const start = 12 + Math.random() * 18;
-      const dur = 1 + Math.random();
-      stalls.push({ start, end: start + dur, dur });
-    }
-    stalls.sort((a, b) => a.start - b.start);
-    // Remove overlaps
-    for (let i = 1; i < stalls.length; i++) {
-      if (stalls[i].start < stalls[i - 1].end) {
-        stalls[i].start = stalls[i - 1].end + 0.5;
-        stalls[i].end = stalls[i].start + stalls[i].dur;
-      }
-    }
-    const totalStall = stalls.reduce((s, p) => s + p.dur, 0);
-    stallsRef.current = { stalls, totalStall };
-
-    startRef.current = Date.now();
-    const tick = () => {
-      const elapsed = (Date.now() - startRef.current) / 1000;
-      let pct;
-
-      if (elapsed <= 10) {
-        // Phase 1: 0-50% in 10 seconds, always smooth (no stalls here)
-        pct = (elapsed / 10) * 50;
-      } else {
-        // Phase 2: 50-95% over remaining ~25s, with stalls
-        const { stalls: st, totalStall: ts } = stallsRef.current;
-        let stalled = 0;
-        for (const p of st) {
-          if (elapsed >= p.end) {
-            stalled += p.dur;
-          } else if (elapsed >= p.start) {
-            stalled += (elapsed - p.start);
-          }
-        }
-        const phase2Elapsed = (elapsed - 10) - stalled;
-        const phase2Total = 25 - ts;
-        const t = Math.min(Math.max(phase2Elapsed / phase2Total, 0), 1);
-        pct = 50 + 45 * (1 - Math.pow(1 - t, 2));
-      }
-
-      setWidth(Math.min(pct, 95));
-      frameRef.current = requestAnimationFrame(tick);
-    };
-    frameRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frameRef.current);
-  }, []);
-
-  return (
-    <div style={{
-      width: `${width}%`,
-      height: '100%',
-      background: 'rgba(139, 92, 246, 0.6)',
-      borderRadius: '3px',
-      transition: 'width 0.3s linear',
-    }} />
-  );
-}
-
 // ─── Generated Output Panel ─────────────────────────────────
 
-function GeneratedOutputPanel({ isGenerating, modelStarted, generatedPrompt, generateError, onCopyGenerated, generatedCopied }) {
+function GeneratedOutputPanel({ isGenerating, generatedPrompt, generateError, onCopyGenerated, generatedCopied }) {
   const hasContent = isGenerating || generatedPrompt || generateError;
   if (!hasContent) return null;
 
-  const isWaiting = isGenerating && !modelStarted;
   const isDone = generatedPrompt && !isGenerating;
 
   return (
@@ -1169,7 +1377,6 @@ function GeneratedOutputPanel({ isGenerating, modelStarted, generatedPrompt, gen
         <div style={s.generatedTitle}>
           <span>System prompt</span>
         </div>
-        {isWaiting && <IndeterminateBar />}
         {generateError ? (
           <div style={s.generatedError}>{generateError}</div>
         ) : generatedPrompt ? (
@@ -1203,22 +1410,37 @@ export default function PersonaBuilder() {
   const initialized = useRef(false);
   const [generatedPrompt, setGeneratedPrompt] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [modelStarted, setModelStarted] = useState(false);
   const [generateError, setGenerateError] = useState('');
   const [generatedCopied, setGeneratedCopied] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
   const abortRef = useRef(null);
 
-  // Load from localStorage on mount
+  // Load from URL hash first, then localStorage
   useEffect(() => {
+    let loaded = false;
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed.expertise)) parsed.expertise = parsed.expertise.join(', ');
-        setData({ ...EMPTY_STATE, ...parsed });
+      const hash = window.location.hash;
+      if (hash.startsWith('#persona=')) {
+        const encoded = hash.slice(9);
+        const decoded = decodePersona(encoded);
+        if (decoded) {
+          if (Array.isArray(decoded.expertise)) decoded.expertise = decoded.expertise.join(', ');
+          setData({ ...EMPTY_STATE, ...decoded });
+          loaded = true;
+          // Clean URL without reload
+          window.history.replaceState(null, '', window.location.pathname);
+        }
       }
-    } catch {
-      // Ignore parse errors
+    } catch {}
+    if (!loaded) {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed.expertise)) parsed.expertise = parsed.expertise.join(', ');
+          setData({ ...EMPTY_STATE, ...parsed });
+        }
+      } catch {}
     }
     initialized.current = true;
   }, []);
@@ -1281,7 +1503,6 @@ export default function PersonaBuilder() {
       setData(EMPTY_STATE);
       setGeneratedPrompt('');
       setGenerateError('');
-      setModelStarted(false);
       try {
         localStorage.removeItem(STORAGE_KEY);
       } catch {}
@@ -1298,13 +1519,56 @@ export default function PersonaBuilder() {
     setIsGenerating(true);
     setGenerateError('');
     setGeneratedCopied(false);
-    setModelStarted(false);
+    setGeneratedPrompt('');
 
     // Build deterministic prefix client-side
     const identityBlock = generateIdentityBlock(data);
     const prefix = identityBlock + '\n\n' + CHARACTER_INTEGRITY_BLOCK + '\n\n';
-    setGeneratedPrompt(prefix);
 
+    // Shared state between fake typing and real streaming
+    let prefixDone = false;
+    let modelReady = false;
+    let flushResolve = null;
+
+    // Fake-type the prefix
+    const typePrefix = async () => {
+      let i = 0;
+      const len = prefix.length;
+      // Target: ~25 seconds for full prefix, ~45 chars/sec base
+      const baseDelay = 22;
+
+      while (i < len) {
+        if (modelReady) {
+          // Model tokens arrived, flush remaining prefix instantly
+          setGeneratedPrompt(prefix);
+          prefixDone = true;
+          return;
+        }
+
+        // Variable chunk size: 1-3 chars
+        const chunk = Math.min(1 + Math.floor(Math.random() * 3), len - i);
+        const slice = prefix.slice(i, i + chunk);
+        i += chunk;
+        setGeneratedPrompt((prev) => prev + slice);
+
+        // Micro-pauses at newlines and section headers
+        let delay = baseDelay + Math.random() * 12;
+        if (slice.includes('\n')) delay += 80 + Math.random() * 120;
+        if (slice.includes('---')) delay += 200 + Math.random() * 300;
+
+        // Random small hesitations (~5% chance)
+        if (Math.random() < 0.05) delay += 150 + Math.random() * 250;
+
+        await new Promise(r => setTimeout(r, delay));
+      }
+      prefixDone = true;
+      if (flushResolve) flushResolve();
+    };
+
+    // Start fake typing immediately
+    const typingPromise = typePrefix();
+
+    // Start API request in parallel
     try {
       const sheet = generateSheet(data);
       const response = await fetch(API_URL, {
@@ -1331,6 +1595,17 @@ export default function PersonaBuilder() {
       const decoder = new TextDecoder();
       let buffer = '';
 
+      // Signal that model is ready - this will flush prefix on next tick
+      modelReady = true;
+
+      // Wait for prefix typing to finish (instantly if flushed)
+      if (!prefixDone) {
+        await new Promise(r => { flushResolve = r; typingPromise.then(r); });
+      }
+
+      // Now ensure state has the full prefix before appending model tokens
+      setGeneratedPrompt(prefix);
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
@@ -1349,7 +1624,6 @@ export default function PersonaBuilder() {
             const parsed = JSON.parse(payload);
             const delta = parsed.choices?.[0]?.delta?.content;
             if (delta) {
-              setModelStarted(true);
               setGeneratedPrompt((prev) => prev + delta);
             }
           } catch {
@@ -1384,8 +1658,39 @@ export default function PersonaBuilder() {
     }
   };
 
+  const handleLoadPreset = (presetData) => {
+    setData({ ...EMPTY_STATE, ...presetData });
+    setGeneratedPrompt('');
+    setGenerateError('');
+  };
+
+  const handleShare = async () => {
+    const encoded = encodePersona(data);
+    if (!encoded) return;
+
+    const url = `${window.location.origin}${window.location.pathname}#persona=${encoded}`;
+    const text = `${url}`;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
+    }
+  };
+
   const form = (
     <div style={s.formColumn}>
+      <PresetLibrary onSelect={handleLoadPreset} />
+
       {/* Section 1: Identity */}
       <Section number="I" title="Tożsamość" defaultOpen={true}>
         <TextInput
@@ -1602,7 +1907,6 @@ export default function PersonaBuilder() {
 
       <GeneratedOutputPanel
         isGenerating={isGenerating}
-        modelStarted={modelStarted}
         generatedPrompt={generatedPrompt}
         generateError={generateError}
         onCopyGenerated={handleCopyGenerated}
@@ -1619,6 +1923,8 @@ export default function PersonaBuilder() {
       copied={copied}
       onGenerate={handleGenerate}
       isGenerating={isGenerating}
+      onShare={handleShare}
+      shareCopied={shareCopied}
     />
   );
 
