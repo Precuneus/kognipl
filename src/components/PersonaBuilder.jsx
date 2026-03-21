@@ -1265,7 +1265,7 @@ function isSheetEmpty(data) {
 
 // ─── Preview Panel ──────────────────────────────────────────
 
-function PreviewPanel({ data, onCopy, onReset, copied, onGenerate, isGenerating, onShare, shareCopied }) {
+function PreviewPanel({ data, onCopy, onReset, copied, onShare, shareCopied }) {
   const empty = isSheetEmpty(data);
 
   return (
@@ -1305,22 +1305,6 @@ function PreviewPanel({ data, onCopy, onReset, copied, onGenerate, isGenerating,
           }}
         >
           {copied ? '✓ Skopiowano!' : 'Kopiuj kartę'}
-        </button>
-        <button
-          style={{
-            ...s.generateBtn,
-            ...(empty || isGenerating ? s.generateBtnDisabled : {}),
-          }}
-          onClick={onGenerate}
-          disabled={empty || isGenerating}
-          onMouseEnter={(e) => {
-            if (!empty && !isGenerating) e.target.style.background = 'rgba(139, 92, 246, 0.25)';
-          }}
-          onMouseLeave={(e) => {
-            if (!isGenerating) e.target.style.background = 'rgba(139, 92, 246, 0.15)';
-          }}
-        >
-          {isGenerating ? 'Generuję...' : 'Generuj system prompt'}
         </button>
         <button
           style={{
@@ -1905,6 +1889,26 @@ export default function PersonaBuilder() {
         </div>
       </Section>
 
+      <button
+        style={{
+          ...s.generateBtn,
+          width: '100%',
+          padding: '14px 20px',
+          fontSize: '14px',
+          ...(isSheetEmpty(data) || isGenerating ? s.generateBtnDisabled : {}),
+        }}
+        onClick={handleGenerate}
+        disabled={isSheetEmpty(data) || isGenerating}
+        onMouseEnter={(e) => {
+          if (!isSheetEmpty(data) && !isGenerating) e.target.style.background = 'rgba(139, 92, 246, 0.25)';
+        }}
+        onMouseLeave={(e) => {
+          if (!isGenerating) e.target.style.background = 'rgba(139, 92, 246, 0.15)';
+        }}
+      >
+        {isGenerating ? 'Generuję...' : 'Generuj system prompt'}
+      </button>
+
       <GeneratedOutputPanel
         isGenerating={isGenerating}
         generatedPrompt={generatedPrompt}
@@ -1921,8 +1925,6 @@ export default function PersonaBuilder() {
       onCopy={handleCopy}
       onReset={handleReset}
       copied={copied}
-      onGenerate={handleGenerate}
-      isGenerating={isGenerating}
       onShare={handleShare}
       shareCopied={shareCopied}
     />
