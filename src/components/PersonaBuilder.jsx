@@ -1509,26 +1509,13 @@ export default function PersonaBuilder() {
     const identityBlock = generateIdentityBlock(data);
     const prefix = identityBlock + '\n\n' + CHARACTER_INTEGRITY_BLOCK + '\n\n';
 
-    // Shared state between fake typing and real streaming
-    let prefixDone = false;
-    let modelReady = false;
-    let flushResolve = null;
-
     // Fake-type the prefix
     const typePrefix = async () => {
       let i = 0;
       const len = prefix.length;
-      // Target: ~25 seconds for full prefix, ~45 chars/sec base
       const baseDelay = 22;
 
       while (i < len) {
-        if (modelReady) {
-          // Model tokens arrived, flush remaining prefix instantly
-          setGeneratedPrompt(prefix);
-          prefixDone = true;
-          return;
-        }
-
         // Variable chunk size: 1-3 chars
         const chunk = Math.min(1 + Math.floor(Math.random() * 3), len - i);
         const slice = prefix.slice(i, i + chunk);
@@ -1545,8 +1532,6 @@ export default function PersonaBuilder() {
 
         await new Promise(r => setTimeout(r, delay));
       }
-      prefixDone = true;
-      if (flushResolve) flushResolve();
     };
 
     // Start fake typing immediately
@@ -1579,15 +1564,8 @@ export default function PersonaBuilder() {
       const decoder = new TextDecoder();
       let buffer = '';
 
-      // Signal that model is ready - this will flush prefix on next tick
-      modelReady = true;
-
-      // Wait for prefix typing to finish (instantly if flushed)
-      if (!prefixDone) {
-        await new Promise(r => { flushResolve = r; typingPromise.then(r); });
-      }
-
-      // Now ensure state has the full prefix before appending model tokens
+      // Wait for typing to finish before appending model tokens
+      await typingPromise;
       setGeneratedPrompt(prefix);
 
       while (true) {
