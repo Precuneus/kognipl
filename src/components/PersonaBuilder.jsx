@@ -1962,6 +1962,7 @@ export default function PersonaBuilder() {
           stream: true,
           max_tokens: 8192,
           temperature: 0.3,
+          chat_template_kwargs: { enable_thinking: false },
         }),
         signal: controller.signal,
       });
