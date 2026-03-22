@@ -1103,9 +1103,8 @@ const s = {
   },
   traitTooltip: {
     position: 'absolute',
-    bottom: 'calc(100% + 8px)',
-    left: '50%',
-    transform: 'translateX(-50%)',
+    top: 'calc(100% + 6px)',
+    left: 0,
     padding: '8px 12px',
     background: 'var(--bg-card, #1c1a14)',
     border: '1px solid rgba(226, 221, 212, 0.15)',
@@ -1117,7 +1116,7 @@ const s = {
     lineHeight: 1.4,
     whiteSpace: 'normal',
     width: '200px',
-    textAlign: 'center',
+    textAlign: 'left',
     zIndex: 10,
     pointerEvents: 'none',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
@@ -1434,10 +1433,10 @@ function TraitMenu({ traits, selected, maxTraits, onAdd, onRemove, onAddCustom, 
       {selected.length > 0 && (
         <div style={s.selectedTraitsBox}>
           {selected.map((ct, i) => {
-            const isFromMenu = ct.name.trim() && POOL_CUSTOM_TRAITS.some(t => t.name === ct.name);
+            const isFilled = ct.name.trim() && ct.description.trim();
             return (
               <div key={i} style={s.selectedTraitRow}>
-                {isFromMenu ? (
+                {isFilled ? (
                   <>
                     <span style={s.selectedTraitName}>{ct.name}</span>
                     <span style={s.selectedTraitDesc}>{ct.description}</span>
