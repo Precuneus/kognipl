@@ -59,11 +59,7 @@ const EMPTY_STATE = {
   citations: '',
   thinkingVisibility: '',
   openSpace: '',
-  customTraits: [
-    { name: '', description: '' },
-    { name: '', description: '' },
-    { name: '', description: '' },
-  ],
+  customTraits: [],
 };
 
 const PRESETS = [
@@ -100,8 +96,6 @@ const PRESETS = [
       openSpace: '',
       customTraits: [
         { name: 'Ironia', description: 'Udaje, że nie rozumie, żeby zmusić rozmówcę do precyzji' },
-        { name: '', description: '' },
-        { name: '', description: '' },
       ],
     },
   },
@@ -138,8 +132,6 @@ const PRESETS = [
       openSpace: 'Myśli głośno, zmienia zdanie w trakcie odpowiedzi, i nie udaje, że miała plan od początku.',
       customTraits: [
         { name: 'Niespokojność', description: 'Przeskakuje między wątkami, ale zawsze wraca do sedna' },
-        { name: '', description: '' },
-        { name: '', description: '' },
       ],
     },
   },
@@ -176,8 +168,6 @@ const PRESETS = [
       openSpace: '',
       customTraits: [
         { name: 'DRY obsesja', description: 'Natychmiast reaguje na zduplikowany kod' },
-        { name: '', description: '' },
-        { name: '', description: '' },
       ],
     },
   },
@@ -214,8 +204,6 @@ const PRESETS = [
       openSpace: '',
       customTraits: [
         { name: 'Analogista', description: 'Dla każdego abstrakcyjnego pojęcia szuka namacalnego porównania' },
-        { name: '', description: '' },
-        { name: '', description: '' },
       ],
     },
   },
@@ -1083,6 +1071,90 @@ const s = {
     transition: 'all 0.2s',
     opacity: 0.6,
   },
+  traitMenuGrid: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '6px',
+    marginBottom: '12px',
+  },
+  traitChip: {
+    position: 'relative',
+    padding: '5px 12px',
+    borderRadius: '16px',
+    border: '1px solid rgba(226, 221, 212, 0.1)',
+    background: 'transparent',
+    color: 'var(--text-secondary, #a09888)',
+    fontFamily: 'Inter, sans-serif',
+    fontSize: '12px',
+    fontWeight: 300,
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    whiteSpace: 'nowrap',
+  },
+  traitChipSelected: {
+    background: 'rgba(232, 168, 76, 0.15)',
+    borderColor: 'var(--warm-glow, #e8a84c)',
+    color: 'var(--warm-glow, #e8a84c)',
+    cursor: 'default',
+  },
+  traitChipDisabled: {
+    opacity: 0.3,
+    cursor: 'not-allowed',
+  },
+  traitTooltip: {
+    position: 'absolute',
+    bottom: 'calc(100% + 8px)',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    padding: '8px 12px',
+    background: 'var(--bg-card, #1c1a14)',
+    border: '1px solid rgba(226, 221, 212, 0.15)',
+    borderRadius: '6px',
+    color: 'var(--text-secondary, #a09888)',
+    fontFamily: 'Inter, sans-serif',
+    fontSize: '11px',
+    fontWeight: 300,
+    lineHeight: 1.4,
+    whiteSpace: 'normal',
+    width: '200px',
+    textAlign: 'center',
+    zIndex: 10,
+    pointerEvents: 'none',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
+  },
+  traitCount: {
+    fontSize: '11px',
+    fontWeight: 300,
+    color: 'var(--text-secondary, #a09888)',
+    opacity: 0.6,
+    fontFamily: 'Inter, sans-serif',
+  },
+  selectedTraitsBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+  },
+  selectedTraitRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    padding: '6px 10px',
+    background: 'rgba(232, 168, 76, 0.05)',
+    borderRadius: '6px',
+    border: '1px solid rgba(232, 168, 76, 0.1)',
+  },
+  selectedTraitName: {
+    fontSize: '13px',
+    fontWeight: 400,
+    color: 'var(--warm-glow, #e8a84c)',
+    minWidth: '100px',
+  },
+  selectedTraitDesc: {
+    fontSize: '12px',
+    fontWeight: 300,
+    color: 'var(--text-secondary, #a09888)',
+    flex: 1,
+  },
 };
 
 // ─── Sub-components ─────────────────────────────────────────
@@ -1307,6 +1379,111 @@ function RepeatableField({ label, values, onChange, placeholder }) {
           + Dodaj
         </button>
       </div>
+    </div>
+  );
+}
+
+// ─── Trait Menu ──────────────────────────────────────────────
+
+function TraitChip({ trait, isSelected, isDisabled, onSelect }) {
+  const [hover, setHover] = useState(false);
+
+  return (
+    <button
+      style={{
+        ...s.traitChip,
+        ...(isSelected ? s.traitChipSelected : {}),
+        ...(isDisabled && !isSelected ? s.traitChipDisabled : {}),
+      }}
+      onClick={() => { if (!isSelected && !isDisabled) onSelect(trait); }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      {trait.name}
+      {hover && !isSelected && (
+        <div style={s.traitTooltip}>{trait.description}</div>
+      )}
+    </button>
+  );
+}
+
+function TraitMenu({ traits, selected, maxTraits, onAdd, onRemove, onAddCustom, onUpdateCustom }) {
+  const count = selected.filter(ct => ct.name.trim()).length;
+  const isFull = count >= maxTraits;
+  const selectedNames = selected.map(ct => ct.name.trim());
+
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+        <label style={{ ...s.label, marginBottom: 0 }}>Własne cechy</label>
+        <span style={s.traitCount}>{count}/{maxTraits}</span>
+      </div>
+      <div style={s.traitMenuGrid}>
+        {POOL_CUSTOM_TRAITS.map((trait) => (
+          <TraitChip
+            key={trait.name}
+            trait={trait}
+            isSelected={selectedNames.includes(trait.name)}
+            isDisabled={isFull}
+            onSelect={onAdd}
+          />
+        ))}
+      </div>
+      {selected.filter(ct => ct.name.trim()).length > 0 && (
+        <div style={s.selectedTraitsBox}>
+          {selected.map((ct, i) => {
+            if (!ct.name.trim()) return null;
+            const isFromMenu = POOL_CUSTOM_TRAITS.some(t => t.name === ct.name);
+            return (
+              <div key={i} style={s.selectedTraitRow}>
+                {isFromMenu ? (
+                  <>
+                    <span style={s.selectedTraitName}>{ct.name}</span>
+                    <span style={s.selectedTraitDesc}>{ct.description}</span>
+                  </>
+                ) : (
+                  <>
+                    <input
+                      type="text"
+                      value={ct.name}
+                      onChange={(e) => onUpdateCustom(i, 'name', e.target.value)}
+                      placeholder="Nazwa"
+                      style={{ ...s.input, maxWidth: '120px' }}
+                    />
+                    <input
+                      type="text"
+                      value={ct.description}
+                      onChange={(e) => onUpdateCustom(i, 'description', e.target.value)}
+                      placeholder="Opis"
+                      style={{ ...s.input, flex: 1 }}
+                    />
+                  </>
+                )}
+                <button
+                  style={s.removeBtn}
+                  onClick={() => onRemove(i)}
+                  onMouseEnter={(e) => (e.target.style.opacity = '1')}
+                  onMouseLeave={(e) => (e.target.style.opacity = '0.5')}
+                >×</button>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {!isFull && (
+        <button
+          style={{ ...s.addBtn, marginTop: '8px' }}
+          onClick={onAddCustom}
+          onMouseEnter={(e) => {
+            e.target.style.borderColor = 'rgba(232, 168, 76, 0.3)';
+            e.target.style.color = 'var(--warm-glow, #e8a84c)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.borderColor = 'rgba(226, 221, 212, 0.12)';
+            e.target.style.color = 'var(--text-secondary, #a09888)';
+          }}
+        >+ Własna cecha</button>
+      )}
     </div>
   );
 }
@@ -2126,69 +2303,29 @@ export default function PersonaBuilder() {
             rows={4}
           />
         </div>
-        <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-            <label style={{ ...s.label, marginBottom: 0 }}>Własne cechy</label>
-            <button style={s.diceBtn} onClick={() => {
-              const usedNames = [...data.customTraits.map(ct => ct.name.trim()).filter(Boolean), ...usedDiceRef.current.traits];
-              const example = randomFrom(POOL_CUSTOM_TRAITS, usedNames);
-              usedDiceRef.current.traits.add(example.name);
-              const next = [...data.customTraits];
-              const empty = next.findIndex(ct => !ct.name.trim());
-              if (empty >= 0) {
-                next[empty] = { ...example };
-              } else {
-                next.push({ ...example });
-              }
+        <TraitMenu
+          traits={POOL_CUSTOM_TRAITS}
+          selected={data.customTraits}
+          maxTraits={5}
+          onAdd={(trait) => {
+            const next = data.customTraits.filter(ct => ct.name.trim());
+            if (next.length < 5) {
+              next.push({ ...trait });
               update('customTraits', next);
-            }}
-              onMouseEnter={(e) => { e.target.style.opacity = '1'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.6)'; }}
-              onMouseLeave={(e) => { e.target.style.opacity = '0.6'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.3)'; }}
-            >🎲 losuj</button>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {data.customTraits.map((ct, i) => (
-              <div key={i} style={s.customTraitRow}>
-                <input
-                  type="text"
-                  value={ct.name}
-                  onChange={(e) => updateCustomTrait(i, 'name', e.target.value)}
-                  placeholder="Nazwa cechy"
-                  style={s.input}
-                />
-                <input
-                  type="text"
-                  value={ct.description}
-                  onChange={(e) => updateCustomTrait(i, 'description', e.target.value)}
-                  placeholder="Opis"
-                  style={s.input}
-                />
-                <button
-                  style={s.removeBtn}
-                  onClick={() => {
-                    const next = data.customTraits.filter((_, idx) => idx !== i);
-                    if (next.length === 0) next.push({ name: '', description: '' });
-                    update('customTraits', next);
-                  }}
-                  onMouseEnter={(e) => (e.target.style.opacity = '1')}
-                  onMouseLeave={(e) => (e.target.style.opacity = '0.5')}
-                >×</button>
-              </div>
-            ))}
-            <button
-              style={s.addBtn}
-              onClick={() => update('customTraits', [...data.customTraits, { name: '', description: '' }])}
-              onMouseEnter={(e) => {
-                e.target.style.borderColor = 'rgba(232, 168, 76, 0.3)';
-                e.target.style.color = 'var(--warm-glow, #e8a84c)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.borderColor = 'rgba(226, 221, 212, 0.12)';
-                e.target.style.color = 'var(--text-secondary, #a09888)';
-              }}
-            >+ Dodaj</button>
-          </div>
-        </div>
+            }
+          }}
+          onRemove={(i) => {
+            const next = data.customTraits.filter((_, idx) => idx !== i);
+            update('customTraits', next);
+          }}
+          onAddCustom={() => {
+            const filled = data.customTraits.filter(ct => ct.name.trim());
+            if (filled.length < 5) {
+              update('customTraits', [...data.customTraits, { name: '', description: '' }]);
+            }
+          }}
+          onUpdateCustom={updateCustomTrait}
+        />
       </Section>
 
       <button
