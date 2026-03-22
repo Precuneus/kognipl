@@ -1619,6 +1619,7 @@ export default function PersonaBuilder() {
   const [generatedCopied, setGeneratedCopied] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
   const abortRef = useRef(null);
+  const usedDiceRef = useRef({ always: new Set(), never: new Set(), special: new Set(), open: new Set(), traits: new Set() });
 
   // Load from URL hash first, then localStorage
   useEffect(() => {
@@ -1708,6 +1709,7 @@ export default function PersonaBuilder() {
       setData(EMPTY_STATE);
       setGeneratedPrompt('');
       setGenerateError('');
+      usedDiceRef.current = { always: new Set(), never: new Set(), special: new Set(), open: new Set(), traits: new Set() };
       try {
         localStorage.removeItem(STORAGE_KEY);
       } catch {}
@@ -1734,22 +1736,22 @@ export default function PersonaBuilder() {
     const typePrefix = async () => {
       let i = 0;
       const len = prefix.length;
-      const baseDelay = 16;
+      const baseDelay = 32;
 
       while (i < len) {
-        // Variable chunk size: 1-3 chars
-        const chunk = Math.min(1 + Math.floor(Math.random() * 3), len - i);
+        // Variable chunk size: 1-2 chars
+        const chunk = Math.min(1 + Math.floor(Math.random() * 2), len - i);
         const slice = prefix.slice(i, i + chunk);
         i += chunk;
         setGeneratedPrompt((prev) => prev + slice);
 
         // Micro-pauses at newlines and section headers
-        let delay = baseDelay + Math.random() * 12;
-        if (slice.includes('\n')) delay += 50 + Math.random() * 80;
-        if (slice.includes('---')) delay += 130 + Math.random() * 200;
+        let delay = baseDelay + Math.random() * 24;
+        if (slice.includes('\n')) delay += 100 + Math.random() * 160;
+        if (slice.includes('---')) delay += 260 + Math.random() * 400;
 
         // Random small hesitations (~3% chance)
-        if (Math.random() < 0.03) delay += 100 + Math.random() * 160;
+        if (Math.random() < 0.03) delay += 200 + Math.random() * 320;
 
         await new Promise(r => setTimeout(r, delay));
       }
@@ -1845,6 +1847,7 @@ export default function PersonaBuilder() {
     setData({ ...EMPTY_STATE, ...presetData });
     setGeneratedPrompt('');
     setGenerateError('');
+    usedDiceRef.current = { always: new Set(), never: new Set(), special: new Set(), open: new Set(), traits: new Set() };
   };
 
   const handleShare = async () => {
@@ -2008,7 +2011,9 @@ export default function PersonaBuilder() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
             <label style={{ ...s.label, marginBottom: 0 }}>Zawsze robi</label>
             <button style={s.diceBtn} onClick={() => {
-              const example = randomFrom(POOL_ALWAYS, data.alwaysDoes);
+              const exclude = [...data.alwaysDoes, ...usedDiceRef.current.always];
+              const example = randomFrom(POOL_ALWAYS, exclude);
+              usedDiceRef.current.always.add(example);
               const empty = data.alwaysDoes.findIndex(r => !r.trim());
               if (empty >= 0) {
                 const next = [...data.alwaysDoes]; next[empty] = example; update('alwaysDoes', next);
@@ -2028,7 +2033,9 @@ export default function PersonaBuilder() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
             <label style={{ ...s.label, marginBottom: 0 }}>Nigdy nie robi</label>
             <button style={s.diceBtn} onClick={() => {
-              const example = randomFrom(POOL_NEVER, data.neverDoes);
+              const exclude = [...data.neverDoes, ...usedDiceRef.current.never];
+              const example = randomFrom(POOL_NEVER, exclude);
+              usedDiceRef.current.never.add(example);
               const empty = data.neverDoes.findIndex(r => !r.trim());
               if (empty >= 0) {
                 const next = [...data.neverDoes]; next[empty] = example; update('neverDoes', next);
@@ -2049,7 +2056,9 @@ export default function PersonaBuilder() {
             <label style={{ ...s.label, marginBottom: 0 }}>Specjalne reguły</label>
             <button style={s.diceBtn} onClick={() => {
               const existing = data.specialBehaviors.split('\n').map(l => l.trim()).filter(Boolean);
-              const example = randomFrom(POOL_SPECIAL, existing);
+              const exclude = [...existing, ...usedDiceRef.current.special];
+              const example = randomFrom(POOL_SPECIAL, exclude);
+              usedDiceRef.current.special.add(example);
               update('specialBehaviors', data.specialBehaviors ? data.specialBehaviors + '\n' + example : example);
             }}
               onMouseEnter={(e) => { e.target.style.opacity = '1'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.6)'; }}
@@ -2101,7 +2110,9 @@ export default function PersonaBuilder() {
             <label style={{ ...s.label, marginBottom: 0 }}>Coś jeszcze?</label>
             <button style={s.diceBtn} onClick={() => {
               const existing = data.openSpace.split('\n').map(l => l.trim()).filter(Boolean);
-              const example = randomFrom(POOL_OPEN_SPACE, existing);
+              const exclude = [...existing, ...usedDiceRef.current.open];
+              const example = randomFrom(POOL_OPEN_SPACE, exclude);
+              usedDiceRef.current.open.add(example);
               update('openSpace', data.openSpace ? data.openSpace + '\n' + example : example);
             }}
               onMouseEnter={(e) => { e.target.style.opacity = '1'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.6)'; }}
@@ -2119,8 +2130,9 @@ export default function PersonaBuilder() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
             <label style={{ ...s.label, marginBottom: 0 }}>Własne cechy</label>
             <button style={s.diceBtn} onClick={() => {
-              const usedNames = data.customTraits.map(ct => ct.name.trim()).filter(Boolean);
+              const usedNames = [...data.customTraits.map(ct => ct.name.trim()).filter(Boolean), ...usedDiceRef.current.traits];
               const example = randomFrom(POOL_CUSTOM_TRAITS, usedNames);
+              usedDiceRef.current.traits.add(example.name);
               const next = [...data.customTraits];
               const empty = next.findIndex(ct => !ct.name.trim());
               if (empty >= 0) {
