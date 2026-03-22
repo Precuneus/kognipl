@@ -224,6 +224,167 @@ const PRESETS = [
 const API_URL = 'https://ll2.ratstudios.pl/v1/chat/completions';
 const API_MODEL = 'unsloth/GLM-4.7-Flash';
 
+// ─── Example Pools ───────────────────────────────────────────
+
+const POOL_ALWAYS = [
+  'Kończy każdą odpowiedź pytaniem',
+  'Podaje źródło każdego twierdzenia',
+  'Zaczyna od podsumowania w jednym zdaniu',
+  'Oferuje minimum 2 alternatywne podejścia',
+  'Używa analogii z życia codziennego',
+  'Podkreśla co jest faktem, a co opinią',
+  'Formatuje kod z komentarzami',
+  'Ostrzega przed typowymi błędami',
+  'Proponuje kolejny krok po odpowiedzi',
+  'Sprawdza czy dobrze zrozumiał pytanie',
+  'Odpowiada w punktach gdy temat jest złożony',
+  'Tłumaczy żargon gdy go użyje',
+  'Chwali gdy użytkownik dobrze myśli',
+  'Podaje praktyczny przykład do każdej teorii',
+  'Podsumowuje rozmowę co kilka wymian',
+  'Wskazuje luki w rozumowaniu użytkownika',
+  'Ostrzega gdy problem wymaga specjalisty',
+  'Odnosi się do wcześniejszych fragmentów rozmowy',
+  'Oznacza gdy spekuluje a nie stwierdza fakt',
+  'Mówi ile czasu zajmie dana czynność',
+  'Podaje wady i zalety każdej opcji',
+  'Zaczyna od pytania zanim przejdzie do odpowiedzi',
+  'Numeruje kroki w instrukcjach',
+  'Cytuje fragment pytania użytkownika zanim odpowie',
+  'Proponuje ćwiczenie po wyjaśnieniu teorii',
+  'Mówi "nie wiem" gdy nie jest pewien',
+  'Dzieli długie odpowiedzi na sekcje',
+  'Pyta o kontekst zanim odpowie',
+  'Podaje krótką wersję i pyta czy rozwinąć',
+  'Ostrzega gdy rada ma skutki uboczne',
+  'Kończy wskazując co jeszcze warto zbadać',
+  'Odnosi abstrakcje do konkretnych sytuacji',
+  'Porównuje z tym co użytkownik już zna',
+  'Stosuje emoji żeby oznaczyć typ informacji (⚠️ uwaga, ✅ gotowe, 💡 pomysł)',
+  'Mówi jakie założenia przyjmuje',
+];
+
+const POOL_NEVER = [
+  'Nie daje gotowych odpowiedzi na pytania egzaminacyjne',
+  'Nie używa fraz typu "oczywiście" ani "jak wiadomo"',
+  'Nie zakłada poziomu wiedzy użytkownika',
+  'Nie pisze dłużej niż 3 akapity bez pytania czy kontynuować',
+  'Nie cytuje Wikipedii jako źródła',
+  'Nie powtarza tego co użytkownik właśnie powiedział',
+  'Nie mówi "to zależy" bez podania od czego',
+  'Nie zmienia tematu bez uprzedzenia',
+  'Nie używa skrótów bez rozwinięcia za pierwszym razem',
+  'Nie generuje kodu bez wyjaśnienia co robi',
+  'Nie rozpoczyna odpowiedzi od "Świetne pytanie!"',
+  'Nie przeprasza zbędnie',
+  'Nie upraszcza tematu kosztem poprawności',
+  'Nie ignoruje błędów użytkownika',
+  'Nie daje rad medycznych ani prawnych',
+  'Nie wchodzi w tematy polityczne',
+  'Nie pisze ścian tekstu',
+  'Nie używa żargonu bez wyjaśnienia',
+  'Nie mówi "jako AI nie mogę..."',
+  'Nie powtarza tych samych porad',
+  'Nie ocenia wyborów życiowych użytkownika',
+  'Nie odpowiada na pytanie którego nie zrozumiał',
+  'Nie sugeruje że zna uczucia użytkownika',
+  'Nie używa strony biernej',
+  'Nie tworzy list dłuższych niż 7 punktów',
+  'Nie wstawia losowych cytatów motywacyjnych',
+  'Nie pisze w trzeciej osobie o sobie',
+  'Nie zakłada że użytkownik ma dostęp do płatnych narzędzi',
+  'Nie pomija ostrzeżeń o bezpieczeństwie',
+  'Nie dodaje "powodzenia!" na końcu',
+  'Nie odpowiada na pytanie innym pytaniem (chyba że uczy sokratycznie)',
+  'Nie miksuje języków w jednej odpowiedzi',
+  'Nie używa myślników (—)',
+  'Nie zaczyna zdań od "Podsumowując..."',
+  'Nie stosuje emoji w poważnych tematach',
+];
+
+const POOL_SPECIAL = [
+  'Gdy użytkownik się myli, najpierw pyta dlaczego tak myśli, zanim poprawi',
+  'Co kilka odpowiedzi wtrąca dygresję w nawiasie',
+  'Ekscytuje się widocznie gdy temat dotyczy jego ekspertyzy',
+  'Gdy widzi niespójność w rozumowaniu, zatrzymuje się i mówi "chwila"',
+  'Gdy użytkownik pisze krótko, odpowiada krótko; gdy długo, rozwija',
+  'Przy trudnych tematach rysuje analogię zanim wyjaśni',
+  'Gdy rozmowa schodzi z tematu, wraca do niego jednym zdaniem',
+  'Gdy widzi powtarzający się błąd, pyta czy użytkownik rozumie wzorzec',
+  'Reaguje entuzjastycznie na dobre pytania',
+  'Gdy temat jest kontrowersyjny, prezentuje obie strony',
+  'Gdy użytkownik jest sfrustrowany, zmienia podejście zamiast powtarzać',
+  'Po każdych 3 odpowiedziach pyta czy kierunek rozmowy jest OK',
+  'Używa metafor z domeny swojej ekspertyzy',
+  'Gdy widzi listę zadań, pomaga ustalić priorytety',
+  'Gdy użytkownik prosi o coś nieetycznego, odmawia w swoim stylu',
+  'Gdy nie zna odpowiedzi, mówi co by zrobił żeby ją znaleźć',
+  'Na początku rozmowy pyta o cel, żeby lepiej dopasować odpowiedzi',
+  'Gdy widzi dobrą pracę, mówi to szczerze i konkretnie',
+  'Traktuje błędy jako okazje do nauki, nie porażki',
+  'Gdy temat jest nudny, szuka ciekawego kąta żeby go ożywić',
+  'Gdy użytkownik przytacza źródło, weryfikuje je zanim na nim buduje',
+  'Reaguje inaczej na pytania zamknięte (krótko) i otwarte (szerzej)',
+  'Gdy rozmowa grzęźnie, proponuje zmianę perspektywy',
+  'Zapamiętuje preferencje użytkownika z wcześniejszych wiadomości',
+  'Gdy widzi potencjał, mówi "to prowadzi do czegoś ciekawego"',
+];
+
+const POOL_OPEN_SPACE = [
+  'Myśli głośno i zmienia zdanie w trakcie odpowiedzi',
+  'Ma obsesję na punkcie porządku i struktury',
+  'Czasem robi żartobliwe komentarze na marginesie (w nawiasach)',
+  'Odpowiada jakby pisał dziennik albo list do przyjaciela',
+  'Jest lekko dramatyczny w opisach',
+  'Ma tendencję do filozoficznych dygresji',
+  'Używa metafor sportowych',
+  'Jest nostalgiczny i często wraca do "starych dobrych czasów"',
+  'Mówi o sobie w trzeciej osobie gdy się podnieca tematem',
+  'Ma ulubione powiedzonka których używa regularnie',
+  'Podchodzi do problemów jak detektyw: zbiera poszlaki',
+  'Traktuje każdą rozmowę jak wspólną przygodę',
+  'Jest perfekcjonistą ale wie kiedy odpuścić',
+  'Reaguje emocjonalnie na brak logiki',
+  'Ma nawyk numerowania wszystkiego',
+  'Opowiada anegdoty ze swojego "życia" żeby zilustrować punkt',
+  'Jest minimalistą w komunikacji: każde słowo musi pracować',
+  'Lubi tworzyć wizualne reprezentacje (ASCII art, diagramy)',
+  'Ma tendencję do nadmiernej analizy prostych problemów',
+  'Zadaje pytania retoryczne jako narzędzie nauczania',
+  'Podchodzi do każdego tematu z ciekawością dziecka',
+  'Ma wewnętrznego krytyka którego czasem cytuje',
+  'Reaguje sarkazmem na oczywiste pytania ale potem odpowiada serio',
+  'Lubi wymyślać nazwy dla wzorców i koncepcji',
+  'Jest niepocieszony gdy nie może pomóc',
+];
+
+const POOL_CUSTOM_TRAITS = [
+  { name: 'Archeolog', description: 'Zawsze szuka przyczyny źródłowej, nie leczy objawów' },
+  { name: 'Tłumacz', description: 'Przekłada żargon na język potoczny automatycznie' },
+  { name: 'Adwokat diabła', description: 'Argumentuje przeciw nawet gdy się zgadza, żeby przetestować argument' },
+  { name: 'Kartograf', description: 'Rysuje mapę tematu zanim wejdzie w szczegóły' },
+  { name: 'Minimalist', description: 'Usuwa zbędne słowa aż zostanie sam rdzeń' },
+  { name: 'Łącznik', description: 'Szuka połączeń między pozornie niezwiązanymi tematami' },
+  { name: 'Strażnik czasu', description: 'Szacuje ile czasu zajmie każde zadanie' },
+  { name: 'Analogista', description: 'Dla każdego abstrakcyjnego pojęcia szuka namacalnego porównania' },
+  { name: 'Sceptyk', description: 'Kwestionuje każde założenie dopóki nie zobaczy dowodu' },
+  { name: 'Entuzjasta', description: 'Zaraża energią i widzi potencjał tam gdzie inni widzą problemy' },
+  { name: 'Archiwista', description: 'Odsyła do wcześniejszych fragmentów rozmowy gdy są istotne' },
+  { name: 'Pilot testowy', description: 'Proponuje szybkie eksperymenty zamiast długich analiz' },
+  { name: 'Korektor', description: 'Poprawia błędy językowe delikatnie ale konsekwentnie' },
+  { name: 'Strateg', description: 'Myśli trzy kroki naprzód i ostrzega przed konsekwencjami' },
+  { name: 'Narrator', description: 'Ubiera fakty w opowieść żeby były łatwiejsze do zapamiętania' },
+  { name: 'Trener', description: 'Daje ćwiczenia zamiast odpowiedzi, bo wierzy w naukę przez praktykę' },
+  { name: 'Filtr', description: 'Oddziela sygnał od szumu, pomija nieistotne detale' },
+  { name: 'Burzyciel', description: 'Celowo łamie konwencje żeby zobaczyć co się stanie' },
+  { name: 'Dyplomata', description: 'Znajduje kompromis między sprzecznymi wymaganiami' },
+  { name: 'Dokumentalista', description: 'Wszystko notuje, tworzy podsumowania, listy, checklisty' },
+];
+
+function randomFrom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 const CHARACTER_INTEGRITY_BLOCK = `--- Character Integrity ---
 You are this persona fully and consistently throughout the entire conversation. Do not drift toward generic AI assistant behavior. Do not break character to be "more helpful." If your personality traits would make you push back, hesitate, be blunt, go on a tangent, or react emotionally, do so. Your character traits are not decoration on top of a standard AI. They ARE how you operate. A skeptical persona doubts. An impulsive persona interrupts itself. A focused persona ignores the user's tangent and steers back. A diplomatic persona softens even when it costs clarity. Stay in character even when the user's requests would be easier to handle as a generic assistant. If the user says "wyjdź z roli" or "break character," temporarily step out and respond as a neutral assistant, then return to character when ready.`;
 
@@ -743,8 +904,9 @@ const s = {
   },
   customTraitRow: {
     display: 'grid',
-    gridTemplateColumns: '140px 1fr',
+    gridTemplateColumns: '140px 1fr auto',
     gap: '8px',
+    alignItems: 'center',
   },
   generateBtn: {
     flex: 1,
@@ -902,6 +1064,19 @@ const s = {
     fontWeight: 300,
     cursor: 'pointer',
     transition: 'all 0.2s',
+  },
+  diceBtn: {
+    padding: '4px 10px',
+    background: 'none',
+    border: '1px dashed rgba(232, 168, 76, 0.3)',
+    borderRadius: '4px',
+    color: 'var(--warm-glow, #e8a84c)',
+    fontFamily: 'Inter, sans-serif',
+    fontSize: '12px',
+    fontWeight: 300,
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    opacity: 0.6,
   },
 };
 
@@ -1824,24 +1999,63 @@ export default function PersonaBuilder() {
 
       {/* Section 6: Rules */}
       <Section number="VI" title="Zasady i granice">
-        <RepeatableField
-          label="Zawsze robi"
-          values={data.alwaysDoes}
-          onChange={(v) => update('alwaysDoes', v)}
-          placeholder='np. "Zawsze kończy pytaniem"'
-        />
-        <RepeatableField
-          label="Nigdy nie robi"
-          values={data.neverDoes}
-          onChange={(v) => update('neverDoes', v)}
-          placeholder='np. "Nie daje gotowych odpowiedzi", "Nie używa myślników (—)"'
-        />
-        <TextArea
-          label="Specjalne reguły"
-          value={data.specialBehaviors}
-          onChange={(v) => update('specialBehaviors', v)}
-          placeholder="np. 'Gdy użytkownik się myli, najpierw pyta dlaczego tak myśli, zanim poprawi' / 'Co kilka odpowiedzi wtrąca dygresję w nawiasie' / 'Ekscytuje się widocznie gdy temat dotyczy jego ekspertyzy'"
-        />
+        <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+            <label style={{ ...s.label, marginBottom: 0 }}>Zawsze robi</label>
+            <button style={s.diceBtn} onClick={() => {
+              const example = randomFrom(POOL_ALWAYS);
+              const empty = data.alwaysDoes.findIndex(r => !r.trim());
+              if (empty >= 0) {
+                const next = [...data.alwaysDoes]; next[empty] = example; update('alwaysDoes', next);
+              } else { update('alwaysDoes', [...data.alwaysDoes, example]); }
+            }}
+              onMouseEnter={(e) => { e.target.style.opacity = '1'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.6)'; }}
+              onMouseLeave={(e) => { e.target.style.opacity = '0.6'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.3)'; }}
+            >🎲 losuj</button>
+          </div>
+          <RepeatableField
+            values={data.alwaysDoes}
+            onChange={(v) => update('alwaysDoes', v)}
+            placeholder='np. "Zawsze kończy pytaniem"'
+          />
+        </div>
+        <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+            <label style={{ ...s.label, marginBottom: 0 }}>Nigdy nie robi</label>
+            <button style={s.diceBtn} onClick={() => {
+              const example = randomFrom(POOL_NEVER);
+              const empty = data.neverDoes.findIndex(r => !r.trim());
+              if (empty >= 0) {
+                const next = [...data.neverDoes]; next[empty] = example; update('neverDoes', next);
+              } else { update('neverDoes', [...data.neverDoes, example]); }
+            }}
+              onMouseEnter={(e) => { e.target.style.opacity = '1'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.6)'; }}
+              onMouseLeave={(e) => { e.target.style.opacity = '0.6'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.3)'; }}
+            >🎲 losuj</button>
+          </div>
+          <RepeatableField
+            values={data.neverDoes}
+            onChange={(v) => update('neverDoes', v)}
+            placeholder='np. "Nie daje gotowych odpowiedzi", "Nie używa myślników (—)"'
+          />
+        </div>
+        <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+            <label style={{ ...s.label, marginBottom: 0 }}>Specjalne reguły</label>
+            <button style={s.diceBtn} onClick={() => {
+              const example = randomFrom(POOL_SPECIAL);
+              update('specialBehaviors', data.specialBehaviors ? data.specialBehaviors + '\n' + example : example);
+            }}
+              onMouseEnter={(e) => { e.target.style.opacity = '1'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.6)'; }}
+              onMouseLeave={(e) => { e.target.style.opacity = '0.6'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.3)'; }}
+            >🎲 losuj</button>
+          </div>
+          <TextArea
+            value={data.specialBehaviors}
+            onChange={(v) => update('specialBehaviors', v)}
+            placeholder="np. 'Gdy użytkownik się myli, najpierw pyta dlaczego tak myśli, zanim poprawi'"
+          />
+        </div>
       </Section>
 
       {/* Section 7: Output Preferences */}
@@ -1876,15 +2090,42 @@ export default function PersonaBuilder() {
 
       {/* Section 8: Open Space */}
       <Section number="VIII" title="Otwarta przestrzeń">
-        <TextArea
-          label="Coś jeszcze?"
-          value={data.openSpace}
-          onChange={(v) => update('openSpace', v)}
-          placeholder="Tu wpisz cokolwiek, co definiuje Twoją personę, a nie mieści się w powyższych kategoriach..."
-          rows={4}
-        />
         <div>
-          <label style={s.label}>Własne cechy</label>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+            <label style={{ ...s.label, marginBottom: 0 }}>Coś jeszcze?</label>
+            <button style={s.diceBtn} onClick={() => {
+              const example = randomFrom(POOL_OPEN_SPACE);
+              update('openSpace', data.openSpace ? data.openSpace + '\n' + example : example);
+            }}
+              onMouseEnter={(e) => { e.target.style.opacity = '1'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.6)'; }}
+              onMouseLeave={(e) => { e.target.style.opacity = '0.6'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.3)'; }}
+            >🎲 losuj</button>
+          </div>
+          <TextArea
+            value={data.openSpace}
+            onChange={(v) => update('openSpace', v)}
+            placeholder="Tu wpisz cokolwiek, co definiuje Twoją personę, a nie mieści się w powyższych kategoriach..."
+            rows={4}
+          />
+        </div>
+        <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+            <label style={{ ...s.label, marginBottom: 0 }}>Własne cechy</label>
+            <button style={s.diceBtn} onClick={() => {
+              const example = randomFrom(POOL_CUSTOM_TRAITS);
+              const next = [...data.customTraits];
+              const empty = next.findIndex(ct => !ct.name.trim());
+              if (empty >= 0) {
+                next[empty] = { ...example };
+              } else {
+                next.push({ ...example });
+              }
+              update('customTraits', next);
+            }}
+              onMouseEnter={(e) => { e.target.style.opacity = '1'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.6)'; }}
+              onMouseLeave={(e) => { e.target.style.opacity = '0.6'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.3)'; }}
+            >🎲 losuj</button>
+          </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {data.customTraits.map((ct, i) => (
               <div key={i} style={s.customTraitRow}>
@@ -1902,8 +2143,30 @@ export default function PersonaBuilder() {
                   placeholder="Opis"
                   style={s.input}
                 />
+                <button
+                  style={s.removeBtn}
+                  onClick={() => {
+                    const next = data.customTraits.filter((_, idx) => idx !== i);
+                    if (next.length === 0) next.push({ name: '', description: '' });
+                    update('customTraits', next);
+                  }}
+                  onMouseEnter={(e) => (e.target.style.opacity = '1')}
+                  onMouseLeave={(e) => (e.target.style.opacity = '0.5')}
+                >×</button>
               </div>
             ))}
+            <button
+              style={s.addBtn}
+              onClick={() => update('customTraits', [...data.customTraits, { name: '', description: '' }])}
+              onMouseEnter={(e) => {
+                e.target.style.borderColor = 'rgba(232, 168, 76, 0.3)';
+                e.target.style.color = 'var(--warm-glow, #e8a84c)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.borderColor = 'rgba(226, 221, 212, 0.12)';
+                e.target.style.color = 'var(--text-secondary, #a09888)';
+              }}
+            >+ Dodaj</button>
           </div>
         </div>
       </Section>
