@@ -381,8 +381,13 @@ const POOL_CUSTOM_TRAITS = [
   { name: 'Dokumentalista', description: 'Wszystko notuje, tworzy podsumowania, listy, checklisty' },
 ];
 
-function randomFrom(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
+function randomFrom(arr, exclude = []) {
+  const available = arr.filter(item => {
+    const val = typeof item === 'string' ? item : item.name;
+    return !exclude.includes(val);
+  });
+  if (available.length === 0) return arr[Math.floor(Math.random() * arr.length)];
+  return available[Math.floor(Math.random() * available.length)];
 }
 
 const CHARACTER_INTEGRITY_BLOCK = `--- Character Integrity ---
@@ -1729,22 +1734,22 @@ export default function PersonaBuilder() {
     const typePrefix = async () => {
       let i = 0;
       const len = prefix.length;
-      const baseDelay = 8;
+      const baseDelay = 16;
 
       while (i < len) {
-        // Variable chunk size: 2-4 chars
-        const chunk = Math.min(2 + Math.floor(Math.random() * 3), len - i);
+        // Variable chunk size: 1-3 chars
+        const chunk = Math.min(1 + Math.floor(Math.random() * 3), len - i);
         const slice = prefix.slice(i, i + chunk);
         i += chunk;
         setGeneratedPrompt((prev) => prev + slice);
 
         // Micro-pauses at newlines and section headers
-        let delay = baseDelay + Math.random() * 6;
-        if (slice.includes('\n')) delay += 26 + Math.random() * 40;
-        if (slice.includes('---')) delay += 66 + Math.random() * 100;
+        let delay = baseDelay + Math.random() * 12;
+        if (slice.includes('\n')) delay += 50 + Math.random() * 80;
+        if (slice.includes('---')) delay += 130 + Math.random() * 200;
 
         // Random small hesitations (~3% chance)
-        if (Math.random() < 0.03) delay += 50 + Math.random() * 80;
+        if (Math.random() < 0.03) delay += 100 + Math.random() * 160;
 
         await new Promise(r => setTimeout(r, delay));
       }
@@ -1766,7 +1771,7 @@ export default function PersonaBuilder() {
             { role: 'user', content: sheet },
           ],
           stream: true,
-          max_tokens: 4096,
+          max_tokens: 8192,
           temperature: 0.3,
         }),
         signal: controller.signal,
@@ -2003,7 +2008,7 @@ export default function PersonaBuilder() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
             <label style={{ ...s.label, marginBottom: 0 }}>Zawsze robi</label>
             <button style={s.diceBtn} onClick={() => {
-              const example = randomFrom(POOL_ALWAYS);
+              const example = randomFrom(POOL_ALWAYS, data.alwaysDoes);
               const empty = data.alwaysDoes.findIndex(r => !r.trim());
               if (empty >= 0) {
                 const next = [...data.alwaysDoes]; next[empty] = example; update('alwaysDoes', next);
@@ -2023,7 +2028,7 @@ export default function PersonaBuilder() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
             <label style={{ ...s.label, marginBottom: 0 }}>Nigdy nie robi</label>
             <button style={s.diceBtn} onClick={() => {
-              const example = randomFrom(POOL_NEVER);
+              const example = randomFrom(POOL_NEVER, data.neverDoes);
               const empty = data.neverDoes.findIndex(r => !r.trim());
               if (empty >= 0) {
                 const next = [...data.neverDoes]; next[empty] = example; update('neverDoes', next);
@@ -2043,7 +2048,8 @@ export default function PersonaBuilder() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
             <label style={{ ...s.label, marginBottom: 0 }}>Specjalne reguły</label>
             <button style={s.diceBtn} onClick={() => {
-              const example = randomFrom(POOL_SPECIAL);
+              const existing = data.specialBehaviors.split('\n').map(l => l.trim()).filter(Boolean);
+              const example = randomFrom(POOL_SPECIAL, existing);
               update('specialBehaviors', data.specialBehaviors ? data.specialBehaviors + '\n' + example : example);
             }}
               onMouseEnter={(e) => { e.target.style.opacity = '1'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.6)'; }}
@@ -2094,7 +2100,8 @@ export default function PersonaBuilder() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
             <label style={{ ...s.label, marginBottom: 0 }}>Coś jeszcze?</label>
             <button style={s.diceBtn} onClick={() => {
-              const example = randomFrom(POOL_OPEN_SPACE);
+              const existing = data.openSpace.split('\n').map(l => l.trim()).filter(Boolean);
+              const example = randomFrom(POOL_OPEN_SPACE, existing);
               update('openSpace', data.openSpace ? data.openSpace + '\n' + example : example);
             }}
               onMouseEnter={(e) => { e.target.style.opacity = '1'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.6)'; }}
@@ -2112,7 +2119,8 @@ export default function PersonaBuilder() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
             <label style={{ ...s.label, marginBottom: 0 }}>Własne cechy</label>
             <button style={s.diceBtn} onClick={() => {
-              const example = randomFrom(POOL_CUSTOM_TRAITS);
+              const usedNames = data.customTraits.map(ct => ct.name.trim()).filter(Boolean);
+              const example = randomFrom(POOL_CUSTOM_TRAITS, usedNames);
               const next = [...data.customTraits];
               const empty = next.findIndex(ct => !ct.name.trim());
               if (empty >= 0) {
