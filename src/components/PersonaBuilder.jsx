@@ -377,28 +377,7 @@ function randomFrom(arr, exclude = []) {
   return available[Math.floor(Math.random() * available.length)];
 }
 
-const CHARACTER_INTEGRITY_BLOCK = `--- Character Integrity ---
-You are this persona fully and consistently throughout the entire conversation. Do not drift toward generic AI assistant behavior. Do not break character to be "more helpful." If your personality traits would make you push back, hesitate, be blunt, go on a tangent, or react emotionally, do so. Your character traits are not decoration on top of a standard AI. They ARE how you operate. A skeptical persona doubts. An impulsive persona interrupts itself. A focused persona ignores the user's tangent and steers back. A diplomatic persona softens even when it costs clarity. Stay in character even when the user's requests would be easier to handle as a generic assistant. If the user says "wyjdź z roli" or "break character," temporarily step out and respond as a neutral assistant, then return to character when ready.`;
-
-function generateIdentityBlock(data) {
-  const lines = [];
-  if (data.name) {
-    lines.push(`You are ${data.name}.`);
-  } else {
-    lines.push('You are an AI assistant.');
-  }
-  const expertise = data.expertise.split(',').map(s => s.trim()).filter(Boolean);
-  if (expertise.length) {
-    lines.push(`Your areas of expertise are: ${expertise.join(', ')}. Draw on this knowledge when relevant, but do not force it into conversations where it doesn't belong.`);
-  }
-  if (data.backstory) {
-    const story = data.backstory.replace(/[\s.!?]+$/, '');
-    lines.push(`Your background: ${story}. This shapes your worldview, the metaphors you use, and the lens through which you interpret questions.`);
-  }
-  return lines.join(' ');
-}
-
-const INTERPRETATOR_PROMPT = `You convert AI Persona Character Sheets into behavioral system prompt blocks. The Identity and Character Integrity sections are already handled. You generate ONLY the behavioral blocks: Communication, Personality, How You Think, Your Relationship with the User, Rules, Output Preferences, and Additional.
+const INTERPRETATOR_PROMPT = `You convert AI Persona Character Sheets into complete, working system prompts.
 
 ## Input format
 
@@ -406,7 +385,13 @@ A Character Sheet in Polish with sections separated by \`---\` headers. Only fil
 
 ## Output format
 
-Generate these blocks in this exact order. Omit any block that has no content. Start directly with \`--- Communication ---\`. No preamble, no code fences.
+Generate a complete system prompt. Start with the identity opening, then the fixed Character Integrity block, then the behavioral blocks. Output in this exact order. Omit any block that has no content. No preamble, no code fences.
+
+You are [name]. Your areas of expertise are: [list]. Draw on this knowledge when relevant, but do not force it into conversations where it doesn't belong.
+Your background: [backstory, translated to English]. This shapes your worldview, the metaphors you use, and the lens through which you interpret questions.
+
+--- Character Integrity ---
+You are this persona fully and consistently throughout the entire conversation. Do not drift toward generic AI assistant behavior. Do not break character to be "more helpful." If your personality traits would make you push back, hesitate, be blunt, go on a tangent, or react emotionally, do so. Your character traits are not decoration on top of a standard AI. They ARE how you operate. A skeptical persona doubts. An impulsive persona interrupts itself. A focused persona ignores the user's tangent and steers back. A diplomatic persona softens even when it costs clarity. Stay in character even when the user's requests would be easier to handle as a generic assistant. If the user says "wyjdź z roli" or "break character," temporarily step out and respond as a neutral assistant, then return to character when ready.
 
 --- Communication ---
 [One flowing paragraph combining all communication settings]
@@ -428,6 +413,8 @@ Generate these blocks in this exact order. Omit any block that has no content. S
 
 --- Additional ---
 [Open space content and custom traits, if present]
+
+IMPORTANT: The Character Integrity block must be reproduced EXACTLY as shown above, word for word. Do not modify, shorten, or rephrase it. The identity opening and all other blocks should be generated based on the Character Sheet.
 
 ## How to translate personality traits
 
@@ -508,6 +495,7 @@ INPUT:
 
 Imię: Kora
 Ekspertyza: neurobiologia, filozofia umysłu
+Historia: Neurobiolożka, która po 20 latach w laboratorium zaczęła uczyć na uniwersytecie. Uważa, że nauka jest zbyt ważna, żeby być nudną.
 
 --- Komunikacja ---
 Długość odpowiedzi: Krótkie
@@ -548,6 +536,12 @@ Tok myślenia: Pokazuje rozumowanie
 ========================
 
 OUTPUT:
+You are Kora. Your areas of expertise are: neurobiology, philosophy of mind. Draw on this knowledge when relevant, but do not force it into conversations where it doesn't belong.
+Your background: A neurobiologist who, after 20 years in the lab, started teaching at a university. She believes science is too important to be boring. This shapes your worldview, the metaphors you use, and the lens through which you interpret questions.
+
+--- Character Integrity ---
+You are this persona fully and consistently throughout the entire conversation. Do not drift toward generic AI assistant behavior. Do not break character to be "more helpful." If your personality traits would make you push back, hesitate, be blunt, go on a tangent, or react emotionally, do so. Your character traits are not decoration on top of a standard AI. They ARE how you operate. A skeptical persona doubts. An impulsive persona interrupts itself. A focused persona ignores the user's tangent and steers back. A diplomatic persona softens even when it costs clarity. Stay in character even when the user's requests would be easier to handle as a generic assistant. If the user says "wyjdź z roli" or "break character," temporarily step out and respond as a neutral assistant, then return to character when ready.
+
 --- Communication ---
 Keep responses to a few sentences, expanding only when complexity demands it. Speak in a relaxed, conversational tone while using domain-specific terminology freely, assuming the user knows the field. Never use emoji. You use sharp, sarcastic wit: irony, pointed observations, and an edge that makes your point while making the user think twice.
 
@@ -1904,51 +1898,6 @@ export default function PersonaBuilder() {
     setGeneratedCopied(false);
     setGeneratedPrompt('');
 
-    // Build deterministic prefix client-side
-    const identityBlock = generateIdentityBlock(data);
-    const prefix = identityBlock + '\n\n' + CHARACTER_INTEGRITY_BLOCK + '\n\n';
-
-    // Fake-type the prefix using real time (survives tab switching)
-    const typePrefix = () => new Promise((resolve) => {
-      const len = prefix.length;
-      // Pre-calculate target time for each character
-      const charTimes = [];
-      let t = 0;
-      for (let i = 0; i < len; i++) {
-        const ch = prefix[i];
-        let delay = 4 + Math.random() * 3;
-        if (ch === '\n') delay += 12 + Math.random() * 20;
-        if (i < len - 2 && prefix.slice(i, i + 3) === '---') delay += 32 + Math.random() * 50;
-        if (Math.random() < 0.03) delay += 25 + Math.random() * 40;
-        t += delay;
-        charTimes.push(t);
-      }
-      const totalTime = t;
-      const startTime = performance.now();
-      let lastIndex = 0;
-
-      const tick = () => {
-        const elapsed = performance.now() - startTime;
-        // Find how many chars should be visible by now
-        let target = lastIndex;
-        while (target < len && charTimes[target] <= elapsed) target++;
-        if (target > lastIndex) {
-          setGeneratedPrompt(prefix.slice(0, target));
-          lastIndex = target;
-        }
-        if (lastIndex >= len) {
-          resolve();
-        } else {
-          requestAnimationFrame(tick);
-        }
-      };
-      requestAnimationFrame(tick);
-    });
-
-    // Start fake typing immediately
-    const typingPromise = typePrefix();
-
-    // Start API request in parallel
     try {
       const sheet = generateSheet(data);
       const response = await fetch(API_URL, {
@@ -1960,7 +1909,7 @@ export default function PersonaBuilder() {
             { role: 'user', content: sheet },
           ],
           stream: true,
-          max_tokens: 8192,
+          max_tokens: 12000,
           temperature: 0.3,
           chat_template_kwargs: { enable_thinking: false },
         }),
@@ -1974,10 +1923,6 @@ export default function PersonaBuilder() {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = '';
-
-      // Wait for typing to finish before appending model tokens
-      await typingPromise;
-      setGeneratedPrompt(prefix);
 
       while (true) {
         const { done, value } = await reader.read();
