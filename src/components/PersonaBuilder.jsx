@@ -209,8 +209,7 @@ const PRESETS = [
   },
 ];
 
-const API_URL = 'https://ll3.ratstudios.pl/v1/chat/completions';
-const API_MODEL = 'unsloth/Qwen3.5-35B';
+const API_URL = 'https://kogni-proxy.izorkus.workers.dev/';
 
 // ─── Example Pools ───────────────────────────────────────────
 
@@ -1956,7 +1955,6 @@ export default function PersonaBuilder() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: API_MODEL,
           messages: [
             { role: 'system', content: INTERPRETATOR_PROMPT },
             { role: 'user', content: sheet },
