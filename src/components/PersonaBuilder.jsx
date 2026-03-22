@@ -209,8 +209,9 @@ const PRESETS = [
   },
 ];
 
-const API_URL = 'https://ll2.ratstudios.pl/v1/chat/completions';
-const API_MODEL = 'unsloth/GLM-4.7-Flash';
+// Cloudflare Worker proxy - hides API key and real endpoint
+// Replace with your deployed worker URL
+const API_URL = 'https://kogni-llm-proxy.YOURSUBDOMAIN.workers.dev';
 
 // ─── Example Pools ───────────────────────────────────────────
 
@@ -1917,10 +1918,10 @@ export default function PersonaBuilder() {
       let t = 0;
       for (let i = 0; i < len; i++) {
         const ch = prefix[i];
-        let delay = 32 + Math.random() * 24;
-        if (ch === '\n') delay += 100 + Math.random() * 160;
-        if (i < len - 2 && prefix.slice(i, i + 3) === '---') delay += 260 + Math.random() * 400;
-        if (Math.random() < 0.03) delay += 200 + Math.random() * 320;
+        let delay = 8 + Math.random() * 6;
+        if (ch === '\n') delay += 25 + Math.random() * 40;
+        if (i < len - 2 && prefix.slice(i, i + 3) === '---') delay += 65 + Math.random() * 100;
+        if (Math.random() < 0.03) delay += 50 + Math.random() * 80;
         t += delay;
         charTimes.push(t);
       }
@@ -1956,7 +1957,6 @@ export default function PersonaBuilder() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: API_MODEL,
           messages: [
             { role: 'system', content: INTERPRETATOR_PROMPT },
             { role: 'user', content: sheet },
