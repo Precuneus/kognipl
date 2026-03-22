@@ -211,7 +211,7 @@ const PRESETS = [
 
 const API_URL = 'https://ll3.ratstudios.pl/v1/chat/completions';
 const API_MODEL2 = 'unsloth/GLM-4.7-Flash';
-const API_MODEL= 'unsloth/Qwen3.5-27B';
+const API_MODEL= 'unsloth/Qwen3.5-35B';
 
 // ─── Example Pools ───────────────────────────────────────────
 
