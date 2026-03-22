@@ -1909,30 +1909,42 @@ export default function PersonaBuilder() {
     const identityBlock = generateIdentityBlock(data);
     const prefix = identityBlock + '\n\n' + CHARACTER_INTEGRITY_BLOCK + '\n\n';
 
-    // Fake-type the prefix
-    const typePrefix = async () => {
-      let i = 0;
+    // Fake-type the prefix using real time (survives tab switching)
+    const typePrefix = () => new Promise((resolve) => {
       const len = prefix.length;
-      const baseDelay = 32;
-
-      while (i < len) {
-        // Variable chunk size: 1-2 chars
-        const chunk = Math.min(1 + Math.floor(Math.random() * 2), len - i);
-        const slice = prefix.slice(i, i + chunk);
-        i += chunk;
-        setGeneratedPrompt((prev) => prev + slice);
-
-        // Micro-pauses at newlines and section headers
-        let delay = baseDelay + Math.random() * 24;
-        if (slice.includes('\n')) delay += 100 + Math.random() * 160;
-        if (slice.includes('---')) delay += 260 + Math.random() * 400;
-
-        // Random small hesitations (~3% chance)
+      // Pre-calculate target time for each character
+      const charTimes = [];
+      let t = 0;
+      for (let i = 0; i < len; i++) {
+        const ch = prefix[i];
+        let delay = 32 + Math.random() * 24;
+        if (ch === '\n') delay += 100 + Math.random() * 160;
+        if (i < len - 2 && prefix.slice(i, i + 3) === '---') delay += 260 + Math.random() * 400;
         if (Math.random() < 0.03) delay += 200 + Math.random() * 320;
-
-        await new Promise(r => setTimeout(r, delay));
+        t += delay;
+        charTimes.push(t);
       }
-    };
+      const totalTime = t;
+      const startTime = performance.now();
+      let lastIndex = 0;
+
+      const tick = () => {
+        const elapsed = performance.now() - startTime;
+        // Find how many chars should be visible by now
+        let target = lastIndex;
+        while (target < len && charTimes[target] <= elapsed) target++;
+        if (target > lastIndex) {
+          setGeneratedPrompt(prefix.slice(0, target));
+          lastIndex = target;
+        }
+        if (lastIndex >= len) {
+          resolve();
+        } else {
+          requestAnimationFrame(tick);
+        }
+      };
+      requestAnimationFrame(tick);
+    });
 
     // Start fake typing immediately
     const typingPromise = typePrefix();
