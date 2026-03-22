@@ -209,9 +209,8 @@ const PRESETS = [
   },
 ];
 
-// Cloudflare Worker proxy - hides API key and real endpoint
-// Replace with your deployed worker URL
-const API_URL = 'https://kogni-llm-proxy.YOURSUBDOMAIN.workers.dev';
+const API_URL = 'https://ll3.ratstudios.pl/v1/chat/completions';
+const API_MODEL = 'unsloth/Qwen3.5-35B';
 
 // ─── Example Pools ───────────────────────────────────────────
 
@@ -1957,6 +1956,7 @@ export default function PersonaBuilder() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          model: API_MODEL,
           messages: [
             { role: 'system', content: INTERPRETATOR_PROMPT },
             { role: 'user', content: sheet },
