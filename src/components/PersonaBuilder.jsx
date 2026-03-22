@@ -1916,10 +1916,10 @@ export default function PersonaBuilder() {
       let t = 0;
       for (let i = 0; i < len; i++) {
         const ch = prefix[i];
-        let delay = 8 + Math.random() * 6;
-        if (ch === '\n') delay += 25 + Math.random() * 40;
-        if (i < len - 2 && prefix.slice(i, i + 3) === '---') delay += 65 + Math.random() * 100;
-        if (Math.random() < 0.03) delay += 50 + Math.random() * 80;
+        let delay = 4 + Math.random() * 3;
+        if (ch === '\n') delay += 12 + Math.random() * 20;
+        if (i < len - 2 && prefix.slice(i, i + 3) === '---') delay += 32 + Math.random() * 50;
+        if (Math.random() < 0.03) delay += 25 + Math.random() * 40;
         t += delay;
         charTimes.push(t);
       }
