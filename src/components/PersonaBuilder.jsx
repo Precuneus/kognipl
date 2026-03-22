@@ -1326,13 +1326,13 @@ function ToneSlider({ value, onChange }) {
   );
 }
 
-function RepeatableField({ label, values, onChange, placeholder }) {
+function RepeatableField({ label, values, onChange, placeholder, max }) {
   const update = (i, val) => {
     const next = [...values];
     next[i] = val;
     onChange(next);
   };
-  const add = () => onChange([...values, '']);
+  const add = () => { if (!max || values.length < max) onChange([...values, '']); };
   const remove = (i) => {
     if (values.length <= 1) {
       onChange(['']);
@@ -1364,20 +1364,22 @@ function RepeatableField({ label, values, onChange, placeholder }) {
             </button>
           </div>
         ))}
-        <button
-          style={s.addBtn}
-          onClick={add}
-          onMouseEnter={(e) => {
-            e.target.style.borderColor = 'rgba(232, 168, 76, 0.3)';
-            e.target.style.color = 'var(--warm-glow, #e8a84c)';
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.borderColor = 'rgba(226, 221, 212, 0.12)';
-            e.target.style.color = 'var(--text-secondary, #a09888)';
-          }}
-        >
-          + Dodaj
-        </button>
+        {(!max || values.length < max) && (
+          <button
+            style={s.addBtn}
+            onClick={add}
+            onMouseEnter={(e) => {
+              e.target.style.borderColor = 'rgba(232, 168, 76, 0.3)';
+              e.target.style.color = 'var(--warm-glow, #e8a84c)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.borderColor = 'rgba(226, 221, 212, 0.12)';
+              e.target.style.color = 'var(--text-secondary, #a09888)';
+            }}
+          >
+            + Dodaj
+          </button>
+        )}
       </div>
     </div>
   );
@@ -1429,11 +1431,10 @@ function TraitMenu({ traits, selected, maxTraits, onAdd, onRemove, onAddCustom, 
           />
         ))}
       </div>
-      {selected.filter(ct => ct.name.trim()).length > 0 && (
+      {selected.length > 0 && (
         <div style={s.selectedTraitsBox}>
           {selected.map((ct, i) => {
-            if (!ct.name.trim()) return null;
-            const isFromMenu = POOL_CUSTOM_TRAITS.some(t => t.name === ct.name);
+            const isFromMenu = ct.name.trim() && POOL_CUSTOM_TRAITS.some(t => t.name === ct.name);
             return (
               <div key={i} style={s.selectedTraitRow}>
                 {isFromMenu ? (
@@ -2194,7 +2195,7 @@ export default function PersonaBuilder() {
               const empty = data.alwaysDoes.findIndex(r => !r.trim());
               if (empty >= 0) {
                 const next = [...data.alwaysDoes]; next[empty] = example; update('alwaysDoes', next);
-              } else { update('alwaysDoes', [...data.alwaysDoes, example]); }
+              } else if (data.alwaysDoes.length < 5) { update('alwaysDoes', [...data.alwaysDoes, example]); }
             }}
               onMouseEnter={(e) => { e.target.style.opacity = '1'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.6)'; }}
               onMouseLeave={(e) => { e.target.style.opacity = '0.6'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.3)'; }}
@@ -2204,6 +2205,7 @@ export default function PersonaBuilder() {
             values={data.alwaysDoes}
             onChange={(v) => update('alwaysDoes', v)}
             placeholder='np. "Zawsze kończy pytaniem"'
+            max={5}
           />
         </div>
         <div>
@@ -2216,7 +2218,7 @@ export default function PersonaBuilder() {
               const empty = data.neverDoes.findIndex(r => !r.trim());
               if (empty >= 0) {
                 const next = [...data.neverDoes]; next[empty] = example; update('neverDoes', next);
-              } else { update('neverDoes', [...data.neverDoes, example]); }
+              } else if (data.neverDoes.length < 5) { update('neverDoes', [...data.neverDoes, example]); }
             }}
               onMouseEnter={(e) => { e.target.style.opacity = '1'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.6)'; }}
               onMouseLeave={(e) => { e.target.style.opacity = '0.6'; e.target.style.borderColor = 'rgba(232, 168, 76, 0.3)'; }}
@@ -2226,6 +2228,7 @@ export default function PersonaBuilder() {
             values={data.neverDoes}
             onChange={(v) => update('neverDoes', v)}
             placeholder='np. "Nie daje gotowych odpowiedzi", "Nie używa myślników (—)"'
+            max={5}
           />
         </div>
         <div>
@@ -2319,8 +2322,9 @@ export default function PersonaBuilder() {
             update('customTraits', next);
           }}
           onAddCustom={() => {
-            const filled = data.customTraits.filter(ct => ct.name.trim());
-            if (filled.length < 5) {
+            const hasEmpty = data.customTraits.some(ct => !ct.name.trim());
+            if (hasEmpty) return;
+            if (data.customTraits.length < 5) {
               update('customTraits', [...data.customTraits, { name: '', description: '' }]);
             }
           }}
