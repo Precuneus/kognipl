@@ -1100,18 +1100,22 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         }
       });
 
-      // Restore: put the anchor element back to its viewport position
+      // Wait for browser to fully recalculate layout, then correct scroll
       if (anchorEl) {
-        const newRect = anchorEl.getBoundingClientRect();
-        const drift = newRect.top - anchorViewportTop;
-        if (Math.abs(drift) > 1) {
-          // Force instant scroll (override any smooth-scroll CSS)
-          const html = document.documentElement;
-          const prevBehavior = html.style.scrollBehavior;
-          html.style.scrollBehavior = 'auto';
-          window.scrollBy(0, drift);
-          html.style.scrollBehavior = prevBehavior;
-        }
+        // Double requestAnimationFrame ensures layout is complete
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            const newRect = anchorEl.getBoundingClientRect();
+            const drift = newRect.top - anchorViewportTop;
+            if (Math.abs(drift) > 1) {
+              const html = document.documentElement;
+              const prevBehavior = html.style.scrollBehavior;
+              html.style.scrollBehavior = 'auto';
+              window.scrollBy(0, drift);
+              html.style.scrollBehavior = prevBehavior;
+            }
+          });
+        });
       }
     }
 
