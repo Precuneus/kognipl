@@ -438,6 +438,146 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   }
   .bib-item a:hover { opacity: 1; }
   .bib-item em { font-style: italic; }
+
+  /* ── Act navigation ── */
+  .act-nav {
+    display: flex;
+    gap: 0;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+    overflow-x: auto;
+  }
+  .act-tab {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 12px 20px 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
+    opacity: 0.45;
+  }
+  .act-tab.active {
+    color: var(--warm-glow);
+    border-bottom-color: var(--warm-glow);
+    opacity: 1;
+  }
+  .act-tab.upcoming {
+    cursor: default;
+    opacity: 0.25;
+  }
+  .act-tab:not(.upcoming):hover {
+    color: var(--warm-glow);
+    opacity: 0.8;
+  }
+
+  /* ── Time machine slider ── */
+  .time-machine {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    padding: 14px 20px 18px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .tm-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+  .tm-slider {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 3px;
+    background: var(--border-subtle);
+    outline: none;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .tm-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--warm-glow);
+    cursor: pointer;
+    border: 2px solid var(--bg-card);
+    box-shadow: 0 0 0 1px var(--warm-glow);
+  }
+  .tm-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--warm-glow);
+    cursor: pointer;
+    border: 2px solid var(--bg-card);
+    box-shadow: 0 0 0 1px var(--warm-glow);
+  }
+  .tm-stops {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+  .tm-stop {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--text-dim);
+    transition: color 0.3s, font-weight 0.3s;
+  }
+  .tm-stop.active {
+    color: var(--warm-glow);
+    font-weight: 500;
+  }
+  .tm-current {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    text-align: center;
+    min-height: 18px;
+  }
+
+  /* ── Session additions (s2 = added after Session 2: Rozwój) ── */
+  .s2 {
+    transition: opacity 0.4s ease, max-height 0.4s ease;
+  }
+  .s2 p, .s2 li, .s2 .cascade-desc, .s2 .niche-card p {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #c8956c 30%);
+  }
+  .s2 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #c8956c 30%);
+  }
+  .s2 h3 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #c8956c 25%);
+  }
+  .s2.hidden {
+    display: none;
+  }
+
+  /* ── Session origin tag ── */
+  .session-origin {
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--text-dim) 60%, #c8956c 40%);
+    margin-bottom: 4px;
+    display: block;
+  }
 </style>
 
 <PasswordGate
@@ -450,6 +590,26 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <a href="/kursy" class="back-link">&larr; Kursy</a>
     <h1>Wstęp do kognitywistyki II</h1>
     <p class="meta">ćwiczenia · I rok · semestr letni 2025/2026 · 30h</p>
+
+    <!-- ==================== ACT NAVIGATION ==================== -->
+    <nav class="act-nav">
+      <button class="act-tab active" data-act="1">Skąd się wzięliśmy?</button>
+      <button class="act-tab upcoming">Most: Emocje</button>
+      <button class="act-tab upcoming">Co się dzieje w środku?</button>
+      <button class="act-tab upcoming">Most: Neuroróżnorodność</button>
+      <button class="act-tab upcoming">Gdzie są granice?</button>
+    </nav>
+
+    <!-- ==================== TIME MACHINE ==================== -->
+    <div class="time-machine">
+      <div class="tm-label">Oś czasu kursu</div>
+      <input type="range" class="tm-slider" id="tmSlider" min="1" max="2" value="2" step="1" />
+      <div class="tm-stops">
+        <span class="tm-stop active" data-s="1">Ewolucja</span>
+        <span class="tm-stop active" data-s="2">Rozwój</span>
+      </div>
+      <div class="tm-current" id="tmCurrent">Pokazuję stronę po sesji 2: Rozwój poznawczy</div>
+    </div>
 
     <div class="session-header">
       <div class="session-badge">Sesja 1</div>
@@ -473,6 +633,18 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p>Jedyne co zostaje, to interakcja między "Ty" a "rzeczywistością". Między Twoją perspektywą a treścią. Na tym styku jest doświadczanie. To wydaje się najbardziej prawdziwe, uniwersalne. Ale niebezpiecznie oddala się w kierunku filozofii.</p>
     <p>Wróćmy więc do modeli. Modele są predyktywne.</p>
 
+    <div class="s2" data-session="2">
+      <span class="session-origin">+ sesja 2: rozwój</span>
+      <h3>Dziecko buduje modele</h3>
+      <p>Jean Piaget twierdził, że dziecko nie jest biernym odbiorcą wiedzy. Jest aktywnym konstruktorem modeli rzeczywistości. Każde stadium rozwoju to jakościowo inny rodzaj modelu predykcyjnego:</p>
+      <p><strong>Sensoryczno-motoryczne (0-2 lata):</strong> model oparty na zmysłach i ruchu. Dziecko odkrywa stałość przedmiotu: przedmiot nadal istnieje, choć go nie widzę. To pierwsza predykcja wykraczająca poza bezpośrednie dane sensoryczne.</p>
+      <p><strong>Przedoperacyjne (2-7 lat):</strong> model symboliczny. Pojawiają się słowa, zabawa symboliczna, ale myślenie jest egocentryczne. Dziecko nie potrafi jeszcze zbudować modelu perspektywy innej osoby.</p>
+      <p><strong>Operacji konkretnych (7-11 lat):</strong> model logiczny, ale ograniczony do konkretu. Zachowanie ilości, klasyfikacja, serializacja.</p>
+      <p><strong>Operacji formalnych (11+ lat):</strong> model abstrakcyjny. Hipotetyczne myślenie, dedukcja, operacje na operacjach.</p>
+      <p>Dwa mechanizmy napędzają ten rozwój. <strong>Asymilacja</strong> to włączanie nowych informacji do istniejącego modelu. Mały błąd predykcyjny: model się aktualizuje, ale nie zmienia swojej struktury. <strong>Akomodacja</strong> to przebudowa modelu, gdy nowe informacje są zbyt zaskakujące. Duży błąd predykcyjny: potrzebny nowy schemat. Piłka okrągła zawsze się toczy. Piłka do rugby się nie toczy prosto. Dziecko modyfikuje schemat "piłki."</p>
+      <p>Piaget nie używał pojęcia błędu predykcyjnego. Ale mechanizm jest ten sam: rozbieżność między oczekiwaniem a doświadczeniem napędza rozwój.</p>
+    </div>
+
     <hr class="section-divider" />
 
     <h3>Predykcja</h3>
@@ -482,6 +654,17 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p>Nagle samochód przed Tobą zaczyna hamować. Automatycznie reagujesz. Wciskasz hamulec, odbijasz kierownicę, w międzyczasie zerkając w lusterko, czy pas obok jest wolny. Samochód przed Tobą zachował się niespodziewanie - zaskoczył Cię.</p>
     <p>Załóżmy, że samochód przed Tobą to było BMW. Po kilku tygodniach sytuacja się powtarza. Kolejne BMW zaskakuje Cię na drodze i nagle zmienia pas, zajeżdżając Ci drogę. Po kilku tygodniach samochód za Tobą miga Ci długimi po oczach, znów BMW! Zaczynasz spodziewać się nieprzewidywalnych rzeczy, gdy spotykasz samochody tej marki na drodze. Wcześniejsze sytuacje dotrenowały Twoje sieci mózgowe.</p>
     <p>Błędy predykcyjne to niespodziewane informacje, które wędrują w górę (bottom-up) i kształtują sieci tak, aby w przyszłości te informacje były już spodziewane (top-down). Cała historia ewolucyjna, kulturowa i indywidualna kształtuje architekturę sieci neuronowych.</p>
+
+    <div class="s2" data-session="2">
+      <span class="session-origin">+ sesja 2: rozwój</span>
+      <h3>Kto kalibruje twoje predykcje?</h3>
+      <p>Lev Vygotsky twierdził, że poznanie nie buduje się w izolacji. Środowisko społeczne kalibruje twoje modele predykcyjne. Inna osoba jest źródłem błędów predykcyjnych dla Twojego mózgu, ale nie losowych. Są to błędy skalibrowane do Twojego poziomu.</p>
+      <p><strong>Strefa najbliższego rozwoju (ZPD)</strong> to przestrzeń między tym, co potrafisz sam, a tym, co potrafisz z pomocą. W języku predykcyjnym: przestrzeń między modelami, które twoje sieci już zbudowały, a modelami, które mogą zbudować przy odpowiednich błędach predykcyjnych dostarczonych z zewnątrz.</p>
+      <p><strong>Scaffolding</strong> to rusztowanie: struktura wsparcia, która stopniowo się wycofuje w miarę jak Twój model się kalibruje. Na początku duże wsparcie, duże błędy predykcyjne. Na końcu: sam budujesz predykcje. Rusztowanie znika, bo Twoje sieci przejęły jego funkcję.</p>
+      <p><strong>MKO</strong> (More Knowledgeable Other) to osoba z lepiej skalibrowanymi modelami. Nie musi być nauczycielem. Może być rówieśnikiem, rodzicem, a nawet technologią. Kluczem jest to, że MKO generuje błędy predykcyjne we właściwej strefie: nie za łatwe (brak uczenia) i nie za trudne (brak integracji).</p>
+      <p>Piaget powiedziałby: dziecko samo odkrywa świat. Vygotsky: dziecko odkrywa świat, ale ktoś stoi obok i pokazuje mu, co warto odkryć. To jest fałszywa dychotomia: oba mechanizmy działają jednocześnie. Piaget opisuje silnik (budowanie modeli). Vygotsky opisuje kalibrację (kto dostarcza odpowiednie błędy).</p>
+      <p><em>Ten kurs sam w sobie jest eksperymentem Vygotskiańskim. Przychodzisz na konsultacje przed prezentacją. To jest scaffolding. Piaget powiedziałby: odkryjcie sami.</em></p>
+    </div>
 
     <hr class="section-divider" />
 
@@ -523,6 +706,18 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     </div>
 
     <p style="margin-top: 28px;">Przypomnij sobie artykuł "Predictions not commands" (Adams et al., 2013): sygnały zstępujące z kory ruchowej do rdzenia kręgowego mają cechy predykcji, nie rozkazów. Kora motoryczna nie wysyła instrukcji "skurcz mięsień X o Y procent." Wysyła przewidywanie: "spodziewam się takiego a takiego stanu proprioceptywnego." Rdzeń kręgowy minimalizuje błąd między oczekiwanym a aktualnym stanem ciała. Ruch wyłania się z tej minimalizacji. Innymi słowy - spodziewam się jakiejś konfiguracji ciała. A po chwili kolejnej. I kolejnej. Jak surfer na falach.</p>
+
+    <div class="s2" data-session="2">
+      <span class="session-origin">+ sesja 2: rozwój</span>
+      <h3>Okresy krytyczne: co gdy sieci nie dostaną błędów?</h3>
+      <p>Sieci neuronowe potrzebują błędów predykcyjnych, żeby się wykalibrować. Ale nie w dowolnym momencie. Istnieją okna czasowe, w których specyficzne doświadczenie jest konieczne do prawidłowego rozwoju. Zamknij okno, a sieć nigdy nie osiągnie pełnej sprawności.</p>
+      <p><strong>Hubel i Wiesel</strong> zakryli jedno oko kociętom w pierwszych tygodniach życia. Kolumny dominacji ocznej w pierwszorzędowej korze wzrokowej (V1) nie rozwinęły się dla tego oka. Trwale. Otworzenie oka po okresie krytycznym nie naprawiło szkody. Sieć nie dostała błędów predykcyjnych, których potrzebowała. Nobel 1981.</p>
+      <p><strong>Colin Blakemore</strong> poszedł dalej: kocięta hodowane wyłącznie w środowisku z pionowymi liniami. Neurony V1 dostosowały się do dostępnych bodźców. Nie rozwinęły selektywności na orientacje poziome. Sieć wybudowała model świata, który miała, nie świata, który istniał.</p>
+      <p><strong>Genie:</strong> dziewczynka izolowana od ludzi do 13 roku życia. Po uwolnieniu: ograniczony rozwój językowy mimo intensywnej terapii. Okno dla języka zamknęło się.</p>
+      <p><strong>Dzieci rumuńskie</strong> z domów dziecka Ceaușescu. Poważne deficyty poznawcze i emocjonalne wynikające z braku stymulacji społecznej we wczesnym dzieciństwie. Częściowa odwracalność zależna od wieku adopcji: im wcześniej dziecko trafiło do rodziny, tym więcej udało się odzyskać. Ale nie wszystko.</p>
+      <p>Wspólny mechanizm: sieć bez odpowiednich błędów predykcyjnych w odpowiednim czasie nie zbuduje odpowiedniego modelu. Okresy krytyczne to okna, w których sieci są najbardziej plastyczne i najbardziej zależne od doświadczenia.</p>
+      <p><em>Eksperymenty Hubela i Wiesela oraz Blakemore'a na zwierzętach budzą poważne wątpliwości etyczne z dzisiejszej perspektywy. Standardy ochrony zwierząt laboratoryjnych zmieniły się fundamentalnie od lat 60-70.</em></p>
+    </div>
 
     <p>Sieci tworzą hierarchię predykcji - od zmysłów do narracji o sobie:</p>
 
@@ -712,6 +907,17 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p>W zależności od publikacji, obszar Broki jest zaangażowany w sieć domyślną, kontroli i istotności. IPL to obszar, gdzie sieć uwagi i kontroli spotykają się z DMN.ToM w okolicach TPJ. Kiedy obserwujesz kogoś sięgającego po kubek, te (i inne) obsary współpracują ze sobą, kierując wzrok, generując predykcję działania i aktualizując model agenta ("chce się napić").</p>
     <p>Neurony lustrzane nie są mechanizmem empatii ani odczytywania myśli. Są mechanizmem predykcji działania na poziomie motorycznym. Most między poziomem 1 a poziomem 3 jest zbudowany z kaskady: obszar Broki przewiduje ruch, IPL przewiduje cel ruchu, TPJp przewiduje intencję za celem. Każda warstwa dodaje jeden poziom abstrakcji.</p>
 
+    <div class="s2" data-session="2">
+      <span class="session-origin">+ sesja 2: rozwój</span>
+      <h3>Cztery sieci mózgu społecznego</h3>
+      <p>Ludzki mózg społeczny to nie jedna sieć. To nakładające się obwody, które aktywują się progresywnie w miarę jak pogłębia się model innej osoby:</p>
+      <p><strong>Sieć teorii umysłu</strong> (mPFC, TPJ, TP): wnioskowanie o stanach mentalnych innych. Co myśli? Czego chce? Co zaraz zrobi? To podsystem DMN.ToM.</p>
+      <p><strong>Neurony lustrzane</strong> (IFG, IPL): rozumienie działań przez symulację motoryczną. Co robi? Naśladowanie i podstawa empatii automatycznej.</p>
+      <p><strong>Sieć nagrody społecznej</strong> (OFC, jądro półleżące): wartość społeczna interakcji. Przyjemność z relacji, motywacja do kontaktów.</p>
+      <p><strong>Sieć emocji społecznych</strong> (ciało migdałowate, wyspa, ACC): rozpoznawanie emocji, reakcje emocjonalne, monitorowanie konfliktu między własnym a cudzym punktem widzenia.</p>
+      <p>Te cztery nie są oddzielnymi pudełkami. IFG pojawia się zarówno w neuronach lustrzanych, jak i w sieci ToM. Wyspa jest w emocjach społecznych i w sieci salience. To cztery perspektywy na nachodzące się obwody, nie cztery osobne systemy.</p>
+    </div>
+
     <!-- ==================== TEORIA UMYSŁU ==================== -->
     <hr class="section-divider" />
     <h3>Teoria umysłu</h3>
@@ -719,6 +925,26 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p>Grecki żeglarz na wzburzonym morzu robił dokładnie to samo. Odbierał sygnały sensoryczne: fale, wiatr, grzmot. Najlepszym modelem tłumaczącym te informacje zmysłowe był wściekły Posejdon. Mechanizm predykcyjny był identyczny jak przy modelowaniu człowieka. Różnił się tylko obiekt modelowania.</p>
     <p>Bogowie, duchy, przodkowie: to modele agentów przekazywane kulturowo z pokolenia na pokolenie. Shared intentionality umożliwiła ich przechowywanie i transmisję: "my wszyscy wiemy, czego chce Posejdon, i wszyscy wiemy, że wszyscy wiemy." Nisza poznawcza rozszerzyła się poza świat fizyczny, w przestrzeń agentów niewidzialnych.</p>
     <p>Model agenta to nie tylko obiekt wiedzy. To źródło afordancji. Posejdon oferował afordancje przebłagania: można było złożyć ofiarę, zmienić kurs, odmówić modlitwę. Te afordancje są równie realne dla sieci mózgowych jak afordancja kamienia dla zmęczonego wędrowca: generują motywację, kierują działaniem, kształtują decyzje.</p>
+
+    <div class="s2" data-session="2">
+      <span class="session-origin">+ sesja 2: rozwój</span>
+      <h3>Teoria umysłu nie jest przełącznikiem</h3>
+      <p>Standardowa narracja: przed 4 rokiem życia dziecko nie ma teorii umysłu, po 4 roku ma. <strong>Test Sally-Anne</strong>: Sally kładzie piłkę w koszyku i wychodzi. Anne przenosi piłkę do pudełka. Sally wraca. Pytanie: gdzie Sally będzie szukać piłki? Trzylatek: w pudełku (tam, gdzie piłka jest). Pięciolatek: w koszyku (tam, gdzie Sally myśli, że piłka jest).</p>
+      <p>Ale Sally-Anne mierzy podłogę, nie sufit. Teoria umysłu to gradient:</p>
+      <p><strong>Poziom 0:</strong> brak modelu. Drugi człowiek to obiekt fizyczny.</p>
+      <p><strong>Poziom 1:</strong> ona myśli X. (Sally-Anne. Ok. 4 roku życia.)</p>
+      <p><strong>Poziom 2:</strong> jeśli powiem Y, poczuje Z. Tu znika brutalna szczerość dzieci. Pięciolatek mówi babci, że jej jedzenie jest paskudne. Nie jest okrutny. Jego model babci nie zawiera jeszcze "moje słowa mogą zranić jej uczucia dotyczące jej gotowania."</p>
+      <p><strong>Poziom 3:</strong> ona myśli, że ja myślę W. Białe kłamstwa. Dyplomacja.</p>
+      <p><strong>Poziom 4+:</strong> rekursja. "Wiem, że wiesz, że wiem..." Shared intentionality.</p>
+      <p>Każdy poziom rekrutuje więcej sieci. Poziom 1: DMN.ToM. Poziom 2: +emocje społeczne (ciało migdałowate, wyspa). Poziom 3: +kalkulacja kosztu (OFC). Cztery sieci mózgu społecznego to warstwy, które aktywują się progresywnie w miarę pogłębiania modelu.</p>
+      <h3>Kultura kształtuje kiedy, nie czy</h3>
+      <p>Dzieci samoańskie nie przechodzą testu Sally-Anne do 8 roku życia. 1/3 dzieci w wieku 10-13 lat wciąż go nie przechodzi (Mayer i Träuble, 2013, N>300). Zachodnie dzieci przechodzą ok. 4-5 roku.</p>
+      <p>Mechanizm: Samoa i kultury Pacyfiku (Kaluli/Bosavi w PNG, Tonga, Vanuatu) praktykują "doktrynę nieprzejrzystości umysłów" (Robbins i Rumsey, 2008). Dorośli nigdy nie przypisują intencji niemowlęcym wokalizacjom. Dzieci uczone są raportować co ktoś <em>zrobił</em>, nie co ktoś <em>czuł</em>. Spekulowanie o stanach mentalnych jest niestosowne.</p>
+      <p>Paradoks: gęste środowisko społeczne, ale późniejszy rozwój ToM. Sieć DMN.ToM jest obecna. Nisza kulturowa kształtuje kiedy i jak jest ćwiczona. To Vygotsky w czystej postaci.</p>
+      <p><em>Korekta: na zajęciach padła informacja o Quechua w Andach. To nie ta grupa kulturowa. Właściwa kultura to Samoa i Pacyfik.</em></p>
+      <h3>Alison Gopnik: dzieci jako naukowcy</h3>
+      <p>Gopnik proponuje, że dzieci nie są niedoskonałymi dorosłymi. Są zoptymalizowanymi maszynami do eksploracji. Dorośli eksploatują: korzystają z wyuczonych modeli. Dzieci eksplorują: testują więcej hipotez, akceptują większe błędy, próbują więcej wariantów. Wysoka temperatura w języku sieci neuronowych.</p>
+    </div>
 
     <!-- ==================== JĘZYK ==================== -->
     <hr class="section-divider" />
@@ -751,6 +977,22 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p>IFG składa to wszystko w plan wypowiedzi i wysyła predykcję motoryczną do SMN (inferior): wargi, język, krtań. W skrócie: powiedzenie czegoś to abstrakcyjne koncepty (TP + OFC) stopniowo ubierane w słowa (MTG, STG) i finalnie wypowiadane (IFG → SMN).</p>
 
+    <div class="s2" data-session="2">
+      <span class="session-origin">+ sesja 2: rozwój</span>
+      <h3>Język jako narzędzie myślenia: Vygotsky</h3>
+      <p>Vygotsky opisał trzy fazy internalizacji języka. To nie jest teoria. To obserwacja, którą możesz zweryfikować w dowolnym przedszkolu:</p>
+      <p><strong>Mowa społeczna (2+ lat):</strong> język służy wyłącznie komunikacji z innymi. Dziecko mówi do ludzi.</p>
+      <p><strong>Mowa prywatna (3+ lat):</strong> dziecko mówi do siebie na głos. Buduje wieżę z klocków i komentuje: "teraz ten... nie, za duży... ten mały..." To nie jest niedojrzałość. To jest język używany jako narzędzie kierowania własnym działaniem. Dziecko używa IFG (tego samego obszaru, który przetwarza mowę społeczną) do regulacji własnego zachowania.</p>
+      <p><strong>Mowa wewnętrzna (7+ lat):</strong> mowa prywatna staje się cicha. Internalizuje się. Staje się "myśleniem słowami." Cichy monolog wewnętrzny, którego używasz do planowania, rozumowania, refleksji.</p>
+      <p>Vygotsky'ego teza: poznanie idzie od społecznego do indywidualnego. Najpierw inni ludzie kierują twoim zachowaniem słowami. Potem ty kierujesz swoim zachowaniem własnymi słowami na głos. Na końcu kierujesz się cicho. Narzędzie społeczne staje się narzędziem wewnętrznym.</p>
+      <p>A co z osobami, które nie mają mowy wewnętrznej? <strong>Anendofazja</strong>: brak wewnętrznego monologu. Jeśli mowa wewnętrzna to finalny etap internalizacji Vygotskiego, to czym te osoby regulują swoje zachowanie? Innymi modalnościami? Obrazami? Intuicjami bez słów? Otwarte pytanie.</p>
+      <hr class="section-divider" />
+      <h3>Fałszywa dychotomia: mózg czy działanie?</h3>
+      <p>"Nie tylko przez działanie mózgu, ale też przez działanie w świecie." Poznanie ucieleśnione (embodied cognition) podkreśla, że procesy poznawcze nie zachodzą wyłącznie w mózgu. Są ściśle związane z ciałem, percepcją i działaniem w środowisku.</p>
+      <p>Ale to jest fałszywa dychotomia. Wszystko jest w mózgu w tym sensie, że doświadczasz modelu generowanego przez swoje sieci. Jednocześnie ten model jest o interakcji między tobą a światem. Ciało nie jest dodatkiem do poznania. Jest warunkiem poznania, bo bez ciała nie ma receptorów, bez receptorów nie ma błędów predykcyjnych, bez błędów nie ma uczenia. Predykcje dotyczą działania w świecie. Afordancje istnieją w relacji ciało-świat.</p>
+      <p>Mózg, ciało i działanie to nie trzy osobne składniki. To trzy perspektywy na ten sam proces. Jak trzy nisze Irikiego: neuronalna, ekologiczna, poznawcza. Trzy opisy, jedna rzeczywistość.</p>
+    </div>
+
     <!-- ==================== PYTANIA ==================== -->
     <hr class="section-divider" />
     <div class="questions-section">
@@ -768,6 +1010,12 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         <li><span class="question-num">10</span>Grecki żeglarz modli się do Posejdona. Połącz teorię umysłu, afordancje i niszę poznawczą w jednym spójnym wyjaśnieniu tego zachowania.</li>
         <li><span class="question-num">11</span>Neurony lustrzane znajdują się w obszarze Broki i IPL. Dlaczego te lokalizacje nie są przypadkowe? Połącz anatomię z funkcją i z poziomami predykcji.</li>
         <li><span class="question-num">12</span>Ten sam las: dla myśliwego - teren łowiecki, dla botanika - obiekt badań, dla dziecka - plac zabaw, dla uciekiniera - kryjówka. Żadna z tych afordancji nie jest "w lesie." Gdzie są? Co to oznacza dla pytania, czy zwierzęta "widzą" świat tak samo jak my?</li>
+        <li class="s2" data-session="2"><span class="question-num">13</span>Dziecko samoańskie nie przechodzi testu Sally-Anne do 8 roku życia. Dziecko zachodnie przechodzi go w wieku 5 lat. Obie grupy mają tę samą sieć DMN.ToM. Wyjaśnij tę różnicę przez pryzmat nisz Irikiego. Która nisza się różni?</li>
+        <li class="s2" data-session="2"><span class="question-num">14</span>Piaget: dziecko buduje wiedzę samo. Vygotsky: dziecko buduje wiedzę z pomocą. Opisz TEN KURS jako eksperyment: które elementy są piagetiańskie, a które vygotskiańskie?</li>
+        <li class="s2" data-session="2"><span class="question-num">15</span>Kocięta Hubela i Wiesela tracą kolumny dominacji ocznej. Dzieci rumuńskie mają deficyty poznawcze. Jaki wspólny mechanizm? Użyj pojęcia błędu predykcyjnego i okresów krytycznych.</li>
+        <li class="s2" data-session="2"><span class="question-num">16</span>Asymilacja i akomodacja Piageta w języku błędów predykcyjnych. Który proces odpowiada małemu błędowi, a który dużemu? Dlaczego ta różnica ma znaczenie?</li>
+        <li class="s2" data-session="2"><span class="question-num">17</span>Neurony lustrzane (IFG, IPL) i sieć ToM (mPFC, TPJ, TP). Czy to dwie oddzielne sieci? Co się dzieje gdy patrzysz jak ktoś sięga po szklankę vs. gdy zastanawiasz się DLACZEGO sięga?</li>
+        <li class="s2" data-session="2"><span class="question-num">18</span>Strefa najbliższego rozwoju: opisz dorosłego jako źródło błędów predykcyjnych dla mózgu dziecka. Jak scaffolding zmienia się gdy dziecko się uczy?</li>
       </ol>
     </div>
 
@@ -782,9 +1030,55 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item">Goodall, J. (1986). <em>The Chimpanzees of Gombe: Patterns of Behavior</em>. Harvard University Press.</p>
       <p class="bib-item">Iriki, A., &amp; Taoka, M. (2012). Triadic (ecological, neural, cognitive) niche construction. <em>Philosophical Transactions of the Royal Society B, 367</em>(1585), 10-23. <a href="https://doi.org/10.1098/rstb.2011.0190" target="_blank">doi:10.1098/rstb.2011.0190</a></p>
       <p class="bib-item">Tomasello, M. (2019). <em>Becoming Human: A Theory of Ontogeny</em>. Harvard University Press.</p>
+      <p class="bib-item s2" data-session="2">Piaget, J. (1952). <em>The Origins of Intelligence in Children</em>. International Universities Press.</p>
+      <p class="bib-item s2" data-session="2">Vygotsky, L. S. (1978). <em>Mind in Society: The Development of Higher Psychological Processes</em>. Harvard University Press.</p>
+      <p class="bib-item s2" data-session="2">Gopnik, A., Meltzoff, A. N., &amp; Kuhl, P. K. (1999). <em>The Scientist in the Crib: Minds, Brains, and How Children Learn</em>. William Morrow.</p>
+      <p class="bib-item s2" data-session="2">Mayer, A., &amp; Träuble, B. E. (2013). Synchrony in the onset of mental state understanding across cultures? <em>International Journal of Behavioral Development, 37</em>(1), 21-28.</p>
+      <p class="bib-item s2" data-session="2">Robbins, J., &amp; Rumsey, A. (2008). Introduction: Cultural and Linguistic Anthropology and the Opacity of Other Minds. <em>Anthropological Quarterly, 81</em>(2), 407-420.</p>
+      <p class="bib-item s2" data-session="2">Hubel, D. H., &amp; Wiesel, T. N. (1970). The period of susceptibility to the physiological effects of unilateral eye closure in kittens. <em>The Journal of Physiology, 206</em>(2), 419-436.</p>
+      <p class="bib-item s2" data-session="2">Blakemore, C., &amp; Cooper, G. F. (1970). Development of the brain depends on the visual environment. <em>Nature, 228</em>(5270), 477-478.</p>
     </div>
 
   </div>
 </PasswordGate>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.getElementById('tmSlider');
+    const current = document.getElementById('tmCurrent');
+    const stops = document.querySelectorAll('.tm-stop');
+    const sessionEls = document.querySelectorAll('[data-session]');
+
+    const sessionNames = {
+      1: 'Ewolucja i poznanie zwierząt',
+      2: 'Rozwój poznawczy'
+    };
+
+    function updateTimeMachine(val) {
+      const v = parseInt(val);
+
+      stops.forEach(s => {
+        const sVal = parseInt(s.dataset.s);
+        s.classList.toggle('active', sVal <= v);
+      });
+
+      current.textContent = 'Pokazuję stronę po sesji ' + v + ': ' + (sessionNames[v] || '');
+
+      sessionEls.forEach(el => {
+        const elSession = parseInt(el.dataset.session);
+        if (elSession > v) {
+          el.classList.add('hidden');
+        } else {
+          el.classList.remove('hidden');
+        }
+      });
+    }
+
+    if (slider) {
+      slider.addEventListener('input', (e) => updateTimeMachine(e.target.value));
+      updateTimeMachine(slider.value);
+    }
+  });
+</script>
 
 </Base>
