@@ -1051,68 +1051,48 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       2: 'Rozwój poznawczy'
     };
 
-    function updateTimeMachine(val, animate) {
+    function updateTimeMachine(val) {
       const v = parseInt(val);
+      const vcenter = window.innerHeight / 2;
 
-      // Find nearest PERMANENT element (never hidden) near top of viewport
-      const permanents = document.querySelectorAll('.course-page h2:not(.s2), .course-page h3:not(.s2), .course-page p:not(.s2):not([class*="s2"]), .course-page .formula-box, .course-page .video-block, .course-page .debate-grid, .course-page hr');
+      // Find permanent element CLOSEST to viewport center
+      const permanents = document.querySelectorAll('.course-page h2:not(.s2), .course-page h3:not(.s2), .course-page p:not(.s2), .course-page .formula-box, .course-page .video-label, .course-page .cascade-step, .course-page .niche-card, .course-page hr.section-divider');
       let anchorEl = null;
-      let anchorViewportTop = 0;
+      let anchorTop = 0;
+      let best = Infinity;
+
       for (const el of permanents) {
-        // Skip elements inside s2 containers
         if (el.closest('.s2')) continue;
-        // Skip if element has no height
-        if (el.offsetHeight === 0) continue;
-        const rect = el.getBoundingClientRect();
-        if (rect.top >= -100 && rect.top <= window.innerHeight * 0.6) {
+        if (el.parentElement && el.parentElement.classList.contains('s2')) continue;
+        if (!el.offsetHeight) continue;
+        const r = el.getBoundingClientRect();
+        const d = Math.abs(r.top + r.height / 2 - vcenter);
+        if (d < best) {
+          best = d;
           anchorEl = el;
-          anchorViewportTop = rect.top;
-          break;
-        }
-      }
-      // Fallback: find closest permanent element above viewport
-      if (!anchorEl) {
-        for (let i = permanents.length - 1; i >= 0; i--) {
-          const el = permanents[i];
-          if (el.closest('.s2')) continue;
-          if (el.offsetHeight === 0) continue;
-          const rect = el.getBoundingClientRect();
-          if (rect.top < 0) {
-            anchorEl = el;
-            anchorViewportTop = rect.top;
-            break;
-          }
+          anchorTop = r.top;
         }
       }
 
       stops.forEach(s => {
-        const sVal = parseInt(s.dataset.s);
-        s.classList.toggle('active', sVal <= v);
+        s.classList.toggle('active', parseInt(s.dataset.s) <= v);
       });
-
       current.textContent = 'Pokazuję stronę po sesji ' + v + ': ' + (sessionNames[v] || '');
 
       sessionEls.forEach(el => {
-        if (parseInt(el.dataset.session) > v) {
-          el.classList.add('hidden');
-        } else {
-          el.classList.remove('hidden');
-        }
+        el.classList.toggle('hidden', parseInt(el.dataset.session) > v);
       });
 
-      // Wait for browser to fully recalculate layout, then correct scroll
       if (anchorEl) {
-        // Double requestAnimationFrame ensures layout is complete
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            const newRect = anchorEl.getBoundingClientRect();
-            const drift = newRect.top - anchorViewportTop;
+            const drift = anchorEl.getBoundingClientRect().top - anchorTop;
             if (Math.abs(drift) > 1) {
-              const html = document.documentElement;
-              const prevBehavior = html.style.scrollBehavior;
-              html.style.scrollBehavior = 'auto';
+              const s = document.documentElement.style;
+              const prev = s.scrollBehavior;
+              s.scrollBehavior = 'auto';
               window.scrollBy(0, drift);
-              html.style.scrollBehavior = prevBehavior;
+              s.scrollBehavior = prev;
             }
           });
         });
