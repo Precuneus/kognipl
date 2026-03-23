@@ -1046,8 +1046,21 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       2: 'Rozwój poznawczy'
     };
 
-    function updateTimeMachine(val) {
+    function updateTimeMachine(val, animate) {
       const v = parseInt(val);
+
+      // Find the element closest to the top of viewport BEFORE toggling
+      const allAnchors = document.querySelectorAll('.course-page h2, .course-page h3, .course-page p:not(.s2), .course-page .cascade-step, .course-page .niche-card');
+      let anchorEl = null;
+      let anchorOffset = 0;
+      for (const el of allAnchors) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top >= -50 && rect.top <= window.innerHeight * 0.5) {
+          anchorEl = el;
+          anchorOffset = rect.top;
+          break;
+        }
+      }
 
       stops.forEach(s => {
         const sVal = parseInt(s.dataset.s);
@@ -1057,13 +1070,21 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       current.textContent = 'Pokazuję stronę po sesji ' + v + ': ' + (sessionNames[v] || '');
 
       sessionEls.forEach(el => {
-        const elSession = parseInt(el.dataset.session);
-        if (elSession > v) {
+        if (parseInt(el.dataset.session) > v) {
           el.classList.add('hidden');
         } else {
           el.classList.remove('hidden');
         }
       });
+
+      // Scroll back so the anchor element stays in the same viewport position
+      if (anchorEl) {
+        const newRect = anchorEl.getBoundingClientRect();
+        const drift = newRect.top - anchorOffset;
+        if (Math.abs(drift) > 2) {
+          window.scrollBy({ top: drift, behavior: 'instant' });
+        }
+      }
     }
 
     if (slider) {
