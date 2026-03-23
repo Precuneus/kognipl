@@ -495,10 +495,12 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     overflow: hidden;
   }
   .time-machine-inner {
-    max-width: 720px;
+    max-width: 672px;
     margin: 0 auto;
     padding: 0 24px;
     box-sizing: border-box;
+    touch-action: none;
+    -ms-touch-action: none;
   }
   .tm-label {
     font-family: var(--font-body);
@@ -520,8 +522,12 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     border-radius: 2px;
     cursor: pointer;
     touch-action: none;
+    -ms-touch-action: none;
     box-sizing: border-box;
     display: block;
+    padding: 14px 0;
+    margin: -14px 0;
+    background-clip: content-box;
   }
   .tm-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -1063,6 +1069,14 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     if (slider) {
       slider.addEventListener('input', (e) => updateTimeMachine(e.target.value));
       updateTimeMachine(slider.value);
+
+      // iOS Safari fix: prevent page scroll when touching the slider
+      const tmContainer = document.querySelector('.time-machine');
+      tmContainer.addEventListener('touchmove', (e) => {
+        if (e.target === slider || e.target.closest('.time-machine-inner')) {
+          e.preventDefault();
+        }
+      }, { passive: false });
     }
   });
 </script>
