@@ -7,7 +7,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 <Base title="Wstęp do kognitywistyki II - kogni.pl" activePage="kursy">
 
 <style is:global>
-  .course-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+  .course-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 140px; }
 
   .back-link {
     display: inline-block;
@@ -480,10 +480,21 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   /* ── Time machine slider ── */
   .time-machine {
     background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    padding: 14px 20px 18px;
-    margin-bottom: 40px;
-    position: relative;
+    border-top: 1px solid var(--border-subtle);
+    padding: 12px 20px 16px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--bg-card) 85%, transparent);
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+  }
+  .time-machine-inner {
+    max-width: 720px;
+    margin: 0 auto;
   }
   .tm-label {
     font-family: var(--font-body);
@@ -600,15 +611,17 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <button class="act-tab upcoming">Gdzie są granice?</button>
     </nav>
 
-    <!-- ==================== TIME MACHINE ==================== -->
+    <!-- ==================== TIME MACHINE (fixed bottom) ==================== -->
     <div class="time-machine">
-      <div class="tm-label">Oś czasu kursu</div>
-      <input type="range" class="tm-slider" id="tmSlider" min="1" max="2" value="2" step="1" />
-      <div class="tm-stops">
-        <span class="tm-stop active" data-s="1">Ewolucja</span>
-        <span class="tm-stop active" data-s="2">Rozwój</span>
+      <div class="time-machine-inner">
+        <div class="tm-label">Oś czasu kursu</div>
+        <input type="range" class="tm-slider" id="tmSlider" min="1" max="2" value="2" step="1" />
+        <div class="tm-stops">
+          <span class="tm-stop active" data-s="1">Ewolucja</span>
+          <span class="tm-stop active" data-s="2">Rozwój</span>
+        </div>
+        <div class="tm-current" id="tmCurrent">Pokazuję stronę po sesji 2: Rozwój poznawczy</div>
       </div>
-      <div class="tm-current" id="tmCurrent">Pokazuję stronę po sesji 2: Rozwój poznawczy</div>
     </div>
 
     <div class="session-header">
@@ -636,12 +649,13 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <div class="s2" data-session="2">
       <span class="session-origin">+ sesja 2: rozwój</span>
       <h3>Dziecko buduje modele</h3>
-      <p>Jean Piaget twierdził, że dziecko nie jest biernym odbiorcą wiedzy. Jest aktywnym konstruktorem modeli rzeczywistości. Każde stadium rozwoju to jakościowo inny rodzaj modelu predykcyjnego:</p>
-      <p><strong>Sensoryczno-motoryczne (0-2 lata):</strong> model oparty na zmysłach i ruchu. Dziecko odkrywa stałość przedmiotu: przedmiot nadal istnieje, choć go nie widzę. To pierwsza predykcja wykraczająca poza bezpośrednie dane sensoryczne.</p>
-      <p><strong>Przedoperacyjne (2-7 lat):</strong> model symboliczny. Pojawiają się słowa, zabawa symboliczna, ale myślenie jest egocentryczne. Dziecko nie potrafi jeszcze zbudować modelu perspektywy innej osoby.</p>
-      <p><strong>Operacji konkretnych (7-11 lat):</strong> model logiczny, ale ograniczony do konkretu. Zachowanie ilości, klasyfikacja, serializacja.</p>
+      <p>Schowaj zabawkę pod koc. Niemowlę patrzy na Ciebie. Nie szuka zabawki. Dla niego po prostu zniknęła. Wróć za pół roku. Teraz sięga pod koc. Co się zmieniło? Zbudowało model: przedmioty istnieją, nawet gdy ich nie widzę. Pierwsza predykcja wykraczająca poza dane sensoryczne.</p>
+      <p>Jean Piaget twierdził, że każde stadium rozwoju to jakościowo inny rodzaj modelu predykcyjnego:</p>
+      <p><strong>Sensoryczno-motoryczne (0-2 lata):</strong> model oparty na zmysłach i ruchu. Poznawanie przez dotykanie, wkładanie do ust, rzucanie. Stałość przedmiotu to odkrycie tego okresu.</p>
+      <p><strong>Przedoperacyjne (2-7 lat):</strong> model symboliczny. Pojawiają się słowa, zabawa symboliczna. Ale myślenie jest egocentryczne: nie potrafisz jeszcze zbudować modelu perspektywy innej osoby. Góra wygląda tak samo z każdej strony, prawda?</p>
+      <p><strong>Operacji konkretnych (7-11 lat):</strong> model logiczny na konkrecie. Zachowanie ilości, klasyfikacja, serializacja. Przelewasz wodę z niskiego szerokiego naczynia do wysokiego wąskiego. Teraz wiesz, że ilość się nie zmieniła.</p>
       <p><strong>Operacji formalnych (11+ lat):</strong> model abstrakcyjny. Hipotetyczne myślenie, dedukcja, operacje na operacjach.</p>
-      <p>Dwa mechanizmy napędzają ten rozwój. <strong>Asymilacja</strong> to włączanie nowych informacji do istniejącego modelu. Mały błąd predykcyjny: model się aktualizuje, ale nie zmienia swojej struktury. <strong>Akomodacja</strong> to przebudowa modelu, gdy nowe informacje są zbyt zaskakujące. Duży błąd predykcyjny: potrzebny nowy schemat. Piłka okrągła zawsze się toczy. Piłka do rugby się nie toczy prosto. Dziecko modyfikuje schemat "piłki."</p>
+      <p>Dwa mechanizmy napędzają ten rozwój. <strong>Asymilacja:</strong> nowe informacje pasują do istniejącego modelu. Mały błąd predykcyjny. Model się aktualizuje, ale struktura stoi. <strong>Akomodacja:</strong> nowe informacje są zbyt zaskakujące. Duży błąd predykcyjny. Potrzebny nowy schemat. Piłka okrągła zawsze się toczy. Piłka do rugby nie toczy się prosto. Schemat "piłki" wymaga przebudowy.</p>
       <p>Piaget nie używał pojęcia błędu predykcyjnego. Ale mechanizm jest ten sam: rozbieżność między oczekiwaniem a doświadczeniem napędza rozwój.</p>
     </div>
 
@@ -662,7 +676,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p><strong>Strefa najbliższego rozwoju (ZPD)</strong> to przestrzeń między tym, co potrafisz sam, a tym, co potrafisz z pomocą. W języku predykcyjnym: przestrzeń między modelami, które twoje sieci już zbudowały, a modelami, które mogą zbudować przy odpowiednich błędach predykcyjnych dostarczonych z zewnątrz.</p>
       <p><strong>Scaffolding</strong> to rusztowanie: struktura wsparcia, która stopniowo się wycofuje w miarę jak Twój model się kalibruje. Na początku duże wsparcie, duże błędy predykcyjne. Na końcu: sam budujesz predykcje. Rusztowanie znika, bo Twoje sieci przejęły jego funkcję.</p>
       <p><strong>MKO</strong> (More Knowledgeable Other) to osoba z lepiej skalibrowanymi modelami. Nie musi być nauczycielem. Może być rówieśnikiem, rodzicem, a nawet technologią. Kluczem jest to, że MKO generuje błędy predykcyjne we właściwej strefie: nie za łatwe (brak uczenia) i nie za trudne (brak integracji).</p>
-      <p>Piaget powiedziałby: dziecko samo odkrywa świat. Vygotsky: dziecko odkrywa świat, ale ktoś stoi obok i pokazuje mu, co warto odkryć. To jest fałszywa dychotomia: oba mechanizmy działają jednocześnie. Piaget opisuje silnik (budowanie modeli). Vygotsky opisuje kalibrację (kto dostarcza odpowiednie błędy).</p>
+      <p>Piaget opisuje silnik: Ty budujesz modele. Vygotsky opisuje kalibrację: kto dostarcza Ci odpowiednie błędy. Oba mechanizmy działają jednocześnie. Dziecko i odkrywa świat samo, i jest kalibrowane przez otoczenie. Pytanie nie brzmi "kto ma rację?" Pytanie brzmi: ile z Twojego modelu świata zbudowałeś sam, a ile ktoś Ci skalibrował?</p>
       <p><em>Ten kurs sam w sobie jest eksperymentem Vygotskiańskim. Przychodzisz na konsultacje przed prezentacją. To jest scaffolding. Piaget powiedziałby: odkryjcie sami.</em></p>
     </div>
 
@@ -910,12 +924,12 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <div class="s2" data-session="2">
       <span class="session-origin">+ sesja 2: rozwój</span>
       <h3>Cztery sieci mózgu społecznego</h3>
-      <p>Ludzki mózg społeczny to nie jedna sieć. To nakładające się obwody, które aktywują się progresywnie w miarę jak pogłębia się model innej osoby:</p>
+      <p>Ludzki mózg społeczny to nakładające się obwody, które aktywują się progresywnie w miarę jak pogłębia się Twój model innej osoby:</p>
       <p><strong>Sieć teorii umysłu</strong> (mPFC, TPJ, TP): wnioskowanie o stanach mentalnych innych. Co myśli? Czego chce? Co zaraz zrobi? To podsystem DMN.ToM.</p>
       <p><strong>Neurony lustrzane</strong> (IFG, IPL): rozumienie działań przez symulację motoryczną. Co robi? Naśladowanie i podstawa empatii automatycznej.</p>
       <p><strong>Sieć nagrody społecznej</strong> (OFC, jądro półleżące): wartość społeczna interakcji. Przyjemność z relacji, motywacja do kontaktów.</p>
       <p><strong>Sieć emocji społecznych</strong> (ciało migdałowate, wyspa, ACC): rozpoznawanie emocji, reakcje emocjonalne, monitorowanie konfliktu między własnym a cudzym punktem widzenia.</p>
-      <p>Te cztery nie są oddzielnymi pudełkami. IFG pojawia się zarówno w neuronach lustrzanych, jak i w sieci ToM. Wyspa jest w emocjach społecznych i w sieci salience. To cztery perspektywy na nachodzące się obwody, nie cztery osobne systemy.</p>
+      <p>Te cztery nachodzą na siebie. IFG pojawia się zarówno w neuronach lustrzanych, jak i w sieci ToM. Wyspa jest w emocjach społecznych i w sieci salience. Cztery perspektywy na wspólne obwody.</p>
     </div>
 
     <!-- ==================== TEORIA UMYSŁU ==================== -->
@@ -928,12 +942,13 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <div class="s2" data-session="2">
       <span class="session-origin">+ sesja 2: rozwój</span>
-      <h3>Teoria umysłu nie jest przełącznikiem</h3>
-      <p>Standardowa narracja: przed 4 rokiem życia dziecko nie ma teorii umysłu, po 4 roku ma. <strong>Test Sally-Anne</strong>: Sally kładzie piłkę w koszyku i wychodzi. Anne przenosi piłkę do pudełka. Sally wraca. Pytanie: gdzie Sally będzie szukać piłki? Trzylatek: w pudełku (tam, gdzie piłka jest). Pięciolatek: w koszyku (tam, gdzie Sally myśli, że piłka jest).</p>
+      <h3>Teoria umysłu to gradient</h3>
+      <p>Pięciolatek mówi babci: "Twoje jedzenie jest obrzydliwe." Nie jest okrutny. Po prostu nie ma jeszcze modelu, w którym babcia ma uczucia dotyczące swojego gotowania, i w którym jego słowa mogą te uczucia zranić. Przechodzi test Sally-Anne (wie, że ktoś inny może wierzyć w coś nieprawdziwego), ale nie modeluje emocjonalnych konsekwencji swoich słów.</p>
+      <p><strong>Test Sally-Anne:</strong> Sally kładzie piłkę w koszyku i wychodzi. Anne przenosi piłkę do pudełka. Sally wraca. Trzylatek: "będzie szukać w pudełku." Pięciolatek: "w koszyku, bo tam myśli, że jest." Przejście od egocentryzmu do modelowania cudzego przekonania. Ok. 4 roku życia.</p>
       <p>Ale Sally-Anne mierzy podłogę, nie sufit. Teoria umysłu to gradient:</p>
       <p><strong>Poziom 0:</strong> brak modelu. Drugi człowiek to obiekt fizyczny.</p>
       <p><strong>Poziom 1:</strong> ona myśli X. (Sally-Anne. Ok. 4 roku życia.)</p>
-      <p><strong>Poziom 2:</strong> jeśli powiem Y, poczuje Z. Tu znika brutalna szczerość dzieci. Pięciolatek mówi babci, że jej jedzenie jest paskudne. Nie jest okrutny. Jego model babci nie zawiera jeszcze "moje słowa mogą zranić jej uczucia dotyczące jej gotowania."</p>
+      <p><strong>Poziom 2:</strong> jeśli powiem Y, poczuje Z. Tu znika brutalna szczerość dzieci. Pięciolatek z babcią. Modelujesz nie tylko co ktoś myśli, ale co poczuje w odpowiedzi na Twoje działanie.</p>
       <p><strong>Poziom 3:</strong> ona myśli, że ja myślę W. Białe kłamstwa. Dyplomacja.</p>
       <p><strong>Poziom 4+:</strong> rekursja. "Wiem, że wiesz, że wiem..." Shared intentionality.</p>
       <p>Każdy poziom rekrutuje więcej sieci. Poziom 1: DMN.ToM. Poziom 2: +emocje społeczne (ciało migdałowate, wyspa). Poziom 3: +kalkulacja kosztu (OFC). Cztery sieci mózgu społecznego to warstwy, które aktywują się progresywnie w miarę pogłębiania modelu.</p>
@@ -943,7 +958,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p>Paradoks: gęste środowisko społeczne, ale późniejszy rozwój ToM. Sieć DMN.ToM jest obecna. Nisza kulturowa kształtuje kiedy i jak jest ćwiczona. To Vygotsky w czystej postaci.</p>
       <p><em>Korekta: na zajęciach padła informacja o Quechua w Andach. To nie ta grupa kulturowa. Właściwa kultura to Samoa i Pacyfik.</em></p>
       <h3>Alison Gopnik: dzieci jako naukowcy</h3>
-      <p>Gopnik proponuje, że dzieci nie są niedoskonałymi dorosłymi. Są zoptymalizowanymi maszynami do eksploracji. Dorośli eksploatują: korzystają z wyuczonych modeli. Dzieci eksplorują: testują więcej hipotez, akceptują większe błędy, próbują więcej wariantów. Wysoka temperatura w języku sieci neuronowych.</p>
+      <p>Gopnik proponuje, że dzieci to zoptymalizowane maszyny do eksploracji. Dorośli eksploatują: korzystają z wyuczonych modeli. Dzieci eksplorują: testują więcej hipotez, akceptują większe błędy, próbują więcej wariantów. Wysoka temperatura w języku sieci neuronowych.</p>
     </div>
 
     <!-- ==================== JĘZYK ==================== -->
@@ -980,17 +995,17 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <div class="s2" data-session="2">
       <span class="session-origin">+ sesja 2: rozwój</span>
       <h3>Język jako narzędzie myślenia: Vygotsky</h3>
-      <p>Vygotsky opisał trzy fazy internalizacji języka. To nie jest teoria. To obserwacja, którą możesz zweryfikować w dowolnym przedszkolu:</p>
+      <p>Vygotsky opisał trzy fazy internalizacji języka. Obserwacja, którą możesz zweryfikować w dowolnym przedszkolu:</p>
       <p><strong>Mowa społeczna (2+ lat):</strong> język służy wyłącznie komunikacji z innymi. Dziecko mówi do ludzi.</p>
-      <p><strong>Mowa prywatna (3+ lat):</strong> dziecko mówi do siebie na głos. Buduje wieżę z klocków i komentuje: "teraz ten... nie, za duży... ten mały..." To nie jest niedojrzałość. To jest język używany jako narzędzie kierowania własnym działaniem. Dziecko używa IFG (tego samego obszaru, który przetwarza mowę społeczną) do regulacji własnego zachowania.</p>
+      <p><strong>Mowa prywatna (3+ lat):</strong> dziecko mówi do siebie na głos. Buduje wieżę z klocków i komentuje: "teraz ten... nie, za duży... ten mały..." Język jako narzędzie kierowania własnym działaniem. Dziecko używa IFG (tego samego obszaru, który przetwarza mowę społeczną) do regulacji własnego zachowania.</p>
       <p><strong>Mowa wewnętrzna (7+ lat):</strong> mowa prywatna staje się cicha. Internalizuje się. Staje się "myśleniem słowami." Cichy monolog wewnętrzny, którego używasz do planowania, rozumowania, refleksji.</p>
       <p>Vygotsky'ego teza: poznanie idzie od społecznego do indywidualnego. Najpierw inni ludzie kierują twoim zachowaniem słowami. Potem ty kierujesz swoim zachowaniem własnymi słowami na głos. Na końcu kierujesz się cicho. Narzędzie społeczne staje się narzędziem wewnętrznym.</p>
       <p>A co z osobami, które nie mają mowy wewnętrznej? <strong>Anendofazja</strong>: brak wewnętrznego monologu. Jeśli mowa wewnętrzna to finalny etap internalizacji Vygotskiego, to czym te osoby regulują swoje zachowanie? Innymi modalnościami? Obrazami? Intuicjami bez słów? Otwarte pytanie.</p>
       <hr class="section-divider" />
-      <h3>Fałszywa dychotomia: mózg czy działanie?</h3>
-      <p>"Nie tylko przez działanie mózgu, ale też przez działanie w świecie." Poznanie ucieleśnione (embodied cognition) podkreśla, że procesy poznawcze nie zachodzą wyłącznie w mózgu. Są ściśle związane z ciałem, percepcją i działaniem w środowisku.</p>
-      <p>Ale to jest fałszywa dychotomia. Wszystko jest w mózgu w tym sensie, że doświadczasz modelu generowanego przez swoje sieci. Jednocześnie ten model jest o interakcji między tobą a światem. Ciało nie jest dodatkiem do poznania. Jest warunkiem poznania, bo bez ciała nie ma receptorów, bez receptorów nie ma błędów predykcyjnych, bez błędów nie ma uczenia. Predykcje dotyczą działania w świecie. Afordancje istnieją w relacji ciało-świat.</p>
-      <p>Mózg, ciało i działanie to nie trzy osobne składniki. To trzy perspektywy na ten sam proces. Jak trzy nisze Irikiego: neuronalna, ekologiczna, poznawcza. Trzy opisy, jedna rzeczywistość.</p>
+      <h3>Mózg czy działanie?</h3>
+      <p>"Poznanie nie zachodzi wyłącznie w mózgu, ale wynika z interakcji mózg-ciało-otoczenie." To jest prawda. I jednocześnie: wszystko, czego doświadczasz, to model generowany przez Twoje sieci. Obie rzeczy naraz.</p>
+      <p>Jak to pogodzić? Bez ciała nie ma receptorów. Bez receptorów nie ma błędów predykcyjnych. Bez błędów nie ma uczenia. Ciało jest warunkiem poznania. Predykcje dotyczą działania w świecie. Afordancje istnieją w relacji ciało-świat.</p>
+      <p>Mózg, ciało i działanie to trzy perspektywy na ten sam proces. Jak trzy nisze Irikiego: neuronalna, ekologiczna, poznawcza. Trzy opisy, jedna rzeczywistość.</p>
     </div>
 
     <!-- ==================== PYTANIA ==================== -->
