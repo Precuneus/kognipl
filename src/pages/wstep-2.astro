@@ -482,7 +482,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   .time-machine {
     background: var(--bg-card);
     border-top: 1px solid var(--border-subtle);
-    padding: 12px 20px 16px;
+    padding: 12px 0 16px;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -492,10 +492,13 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     -webkit-backdrop-filter: blur(12px);
     background: color-mix(in srgb, var(--bg-card) 85%, transparent);
     box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
   }
   .time-machine-inner {
     max-width: 720px;
     margin: 0 auto;
+    padding: 0 24px;
+    box-sizing: border-box;
   }
   .tm-label {
     font-family: var(--font-body);
@@ -508,6 +511,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   }
   .tm-slider {
     width: 100%;
+    max-width: 100%;
     -webkit-appearance: none;
     appearance: none;
     height: 3px;
@@ -516,6 +520,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     border-radius: 2px;
     cursor: pointer;
     touch-action: none;
+    box-sizing: border-box;
+    display: block;
   }
   .tm-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
