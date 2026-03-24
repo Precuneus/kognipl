@@ -7,7 +7,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 <Base title="Wstęp do kognitywistyki II - kogni.pl" activePage="kursy">
 
 <style is:global>
-  .course-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 140px; }
+  .course-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 100px; }
 
   .back-link {
     display: inline-block;
@@ -482,7 +482,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   .time-machine {
     background: var(--bg-card);
     border-top: 1px solid var(--border-subtle);
-    padding: 12px 0 16px;
+    padding: 8px 0 12px;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -501,15 +501,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     box-sizing: border-box;
     touch-action: none;
     -ms-touch-action: none;
-  }
-  .tm-label {
-    font-family: var(--font-body);
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 10px;
   }
   .tm-slider {
     width: 100%;
@@ -570,16 +561,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     color: var(--warm-glow);
     font-weight: 500;
   }
-  .tm-current {
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--text-secondary);
-    margin-top: 6px;
-    text-align: center;
-    min-height: 18px;
-  }
-
   /* ── Session additions: inline spans + standalone blocks ── */
   .s2 {
     transition: opacity 0.4s ease;
@@ -641,13 +622,11 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <!-- ==================== TIME MACHINE (fixed bottom) ==================== -->
     <div class="time-machine">
       <div class="time-machine-inner">
-        <div class="tm-label">Oś czasu kursu</div>
         <input type="range" class="tm-slider" id="tmSlider" min="1" max="2" value="2" step="1" />
         <div class="tm-stops">
           <span class="tm-stop active" data-s="1">Ewolucja</span>
           <span class="tm-stop active" data-s="2">Rozwój</span>
         </div>
-        <div class="tm-current" id="tmCurrent">Pokazuję stronę po sesji 2: Rozwój poznawczy</div>
       </div>
     </div>
 
@@ -1071,14 +1050,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const slider = document.getElementById('tmSlider');
-    const current = document.getElementById('tmCurrent');
     const stops = document.querySelectorAll('.tm-stop');
     const sessionEls = document.querySelectorAll('[data-session]');
-
-    const sessionNames = {
-      1: 'Ewolucja',
-      2: 'Rozwój poznawczy'
-    };
 
     function updateTimeMachine(val) {
       const v = parseInt(val);
@@ -1106,7 +1079,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       stops.forEach(s => {
         s.classList.toggle('active', parseInt(s.dataset.s) <= v);
       });
-      current.textContent = 'Pokazuję stronę po sesji ' + v + ': ' + (sessionNames[v] || '');
 
       sessionEls.forEach(el => {
         el.classList.toggle('hidden', parseInt(el.dataset.session) > v);
