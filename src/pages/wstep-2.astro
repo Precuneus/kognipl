@@ -1215,31 +1215,48 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       const oldV = lastV;
       lastV = v;
 
-      // Anchor: first element clearly visible (below header) that survives BOTH old and new value
-      const headerH = 80; // safe zone below sticky header/nav
-      const allContent = document.querySelectorAll('.course-page h2, .course-page h3, .course-page p, .course-page .formula-box, .course-page .video-label, .course-page .cascade-step, .course-page .niche-card, .course-page hr.section-divider, .course-page .figure-block, .course-page .video-block');
+      // Anchor priority: 1) user's text selection, 2) first visible element below header
+      const headerH = 80;
       let anchorEl = null;
       let anchorTop = 0;
-      let best = Infinity;
 
-      for (const el of allContent) {
-        if (!el.offsetHeight) continue;
-        // Must survive both old and new session value
-        const sess = el.dataset.session || (el.closest('[data-session]') && el.closest('[data-session]').dataset.session);
-        if (sess) {
-          const s = parseInt(sess);
-          if (s > v || s > oldV) continue;
+      // Check if user has selected text
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+        let node = sel.getRangeAt(0).startContainer;
+        if (node.nodeType === 3) node = node.parentElement;
+        const candidate = node.closest('p, h2, h3, li, .formula-box, .cascade-step, .niche-card, .figure-block');
+        if (candidate && candidate.offsetHeight) {
+          const sess = candidate.dataset.session || (candidate.closest('[data-session]') && candidate.closest('[data-session]').dataset.session);
+          const survives = !sess || (parseInt(sess) <= v && parseInt(sess) <= oldV);
+          if (survives) {
+            anchorEl = candidate;
+            anchorTop = candidate.getBoundingClientRect().top;
+          }
         }
-        const r = el.getBoundingClientRect();
-        // Skip elements above the visible reading zone (behind header)
-        if (r.bottom < headerH) continue;
-        // Pick the first element whose top is at or below the header
-        const visibleTop = Math.max(r.top, headerH);
-        const d = visibleTop - headerH;
-        if (d < best) {
-          best = d;
-          anchorEl = el;
-          anchorTop = r.top;
+      }
+
+      // Fallback: first visible element below header that survives both values
+      if (!anchorEl) {
+        const allContent = document.querySelectorAll('.course-page h2, .course-page h3, .course-page p, .course-page .formula-box, .course-page .video-label, .course-page .cascade-step, .course-page .niche-card, .course-page hr.section-divider, .course-page .figure-block, .course-page .video-block');
+        let best = Infinity;
+
+        for (const el of allContent) {
+          if (!el.offsetHeight) continue;
+          const sess = el.dataset.session || (el.closest('[data-session]') && el.closest('[data-session]').dataset.session);
+          if (sess) {
+            const s = parseInt(sess);
+            if (s > v || s > oldV) continue;
+          }
+          const r = el.getBoundingClientRect();
+          if (r.bottom < headerH) continue;
+          const visibleTop = Math.max(r.top, headerH);
+          const d = visibleTop - headerH;
+          if (d < best) {
+            best = d;
+            anchorEl = el;
+            anchorTop = r.top;
+          }
         }
       }
 
