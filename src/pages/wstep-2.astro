@@ -1194,20 +1194,22 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     function updateTimeMachine(val) {
       const v = parseInt(val);
-      const vcenter = window.innerHeight / 2;
 
-      // Find permanent element CLOSEST to viewport center
-      const permanents = document.querySelectorAll('.course-page h2:not(.s2), .course-page h3:not(.s2), .course-page p:not(.s2), .course-page .formula-box, .course-page .video-label, .course-page .cascade-step, .course-page .niche-card, .course-page hr.section-divider');
+      // Find anchor: first visible element near viewport top that will SURVIVE the toggle
+      const allContent = document.querySelectorAll('.course-page h2, .course-page h3, .course-page p, .course-page .formula-box, .course-page .video-label, .course-page .cascade-step, .course-page .niche-card, .course-page hr.section-divider, .course-page .figure-block, .course-page .video-block');
       let anchorEl = null;
       let anchorTop = 0;
       let best = Infinity;
 
-      for (const el of permanents) {
-        if (el.closest('.s2')) continue;
-        if (el.parentElement && el.parentElement.classList.contains('s2')) continue;
+      for (const el of allContent) {
+        // Skip elements that will be hidden at the new value
+        const sess = el.dataset.session || (el.closest('[data-session]') && el.closest('[data-session]').dataset.session);
+        if (sess && parseInt(sess) > v) continue;
         if (!el.offsetHeight) continue;
         const r = el.getBoundingClientRect();
-        const d = Math.abs(r.top + r.height / 2 - vcenter);
+        // Find element closest to viewport top (within visible area)
+        if (r.top < -r.height) continue;
+        const d = Math.abs(r.top);
         if (d < best) {
           best = d;
           anchorEl = el;
