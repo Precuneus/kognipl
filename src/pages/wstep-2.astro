@@ -704,7 +704,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       </div>
     </div>
     <p class="s2" data-session="2">Piaget opisał ten proces jako stadia rozwoju. Odzwierciedlają one trening kolejnych sieci neuronowych (sensomotorycznych, uwagi, kontroli, domyślnej). Sieci przekazują informacje między sobą, dostarczając sobie błędy predykcyjne (bottom-up) i predykcje (top-down). Stadia rozwoju wskazują na kolejność wyłaniania się kompetencji, jednak ich rozwój trwa całe życie. Stadium sensomotoryczne (i pierwszorzędowe sieci oraz sieć uwagowa) to fundament, na którym budowane są struktury kolejnych sieci.</p>
-    <p class="s2" data-session="2"><strong>Sensoryczno-motoryczne (0-2 lata):</strong> świat jest czystym doznaniem. Dotyk, smak, ruch. Chwytasz, wkładasz do ust, rzucasz. Powoli odkrywasz, że rzeczy istnieją nawet gdy na nie nie patrzysz. Twój pierwszy model: świat trwa. Ten model buduje się we wspólnej przestrzeni (we-space) wraz z opiekunami. Opiekun dostarcza pierwsze i najważniejsze (z perspektywy dziecka) afordancje. Sieci sensoryczne (01) dominują. Wszystko jest bottom-up. Komunikacja jest przedwerbalna: synchronizacja spojrzenia, mimiki, wokalizacji.</p>
+    <p class="s2" data-session="2"><strong>Sensoryczno-motoryczne (0-2 lata):</strong> świat jest czystym doznaniem. Dotyk, smak, ruch. Chwytasz, wkładasz do ust, rzucasz. Powoli odkrywasz, że rzeczy istnieją nawet gdy na nie nie patrzysz. Twój pierwszy model: świat trwa. Ten model buduje się we wspólnej przestrzeni wraz z opiekunami (we-space). Opiekun dostarcza pierwsze i najważniejsze (z perspektywy dziecka) afordancje. Sieci sensoryczne (01) dominują. Wszystko jest bottom-up. Komunikacja jest przedwerbalna: synchronizacja spojrzenia, mimiki, wokalizacji.</p>
     <div class="video-grid s2" data-session="2" style="grid-template-columns: repeat(2, 1fr);">
       <div class="video-grid-item">
         <div class="video-wrapper">
@@ -1208,24 +1208,34 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     const stops = document.querySelectorAll('.tm-stop');
     const sessionEls = document.querySelectorAll('[data-session]');
 
+    let lastV = parseInt(slider ? slider.value : 1);
+
     function updateTimeMachine(val) {
       const v = parseInt(val);
+      const oldV = lastV;
+      lastV = v;
 
-      // Find anchor: first visible element near viewport top that will SURVIVE the toggle
+      // Anchor: first element clearly visible (below header) that survives BOTH old and new value
+      const headerH = 80; // safe zone below sticky header/nav
       const allContent = document.querySelectorAll('.course-page h2, .course-page h3, .course-page p, .course-page .formula-box, .course-page .video-label, .course-page .cascade-step, .course-page .niche-card, .course-page hr.section-divider, .course-page .figure-block, .course-page .video-block');
       let anchorEl = null;
       let anchorTop = 0;
       let best = Infinity;
 
       for (const el of allContent) {
-        // Skip elements that will be hidden at the new value
-        const sess = el.dataset.session || (el.closest('[data-session]') && el.closest('[data-session]').dataset.session);
-        if (sess && parseInt(sess) > v) continue;
         if (!el.offsetHeight) continue;
+        // Must survive both old and new session value
+        const sess = el.dataset.session || (el.closest('[data-session]') && el.closest('[data-session]').dataset.session);
+        if (sess) {
+          const s = parseInt(sess);
+          if (s > v || s > oldV) continue;
+        }
         const r = el.getBoundingClientRect();
-        // Find element closest to viewport top (within visible area)
-        if (r.top < -r.height) continue;
-        const d = Math.abs(r.top);
+        // Skip elements above the visible reading zone (behind header)
+        if (r.bottom < headerH) continue;
+        // Pick the first element whose top is at or below the header
+        const visibleTop = Math.max(r.top, headerH);
+        const d = visibleTop - headerH;
         if (d < best) {
           best = d;
           anchorEl = el;
