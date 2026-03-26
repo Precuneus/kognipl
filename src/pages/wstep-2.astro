@@ -606,6 +606,40 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   .s2.hidden {
     display: none;
   }
+  /* ── Session 3 additions (sage green tint) ── */
+  .s3 {
+    transition: opacity 0.4s ease;
+  }
+  p.s3, li.s3 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #6cc89a 30%);
+  }
+  p.s3 strong, li.s3 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #6cc89a 30%);
+  }
+  h3.s3 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #6cc89a 25%);
+  }
+  p.s3 em {
+    color: color-mix(in srgb, var(--text-dim) 70%, #6cc89a 30%);
+  }
+  span.s3 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #6cc89a 30%);
+  }
+  span.s3 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #6cc89a 30%);
+  }
+  div.s3 p, div.s3 li, div.s3 .cascade-desc, div.s3 .niche-card p {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #6cc89a 30%);
+  }
+  div.s3 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #6cc89a 30%);
+  }
+  div.s3 h3 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #6cc89a 25%);
+  }
+  .s3.hidden {
+    display: none;
+  }
 
 </style>
 
@@ -630,10 +664,11 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <!-- ==================== TIME MACHINE (fixed bottom) ==================== -->
     <div class="time-machine">
       <div class="time-machine-inner">
-        <input type="range" class="tm-slider" id="tmSlider" min="1" max="2" value="2" step="1" />
+        <input type="range" class="tm-slider" id="tmSlider" min="1" max="3" value="3" step="1" />
         <div class="tm-stops">
           <span class="tm-stop active" data-s="1">Ewolucja</span>
           <span class="tm-stop active" data-s="2">Rozwój</span>
+          <span class="tm-stop active" data-s="3">Dopamina</span>
         </div>
       </div>
     </div>
@@ -708,6 +743,28 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s2" data-session="2">Dwa mechanizmy kształtują rozwój. <strong>Asymilacja:</strong> nowe doświadczenie pasuje do istniejącego modelu. Mały błąd predykcyjny, model się aktualizuje. <strong>Akomodacja:</strong> doświadczenie jest zbyt zaskakujące. Duży błąd predykcyjny, potrzebny nowy model. Piłka okrągła toczy się przewidywalnie. Piłka do rugby nie. Model "piłki" wymaga przebudowy.</p>
     <p>Najogólniej mówiąc, uczenie się to proces budowania modelu świata. Wcześniejsze doświadczenia trenują Twój model i kształtują predykcje na przyszłość.</p>
 
+    <p class="s3" data-session="3">Tolman pokazał, że model nie buduje się ze ślepych łańcuchów bodziec-reakcja. Szczury, które eksplorowały labirynt bez nagrody, zbudowały mapę poznawczą. Kiedy nagroda się pojawiła, natychmiast użyły skrótów. Hipokamp (HPC) to miejsce, w którym te mapy mieszkają (komórki miejsca O'Keefe'a).</p>
+    <p class="s3" data-session="3">W miarę jak model staje się niezawodny przez powtarzanie, zachowanie stopniowo przenosi się z hipokampa (elastyczny, deklaratywny: "pamiętam, jak tam dojechać") do prążkowia grzbietowo-bocznego (automatyczny, nawykowy: "ciało samo jedzie"). To gradient od nauki jazdy do jazdy na autopilocie. Dopamina konsoliduje ten transfer.</p>
+    <p class="s3" data-session="3">Hipokamp wykrywa nowość. Sygnał dociera do istoty czarnej (SN, Substantia Nigra) 527 ms później (Kaminski et al. 2018, zapis u przytomnych ludzi). Neurony dopaminergiczne SN odpalają i wysyłają sygnał konsolidacyjny z powrotem. Pętla: wykryj nowość, skonsoliduj, zaktualizuj model.</p>
+    <p class="s3" data-session="3">Trzy źródła dostarczają dopaminę do hipokampa. Miejsce sinawe (LC, Locus Coeruleus): najgęstsza projekcja, współuwalnia dopaminę obok noradrenaliny (laboratorium Tonegawy). Reaguje na nowość środowiskową w szerokim oknie czasowym, ok. godziny. VTA (Ventral Tegmental Area, pole brzuszne nakrywki): skąpa projekcja do grzbietowego hipokampa, gęstsza do brzusznego. Reaguje na nowość związaną z nagrodą w wąskim oknie. Istota czarna: pętla Lismana-Grace'a, potwierdzona u ludzi przez Kaminskiego.</p>
+
+    <figure class="figure-block s3" data-session="3">
+      <img src="/images/dopamine_pathways_wikimedia.svg" alt="Trzy główne szlaki dopaminergiczne mózgu" />
+      <figcaption>Trzy główne szlaki dopaminergiczne: nigrostriatalny (SN &rarr; prążkowie), mezolimbiczny (VTA &rarr; NAcc) i mezokortykalny (VTA &rarr; kora prefrontalna). Źródło: Wikimedia Commons, Public Domain.</figcaption>
+    </figure>
+
+    <div class="video-block s3" data-session="3">
+      <div class="video-label">2-Minute Neuroscience · Dopamina</div>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/Wa8_nLwQIpg"
+          title="2-Minute Neuroscience: Dopamine"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
     <hr class="section-divider" />
 
     <h3>Predykcja</h3>
@@ -717,6 +774,23 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p>Nagle samochód przed Tobą zaczyna hamować. Automatycznie reagujesz. Wciskasz hamulec, odbijasz kierownicę, w międzyczasie zerkając w lusterko, czy pas obok jest wolny. Samochód przed Tobą zachował się niespodziewanie - zaskoczył Cię.</p>
     <p>Załóżmy, że samochód przed Tobą to było BMW. Po kilku tygodniach sytuacja się powtarza. Kolejne BMW zaskakuje Cię na drodze i nagle zmienia pas, zajeżdżając Ci drogę. Po kilku tygodniach samochód za Tobą miga Ci długimi po oczach, znów BMW! Zaczynasz spodziewać się nieprzewidywalnych rzeczy, gdy spotykasz samochody tej marki na drodze. Wcześniejsze sytuacje dotrenowały Twoje sieci mózgowe.</p>
     <p>Błędy predykcyjne to niespodziewane informacje, które wędrują w górę (bottom-up) i kształtują sieci tak, aby w przyszłości te informacje były już spodziewane (top-down). Cała historia ewolucyjna, kulturowa i indywidualna kształtuje architekturę sieci neuronowych. <span class="s2" data-session="2">Ale czy budujesz swój model świata sam? Lev Vygotsky dodałby: inna osoba jest źródłem skalibrowanych błędów predykcyjnych dla Twojego mózgu dopasowanych do Twojego poziomu.</span></p>
+
+    <p class="s3" data-session="3">Jaki chemiczny sygnał niesie aktualizację? Dopamina. Kultura popularna nazywa ją "hormonem szczęścia", ale najnowsze dane (Nature 2026) pokazują coś szerszego: neurony dopaminergiczne reagują na zagrożenia, nowe bodźce, ruch i predykcje ruchowe. Dopamina to sygnał konsolidacyjny. Wzmacnia skojarzenie między tym, co się wydarzyło, a okolicznościami, w których się wydarzyło.</p>
+    <p class="s3" data-session="3">Pierwsze BMW, które Cię zajechało: nieoczekiwane, dopamina zalewa, kontekst zakodowany szeroko (która droga, jaka pora, jaki samochód). Po kilku BMW: skojarzenie jest skonsolidowane, dopamina przesuwa się z kodowania na odtwarzanie. Widzisz BMW i predykcja odpala zanim cokolwiek się stanie. Model aktualizuje się.</p>
+    <p class="s3" data-session="3">Przypisanie przyczynowości (credit assignment) jest kluczowe. Kiedy wiesz dokładnie, co przewiduje co (100% prawdopodobieństwa), dopamina przy wskazówce to odtwarzanie. Kiedy predykcja jest niepewna (50%), dopamina to kodowanie: system nie wie jeszcze, które zmienne są istotne, więc zapisuje wszystko. Kodowanie jest stopniowe. Z każdym doświadczeniem system zawęża, które zmienne niosą predykcję.</p>
+    <p class="s3" data-session="3">Dlatego niepewność generuje więcej dopaminy niż pewność (Sapolsky). Zapotrzebowanie na kodowanie jest wyższe.</p>
+
+    <div class="video-block s3" data-session="3">
+      <div class="video-label">Robert Sapolsky · Dopamina i niepewność</div>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/axrywDP9Ii0"
+          title="Robert Sapolsky - Dopamine Jackpot"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
 
     <p class="s2" data-session="2"><strong>Strefa najbliższego rozwoju (ZPD)</strong> to przestrzeń między tym, co potrafisz samemu, a tym, co potrafisz z pomocą kogoś bardziej doświadczonego. Ktoś bardziej doświadczony pomaga Ci wytrenować Twój model świata.</p>
     <p class="s2" data-session="2"><strong>Scaffolding</strong> to rusztowanie: struktura wsparcia, która stopniowo się wycofuje w miarę jak Twój model się kalibruje. Na początku duże wsparcie, duże błędy predykcyjne. Na końcu: samemu budujesz predykcje. Rusztowanie znika, bo Twoje sieci przejęły jego funkcję.</p>
@@ -765,6 +839,12 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p style="margin-top: 28px;">Przypomnij sobie artykuł "Predictions not commands" (Adams et al., 2013): sygnały zstępujące z kory ruchowej do rdzenia kręgowego mają cechy predykcji, nie rozkazów. Kora motoryczna nie wysyła instrukcji "skurcz mięsień X o Y procent." Wysyła przewidywanie: "spodziewam się takiego a takiego stanu proprioceptywnego." Rdzeń kręgowy minimalizuje błąd między oczekiwanym a aktualnym stanem ciała. Ruch wyłania się z tej minimalizacji. Innymi słowy: spodziewam się jakiejś konfiguracji ciała. A po chwili kolejnej. I kolejnej. Jak surfer na falach.</p>
 
+    <p class="s3" data-session="3">Te trzy wymiary to nie tylko kategorie doznań. Definiują, jaki typ uczenia się jest możliwy.</p>
+    <p class="s3" data-session="3"><strong>Warunkowanie klasyczne</strong> (Pawłow): wskazówka eksteroceptywna (dzwonek) przewiduje konsekwencję interoceptywną (jedzenie, ślinienie). Organizm nic nie robi. Działanie ciała jest nieistotne. Sprawczość zero. Świat ogłasza, co nadchodzi dla ciała.</p>
+    <p class="s3" data-session="3"><strong>Warunkowanie instrumentalne</strong> (Skinner): działanie proprioceptywne (naciśnij dźwignię) produkuje konsekwencję interoceptywną (jedzenie) w kontekście eksteroceptywnym (klatka, światło). Sprawczość to dokładnie ten moment, w którym propriocepcja staje się zmienną kontrolną.</p>
+    <p class="s3" data-session="3">Oba typy zbiegają się na interocepcji jako przewidywanym celu. Różnica leży w tym, który wymiar niesie predykcję.</p>
+    <p class="s3" data-session="3">Trzy szlaki dopaminergiczne mapują się na te trzy wymiary. Istota czarna do prążkowia grzbietowego obsługuje wymiar proprioceptywny (którą akcję wybrać). VTA do jądra półleżącego (NAcc, Nucleus Accumbens) obsługuje wymiar interoceptywny (jak wartościowy jest wynik). Locus coeruleus (i SN) do hipokampa obsługuje wymiar eksteroceptywny (w jakim jestem kontekście). Ta sama cząsteczka. Różne obwody. Różne wymiary.</p>
+
     <p>Z tych informacji sieci budują hierarchię predykcji, od zmysłów do narracji o sobie:</p>
 
     <div class="network-cascade">
@@ -805,6 +885,17 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       </div>
     </div>
 
+    <p class="s3" data-session="3">Jak system decyduje, którą trajektorię przez kaskadę realizować? Dwa szlaki w jądrach podstawy działają jak mechanizm push-pull.</p>
+    <p class="s3" data-session="3"><strong>Szlak bezpośredni</strong> (receptory D1): pobudzany przez dopaminę. "Podążaj za tą afordancją. Tą trajektorią przez czas."</p>
+    <p class="s3" data-session="3"><strong>Szlak pośredni</strong> (receptory D2): hamowany przez dopaminę. "Wycisz alternatywy. Zostań na kursie."</p>
+    <p class="s3" data-session="3">Kiedy błąd predykcyjny sygnalizuje "lepiej niż oczekiwano": dopamina wyrzuca, D1 odpala (wzmocnij to działanie), D2 cichnie (blokuj dystrakcje). Kiedy "gorzej niż oczekiwano": dopamina spada, D1 słabnie (przestań), D2 uwalnia (wpuść alternatywy).</p>
+    <p class="s3" data-session="3">To nie przełącznik binarny. To przewidywanie przepływu czasu. Zobowiązujesz się do sekwencji afordancji: wstań, zrób kawę, idź do łazienki, ubierz się. D1 zainicjował sekwencję. D2 ją utrzymuje. Kiedy ta równowaga jest zakłócona, trajektorie pękają w połowie wykonywania. Dystraktor Cię chwyta, bo bramka D2 nie utrzymuje.</p>
+
+    <figure class="figure-block s3" data-session="3">
+      <img src="/images/basal_ganglia_diagram_wikimedia.svg" alt="Szlak bezpośredni i pośredni w jądrach podstawy" />
+      <figcaption>Szlak bezpośredni i pośredni w jądrach podstawy. Szlak bezpośredni (D1) odblokowuje wzgórze, ułatwiając ruch. Szlak pośredni (D2) hamuje wzgórze, tłumiąc alternatywy. Źródło: Wikimedia Commons.</figcaption>
+    </figure>
+
     <hr class="section-divider" />
 
     <h3>Afordancje</h3>
@@ -823,6 +914,13 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p>Afordancje są więc możliwościami do działania. Są elementami modelu rzeczywistości, z którymi model "Ciebie" może wejść w interakcję. Poruszasz ciałem implementując predykcje top-down z kory motorycznej (Adams et al., 2013). Model w korze motorycznej powstał w wyniku lat treningu stadium sensoryczno-motorycznego. Trening ruchowy i używania narzędzi ukształtował strukturę sieci neuronowych za pośrednictwem błędów predykcyjnych bottom-up, która zwrotnie zapewnia sygnał top-down generując kolejne predykcje ruchu. Predykcje i błędy predykcyjne są w ciągłej interakcji, znane afordancje są przewidywane, nowe afordancje są odkrywane i dodawane do modelu. <span class="s2" data-session="2">Poruszanie ciałem jest warunkiem poznania. Mózg, ciało i działanie to trzy perspektywy na ten sam proces.</span></p>
     <p class="s2" data-session="2">Alison Gopnik proponuje, że dzieci to zoptymalizowane maszyny do eksploracji: testują więcej afordancji, napotykają więcej błędów predykcyjnych, próbują więcej wariantów. Dorośli eksploatują wyuczone modele podążając utartymi ścieżkami znanych afordancji.</p>
     <p>Motywacja to nie abstrakcyjna siła napędowa. To konkretne przyciąganie: coś wydaje się atrakcyjne, przyjemne, warte zachodu. Zmęczony wędrowiec nie analizuje kamienia. Kamień go po prostu <em>przyciąga</em> jako miejsce odpoczynku, bo jego ciało tego właśnie chce.</p>
+
+    <p class="s3" data-session="3">Motywacja na tej stronie to właściwie dwa oddzielne systemy.</p>
+    <p class="s3" data-session="3"><strong>Chcenie</strong> (dopaminergiczne): zbliżenie, przyciąganie ku afordancji. Nie musisz czegoś lubić, żeby tego chcieć.</p>
+    <p class="s3" data-session="3"><strong>Lubienie</strong> (opioidergiczne): odpowiedź hedoniczna, gdy faktycznie doświadczasz nagrody. Receptory mu-opioidowe, brzuszna gałka blada. Rzadsze niż chcenie.</p>
+    <p class="s3" data-session="3">Pomyśl o scrollowaniu mediów społecznościowych. Każde przesunięcie to zbliżanie się ku potencjalnej afordancji. Feed to nieskończona przestrzeń afordancji. Większość treści jest neutralna albo lekko irytująca. A mimo to scrollujesz dalej.</p>
+    <p class="s3" data-session="3">Gdyby dopamina dotyczyła przyjemności, zatrzymałbyś się po trzech nienagrodzonych scrollach. Scrollujesz dalej, bo dopamina napędza eksplorację. Algorytm gwarantuje, że credit assignment nigdy się nie rozwiąże: nie ma stabilnej reguły przewidującej, który scroll przyniesie coś dobrego. System zostaje w trybie kodowania na stałe.</p>
+    <p class="s3" data-session="3">Twoja architektura eksploracji ewoluowała dla skończonych nisz ekologicznych. Sawanna w końcu staje się znajoma. Media społecznościowe to przestrzeń afordancji bez krawędzi.</p>
 
     <hr class="section-divider" />
 
@@ -846,6 +944,30 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     </div>
 
     <p>Trzy nisze to trzy opisy tego samego procesu: jak doświadczenie i sieci zwrotnie się kształtują. <span class="s2" data-session="2">Każde dziecko konstruuje wszystkie trzy nisze jednocześnie.</span></p>
+
+    <h3 class="s3" data-session="3">Gdy system konsolidacji zostaje przejęty</h3>
+    <p class="s3" data-session="3">W 1954 roku Olds i Milner przypadkowo odkryli, że szczury naciskają dźwignię tysiące razy na godzinę, by stymulować elektrycznie własny mózg. Elektroda siedziała w podwzgórzu bocznym, ale stymulowała pęczek przyśrodkowy przodomózgowia: autostradę aksjonów dopaminergicznych z VTA do jądra półleżącego. Nie cel. Drogę do celu. Pierwsza demonstracja, że szlak konsolidacyjny można aktywować bezpośrednio.</p>
+
+    <div class="video-block s3" data-session="3">
+      <div class="video-label">Eksperyment z Małym Albertem (Watson, 1920)</div>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/FMnhyGozLyE"
+          title="Little Albert Experiment"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <p class="s3" data-session="3">Mały Albert (Watson): sparuj białego szczura (eksterocepcja) z głośnym hałasem (eksterocepcja wyzwalająca interoceptywny lęk). Po warunkowaniu: sam biały szczur wywołuje strach. Potem generalizacja: biały królik, futrzany płaszcz, broda Mikołaja. Konsekwencja interoceptywna (strach) pozostaje stała, a wymiar eksteroceptywny się rozszerza. System nadgeneralizuje, bo bezpieczniej jest bać się za wielu rzeczy niż za mało.</p>
+
+    <p class="s3" data-session="3">Substancje przejmują ten sam system konsolidacji.</p>
+    <p class="s3" data-session="3">Kokaina blokuje transporter dopaminy (DAT, Dopamine Transporter). Dopamina zostaje w synapsie. Sygnał konsolidacyjny się nie kończy.</p>
+    <p class="s3" data-session="3">Amfetaminy blokują DAT i odwracają transporter, wypychając dopaminę z neuronu. Sygnał zalewa bez odpalenia neuronu.</p>
+    <p class="s3" data-session="3">Opiaty działają inaczej: hamują interneurony GABAergiczne w VTA, które normalnie hamują neurony dopaminergiczne. Hamulec na hamulcu puszcza. Jednocześnie opiaty bezpośrednio produkują zmianę interoceptywną: ból znika, ciepło zalewa. Podwójne wiązanie: stan interoceptywny jest wytwarzany, a konsolidacja jednocześnie wzmacniana.</p>
+    <p class="s3" data-session="3">Wszystkie trzy łamią proporcjonalność. Naturalne nagrody produkują skalibrowaną dopaminę. Substancje produkują sygnał, którego żadne naturalne doświadczenie nie osiągnie. Każdy detal eksteroceptywny obecny podczas zażycia (pokój, ludzie, muzyka) zostaje skonsolidowany z nadludzką siłą. Dlatego kontekst wyzwala nawrót. Te skojarzenia zostały wykute sygnałem, do którego architektura nigdy nie była skalibrowana.</p>
+    <p class="s3" data-session="3"><em>Ćwiczenie rozumowania:</em> jeśli choroba Parkinsona to degeneracja neuronów SNc (Substantia Nigra pars compacta; mniej dopaminy w prążkowiu grzbietowym), a kokaina blokuje DAT (utrzymuje dopaminę w synapsie dłużej), to czy kokaina mogłaby pomóc? Logika jest poprawna. Klinicznie zawodzi, bo kokaina jest nieselektywna (zalewa też NAcc, wywołując uzależnienie) i bo w miarę umierania neuronów jest coraz mniej dopaminy do utrzymania w synapsie. L-DOPA rozwiązuje inaczej: więcej surowego materiału dla przeżywających neuronów do konwersji. Ten sam cel, inne miejsce wejścia.</p>
 
     <!-- ==================== POZIOMY PREDYKCJI ==================== -->
     <hr class="section-divider" />
@@ -1051,6 +1173,15 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item s2" data-session="2">Robbins, J., &amp; Rumsey, A. (2008). Introduction: Cultural and Linguistic Anthropology and the Opacity of Other Minds. <em>Anthropological Quarterly, 81</em>(2), 407-420.</p>
       <p class="bib-item s2" data-session="2">Hubel, D. H., &amp; Wiesel, T. N. (1970). The period of susceptibility to the physiological effects of unilateral eye closure in kittens. <em>The Journal of Physiology, 206</em>(2), 419-436.</p>
       <p class="bib-item s2" data-session="2">Blakemore, C., &amp; Cooper, G. F. (1970). Development of the brain depends on the visual environment. <em>Nature, 228</em>(5270), 477-478.</p>
+      <p class="bib-item s3" data-session="3">Tolman, E. C. (1948). Cognitive maps in rats and men. <em>Psychological Review, 55</em>(4), 189-208.</p>
+      <p class="bib-item s3" data-session="3">O'Keefe, J., &amp; Nadel, L. (1978). <em>The Hippocampus as a Cognitive Map</em>. Oxford University Press.</p>
+      <p class="bib-item s3" data-session="3">Kaminski, J., et al. (2018). Novelty-sensitive dopaminergic neurons in the human substantia nigra predict reward value. <em>Current Biology, 28</em>(9), 1400-1407.</p>
+      <p class="bib-item s3" data-session="3">Takeuchi, T., et al. (2016). Locus coeruleus and dopaminergic consolidation of everyday memory. <em>Nature, 537</em>(7620), 357-362.</p>
+      <p class="bib-item s3" data-session="3">Lisman, J. E., &amp; Grace, A. A. (2005). The hippocampal-VTA loop: controlling the entry of information into long-term memory. <em>Neuron, 46</em>(5), 703-713.</p>
+      <p class="bib-item s3" data-session="3">Sapolsky, R. M. (2017). <em>Behave: The Biology of Humans at Our Best and Worst</em>. Penguin Press.</p>
+      <p class="bib-item s3" data-session="3">Berridge, K. C., &amp; Robinson, T. E. (2016). Liking, wanting, and the incentive-sensitization theory of addiction. <em>American Psychologist, 71</em>(8), 670-679.</p>
+      <p class="bib-item s3" data-session="3">Olds, J., &amp; Milner, P. (1954). Positive reinforcement produced by electrical stimulation of septal area and other regions of rat brain. <em>Journal of Comparative and Physiological Psychology, 47</em>(6), 419-427.</p>
+      <p class="bib-item s3" data-session="3">Watson, J. B., &amp; Rayner, R. (1920). Conditioned emotional reactions. <em>Journal of Experimental Psychology, 3</em>(1), 1-14.</p>
     </div>
 
   </div>
