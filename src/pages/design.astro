@@ -1,31 +1,344 @@
 ---
 import Base from '../layouts/Base.astro';
 import PasswordGate from '../components/PasswordGate.astro';
-const HASH = "2728ca17b7eeb44389e3601218ebd0d76aedda367554c19ef5935d49021b2bd6";
+const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
 ---
 <Base title="Design Thinking - kogni.pl" activePage="kursy">
 
 <style is:global>
   .course-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
-  .course-page h1 { font-family: var(--font-display); font-size: 36px; font-weight: 400; color: var(--text-primary); letter-spacing: 2px; margin-bottom: 8px; text-align: center; }
-  .course-page .meta { font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-dim); text-align: center; letter-spacing: 1px; margin-bottom: 48px; }
-  .course-page h2 { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--text-primary); margin: 40px 0 16px; }
-  .course-page p { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; }
-  .back-link { display: inline-block; font-family: var(--font-body); font-size: 12px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; margin-bottom: 32px; transition: color 0.3s; }
+
+  .back-link {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    margin-bottom: 32px;
+    transition: color 0.3s;
+  }
   .back-link:hover { color: var(--warm-glow); }
+
+  .course-page h1 {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .course-page .meta {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-dim);
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 56px;
+  }
+
+  /* Section heading */
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 52px 0 16px;
+    letter-spacing: 1px;
+  }
+  .section-divider {
+    width: 32px;
+    height: 1px;
+    background: var(--border-warm);
+    opacity: 0.4;
+    margin-bottom: 20px;
+  }
+
+  .course-page p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  /* DT Process map */
+  .dt-process {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin: 28px 0 36px;
+    position: relative;
+  }
+  .dt-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+  .dt-step::after {
+    content: '';
+    position: absolute;
+    top: 18px;
+    right: -1px;
+    width: 100%;
+    height: 1px;
+    background: var(--border-subtle);
+    z-index: 0;
+  }
+  .dt-step:last-child::after { display: none; }
+
+  .dt-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-dim);
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s;
+  }
+  .dt-step.active .dt-dot {
+    border-color: var(--warm-glow);
+    color: var(--warm-glow);
+    background: rgba(232, 168, 76, 0.06);
+  }
+  .dt-step.done .dt-dot {
+    border-color: var(--border-subtle);
+    color: var(--text-dim);
+    opacity: 0.5;
+  }
+  .dt-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+  .dt-step.active .dt-label {
+    color: var(--text-secondary);
+  }
+  .dt-step-note {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 11px;
+    color: var(--warm-glow);
+    margin-top: 6px;
+  }
+
+  /* Status card */
+  .status-card {
+    border: 1px solid var(--border-warm);
+    background: linear-gradient(135deg, rgba(232,168,76,0.04), transparent);
+    padding: 24px 28px;
+    margin: 28px 0;
+    position: relative;
+  }
+  .status-card::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(232,168,76,0.08);
+    pointer-events: none;
+  }
+  .status-card-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--warm-glow);
+    margin-bottom: 10px;
+  }
+  .status-card p {
+    margin-bottom: 0;
+  }
+
+  /* Concept checklist */
+  .concept-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+  }
+  .concept-list li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    padding: 10px 0 10px 28px;
+    border-bottom: 1px solid var(--border-subtle);
+    position: relative;
+  }
+  .concept-list li:last-child { border-bottom: none; }
+  .concept-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--warm-glow);
+    opacity: 0.6;
+  }
+
+  /* Materials section */
+  .materials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  @media (max-width: 520px) {
+    .materials-grid { grid-template-columns: 1fr; }
+  }
+
+  .material-card {
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    padding: 20px 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.3s;
+    text-decoration: none;
+  }
+  .material-card:hover {
+    border-color: var(--border-warm);
+  }
+  .material-icon {
+    font-size: 20px;
+    opacity: 0.5;
+    margin-bottom: 4px;
+  }
+  .material-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+  }
+  .material-desc {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-dim);
+    line-height: 1.6;
+    flex: 1;
+  }
+  .material-download {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--warm-glow);
+    margin-top: 4px;
+  }
+
+  /* Deadline note */
+  .deadline-note {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text-dim);
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-subtle);
+  }
 </style>
 
 <PasswordGate title="Design Thinking" subtitle="Semestr letni 2025/2026" passwordHash={HASH} sessionKey="design">
   <div class="course-page">
     <a href="/kursy" class="back-link">&larr; Kursy</a>
+
     <h1>Design Thinking</h1>
-    <p class="meta">warsztat · II rok · semestr letni 2025/2026 · 15h</p>
-    <h2>Opis kursu</h2>
-    <p>Projektowanie rozwiązań metodą iteracyjną. Od problemu do prototypu.</p>
-    <h2>Harmonogram</h2>
-    <p>Treść w przygotowaniu.</p>
-    <h2>Zasady zaliczenia</h2>
-    <p>Treść w przygotowaniu.</p>
+    <p class="meta">warsztat · I rok magisterska · semestr letni 2025/2026 · 30h · 5 ECTS</p>
+
+    <!-- DT Process Map -->
+    <h2 class="section-heading">Gdzie jesteśmy</h2>
+    <div class="section-divider"></div>
+
+    <div class="dt-process">
+      <div class="dt-step done">
+        <div class="dt-dot">01</div>
+        <div class="dt-label">Empatia</div>
+      </div>
+      <div class="dt-step active">
+        <div class="dt-dot">02</div>
+        <div class="dt-label">Badania</div>
+        <div class="dt-step-note">jesteście tutaj</div>
+      </div>
+      <div class="dt-step">
+        <div class="dt-dot">03</div>
+        <div class="dt-label">Definicja</div>
+      </div>
+      <div class="dt-step">
+        <div class="dt-dot">04</div>
+        <div class="dt-label">Ideacja</div>
+      </div>
+      <div class="dt-step">
+        <div class="dt-dot">05</div>
+        <div class="dt-label">Prototyp</div>
+      </div>
+    </div>
+
+    <div class="status-card">
+      <div class="status-card-label">Etap 2 z 5 — Badania użytkowników</div>
+      <p>Macie wstępny pomysł na grę. Teraz wasze zadanie to go podważyć — zanim zainwestujecie w jego rozwinięcie. Wywiady z potencjalnymi graczami ujawnią, co jest w nim naprawdę wartościowe, a co jest tylko założeniem. Dobry wywiad nie potwierdza pomysłu. Sprawdza, czy jest potrzebny.</p>
+    </div>
+
+    <!-- Co powinien zawierać dobry pomysł -->
+    <h2 class="section-heading">Co powinien zawierać Wasz pomysł</h2>
+    <div class="section-divider"></div>
+
+    <p>Na tym etapie nie oczekuję gotowej gry. Oczekuję pomysłu, który jest wystarczająco konkretny, żeby można było go przetestować. Dobry koncept na tym etapie odpowiada na cztery pytania:</p>
+
+    <ul class="concept-list">
+      <li><strong>Co to jest?</strong> Jaka forma gry (planszowa, karciana, cyfrowa, fizyczna). Jedna zdecydowana odpowiedź, nie lista opcji.</li>
+      <li><strong>Dla kogo?</strong> Konkretna grupa użytkowników, do której macie realny dostęp. Nie "wszyscy" ani "ludzie którzy lubią gry".</li>
+      <li><strong>Jaki problem rozwiązuje lub jaką potrzebę adresuje?</strong> To musi wynikać z Waszego I Wish — z obserwacji rzeczywistej potrzeby kogoś konkretnego.</li>
+      <li><strong>Czego jeszcze nie wiecie?</strong> Lista założeń, które trzeba sprawdzić w wywiadach. Im dłuższa, tym lepiej — oznacza, że myślicie krytycznie.</li>
+    </ul>
+
+    <p>Pomysł nie musi być oryginalny. Musi być zakorzeniony w realnej obserwacji i otwarty na weryfikację.</p>
+
+    <!-- Materiały -->
+    <h2 class="section-heading">Materiały na kolejne zajęcia</h2>
+    <div class="section-divider"></div>
+
+    <p>Przed następnymi zajęciami wypełnijcie jako zespół <strong>Kartę Konceptu</strong> i przeprowadźcie co najmniej trzy wywiady z Waszą grupą docelową, korzystając z <strong>Szablonu Scenariusza</strong>. Przynieście wydrukowane notatki.</p>
+
+    <div class="materials-grid">
+      <a class="material-card" href="/dt_concept_worksheet.pdf" download>
+        <div class="material-icon">◈</div>
+        <div class="material-title">Karta Konceptu</div>
+        <div class="material-desc">Ustrukturyzujcie Wasz pomysł: What If, grupa docelowa, założenia do sprawdzenia. Wypełnijcie razem jako zespół przed zajęciami.</div>
+        <div class="material-download">Pobierz PDF &darr;</div>
+      </a>
+      <a class="material-card" href="/dt_interview_template.pdf" download>
+        <div class="material-icon">◎</div>
+        <div class="material-title">Scenariusz Wywiadu</div>
+        <div class="material-desc">Szablon do przeprowadzenia wywiadu pogłębionego z potencjalnym graczem. Minimum 3 rozmowy na grupę. Jeden wydruk na rozmowę.</div>
+        <div class="material-download">Pobierz PDF &darr;</div>
+      </a>
+    </div>
+
+    <p class="deadline-note">Materiały i notatki z wywiadów — na kolejne zajęcia.</p>
+
   </div>
 </PasswordGate>
 
