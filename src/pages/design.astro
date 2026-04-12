@@ -67,6 +67,8 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
     margin-bottom: 16px;
   }
 
+  html { scroll-behavior: smooth; }
+
   /* DT Process map */
   .dt-process {
     display: flex;
@@ -119,6 +121,24 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
     border-color: var(--border-subtle);
     color: var(--text-dim);
     opacity: 0.5;
+  }
+  .dt-step a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+  .dt-step.done a .dt-dot,
+  .dt-step.active a .dt-dot {
+    transition: all 0.3s;
+  }
+  .dt-step.done a:hover .dt-dot {
+    opacity: 0.85;
+    border-color: var(--border-warm);
+  }
+  .dt-step.active a:hover .dt-dot {
+    background: rgba(232, 168, 76, 0.12);
   }
   .dt-label {
     font-family: var(--font-body);
@@ -274,13 +294,17 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
 
     <div class="dt-process">
       <div class="dt-step done">
-        <div class="dt-dot">01</div>
-        <div class="dt-label">Empatia</div>
+        <a href="#etap-1">
+          <div class="dt-dot">01</div>
+          <div class="dt-label">Empatia</div>
+        </a>
       </div>
       <div class="dt-step active">
-        <div class="dt-dot">02</div>
-        <div class="dt-label">Badania</div>
-        <div class="dt-step-note">jesteście tutaj</div>
+        <a href="#etap-2">
+          <div class="dt-dot">02</div>
+          <div class="dt-label">Badania</div>
+          <div class="dt-step-note">jesteście tutaj</div>
+        </a>
       </div>
       <div class="dt-step">
         <div class="dt-dot">03</div>
@@ -297,7 +321,7 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
     </div>
 
     <!-- Etap 1: Empatia (done) -->
-    <h2 class="section-heading">Etap 1 — Empatia</h2>
+    <h2 class="section-heading" id="etap-1">Etap 1 — Empatia</h2>
     <div class="section-divider"></div>
 
     <p>Na pierwszych zajęciach każdy z Was zaczął od siebie — od tego, co go porusza, i od kogoś bliskiego, kto czegoś potrzebuje. Połączenie tych dwóch obserwacji dało pierwsze What If: wstępny pomysł na grę zakorzeniony w realnym doświadczeniu, nie w wyobraźni.</p>
@@ -312,7 +336,7 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
     </div>
 
     <!-- Etap 2: Badania (current) -->
-    <h2 class="section-heading" style="margin-top: 52px;">Etap 2 — Badania</h2>
+    <h2 class="section-heading" id="etap-2" style="margin-top: 52px;">Etap 2 — Badania</h2>
     <div class="section-divider"></div>
 
     <div class="status-card">
