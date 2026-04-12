@@ -301,32 +301,32 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
 
     <div class="dt-process">
       <div class="dt-step done" data-panel="1">
-        <button onclick="showPanel(1)">
+        <button data-show="1">
           <div class="dt-dot">01</div>
           <div class="dt-label">Empatia</div>
         </button>
       </div>
       <div class="dt-step active" data-panel="2">
-        <button onclick="showPanel(2)">
+        <button data-show="2">
           <div class="dt-dot">02</div>
           <div class="dt-label">Badania</div>
           <div class="dt-step-note">jesteście tutaj</div>
         </button>
       </div>
       <div class="dt-step" data-panel="3">
-        <button onclick="showPanel(3)">
+        <button data-show="3">
           <div class="dt-dot">03</div>
           <div class="dt-label">Synteza</div>
         </button>
       </div>
       <div class="dt-step" data-panel="4">
-        <button onclick="showPanel(4)">
+        <button data-show="4">
           <div class="dt-dot">04</div>
           <div class="dt-label">Prototyp</div>
         </button>
       </div>
       <div class="dt-step" data-panel="5">
-        <button onclick="showPanel(5)">
+        <button data-show="5">
           <div class="dt-dot">05</div>
           <div class="dt-label">Prezentacja</div>
         </button>
@@ -432,6 +432,11 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
         document.querySelectorAll('.dt-step').forEach(s => s.classList.remove('viewing'));
         document.querySelector('.dt-step[data-panel="' + n + '"]').classList.add('viewing');
       }
+
+      document.querySelectorAll('button[data-show]').forEach(btn => {
+        btn.addEventListener('click', () => showPanel(btn.dataset.show));
+      });
+
       showPanel(2);
     </script>
 
