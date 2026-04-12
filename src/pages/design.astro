@@ -113,9 +113,9 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
     transition: all 0.3s;
   }
   .dt-step.active .dt-dot {
-    border-color: var(--warm-glow);
-    color: var(--warm-glow);
-    background: rgba(232, 168, 76, 0.06);
+    border-color: var(--border-subtle);
+    color: var(--text-dim);
+    opacity: 0.5;
   }
   .dt-step.done .dt-dot {
     border-color: var(--border-subtle);
@@ -134,6 +134,7 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
     border-color: var(--border-warm);
     opacity: 1;
   }
+  /* Viewing state: sole source of amber */
   .dt-step.viewing .dt-dot {
     border-color: var(--warm-glow) !important;
     color: var(--warm-glow) !important;
@@ -310,7 +311,6 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
         <button data-show="2">
           <div class="dt-dot">02</div>
           <div class="dt-label">Badania</div>
-          <div class="dt-step-note">jesteście tutaj</div>
         </button>
       </div>
       <div class="dt-step" data-panel="3">
