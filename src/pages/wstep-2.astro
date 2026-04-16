@@ -366,6 +366,47 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     font-style: italic;
   }
 
+  /* ── YouTube lazy facade ── */
+  .yt-facade {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+  }
+  .yt-facade img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.82;
+    transition: opacity 0.2s;
+  }
+  .yt-facade:hover img { opacity: 1; }
+  .yt-play-btn {
+    position: relative;
+    z-index: 1;
+    width: 64px;
+    height: 44px;
+    background: rgba(198, 28, 28, 0.88);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .yt-facade:hover .yt-play-btn {
+    background: #c00;
+    transform: scale(1.08);
+  }
+  .yt-play-btn svg { fill: #fff; width: 22px; height: 22px; }
+  .video-wrapper.playing {
+    box-shadow: 0 0 0 1px var(--warm-glow);
+  }
+
   /* ── Video grid (senses) ── */
   .video-grid-label {
     font-family: var(--font-body);
@@ -1267,6 +1308,56 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    // ── YouTube lazy-load facades ──
+    document.querySelectorAll('.video-wrapper iframe').forEach(iframe => {
+      const src = iframe.getAttribute('src');
+      if (!src || !src.includes('youtube.com/embed/')) return;
+
+      const urlParts = src.split('?');
+      const videoId = urlParts[0].split('/embed/')[1];
+      const existingParams = urlParts[1] || '';
+
+      const facade = document.createElement('div');
+      facade.className = 'yt-facade';
+      facade.dataset.src = src;
+      facade.dataset.title = iframe.title || '';
+
+      const thumb = document.createElement('img');
+      thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+      thumb.alt = iframe.title || 'YouTube video';
+      thumb.loading = 'lazy';
+
+      const btn = document.createElement('div');
+      btn.className = 'yt-play-btn';
+      btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+
+      facade.appendChild(thumb);
+      facade.appendChild(btn);
+
+      facade.addEventListener('click', () => {
+        const base = urlParts[0];
+        const newSrc = existingParams
+          ? `${base}?autoplay=1&${existingParams}`
+          : `${base}?autoplay=1`;
+
+        const newIframe = document.createElement('iframe');
+        newIframe.src = newSrc;
+        newIframe.title = facade.dataset.title;
+        newIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        newIframe.allowFullscreen = true;
+        newIframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:none;';
+
+        const wrapper = facade.parentElement;
+        wrapper.classList.add('playing');
+        wrapper.removeChild(facade);
+        wrapper.appendChild(newIframe);
+      });
+
+      const wrapper = iframe.parentElement;
+      wrapper.removeChild(iframe);
+      wrapper.appendChild(facade);
+    });
+
     const slider = document.getElementById('tmSlider');
     const stops = document.querySelectorAll('.tm-stop');
     const sessionEls = document.querySelectorAll('[data-session]');
