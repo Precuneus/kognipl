@@ -599,7 +599,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   .tm-stops {
     display: flex;
     justify-content: space-between;
-    margin-top: 4px;
+    margin: -4px -12px -8px;
   }
   .tm-stop {
     font-family: var(--font-body);
@@ -607,10 +607,13 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     font-weight: 400;
     color: var(--text-dim);
     transition: color 0.3s, font-weight 0.3s;
-    padding: 4px 8px;
+    padding: 12px 12px;
     border-radius: 4px;
-    cursor: default;
+    cursor: pointer;
     letter-spacing: 0.01em;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
   }
   .tm-stop.active {
     color: var(--warm-glow);
@@ -923,6 +926,44 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       </div>
     </div>
 
+    <!-- ==================== POZIOMY PREDYKCJI ==================== -->
+    <hr class="section-divider" />
+    <h2>Trzy ewolucyjne poziomy predykcji</h2>
+    <p>Sieci mózgowe przewidują na kilku poziomach jednocześnie.</p>
+    <p><strong>Poziom 1 - ciało i narzędzia</strong> (Iriki &amp; Taoka): Makak bierze grabki. Jego kora ciemieniowa musi nagle przewidywać trzy razy większą przestrzeń pełną nowych afordancji. Przestrzeń peripersonalna rozszerza się na koniec narzędzia. Narzędzia modyfikują dostępne możliwości do działania, tak jak nauczenie się jazdy samochodem modyfikuje, jak pewnie się czujesz za kierownicą i co jest osiągalne.</p>
+    <p><strong>Poziom 2 - emocje innych</strong> (de Waal, Goodall): Szympans widzi, że innemu szympansowi jest źle. Przewiduje jego ból i podchodzi pocieszyć. To jest empatia jako mechanizm predykcyjny - uniwersalny dla wielu gatunków.</p>
+
+    <h3 class="s4" data-session="4">Łańcuch neuronalny</h3>
+
+    <p class="s4" data-session="4">Kilka struktur jest kluczowych:</p>
+    <ul>
+      <li class="s4" data-session="4"><strong>Ciało migdałowate:</strong> detektor saliencji. Reaguje na cokolwiek ważne dla organizmu: nowe, nagradzające, zagrażające. Moduluje uczenie się emocjonalne i dostęp do zasobów uwagowych.</li>
+      <li class="s4" data-session="4"><strong>Wzgórze:</strong> router sensoryczny. Przetwarza i przekierowuje sygnały zmysłowe. Droga niska (wzgórze → ciało migdałowate) działa szybko, grubo, podkorowo. Droga wysoka (wzgórze → kora → ciało migdałowate) działa wolniej, ale precyzyjniej. LeDoux sam zaznaczył po latach, że silna wersja tej tezy ma słabe poparcie u ludzi. Droga niska jest przydatnym modelem konceptualnym dla trade-off szybkość/dokładność. Unikaj "amygdala hijack" (Goleman): zbyt uproszczone.</li>
+      <li class="s4" data-session="4"><strong>Wyspa</strong> (insula): przetwornik interoceptywny (posterior → mid → anterior). Przekształca sygnały ciałowe w afekt dostępny korze.</li>
+      <li class="s4" data-session="4"><strong>vmPFC</strong> (brzuszno-przyśrodkowa kora przedczołowa): integruje kontekst z afektem. Przepisuje predykcję o tym, czego ciało zaraz doświadczy.</li>
+      <li class="s4" data-session="4"><strong>dlPFC</strong> (grzbietowo-boczna kora przedczołowa): świadoma regulacja. Reappraisal: zmiana interpretacji sytuacji, która zmienia doświadczenie emocjonalne. Wysiłkowe i wolniejsze niż modulacja vmPFC.</li>
+    </ul>
+
+    <p><strong>Poziom 3 - intencje innych</strong> (Tomasello): Szympans przewiduje, co inny zrobi. Człowiek przewiduje, co inny chce, żebym wiedział. Z tej różnicy wynika kumulatywna kultura: każde pokolenie zaczyna tam, gdzie skończyło poprzednie.</p>
+    <p>Poziom 3 ma dwa podpoziomy:</p>
+    <ul>
+      <li><strong>Podpoziom A - joint attention:</strong> "Skupiamy uwagę na tym samym." Trójstronna relacja: ja, ty, obiekt. Oboje wiemy, że oboje patrzymy. Szympansy to potrafią, choć słabiej niż ludzie.</li>
+      <li><strong>Podpoziom B - shared intentionality:</strong> "Mamy różne role w tym samym planie i oboje to rozumiemy." Tu pojawia się rekurencja: wiem że ty wiesz że ja wiem, i razem działamy na podstawie tej wzajemnej świadomości. Tutaj szympansy radzą sobie gorzej - zazwyczaj dominujący osobnik nie przyjmuje perspektywy współpracownika.</li>
+    </ul>
+
+    <div class="video-block">
+      <div class="video-label">Michael Tomasello · What Makes Us Human?</div>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/BNbeleWvXyQ"
+          title="Michael Tomasello - What Makes Us Human?"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <p class="video-caption">Tomasello o shared intentionality, joint attention i tym, co odróżnia człowieka od szympansa.</p>
+    </div>
+
     <hr class="section-divider" />
 
     <h3>Informacja</h3>
@@ -1016,7 +1057,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <h3 class="s4" data-session="4">Depresja jako kolaps przestrzeni afordancji</h3>
 
-    <p class="s4" data-session="4">"Depresja to niewidzenie innych opcji." Sformułowanie precyzyjniejsze niż większość definicji klinicznych. Mechanizm: prior predykcyjny jest tak silnie negatywny, że system nie generuje pozytywnych kandydatów do działania. Każda opcja jest oceniana przez priors przewidujące porażkę. To błąd kalibracji priora. Połączenie z krokiem prepare (D1): depresja atakuje właśnie ten etap. Mniej kandydatów do działania dociera do progu, zanim nastąpi selekcja. Kolaps dotyczy generowania opcji.</p>
+    <p class="s4" data-session="4">"Depresja to niewidzenie innych opcji." Mechanizm: predykcje są tak silnie negatywne, że system nie generuje pozytywnych kandydatów do działania. Każda opcja przewiduje porażkę.</p>
     <p class="s4" data-session="4">Kolaps zachodzi na każdym poziomie hierarchii jednocześnie: neutralne stany ciała są etykietowane przez DMN jako ciężkość i bezwartościowość; ta sama fizjologiczna ekscytacja jest konstruowana jako groza, nie jako oczekiwanie; każde działanie jest oceniane przez prior porażki zanim zostanie zainicjowane.</p>
 
     <figure class="figure-block s3" data-session="3">
@@ -1092,6 +1133,19 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s4" data-session="4">Lisa Feldman Barrett argumentuje inaczej. Emocje nie są odkrywane przez mózg. Są <strong>konstruowane</strong>. Nie ma dedykowanego "obwodu strachu" ani "centrum smutku". Jest afekt: ciągły sygnał walencji (dobre/złe) i pobudzenia (wysokie/niskie) płynący z ciała. I jest kontekst: historia życia, kultura, język, sytuacja. Mózg bierze ten surowy materiał i <em>tworzy</em> instancję emocji, w czasie rzeczywistym, za każdym razem od nowa. Dwie osoby z szybko bijącym sercem i spoconymi dłońmi: jedna czuje strach, druga podekscytowanie. Ta sama fizjologia, inna emocja. Dlatego że kontekst przepisuje predykcję.</p>
 
+    <div class="video-block s4" data-session="4">
+      <div class="video-label">Lisa Feldman Barrett · You aren't at the mercy of your emotions</div>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/0gks6ceq4eQ"
+          title="Lisa Feldman Barrett - You aren't at the mercy of your emotions"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <p class="video-caption">Barrett o konstruowanej naturze emocji: mózg nie reaguje na świat, lecz aktywnie przewiduje i konstruuje doświadczenie.</p>
+    </div>
+
     <h3 class="s4" data-session="4">Trzy poziomy: afekt, emocja, uczucie</h3>
 
     <p class="s4" data-session="4">Żeby rozmawiać precyzyjnie, potrzebujemy trzech pojęć.</p>
@@ -1103,17 +1157,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s4" data-session="4">Wysokie pobudzenie samo w sobie to afekt bez kategorii. Ten sam stan fizjologiczny (szybki puls, spocone dłonie, napięcie mięśni) może zostać skonstruowany jako strach, ekscytacja, gniew albo zauroczenie, w zależności od tego, jaki szablon pojęciowy jest dostępny i jaki kontekst jest aktywny. Afekt z kategorią to emocja.</p>
 
-    <h3 class="s4" data-session="4">Łańcuch neuronalny</h3>
-
-    <p class="s4" data-session="4">Kilka struktur jest kluczowych:</p>
-    <ul>
-      <li class="s4" data-session="4"><strong>Ciało migdałowate:</strong> detektor saliencji. Reaguje na cokolwiek ważne dla organizmu: nowe, nagradzające, zagrażające. Moduluje uczenie się emocjonalne i dostęp do zasobów uwagowych.</li>
-      <li class="s4" data-session="4"><strong>Wzgórze:</strong> router sensoryczny. Przetwarza i przekierowuje sygnały zmysłowe. Droga niska (wzgórze → ciało migdałowate) działa szybko, grubo, podkorowo. Droga wysoka (wzgórze → kora → ciało migdałowate) działa wolniej, ale precyzyjniej. LeDoux sam zaznaczył po latach, że silna wersja tej tezy ma słabe poparcie u ludzi. Droga niska jest przydatnym modelem konceptualnym dla trade-off szybkość/dokładność. Unikaj "amygdala hijack" (Goleman): zbyt uproszczone.</li>
-      <li class="s4" data-session="4"><strong>Wyspa</strong> (insula): przetwornik interoceptywny (posterior → mid → anterior). Przekształca sygnały ciałowe w afekt dostępny korze.</li>
-      <li class="s4" data-session="4"><strong>vmPFC</strong> (brzuszno-przyśrodkowa kora przedczołowa): integruje kontekst z afektem. Przepisuje predykcję o tym, czego ciało zaraz doświadczy.</li>
-      <li class="s4" data-session="4"><strong>dlPFC</strong> (grzbietowo-boczna kora przedczołowa): świadoma regulacja. Reappraisal: zmiana interpretacji sytuacji, która zmienia doświadczenie emocjonalne. Wysiłkowe i wolniejsze niż modulacja vmPFC.</li>
-    </ul>
-
     <h3 class="s4" data-session="4">Pacjent S.M.</h3>
 
     <p class="s4" data-session="4">Kobieta z obustronnym uszkodzeniem ciała migdałowatego (choroba Urbacha-Wiethego, rzadkie wapnienie struktur). Nie reaguje strachem na węże, pająki, napady, broń przystawioną do twarzy. Jej deficyt jest selektywny: eksteroceptywne wykrywanie zagrożenia. Droga wzrokowa i słuchowa do ciała migdałowatego jest zerwana.</p>
@@ -1121,6 +1164,19 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s4" data-session="4">Feinstein i współpracownicy (2013) pokazali, że S.M. <em>doświadcza strachu</em> podczas inhalacji CO2. Interoceptywna droga do strachu, przez wyspę, jest nienaruszona. Ciało wysyła sygnał paniki, wyspa go przetwarza, emocja zostaje skonstruowana. Wniosek: ciało migdałowate jest konieczne dla strachu opartego na sygnałach zewnętrznych. Dla strachu interoceptywnego: nie.</p>
 
     <p class="s4" data-session="4">Porównanie S.M. z psychopatią jest ilustracyjne. Podobne zachowanie na powierzchni (zredukowany strach, zaburzone decyzje moralne), ale różne mechanizmy. U S.M. sygnał saliencji zagrożenia nie dociera: ciało migdałowate wyłączone. W psychopatii cierpienie innych nie wchodzi do kalkulacji decyzyjnej. Przednia wyspa jest hipo-aktywna, afektywna rezonancja przez pętlę wyspa-dACC zredukowana. Ten sam efekt behawioralny, inna architektura awarii.</p>
+
+    <div class="video-block s4" data-session="4">
+      <div class="video-label">Vsauce · The Scariest Thing</div>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/9Vmwsg8Eabo"
+          title="Vsauce - The Scariest Thing"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <p class="video-caption">Vsauce o pacjentce S.M., strachu i tym, co naprawdę jest najstraszniejsze.</p>
+    </div>
 
     <h3 class="s4" data-session="4">Gdy szczytowy gniew wyłącza słuch</h3>
 
@@ -1130,32 +1186,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s4" data-session="4">Niemowlę nie reguluje własnych stanów emocjonalnych. Nie może: kora przedczołowa i dlPFC nie są jeszcze online. Opiekun jest zewnętrznym systemem regulacyjnym: przyłożony do ciała, kojący głos, rytmiczna kołysanka zmniejszają pobudzenie ciała migdałowatego niemowlęcia przez wejście ciałowe. <span class="s2" data-session="2">To jest koregulacja jako MKO dla układu nerwowego. Ten sam mechanizm scaffoldingu, który Wygotski opisał dla poznania, działa tutaj dla emocji.</span></p>
     <p class="s4" data-session="4">Między 2. a 5. rokiem życia dlPFC stopniowo dojrzewa. Dziecko internalizuje zdolność regulacyjną. Mowa prywatna (Wygotski) pojawia się teraz dla regulacji emocjonalnej: "spokojnie, to tylko pies, nie ugryzie." Między 6. a 12. rokiem życia łączność vmPFC-ciało migdałowate dojrzewa. Architektura wspiera to, co dorośli nazywają inteligencją emocjonalną.</p>
-
-    <!-- ==================== POZIOMY PREDYKCJI ==================== -->
-    <hr class="section-divider" />
-    <h2>Trzy ewolucyjne poziomy predykcji</h2>
-    <p>Sieci mózgowe przewidują na kilku poziomach jednocześnie.</p>
-    <p><strong>Poziom 1 - ciało i narzędzia</strong> (Iriki &amp; Taoka): Makak bierze grabki. Jego kora ciemieniowa musi nagle przewidywać trzy razy większą przestrzeń pełną nowych afordancji. Przestrzeń peripersonalna rozszerza się na koniec narzędzia. Narzędzia modyfikują dostępne możliwości do działania, tak jak nauczenie się jazdy samochodem modyfikuje, jak pewnie się czujesz za kierownicą i co jest osiągalne.</p>
-    <p><strong>Poziom 2 - emocje innych</strong> (de Waal, Goodall): Szympans widzi, że innemu szympansowi jest źle. Przewiduje jego ból i podchodzi pocieszyć. To jest empatia jako mechanizm predykcyjny - uniwersalny dla wielu gatunków.</p>
-    <p><strong>Poziom 3 - intencje innych</strong> (Tomasello): Szympans przewiduje, co inny zrobi. Człowiek przewiduje, co inny chce, żebym wiedział. Z tej różnicy wynika kumulatywna kultura: każde pokolenie zaczyna tam, gdzie skończyło poprzednie.</p>
-    <p>Poziom 3 ma dwa podpoziomy:</p>
-    <ul>
-      <li><strong>Podpoziom A - joint attention:</strong> "Skupiamy uwagę na tym samym." Trójstronna relacja: ja, ty, obiekt. Oboje wiemy, że oboje patrzymy. Szympansy to potrafią, choć słabiej niż ludzie.</li>
-      <li><strong>Podpoziom B - shared intentionality:</strong> "Mamy różne role w tym samym planie i oboje to rozumiemy." Tu pojawia się rekurencja: wiem że ty wiesz że ja wiem, i razem działamy na podstawie tej wzajemnej świadomości. Tutaj szympansy radzą sobie gorzej - zazwyczaj dominujący osobnik nie przyjmuje perspektywy współpracownika.</li>
-    </ul>
-
-    <div class="video-block">
-      <div class="video-label">Michael Tomasello · What Makes Us Human?</div>
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/BNbeleWvXyQ"
-          title="Michael Tomasello - What Makes Us Human?"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
-      <p class="video-caption">Tomasello o shared intentionality, joint attention i tym, co odróżnia człowieka od szympansa.</p>
-    </div>
 
     <!-- ==================== SPÓR ==================== -->
     <hr class="section-divider" />
@@ -1433,6 +1463,12 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item s3" data-session="3">Olds, J., &amp; Milner, P. (1954). Positive reinforcement produced by electrical stimulation of septal area and other regions of rat brain. <em>Journal of Comparative and Physiological Psychology, 47</em>(6), 419-427.</p>
       <p class="bib-item s3" data-session="3">Watson, J. B., &amp; Rayner, R. (1920). Conditioned emotional reactions. <em>Journal of Experimental Psychology, 3</em>(1), 1-14.</p>
       <p class="bib-item s3" data-session="3">Subbaraman, N. (2026). Dopamine takes a hit: how neuroscience is rethinking the 'feel-good' chemical. <em>Nature</em>. <a href="https://www.nature.com/articles/d41586-026-00836-x" target="_blank">doi:10.1038/d41586-026-00836-x</a></p>
+      <p class="bib-item s4" data-session="4">Barrett, L. F. (2017). <em>How Emotions Are Made: The Secret Life of the Brain</em>. Houghton Mifflin Harcourt.</p>
+      <p class="bib-item s4" data-session="4">Ekman, P. (1992). An argument for basic emotions. <em>Cognition &amp; Emotion, 6</em>(3-4), 169-200. <a href="https://doi.org/10.1080/02699939208411068" target="_blank">doi:10.1080/02699939208411068</a></p>
+      <p class="bib-item s4" data-session="4">Lieberman, M. D., Eisenberger, N. I., Crockett, M. J., Tom, S. M., Pfeifer, J. H., &amp; Way, B. M. (2007). Putting feelings into words: affect labeling disrupts amygdala activity in response to affective stimuli. <em>Psychological Science, 18</em>(5), 421-428. <a href="https://doi.org/10.1111/j.1467-9280.2007.01916.x" target="_blank">doi:10.1111/j.1467-9280.2007.01916.x</a></p>
+      <p class="bib-item s4" data-session="4">Feinstein, J. S., Buzza, C., Hurlemann, R., Follmer, R. L., Dahdaleh, N. S., Coryell, W. H., Welsh, M. J., Tranel, D., &amp; Wemmie, J. A. (2013). Fear and panic in humans with bilateral amygdala damage. <em>Nature Neuroscience, 16</em>(3), 270-272. <a href="https://doi.org/10.1038/nn.3323" target="_blank">doi:10.1038/nn.3323</a></p>
+      <p class="bib-item s4" data-session="4">Bowlby, J. (1969). <em>Attachment and Loss: Vol. 1. Attachment</em>. Basic Books.</p>
+      <p class="bib-item s4" data-session="4">LeDoux, J. E. (1996). <em>The Emotional Brain: The Mysterious Underpinnings of Emotional Life</em>. Simon &amp; Schuster.</p>
     </div>
 
   </div>
@@ -1569,6 +1605,16 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         });
       }
     }
+
+    stops.forEach(s => {
+      s.addEventListener('click', () => {
+        const val = s.dataset.s;
+        if (slider) {
+          slider.value = val;
+        }
+        updateTimeMachine(val);
+      });
+    });
 
     if (slider) {
       slider.addEventListener('input', (e) => updateTimeMachine(e.target.value));
