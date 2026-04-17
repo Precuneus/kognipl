@@ -534,6 +534,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     background: color-mix(in srgb, var(--bg-card) 85%, transparent);
     box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
     overflow: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
   .time-machine-inner {
     max-width: 672px;
@@ -601,14 +603,18 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   }
   .tm-stop {
     font-family: var(--font-body);
-    font-size: 11px;
-    font-weight: 300;
+    font-size: 13px;
+    font-weight: 400;
     color: var(--text-dim);
     transition: color 0.3s, font-weight 0.3s;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: default;
+    letter-spacing: 0.01em;
   }
   .tm-stop.active {
     color: var(--warm-glow);
-    font-weight: 500;
+    font-weight: 600;
   }
   /* ── Session additions: inline spans + standalone blocks ── */
   .s2 {
@@ -681,6 +687,46 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   .s3.hidden {
     display: none;
   }
+  /* ── Session 4 additions (muted violet tint) ── */
+  .s4 {
+    transition: opacity 0.4s ease;
+  }
+  p.s4, li.s4 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #8a7ab8 30%);
+  }
+  p.s4 strong, li.s4 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #8a7ab8 30%);
+  }
+  h3.s4 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #8a7ab8 25%);
+  }
+  h2.s4 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #8a7ab8 25%);
+  }
+  p.s4 em {
+    color: color-mix(in srgb, var(--text-dim) 70%, #8a7ab8 30%);
+  }
+  span.s4 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #8a7ab8 30%);
+  }
+  span.s4 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #8a7ab8 30%);
+  }
+  div.s4 p, div.s4 li, div.s4 .cascade-desc, div.s4 .niche-card p {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #8a7ab8 30%);
+  }
+  div.s4 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #8a7ab8 30%);
+  }
+  div.s4 h3 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #8a7ab8 25%);
+  }
+  figure.s4 figcaption {
+    color: color-mix(in srgb, var(--text-dim) 70%, #8a7ab8 30%);
+  }
+  .s4.hidden {
+    display: none;
+  }
 
 </style>
 
@@ -705,11 +751,12 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <!-- ==================== TIME MACHINE (fixed bottom) ==================== -->
     <div class="time-machine">
       <div class="time-machine-inner">
-        <input type="range" class="tm-slider" id="tmSlider" min="1" max="3" value="3" step="1" />
+        <input type="range" class="tm-slider" id="tmSlider" min="1" max="4" value="4" step="1" />
         <div class="tm-stops">
           <span class="tm-stop active" data-s="1">Ewolucja</span>
           <span class="tm-stop active" data-s="2">Rozwój</span>
           <span class="tm-stop active" data-s="3">Dopamina</span>
+          <span class="tm-stop active" data-s="4">Emocje</span>
         </div>
       </div>
     </div>
@@ -868,7 +915,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <ul>
       <li><strong>Eksterocepcja:</strong> wzrok, słuch, węch, smak, dotyk - sygnały o tym, co dzieje się na granicy ciała i świata.</li>
       <li><strong>Propriocepcja:</strong> pozycja kończyn, napięcie mięśni, przyspieszenie liniowe i kątowe (z układu przedsionkowego) - sygnały o tym, jak ciało porusza się w przestrzeni.</li>
-      <li><strong>Interocepcja:</strong> bicie serca, oddech, głód, temperatura narządów - sygnały o stanie wnętrza ciała.</li>
+      <li><strong>Interocepcja:</strong> bicie serca, oddech, głód, temperatura narządów - sygnały o stanie wnętrza ciała. <span class="s4" data-session="4">Główny przetwornik interocepcji to <strong>insula</strong>: korowy pas biegnący wzdłuż bruzdy bocznej. Sygnały wędrują przez nią wzdłuż osi posterior-anterior. Tylna insula rejestruje surowe dane ciałowe (szybkość pulsu, napięcie trzewne), środkowa nadaje im pierwszą wartościowość, przednia buduje z nich reprezentację afektywną dostępną dla kory przedczołowej. To właśnie w przedniej insuli materiał interoceptywny staje się budulcem emocji.</span></li>
     </ul>
 
     <p style="margin-top: 28px;">Przypomnij sobie artykuł "Predictions not commands" (Adams et al., 2013): sygnały zstępujące z kory ruchowej do rdzenia kręgowego mają cechy predykcji, nie rozkazów. Kora motoryczna nie wysyła instrukcji "skurcz mięsień X o Y procent." Wysyła przewidywanie: "spodziewam się takiego a takiego stanu proprioceptywnego." Rdzeń kręgowy minimalizuje błąd między oczekiwanym a aktualnym stanem ciała. Ruch wyłania się z tej minimalizacji. Innymi słowy: spodziewam się jakiejś konfiguracji ciała. A po chwili kolejnej. I kolejnej. Jak surfer na falach.</p>
@@ -951,7 +998,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s3" data-session="3"><strong>Szlak bezpośredni,</strong> w którym szybko uwalniana dopamina (phasic) łączy się z receptorami D1, które są aktywujące. Ułatwia wybraną akcję, mapuje możliwe afordancje do działania.</p>
     <p class="s3" data-session="3"><strong>Szlak pośredni,</strong> w którym powoli uwalniana dopamina (tonic) łączy się z receptorami D2, które są hamujące. Efektem jest tłumienie konkurencyjnych akcji i utrzymywanie trajektorii na danej afordancji.</p>
     <p class="s3" data-session="3">Najnowsze modele (Keeler et al., 2014) opisują to jako "prepare and select": D1 przygotowuje zestaw możliwych odpowiedzi, D2 zawęża wybór do jednej. Dopamina nie mówi "idź" albo "stój". Dopamina kształtuje krajobraz dostępnych akcji: które są dostępne (D1) i która wygrywa (D2).</p>
-    <p class="s3" data-session="3">Robisz sekwencję afordancji: wstań, zrób kawę, idź do łazienki, ubierz się. D1 ułatwia każdy krok sekwencji. D2 tłumi rozpraszacze. Kiedy dopaminy w prążkowiu jest za mało (jak w chorobie Parkinsona), aktywność szlaku bezpośredniego jest zmniejszona relatywnie do szlaku pośredniego: problem z inicjacją ruchu.</p>
+    <p class="s3" data-session="3">Robisz sekwencję afordancji: wstań, zrób kawę, idź do łazienki, ubierz się. D1 ułatwia każdy krok sekwencji. D2 tłumi rozpraszacze. Kiedy dopaminy w prążkowiu jest za mało (jak w chorobie Parkinsona), aktywność szlaku bezpośredniego jest zmniejszona relatywnie do szlaku pośredniego: problem z inicjacją ruchu. <span class="s4" data-session="4">Ten sam mechanizm działa w depresji: kolaps kroku prepare na poziomie emocjonalnym. Mniej kandydatów do działania jest generowanych w ogóle, zanim selekcja D2 zdąży cokolwiek wybrać. Kurczy się przestrzeń afordancji: deficyt generowania kandydatów.</span></p>
 
     <figure class="figure-block s3" data-session="3">
       <img src="/images/basal_ganglia.png" alt="Szlak bezpośredni i pośredni w jądrach podstawy" />
@@ -1017,6 +1064,79 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s3" data-session="3">Wszystkie trzy substancje wpływają na uwalnianie dopaminy w różnych miejscach w różny sposób. Substancje produkują sygnał naturalnie nie doświadczany. Każdy detal eksteroceptywny obecny podczas zażycia (pokój, ludzie, muzyka) zostaje skonsolidowany z nadludzką siłą. Dlatego kontekst wyzwala nawrót. Te skojarzenia zostały wykute sygnałem, do którego architektura nigdy nie była skalibrowana.</p>
     <p class="s3" data-session="3"><em>Ćwiczenie:</em> jeśli choroba Parkinsona to degeneracja neuronów SNc (Substantia Nigra pars compacta; mniej dopaminy w prążkowiu grzbietowym), a kokaina blokuje DAT (utrzymuje dopaminę w synapsie dłużej), to czy kokaina mogłaby pomóc?</p>
     <p class="s3" data-session="3">Teoretycznie tak, ale problem w tym, że kokaina jest nieselektywna: blokuje DAT, NET i SERT jednocześnie, wywołując szerokie spektrum efektów ubocznych i uzależnienie. L-DOPA stosowana w leczeniu działa inaczej: dostarcza prekursora do neuronów dopaminergicznych, które mają enzym DOPA dekarboksylazę do konwersji. To zwiększa dostępność dopaminy w całym mózgu, nie tylko w SN. Efektem ubocznym jest zwiększona aktywność szlaku mezolimbicznego: pacjenci z Parkinsonem leczeni L-DOPA czasem rozwijają kompulsywne zachowania (hazard, zakupy). Ten sam lek, który przywraca kontrolę ruchową przez szlak nigrostriatalny, może zaburzyć kontrolę impulsów przez szlak mezolimbiczny.</p>
+
+    <!-- ==================== EMOCJE ==================== -->
+    <hr class="section-divider s4" data-session="4" />
+    <h2 class="s4" data-session="4">Emocje</h2>
+
+    <p class="s4" data-session="4">Przez dekady odpowiedź brzmiała: mózg ma wbudowane moduły emocjonalne. Paul Ekman udokumentował sześć ekspresji twarzy (szczęście, smutek, strach, wstręt, gniew, zaskoczenie), które rozpoznają ludzie na wszystkich kontynentach, niezależnie od kultury. Mimika jako dwukierunkowy sygnał: wyraża emocję i ją wzmacnia (hipoteza facial feedback). Mikroekspresje trwające ułamek sekundy jako dowód na biologiczną podstawę, którą trudno sfałszować. Emocje jako wrodzone, uniwersalne kategorie: elementy architektury.</p>
+
+    <p class="s4" data-session="4">Lisa Feldman Barrett argumentuje inaczej. Emocje nie są odkrywane przez mózg. Są <strong>konstruowane</strong>. Nie ma dedykowanego "obwodu strachu" ani "centrum smutku". Jest afekt: ciągły sygnał walencji (dobre/złe) i pobudzenia (wysokie/niskie) płynący z ciała. I jest kontekst: historia życia, kultura, język, sytuacja. Mózg bierze ten surowy materiał i <em>tworzy</em> instancję emocji, w czasie rzeczywistym, za każdym razem od nowa. Dwie osoby z bijącym sercem i spoczonymi dłońmi: jedna czuje strach, druga podniecenie. Ta sama fizjologia, inna emocja. Dlatego że kontekst przepisuje predykcję.</p>
+
+    <h3 class="s4" data-session="4">Trzy poziomy: afekt, emocja, uczucie</h3>
+
+    <p class="s4" data-session="4">Żeby rozmawiać precyzyjnie, potrzebujemy trzech pojęć.</p>
+    <ul>
+      <li class="s4" data-session="4"><strong>Afekt:</strong> sygnał orientujący krajobraz afordancji, zanim jakakolwiek kategoria zostanie nałożona. Walencja mówi: ta afordancja przyciąga albo odpycha. Pobudzenie mówi: jak intensywnie. Płynie z ciała przez insulę jako surowy materiał przed konstrukcją emocji.</li>
+      <li class="s4" data-session="4"><strong>Emocja:</strong> afekt plus kontekst plus predykcja. Skonstruowana kategoria: "to co czuję teraz to strach." Wymaga pojęcia emocji jako szablonu do konstrukcji.</li>
+      <li class="s4" data-session="4"><strong>Uczucie:</strong> świadoma, raportowalna reprezentacja skonstruowanej emocji. To, co możesz powiedzieć rozmówcy lub zapisać w dzienniku.</li>
+    </ul>
+
+    <p class="s4" data-session="4">Wysokie pobudzenie samo w sobie to afekt bez kategorii. Ten sam stan ciałowy (szybki puls, spocone dłonie, napięcie mięśni) może zostać skonstruowany jako strach, ekscytacja, gniew albo zauroczenie, w zależności od tego, jaki szablon pojęciowy jest dostępny i jaki kontekst jest aktywny. Afekt z kategorią to emocja.</p>
+
+    <h3 class="s4" data-session="4">Łańcuch neuronalny</h3>
+
+    <p class="s4" data-session="4">Kilka struktur jest kluczowych:</p>
+    <ul>
+      <li class="s4" data-session="4"><strong>Ciało migdałowate:</strong> detektor saliencji. Reaguje na cokolwiek ważne dla organizmu: nowe, nagradzające, zagrażające. Moduluje uczenie się emocjonalne i dostęp do zasobów uwagowych.</li>
+      <li class="s4" data-session="4"><strong>Wzgórze:</strong> router sensoryczny. Przetwarza i przekierowuje sygnały zmysłowe. Droga niska (wzgórze → ciało migdałowate) działa szybko, grubo, podkorowo. Droga wysoka (wzgórze → kora → ciało migdałowate) działa wolniej, ale precyzyjniej. LeDoux sam zaznaczył po latach, że silna wersja tej tezy ma słabe poparcie u ludzi. Droga niska jest przydatnym modelem konceptualnym dla trade-off szybkość/dokładność. Unikaj "amygdala hijack" (Goleman): zbyt uproszczone.</li>
+      <li class="s4" data-session="4"><strong>Insula:</strong> przetwornik interoceptywny (patrz wyżej: posterior → mid → anterior). Przekształca sygnały ciałowe w afekt dostępny korze.</li>
+      <li class="s4" data-session="4"><strong>vmPFC</strong> (brzuszno-przyśrodkowa kora przedczołowa): integruje kontekst z afektem. Przepisuje predykcję o tym, czego ciało zaraz doświadczy. Tu mieszkają placebo i nocebo.</li>
+      <li class="s4" data-session="4"><strong>dlPFC</strong> (grzbietowo-boczna kora przedczołowa): świadoma regulacja. Reappraisal: zmiana interpretacji sytuacji, która zmienia doświadczenie emocjonalne. Wysiłkowe i wolniejsze niż modulacja vmPFC.</li>
+    </ul>
+
+    <h3 class="s4" data-session="4">Pacjent S.M.</h3>
+
+    <p class="s4" data-session="4">Kobieta z obustronnym uszkodzeniem ciała migdałowatego (choroba Urbacha-Wiethego, rzadkie wapnienie struktur). Nie reaguje strachem na węże, pająki, napady, broń przystawioną do twarzy. Jej deficyt jest selektywny: eksteroceptywne wykrywanie zagrożenia. Droga wzrokowa i słuchowa do ciała migdałowatego jest zerwana.</p>
+
+    <p class="s4" data-session="4">Feinstein i współpracownicy (2013) pokazali, że S.M. <em>doświadcza strachu</em> podczas inhalacji CO2. Interoceptywna droga do strachu, przez insulę, jest nienaruszona. Ciało wysyła sygnał paniki, insula go przetwarza, emocja zostaje skonstruowana. Wniosek: ciało migdałowate jest konieczne dla strachu opartego na sygnałach zewnętrznych. Dla strachu interoceptywnego: nie.</p>
+
+    <p class="s4" data-session="4">Porównanie S.M. z psychopatią jest ilustracyjne. Podobne zachowanie na powierzchni (zredukowany strach, zaburzone decyzje moralne), ale różne mechanizmy. U S.M. sygnał saliencji zagrożenia nie dociera: ciało migdałowate wyłączone. W psychopatii cierpienie innych nie wchodzi do kalkulacji decyzyjnej. Anterior insula jest hipo-aktywna, afektywna rezonancja przez pętlę insula-dACC zredukowana. Ten sam efekt behawioralny, inna architektura awarii.</p>
+
+    <h3 class="s4" data-session="4">Placebo i nocebo</h3>
+
+    <p class="s4" data-session="4">Oczekiwanie zmienia afekt, zanim afekt nadejdzie. vmPFC przepisuje predykcję ciałową: "za chwilę będzie lepiej" lub "za chwilę będzie boleć." Ten prior nadpisuje bottom-up sygnał z tkanek. Placebo działa, bo mózg zaczyna generować stan ulgi zanim substancja cokolwiek robi, lub kiedy substancja jest chemicznie obojętna. Nocebo to ten sam mechanizm odwrócony: "to będzie boleć" prime'uje anterior insulę do znajdowania bólu w niejednoznacznych sygnałach ciałowych. Kontekst, zaufanie do lekarza i oczekiwania są mechanistycznie aktywne.</p>
+
+    <h3 class="s4" data-session="4">Granulacja emocjonalna i słownictwo jako regulacja</h3>
+
+    <p class="s4" data-session="4">Barrett: ludzie z bogatszym słownictwem emocjonalnym dosłownie doświadczają bardziej odrębnych stanów emocjonalnych. Granularność biblioteki pojęć determinuje granularność konstruowanego doświadczenia. Ktoś, kto rozróżnia frustrację, rozczarowanie, bezsilność i żal, konstruuje cztery różne stany tam, gdzie ktoś bez tych słów konstruuje jeden: "jest mi źle."</p>
+
+    <p class="s4" data-session="4">Lieberman i współpracownicy (2007): samo nadanie nazwy uczuciu redukuje aktywację ciała migdałowatego. Akt budowania słowa tłumi surowy sygnał. Słownictwo emocjonalne jest regulacyjne. Dlatego opiekun, który mówi dziecku "jesteś sfrustrowany, bo chciałeś sięgnąć po zabawkę i nie mogłeś" nie tylko etykietuje. Instaluje szablon konstrukcyjny na całe życie. Narzędzie emocjonalne przekazane przez MKO, zinternalizowane. Dokładnie mechanizm Wygotskiego, stosowany do regulacji afektu.</p>
+
+    <h3 class="s4" data-session="4">Gdy szczytowy gniew wyłącza słuch</h3>
+
+    <p class="s4" data-session="4">"Dzieci, które są wściekłe, nie słyszą." To precyzyjny opis mechanizmu. Silny stan emocjonalny generuje tak silny prior top-down, że sygnały bottom-up (w tym język i polecenia słowne) nie mogą przebić się przez kaskadę. Mechanizm: wysoki arousal aktywuje ciało migdałowate, które uwalnia noradrenalinę z miejsca sinawego (locus coeruleus). Powyżej optimum krzywej Yerkesa-Dodona noradrenalina degraduje funkcję kory przedczołowej. Kora potrzebna do przetworzenia języka jest dokładnie tą, którą szczytowy gniew dezaktywuje. Najskuteczniejsza interwencja: działanie na poziomie ciałowym (kontakt, oddech, obniżenie pobudzenia), które przywróci funkcję korową zanim komunikacja stanie się możliwa.</p>
+
+    <h3 class="s4" data-session="4">Style przywiązania jako kalibracja architektury regulacyjnej</h3>
+
+    <p class="s4" data-session="4">Style przywiązania Bowlby'ego to nie typy osobowości. To cztery różne odpowiedzi tej samej architektury na jedno pytanie: <em>jak przewidywalna jest moja opiekunka jako zasób regulacyjny?</em> Inaczej: wewnętrzny model roboczy = system predykcji dotyczący dostępności zewnętrznego regulatora.</p>
+    <ul>
+      <li class="s4" data-session="4"><strong>Bezpieczny:</strong> opiekun konsekwentnie dostępny. vmPFC-ciało migdałowate rozwija się z niezawodnym zewnętrznym modelem jako scaffoldem.</li>
+      <li class="s4" data-session="4"><strong>Lękowo-ambiwalentny:</strong> opiekun niekonsekwentny. System przywiązania pozostaje hiper-aktywowany. Ciało migdałowate uczy się: alarm włączony, bo odpowiedź jest nieprzewidywalna. Koszt: chroniczne pobudzenie, nadwrażliwość na sygnały porzucenia.</li>
+      <li class="s4" data-session="4"><strong>Unikający:</strong> opiekun konsekwentnie nieresponsywny. Dziecko deaktywuje sygnalizację przywiązania. Wygląda jak niezależność. To wyłączony obwód przywiązania. Kosztem jest niedostępność własnych stanów interoceptywnych.</li>
+      <li class="s4" data-session="4"><strong>Zdezorganizowany:</strong> opiekun jest jednocześnie źródłem zagrożenia i jedynym bezpiecznym portem. System otrzymuje sprzeczne polecenia. Najsilniejszy predyktor późniejszej psychopatologii i dysocjacji.</li>
+    </ul>
+    <p class="s4" data-session="4">Teoria przywiązania i predictive processing opisują tę samą architekturę w różnych słownikach. Styl przywiązania to kalibracja modeli predykcyjnych dotyczących regulatora zewnętrznego, które kształtują połączenia vmPFC-ciało migdałowate przez powtarzaną koregulację.</p>
+
+    <h3 class="s4" data-session="4">Łuk rozwojowy: od koregulacji do integracji</h3>
+
+    <p class="s4" data-session="4">Niemowlę nie reguluje własnych stanów emocjonalnych. Nie może: kora przedczołowa i dlPFC nie są jeszcze online. Opiekun jest zewnętrznym systemem regulacyjnym: przyłożony do ciała, kojący głos, rytmiczna kołysanka zmniejszają pobudzenie ciała migdałowatego niemowlęcia przez wejście ciałowe. <span class="s2" data-session="2">To jest koregulacja jako MKO dla układu nerwowego. Ten sam mechanizm scaffoldingu, który Wygotski opisał dla poznania, działa tutaj dla emocji.</span></p>
+    <p class="s4" data-session="4">Między 2. a 5. rokiem życia dlPFC stopniowo dojrzewa. Dziecko internalizuje zdolność regulacyjną. Mowa prywatna (Wygotski) pojawia się teraz dla regulacji emocjonalnej: "spokojnie, to tylko pies, nie ugryzie." Między 6. a 12. rokiem życia łączność vmPFC-ciało migdałowate dojrzewa. Architektura wspiera to, co dorośli nazywają inteligencją emocjonalną.</p>
+
+    <h3 class="s4" data-session="4">Depresja jako kolaps przestrzeni afordancji</h3>
+
+    <p class="s4" data-session="4">"Depresja to niewidzenie innych opcji." Sformułowanie precyzyjniejsze niż większość definicji klinicznych. Mechanizm: prior predykcyjny jest tak silnie negatywny, że system nie generuje pozytywnych kandydatów do działania. Każda opcja jest oceniana przez priors przewidujące porażkę. To błąd kalibracji priora. <span class="s3" data-session="3">Połączenie z krokiem prepare (D1): depresja atakuje właśnie ten etap. Mniej kandydatów do działania dociera do progu, zanim nastąpi selekcja. Kolaps dotyczy generowania opcji.</span></p>
+    <p class="s4" data-session="4">Kolaps zachodzi na każdym poziomie hierarchii jednocześnie: neutralne stany ciałowe są etykietowane przez DMN jako ciężkość i bezwartościowość; ta sama fizjologiczna ekscytacja jest konstruowana jako groza, nie jako oczekiwanie; każde działanie jest oceniane przez prior porażki zanim zostanie zainicjowane.</p>
 
     <!-- ==================== POZIOMY PREDYKCJI ==================== -->
     <hr class="section-divider" />
