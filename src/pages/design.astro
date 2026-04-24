@@ -303,19 +303,19 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
           <div class="dt-label">Empatia</div>
         </button>
       </div>
-      <div class="dt-step active" data-panel="2">
+      <div class="dt-step done" data-panel="2">
         <button data-show="2">
           <div class="dt-dot">02</div>
           <div class="dt-label">Badania</div>
         </button>
       </div>
-      <div class="dt-step" data-panel="3">
+      <div class="dt-step done" data-panel="3">
         <button data-show="3">
           <div class="dt-dot">03</div>
           <div class="dt-label">Synteza</div>
         </button>
       </div>
-      <div class="dt-step" data-panel="4">
+      <div class="dt-step active" data-panel="4">
         <button data-show="4">
           <div class="dt-dot">04</div>
           <div class="dt-label">Prototyp</div>
@@ -422,9 +422,32 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
     </div>
     <div class="etap-panel" id="panel-4">
       <div class="status-card">
-        <div class="status-card-label">Etap 4 z 5 — Prototyp</div>
-        <p>Materiały pojawią się po zajęciach.</p>
+        <div class="status-card-label">Etap 4 z 5 — Prototyp i test</div>
+        <p>Macie prototyp. Teraz sprawdzicie, jak radzi sobie w rękach kogoś, kto nigdy wcześniej nie słyszał o Waszej grze. Dajecie prototyp i instrukcję. Nic nie tłumaczycie. Obserwujecie. Potem przeprowadzacie krótki wywiad.</p>
       </div>
+
+      <h2 class="section-heading">Jak przeprowadzić test</h2>
+      <div class="section-divider"></div>
+
+      <p>Znajdźcie minimum 3 osoby, które nigdy nie słyszały o Waszej grze. Nie kolegów z zespołu, nie osoby które widziały prototyp, nie kogoś komu opowiadaliście o pomyśle. Dajecie im grę i instrukcję. Nie tłumaczycie zasad. Nie podpowiadacie. Obserwujecie, jak radzą sobie sami.</p>
+
+      <p>W trakcie gry notujecie fakty: co gracz zrobił najpierw, gdzie się zatrzymał, co było niejasne, o co pytał. Po grze przeprowadzacie krótki wywiad: co czuł, co zrozumiał, co by zmienił, czy zagrałby jeszcze raz.</p>
+
+      <p>Po zebraniu wszystkich testów wypełniacie wspólnie stronę syntezy: jakie wzorce widzicie, co Was zaskoczyło, co konkretnie zmieniacie w prototypie. Całość przynosicie na zajęcia.</p>
+
+      <h2 class="section-heading">Materiały</h2>
+      <div class="section-divider"></div>
+
+      <div class="materials-grid" style="grid-template-columns: 1fr; max-width: 320px;">
+        <a class="material-card" href="/dt_test_worksheet.pdf" download>
+          <div class="material-icon">◇</div>
+          <div class="material-title">Test Prototypu</div>
+          <div class="material-desc">Arkusz obserwacji i wywiadu po grze. Wydrukujcie tyle kopii stron 1-2, ilu macie testerów. Stronę 3 (synteza) wypełniacie raz, wspólnie.</div>
+          <div class="material-download">Pobierz PDF &darr;</div>
+        </a>
+      </div>
+
+      <p class="deadline-note">Testy z użytkownikami i wypełnione arkusze — na kolejne zajęcia.</p>
     </div>
     <div class="etap-panel" id="panel-5">
       <div class="status-card">
@@ -445,7 +468,7 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
         btn.addEventListener('click', () => showPanel(btn.dataset.show));
       });
 
-      showPanel(2);
+      showPanel(4);
     </script>
 
   </div>
