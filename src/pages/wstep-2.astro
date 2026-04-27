@@ -730,6 +730,47 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   .s4.hidden {
     display: none;
   }
+  /* ── Session 5 additions (muted teal tint) ── */
+  .s5 {
+    transition: opacity 0.4s ease;
+  }
+  p.s5, li.s5 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #6a9dab 30%);
+  }
+  p.s5 strong, li.s5 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #6a9dab 30%);
+  }
+  h3.s5 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #6a9dab 25%);
+  }
+  h2.s5 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #6a9dab 25%);
+  }
+  p.s5 em {
+    color: color-mix(in srgb, var(--text-dim) 70%, #6a9dab 30%);
+  }
+  span.s5 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #6a9dab 30%);
+  }
+  span.s5 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #6a9dab 30%);
+  }
+  div.s5 p, div.s5 li, div.s5 .cascade-desc, div.s5 .niche-card p {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #6a9dab 30%);
+  }
+  div.s5 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #6a9dab 30%);
+  }
+  div.s5 h3 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #6a9dab 25%);
+  }
+  figure.s5 figcaption {
+    color: color-mix(in srgb, var(--text-dim) 70%, #6a9dab 30%);
+  }
+  .s5.hidden {
+    display: none;
+  }
+
   /* embedded S4 headings in non-emocje sections: hidden by JS but not violet */
   [data-session].hidden {
     display: none;
@@ -758,19 +799,20 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <!-- ==================== TIME MACHINE (fixed bottom) ==================== -->
     <div class="time-machine">
       <div class="time-machine-inner">
-        <input type="range" class="tm-slider" id="tmSlider" min="1" max="4" value="4" step="1" />
+        <input type="range" class="tm-slider" id="tmSlider" min="1" max="5" value="5" step="1" />
         <div class="tm-stops">
           <span class="tm-stop active" data-s="1">Ewolucja</span>
           <span class="tm-stop active" data-s="2">Rozwój</span>
           <span class="tm-stop active" data-s="3">Dopamina</span>
           <span class="tm-stop active" data-s="4">Emocje</span>
+          <span class="tm-stop active" data-s="5">Pamięć</span>
         </div>
       </div>
     </div>
 
     <div class="session-header">
       <div class="session-title">Skąd się wzięliśmy?</div>
-      <div class="session-subtitle">Ewolucja · Rozwój · Predykcje · Afordancje</div>
+      <div class="session-subtitle">Ewolucja · Rozwój · Predykcje · Afordancje · Pamięć</div>
     </div>
 
     <!-- ==================== PODSTAWOWE POJĘCIA ==================== -->
@@ -785,6 +827,9 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <h3>Model</h3>
     <p>Doświadczana "rzeczywistość" to model powstały w wyniku wielu lat treningu Twoich biologicznych sieci neuronowych. Doświadczasz modelu generowanego przez aktywność swoich sieci mózgowych. Treść doświadczenia to model. Uszkodzenie zakrętu wrzecionowatego wykasuje twarze z treści Twojego doświadczenia; uszkodzenie V5/MT sprawi, że odświeżanie rzeczywistości zwolni do kilku klatek na sekundę; uszkodzenie prawej kory ciemieniowej tymczasowo wymaże lewą stronę doświadczenia.</p>
     <p>"Ty" też jesteś modelem. Jesteś historią swoich wcześniejszych doświadczeń, opowieścią, jaką kultywujesz w swojej spójnej narracji tłumaczącej Twoje życie. Jak myślisz o sobie? Jak się zmieniasz? Czy masz jedno czy wiele żyć? Możliwe, że jesteś pomocną i życzliwą osobą, ale uszkodzenie mózgu może sprawić, że zmienisz się diametralnie, jak Phineas Gage. W innych przypadkach tożsamość może zniknąć całkiem: demencja uniemożliwia tworzenie spójnej narracji o sobie i zapamiętywanie swojej historii. <span class="s2" data-session="2">"Ty" to też model. Budowany od momentu urodzenia (Piaget), wzorując się na afordancjach zapewnianych przez bliskich (Vygotsky).</span></p>
+    <p class="s5" data-session="5">W 1953 roku chirurg William Beecher Scoville usunął obustronne przyśrodkowe płaty skroniowe u pacjenta Henry'ego Molaisona (H.M.), próbując leczyć ciężką epilepsję. Operacja objęła hipokamp (strukturę głęboko w płacie skroniowym, kluczową dla pamięci), korę śródwęchową (bramę, przez którą informacje trafiają do hipokampa) i ciało migdałowate. Epilepsja ustąpiła, ale H.M. stracił zdolność tworzenia nowych wspomnień deklaratywnych. Mógł pamiętać dzieciństwo, ale nie potrafił zapamiętać osoby, którą poznał pięć minut temu. Jego model świata zamroził się w 1953 roku.</p>
+    <p class="s5" data-session="5">Brenda Milner odkryła coś zaskakującego: H.M. uczył się rysowania w lustrze. Z każdą sesją był szybszy i dokładniejszy, choć za każdym razem twierdził, że nigdy tego nie robił. Pętla hipokamp-kora śródwęchowa (HPC-EC) buduje wspomnienia deklaratywne: kartka z datą i adresem, do której możesz wrócić. Prążkowie buduje nawyki: ciało pamięta, choć "Ty" nie. H.M. stracił kartki, ale zachował ciało.</p>
+
     <p>Jedyne co zostaje, to interakcja między "Ty" a "rzeczywistością". Między Twoją perspektywą a treścią. Na tym styku jest doświadczanie. To wydaje się najbardziej prawdziwe, uniwersalne. Ale niebezpiecznie oddala się w kierunku filozofii.</p>
     <p>Wróćmy do modeli. Model powstał podczas lat treningu. <span class="s2" data-session="2">Joscha Bach zauważa, że Genesis może być interpretowane jako budowanie modelu świata przez dziecko przychodzące na świat.</span></p>
     <div class="video-block s2" data-session="2">
@@ -869,6 +914,9 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s3" data-session="3">Tolman pokazał, że model buduje się cały czas. Szczury, które eksplorowały labirynt bez nagrody, zbudowały mapę poznawczą umożliwiającą im budowanie skrótów gdy pojawiła się nagroda. Mapy poznawcze łączą relacje między informacjami z receptorów dzięki aktywnościom komórek miejsca w hipokampie (HPC) i komórek siatki w korze śródwęchowej (Entorhinal Cortex, EC).</p>
     <p class="s3" data-session="3">W miarę jak model staje się niezawodny przez powtarzanie, zachowanie stopniowo przenosi się z hipokampa (elastyczny, deklaratywny: "pamiętam, jak tam dojechać") do prążkowia grzbietowo-bocznego (automatyczny, nawykowy: "ciało samo jedzie"). Alternatywne scenariusze nie muszą już być modelowane w HPC bo dany ciąg afordancji zawsze niesie ze sobą przewidywalne informacje i wystarczy nawykowo powtórzyć to, co zawsze działało.</p>
+    <p class="s5" data-session="5">Thorndike widział uczenie się jako mechaniczne wzmacnianie połączeń bodziec-reakcja: kot w puzzle box próbuje losowo, przypadkowo trafia, i to połączenie się wzmacnia. Tolman pokazał, że szczury robią coś fundamentalnie innego: budują model przestrzeni i używają go elastycznie. To różnica między nawykiem a mapą. Nawyk to prążkowie: "skręć w lewo." Mapa to hipokamp: "wyjście jest na północ, mogę tam dotrzeć różnymi drogami." Godden i Baddeley (1975) dodali, że mapa nie jest abstrakcyjna: nurkowie, którzy uczyli się słów pod wodą, przypominali je lepiej pod wodą niż na lądzie. Kontekst jest częścią śladu pamięciowego: Twój hipokamp koduje treść razem z okolicznościami, w których ją napotkałeś.</p>
+    <p class="s5" data-session="5">Rekonsolidacja komplikuje obraz. Przypominasz sobie kłótnię sprzed roku. W momencie przywoływania wspomnienie otwiera się na modyfikację: przez krótkie okno jest podatne na zmianę, zanim hipokamp ponownie je skonsoliduje (Nader et al., 2000). To nie jest błąd systemu. To mechanizm aktualizacji: stary model spotyka nowe dane i może się zmienić. Nawyk w prążkowiu nie podlega tej samej plastyczności. Dlatego trauma zakodowana deklaratywnie w hipokampie jest potencjalnie modyfikowalna (na tym bazuje terapia ekspozycyjna), podczas gdy nawyk unikania, skonsolidowany w prążkowiu, opiera się zmianie.</p>
+
 
     <figure class="figure-block s3" data-session="3">
       <img src="/images/dopamine_pathways.png" alt="Trzy główne szlaki dopaminergiczne mózgu" />
@@ -907,6 +955,9 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p>Sieci neuronowe nie czekają na informacje ze świata, żeby potem zareagować. Sieci cały czas aktywnie przewidują przyszłe informacje. Są jak surferzy pokonujący fale - muszą przewidywać, co będzie za chwilę.</p>
     <p>Prowadzisz samochód na autostradzie. Zmieniasz pasy, wyprzedzasz, jedziesz płynnie. Mimo prędkości wszystko jest... przewidywalne. Sterujesz swoim samochodem, wiesz, jak zareaguje na naciśnięcie pedałów, skręt kierownicy - Twoje sieci mózgowe są już wytrenowane. Nie to co na początku! Wtedy przecież nawet płynne ruszenie było wyzwaniem.</p>
     <p>To jest predykcja: nieustanne generowanie hipotez o tym, co zaraz nastąpi. Percepcja to weryfikowanie hipotez o świecie. <span class="s4" data-session="4">Silna predykcja potrafi wygenerować oczekiwany stan ciała zanim bodziec nadejdzie. Placebo to najczystszy dowód: mózg produkuje ulgę zanim substancja cokolwiek zrobi. Albo kiedy substancja jest chemicznie obojętna.</span></p>
+    <p class="s5" data-session="5">Pamięć działa tak samo. Wspomnienie nie jest nagraniem. Za każdym razem, gdy coś sobie "przypominasz", hipokamp rekonstruuje scenę z rozproszonych fragmentów: kontekst z kory śródwęchowej, szczegóły sensoryczne z kory asocjacyjnej (obszarów łączących różne zmysły), emocjonalny koloryt z ciała migdałowatego. Rekonstrukcja podlega aktualnym priorom. Loftus i Palmer (1974) pokazali to jednym słowem: uczestnicy oglądali film z wypadkiem samochodowym, a potem odpowiadali na pytanie o prędkość. Gdy pytanie zawierało "smashed" zamiast "hit", szacunki prędkości wzrosły o 20%, a tydzień później ci sami ludzie "pamiętali" potłuczone szkło, którego nigdy nie było. Predykcja top-down nadpisała ślad pamięciowy. Schacter i Addis (2007) nazwą później ten sam mechanizm konstruktywną symulacją epizodyczną: aparat, który pozwala Ci wyobrażać sobie przyszłość, jest tym samym aparatem, który rekonstruuje przeszłość.</p>
+    <p class="s5" data-session="5">Eksperyment Coca-Coli ilustruje to na skrzyżowaniu percepcji i pamięci: uczestnicy oceniali smak identycznych napojów, ale ci, którzy widzieli logo Coca-Coli, wykazywali silniejszą aktywację vmPFC i hipokampa (McClure et al., 2004). Prior markowy rekonstruował doświadczenie smaku, zanim język zdążył wysłać sygnał. Twój mózg nie czekał na dane; generował smak z oczekiwania. Pamięć i percepcja to ten sam mechanizm predykcyjny, różniący się jedynie tym, skąd pochodzi błąd: ze świata czy z wnętrza.</p>
+
     <p>Nagle samochód przed Tobą zaczyna hamować. Automatycznie reagujesz. Wciskasz hamulec, odbijasz kierownicę, w międzyczasie zerkając w lusterko, czy pas obok jest wolny. Samochód przed Tobą zachował się niespodziewanie - zaskoczył Cię.</p>
     <p>Załóżmy, że samochód przed Tobą to było BMW. Po kilku tygodniach sytuacja się powtarza. Kolejne BMW zaskakuje Cię na drodze i nagle zmienia pas, zajeżdżając Ci drogę. Po kilku tygodniach samochód za Tobą miga Ci długimi po oczach, znów BMW! Zaczynasz spodziewać się nieprzewidywalnych rzeczy, gdy spotykasz samochody tej marki na drodze. Wcześniejsze sytuacje dotrenowały Twoje sieci mózgowe. <span class="s2" data-session="2">Koncept BMW jest zakomodowany: samochody tej marki mają specjalne miejsce w Twoim modelu, do czego utworzenia sama asymilacja by nie wystarczyła.</span> <span class="s3" data-session="3">Pierwsze BMW, które Cię zajechało: nieoczekiwane, dopamina zalewa, kontekst zakodowany szeroko (która droga, jaka pora, jaki samochód). Po kilku BMW: skojarzenie jest skonsolidowane, dopamina przesuwa się z kodowania na odtwarzanie. Widzisz BMW i predykcja odpala zanim cokolwiek się stanie.</span></p>
     <p>Błędy predykcyjne to niespodziewane informacje, które wędrują w górę (bottom-up) i kształtują sieci tak, aby w przyszłości te informacje były już spodziewane (top-down). Cała historia ewolucyjna, kulturowa i indywidualna kształtuje architekturę sieci neuronowych. <span class="s4" data-session="4">Prior potrafi też nadpisać sygnał bottom-up z tkanek. Kora przedczołowa przepisuje predykcję z ciała: "za chwilę będzie lepiej" lub "za chwilę będzie boleć." Oczekiwanie zmienia afekt zanim afekt nadejdzie. Nocebo to ten sam mechanizm odwrócony: "to będzie boleć" prime'uje wyspę do znajdowania bólu w niejednoznacznych sygnałach ciałowych.</span> <span class="s2" data-session="2">Ale czy budujesz swój model świata sam? Lev Vygotsky dodałby: inna osoba jest źródłem skalibrowanych błędów predykcyjnych dla Twojego mózgu dopasowanych do Twojego poziomu. Dostarcza Ci afordancji za którymi możesz podążać.</span> <span class="s3" data-session="3">Kluczowe jest przypisanie przyczyn obecnego doświadczenia (credit assignment), znalezienie przyczyny błędu predykcyjnego. Jakie wcześniejsze informacje mogą sugerować obecne doświadczenie?</span></p>
@@ -1082,6 +1133,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p>Afordancje są więc możliwościami do działania. Są elementami modelu rzeczywistości, z którymi model "Ciebie" może wejść w interakcję. Poruszasz ciałem implementując predykcje top-down z kory motorycznej (Adams et al., 2013). Model w korze motorycznej powstał w wyniku lat treningu stadium sensoryczno-motorycznego. Trening ruchowy i używania narzędzi ukształtował strukturę sieci neuronowych za pośrednictwem błędów predykcyjnych bottom-up, która zwrotnie zapewnia sygnał top-down generując kolejne predykcje ruchu. Predykcje i błędy predykcyjne są w ciągłej interakcji, znane afordancje są przewidywane, nowe afordancje są odkrywane i dodawane do modelu. <span class="s2" data-session="2">Poruszanie ciałem jest warunkiem poznania. Mózg, ciało i działanie to trzy perspektywy na ten sam proces.</span></p>
     <p class="s2" data-session="2">Alison Gopnik proponuje, że dzieci to zoptymalizowane maszyny do eksploracji: testują więcej afordancji, napotykają więcej błędów predykcyjnych, próbują więcej wariantów. Dorośli eksploatują wyuczone modele podążając utartymi ścieżkami znanych afordancji.</p>
+    <p class="s5" data-session="5">Nie wszyscy eksplorują tak samo, bo nie wszyscy wyobrażają sobie tak samo. Afantazja to brak mentalnych obrazów: takie osoby nie "widzą" jabłka, gdy zamkną oczy, ale operują na abstrakcyjnych propozycjach. Hiperfantazja to drugi koniec spektrum: obrazy tak żywe, że bywają mylone z percepcją. Synestezja to jeszcze inny wariant: dźwięk ma kolor, litera ma smak, bo sieci sensoryczne są skrzyżowane w sposób nietypowy. Każdy wariant zmienia krajobraz afordancji. Synestetyk widzi możliwości tam, gdzie inni nie widzą nic; afantastyk buduje modele inaczej, ale niekoniecznie gorzej. Solomon Shereshevsky, badany przez Łuriję przez trzydzieści lat, pamiętał wszystko dzięki synestezji: każda cyfra miała kształt, kolor, smak. Koszt był poważny: nadmiar szczegółów uniemożliwiał abstrahowanie i rozumienie metafor. Doskonała pamięć nie oznacza lepszego modelu.</p>
+
     <p>Motywacja to nie abstrakcyjna siła napędowa. To konkretne przyciąganie: coś wydaje się atrakcyjne, przyjemne, warte zachodu. Zmęczony wędrowiec nie analizuje kamienia. Kamień go po prostu <em>przyciąga</em> jako miejsce odpoczynku, bo jego ciało tego właśnie chce.</p>
 
     <p class="s3" data-session="3">Motywacja na tej stronie to właściwie dwa oddzielne systemy.</p>
@@ -1113,6 +1166,11 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     </div>
 
     <p>Trzy nisze to trzy opisy tego samego procesu: jak doświadczenie i sieci zwrotnie się kształtują. <span class="s2" data-session="2">Każde dziecko konstruuje wszystkie trzy nisze jednocześnie.</span></p>
+    <h3 class="s5" data-session="5">Pamięć jako symulacja: hipokamp buduje przyszłość z przeszłości</h3>
+    <p class="s5" data-session="5">Zamknij oczy i przypomnij sobie wczorajszy obiad. Hipokamp właśnie złożył scenę z fragmentów: miejsce z kory śródwęchowej, zapach z kory asocjacyjnej, nastrój z ciała migdałowatego. Schacter i Addis (2007) nazwali to konstruktywną symulacją epizodyczną: hipokamp nie przechowuje wspomnień jak pliki na dysku. Rekombinuje fragmenty przeszłych doświadczeń w nowe konfiguracje. A teraz wyobraź sobie jutrzejszy obiad. Addis, Wong i Schacter (2007) pokazali w fMRI, że Twój mózg aktywuje dokładnie tę samą sieć: hipokamp, korę śródwęchową, mPFC i PCC (tylna kora zakrętu obręczy). Sieć domyślna. Ten sam aparat buduje przeszłość i przyszłość.</p>
+    <p class="s5" data-session="5">Implikacja jest fundamentalna: fałszywe wspomnienia nie są błędem systemu. Są kosztem architektury zoptymalizowanej pod symulację, nie pod wierność zapisu. System, który potrafi rekombinować elementy przeszłości w nowe scenariusze, z konieczności może też rekombinować je w scenariusze, które nigdy się nie wydarzyły. Potłuczone szkło, które "pamiętali" uczestnicy eksperymentu Loftus, to produkt tego samego mechanizmu, który pozwala Ci wyobrazić sobie, co zrobisz jutro.</p>
+    <p class="s5" data-session="5">H.M. stracił tę zdolność razem z hipokampem. Nie tylko nie tworzył nowych wspomnień; nie potrafił wyobrażać sobie przyszłości. Gdy proszono go o opisanie jutra, nie potrafił skonstruować żadnej sceny. Odpowiadał ogólnikami albo milczał. Twoja nisza poznawcza rozciąga się od wspomnień dzieciństwa po plany na przyszły tydzień. Nisza H.M. zwężyła się do teraźniejszości. Bez hipokampa mapa czasowa znikła tak samo jak mapa przestrzenna.</p>
+
 
     <h3 class="s3" data-session="3">Gdy system konsolidacji zostaje przejęty</h3>
     <p class="s3" data-session="3">W 1954 roku Olds i Milner przypadkowo odkryli, że szczury naciskają dźwignię tysiące razy na godzinę, by stymulować elektrycznie własny mózg. Elektroda była umieszczona w podwzgórzu bocznym, ale stymulowała pęczek przyśrodkowy przodomózgowia: szlak dopaminergiczny z VTA do NAcc. Późniejsze badania pokazały, że to właśnie aktywacja NAcc tak bardzo uzależnia.</p>
@@ -1132,6 +1190,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s4" data-session="4">Przez dekady odpowiedź brzmiała: mózg ma wbudowane moduły emocjonalne. Paul Ekman udokumentował sześć ekspresji twarzy (szczęście, smutek, strach, wstręt, gniew, zaskoczenie), które rozpoznają ludzie na wszystkich kontynentach, niezależnie od kultury. Mimika jako dwukierunkowy sygnał: wyraża emocję i ją wzmacnia (hipoteza facial feedback). Mikroekspresje trwające ułamek sekundy jako dowód na biologiczną podstawę, którą trudno sfałszować. Emocje jako wrodzone, uniwersalne kategorie: elementy architektury.</p>
 
     <p class="s4" data-session="4">Lisa Feldman Barrett argumentuje inaczej. Emocje nie są odkrywane przez mózg. Są <strong>konstruowane</strong>. Nie ma dedykowanego "obwodu strachu" ani "centrum smutku". Jest afekt: ciągły sygnał walencji (dobre/złe) i pobudzenia (wysokie/niskie) płynący z ciała. I jest kontekst: historia życia, kultura, język, sytuacja. Mózg bierze ten surowy materiał i <em>tworzy</em> instancję emocji, w czasie rzeczywistym, za każdym razem od nowa. Dwie osoby z szybko bijącym sercem i spoconymi dłońmi: jedna czuje strach, druga podekscytowanie. Ta sama fizjologia, inna emocja. Dlatego że kontekst przepisuje predykcję.</p>
+    <p class="s5" data-session="5">Ten sam mechanizm konstrukcji działa w pamięci: hipokamp nie odtwarza wspomnień, lecz składa je z fragmentów pod dyktando aktualnych priorów. Barrett konstruuje emocje; Schacter konstruuje wspomnienia. Jeden aparat, dwa produkty.</p>
 
     <div class="video-block s4" data-session="4">
       <div class="video-label">Lisa Feldman Barrett · You aren't at the mercy of your emotions</div>
@@ -1253,6 +1312,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     </table>
 
     <p>Garin i współpracownicy (2022) porównali sieć spoczynkową (DMN) u czterech gatunków (człowiek, makak, marmozeta, mysz lemur). U naczelnych niehominidowych mPFC i PCC są słabo połączone. U człowieka to kluczowe połączenie DMN. Ludzki DMN, z jego pętlą mPFC-PCC, pojawił się stosunkowo późno w ewolucji naczelnych. Może to sugerować, że główna oś DMN (myślenie o sobie) jest nowym ewolucyjnie nabytkiem i to właśnie odróżnia ludzi od innych zwierząt.</p>
+    <p class="s5" data-session="5">DMN to nie sieć "odpoczynku." To silnik symulacji. Kiedy nie jesteś zajęty zadaniem, DMN rekombinuje fragmenty z hipokampa: sceny z przeszłości, fragmenty rozmów, interoceptywny koloryt emocji. Produkuje kandydatów do przyszłości: "co by było gdyby", "a może", "co jeśli." Te symulacje nie są przypadkowe; są karmione sygnałem interoceptywnym z wyspy (jak się teraz czujesz?) i fragmentami epizodycznymi z hipokampa (co ci to przypomina?). Wyobraź sobie jutrzejszy egzamin: serce przyspiesza, czujesz napięcie. DMN nie tylko planuje; generuje afekt prospektywny. Podróż w czasie jest cielesna.</p>
+
 
     <figure class="figure-block">
       <img src="/images/garin2022_dmn.png" alt="Schemat połączeń DMN u człowieka i naczelnych niehominidowych (Garin et al., 2022)" />
@@ -1363,6 +1424,11 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         <li class="s4" data-session="4"><span class="question-num">36</span>Trzyletnie dziecko jest wściekłe. Rodzic mówi "spokojnie, oddychaj." Dziecko nie reaguje. Rodzic przytula dziecko i zaczyna oddychać razem z nim. Dziecko się uspokaja. Dopiero potem słyszy słowa. Dlaczego słowa nie działały, a przytulenie tak? Odnieś się do kory przedczołowej, ciała migdałowatego i miejsca sinawego.</li>
         <li class="s4" data-session="4"><span class="question-num">37</span>S.M. i osoba z psychopatią: obie wykazują zredukowany strach i zaburzone decyzje moralne. Ten sam efekt behawioralny, inna architektura awarii. Która struktura jest wyłączona u S.M.? Która jest hipo-aktywna w psychopatii?</li>
         <li class="s4" data-session="4"><span class="question-num">38</span>Dwie osoby doświadczają odrzucenia. Pierwsza mówi "jest mi źle." Druga rozróżnia: "czuję się upokorzona, nie zraniona, bardziej wkurzona na siebie." Barrett twierdzi, że druga osoba dosłownie doświadcza czegoś innego. Dlaczego słownictwo zmienia doświadczenie?</li>
+        <li class="s5" data-session="5"><span class="question-num">39</span>H.M. nie potrafił zapamiętać osoby poznanej pięć minut temu, ale z każdą sesją był lepszy w rysowaniu w lustrze. Opisz tę dysocjację mechanistycznie: która struktura buduje wspomnienia deklaratywne, a która nawyki? Dlaczego chirurgiczne usunięcie jednej nie naruszyło drugiej?</li>
+        <li class="s5" data-session="5"><span class="question-num">40</span>Loftus i Palmer (1974) zmienili jedno słowo w pytaniu i uczestnicy "pamiętali" potłuczone szkło, którego nie było. Opisz ten wynik jako błąd predykcyjny w systemie pamięci. Gdzie w hierarchii predykcyjnej dochodzi do nadpisania śladu? Jak ten mechanizm łączy się z hipotezą konstruktywnej symulacji Schactera i Addis?</li>
+        <li class="s5" data-session="5"><span class="question-num">41</span>Nurkowie Goddena i Baddeleya (1975) lepiej przypominali sobie słowa w tym samym środowisku, w którym się ich uczyli. Opisz ten wynik używając pojęć: hipokamp, kontekst, kora śródwęchowa. Dlaczego nawyk (prążkowie) nie wykazuje takiej samej zależności kontekstowej?</li>
+        <li class="s5" data-session="5"><span class="question-num">42</span>Addis, Wong i Schacter (2007) pokazali, że wspominanie przeszłości i wyobrażanie przyszłości aktywują tę samą sieć (DMN + hipokamp). H.M. stracił obie zdolności jednocześnie. Dlaczego system pamięciowy i system wyobraźni to ten sam system? Jakie są koszty tej architektury?</li>
+        <li class="s5" data-session="5"><span class="question-num">43</span>Osoba z afantazją nie widzi mentalnych obrazów, ale skutecznie planuje przyszłość. Osoba z hiperfantazją widzi sceny tak żywe, że myli je z percepcją. Shereshevsky pamiętał wszystko, ale nie potrafił abstrahować. Połącz te trzy przypadki z pojęciem niszy poznawczej: jak wariant wyobraźni zmienia krajobraz afordancji?</li>
       </ol>
     </div>
 
@@ -1427,6 +1493,14 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         <li class="s4" data-session="4"><span class="question-num">54</span>Wymień cztery style przywiązania Bowlby'ego.</li>
         <li class="s4" data-session="4"><span class="question-num">55</span>Co to jest granulacja emocjonalna?</li>
         <li class="s4" data-session="4"><span class="question-num">56</span>Dlaczego placebo działa mimo że substancja jest chemicznie obojętna?</li>
+        <li class="s5" data-session="5"><span class="question-num">57</span>Kto to jest H.M. i co stracił po operacji?</li>
+        <li class="s5" data-session="5"><span class="question-num">58</span>Czym różni się pamięć deklaratywna (hipokamp) od nawykowej (prążkowie)?</li>
+        <li class="s5" data-session="5"><span class="question-num">59</span>Czym jest konstruktywna symulacja epizodyczna (Schacter i Addis)?</li>
+        <li class="s5" data-session="5"><span class="question-num">60</span>Dlaczego fałszywe wspomnienia są kosztem architektury pamięci, a nie błędem?</li>
+        <li class="s5" data-session="5"><span class="question-num">61</span>Co pokazał eksperyment Loftus i Palmer (1974) z pytaniem o "smashed" vs "hit"?</li>
+        <li class="s5" data-session="5"><span class="question-num">62</span>Co to jest rekonsolidacja pamięci?</li>
+        <li class="s5" data-session="5"><span class="question-num">63</span>Co to jest afantazja?</li>
+        <li class="s5" data-session="5"><span class="question-num">64</span>Co to jest zależność kontekstowa pamięci (Godden i Baddeley)?</li>
       </ol>
     </div>
 
@@ -1465,6 +1539,13 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item s4" data-session="4">Feinstein, J. S., Buzza, C., Hurlemann, R., Follmer, R. L., Dahdaleh, N. S., Coryell, W. H., Welsh, M. J., Tranel, D., &amp; Wemmie, J. A. (2013). Fear and panic in humans with bilateral amygdala damage. <em>Nature Neuroscience, 16</em>(3), 270-272. <a href="https://doi.org/10.1038/nn.3323" target="_blank">doi:10.1038/nn.3323</a></p>
       <p class="bib-item s4" data-session="4">Bowlby, J. (1969). <em>Attachment and Loss: Vol. 1. Attachment</em>. Basic Books.</p>
       <p class="bib-item s4" data-session="4">LeDoux, J. E. (1996). <em>The Emotional Brain: The Mysterious Underpinnings of Emotional Life</em>. Simon &amp; Schuster.</p>
+      <p class="bib-item s5" data-session="5">Scoville, W. B., &amp; Milner, B. (1957). Loss of recent memory after bilateral hippocampal lesions. <em>Journal of Neurology, Neurosurgery &amp; Psychiatry, 20</em>(1), 11-21. <a href="https://doi.org/10.1136/jnnp.20.1.11" target="_blank">doi:10.1136/jnnp.20.1.11</a></p>
+      <p class="bib-item s5" data-session="5">Loftus, E. F., &amp; Palmer, J. C. (1974). Reconstruction of automobile destruction: An example of the interaction between language and memory. <em>Journal of Verbal Learning and Verbal Behavior, 13</em>(5), 585-589. <a href="https://doi.org/10.1016/S0022-5371(74)80011-3" target="_blank">doi:10.1016/S0022-5371(74)80011-3</a></p>
+      <p class="bib-item s5" data-session="5">Schacter, D. L., &amp; Addis, D. R. (2007). The cognitive neuroscience of constructive memory: remembering the past and imagining the future. <em>Philosophical Transactions of the Royal Society B, 362</em>(1481), 773-786. <a href="https://doi.org/10.1098/rstb.2007.2087" target="_blank">doi:10.1098/rstb.2007.2087</a></p>
+      <p class="bib-item s5" data-session="5">Addis, D. R., Wong, A. T., &amp; Schacter, D. L. (2007). Remembering the past and imagining the future: common and distinct neural substrates during event construction and elaboration. <em>Neuropsychologia, 45</em>(7), 1363-1377. <a href="https://doi.org/10.1016/j.neuropsychologia.2006.10.016" target="_blank">doi:10.1016/j.neuropsychologia.2006.10.016</a></p>
+      <p class="bib-item s5" data-session="5">Godden, D. R., &amp; Baddeley, A. D. (1975). Context-dependent memory in two natural environments: on land and underwater. <em>British Journal of Psychology, 66</em>(3), 325-331. <a href="https://doi.org/10.1111/j.2044-8295.1975.tb01468.x" target="_blank">doi:10.1111/j.2044-8295.1975.tb01468.x</a></p>
+      <p class="bib-item s5" data-session="5">McClure, S. M., Li, J., Tomlin, D., Cypert, K. S., Montague, L. M., &amp; Montague, P. R. (2004). Neural correlates of behavioral preference for culturally familiar drinks. <em>Neuron, 44</em>(2), 379-387. <a href="https://doi.org/10.1016/j.neuron.2004.09.019" target="_blank">doi:10.1016/j.neuron.2004.09.019</a></p>
+      <p class="bib-item s5" data-session="5">Nader, K., Schafe, G. E., &amp; Le Doux, J. E. (2000). Fear memories require protein synthesis in the amygdala for reconsolidation after retrieval. <em>Nature, 406</em>(6797), 722-726. <a href="https://doi.org/10.1038/35021052" target="_blank">doi:10.1038/35021052</a></p>
     </div>
 
   </div>
