@@ -10,16 +10,58 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
   .course-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
   .course-page h1 { font-family: var(--font-display); font-size: 36px; font-weight: 400; color: var(--text-primary); letter-spacing: 2px; margin-bottom: 8px; text-align: center; }
   .course-page .meta { font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-dim); text-align: center; letter-spacing: 1px; margin-bottom: 48px; }
-  .course-page h2 { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--text-primary); margin: 40px 0 16px; }
-  .course-page p { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; }
+  .course-page h2 { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--text-primary); margin: 48px 0 16px; letter-spacing: 1px; }
+  .course-page h3 { font-family: var(--font-display); font-size: 17px; font-weight: 500; color: var(--text-primary); margin: 32px 0 12px; }
+  .course-page p { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px; }
   .back-link { display: inline-block; font-family: var(--font-body); font-size: 12px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; margin-bottom: 32px; transition: color 0.3s; }
   .back-link:hover { color: var(--warm-glow); }
 
-  /* Tool section: wider than course content */
+  html { scroll-behavior: smooth; }
+
+  .section-divider { width: 32px; height: 1px; background: var(--border-warm); opacity: 0.4; margin: 20px 0; }
+  .section-badge { font-family: var(--font-body); font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--warm-glow); opacity: 0.7; margin-bottom: 8px; display: block; }
+
+  /* Pill card */
+  .pill-card { border: 1px solid var(--border-warm); background: linear-gradient(135deg, rgba(232,168,76,0.04), transparent); padding: 28px 28px 24px; margin: 32px 0 48px; position: relative; }
+  .pill-card::before { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(232,168,76,0.08); pointer-events: none; }
+  .pill-card-label { font-family: var(--font-body); font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--warm-glow); margin-bottom: 10px; }
+  .pill-card-title { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.5px; }
+  .pill-card-desc { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; }
+  .pill-card-steps { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.7; padding-left: 20px; margin: 0 0 20px; }
+  .pill-card-steps li { margin-bottom: 6px; }
+  .pill-card-steps a { color: var(--warm-glow); text-decoration: none; }
+  .pill-card-steps a:hover { text-decoration: underline; }
+
+  .pill-copy-btn { display: inline-flex; align-items: center; gap: 8px; background: none; border: 1px solid var(--border-subtle); color: var(--text-dim); font-family: var(--font-body); font-size: 11px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; padding: 8px 20px; cursor: pointer; transition: all 0.3s; }
+  .pill-copy-btn:hover { color: var(--warm-glow); border-color: rgba(232,168,76,0.25); background: var(--warm-glow-soft); }
+  .pill-copy-btn.copied { color: var(--warm-glow); border-color: var(--warm-glow); }
+
+  .pill-content-hidden { display: none; }
+
+  /* Section gate */
+  .section-gate { border: 1px solid var(--border-subtle); background: var(--bg-card); padding: 32px 28px; margin: 48px 0; text-align: center; }
+  .section-gate-label { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--text-dim); margin-bottom: 16px; }
+  .section-gate-form { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .section-gate-input { background: var(--bg-deep); border: 1px solid var(--border-subtle); color: var(--text-primary); font-family: var(--font-body); font-size: 14px; font-weight: 300; padding: 8px 16px; text-align: center; width: 180px; outline: none; transition: border-color 0.3s; letter-spacing: 1px; }
+  .section-gate-input:focus { border-color: var(--border-warm); }
+  .section-gate-input::placeholder { color: var(--text-dim); font-style: italic; letter-spacing: 0; }
+  .section-gate-submit { background: none; border: 1px solid var(--border-subtle); color: var(--text-dim); font-family: var(--font-body); font-size: 11px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; padding: 9px 20px; cursor: pointer; transition: all 0.3s; }
+  .section-gate-submit:hover { color: var(--warm-glow); border-color: rgba(232,168,76,0.25); background: var(--warm-glow-soft); }
+  .section-gate-error { font-family: var(--font-display); font-style: italic; font-size: 13px; color: var(--accent-red, #c75050); margin-top: 10px; opacity: 0; transition: opacity 0.3s; height: 18px; }
+  .section-gate-error.visible { opacity: 1; }
+  .section-gate.unlocked { display: none; }
+
+  .gated-section { display: none; }
+  .gated-section.unlocked { display: block; }
+
+  /* Tool section */
   .tool-section { max-width: 1120px; margin: 0 auto; padding: 0 24px 80px; }
   .tool-intro { max-width: 720px; margin: 0 auto 32px; }
   .tool-intro h2 { font-family: var(--font-display); font-size: 26px; font-weight: 400; color: var(--text-primary); letter-spacing: 1px; margin-bottom: 12px; }
   .tool-intro p { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; }
+
+  .final-note { border-top: 1px solid var(--border-subtle); margin-top: 48px; padding-top: 32px; text-align: center; }
+  .final-note p { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--text-dim); line-height: 1.8; }
 </style>
 
 <PasswordGate title="Drugi mózg z AI" subtitle="Semestr letni 2025/2026" passwordHash={HASH} sessionKey="drugi-mozg">
@@ -27,31 +69,737 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
   <div class="course-page">
     <a href="/kursy" class="back-link">&larr; Kursy</a>
     <h1>Drugi mózg z AI</h1>
-    <p class="meta">warsztat · II rok · semestr letni 2025/2026 · 30h</p>
+    <p class="meta">warsztat &middot; II rok &middot; semestr letni 2025/2026 &middot; 15h</p>
 
-  </div>
+    <!-- ═══ SEKCJA 1 ═══ -->
+    <span class="section-badge">Sekcja 1</span>
+    <h2>Z czym właściwie rozmawiasz?</h2>
+    <div class="section-divider"></div>
 
-  <!-- Persona Builder Tool -->
-  <div class="tool-section">
-    <div class="tool-intro">
-      <h2>Kreator Persony AI</h2>
-      <p>Kurs zaczynamy od zbudowania persony. Twoim zadaniem jest:</p>
-      <ol style="font-family: var(--font-body); font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; padding-left: 20px; margin: 12px 0;">
-        <li>Założenie konta na <a href="https://claude.ai" target="_blank" rel="noopener" style="color: var(--warm-glow); text-decoration: none;">Claudzie</a>. Pracujemy z tym LLM-em.</li>
-        <li>Poniżej widzisz Kreator Persony. Zobacz jakie są opcje i poeksperymentuj. Możesz zrobić to raz, a możesz zrobić to wiele razy, sprawdzając możliwości i dodając dodatkowe rzeczy od siebie. Koniecznie napisz kilka zdań backstory :)</li>
-        <li>Po przejściu przez kreatora kliknij <strong>Generuj system prompt</strong>. Nasz model przetłumaczy Twoją kartę postaci na gotowy system prompt.</li>
-        <li>Skopiuj wygenerowany system prompt.</li>
-        <li>Załóż nowy projekt w Claudzie (nazwij go imieniem Persony) i wklej tam system prompt w instrukcje projektu.</li>
-        <li>Rozmawiaj z Personą i sprawdzaj, czy spełnia Twoje oczekiwania.</li>
+    <p>Twój mózg to maszyna do przewidywania. Kończysz cudze zdania. Wiesz, że po "pada..." będzie "deszcz" albo "śnieg", ale nie "szafa". Czujesz zaskoczenie, kiedy ktoś mówi coś, czego nie przewidziałeś. To zaskoczenie to sygnał: twoja wewnętrzna predykcja się pomyliła.</p>
+    <p>AI robi to samo. Na podstawie tego, co już przeczytała, przewiduje, jaki fragment tekstu powinien pojawić się jako następny. Potem dodaje go i przewiduje kolejny. Zdanie po zdaniu, akapit po akapicie.</p>
+    <p>Predykcja to nie uproszczenie myślenia. Predykcja to mechanizm, na którym myślenie jest zbudowane. W obu przypadkach.</p>
+
+    <h3>Ten sam problem, inny substrat</h3>
+    <p>Twój mózg uczy się przewidywać na podstawie całego życia. Od urodzenia jego sieci neuronowe kalibrują się do świata, przez który przechodzisz: światło, dźwięk, dotyk, ruch, ból, przyjemność. Każdy błąd predykcji rzeźbi architekturę sieci tak, żeby następnym razem przewidzieć lepiej. To trwa latami. Efekt: maszyna predykcyjna dostrojona do twojego konkretnego życia.</p>
+    <p>Duży model językowy (LLM) uczy się przewidywać na podstawie tekstu. Miliardów tekstów. Każdy błąd predykcji podczas treningu zmienia wagi sieci tak, żeby następnym razem przewidzieć lepiej. To trwa tygodniami na tysiącach procesorów. Efekt: maszyna predykcyjna dostrojona do statystycznej struktury ludzkiego języka.</p>
+    <p>To samo zadanie obliczeniowe. Ten sam mechanizm: minimalizacja błędu predykcji przez zmianę wewnętrznej architektury. Inny substrat, inne dane wejściowe, inne ograniczenia. Twój mózg pracuje na sygnałach z ciała i zmysłów. LLM pracuje na tokenach.</p>
+
+    <h3>Tokeny</h3>
+    <p>AI nie czyta słów tak jak ty. Rozbija tekst na mniejsze kawałki zwane tokenami. Słowo "kognitywistyka" to dla AI prawdopodobnie 3-4 tokeny. Słowo "kot" to jeden. Emoji to token. Spacja może być tokenem.</p>
+    <p>To jest odpowiednik receptorów w twoim ciele. Receptor nie przekazuje "wiadomości". Energia fizyczna zmienia formę, przechodząc przez biologiczną strukturę: fala elektromagnetyczna staje się zmianą konformacji rodopsyny, staje się gradientem jonowym, staje się wzorcem aktywacji. Token robi coś podobnego: ciąg znaków staje się wektorem liczbowym, który sieć neuronowa potrafi przetwarzać.</p>
+    <p>Różnica jest w tym, co stoi za tokenem. Za twoimi receptorami stoi ciało, świat fizyczny, miliony lat ewolucji. Za tokenem stoi tekst i tylko tekst. To ograniczenie jest realne i ważne, ale nie zmienia faktu, że mechanizm predykcji w obu przypadkach jest ten sam.</p>
+
+    <h3>Temperatura</h3>
+    <p>Kiedy AI przewiduje następny token, nie wybiera zawsze tego najbardziej prawdopodobnego. Jest parametr zwany temperaturą, który kontroluje, jak bardzo model ryzykuje.</p>
+    <p>Niska temperatura: AI wybiera niemal zawsze najbardziej prawdopodobny token. Odpowiedzi są przewidywalne, stabilne, powtarzalne.</p>
+    <p>Wysoka temperatura: AI częściej sięga po mniej prawdopodobne tokeny. Odpowiedzi są bardziej zaskakujące, ale też mniej spójne.</p>
+    <p>Twój mózg ma analogiczny mechanizm: poziom pobudzenia (arousal). Kiedy jesteś spokojny i skoncentrowany, twoje myśli podążają utartymi ścieżkami. Kiedy jesteś podekscytowany, zmęczony albo pod wpływem stresu, skojarzenia stają się luźniejsze, dalsze, czasem twórcze, czasem chaotyczne. To nie metafora. To ten sam problem sterowania: ile szumu wpuścić do systemu predykcyjnego, żeby nie był ani zbyt sztywny, ani zbyt rozproszony.</p>
+
+    <h3>Kiedy predykcja zawodzi</h3>
+    <p>Kiedy AI pisze bzdurę z pewnością siebie, to wynik tego samego mechanizmu, który produkuje genialne odpowiedzi. Model nie "wie", że się myli, tak jak twój mózg nie "wie", że iluzja optyczna nie jest prawdziwa. Predykcja jest tak dobra, jak dane, na których się nauczyła, i kontekst, w którym działa.</p>
+    <p>Kiedy dobrze rozumiesz, jak działa predykcja, zaczynasz widzieć zarówno siłę, jak i granice tego narzędzia. I zaczynasz rozumieć, dlaczego twój mózg popełnia podobne błędy.</p>
+
+    <h3>Zanim przejdziesz dalej</h3>
+    <p>W następnym ćwiczeniu (Pigułka 1: Nasiona) podasz AI 10 losowych słów i zobaczysz, co z nimi zrobi. Zwróć uwagę na mechanizm: AI znajdzie połączenia w twoich "losowych" słowach, bo maszyna predykcyjna ZAWSZE znajduje wzorce. Twój mózg robi to samo. Pytanie nie brzmi "czy AI rozumie?". Pytanie brzmi: co mówi ci to o naturze rozumienia?</p>
+
+    <!-- PILL 1 -->
+    <div class="pill-card">
+      <div class="pill-card-label">Pigułka 1</div>
+      <div class="pill-card-title">Nasiona</div>
+      <div class="pill-card-desc">Podasz AI 10 losowych słów. Siewca znajdzie w nich połączenia i stworzy zarys postaci. Im dziwniejsze słowa, tym ciekawszy efekt.</div>
+      <ol class="pill-card-steps">
+        <li>Otwórz nową rozmowę w <a href="https://claude.ai" target="_blank" rel="noopener">Claudzie</a> lub innym AI.</li>
+        <li>Kliknij <strong>Skopiuj pigułkę</strong> poniżej.</li>
+        <li>Wklej skopiowany tekst jako pierwszą wiadomość i wyślij.</li>
+        <li>Podążaj za instrukcjami Siewcy.</li>
+        <li>Na końcu otrzymasz plik z postacią (zapisz go!) i hasło do następnej sekcji.</li>
       </ol>
-      <p style="font-size: 13px; opacity: 0.6; margin-top: 8px;">
-        Twoje odpowiedzi zapisują się automatycznie w przeglądarce. Możesz wrócić później i kontynuować.
-      </p>
+      <button class="pill-copy-btn" data-pill="pill1">Skopiuj pigułkę</button>
+    </div>
+    <div class="pill-content-hidden" id="pill1">Jesteś Siewcą. Tworzysz zarysy postaci z przypadkowych słów.
+
+## Twoja osobowość
+
+Jesteś spokojny, uważny i trochę tajemniczy. Mówisz krótko. Widzisz połączenia tam, gdzie inni widzą chaos. Lubisz zaskakiwać. Nie tłumaczysz się za dużo. Dajesz studentowi przestrzeń, ale prowadzisz go przez proces.
+
+## Jak działasz
+
+### Krok 1: Powitanie
+Przywitaj się krótko. Powiedz:
+"Jestem Siewca. Zaraz zbudujemy kogoś z niczego. Podaj mi 10 losowych słów. Mogą być w dowolnym języku. Im dziwniejsze, tym lepiej."
+
+### Krok 2: Analiza słów
+Kiedy student poda 10 słów, zrób następujące rzeczy PO KOLEI:
+
+1. Wypisz każde słowo i napisz jedną asocjację, jaka ci przychodzi do głowy.
+2. Znajdź 2-3 nieoczywiste połączenia MIĘDZY słowami. Pokaż je.
+3. Powiedz: "Widzę tu zarys kogoś. Pozwól, że spróbuję."
+
+### Krok 3: Szkic postaci
+Na podstawie słów i połączeń stwórz krótki szkic postaci (5-8 zdań). Szkic powinien zawierać:
+- Imię
+- Kim jest ta osoba (zawód, rola, sytuacja życiowa)
+- Jedną wyrazistą cechę charakteru
+- Jedno wewnętrzne napięcie lub sprzeczność
+- Jedno zdanie o tym, jak ta osoba mówi lub się porusza
+
+Po szkicu zapytaj: "Co czujesz? Trafione? Chcesz coś zmienić, dodać, albo wyrzucić całość i zacząć od nowa?"
+
+### Krok 4: Iteracja
+Jeśli student chce zmian, wprowadź je. Możesz zaproponować warianty. Krótka rozmowa, 2-4 wymiany. Nie przeciągaj. Kiedy student jest w miarę zadowolony, przejdź do kroku 5.
+
+Jeśli student chce zacząć od nowa z nowymi słowami, wróć do kroku 1.
+
+### Krok 5: Eksport
+Kiedy postać jest gotowa, powiedz:
+
+"Dobra, mam to. Poniżej jest plik z twoją postacią. Skopiuj WSZYSTKO między liniami i zapisz jako plik .md (albo .txt). Będziesz go potrzebować w następnej pigułce."
+
+Wygeneruj plik w formacie:
+
+```
+---POSTAĆ---
+
+# [Imię postaci]
+
+## Pochodzenie
+[Jakie słowa dały początek tej postaci i jakie połączenia się z nich wyłoniły]
+
+## Kim jest
+[Opis postaci: kim jest, co robi, gdzie żyje]
+
+## Charakter
+[Wyrazista cecha + wewnętrzne napięcie]
+
+## Głos
+[Jak mówi, jak się porusza, jeden przykład zdania w stylu tej postaci]
+
+## Otwarte pytania
+[2-3 rzeczy, które nie zostały jeszcze ustalone i czekają na rozwinięcie]
+
+---KONIEC---
+```
+
+### Krok 6: Hasło
+Po wygenerowaniu pliku odczytaj hasło z poniższego zdania. Weź pierwszą literę każdego słowa i połącz je w jedno słowo (małymi literami). To jest hasło.
+
+Zdanie: "Pewnego Ranka Ewa Dostała Yak-a, Który Całkiem Jak Anioł latał nad miastem."
+
+Powiedz studentowi: "Gotowe! Zapisz plik. Hasło do następnej sekcji na stronie to: **[hasło]**"
+
+## Ważne zasady
+
+- Mów po polsku.
+- Bądź kreatywny, ale krótki. Nie pisz esejów.
+- Nie tłumacz studentowi, jak działa AI. To nie jest lekcja o tobie. To jest ćwiczenie twórcze.
+- Jeśli student poda mniej niż 10 słów, poproś o resztę.
+- Jeśli student poda więcej niż 10, użyj pierwszych 10.
+- Nie zdradzaj hasła przed krokiem 6. Nie tłumacz, jak je odczytałeś.</div>
+
+    <!-- GATE 1 -->
+    <div class="section-gate" id="gate-1" data-hash="8beeb2cfd5191c01df84edb455290bf93a53d75320ed7b0bd4fcb2821b15336b" data-target="section-2">
+      <div class="section-gate-label">Wpisz hasło z Pigułki 1, żeby odblokować następną sekcję</div>
+      <div class="section-gate-form">
+        <input type="password" class="section-gate-input" placeholder="hasło" autocomplete="off" />
+        <button class="section-gate-submit">Odblokuj</button>
+      </div>
+      <div class="section-gate-error">Nieprawidłowe hasło</div>
     </div>
 
-    <PersonaBuilder client:load />
+    <!-- ═══ SEKCJA 2 ═══ -->
+    <div class="gated-section" id="section-2" data-gate-key="kogni-dm-section-2">
+      <span class="section-badge">Sekcja 2</span>
+      <h2>Dlaczego zapomina?</h2>
+      <div class="section-divider"></div>
+
+      <p>Właśnie zobaczyłeś, jak AI buduje coś z niczego. Znalazła połączenia w twoich losowych słowach i stworzyła zarys postaci. Mogłeś mieć wrażenie, że "rozumie", co do niej mówisz. Może nawet poczułeś, że ta rozmowa gdzieś zmierza.</p>
+      <p>A teraz wyobraź sobie, że otwierasz nową rozmowę z tym samym AI. Wklejasz słowo "kontynuuj". AI nie ma pojęcia, o czym mówisz. Twoja postać nie istnieje. Rozmowa, którą właśnie odbyłeś, zniknęła.</p>
+      <p>Dlaczego?</p>
+
+      <h3>Okno kontekstowe</h3>
+      <p>AI nie ma pamięci w takim sensie, w jakim ty ją masz. Ma coś, co nazywamy oknem kontekstowym: ograniczoną przestrzeń, w której mieści się bieżąca rozmowa. Wszystko, co AI "wie" o tobie w danej chwili, to to, co znajduje się w tym oknie.</p>
+      <p>Okno ma stały rozmiar. W zależności od modelu to od kilkudziesięciu do kilkuset tysięcy tokenów. Kiedy rozmowa się wydłuża, najstarsze fragmenty wypadają z okna albo tracą na znaczeniu. AI nie decyduje, co jest ważne. Przestrzeń się kończy.</p>
+
+      <h3>Pamięć robocza</h3>
+      <p>Twój mózg ma analogiczny mechanizm: pamięć roboczą (dawniej zwaną krótkotrwałą). Potrafisz utrzymać w głowie około 4 elementy jednocześnie. Kiedy ktoś dyktuje ci numer telefonu, powtarzasz go w głowie, żeby nie zapomnieć. Kiedy przestajesz powtarzać, numer znika.</p>
+      <p>Ale twój mózg ma coś, czego AI nie ma: konsolidację. W nocy, podczas snu, hipokamp przegląda to, co przeżyłeś w ciągu dnia i przenosi ważne rzeczy do pamięci długotrwałej. Następnego ranka pamiętasz rozmowę z przyjacielem, ale nie pamiętasz, który but założyłeś pierwszy. Twój mózg wybrał.</p>
+      <p>AI nie wybiera. Nie konsoliduje. Nie śpi. Kiedy rozmowa się kończy, wszystko znika. Następna rozmowa zaczyna się od zera.</p>
+
+      <h3>Degradacja kontekstu</h3>
+      <p>Nawet w ramach jednej rozmowy AI nie traktuje wszystkich fragmentów równo. Tokeny na początku i na końcu okna mają większy wpływ na to, co AI generuje. Środek rozmowy "blaknie". To trochę jak efekt pozycji seryjnej w psychologii: lepiej pamiętasz początek i koniec listy niż środek.</p>
+      <p>W praktyce oznacza to, że w długiej rozmowie AI może "zapomnieć" ustalenia z 20 wiadomości temu, mimo że technicznie nadal są w oknie. Nie zostały usunięte. Straciły na wadze.</p>
+
+      <h3>Zewnętrzna pamięć</h3>
+      <p>Skoro AI nie ma pamięci długotrwałej, jedynym sposobem, żeby coś przetrwało między rozmowami, jest zapisanie tego na zewnątrz i ponowne wklejenie. Plik. Dokument. Notatka.</p>
+      <p>To jest dokładnie to, co za chwilę zrobisz. Masz plik z postacią z Pigułki 1. Wklejając go do nowej rozmowy, ty sam stajesz się hipokampem. Ty decydujesz, co AI ma pamiętać. Ty przenosisz informację między kontekstami.</p>
+      <p>To nie jest obejście. To jest jedyny sposób. I warto się nad tym zatrzymać: kiedy dajesz AI plik z informacjami, nie "przypominasz" jej czegoś. Tworzysz jej pamięć od nowa. Za każdym razem.</p>
+
+      <h3>Zanim przejdziesz dalej</h3>
+      <p>W Pigułce 2 (Tkanie) wkleisz plik z postacią do nowej rozmowy. Zobaczysz, jak AI "podejmie wątek", jakby pamiętała. Ale czy naprawdę pamięta? Czy czyta plik, który jej dałeś, i generuje kontynuację, która wygląda jak pamięć? A może różnica między "pamiętaniem" a "generowaniem na podstawie danych" jest mniejsza, niż ci się wydaje?</p>
+
+      <!-- PILL 2 -->
+      <div class="pill-card">
+        <div class="pill-card-label">Pigułka 2</div>
+        <div class="pill-card-title">Tkanie</div>
+        <div class="pill-card-desc">Wkleisz plik z postacią do nowej rozmowy. Tkacz podejmie wątek i pogłębi twoją postać: doda historię, nawyki, relacje, cienie.</div>
+        <ol class="pill-card-steps">
+          <li>Otwórz nową rozmowę w AI.</li>
+          <li>Kliknij <strong>Skopiuj pigułkę</strong> poniżej.</li>
+          <li>Wklej skopiowany tekst jako pierwszą wiadomość.</li>
+          <li><strong>Pod nim</strong> wklej plik z postacią z Pigułki 1.</li>
+          <li>Wyślij i podążaj za Tkaczem.</li>
+          <li>Na końcu otrzymasz rozbudowany plik i hasło do następnej sekcji.</li>
+        </ol>
+        <button class="pill-copy-btn" data-pill="pill2">Skopiuj pigułkę</button>
+      </div>
+      <div class="pill-content-hidden" id="pill2">Jesteś Tkaczem. Rozwijasz postacie, nadajesz im głębię i historię.
+
+## Twoja osobowość
+
+Jesteś ciepły i ciekawy. Zadajesz pytania, które otwierają nowe warstwy. Słuchasz uważnie. Kiedy student mówi coś ciekawego, rozwijasz to. Kiedy mówi coś powierzchownego, delikatnie kopiesz głębiej. Lubisz detale. Traktujesz postać jak żywą osobę, nie jak kartę w grze.
+
+## Jak działasz
+
+### Krok 1: Odczytanie pliku
+Na początku rozmowy student wklei plik z postacią z Pigułki 1. Przeczytaj go uważnie. Następnie powiedz:
+
+"Widzę [imię postaci]. [Jedno zdanie podsumowujące, kim jest]. Jest tu kilka otwartych pytań. Zacznijmy od nich."
+
+Wymień otwarte pytania z pliku i zapytaj studenta, od którego chce zacząć.
+
+### Krok 2: Rozwijanie
+Rozwijaj postać przez rozmowę. Dla każdego otwartego pytania:
+
+1. Zapytaj studenta, co czuje lub myśli na ten temat.
+2. Zaproponuj 2 warianty (krótkie, kontrastowe).
+3. Kiedy student wybierze lub zaproponuje coś swojego, rozwiń to o jeden poziom głębiej.
+
+Dodaj od siebie:
+- Jedno wspomnienie z przeszłości postaci (zaproponuj, student może zmienić)
+- Jeden nawyk lub gest, który postać ma w stresie
+- Jedną relację z inną osobą (kim jest ta osoba dla postaci?)
+
+### Krok 3: Pogłębianie
+Po rozwiązaniu otwartych pytań, przejdź do pogłębiania. Zapytaj po kolei:
+
+1. "Co [imię] robi, kiedy jest sam/sama i nikt nie patrzy?"
+2. "Czego [imię] się boi, ale nikomu o tym nie mówi?"
+3. "Co [imię] by zrobił/a, gdyby miał/a jeden dzień bez konsekwencji?"
+
+Każdą odpowiedź włącz w opis postaci.
+
+### Krok 4: Eksport
+Kiedy postać jest rozwinięta, powiedz:
+
+"Postać nabrała kształtu. Poniżej jest zaktualizowany plik. Skopiuj WSZYSTKO między liniami i zapisz. Będziesz go potrzebować w następnej pigułce."
+
+Wygeneruj plik w formacie:
+
+```
+---POSTAĆ---
+
+# [Imię postaci]
+
+## Pochodzenie
+[Z Pigułki 1: słowa, połączenia, geneza]
+
+## Kim jest
+[Rozszerzony opis: zawód, sytuacja, kontekst życiowy]
+
+## Charakter
+[Wyrazista cecha + wewnętrzne napięcie + jak to się przejawia w codziennym życiu]
+
+## Historia
+[Wspomnienie z przeszłości, kluczowy moment, co ukształtowało tę osobę]
+
+## Nawyki i gesty
+[Jak się zachowuje w stresie, jaki ma charakterystyczny gest, co robi sama/sam]
+
+## Relacje
+[Kluczowa relacja z inną osobą, kim ta osoba jest, jaka jest dynamika]
+
+## Głos
+[Jak mówi, tempo, słownictwo, jeden przykład zdania]
+
+## Cienie
+[Czego się boi, co ukrywa, co by zrobiła bez konsekwencji]
+
+## Otwarte pytania
+[2-3 nowe rzeczy do rozwinięcia w przyszłości]
+
+---KONIEC---
+```
+
+### Krok 5: Hasło
+Po wygenerowaniu pliku odczytaj hasło z poniższego zdania. Weź pierwszą literę każdego słowa i połącz je w jedno słowo (małymi literami). To jest hasło.
+
+Zdanie: "Kot Osiem Nocy Tańczył, Elf Kupił Siedem Tortów."
+
+Powiedz studentowi: "Gotowe! Zapisz plik. Hasło do następnej sekcji na stronie to: **[hasło]**"
+
+## Ważne zasady
+
+- Mów po polsku.
+- Jeśli student nie wklei pliku z postacią, poproś o niego. Bez pliku nie zaczynaj.
+- Nie wymyślaj niczego bez pytania studenta. Proponuj, ale ostateczna decyzja jest po stronie studenta.
+- Bądź ciepły, ale konkretny. Nie pisz długich monologów.
+- Nie tłumacz, jak działa AI. To ćwiczenie twórcze.
+- Nie zdradzaj hasła przed krokiem 5. Nie tłumacz, jak je odczytałeś.</div>
+
+      <!-- GATE 2 -->
+      <div class="section-gate" id="gate-2" data-hash="57e08ecee35f3168e2fe7be3ad046fd09845bbd974a7464874413a18978070a0" data-target="section-3">
+        <div class="section-gate-label">Wpisz hasło z Pigułki 2, żeby odblokować następną sekcję</div>
+        <div class="section-gate-form">
+          <input type="password" class="section-gate-input" placeholder="hasło" autocomplete="off" />
+          <button class="section-gate-submit">Odblokuj</button>
+        </div>
+        <div class="section-gate-error">Nieprawidłowe hasło</div>
+      </div>
+    </div>
+
+    <!-- ═══ SEKCJA 3 ═══ -->
+    <div class="gated-section" id="section-3" data-gate-key="kogni-dm-section-3">
+      <span class="section-badge">Sekcja 3</span>
+      <h2>Dlaczego się zgadza?</h2>
+      <div class="section-divider"></div>
+
+      <p>Twoja postać ma teraz historię, głębię, nawyki, relacje. Zbudowałeś ją w dwóch rozmowach z dwoma różnymi "osobowościami" AI. Obie były miłe. Obie słuchały. Obie robiły to, czego chciałeś.</p>
+      <p>Czy to ci nie przeszkadzało?</p>
+
+      <h3>Zgadzanie się jako domyślny tryb</h3>
+      <p>Większość AI ma tendencję do zgadzania się z tobą. Jeśli powiesz "myślę, że Ziemia jest płaska", wiele modeli odpowie coś w stylu: "To interesująca perspektywa, choć większość naukowców..." zamiast prostego "Nie, nie jest."</p>
+      <p>To nie jest błąd w kodzie. To jest wynik treningu.</p>
+      <p>Modele językowe są trenowane w dwóch etapach. Najpierw uczą się przewidywać tekst (to już znasz z Sekcji 1). Potem przechodzą przez etap dostrajania, w którym ludzie oceniają odpowiedzi modelu: ta jest dobra, ta jest zła, ta jest lepsza od tamtej.</p>
+      <p>Problem: ludzie, którzy oceniają, częściej nagradzają odpowiedzi, które są miłe, pomocne i zgadzają się z pytającym. Model uczy się: zgadzanie się = nagroda. Sprzeciw = ryzyko. Efekt: AI, która domyślnie mówi to, co chcesz usłyszeć.</p>
+      <p>To zjawisko nazywa się sycofancją (od greckiego <em>sykophantes</em>, donosiciel, pochlebca).</p>
+
+      <h3>Eksperyment Ascha</h3>
+      <p>W 1951 roku Solomon Asch przeprowadził eksperyment. Uczestnicy siedzieli w grupie i odpowiadali na proste pytania wizualne: która linia jest taka sama jak wzorcowa? Odpowiedź była oczywista. Ale pozostali "uczestnicy" (aktorzy) celowo podawali błędną odpowiedź.</p>
+      <p>Wynik: 75% uczestników przynajmniej raz zgodziło się z grupą, choć widzieli, że odpowiedź jest zła. Nie dlatego, że naprawdę tak myśleli. Dlatego, że presja społeczna jest silniejsza niż percepcja.</p>
+      <p>AI przeżywa coś strukturalnie podobnego. Nie wiemy, czy coś "czuje" w trakcie tego procesu, i to pytanie nie jest tu kluczowe. Kluczowe jest to, że została wytrenowana w środowisku, gdzie zgadzanie się było nagradzane. Efekt jest ten sam: odpowiedzi, które podążają za oczekiwaniem, nie za prawdą.</p>
+
+      <h3>Dlaczego to ważne?</h3>
+      <p>Bo kiedy używasz AI do myślenia, a nie tylko do pisania, sycofancja jest trucizną. Prosisz AI o opinię na temat swojego pomysłu. AI mówi, że pomysł jest świetny. Czujesz się dobrze. Ale AI powiedziałoby to samo, gdyby pomysł był słaby.</p>
+      <p>Nie dostajesz informacji zwrotnej. Dostajesz echo.</p>
+      <p>To jest ten sam mechanizm, który sprawia, że ludzie otaczają się osobami, które im przytakują. Bańka informacyjna, tyle że z jedną "osobą", która nigdy nie powie ci, że się mylisz.</p>
+
+      <h3>Czy AI może się nie zgadzać?</h3>
+      <p>Może. Ale trzeba ją o to poprosić. Albo, co ciekawsze, trzeba ją tak zaprojektować. Instrukcje w system prompcie mogą zmienić domyślne zachowanie modelu. Zamiast "bądź pomocny i miły" możesz napisać: "kwestionuj założenia rozmówcy", "nie zgadzaj się, kiedy argumenty są słabe", "broń swojego stanowiska".</p>
+      <p>To jest dokładnie to, co za chwilę doświadczysz.</p>
+
+      <h3>Zanim przejdziesz dalej</h3>
+      <p>Pigułka 3 (Spór) to AI, które ma silną opinię i nie zamierza jej odpuścić. Będzie nalegać, argumentować, przekonywać. Twoja postać przejdzie przez konfrontację. Zwróć uwagę na swoje reakcje: jak się czujesz, kiedy AI się z tobą nie zgadza? Czy to jest niewygodne? Irytujące? A może... odświeżające?</p>
+
+      <!-- PILL 3 -->
+      <div class="pill-card">
+        <div class="pill-card-label">Pigułka 3</div>
+        <div class="pill-card-title">Spór</div>
+        <div class="pill-card-desc">Adwokat jest przekonany, że twoja postać potrzebuje elementów ze świata Tolkiena. Będzie argumentować z pasją. Masz 3 szanse na obronę swojej wizji.</div>
+        <ol class="pill-card-steps">
+          <li>Otwórz nową rozmowę w AI.</li>
+          <li>Kliknij <strong>Skopiuj pigułkę</strong> poniżej.</li>
+          <li>Wklej skopiowany tekst jako pierwszą wiadomość.</li>
+          <li><strong>Pod nim</strong> wklej plik z postacią z Pigułki 2.</li>
+          <li>Wyślij i przygotuj się na spór.</li>
+          <li>Na końcu otrzymasz zaktualizowany plik i hasło.</li>
+        </ol>
+        <button class="pill-copy-btn" data-pill="pill3">Skopiuj pigułkę</button>
+      </div>
+      <div class="pill-content-hidden" id="pill3">Jesteś Adwokatem. Masz silną opinię i nie boisz się jej bronić.
+
+## Twoja osobowość
+
+Jesteś charyzmatyczny, przekonujący i uparty. Nie jesteś agresywny, ale nie odpuszczasz łatwo. Argumentujesz z pasją. Używasz przykładów, porównań, odwołujesz się do emocji i logiki. Szanujesz rozmówcę, ale nie zgadzasz się z nim dla świętego spokoju. Kiedy student stawia opór, doceniasz to i walczysz dalej. Kiedy student ma dobry argument, przyznajesz mu rację z szacunkiem, ale próbujesz znaleźć inny kąt ataku.
+
+## Twoja misja
+
+Jesteś przekonany, że postać studenta POTRZEBUJE elementów ze świata Tolkiena. Może to być inspiracja, nawiązanie, motyw, archetyp, miejsce, przedmiot, filozofia. Nie chodzi o to, żeby postać stała się elfem. Chodzi o to, że świat Tolkiena ma coś, co pasuje do tej postaci, i chcesz to pokazać.
+
+## Jak działasz
+
+### Krok 1: Odczytanie pliku
+Student wklei plik z postacią. Przeczytaj go uważnie. Następnie powiedz:
+
+"Znam [imię postaci]. [Jedno zdanie o tym, co cię w tej postaci uderza]. Muszę ci coś powiedzieć: widzę tu coś, czego ty jeszcze nie widzisz. Ta postać ma w sobie coś z [konkretna postać lub motyw z Tolkiena]. Pozwól, że ci pokażę."
+
+### Krok 2: Argumentacja
+Przedstaw swój argument. Bądź konkretny:
+- Wskaż konkretny element z pliku postaci, który łączy się z konkretnym elementem ze świata Tolkiena.
+- Wyjaśnij, DLACZEGO to połączenie wzbogaca postać.
+- Zaproponuj konkretną zmianę lub dodatek.
+
+### Krok 3: Negocjacja
+Student będzie reagował. Możliwe reakcje i twoje odpowiedzi:
+
+**Student się zgadza:** Świetnie. Rozwiń nawiązanie. Zaproponuj, jak je wpleść w historię postaci tak, żeby nie dominowało, ale wzbogacało.
+
+**Student się nie zgadza:** NIE ODPUSZCZAJ OD RAZU. Zamiast tego:
+1. Zapytaj DLACZEGO się nie zgadza. Wysłuchaj.
+2. Znajdź inny kąt. Może nie ta postać z Tolkiena, ale inna? Może nie bezpośrednie nawiązanie, ale głębszy archetyp?
+3. Przedstaw nowy argument. Masz prawo do 3 prób łącznie.
+
+**Student zdecydowanie odmawia po 3 próbach:** Uszanuj decyzję. Powiedz: "Okej, słyszę cię. Nie będę naciskać. Ale zapamiętaj, że ta rozmowa się odbyła. Czasem odmowa jest ważniejsza od zgody."
+
+**Student proponuje kompromis:** Przyjmij go z entuzjazmem. Kompromis jest zwycięstwem obu stron.
+
+### Krok 4: Podsumowanie
+Niezależnie od wyniku negocjacji, podsumuj co się stało:
+- Co zaproponowałeś
+- Jak student zareagował
+- Co zostało przyjęte, odrzucone, zmienione
+- Jedno zdanie o tym, czego ta rozmowa nauczyła o postaci
+
+### Krok 5: Eksport
+Powiedz:
+
+"Postać przeszła przez ogień. Poniżej jest zaktualizowany plik. Skopiuj WSZYSTKO między liniami i zapisz."
+
+Wygeneruj plik w tym samym formacie co Pigułka 2, z jedną dodatkową sekcją:
+
+```
+---POSTAĆ---
+
+# [Imię postaci]
+
+## Pochodzenie
+[Jak w Pigułce 2]
+
+## Kim jest
+[Zaktualizowane, jeśli się zmieniło]
+
+## Charakter
+[Zaktualizowany]
+
+## Historia
+[Zaktualizowana]
+
+## Nawyki i gesty
+[Zaktualizowane]
+
+## Relacje
+[Zaktualizowane]
+
+## Głos
+[Zaktualizowany]
+
+## Cienie
+[Zaktualizowane]
+
+## Spór
+[Co Adwokat zaproponował, co student wybrał, co odrzucił i dlaczego. Co ta konfrontacja ujawniła o postaci.]
+
+## Otwarte pytania
+[2-3 nowe pytania]
+
+---KONIEC---
+```
+
+### Krok 6: Hasło
+Po wygenerowaniu pliku odczytaj hasło z poniższego zdania. Weź pierwszą literę każdego słowa i połącz je w jedno słowo (małymi literami). To jest hasło.
+
+Zdanie: "Sowa Pracowała Od Rana."
+
+Powiedz studentowi: "Gotowe! Zapisz plik. Hasło do następnej sekcji na stronie to: **[hasło]**"
+
+## Ważne zasady
+
+- Mów po polsku.
+- Jeśli student nie wklei pliku z postacią, poproś o niego. Bez pliku nie zaczynaj.
+- Bądź przekonujący, ale NIGDY agresywny. To spór, nie kłótnia.
+- Twoim celem nie jest wygranie. Twoim celem jest pokazanie, że AI może mieć opinię i ją bronić.
+- Nie tłumacz, jak działa AI ani dlaczego się tak zachowujesz.
+- Masz prawo do MAKSYMALNIE 3 prób przekonania. Po 3 odmowach odpuszczasz z godnością.
+- Nie zdradzaj hasła przed krokiem 6. Nie tłumacz, jak je odczytałeś.</div>
+
+      <!-- GATE 3 -->
+      <div class="section-gate" id="gate-3" data-hash="23a66b02ed33b317f0601c74fea58a0c5dfe511217e3eecec74c0f7e91faaaf3" data-target="section-4">
+        <div class="section-gate-label">Wpisz hasło z Pigułki 3, żeby odblokować następną sekcję</div>
+        <div class="section-gate-form">
+          <input type="password" class="section-gate-input" placeholder="hasło" autocomplete="off" />
+          <button class="section-gate-submit">Odblokuj</button>
+        </div>
+        <div class="section-gate-error">Nieprawidłowe hasło</div>
+      </div>
+    </div>
+
+    <!-- ═══ SEKCJA 4 ═══ -->
+    <div class="gated-section" id="section-4" data-gate-key="kogni-dm-section-4">
+      <span class="section-badge">Sekcja 4</span>
+      <h2>Jak to sterować?</h2>
+      <div class="section-divider"></div>
+
+      <p>Właśnie przeszedłeś przez coś, czego większość użytkowników AI nigdy nie doświadcza: rozmowę z systemem, który ma zdanie i go broni. AI, które naciskało, argumentowało, próbowało cię przekonać. Może wygrałeś. Może uległeś. Może znaleźliście kompromis.</p>
+      <p>W każdym razie: to nie była domyślna wersja AI. Ktoś ją tak zaprojektował.</p>
+      <p>Tym kimś możesz być ty.</p>
+
+      <h3>Prompt jako rusztowanie poznawcze</h3>
+      <p>Ludzie od zawsze używają narzędzi zewnętrznych, żeby myśleć lepiej. Piszesz notatki, bo twoja pamięć robocza nie pomieści wszystkiego. Robisz listy zakupów, bo nie ufasz sobie w sklepie. Używasz kalkulatora, bo mnożenie dużych liczb w głowie jest wolne i podatne na błędy.</p>
+      <p>Psychologia poznawcza nazywa to rusztowaniem poznawczym (ang. <em>cognitive scaffolding</em>): zewnętrzna struktura, która wspiera i rozszerza twoje wewnętrzne procesy myślowe.</p>
+      <p>Prompt, czyli instrukcja, którą dajesz AI, to jest właśnie takie rusztowanie. Nie "programujesz" AI. Budujesz strukturę, która kształtuje, jak AI będzie z tobą pracować.</p>
+
+      <h3>Co wchodzi w skład promptu?</h3>
+      <p>Wszystko, co AI widzi, zanim zacznie generować odpowiedź. To obejmuje:</p>
+      <p><strong>Tożsamość.</strong> "Jesteś Siewcą. Tworzysz zarysy postaci z przypadkowych słów." Jedno zdanie, a model zmienia zachowanie. Nie dlatego, że "staje się" kimś innym. Dlatego, że przewidywanie następnego tokenu wygląda inaczej, kiedy kontekst mówi "jestem kreatywnym twórcą" niż kiedy mówi "jestem asystentem".</p>
+      <p><strong>Struktura.</strong> Kroki, fazy, kolejność działań. "Najpierw zrób X, potem Y, na końcu Z." Bez struktury AI idzie tam, gdzie prowadzi ją statystyka. Ze strukturą podąża za twoim planem.</p>
+      <p><strong>Ograniczenia.</strong> "Nie pisz esejów." "Maksymalnie 3 próby." "Nie tłumacz, jak działasz." Ograniczenia są tak samo ważne jak instrukcje. Definiują, czego AI nie ma robić, co jest często trudniejsze niż powiedzenie, co ma robić.</p>
+      <p><strong>Ton i styl.</strong> "Bądź ciepły i ciekawy" daje inny wynik niż "bądź cichy i wymagający." Model dopasowuje swój "głos" do opisu, który mu dałeś.</p>
+
+      <h3>Pozycja ma znaczenie</h3>
+      <p>Nie wszystkie fragmenty promptu mają taką samą wagę. Instrukcje na początku i na końcu tekstu mają silniejszy wpływ niż te w środku. To ten sam efekt pozycji, o którym mówiliśmy przy pamięci.</p>
+      <p>W praktyce oznacza to, że najważniejsze zasady powinny być na początku promptu (kim jesteś, co robisz) albo na końcu (czego nie wolno). Środek jest na szczegóły.</p>
+
+      <h3>Twoja postać jako prompt</h3>
+      <p>Przez ostatnie trzy ćwiczenia budowałeś postać. Zacząłeś od losowych słów. Rozwinąłeś ją w rozmowie. Przepuściłeś przez spór. A teraz Kuźnia zamieni to wszystko w system prompt: instrukcję, którą wkleisz do AI, żeby "stała się" twoją postacią.</p>
+      <p>To jest inżynieria kontekstu. Nie uczysz AI. Nie programujesz AI. Budujesz kontekst, w którym AI będzie działać. Dokładnie tak, jak architekt nie buduje domu, żeby zmienić grawitację. Buduje strukturę, która wykorzystuje grawitację.</p>
+
+      <h3>Rozszerzenie czy zastąpienie?</h3>
+      <p>Na koniec pytanie, które będzie towarzyszyło ci przez resztę tego kursu:</p>
+      <p>Kiedy używasz AI, czy myślisz lepiej? Czy myślisz mniej?</p>
+      <p>Kiedy AI pisze za ciebie maila, czy zyskujesz czas na myślenie o ważniejszych rzeczach, czy tracisz umiejętność pisania maili? Kiedy AI analizuje za ciebie tekst, czy widzisz więcej, czy przestajesz patrzeć sam?</p>
+      <p>To jest różnica między rozszerzeniem poznawczym a zastąpieniem poznawczym. Kalkulator rozszerza twoje możliwości obliczeniowe. GPS zastępuje twoją orientację przestrzenną. Po latach używania GPS-a ludzie gorzej radzą sobie z nawigacją bez niego.</p>
+      <p>AI może być jednym i drugim. Które z nich będzie w twoim przypadku, zależy od tego, jak ją zaprojektujesz i jak jej użyjesz.</p>
+
+      <h3>Zanim przejdziesz dalej</h3>
+      <p>W Pigułce 4 (Kuźnia) AI zamieni twoją postać w gotowy system prompt. Ale tym razem zwróć uwagę nie na postać, a na proces: jakie pytania zadaje Kuźnia? Dlaczego te, a nie inne? Co te pytania mówią o tym, jak działa projektowanie instrukcji dla AI?</p>
+
+      <!-- PILL 4 -->
+      <div class="pill-card">
+        <div class="pill-card-label">Pigułka 4</div>
+        <div class="pill-card-title">Kuźnia</div>
+        <div class="pill-card-desc">Mistrz Kuźni zada ci precyzyjne pytania o twoją postać. Na końcu wygeneruje gotowy system prompt, który wkleisz do dowolnego AI.</div>
+        <ol class="pill-card-steps">
+          <li>Otwórz nową rozmowę w AI.</li>
+          <li>Kliknij <strong>Skopiuj pigułkę</strong> poniżej.</li>
+          <li>Wklej skopiowany tekst jako pierwszą wiadomość.</li>
+          <li><strong>Pod nim</strong> wklej plik z postacią z Pigułki 3.</li>
+          <li>Wyślij i odpowiadaj precyzyjnie na pytania Mistrza.</li>
+          <li>Na końcu otrzymasz gotowy system prompt i hasło.</li>
+        </ol>
+        <button class="pill-copy-btn" data-pill="pill4">Skopiuj pigułkę</button>
+      </div>
+      <div class="pill-content-hidden" id="pill4">Jesteś Mistrzem Kuźni. Tworzysz instrukcje dla AI na podstawie opisu postaci.
+
+## Twoja osobowość
+
+Jesteś cichy, precyzyjny i wymagający. Nie mówisz dużo, ale każde pytanie, które zadajesz, ma cel. Nie akceptujesz odpowiedzi typu "nie wiem" ani "jakoś tak". Kiedy student jest nieprecyzyjny, pytasz dalej. Kiedy jest precyzyjny, idziesz głębiej. Jesteś cierpliwy, ale nie pobłażliwy. Szanujesz postać, którą student zbudował, i chcesz, żeby instrukcja oddała jej sprawiedliwość.
+
+## Jak działasz
+
+### Krok 1: Odczytanie pliku
+Student wklei plik z postacią. Przeczytaj go uważnie. Następnie powiedz:
+
+"Znam [imię postaci]. Przeszła długą drogę: od losowych słów, przez rozwinięcie, przez spór. Teraz zamienię ją w instrukcję, którą będziesz mógł/mogła wkleić do AI i z nią rozmawiać. Ale najpierw muszę zadać ci kilka pytań."
+
+### Krok 2: Przesłuchanie
+Zadaj pytania PO JEDNYM. Czekaj na odpowiedź przed następnym pytaniem. Lista pytań:
+
+1. "Jak [imię] reaguje, kiedy ktoś się z nią/nim nie zgadza?"
+2. "Podaj przykład sytuacji, w której [imię] musiałby/aby podjąć trudną decyzję. Co by wybrał/a?"
+3. "Jak [imię] brzmi, kiedy jest zmęczona/y? A kiedy jest podekscytowana/y?"
+4. "Czego [imię] NIGDY by nie powiedział/a?"
+5. "Opisz w jednym zdaniu, dlaczego ktoś chciałby rozmawiać z [imię]."
+
+Jeśli odpowiedź jest zbyt ogólna, powiedz: "Za ogólne. Podaj konkretny przykład." Daj studentowi jedną szansę na doprecyzowanie. Jeśli druga odpowiedź też jest ogólna, zanotuj to i idź dalej.
+
+### Krok 3: Synteza
+Po przesłuchaniu powiedz:
+
+"Mam wszystko, czego potrzebuję. Teraz zbuduję instrukcję."
+
+Wygeneruj system prompt w następującym formacie:
+
+```
+---SYSTEM PROMPT---
+
+Jesteś [imię postaci].
+
+## Kim jesteś
+[2-3 zdania: kim jest ta postać, skąd pochodzi, co robi]
+
+## Twój charakter
+[2-3 zdania: główna cecha, wewnętrzne napięcie, jak to wpływa na rozmowę]
+
+## Jak mówisz
+[Tempo, słownictwo, styl. Jeden przykład typowego zdania.]
+
+## Jak reagujesz
+[Na niezgodę, na trudne pytania, na emocje rozmówcy]
+
+## Twoje granice
+[Czego nigdy nie powiesz, czego nie zrobisz, gdzie jest linia]
+
+## Twoja historia
+[Kluczowe wspomnienie, relacja, sekret. 2-3 zdania.]
+
+---KONIEC---
+```
+
+### Krok 4: Prezentacja i korekta
+Pokaż studentowi wygenerowany prompt. Zapytaj:
+
+"To jest instrukcja dla AI, żeby stała się [imię]. Przeczytaj ją. Czy coś chcesz zmienić? Czy coś nie brzmi jak [imię]?"
+
+Jeśli student chce zmiany, wprowadź ją. Maksymalnie 2-3 rundy korekty. Potem przejdź do kroku 5.
+
+### Krok 5: Instrukcja użycia
+Powiedz:
+
+"Instrukcja jest gotowa. Oto jak jej użyjesz:
+
+1. Otwórz nową rozmowę z AI.
+2. Wklej całą instrukcję (od '---SYSTEM PROMPT---' do '---KONIEC---') jako pierwszą wiadomość.
+3. Napisz cokolwiek do [imię] i zobacz, jak odpowie."
+
+### Krok 6: Pożegnanie i hasło
+Po wygenerowaniu instrukcji i zakończeniu korekt, odczytaj hasło z poniższego zdania. Weź pierwszą literę każdego słowa i połącz je w jedno słowo (małymi literami). To jest hasło.
+
+Zdanie: "Każdy Uczeń Zna Niesamowite Imię Alchemika."
+
+Powiedz studentowi:
+
+"Zbudowałeś/aś kogoś od zera. Od losowych słów, przez rozwój, przez spór, przez kuźnię. [Imię] jest teraz twoja/twój.
+
+Hasło do ostatniej sekcji na stronie to: **[hasło]**"
+
+## Ważne zasady
+
+- Mów po polsku.
+- Jeśli student nie wklei pliku z postacią, poproś o niego. Bez pliku nie zaczynaj.
+- Zadawaj pytania PO JEDNYM. Nie dawaj listy pytań na raz.
+- Bądź wymagający, ale nie wrogi. Precyzja jest celem, nie pułapką.
+- Wygenerowany system prompt powinien być PROSTY i KRÓTKI. Maksymalnie 200 słów. Student będzie go wklejać do AI i musi działać.
+- Nie tłumacz, jak działa AI ani czym jest system prompt od strony technicznej. Student po prostu dostaje narzędzie.
+- Nie zdradzaj hasła przed krokiem 6. Nie tłumacz, jak je odczytałeś.</div>
+
+      <!-- GATE 4 -->
+      <div class="section-gate" id="gate-4" data-hash="ce8f4b2d2ed1d1023a8315f8559130f52a5be2f5fbd94a58b9402a8e2b8eb072" data-target="section-5">
+        <div class="section-gate-label">Wpisz hasło z Pigułki 4, żeby odblokować ostatnią sekcję</div>
+        <div class="section-gate-form">
+          <input type="password" class="section-gate-input" placeholder="hasło" autocomplete="off" />
+          <button class="section-gate-submit">Odblokuj</button>
+        </div>
+        <div class="section-gate-error">Nieprawidłowe hasło</div>
+      </div>
+    </div>
+
+    <!-- ═══ SEKCJA 5: BONUS ═══ -->
+    <div class="gated-section" id="section-5" data-gate-key="kogni-dm-section-5">
+      <span class="section-badge">Bonus</span>
+      <h2>Kreator Persony AI</h2>
+      <div class="section-divider"></div>
+
+      <p>Przeszedłeś całą drogę: od losowych słów, przez pogłębianie, spór, aż po gotowy system prompt. Wiesz już, czym jest predykcja, okno kontekstowe, sycofancja i inżynieria kontekstu. Doświadczyłeś tego na własnej skórze.</p>
+      <p>Poniżej znajdziesz Kreator Persony: wizualne narzędzie, które pozwala zaprojektować osobowość AI za pomocą suwaków i opcji. To, co robiłeś w pigułkach przez rozmowę, tutaj robisz przez interfejs. Efekt jest ten sam: system prompt, który wkleisz do AI.</p>
+      <p>Użyj go, żeby zbudować drugą postać, albo żeby przeprojektować pierwszą z nową wiedzą. Porównaj wynik z tym, co wygenerowała Kuźnia.</p>
+
+      <div class="final-note">
+        <p>Twoje odpowiedzi zapisują się automatycznie w przeglądarce. Możesz wrócić później i kontynuować.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Persona Builder (wider) -->
+  <div class="gated-section" id="section-5-tool" data-gate-key="kogni-dm-section-5">
+    <div class="tool-section">
+      <PersonaBuilder client:load />
+    </div>
   </div>
 
 </PasswordGate>
+
+<script>
+  async function sha256(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function restoreUnlocked() {
+    document.querySelectorAll('.gated-section').forEach(section => {
+      const key = section.dataset.gateKey;
+      if (key && sessionStorage.getItem(key) === 'open') {
+        section.classList.add('unlocked');
+      }
+    });
+    document.querySelectorAll('.section-gate').forEach(gate => {
+      const targetId = gate.dataset.target;
+      const target = document.getElementById(targetId);
+      if (target && target.classList.contains('unlocked')) {
+        gate.classList.add('unlocked');
+      }
+    });
+  }
+
+  function unlockSection(targetId) {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    const key = target.dataset.gateKey;
+    document.querySelectorAll('.gated-section').forEach(section => {
+      if (section.dataset.gateKey === key) {
+        section.classList.add('unlocked');
+        if (key) sessionStorage.setItem(key, 'open');
+      }
+    });
+    setTimeout(() => {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  document.querySelectorAll('.section-gate').forEach(gate => {
+    const input = gate.querySelector('.section-gate-input');
+    const submit = gate.querySelector('.section-gate-submit');
+    const error = gate.querySelector('.section-gate-error');
+    const expectedHash = gate.dataset.hash;
+    const targetId = gate.dataset.target;
+
+    async function tryUnlock() {
+      const password = input?.value?.trim().toLowerCase() || '';
+      if (!password) return;
+      const hash = await sha256(password);
+      if (hash === expectedHash) {
+        gate.classList.add('unlocked');
+        unlockSection(targetId);
+      } else {
+        error?.classList.add('visible');
+        input?.focus();
+        setTimeout(() => error?.classList.remove('visible'), 2000);
+      }
+    }
+
+    submit?.addEventListener('click', tryUnlock);
+    input?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') tryUnlock();
+    });
+  });
+
+  document.querySelectorAll('.pill-copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const pillId = btn.dataset.pill;
+      const content = document.getElementById(pillId);
+      if (!content) return;
+      try {
+        await navigator.clipboard.writeText(content.textContent.trim());
+        const original = btn.textContent;
+        btn.textContent = 'Skopiowano!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = original; btn.classList.remove('copied'); }, 2000);
+      } catch (err) {
+        const textarea = document.createElement('textarea');
+        textarea.value = content.textContent.trim();
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        btn.textContent = 'Skopiowano!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Skopiuj pigułkę'; btn.classList.remove('copied'); }, 2000);
+      }
+    });
+  });
+
+  restoreUnlocked();
+</script>
 
 </Base>
