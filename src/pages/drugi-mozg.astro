@@ -942,8 +942,12 @@ Hasło do ostatniej sekcji na stronie to: **[hasło]**"
     const expectedHash = gate.dataset.hash;
     const targetId = gate.dataset.target;
 
+    function stripDiacritics(str) {
+      return str.replace(/ą/g,'a').replace(/ć/g,'c').replace(/ę/g,'e').replace(/ł/g,'l').replace(/ń/g,'n').replace(/ó/g,'o').replace(/ś/g,'s').replace(/ź/g,'z').replace(/ż/g,'z');
+    }
+
     async function tryUnlock() {
-      const password = input?.value?.trim().toLowerCase() || '';
+      const password = stripDiacritics(input?.value?.trim().toLowerCase() || '');
       if (!password) return;
       const hash = await sha256(password);
       if (hash === expectedHash) {
