@@ -139,6 +139,14 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
 
   .final-note { border-top: 1px solid var(--border-subtle); margin-top: 48px; padding-top: 32px; text-align: center; }
   .final-note p { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+
+  /* ─── Pill download link ─── */
+  .pill-download-link { color: var(--warm-glow); text-decoration: none; border-bottom: 1px solid rgba(232,168,76,0.3); transition: border-color 0.3s; }
+  .pill-download-link:hover { border-color: var(--warm-glow); }
+
+  /* ─── Skill library ─── */
+  .skill-library-empty { border: 1px dashed var(--border-subtle); padding: 32px; text-align: center; margin: 24px 0 48px; }
+  .skill-library-empty p { margin: 0; }
 </style>
 
 <PasswordGate title="Drugi mózg z AI" subtitle="Semestr letni 2025/2026" passwordHash={HASH} sessionKey="drugi-mozg">
@@ -159,7 +167,13 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
       <div class="dm-tab" data-panel="pills">
         <button data-show="pills">
           <div class="dm-tab-dot">02</div>
-          <div class="dm-tab-label">Pigułki</div>
+          <div class="dm-tab-label">Kuźnia</div>
+        </button>
+      </div>
+      <div class="dm-tab" data-panel="skills">
+        <button data-show="skills">
+          <div class="dm-tab-dot">03</div>
+          <div class="dm-tab-label">Skille</div>
         </button>
       </div>
     </div>
@@ -1000,6 +1014,94 @@ Hasło do ostatniej sekcji na stronie to: **[hasło]**"
 
     </div><!-- /.course-page (pills panel) -->
   </div><!-- /#panel-pills -->
+
+
+  <!-- ═══ PANEL 3: Skille ═══ -->
+  <div class="dm-panel" id="panel-skills">
+    <div class="course-page">
+
+    <div class="section-gate" data-hash="e3127a4ce13edc51ba8dc3fc5e8ae1e1f21b6e57921030af027e9014b34cbd76" data-target="section-skills-main">
+      <div class="section-gate-label">Ta sekcja jest jeszcze zamknięta</div>
+      <div class="section-gate-form">
+        <input type="text" class="section-gate-input" placeholder="hasło..." autocomplete="off" spellcheck="false">
+        <button class="section-gate-submit">Odblokuj</button>
+      </div>
+      <div class="section-gate-error">Nieprawidłowe hasło</div>
+    </div>
+
+    <div class="gated-section" id="section-skills-main" data-gate-key="kogni-dm-section-skills-main">
+
+    <span class="section-badge">Skille</span>
+    <h2>Twoje własne narzędzia</h2>
+    <div class="section-divider"></div>
+
+    <p>Masz personę. Umiesz rozmawiać z AI, które ma głos, charakter, granice. Ale persona to dopiero pierwszy krok. AI potrafi więcej niż udawać kogoś innego.</p>
+    <p>Skill to instrukcja, która zamienia AI w narzędzie do konkretnego zadania. Nie postać do rozmowy, ale maszyna, która bierze coś od ciebie, przetwarza to według określonych kroków i zwraca wynik w określonym formacie.</p>
+    <p>Przykład: masz notatki z wykładu w formie bałaganu. Wklejasz je do AI z odpowiednią instrukcją. AI wyciąga kluczowe tezy, porządkuje je hierarchicznie, generuje trzy pytania egzaminacyjne do samosprawdzenia. To jest skill: wejście (bałagan), przetwarzanie (wyciągnij, uporządkuj, wygeneruj), wyjście (uporządkowane notatki + pytania).</p>
+    <p>Co skill może robić? To zależy od platformy. Większość dużych modeli potrafi dziś więcej niż tylko rozmawiać. Claude, GPT, Gemini w różnych wersjach oferują wyszukiwanie w internecie, uruchamianie kodu, analizę plików, rozpoznawanie obrazów, generowanie grafik. Twój skill może korzystać z tych wszystkich możliwości, pod warunkiem, że platforma, której używasz, je wspiera.</p>
+    <p>Dobry skill ma trzy elementy. Wejście: co dokładnie do niego trafia i w jakiej formie. Przetwarzanie: co skill robi z tym materiałem, krok po kroku, każdy krok to jedna operacja. Wyjście: co dostajesz na końcu, w jakim formacie, jakiej długości.</p>
+    <p>Skill zapisujesz jako plik .md i wklejasz do nowej rozmowy z AI jako pierwszą wiadomość. Działa na każdym modelu, bo to czysty tekst, nie kod.</p>
+
+    <h3>Jak zbudować swój skill</h3>
+    <p>Zbudujesz go w dwóch krokach. Twoja persona poprowadzi cię przez oba.</p>
+    <p>W pierwszym kroku persona zadzwoni do ciebie. Chce zrozumieć, jak używasz AI na co dzień: co działa, co nie, czego ci brakuje. Na tej podstawie razem zaprojektujecie specyfikację skilla, który rozwiąże konkretny problem z twojej codzienności.</p>
+    <p>W drugim kroku wejdziesz do warsztatu swojej persony. Przyniesiesz specyfikację z pierwszego kroku, a persona zamieni ją w działający system prompt, który wkleisz do dowolnego AI.</p>
+
+    <h3>Zanim zaczniesz</h3>
+    <p>Potrzebujesz gotowego system promptu swojej persony z Kuźni (Pigułka 4). Otwierasz nową rozmowę z AI, wklejasz system prompt persony jako pierwszą wiadomość, a pod nim wklejasz treść misji. Persona przeczyta misję i poprowadzi cię przez proces.</p>
+
+    <!-- PILL 5: Diagnosta -->
+    <div class="pill-card">
+      <div class="pill-card-label">Pigułka 5</div>
+      <div class="pill-card-title">Diagnosta</div>
+      <div class="pill-card-desc">Twoja persona dzwoni do ciebie. Chce zrozumieć, jak używasz AI, co działa, co nie, czego ci brakuje. Razem zaprojektujecie specyfikację skilla dopasowanego do twoich potrzeb.</div>
+      <ol class="pill-card-steps">
+        <li>Otwórz nową rozmowę w AI.</li>
+        <li>Wklej system prompt swojej persony (z Pigułki 4) jako pierwszą wiadomość.</li>
+        <li>Pod nim wklej treść misji: <a href="/pill_5_diagnosta.md" download class="pill-download-link">pobierz Misja: Diagnosta</a></li>
+        <li>Wyślij i odbierz telefon od swojej persony.</li>
+        <li>Na końcu otrzymasz plik JSON ze specyfikacją skilla i hasło do następnej sekcji.</li>
+      </ol>
+    </div>
+
+    <div class="section-gate" data-hash="8c85b6639e62e10b8330a8b883004b43c119053d7d62b512a98c77eb069627a7" data-target="section-skills-2">
+      <div class="section-gate-label">Podaj hasło, żeby odblokować następną sekcję</div>
+      <div class="section-gate-form">
+        <input type="text" class="section-gate-input" placeholder="hasło..." autocomplete="off" spellcheck="false">
+        <button class="section-gate-submit">Odblokuj</button>
+      </div>
+      <div class="section-gate-error">Nieprawidłowe hasło</div>
+    </div>
+
+    <div class="gated-section" id="section-skills-2" data-gate-key="kogni-dm-section-skills-2">
+
+      <!-- PILL 6: Budowniczy -->
+      <div class="pill-card">
+        <div class="pill-card-label">Pigułka 6</div>
+        <div class="pill-card-title">Budowniczy</div>
+        <div class="pill-card-desc">Wchodzisz do warsztatu swojej persony. Przynosisz specyfikację z Pigułki 5. Persona zamienia ją w działający system prompt, krok po kroku, stanowisko po stanowisku.</div>
+        <ol class="pill-card-steps">
+          <li>Otwórz nową rozmowę w AI.</li>
+          <li>Wklej system prompt swojej persony jako pierwszą wiadomość.</li>
+          <li>Pod nim wklej treść misji: <a href="/pill_6_budowniczy.md" download class="pill-download-link">pobierz Misja: Budowniczy</a></li>
+          <li>Pod misją wklej plik JSON ze specyfikacją z Pigułki 5.</li>
+          <li>Wyślij i wejdź do warsztatu.</li>
+          <li>Na końcu otrzymasz gotowy skill jako plik .md.</li>
+        </ol>
+      </div>
+
+      <h3>Biblioteka skilli</h3>
+      <p>Jeśli chcesz podzielić się swoim skillem z innymi, wyślij plik .md na adres prowadzącego. Najciekawsze skille pojawią się poniżej.</p>
+      <div class="skill-library-empty">
+        <p><em>Biblioteka jest pusta. Bądź pierwszy.</em></p>
+      </div>
+
+    </div><!-- /section-skills-2 -->
+
+    </div><!-- /section-skills-main -->
+
+    </div><!-- /.course-page (skills panel) -->
+  </div><!-- /#panel-skills -->
 
 </PasswordGate>
 
