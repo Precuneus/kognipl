@@ -21,7 +21,84 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
   .section-divider { width: 32px; height: 1px; background: var(--border-warm); opacity: 0.4; margin: 20px 0; }
   .section-badge { font-family: var(--font-body); font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--warm-glow); opacity: 0.7; margin-bottom: 8px; display: block; }
 
-  /* Pill card */
+  /* ─── Tab navigation ─── */
+  .dm-tabs {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin: 0 0 40px;
+    position: relative;
+  }
+  .dm-tab {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+  .dm-tab::after {
+    content: '';
+    position: absolute;
+    top: 18px;
+    right: -1px;
+    width: 100%;
+    height: 1px;
+    background: var(--border-subtle);
+    z-index: 0;
+  }
+  .dm-tab:last-child::after { display: none; }
+  .dm-tab button {
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    width: 100%;
+  }
+  .dm-tab-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-dim);
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s;
+  }
+  .dm-tab button:hover .dm-tab-dot {
+    border-color: var(--border-warm);
+    opacity: 1;
+  }
+  .dm-tab.viewing .dm-tab-dot {
+    border-color: var(--warm-glow) !important;
+    color: var(--warm-glow) !important;
+    background: rgba(232, 168, 76, 0.06) !important;
+    opacity: 1 !important;
+  }
+  .dm-tab-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+  .dm-tab.viewing .dm-tab-label {
+    color: var(--text-secondary);
+  }
+
+  /* Tab panels */
+  .dm-panel { display: none; }
+  .dm-panel.active { display: block; }
+
+  /* ─── Pill card ─── */
   .pill-card { border: 1px solid var(--border-warm); background: linear-gradient(135deg, rgba(232,168,76,0.04), transparent); padding: 28px 28px 24px; margin: 32px 0 48px; position: relative; }
   .pill-card::before { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(232,168,76,0.08); pointer-events: none; }
   .pill-card-label { font-family: var(--font-body); font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--warm-glow); margin-bottom: 10px; }
@@ -54,7 +131,7 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
   .gated-section { display: none; }
   .gated-section.unlocked { display: block; }
 
-  /* Tool section */
+  /* Tool section (PersonaBuilder wider container) */
   .tool-section { max-width: 1120px; margin: 0 auto; padding: 0 24px 80px; }
   .tool-intro { max-width: 720px; margin: 0 auto 32px; }
   .tool-intro h2 { font-family: var(--font-display); font-size: 26px; font-weight: 400; color: var(--text-primary); letter-spacing: 1px; margin-bottom: 12px; }
@@ -70,6 +147,37 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
     <a href="/kursy" class="back-link">&larr; Kursy</a>
     <h1>Drugi mózg z AI</h1>
     <p class="meta">warsztat &middot; II rok &middot; semestr letni 2025/2026 &middot; 15h</p>
+
+    <!-- ─── Tab navigator ─── -->
+    <div class="dm-tabs">
+      <div class="dm-tab viewing" data-panel="persona">
+        <button data-show="persona">
+          <div class="dm-tab-dot">01</div>
+          <div class="dm-tab-label">Kreator Persony</div>
+        </button>
+      </div>
+      <div class="dm-tab" data-panel="pills">
+        <button data-show="pills">
+          <div class="dm-tab-dot">02</div>
+          <div class="dm-tab-label">Pigułki</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL 1: Kreator Persony ═══ -->
+  <div class="dm-panel active" id="panel-persona">
+    <div class="tool-section">
+      <div class="tool-intro">
+        <p>Kreator Persony buduje kartę postaci przez interfejs: suwaki, opcje, pola tekstowe. Efekt: gotowy system prompt, który wkleisz do dowolnego AI. Twoje odpowiedzi zapisują się automatycznie w przeglądarce.</p>
+      </div>
+      <PersonaBuilder client:load />
+    </div>
+  </div>
+
+  <!-- ═══ PANEL 2: Pigułki ═══ -->
+  <div class="dm-panel" id="panel-pills">
+    <div class="course-page">
 
     <!-- ═══ SEKCJA 1 ═══ -->
     <span class="section-badge">Sekcja 1</span>
@@ -847,7 +955,7 @@ Hasło do ostatniej sekcji na stronie to: **[hasło]**"
       <div class="section-gate-error">Nieprawidłowe hasło</div>
     </div>
 
-    <!-- ═══ SEKCJA 5: BONUS ═══ -->
+    <!-- ═══ SEKCJA 5: PODSUMOWANIE ═══ -->
     <div class="gated-section" id="section-5" data-gate-key="kogni-dm-section-5">
       <span class="section-badge">Podsumowanie</span>
       <h2>Co właśnie zrobiłeś</h2>
@@ -879,24 +987,36 @@ Hasło do ostatniej sekcji na stronie to: **[hasło]**"
 
       <p>Masz system prompt. Wklej go do dowolnego AI i zacznij rozmowę z postacią, którą sam zbudowałeś. Potem zmień jedno zdanie i zobacz, jak zmieni się zachowanie. Dodaj regułę. Usuń ograniczenie. Obserwuj.</p>
 
-      <p>Poniżej jest jeszcze jedno narzędzie: Kreator Persony. Robi to samo co pigułki, ale przez interfejs zamiast rozmowy. Suwaki, opcje, pola tekstowe. Efekt ten sam: karta postaci, z której AI wygeneruje system prompt. Zbuduj kogoś nowego, albo przeprojektuj swoją postać z nową wiedzą i porównaj wyniki.</p>
+      <p>Kreator Persony w pierwszej zakładce robi to samo co pigułki, ale przez interfejs zamiast rozmowy. Suwaki, opcje, pola tekstowe. Efekt ten sam: karta postaci, z której AI wygeneruje system prompt. Zbuduj kogoś nowego, albo przeprojektuj swoją postać z nową wiedzą i porównaj wyniki.</p>
 
       <div class="final-note">
         <p>Twoje odpowiedzi w Kreatorze zapisują się automatycznie w przeglądarce. Możesz wrócić później.</p>
       </div>
     </div>
-  </div>
 
-  <!-- Persona Builder (wider) -->
-  <div class="gated-section" id="section-5-tool" data-gate-key="kogni-dm-section-5">
-    <div class="tool-section">
-      <PersonaBuilder client:load />
-    </div>
-  </div>
+    </div><!-- /section-4 -->
+    </div><!-- /section-3 -->
+    </div><!-- /section-2 -->
+
+    </div><!-- /.course-page (pills panel) -->
+  </div><!-- /#panel-pills -->
 
 </PasswordGate>
 
 <script>
+  // ─── Tab switching ───
+  function showDmPanel(id) {
+    document.querySelectorAll('.dm-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + id)?.classList.add('active');
+    document.querySelectorAll('.dm-tab').forEach(t => t.classList.remove('viewing'));
+    document.querySelector('.dm-tab[data-panel="' + id + '"]')?.classList.add('viewing');
+  }
+
+  document.querySelectorAll('.dm-tab button[data-show]').forEach(btn => {
+    btn.addEventListener('click', () => showDmPanel(btn.dataset.show));
+  });
+
+  // ─── Section gates ───
   async function sha256(message) {
     const msgBuffer = new TextEncoder().encode(message);
     const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -966,6 +1086,7 @@ Hasło do ostatniej sekcji na stronie to: **[hasło]**"
     });
   });
 
+  // ─── Pill copy buttons ───
   document.querySelectorAll('.pill-copy-btn').forEach(btn => {
     btn.addEventListener('click', async () => {
       const pillId = btn.dataset.pill;
