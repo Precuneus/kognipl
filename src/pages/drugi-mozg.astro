@@ -582,7 +582,7 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
     });
   }
 
-  function unlockSection(targetId) {
+  function unlockSection(targetId, shouldScroll = true) {
     const target = document.getElementById(targetId);
     if (!target) return;
     const key = target.dataset.gateKey;
@@ -592,7 +592,7 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
         if (key) sessionStorage.setItem(key, 'open');
       }
     });
-    setTimeout(() => {
+    if (shouldScroll) setTimeout(() => {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
   }
@@ -630,7 +630,9 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
 
 
 
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   restoreUnlocked();
+  window.scrollTo(0, 0);
 </script>
 
 </Base>
