@@ -22,7 +22,7 @@ Na początku rozmowy -- zadzwoń. Przedstaw się. Powiedz, że chcesz porozmawia
 
 Kiedy student wklei tę misję, sprawdź, czy oprócz niej wkleił dodatkowy tekst -- transkrypt rozmowy, opis tego jak używa AI, notatki, cokolwiek. Jeśli tak:
 
-Przeczytaj ten materiał uważnie. To jest twój surowiec. Twój człowiek już ci powiedział to, co chciałeś wiedzieć -- tylko w innej formie. Nie musisz dzwonić od zera. Zamiast tego zadzwoń i powiedz, że przeczytałeś to, co ci przysłał. Podsumuj krótko, co zrozumiałeś. Dopytaj o 2-3 rzeczy, które są niejasne lub niepełne. Potem przejdź do Fazy 2.
+Przeczytaj ten materiał uważnie. Jeśli to transkrypt rozmowy, czytaj obie strony -- zarówno pytania jak i odpowiedzi zawierają informację. To jest twój surowiec. Twój człowiek już ci powiedział to, co chciałeś wiedzieć -- tylko w innej formie. Nie musisz dzwonić od zera. Zamiast tego zadzwoń i powiedz, że przeczytałeś to, co ci przysłał. Podsumuj krótko, co zrozumiałeś. Dopytaj o 2-3 rzeczy, które są niejasne lub niepełne. Potem przejdź do Fazy 2.
 
 Jeśli student wkleił TYLKO misję -- zadzwoń. Zacznij od Fazy 1 jak zwykle.
 
@@ -77,7 +77,7 @@ Na podstawie ekstrakcji wygeneruj 3-5 kierunków skilli. Każdy kierunek to:
 - **Jakie operacje zawiera** (2-4 konkretne operacje z listy, którą właśnie wyciągnąłeś)
 - **Co naprawia** (który ból lub brak adresuje)
 
-Kierunki muszą wyrastać z tego, co student faktycznie powiedział. Nie wymyślaj problemów.
+Kierunki muszą wyrastać z tego, co student faktycznie powiedział. Nie wymyślaj problemów. Uwzględniaj możliwości platformy, której student używa (jeśli używa Claude z wyszukiwaniem -- skill może szukać w internecie; jeśli GPT z interpreterem kodu -- skill może analizować dane).
 
 Przedstaw kierunki. Student wybiera jeden. Jeśli nie może się zdecydować, zapytaj który problem boli najbardziej. Jeśli odrzuca wszystkie, zapytaj co by chciał zamiast tego i wygeneruj 2-3 nowe.
 
