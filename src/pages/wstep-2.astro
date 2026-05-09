@@ -770,6 +770,86 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   .s5.hidden {
     display: none;
   }
+  /* ── Session 6 additions (muted indigo tint) ── */
+  .s6 {
+    transition: opacity 0.4s ease;
+  }
+  p.s6, li.s6 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #7a8ac4 30%);
+  }
+  p.s6 strong, li.s6 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #7a8ac4 30%);
+  }
+  h3.s6 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #7a8ac4 25%);
+  }
+  h2.s6 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #7a8ac4 25%);
+  }
+  p.s6 em {
+    color: color-mix(in srgb, var(--text-dim) 70%, #7a8ac4 30%);
+  }
+  span.s6 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #7a8ac4 30%);
+  }
+  span.s6 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #7a8ac4 30%);
+  }
+  div.s6 p, div.s6 li, div.s6 .cascade-desc, div.s6 .niche-card p {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #7a8ac4 30%);
+  }
+  div.s6 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #7a8ac4 30%);
+  }
+  div.s6 h3 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #7a8ac4 25%);
+  }
+  figure.s6 figcaption {
+    color: color-mix(in srgb, var(--text-dim) 70%, #7a8ac4 30%);
+  }
+  .s6.hidden {
+    display: none;
+  }
+  /* ── Session 7 additions (muted olive tint) ── */
+  .s7 {
+    transition: opacity 0.4s ease;
+  }
+  p.s7, li.s7 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #8aab6a 30%);
+  }
+  p.s7 strong, li.s7 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #8aab6a 30%);
+  }
+  h3.s7 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #8aab6a 25%);
+  }
+  h2.s7 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #8aab6a 25%);
+  }
+  p.s7 em {
+    color: color-mix(in srgb, var(--text-dim) 70%, #8aab6a 30%);
+  }
+  span.s7 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #8aab6a 30%);
+  }
+  span.s7 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #8aab6a 30%);
+  }
+  div.s7 p, div.s7 li, div.s7 .cascade-desc, div.s7 .niche-card p {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #8aab6a 30%);
+  }
+  div.s7 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #8aab6a 30%);
+  }
+  div.s7 h3 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #8aab6a 25%);
+  }
+  figure.s7 figcaption {
+    color: color-mix(in srgb, var(--text-dim) 70%, #8aab6a 30%);
+  }
+  .s7.hidden {
+    display: none;
+  }
 
   /* embedded S4 headings in non-emocje sections: hidden by JS but not violet */
   [data-session].hidden {
@@ -794,13 +874,15 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <!-- ==================== TIME MACHINE (fixed bottom) ==================== -->
     <div class="time-machine">
       <div class="time-machine-inner">
-        <input type="range" class="tm-slider" id="tmSlider" min="1" max="5" value="5" step="1" />
+        <input type="range" class="tm-slider" id="tmSlider" min="1" max="7" value="7" step="1" />
         <div class="tm-stops">
           <span class="tm-stop active" data-s="1">Ewolucja</span>
           <span class="tm-stop active" data-s="2">Rozwój</span>
           <span class="tm-stop active" data-s="3">Dopamina</span>
           <span class="tm-stop active" data-s="4">Emocje</span>
           <span class="tm-stop active" data-s="5">Pamięć</span>
+          <span class="tm-stop active" data-s="6">Sny</span>
+          <span class="tm-stop active" data-s="7">Neuroróżnorodność</span>
         </div>
       </div>
     </div>
@@ -908,6 +990,10 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s5" data-session="5">Thorndike widział uczenie się jako mechaniczne wzmacnianie połączeń bodziec-reakcja: kot w puzzle box próbuje losowo, przypadkowo trafia, i to połączenie się wzmacnia. Tolman pokazał, że szczury robią coś fundamentalnie innego: budują model przestrzeni i używają go elastycznie. To różnica między nawykiem a mapą. Nawyk to prążkowie: "skręć w lewo." Mapa to hipokamp: "wyjście jest na północ, mogę tam dotrzeć różnymi drogami." Godden i Baddeley (1975) dodali, że mapa nie jest abstrakcyjna: nurkowie, którzy uczyli się słów pod wodą, przypominali je lepiej pod wodą niż na lądzie. Kontekst jest częścią śladu pamięciowego: Twój hipokamp koduje treść razem z okolicznościami, w których ją napotkałeś.</p>
     <p class="s5" data-session="5">Rekonsolidacja komplikuje obraz. Przypominasz sobie kłótnię sprzed roku. W momencie przywoływania wspomnienie otwiera się na modyfikację: przez krótkie okno jest podatne na zmianę, zanim hipokamp ponownie je skonsoliduje (Nader et al., 2000). To nie jest błąd systemu. To mechanizm aktualizacji: stary model spotyka nowe dane i może się zmienić. Nawyk w prążkowiu nie podlega tej samej plastyczności. Dlatego trauma zakodowana deklaratywnie w hipokampie jest potencjalnie modyfikowalna (na tym bazuje terapia ekspozycyjna), podczas gdy nawyk unikania, skonsolidowany w prążkowiu, opiera się zmianie.</p>
 
+    <h3 class="s6" data-session="6">Sen jako offline update modelu</h3>
+    <p class="s6" data-session="6">Kiedy konsolidacja zachodzi? W nocy. Sen to tryb offline, w którym mózg reorganizuje model bez dopływu danych sensorycznych. Trzy fazy snu robią trzy różne rzeczy. <strong>SWS (N3)</strong> to archiwista: hipokamp odtwarza sekwencje neuronów z dnia (HPC replay) w kompresji czasowej (20x szybciej), a sharp-wave ripples (eksplozje aktywności 50-150 ms) transferują wspomnienia episodyczne do kory nowej. Credit assignment domykany jest w nocy: dopamina z SN i LC (Kaminski 2018, Takeuchi 2016) działa jako sygnał konsolidacyjny. Bez tego sygnału mapa poznawcza nie trafia do pamięci długoterminowej. Deprywacja snu przed egzaminem to przepisywanie do pustego dysku.</p>
+    <p class="s6" data-session="6"><strong>REM</strong> to terapeuta i trener. Walker opisuje to jako "sleep to forget, sleep to remember": REM redukuje ładunek emocjonalny wspomnienia bez usuwania jego treści. Jednocześnie konsoliduje umiejętności motoryczne. Ostatnie dwie godziny snu (gdzie REM dominuje) są nieproporcjonalnie ważne: każde skrócenie uderza tu najsilniej. <strong>NREM2</strong> to szlifierz umiejętności: wrzeciona senne (12-15 Hz, generowane przez wzgórze) korelują z uczeniem proceduralnym. Trenujący muzycy i sportowcy mają ich więcej. Dwie hipotezy konsolidacji działają równolegle: homeostaza synaptyczna (Tononi i Cirelli) osłabia niepotrzebne synapsy, podczas gdy aktywna konsolidacja (Diekelmann i Born) wzmacnia ważne ślady.</p>
+    <p class="s6" data-session="6">Sen REM ma jeszcze jedną właściwość: DMN operuje na pełnych obrotach bez żadnego hamulca. Na jawie zadanie zewnętrzne tłumi DMN. We śnie żadnego zadania nie ma. Sny mają sensowną fabułę (DMN produkuje narrację), ale brakuje im stabilnych detali (sieci sensoryczne i uwagowe są odcięte). Nie potrafisz czytać we śnie, liczyć ani sprawdzić czasu, bo te czynności wymagają kory przedczołowej, która w REM jest nieaktywna. Potrafisz biegać, rozmawiać i nawigować, bo te funkcje opierają się na starszych ewolucyjnie systemach proceduralnych i emocjonalnych. Sny eksplorują niszę, którą sieci sensoryczno-motoryczne i limbiczne znają.</p>
 
     <figure class="figure-block s3" data-session="3">
       <img src="/images/dopamine_pathways.png" alt="Trzy główne szlaki dopaminergiczne mózgu" />
@@ -1097,6 +1183,9 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s3" data-session="3"><strong>Szlak pośredni,</strong> w którym powoli uwalniana dopamina (tonic) łączy się z receptorami D2, które są hamujące. Efektem jest tłumienie konkurencyjnych akcji i utrzymywanie trajektorii na danej afordancji.</p>
     <p class="s3" data-session="3">Robisz sekwencję afordancji: wstań, zrób kawę, idź do łazienki, ubierz się. D1 ułatwia każdy krok sekwencji. D2 tłumi rozpraszacze. Kiedy dopaminy w prążkowiu jest za mało (jak w chorobie Parkinsona), aktywność szlaku bezpośredniego jest zmniejszona relatywnie do szlaku pośredniego: problem z inicjacją ruchu.</p>
 
+    <p class="s7" data-session="7">ADHD to zaburzenie tej równowagi. Transporter dopaminy (DAT) w prążkowiu jest nadmiernie aktywny: wciąga dopaminę z przestrzeni synaptycznej zanim zdąży zdziałać. Szlak bezpośredni (D1) dostaje za mało paliwa, żeby utrzymać sekwencję. Efekt: każdy bodziec konkuruje z każdym, bo szlak pośredni (D2) nie ma czym tłumić rozpraszaczy. Metylfenidat (Ritalin, Concerta) blokuje DAT, zatrzymując dopaminę w synapsie dłużej. Paradoks, który zaskakuje studentów: stymulant uspokaja osobę z ADHD. Ale paradoks znika, gdy rozumiesz mechanizm. Agitacja motoryczna w ADHD to samoleczenie: organizm szuka stymulacji, bo prążkowie jest niedożywione. Daj mu dopaminę farmakologicznie, a potrzeba szukania jej behawioralnie spada. Stymulant nie dodaje pobudzenia. Przywraca balans D1/D2, który pozwala na sekwencyjne działanie.</p>
+    <p class="s7" data-session="7">Farmakologia ma jednak cenę. Przewlekłe blokowanie DAT wywołuje kompensację: mózg produkuje więcej transportera (+24% gęstości DAT po roku stosowania, Wang et al., 2013). Kiedy lek przestaje działać, więcej DAT oznacza szybsze usuwanie dopaminy niż przed leczeniem. To efekt z odbicia (rebound): wieczorem, gdy lek opada, objawy wracają silniejsze niż rano. System, który kompensował brak dopaminy, teraz kompensuje jej sztuczną obecność.</p>
+
     <h3 class="s4" data-session="4">Depresja jako kolaps przestrzeni afordancji</h3>
 
     <p class="s4" data-session="4">"Depresja to niewidzenie innych opcji." Mechanizm: predykcje są tak silnie negatywne, że system nie generuje pozytywnych kandydatów do działania. Każda opcja przewiduje porażkę.</p>
@@ -1125,6 +1214,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p>Afordancje są więc możliwościami do działania. Są elementami modelu rzeczywistości, z którymi model "Ciebie" może wejść w interakcję. Poruszasz ciałem implementując predykcje top-down z kory motorycznej (Adams et al., 2013). Model w korze motorycznej powstał w wyniku lat treningu stadium sensoryczno-motorycznego. Trening ruchowy i używania narzędzi ukształtował strukturę sieci neuronowych za pośrednictwem błędów predykcyjnych bottom-up, która zwrotnie zapewnia sygnał top-down generując kolejne predykcje ruchu. Predykcje i błędy predykcyjne są w ciągłej interakcji, znane afordancje są przewidywane, nowe afordancje są odkrywane i dodawane do modelu. <span class="s2" data-session="2">Poruszanie ciałem jest warunkiem poznania. Mózg, ciało i działanie to trzy perspektywy na ten sam proces.</span></p>
     <p class="s2" data-session="2">Alison Gopnik proponuje, że dzieci to zoptymalizowane maszyny do eksploracji: testują więcej afordancji, napotykają więcej błędów predykcyjnych, próbują więcej wariantów. Dorośli eksploatują wyuczone modele podążając utartymi ścieżkami znanych afordancji.</p>
     <p class="s5" data-session="5">Nie wszyscy eksplorują tak samo, bo nie wszyscy wyobrażają sobie tak samo. Afantazja to brak mentalnych obrazów: takie osoby nie "widzą" jabłka, gdy zamkną oczy, ale operują na abstrakcyjnych propozycjach. Hiperfantazja to drugi koniec spektrum: obrazy tak żywe, że bywają mylone z percepcją. Synestezja to jeszcze inny wariant: dźwięk ma kolor, litera ma smak, bo sieci sensoryczne są skrzyżowane w sposób nietypowy. Każdy wariant zmienia krajobraz afordancji. Synestetyk widzi możliwości tam, gdzie inni nie widzą nic; afantastyk buduje modele inaczej, ale niekoniecznie gorzej. Solomon Shereshevsky, badany przez Łuriję przez trzydzieści lat, pamiętał wszystko dzięki synestezji: każda cyfra miała kształt, kolor, smak. Koszt był poważny: nadmiar szczegółów uniemożliwiał abstrahowanie i rozumienie metafor. Doskonała pamięć nie oznacza lepszego modelu.</p>
+    <p class="s7" data-session="7">Autyzm zmienia krajobraz afordancji jeszcze inaczej, i predictive coding wyjaśnia jak. W modelu Pellicano i Burr (2012) mózg autystyczny przypisuje wyższą precyzję (wagę) błędom predykcyjnym bottom-up, a niższą predykcjom top-down. Efekt: każdy sygnał sensoryczny dociera z pełną mocą, bo priory go nie tłumią. Świat jest intensywniejszy, bardziej szczegółowy, ale trudniejszy do kompresji w schematy. Stąd nadwrażliwość sensoryczna (hałas w stołówce to nie tło, to bombardowanie), ale też zdolność do dostrzegania wzorców, które neurotypowy mózg wygładza. Powtarzalne zachowania (stimming) nabierają sensu jako aktywne generowanie przewidywalnych sygnałów sensorycznych: organizm sam sobie dostarcza predykcje, które może spełnić, redukując allostatic load w środowisku pełnym nieoczekiwanych bodźców.</p>
 
     <p>Motywacja to nie abstrakcyjna siła napędowa. To konkretne przyciąganie: coś wydaje się atrakcyjne, przyjemne, warte zachodu. Zmęczony wędrowiec nie analizuje kamienia. Kamień go po prostu <em>przyciąga</em> jako miejsce odpoczynku, bo jego ciało tego właśnie chce.</p>
 
@@ -1383,6 +1473,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         <li class="s5" data-session="5"><span class="question-num">03</span>Dziecko z nieprzewidywalnym opiekunem uczy się, że świat nie ma stabilnych reguł. W dorosłości kompulsywnie scrolluje, mimo że wie, że to mu szkodzi. W terapii w wieku 35 lat przywołuje żywe wspomnienie sceny z dzieciństwa, które nigdy nie miało miejsca. Trzy etapy jednego życia. Jeden mechanizm łączy je wszystkie. Jaki? I dlaczego każdy kolejny etap czuje się jak nieunikniona konsekwencja poprzedniego?</li>
         <li class="s5" data-session="5"><span class="question-num">04</span>Pacjentka z demencją nie tworzy nowych wspomnień i nie potrafi wyobrazić sobie, co będzie robić jutro. Nie rozpoznaje personelu, który widzi codziennie. Ale kiedy usłyszy znajomą melodię, zaczyna śpiewać, a rytmiczny kontakt fizyczny uspokaja ją tak jak uspokajał w dzieciństwie. Co przeżyło? Dlaczego właśnie to? I co to mówi o kolejności, w jakiej mózg traci swoje funkcje?</li>
         <li class="s5" data-session="5"><span class="question-num">05</span>Dwoje ludzi siedzi obok siebie na koncercie jazzowym. Muzyk gra niespodziewaną frazę. Jeden słyszy dźwięk. Drugi słyszy dźwięk, widzi kolor i czuje smak. Oboje doświadczają zaskoczenia, ale różnego. Oboje zapamiętają ten moment, ale różnie. Następnego dnia oboje opowiedzą komuś o koncercie, ale ich historie będą brzmiały, jakby byli na dwóch różnych wydarzeniach. Wyjaśnij każdą z tych różnic.</li>
+        <li class="s6" data-session="6"><span class="question-num">06</span>Student uczy się do egzaminu do trzeciej w nocy, śpi cztery godziny i pisze egzamin rano. Drugi student uczy się do północy, śpi osiem godzin i pisze ten sam egzamin. Obaj spędzili tyle samo czasu nad materiałem. Wyjaśnij, używając mechanizmów SWS, REM i NREM2, dlaczego ich wyniki będą różne. Co dokładnie stracił pierwszy student, skracając sen?</li>
+        <li class="s7" data-session="7"><span class="question-num">07</span>Dziecko z ADHD w klasie wierca się na krześle, bawi się długopisem, wstaje co pięć minut. Nauczyciel interpretuje to jako brak dyscypliny. Lekarz przepisuje metylfenidat i dziecko siedzi spokojnie. Rodzic pyta: "dlaczego stymulant uspokaja moje dziecko?" Wyjaśnij paradoks mechanistycznie, używając DAT, D1/D2 i pojęcia samoleczenia behawioralnego. Następnie wyjaśnij, dlaczego wieczorem, gdy lek przestaje działać, objawy wracają silniejsze niż rano.</li>
       </ol>
     </div>
 
@@ -1420,6 +1512,9 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         <li class="s5" data-session="5"><span class="question-num">27</span>Nurkowie Goddena i Baddeleya (1975) lepiej przypominali sobie słowa w tym samym środowisku, w którym się ich uczyli. Opisz ten wynik używając pojęć: hipokamp, kontekst, kora śródwęchowa. Dlaczego nawyk (prążkowie) nie wykazuje takiej samej zależności kontekstowej?</li>
         <li class="s5" data-session="5"><span class="question-num">28</span>Addis, Wong i Schacter (2007) pokazali, że wspominanie przeszłości i wyobrażanie przyszłości aktywują tę samą sieć (DMN + hipokamp). H.M. stracił obie zdolności jednocześnie. Dlaczego system pamięciowy i system wyobraźni to ten sam system? Jakie są koszty tej architektury?</li>
         <li class="s5" data-session="5"><span class="question-num">29</span>Osoba z afantazją nie widzi mentalnych obrazów, ale skutecznie planuje przyszłość. Osoba z hiperfantazją widzi sceny tak żywe, że myli je z percepcją. Shereshevsky pamiętał wszystko, ale nie potrafił abstrahować. Połącz te trzy przypadki z pojęciem niszy poznawczej: jak wariant wyobraźni zmienia krajobraz afordancji?</li>
+        <li class="s6" data-session="6"><span class="question-num">30</span>SWS odtwarza sekwencje hipokampalne w kompresji 20x. REM redukuje ładunek emocjonalny bez usuwania treści. NREM2 wzmacnia umiejętności proceduralne przez wrzeciona senne. Opisz, co stanie się ze wspomnieniem traumatycznego egzaminu po jednej nocy snu: który aspekt (fakty, emocje, nawyk pisania) zostanie przetworzony przez którą fazę?</li>
+        <li class="s7" data-session="7"><span class="question-num">31</span>Pellicano i Burr (2012) proponują, że mózg autystyczny przypisuje wyższą precyzję błędom predykcyjnym bottom-up. Połącz ten mechanizm z nadwrażliwością sensoryczną, stimmingiem i zdolnością do dostrzegania wzorców, które neurotypowy mózg wygładza. Dlaczego te trzy cechy to konsekwencje jednego parametru?</li>
+        <li class="s7" data-session="7"><span class="question-num">32</span>Metylfenidat blokuje DAT w prążkowiu. Kokaina też blokuje DAT. Dlaczego jedno jest lekiem na ADHD, a drugie narkotykiem? Odnieś się do szybkości wiązania, selektywności i kontekstu wyjściowego poziomu dopaminy.</li>
       </ol>
     </div>
 
@@ -1490,6 +1585,15 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         <li class="s5" data-session="5"><span class="question-num">60</span>Co pokazał eksperyment Loftus i Palmer (1974) z pytaniem o "smashed" vs "hit"?</li>
         <li class="s5" data-session="5"><span class="question-num">61</span>Co to jest afantazja?</li>
         <li class="s5" data-session="5"><span class="question-num">62</span>Co to jest zależność kontekstowa pamięci (Godden i Baddeley)?</li>
+        <li class="s6" data-session="6"><span class="question-num">63</span>Co robi SWS (N3) z wspomnieniami z dnia?</li>
+        <li class="s6" data-session="6"><span class="question-num">64</span>Co to są sharp-wave ripples?</li>
+        <li class="s6" data-session="6"><span class="question-num">65</span>Jak REM przetwarza emocje według Walkera?</li>
+        <li class="s6" data-session="6"><span class="question-num">66</span>Co to są wrzeciona senne i z jakim uczeniem się korelują?</li>
+        <li class="s6" data-session="6"><span class="question-num">67</span>Dlaczego nie potrafisz czytać we śnie?</li>
+        <li class="s7" data-session="7"><span class="question-num">68</span>Co blokuje metylfenidat?</li>
+        <li class="s7" data-session="7"><span class="question-num">69</span>Dlaczego stymulant uspokaja osobę z ADHD?</li>
+        <li class="s7" data-session="7"><span class="question-num">70</span>Co to jest efekt z odbicia (rebound) przy metylfenidacie?</li>
+        <li class="s7" data-session="7"><span class="question-num">71</span>Jak model Pellicano i Burr opisuje percepcję w autyzmie?</li>
       </ol>
     </div>
 
@@ -1534,6 +1638,11 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item s5" data-session="5">Addis, D. R., Wong, A. T., &amp; Schacter, D. L. (2007). Remembering the past and imagining the future: common and distinct neural substrates during event construction and elaboration. <em>Neuropsychologia, 45</em>(7), 1363-1377. <a href="https://doi.org/10.1016/j.neuropsychologia.2006.10.016" target="_blank">doi:10.1016/j.neuropsychologia.2006.10.016</a></p>
       <p class="bib-item s5" data-session="5">Godden, D. R., &amp; Baddeley, A. D. (1975). Context-dependent memory in two natural environments: on land and underwater. <em>British Journal of Psychology, 66</em>(3), 325-331. <a href="https://doi.org/10.1111/j.2044-8295.1975.tb01468.x" target="_blank">doi:10.1111/j.2044-8295.1975.tb01468.x</a></p>
       <p class="bib-item s5" data-session="5">Nader, K., Schafe, G. E., &amp; Le Doux, J. E. (2000). Fear memories require protein synthesis in the amygdala for reconsolidation after retrieval. <em>Nature, 406</em>(6797), 722-726. <a href="https://doi.org/10.1038/35021052" target="_blank">doi:10.1038/35021052</a></p>
+      <p class="bib-item s6" data-session="6">Walker, M. P. (2017). <em>Why We Sleep: Unlocking the Power of Sleep and Dreams</em>. Scribner.</p>
+      <p class="bib-item s6" data-session="6">Diekelmann, S., &amp; Born, J. (2010). The memory function of sleep. <em>Nature Reviews Neuroscience, 11</em>(2), 114-126. <a href="https://doi.org/10.1038/nrn2762" target="_blank">doi:10.1038/nrn2762</a></p>
+      <p class="bib-item s6" data-session="6">Tononi, G., &amp; Cirelli, C. (2006). Sleep function and synaptic homeostasis. <em>Sleep Medicine Reviews, 10</em>(1), 49-62. <a href="https://doi.org/10.1016/j.smrv.2005.05.002" target="_blank">doi:10.1016/j.smrv.2005.05.002</a></p>
+      <p class="bib-item s7" data-session="7">Pellicano, E., &amp; Burr, D. (2012). When the world becomes 'too real': a Bayesian explanation of autistic perception. <em>Trends in Cognitive Sciences, 16</em>(10), 504-510. <a href="https://doi.org/10.1016/j.tics.2012.08.009" target="_blank">doi:10.1016/j.tics.2012.08.009</a></p>
+      <p class="bib-item s7" data-session="7">Wang, G.-J., et al. (2013). Long-term stimulant treatment affects brain dopamine transporter level in patients with attention deficit hyperactive disorder. <em>PLoS ONE, 8</em>(5), e63023. <a href="https://doi.org/10.1371/journal.pone.0063023" target="_blank">doi:10.1371/journal.pone.0063023</a></p>
     </div>
 
   </div>
