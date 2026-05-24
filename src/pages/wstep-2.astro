@@ -679,82 +679,70 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     margin: 0 auto;
     padding: 0 32px;
     box-sizing: border-box;
-    touch-action: none;
-    -ms-touch-action: none;
   }
-  .tm-slider {
-    width: 100%;
-    max-width: 100%;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 6px;
-    background: var(--border-subtle);
-    outline: none;
-    border-radius: 3px;
-    cursor: pointer;
-    touch-action: none;
-    -ms-touch-action: none;
-    box-sizing: border-box;
-    display: block;
-    padding: 14px 0;
-    margin: -14px 0;
-    background-clip: content-box;
-  }
-  @media (max-width: 560px) {
-    .time-machine-inner {
-      padding: 0 32px;
-    }
-  }
-  .tm-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 12px;
-    border-radius: 4px;
-    background: var(--warm-glow);
-    cursor: grab;
-    border: none;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-  }
-  .tm-slider::-webkit-slider-thumb:active {
-    cursor: grabbing;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 8px rgba(200, 149, 108, 0.4);
-  }
-  .tm-slider::-moz-range-thumb {
-    width: 20px;
-    height: 12px;
-    border-radius: 4px;
-    background: var(--warm-glow);
-    cursor: grab;
-    border: none;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-  }
-  .tm-slider::-moz-range-thumb:active {
-    cursor: grabbing;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 8px rgba(200, 149, 108, 0.4);
-  }
-  .tm-stops {
+  .tm-checks {
     display: flex;
     justify-content: space-between;
-    margin: -4px -12px -8px;
+    gap: 4px;
   }
-  .tm-stop {
-    font-family: var(--font-body);
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--text-dim);
-    transition: color 0.3s, font-weight 0.3s;
-    padding: 12px 12px;
-    border-radius: 4px;
+  .tm-check {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
     cursor: pointer;
-    letter-spacing: 0.01em;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     -webkit-user-select: none;
+    flex: 1;
+    padding: 4px 0;
   }
-  .tm-stop.active {
+  .tm-check input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border-subtle);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .tm-check input[type="checkbox"]:checked {
+    background: var(--warm-glow);
+    border-color: var(--warm-glow);
+  }
+  .tm-check input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 9px;
+    border: solid var(--bg-card);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .tm-check span {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-dim);
+    transition: color 0.2s, font-weight 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .tm-check input[type="checkbox"]:checked + span {
     color: var(--warm-glow);
     font-weight: 600;
+  }
+  @media (max-width: 560px) {
+    .time-machine-inner {
+      padding: 0 16px;
+    }
+    .tm-check span {
+      font-size: 10px;
+    }
   }
   /* ── Session additions: inline spans + standalone blocks ── */
   .s2 {
@@ -1028,6 +1016,26 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     display: none;
   }
 
+  /* S1 content hidden by checkbox toggle */
+  .course-page p.hidden,
+  .course-page h3.hidden,
+  .course-page ul.hidden,
+  .course-page ol.hidden,
+  .course-page table.hidden,
+  .course-page figure.hidden,
+  .course-page .formula-box.hidden,
+  .course-page .video-block.hidden,
+  .course-page .video-grid.hidden,
+  .course-page .video-grid-solo.hidden,
+  .course-page .video-grid-label.hidden,
+  .course-page .network-cascade.hidden,
+  .course-page .niche-cards.hidden,
+  .course-page .tract-list.hidden,
+  .course-page .debate-grid.hidden,
+  .course-page .figure-block.hidden {
+    display: none;
+  }
+
 </style>
 
 <PasswordGate
@@ -1069,19 +1077,18 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
 
 
-    <!-- ==================== TIME MACHINE (fixed bottom) ==================== -->
+    <!-- ==================== SESSION TOGGLES (fixed bottom) ==================== -->
     <div class="time-machine">
       <div class="time-machine-inner">
-        <input type="range" class="tm-slider" id="tmSlider" min="1" max="8" value="8" step="1" />
-        <div class="tm-stops">
-          <span class="tm-stop active" data-s="1">S01</span>
-          <span class="tm-stop active" data-s="2">S02</span>
-          <span class="tm-stop active" data-s="3">S03</span>
-          <span class="tm-stop active" data-s="4">S04</span>
-          <span class="tm-stop active" data-s="5">S05</span>
-          <span class="tm-stop active" data-s="6">S06</span>
-          <span class="tm-stop active" data-s="7">S07</span>
-          <span class="tm-stop active" data-s="8">S08</span>
+        <div class="tm-checks">
+          <label class="tm-check"><input type="checkbox" data-s="1" checked /><span>S01</span></label>
+          <label class="tm-check"><input type="checkbox" data-s="2" checked /><span>S02</span></label>
+          <label class="tm-check"><input type="checkbox" data-s="3" checked /><span>S03</span></label>
+          <label class="tm-check"><input type="checkbox" data-s="4" checked /><span>S04</span></label>
+          <label class="tm-check"><input type="checkbox" data-s="5" checked /><span>S05</span></label>
+          <label class="tm-check"><input type="checkbox" data-s="6" checked /><span>S06</span></label>
+          <label class="tm-check"><input type="checkbox" data-s="7" checked /><span>S07</span></label>
+          <label class="tm-check"><input type="checkbox" data-s="8" checked /><span>S08</span></label>
         </div>
       </div>
     </div>
@@ -2046,73 +2053,85 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       wrapper.appendChild(facade);
     });
 
-    const slider = document.getElementById('tmSlider');
-    const stops = document.querySelectorAll('.tm-stop');
+    // ── Session checkboxes ──
+    const checkboxes = document.querySelectorAll('.tm-check input[type="checkbox"]');
     const sessionEls = document.querySelectorAll('[data-session]');
 
-    let lastV = parseInt(slider ? slider.value : 1);
+    // S01 content: elements inside .course-page that have no data-session
+    // and are not structural (h2, hr, time-machine, back-link, h1, meta, sidebar)
+    const coursePage = document.querySelector('.course-page');
+    const s1ContentSelectors = 'p, h3, ul, ol, .formula-box, .video-block, .video-grid, .video-grid-solo, .video-grid-label, .network-cascade, .niche-cards, .tract-list, .debate-grid, figure, table, .figure-block';
 
-    function updateTimeMachine(val) {
-      const v = parseInt(val);
-      const oldV = lastV;
-      lastV = v;
+    function getS1Elements() {
+      const candidates = coursePage.querySelectorAll(s1ContentSelectors);
+      return Array.from(candidates).filter(el => {
+        if (el.dataset.session) return false;
+        if (el.closest('[data-session]')) return false;
+        if (el.closest('.time-machine')) return false;
+        if (el.closest('.questions-section')) return false;
+        if (el.classList.contains('meta')) return false;
+        return true;
+      });
+    }
 
-      // Anchor priority: 1) user's text selection, 2) first visible element below header
+    function getCheckedSessions() {
+      const checked = new Set();
+      checkboxes.forEach(cb => {
+        if (cb.checked) checked.add(parseInt(cb.dataset.s));
+      });
+      return checked;
+    }
+
+    function updateSessionVisibility() {
+      const checked = getCheckedSessions();
+
+      // Scroll anchor: find first visible element that will survive the toggle
       const headerH = 80;
       let anchorEl = null;
       let anchorTop = 0;
 
-      // Check if user has selected text
       const sel = window.getSelection();
       if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
         let node = sel.getRangeAt(0).startContainer;
         if (node.nodeType === 3) node = node.parentElement;
         const candidate = node.closest('p, h2, h3, li, .formula-box, .cascade-step, .niche-card, .figure-block');
         if (candidate && candidate.offsetHeight) {
-          const sess = candidate.dataset.session || (candidate.closest('[data-session]') && candidate.closest('[data-session]').dataset.session);
-          const survives = !sess || (parseInt(sess) <= v && parseInt(sess) <= oldV);
-          if (survives) {
-            anchorEl = candidate;
-            anchorTop = candidate.getBoundingClientRect().top;
-          }
+          anchorEl = candidate;
+          anchorTop = candidate.getBoundingClientRect().top;
         }
       }
 
-      // Fallback: first visible element below header that survives both values
       if (!anchorEl) {
-        const allContent = document.querySelectorAll('.course-page h2, .course-page h3, .course-page p, .course-page .formula-box, .course-page .video-label, .course-page .cascade-step, .course-page .niche-card, .course-page hr.section-divider, .course-page .figure-block, .course-page .video-block');
+        const allContent = coursePage.querySelectorAll('h2, h3, p, .formula-box, .video-label, .cascade-step, .niche-card, hr.section-divider, .figure-block, .video-block');
         let best = Infinity;
-
         for (const el of allContent) {
           if (!el.offsetHeight) continue;
-          const sess = el.dataset.session || (el.closest('[data-session]') && el.closest('[data-session]').dataset.session);
-          if (sess) {
-            const s = parseInt(sess);
-            if (s > v || s > oldV) continue;
-          }
           const r = el.getBoundingClientRect();
           if (r.bottom < headerH) continue;
-          const visibleTop = Math.max(r.top, headerH);
-          const d = visibleTop - headerH;
-          if (d < best) {
-            best = d;
-            anchorEl = el;
-            anchorTop = r.top;
-          }
+          const d = Math.max(r.top, headerH) - headerH;
+          if (d < best) { best = d; anchorEl = el; anchorTop = r.top; }
         }
       }
 
-      stops.forEach(s => {
-        s.classList.toggle('active', parseInt(s.dataset.s) <= v);
-      });
-
+      // Toggle S2-S8 content
       sessionEls.forEach(el => {
-        el.classList.toggle('hidden', parseInt(el.dataset.session) > v);
+        const s = parseInt(el.dataset.session);
+        if (s >= 2) {
+          el.classList.toggle('hidden', !checked.has(s));
+        }
       });
 
-      // Update sidebar nav visibility for session-gated sections
+      // Toggle S1 content (elements without data-session)
+      const s1Els = getS1Elements();
+      const s1Hidden = !checked.has(1);
+      s1Els.forEach(el => {
+        el.classList.toggle('hidden', s1Hidden);
+      });
+
+      // Sync nav sidebar
       if (typeof updateNavVisibility === 'function') updateNavVisibility();
 
+      // Restore scroll position
       if (anchorEl) {
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
@@ -2129,28 +2148,11 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       }
     }
 
-    stops.forEach(s => {
-      s.addEventListener('click', () => {
-        const val = s.dataset.s;
-        if (slider) {
-          slider.value = val;
-        }
-        updateTimeMachine(val);
-      });
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', () => updateSessionVisibility());
     });
 
-    if (slider) {
-      slider.addEventListener('input', (e) => updateTimeMachine(e.target.value));
-      updateTimeMachine(slider.value);
-
-      // iOS Safari fix: prevent page scroll when touching the slider
-      const tmContainer = document.querySelector('.time-machine');
-      tmContainer.addEventListener('touchmove', (e) => {
-        if (e.target === slider || e.target.closest('.time-machine-inner')) {
-          e.preventDefault();
-        }
-      }, { passive: false });
-    }
+    updateSessionVisibility();
 
     // ── Section navigator: scroll tracking ──
     const navLinks = document.querySelectorAll('.nav-sidebar a[data-nav]');
@@ -2199,13 +2201,13 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       });
     }
 
-    // ── Nav links: hide session-gated sections when slider hides them ──
+    // ── Nav links: hide session-gated sections when their checkbox is off ──
     function updateNavVisibility() {
-      const v = parseInt(slider ? slider.value : 8);
+      const checked = getCheckedSessions();
       navLinks.forEach(link => {
         const sess = link.dataset.session;
         if (sess) {
-          link.style.display = parseInt(sess) > v ? 'none' : '';
+          link.style.display = checked.has(parseInt(sess)) ? '' : 'none';
         }
       });
     }
