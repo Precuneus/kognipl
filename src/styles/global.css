@@ -115,23 +115,23 @@ a { color: inherit; }
   text-transform: uppercase;
   color: var(--text-secondary);
   text-decoration: none;
-  padding: 6px 14px;
+  padding: 8px 18px;
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid var(--border-warm);
   transition: color 0.3s, border-color 0.3s, background 0.3s;
   position: relative;
 }
 
 .site-nav a:hover {
   color: var(--text-primary);
-  border-color: var(--border-subtle);
-  background: rgba(180, 155, 100, 0.04);
+  border-color: rgba(232, 168, 76, 0.35);
+  background: rgba(232, 168, 76, 0.06);
 }
 
 .site-nav a.active {
   color: var(--warm-glow);
-  border-color: var(--border-warm);
-  background: rgba(232, 168, 76, 0.06);
+  border-color: rgba(232, 168, 76, 0.4);
+  background: rgba(232, 168, 76, 0.08);
 }
 
 /* === DIVIDER === */
