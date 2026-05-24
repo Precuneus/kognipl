@@ -7,7 +7,124 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 <Base title="Wstęp do kognitywistyki II - kogni.pl" activePage="kursy">
 
 <style is:global>
-  .course-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+  /* ── Three-column layout ── */
+  .course-layout {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 720px) 1fr;
+    gap: 0;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  .course-page { max-width: 720px; width: 100%; margin: 0 auto; padding: 48px 24px 80px; grid-column: 2; }
+
+  /* ── Left sidebar: section navigator ── */
+  .nav-sidebar {
+    grid-column: 1;
+    position: relative;
+  }
+  .nav-sidebar-inner {
+    position: sticky;
+    top: 80px;
+    padding: 48px 12px 48px 0;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+  .nav-sidebar-inner::-webkit-scrollbar { display: none; }
+  .nav-sidebar-inner { scrollbar-width: none; }
+
+  .nav-sidebar .nav-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    padding-left: 12px;
+  }
+  .nav-sidebar a {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-left: 2px solid transparent;
+    transition: color 0.25s, border-color 0.25s;
+    line-height: 1.4;
+  }
+  .nav-sidebar a:hover {
+    color: var(--text-secondary);
+  }
+  .nav-sidebar a.active {
+    color: var(--text-primary);
+    border-left-color: var(--warm-glow);
+    font-weight: 500;
+  }
+
+  /* ── Right sidebar: glossary ── */
+  .glossary-sidebar {
+    grid-column: 3;
+    position: relative;
+  }
+  .glossary-sidebar-inner {
+    position: sticky;
+    top: 80px;
+    padding: 48px 0 48px 12px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+  .glossary-sidebar-inner::-webkit-scrollbar { display: none; }
+  .glossary-sidebar-inner { scrollbar-width: none; }
+
+  .glossary-sidebar .glossary-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    padding-left: 4px;
+  }
+  .glossary-entry {
+    padding: 5px 4px;
+    font-family: var(--font-body);
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--text-dim);
+    transition: opacity 0.3s, max-height 0.4s;
+    max-height: 60px;
+    overflow: hidden;
+  }
+  .glossary-entry .abbr-key {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+  .glossary-entry .abbr-full {
+    color: var(--text-dim);
+  }
+  .glossary-entry.hidden {
+    opacity: 0;
+    max-height: 0;
+    padding: 0 4px;
+    overflow: hidden;
+  }
+
+  /* ── Responsive: collapse sidebars below 1200px ── */
+  @media (max-width: 1200px) {
+    .course-layout {
+      grid-template-columns: 1fr;
+    }
+    .nav-sidebar, .glossary-sidebar {
+      display: none;
+    }
+    .course-page { grid-column: 1; }
+  }
 
   .back-link {
     display: inline-block;
@@ -899,6 +1016,22 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   passwordHash={HASH}
   sessionKey="wstep-2"
 >
+  <div class="course-layout">
+
+  <!-- ===== LEFT SIDEBAR: Section Navigator ===== -->
+  <nav class="nav-sidebar" aria-label="Nawigacja po sekcjach">
+    <div class="nav-sidebar-inner">
+      <div class="nav-label">Sekcje</div>
+      <a href="#sec-pojecia" data-nav="sec-pojecia">Podstawowe pojęcia</a>
+      <a href="#sec-predykcja" data-nav="sec-predykcja">Poziomy predykcji</a>
+      <a href="#sec-emocje" data-nav="sec-emocje" data-session="4">Emocje</a>
+      <a href="#sec-spor" data-nav="sec-spor" data-session="2">Ciągłość vs. przepaść</a>
+      <a href="#sec-dmn" data-nav="sec-dmn">DMN i ewolucja</a>
+      <a href="#sec-pytania" data-nav="sec-pytania">Pytania</a>
+    </div>
+  </nav>
+
+  <!-- ===== CENTER: Course Content ===== -->
   <div class="course-page">
     <a href="/kursy" class="back-link">&larr; Kursy</a>
     <h1>Wstęp do kognitywistyki II</h1>
@@ -926,7 +1059,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
 
     <!-- ==================== PODSTAWOWE POJĘCIA ==================== -->
-    <h2>Podstawowe pojęcia</h2>
+    <h2 id="sec-pojecia">Podstawowe pojęcia</h2>
 
     <h3>Mózg i doświadczenie</h3>
     <p>Czytasz płynnie te słowa dzięki dekadom treningu swoich sieci neuronowych. Gdyby ktoś skanował Ci mózg, widziałby wzorce aktywności elektrycznej, przepływ krwi, sygnały BOLD w fMRI. Z boku widać Twoje oczy poruszające się wzdłuż tekstu, wyraz twarzy, może skinienie głową. Od środka... po prostu czytasz. Doświadczasz znaczenia tekstu.</p>
@@ -1113,7 +1246,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <!-- ==================== POZIOMY PREDYKCJI ==================== -->
     <hr class="section-divider" />
-    <h2>Trzy ewolucyjne poziomy predykcji</h2>
+    <h2 id="sec-predykcja">Trzy ewolucyjne poziomy predykcji</h2>
     <p>Sieci mózgowe przewidują na kilku poziomach jednocześnie.</p>
     <p><strong>Poziom 1 - ciało i narzędzia</strong> (Iriki &amp; Taoka): Makak bierze grabki. Jego kora ciemieniowa musi nagle przewidywać trzy razy większą przestrzeń pełną nowych afordancji. Przestrzeń peripersonalna rozszerza się na koniec narzędzia. Narzędzia modyfikują dostępne możliwości do działania, tak jak nauczenie się jazdy samochodem modyfikuje, jak pewnie się czujesz za kierownicą i co jest osiągalne.</p>
     <p><strong>Poziom 2 - emocje innych</strong> (de Waal, Goodall): Szympans widzi, że innemu szympansowi jest źle. Przewiduje jego ból i podchodzi pocieszyć. To jest empatia jako mechanizm predykcyjny - uniwersalny dla wielu gatunków.</p>
@@ -1346,7 +1479,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <!-- ==================== EMOCJE ==================== -->
     <hr class="section-divider s4" data-session="4" />
-    <h2 class="s4" data-session="4">Emocje</h2>
+    <h2 id="sec-emocje" class="s4" data-session="4">Emocje</h2>
 
     <p class="s4" data-session="4">Przez dekady odpowiedź brzmiała: mózg ma wbudowane moduły emocjonalne. Paul Ekman udokumentował sześć ekspresji twarzy (szczęście, smutek, strach, wstręt, gniew, zaskoczenie), które rozpoznają ludzie na wszystkich kontynentach, niezależnie od kultury. Mimika jako dwukierunkowy sygnał: wyraża emocję i ją wzmacnia (hipoteza facial feedback). Mikroekspresje trwające ułamek sekundy jako dowód na biologiczną podstawę, którą trudno sfałszować. Emocje jako wrodzone, uniwersalne kategorie: elementy architektury.</p>
 
@@ -1405,7 +1538,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <!-- ==================== SPÓR ==================== -->
     <hr class="section-divider s2" data-session="2" />
-    <h2 class="s2" data-session="2">Spór: ciągłość vs. przepaść</h2>
+    <h2 id="sec-spor" class="s2" data-session="2">Spór: ciągłość vs. przepaść</h2>
     <p class="s2" data-session="2">Dwie strony sporu zgadzają się, że zwierzęta mają kulturę. Różnią się w ocenie mechanizmu.</p>
 
     <div class="debate-grid s2" data-session="2">
@@ -1442,7 +1575,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <!-- ==================== DMN ==================== -->
     <hr class="section-divider" />
-    <h2>Callback do Neurokognitywistyki: DMN i ewolucja</h2>
+    <h2 id="sec-dmn">Callback do Neurokognitywistyki: DMN i ewolucja</h2>
     <p>Gdzie w mózgach ludzi jest wspólna intencjonalność?</p>
     <p>Wspólna intencjonalność wymaga modelowania intencji innych, a więc angażuje DMN, podsieć związaną z Teorią Umysłu (Theory of Mind - ToM). <strong>DMN.ToM</strong> to podsystem sieci domyślnej odpowiedzialny za mentalizację (pSTS, TPJp, TP). Innymi słowy: sieć modelowania cudzych umysłów.</p>
     <table>
@@ -1557,7 +1690,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <!-- ==================== PYTANIA ==================== -->
     <!-- ==================== BARDZO KOMPLEKSOWE PYTANIA ==================== -->
-    <hr class="section-divider s5" data-session="5" />
+    <hr id="sec-pytania" class="section-divider s5" data-session="5" />
     <div class="questions-section s5" data-session="5">
       <h2 class="s5" data-session="5">Bardzo kompleksowe pytania</h2>
       <ol class="question-list">
@@ -1784,6 +1917,51 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     </div>
 
   </div>
+
+  <!-- ===== RIGHT SIDEBAR: Glossary ===== -->
+  <aside class="glossary-sidebar" aria-label="Słowniczek skrótów">
+    <div class="glossary-sidebar-inner">
+      <div class="glossary-label">Skróty</div>
+      <div class="glossary-entry" data-sections="sec-pojecia sec-predykcja sec-dmn"><span class="abbr-key">DMN</span> <span class="abbr-full">Default Mode Network, sieć domyślna</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">DAN</span> <span class="abbr-full">Dorsal Attention Network, grzbietowa sieć uwagi</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">VAN</span> <span class="abbr-full">Ventral Attention Network, brzuszna sieć uwagi</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">CEN</span> <span class="abbr-full">Central Executive Network, sieć kontroli</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia sec-predykcja"><span class="abbr-key">fMRI</span> <span class="abbr-full">funkcjonalny rezonans magnetyczny</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia"><span class="abbr-key">BOLD</span> <span class="abbr-full">Blood-Oxygen-Level-Dependent, sygnał tlenowy</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia sec-predykcja"><span class="abbr-key">HPC</span> <span class="abbr-full">hipokamp (hippocampus)</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia sec-predykcja"><span class="abbr-key">EC</span> <span class="abbr-full">kora śródwęchowa (entorhinal cortex)</span></div>
+      <div class="glossary-entry" data-sections="sec-emocje sec-predykcja"><span class="abbr-key">vmPFC</span> <span class="abbr-full">brzuszno-przyśrodkowa kora przedczołowa</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn"><span class="abbr-key">mPFC</span> <span class="abbr-full">przyśrodkowa kora przedczołowa</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn"><span class="abbr-key">PCC</span> <span class="abbr-full">tylna kora zakrętu obręczy</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn sec-predykcja"><span class="abbr-key">TP</span> <span class="abbr-full">biegun skroniowy (temporal pole)</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn sec-predykcja"><span class="abbr-key">OFC</span> <span class="abbr-full">kora oczodołowo-czołowa</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn sec-predykcja sec-pojecia"><span class="abbr-key">IFG</span> <span class="abbr-full">zakręt czołowy dolny (inferior frontal gyrus), obszar Broki</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn"><span class="abbr-key">aMFG</span> <span class="abbr-full">przedni zakręt czołowy środkowy</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn sec-predykcja"><span class="abbr-key">MTG</span> <span class="abbr-full">zakręt skroniowy środkowy</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn"><span class="abbr-key">SSC</span> <span class="abbr-full">kora somatosensoryczna</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn"><span class="abbr-key">A1</span> <span class="abbr-full">pierwszorzędowa kora słuchowa</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia"><span class="abbr-key">LTP</span> <span class="abbr-full">Long-Term Potentiation, wzmocnienie synaptyczne</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia"><span class="abbr-key">LTD</span> <span class="abbr-full">Long-Term Depression, osłabienie synaptyczne</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia"><span class="abbr-key">NMDA</span> <span class="abbr-full">receptor NMDA, bramka synaptyczna</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">VTA</span> <span class="abbr-full">pole brzuszne nakrywki (ventral tegmental area)</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">NAcc</span> <span class="abbr-full">jądro półleżące (nucleus accumbens)</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja sec-pojecia"><span class="abbr-key">SN</span> <span class="abbr-full">istota czarna (substantia nigra)</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">SNc</span> <span class="abbr-full">istota czarna, część zbita</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">LC</span> <span class="abbr-full">miejsce sinawe (locus coeruleus)</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">D1</span> <span class="abbr-full">receptor dopaminowy D1, szlak bezpośredni</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">D2</span> <span class="abbr-full">receptor dopaminowy D2, szlak pośredni</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">DAT</span> <span class="abbr-full">transporter dopaminy</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">NET</span> <span class="abbr-full">transporter noradrenaliny</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">SERT</span> <span class="abbr-full">transporter serotoniny</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">L-DOPA</span> <span class="abbr-full">lewodopa, prekursor dopaminy</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">CLS</span> <span class="abbr-full">Complementary Learning Systems</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn"><span class="abbr-key">UG</span> <span class="abbr-full">Universal Grammar, gramatyka uniwersalna</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia"><span class="abbr-key">ZPD</span> <span class="abbr-full">strefa najbliższego rozwoju (Vygotsky)</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia"><span class="abbr-key">MKO</span> <span class="abbr-full">More Knowledgeable Other</span></div>
+    </div>
+  </aside>
+
+  </div> <!-- /.course-layout -->
 </PasswordGate>
 
 <script>
@@ -1902,6 +2080,9 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         el.classList.toggle('hidden', parseInt(el.dataset.session) > v);
       });
 
+      // Update sidebar nav visibility for session-gated sections
+      if (typeof updateNavVisibility === 'function') updateNavVisibility();
+
       if (anchorEl) {
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
@@ -1940,6 +2121,76 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         }
       }, { passive: false });
     }
+
+    // ── Section navigator: scroll tracking ──
+    const navLinks = document.querySelectorAll('.nav-sidebar a[data-nav]');
+    const sectionIds = ['sec-pojecia', 'sec-predykcja', 'sec-emocje', 'sec-spor', 'sec-dmn', 'sec-pytania'];
+    const sectionEls = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+    let currentSection = '';
+
+    function updateNavHighlight() {
+      const scrollY = window.scrollY + 120;
+      let active = '';
+      for (const el of sectionEls) {
+        if (el.offsetTop <= scrollY) active = el.id;
+      }
+      if (active !== currentSection) {
+        currentSection = active;
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.dataset.nav === active);
+        });
+        updateGlossary(active);
+      }
+    }
+
+    // ── Glossary: context-sensitive visibility ──
+    const glossaryEntries = document.querySelectorAll('.glossary-entry');
+
+    function updateGlossary(sectionId) {
+      glossaryEntries.forEach(entry => {
+        const sections = entry.dataset.sections || '';
+        const relevant = !sectionId || sections.includes(sectionId);
+        entry.classList.toggle('hidden', !relevant);
+      });
+    }
+
+    // ── Nav links: hide session-gated sections when slider hides them ──
+    function updateNavVisibility() {
+      const v = parseInt(slider ? slider.value : 8);
+      navLinks.forEach(link => {
+        const sess = link.dataset.session;
+        if (sess) {
+          link.style.display = parseInt(sess) > v ? 'none' : '';
+        }
+      });
+    }
+
+    // Throttled scroll listener
+    let scrollTick = false;
+    window.addEventListener('scroll', () => {
+      if (!scrollTick) {
+        scrollTick = true;
+        requestAnimationFrame(() => {
+          updateNavHighlight();
+          scrollTick = false;
+        });
+      }
+    });
+
+    // Smooth scroll for nav links
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.getElementById(link.dataset.nav);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Initialize
+    updateNavHighlight();
+    updateNavVisibility();
   });
 </script>
 
