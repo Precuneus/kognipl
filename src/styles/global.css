@@ -30,6 +30,13 @@
 
 body {
   background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(240, 192, 96, 0.035) 0%,
+      rgba(232, 168, 76, 0.018) 30%,
+      rgba(200, 140, 60, 0.007) 60%,
+      transparent 100%
+    ) fixed no-repeat,
     linear-gradient(to right,
       rgba(182, 142, 92, 0.10) 0%,
       rgba(182, 142, 92, 0.04) 8%,
@@ -50,42 +57,6 @@ body {
 
 a { color: inherit; }
 
-/* === CANDLELIGHT AMBIENT === */
-.candle-ambient {
-  position: fixed;
-  top: -10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 800px;
-  height: 600px;
-  background: radial-gradient(
-    ellipse at 50% 0%,
-    rgba(240, 192, 96, 0.04) 0%,
-    rgba(232, 168, 76, 0.02) 30%,
-    rgba(200, 140, 60, 0.008) 60%,
-    transparent 100%
-  );
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.9;
-  will-change: opacity;
-  animation: candleFlicker 8s ease-in-out infinite alternate;
-}
-
-@keyframes candleFlicker {
-  0% { opacity: 0.8; }
-  50% { opacity: 1; }
-  100% { opacity: 0.85; }
-}
-
-/* === HERO (image-based, styles in page) === */
-
-@keyframes glowPulse {
-  0% { opacity: 0.6; transform: translateX(-50%) scale(1); }
-  50% { opacity: 1; transform: translateX(-50%) scale(1.2); }
-  100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
-}
-
 /* === LAYOUT === */
 .page { max-width: 820px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 .page-wide { max-width: 960px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
@@ -102,9 +73,7 @@ a { color: inherit; }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(14, 13, 11, 0.9);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: var(--bg-deep);
 }
 
 .logo {
