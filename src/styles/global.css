@@ -66,8 +66,7 @@ a { color: inherit; }
   max-width: 820px;
   margin: 0 auto;
   padding: 32px 24px 28px;
-  border: 1px solid var(--border-subtle);
-  border-top: none;
+  border: none;
   border-radius: 0 0 16px 16px;
   display: flex;
   align-items: center;
@@ -76,15 +75,23 @@ a { color: inherit; }
   top: 0;
   z-index: 100;
   background:
-    linear-gradient(to right,
-      rgba(182, 142, 92, 0.10) 0%,
-      rgba(182, 142, 92, 0.04) 8%,
-      transparent 18%,
-      transparent 82%,
-      rgba(182, 142, 92, 0.04) 92%,
-      rgba(182, 142, 92, 0.10) 100%
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(182, 142, 92, 0.12) 0%,
+      rgba(182, 142, 92, 0.04) 50%,
+      transparent 100%
     ),
-    var(--bg-deep);
+    linear-gradient(to bottom,
+      var(--bg-deep) 0%,
+      rgba(14, 13, 11, 0.85) 50%,
+      transparent 100%
+    );
+  -webkit-mask-image: linear-gradient(to right,
+    transparent 0%, black 5%, black 95%, transparent 100%
+  );
+  mask-image: linear-gradient(to right,
+    transparent 0%, black 5%, black 95%, transparent 100%
+  );
 }
 
 .logo {
