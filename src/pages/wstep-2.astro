@@ -851,6 +851,41 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     display: none;
   }
 
+  /* ── S8 tint: muted amber ── */
+  h3.s8, h2.s8 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #c4a55a 25%);
+  }
+  p.s8, li.s8 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #c4a55a 30%);
+  }
+  p.s8 strong, li.s8 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #c4a55a 30%);
+  }
+  .s8 .cascade-desc {
+    color: color-mix(in srgb, var(--text-dim) 70%, #c4a55a 30%);
+  }
+  span.s8 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #c4a55a 30%);
+  }
+  span.s8 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #c4a55a 30%);
+  }
+  div.s8 p, div.s8 li, div.s8 .cascade-desc, div.s8 .niche-card p {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #c4a55a 30%);
+  }
+  div.s8 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #c4a55a 30%);
+  }
+  div.s8 h3 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #c4a55a 25%);
+  }
+  figure.s8 figcaption {
+    color: color-mix(in srgb, var(--text-dim) 70%, #c4a55a 30%);
+  }
+  .s8.hidden {
+    display: none;
+  }
+
   /* embedded S4 headings in non-emocje sections: hidden by JS but not violet */
   [data-session].hidden {
     display: none;
@@ -869,12 +904,13 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <h1>Wstęp do kognitywistyki II</h1>
     <p class="meta">ćwiczenia · I rok · semestr letni 2025/2026 · 30h</p>
 
+    <p class="s8" data-session="8" style="background: var(--warm-glow-soft); border: 1px solid var(--border-warm); padding: 14px 18px; font-size: 13px; margin-top: 32px;"><strong>Egzamin końcowy:</strong> Możecie przygotować odręczne notatki (kartka A4, obie strony). Na egzaminie będziecie mogli z nich korzystać przez 3 minuty.</p>
 
 
     <!-- ==================== TIME MACHINE (fixed bottom) ==================== -->
     <div class="time-machine">
       <div class="time-machine-inner">
-        <input type="range" class="tm-slider" id="tmSlider" min="1" max="7" value="7" step="1" />
+        <input type="range" class="tm-slider" id="tmSlider" min="1" max="8" value="8" step="1" />
         <div class="tm-stops">
           <span class="tm-stop active" data-s="1">S01</span>
           <span class="tm-stop active" data-s="2">S02</span>
@@ -883,6 +919,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
           <span class="tm-stop active" data-s="5">S05</span>
           <span class="tm-stop active" data-s="6">S06</span>
           <span class="tm-stop active" data-s="7">S07</span>
+          <span class="tm-stop active" data-s="8">S08</span>
         </div>
       </div>
     </div>
@@ -987,6 +1024,22 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s3" data-session="3">Tolman pokazał, że model buduje się cały czas. Szczury, które eksplorowały labirynt bez nagrody, zbudowały mapę poznawczą umożliwiającą im budowanie skrótów gdy pojawiła się nagroda. Mapy poznawcze łączą relacje między informacjami z receptorów dzięki aktywnościom komórek miejsca w hipokampie (HPC) i komórek siatki w korze śródwęchowej (Entorhinal Cortex, EC).</p>
     <p class="s3" data-session="3">W miarę jak model staje się niezawodny przez powtarzanie, zachowanie stopniowo przenosi się z hipokampa (elastyczny, deklaratywny: "pamiętam, jak tam dojechać") do prążkowia grzbietowo-bocznego (automatyczny, nawykowy: "ciało samo jedzie"). Alternatywne scenariusze nie muszą już być modelowane w HPC bo dany ciąg afordancji zawsze niesie ze sobą przewidywalne informacje i wystarczy nawykowo powtórzyć to, co zawsze działało.</p>
+
+    <p class="s8" data-session="8">Komórki miejsca i komórki siatki budują mapy przestrzeni fizycznej. Ale hipokamp mapuje nie tylko przestrzeń. Quian Quiroga i współpracownicy (2005) mierzyli aktywność neuronów u pacjentów z epilepsją i odkryli coś zaskakującego: pojedyncze neurony w hipokampie reagowały na konkretną osobę, niezależnie od zdjęcia, kąta widzenia, a nawet samego imienia. Jeden neuron aktywował się na każde przedstawienie Jennifer Aniston: zdjęcie z profilu, z przodu, napis "Jennifer Aniston." Nie reagował na cechy wzrokowe. Reagował na <strong>pojęcie</strong>.</p>
+    <p class="s8" data-session="8">Te <strong>komórki pojęciowe</strong> (concept cells) to neurony, które kompresują rozproszoną aktywność kory nowej w jedno pojęcie. Kora wzrokowa przetwarza piksele. Kora asocjacyjna łączy cechy. Hipokamp robi snapshot: jedno pojęcie, jedna komórka. Mackay i współpracownicy (2024) dodali drugi element: w korze przyhipokampalnej (parahippocampal cortex) odkryli <strong>komórki lokalizacyjne</strong>, które kodują GDZIE spotkałeś dane pojęcie. Komórki pojęciowe dostarczają "co", komórki lokalizacyjne dostarczają "gdzie." Razem budują adres wspomnienia epizodycznego.</p>
+    <p class="s8" data-session="8">Hipokamp potrafi to zrobić w jednym podejściu. <strong>One-shot learning:</strong> jedno spotkanie wystarczy, żeby utworzyć nowe wiązanie pojęcie-kontekst. Kora nowa potrzebuje setek powtórzeń, żeby wybudować prototyp. Hipokamp zapisuje egzemplarz od razu. To dlatego przechowywanie egzemplarzy jest hipokampalne, a prototypów korowe.</p>
+    <div class="video-block s8" data-session="8">
+      <div class="video-label">Artem Kirsanov · Mapy poznawcze i przestrzenie abstrakcyjne</div>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/iV-EMA5g288"
+          title="Place cells: How your brain creates maps of abstract spaces"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
     <p class="s5" data-session="5">Thorndike widział uczenie się jako mechaniczne wzmacnianie połączeń bodziec-reakcja: kot w puzzle box próbuje losowo, przypadkowo trafia, i to połączenie się wzmacnia. Tolman pokazał, że szczury robią coś fundamentalnie innego: budują model przestrzeni i używają go elastycznie. To różnica między nawykiem a mapą. Nawyk to prążkowie: "skręć w lewo." Mapa to hipokamp: "wyjście jest na północ, mogę tam dotrzeć różnymi drogami." Godden i Baddeley (1975) dodali, że mapa nie jest abstrakcyjna: nurkowie, którzy uczyli się słów pod wodą, przypominali je lepiej pod wodą niż na lądzie. Kontekst jest częścią śladu pamięciowego: Twój hipokamp koduje treść razem z okolicznościami, w których ją napotkałeś.</p>
     <p class="s5" data-session="5">Rekonsolidacja komplikuje obraz. Przypominasz sobie kłótnię sprzed roku. W momencie przywoływania wspomnienie otwiera się na modyfikację: przez krótkie okno jest podatne na zmianę, zanim hipokamp ponownie je skonsoliduje (Nader et al., 2000). To nie jest błąd systemu. To mechanizm aktualizacji: stary model spotyka nowe dane i może się zmienić. Nawyk w prążkowiu nie podlega tej samej plastyczności. Dlatego trauma zakodowana deklaratywnie w hipokampie jest potencjalnie modyfikowalna (na tym bazuje terapia ekspozycyjna), podczas gdy nawyk unikania, skonsolidowany w prążkowiu, opiera się zmianie.</p>
 
@@ -998,6 +1051,10 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <img src="/images/kitamura2017_fig4L.png" alt="Model konsolidacji systemowej Kitamury et al. (2017)" />
       <figcaption>Kitamura et al. (2017), Fig. 4L. Po lewej: dzień uczenia. Hipokamp (HPC) i ciało migdałowate (BLA) generują niedojrzałe engramy w korze przedczołowej (PFC). Po prawej: po konsolidacji. PFC przejmuje przypominanie, HPC milknie, BLA utrzymuje walencję emocjonalną. Źródło: Kitamura et al. (2017), <em>Science</em>.</figcaption>
     </figure>
+
+    <h3 class="s8" data-session="8">Mechanizm synaptyczny: LTP i LTD</h3>
+    <p class="s8" data-session="8">Konsolidacja w śnie działa na poziomie systemów: hipokamp odtwarza, kora nowa przejmuje. Ale co dokładnie zmienia się w synapsie? <strong>Długotrwałe wzmocnienie synaptyczne</strong> (LTP, Long-Term Potentiation): gdy dwa neurony wielokrotnie aktywują się jednocześnie, synapsa między nimi się wzmacnia. "Cells that fire together, wire together." Kluczowy jest receptor <strong>NMDA</strong>: otwiera się tylko wtedy, gdy jednocześnie dociera glutaminian z neuronu presynaptycznego ORAZ błona postsynaptyczna jest depolaryzowana. Receptor NMDA to detektor koincydencji. Wymaga, żeby obie strony były aktywne w tym samym momencie.</p>
+    <p class="s8" data-session="8"><strong>Długotrwałe osłabienie synaptyczne</strong> (LTD, Long-Term Depression): gdy timing jest niedokładny albo aktywność słaba, synapsy słabną. Przycinanie, które wyostrza model. LTP buduje, LTD rzeźbi. Sharp-wave ripples podczas SWS odtwarzają sekwencje neuronów z dnia, wymuszając jednoczesną aktywację: to napędza LTP w synapsach korowych. Dojrzewanie engramów opisane przez Kitamurę to właśnie efekt powtarzanego LTP w korze przedczołowej, napędzanego przez nocne odtwarzanie w hipokampie. Homeostaza synaptyczna Tononiego (LTD) i aktywna konsolidacja Borna (LTP) nie są sprzeczne. Działają równolegle: LTP wzmacnia ślady, które replay aktywował, LTD osłabia te, których nie aktywował.</p>
 
     <p class="s3" data-session="3"><strong>Struktury mogące uwalniać dopaminę:</strong></p>
     <ul class="s3" data-session="3">
@@ -1030,7 +1087,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <h3>Predykcja</h3>
     <p>Sieci neuronowe nie czekają na informacje ze świata, żeby potem zareagować. Sieci cały czas aktywnie przewidują przyszłe informacje. Są jak surferzy pokonujący fale - muszą przewidywać, co będzie za chwilę.</p>
     <p>Prowadzisz samochód na autostradzie. Zmieniasz pasy, wyprzedzasz, jedziesz płynnie. Mimo prędkości wszystko jest... przewidywalne. Sterujesz swoim samochodem, wiesz, jak zareaguje na naciśnięcie pedałów, skręt kierownicy - Twoje sieci mózgowe są już wytrenowane. Nie to co na początku! Wtedy przecież nawet płynne ruszenie było wyzwaniem.</p>
-    <p>To jest predykcja: nieustanne generowanie hipotez o tym, co zaraz nastąpi. Percepcja to weryfikowanie hipotez o świecie. <span class="s4" data-session="4">Silna predykcja potrafi wygenerować oczekiwany stan ciała zanim bodziec nadejdzie. Placebo to najczystszy dowód: mózg produkuje ulgę zanim substancja cokolwiek zrobi. Albo kiedy substancja jest chemicznie obojętna.</span></p>
+    <p>To jest predykcja: nieustanne generowanie hipotez o tym, co zaraz nastąpi. Percepcja to weryfikowanie hipotez o świecie. <span class="s8" data-session="8">Karl Friston sformalizował tę intuicję: organizm minimalizuje <strong>energię swobodną</strong> (free energy), różnicę między tym, co model przewiduje, a tym, co dociera ze zmysłów. Każda akcja, każda percepcja, każda myśl to krok ku mniejszemu zaskoczeniu.</span> <span class="s4" data-session="4">Silna predykcja potrafi wygenerować oczekiwany stan ciała zanim bodziec nadejdzie. Placebo to najczystszy dowód: mózg produkuje ulgę zanim substancja cokolwiek zrobi. Albo kiedy substancja jest chemicznie obojętna.</span></p>
     <p class="s5" data-session="5">Pamięć działa tak samo. Wspomnienie nie jest nagraniem. Za każdym razem, gdy coś sobie "przypominasz", hipokamp rekonstruuje scenę z rozproszonych fragmentów: kontekst z kory śródwęchowej, szczegóły sensoryczne z kory asocjacyjnej (obszarów łączących różne zmysły), emocjonalny koloryt z ciała migdałowatego. Rekonstrukcja podlega aktualnym priorom. Loftus i Palmer (1974) pokazali to jednym słowem: uczestnicy oglądali film z wypadkiem samochodowym, a potem odpowiadali na pytanie o prędkość. Gdy pytanie zawierało "smashed" zamiast "hit", szacunki prędkości wzrosły o 20%, a tydzień później ci sami ludzie "pamiętali" potłuczone szkło, którego nigdy nie było. Predykcja top-down nadpisała ślad pamięciowy. Schacter i Addis (2007) nazwą później ten sam mechanizm konstruktywną symulacją epizodyczną: aparat, który pozwala Ci wyobrażać sobie przyszłość, jest tym samym aparatem, który rekonstruuje przeszłość.</p>
 
 
@@ -1102,6 +1159,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     </ul>
 
     <p style="margin-top: 28px;">Przypomnij sobie artykuł "Predictions not commands" (Adams et al., 2013): sygnały zstępujące z kory ruchowej do rdzenia kręgowego mają cechy predykcji, nie rozkazów. Kora motoryczna nie wysyła instrukcji "skurcz mięsień X o Y procent." Wysyła przewidywanie: "spodziewam się takiego a takiego stanu proprioceptywnego." Rdzeń kręgowy minimalizuje błąd między oczekiwanym a aktualnym stanem ciała. Ruch wyłania się z tej minimalizacji. Innymi słowy: spodziewam się jakiejś konfiguracji ciała. A po chwili kolejnej. I kolejnej. Jak surfer na falach.</p>
+
+    <p class="s8" data-session="8">Kora ruchowa nie jest jedyną korą, która wysyła predykcje. Cała kora czołowa działa na tej samej zasadzie, tyle że w różnych przestrzeniach. Zakręt przedśrodkowy (kora pierwszorzędowa ruchowa) porusza ciałem przez przestrzeń fizyczną: predykcje proprioceptywne. IFG (obszar Broki) porusza się przez przestrzeń gramatyczną: predykcje składniowe. MTG hamuje konkurencyjne trajektorie w przestrzeni semantycznej. OFC i biegun skroniowy (TP) nawigują przez przestrzeń pojęciową: co jest warte powiedzenia, zrobienia, pomyślenia. Ruch to ruch. Zmienia się przestrzeń, w której się poruszasz.</p>
 
     <p class="s3" data-session="3">Te trzy wymiary to nie tylko kategorie doznań. Definiują, jaki typ uczenia się jest możliwy.</p>
     <p class="s3" data-session="3"><strong>Warunkowanie klasyczne</strong> (Pawłow): wskazówka eksteroceptywna (dzwonek) przewiduje konsekwencję interoceptywną (jedzenie, ślinienie). Organizm nic nie robi. Działanie ciała jest nieistotne. Sprawczość zero. Świat ogłasza, co nadchodzi dla ciała.</p>
@@ -1251,6 +1310,19 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     </div>
 
     <p>Trzy nisze to trzy opisy tego samego procesu: jak doświadczenie i sieci zwrotnie się kształtują. <span class="s2" data-session="2">Każde dziecko konstruuje wszystkie trzy nisze jednocześnie.</span></p>
+
+    <h3 class="s8" data-session="8">Pojęcia: budulec modeli</h3>
+    <p class="s8" data-session="8">Z czego zbudowana jest nisza poznawcza? Z pojęć. Ale pojęcie to nie słowo i nie etykieta. Peter Gärdenfors proponuje, że pojęcie to <strong>region w wielowymiarowej przestrzeni</strong>. Pomyśl o kolorach. Każdy kolor ma odcień, nasycenie i jasność. Te trzy wymiary tworzą przestrzeń. "Czerwony" to nie punkt w tej przestrzeni. To region: zbiór punktów, które Twoje sieci neuronowe klasyfikują jako wystarczająco podobne. W centrum tego regionu siedzi prototyp: najlepszy przykład kategorii.</p>
+    <p class="s8" data-session="8">Eleanor Rosch pokazała, że Twój mózg tak właśnie organizuje kategorie. Kiedy myślisz "ptak", aktywujesz prototyp: wróbla, rudzika. Nie pingwina. Pingwin jest daleko od centrum regionu "ptak" w przestrzeni pojęciowej, choć ciągle wewnątrz granicy. <strong>Teoria prototypów:</strong> kategorie mają centrum (typowy egzemplarz) i rozmyte granice. Obiekty bliżej centrum są "bardziej" kategorią.</p>
+    <p class="s8" data-session="8"><strong>Teoria egzemplarzy</strong> mówi co innego: nie przechowujesz skompresowanego prototypu. Przechowujesz konkretne spotkania. Każdy nowy ptak jest porównywany z zapamiętanymi ptakami, jeden po jednym. Która teoria ma rację?</p>
+    <p class="s8" data-session="8">Obie. Bo opisują różne systemy. Teoria egzemplarzy opisuje przetwarzanie bottom-up: widzisz obiekt i porównujesz go z zapamiętanymi instancjami. To jest hipokamp: szybkie, epizodyczne, wiernie zapisuje pojedyncze spotkania. Teoria prototypów opisuje przetwarzanie top-down: myślisz o kategorii i generujesz skompresowaną statystykę. To jest kora nowa: powolna, semantyczna, buduje uogólnienia z wielu doświadczeń. Dwa systemy uczenia się, opisane niezależnie przez teorię komplementarnych systemów uczenia (CLS, McClelland et al., 1995). Egzemplarz i prototyp to nie rywalizujące teorie. To dwa końce tej samej architektury.</p>
+    <p class="s8" data-session="8">Asymilacja i akomodacja Piageta nabierają teraz geometrycznego sensu. Asymilacja: nowy punkt wpada do istniejącego regionu pojęciowego. Nie wymaga zmiany granic. Akomodacja: punkt wypada poza region. Granice muszą zostać przerysowane albo musi powstać nowy region. Dziecko w ZOO widzi wilka: za daleko od regionu "pies", żeby asymilować. Nowy region, nowe pojęcie.</p>
+
+    <h3 class="s8" data-session="8">Myślenie jako nawigacja</h3>
+    <p class="s8" data-session="8">Bellmund, Gärdenfors, Moser i Doeller (2018) postawili tezę wprost: <strong>myślenie to nawigowanie po przestrzeniach pojęciowych</strong>. Ten sam system hipokamp-kora śródwęchowa, który nawiguje Cię przez pokój, nawiguje Cię przez pojęcia. Komórki siatki, które tworzą heksagonalną siatkę współrzędnych w przestrzeni fizycznej, tworzą analogiczną siatkę w przestrzeni abstrakcyjnej. Kiedy porównujesz dwa pojęcia (np. "pies" i "wilk"), Twój mózg oblicza dystans w przestrzeni pojęciowej, używając tego samego kodu, którego używa do obliczania dystansu w przestrzeni fizycznej.</p>
+    <p class="s8" data-session="8">Pojęcia żyją na <strong>rozmaitościach</strong> (manifolds): niskowymiarowych powierzchniach zanurzonych w wielowymiarowej przestrzeni cech. Przestrzeń cech ptaka jest ogromna (kolor, rozmiar, kształt dzioba, śpiew, siedlisko...), ale konkretne ptaki, które spotkałeś, leżą na niższej wymiarowo powierzchni. Nie przeszukujesz całej przestrzeni. Nawigujesz po wyuczonej rozmaitości. Zespoły engramowe (ensembles) kreślą trajektorie po tych powierzchniach: myśl to ścieżka, nie punkt.</p>
+    <p class="s8" data-session="8">Karl Friston łączy to z predykcją. Organizm minimalizuje zaskoczenie (energię swobodną) nawigując ku stanom, które model przewiduje. W przestrzeni pojęciowej: myślenie to ruch ku regionom, które minimalizują błąd predykcyjny. Asymilacja to pozostanie na rozmaitości. Akomodacja to skok na nową. A Piaget, który opisał te mechanizmy u dzieci dekady temu, opisał nawigację po przestrzeniach pojęciowych zanim ktokolwiek wiedział, że hipokamp je mapuje.</p>
+
     <h3 class="s5" data-session="5">Pamięć jako symulacja: hipokamp buduje przyszłość z przeszłości</h3>
     <p class="s5" data-session="5">Zamknij oczy i przypomnij sobie wczorajszy obiad. A teraz wyobraź sobie jutrzejszy. Addis, Wong i Schacter (2007) pokazali w fMRI, że Twój mózg aktywuje dokładnie tę samą sieć w obu przypadkach: hipokamp, korę śródwęchową, mPFC i PCC (tylna kora zakrętu obręczy). Sieć domyślna. Ten sam aparat, który rekonstruuje przeszłość, buduje przyszłość.</p>
     <p class="s5" data-session="5">Implikacja jest fundamentalna: fałszywe wspomnienia to koszt architektury zoptymalizowanej pod symulację. System, który potrafi rekombinować elementy przeszłości w nowe scenariusze, z konieczności może też rekombinować je w scenariusze, które nigdy się nie wydarzyły. Fałszywe wspomnienia z eksperymentu Loftus to produkt tego samego mechanizmu, który pozwala Ci wyobrazić sobie, co zrobisz jutro.</p>
@@ -1460,11 +1532,24 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s2" data-session="2">IFG składa to wszystko w plan wypowiedzi i wysyła predykcję motoryczną do SMN (inferior): wargi, język, krtań. W skrócie: powiedzenie czegoś to abstrakcyjne koncepty (TP + OFC) stopniowo ubierane w słowa (MTG, STG) i finalnie wypowiadane (IFG → SMN).</p>
 
+    <p class="s8" data-session="8">Trzy trakty to uproszczenie. Pełny przepływ produkcji językowej to kaskada: abstrakcyjne pojęcie w TP i OFC (co chcesz powiedzieć i jaka jest tego wartość emocjonalna) przechodzi przez przedni zakręt czołowy środkowy (aMFG, selekcja leksykalna), dalej do tylnego MFG i SFG (planowanie sekwencji), do IFG (montaż składniowy i fonologiczny), do kory somatosensorycznej (SSC, wykonanie motoryczne: wargi, język, krtań) i z powrotem przez korę słuchową (A1) jako feedback. Słyszysz własny głos i porównujesz z predykcją. Błąd predykcyjny koryguje następne słowo.</p>
+
+    <h3 class="s8" data-session="8">Afazja Broki i afazja Wernickego</h3>
+    <p class="s8" data-session="8">Uszkodzenie IFG (obszar Broki) daje <strong>afazję Broki:</strong> rozumiesz język, ale nie możesz złożyć wypowiedzi. Wiesz, co chcesz powiedzieć. Nie potrafisz zbudować sekwencji motorycznej, żeby to powiedzieć. Mowa jest powolna, telegraficzna, pozbawiona gramatyki. Struktura (składnia) jest złamana. Znaczenie (semantyka) jest nietknięte.</p>
+    <p class="s8" data-session="8">Uszkodzenie tylnego STG (obszar Wernickego) daje <strong>afazję Wernickego:</strong> mówisz płynnie, gramatycznie poprawnie. Zdania brzmią jak zdania. Ale nie znaczą nic. Semantyka jest złamana. Składnia jest nietknięta. Podwójna dysocjacja: struktura (IFG) i znaczenie (STG/MTG) to osobne procesy z osobnymi substratami neuronalnymi. Noam Chomsky argumentował to od lat pięćdziesiątych: istnieje <strong>gramatyka uniwersalna</strong>, wrodzona zdolność do przetwarzania struktury językowej, niezależna od konkretnego języka i niezależna od znaczenia. Afazje dostarczają jej neuroanatomicznego wsparcia.</p>
+
+    <h3 class="s8" data-session="8">Język kształtuje myślenie?</h3>
+    <p class="s8" data-session="8">Chomsky twierdzi, że zdolność językowa jest wrodzona: mózg przychodzi z generatywną maszynerią, która ze skończonego zestawu reguł produkuje nieskończoną liczbę zdań. Język generatywny ma dwa niezależne wymiary: <strong>składnię</strong> (struktura, "kto komu co zrobił") i <strong>semantykę</strong> (znaczenie, "co to wszystko znaczy"). Afazje pokazują, że mózg przetwarza je osobno.</p>
+    <p class="s8" data-session="8">Ale czy język wpływa na to, jak myślisz? <strong>Hipoteza Sapira-Whorfa</strong> mówi: tak. Wersja silna (język determinuje myślenie) jest w większości odrzucona. Wersja słaba (język wpływa na myślenie) ma solidne wsparcie. Pomyśl o kolorach. Język eskimoski ma wiele słów na "biały." Języki amazońskie mają wiele słów na "zielony." Liczba etykiet w danej domenie koreluje z dokładnością percepcji w tej domenie. Więcej słów na odcienie bieli: lepsza dyskryminacja odcieni bieli.</p>
+    <p class="s8" data-session="8">W geometrii Gärdenfors: język dostarcza granic regionów w przestrzeni pojęciowej. Więcej słów na odcienie bieli to więcej regionów w tej części przestrzeni kolorów, a każdy region ma swój prototyp. Barrett opisała dokładnie ten sam mechanizm dla emocji: ludzie z bogatszym słownictwem emocjonalnym konstruują bardziej zróżnicowane stany emocjonalne. Sapir-Whorf i granulacja emocjonalna to ten sam mechanizm zastosowany do różnych przestrzeni pojęciowych.</p>
+
     <h3 class="s4" data-session="4">Granulacja emocjonalna i słownictwo jako regulacja</h3>
 
     <p class="s4" data-session="4">Barrett: ludzie z bogatszym słownictwem emocjonalnym dosłownie doświadczają bardziej odrębnych stanów emocjonalnych. Granularność biblioteki pojęć determinuje granularność konstruowanego doświadczenia. Ktoś, kto rozróżnia frustrację, rozczarowanie, bezsilność i żal, konstruuje cztery różne stany tam, gdzie ktoś bez tych słów konstruuje jeden: "jest mi źle."</p>
 
     <p class="s4" data-session="4">Lieberman i współpracownicy (2007): samo nadanie nazwy uczuciu redukuje aktywację ciała migdałowatego. Akt budowania słowa tłumi surowy sygnał. Słownictwo emocjonalne jest regulacyjne. Dlatego opiekun, który mówi dziecku "jesteś sfrustrowany, bo chciałeś sięgnąć po zabawkę i nie mogłeś" nie tylko etykietuje. Instaluje szablon konstrukcyjny na całe życie. Narzędzie emocjonalne przekazane przez MKO, zinternalizowane. Dokładnie mechanizm Wygotskiego, stosowany do regulacji afektu.</p>
+
+    <p class="s8" data-session="8">Sztuczna inteligencja buduje analogiczne przestrzenie. Duże modele językowe (LLM) konstruują przestrzenie embeddingów: wielowymiarowe rozmaitości, na których słowa, zdania i pojęcia mają pozycje i dystanse. "Król" minus "mężczyzna" plus "kobieta" równa się "królowa": operacja geometryczna w przestrzeni pojęciowej. Ludzie i LLM-y są wrażliwi na prompty z tego samego powodu: prompt ustawia punkt startowy na rozmaitości. Inny punkt startowy, inna trajektoria, inny wynik.</p>
 
     <!-- ==================== PYTANIA ==================== -->
     <!-- ==================== BARDZO KOMPLEKSOWE PYTANIA ==================== -->
@@ -1479,6 +1564,9 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         <li class="s5" data-session="5"><span class="question-num">05</span>Dwoje ludzi siedzi obok siebie na koncercie jazzowym. Muzyk gra niespodziewaną frazę. Jeden słyszy dźwięk. Drugi słyszy dźwięk, widzi kolor i czuje smak. Oboje doświadczają zaskoczenia, ale różnego. Oboje zapamiętają ten moment, ale różnie. Następnego dnia oboje opowiedzą komuś o koncercie, ale ich historie będą brzmiały, jakby byli na dwóch różnych wydarzeniach. Wyjaśnij każdą z tych różnic.</li>
         <li class="s6" data-session="6"><span class="question-num">06</span>Kitamura et al. (2017) aktywują optogenetycznie komórki engramowe w hipokampie dwa tygodnie po uczeniu. Zwierzę reaguje strachem: ślad tam jest. Ale przy naturalnym przypominaniu te same komórki milczą. Przypomina teraz kora przedczołowa, która w dniu uczenia miała engramy niedojrzałe i niezdolne do aktywacji. Wspomnienie zmieniło adres, a właściciel tego nie zauważył. Opisz proces, który to umożliwił, wyjaśnij rolę SWS w dojrzewaniu engramów korowych, i odpowiedz: dlaczego komórki BLA utrzymują się przez cały czas, gdy HPC milknie, a PFC przejmuje?</li>
         <li class="s7" data-session="7"><span class="question-num">07</span>Dziecko z ADHD w klasie wierca się na krześle, bawi się długopisem, wstaje co pięć minut. Nauczyciel interpretuje to jako brak dyscypliny. Lekarz przepisuje metylfenidat i dziecko siedzi spokojnie. Rodzic pyta: "dlaczego stymulant uspokaja moje dziecko?" Wyjaśnij paradoks mechanistycznie. Następnie wyjaśnij, dlaczego wieczorem, gdy lek przestaje działać, objawy wracają silniejsze niż rano, i co to mówi o różnicy między leczeniem przyczyny a leczeniem objawu.</li>
+        <li class="s8" data-session="8"><span class="question-num">08</span>Quiroga et al. znaleźli neuron, który reagował na Jennifer Aniston niezależnie od zdjęcia, kąta widzenia i nawet samego imienia. Mackay et al. (2024) dodali komórki lokalizacyjne kodujące GDZIE spotkałeś dane pojęcie. Jednocześnie McClelland et al. opisali komplementarne systemy uczenia: hipokamp zapisuje egzemplarze szybko (one-shot), kora nowa buduje prototypy powoli. Wyobraź sobie, że poznajesz nową osobę na konferencji. Opisz, co dzieje się z Twoimi komórkami pojęciowymi, lokalizacyjnymi i obydwoma systemami uczenia w ciągu następnych dwóch tygodni, włączając rolę snu.</li>
+        <li class="s8" data-session="8"><span class="question-num">09</span>Bellmund et al. twierdzą, że myślenie to nawigacja po przestrzeniach pojęciowych. Friston formalizuje to jako minimalizację energii swobodnej. Gärdenfors opisuje pojęcia jako regiony w wielowymiarowych przestrzeniach. Piaget opisał asymilację i akomodację. Teraz połącz wszystko: student uczy się nowego przedmiotu. Na początku nic nie rozumie. Po miesiącu "klika." Po roku naucza innych. Opisz tę trajektorię jako nawigację po rozmaitościach pojęciowych, używając pojęć: manifold, energia swobodna, asymilacja, akomodacja, LTP, konsolidacja.</li>
+        <li class="s8" data-session="8"><span class="question-num">10</span>Osoba dwujęzyczna przełącza się między polskim a angielskim. W każdym języku opisuje te same emocje inaczej. W polskim ma słowo "tęsknota" bez dobrego angielskiego odpowiednika. W angielskim ma "overwhelmed" bez dobrego polskiego odpowiednika. Hipoteza Sapira-Whorfa mówi, że język wpływa na percepcję. Barrett mówi, że słownictwo emocjonalne determinuje granularność doświadczenia. Kora czołowa nawiguje po przestrzeniach pojęciowych. IFG montuje składnię, OFC+TP nawigują przez pojęcia. Co dzieje się w mózgu tej osoby, gdy przełącza język? Czy zmienia się przestrzeń pojęciowa, czy tylko etykiety? Uzasadnij mechanistycznie.</li>
       </ol>
     </div>
 
@@ -1519,6 +1607,11 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         <li class="s6" data-session="6"><span class="question-num">30</span>Tononi i Cirelli twierdzą, że sen osłabia synapsy (homeostaza synaptyczna). Diekelmann i Born twierdzą, że sen wzmacnia ślady pamięciowe (aktywna konsolidacja). Obie hipotezy mają wsparcie eksperymentalne. Czy to sprzeczność? Opisz jedno wspomnienie z dnia, w którym oba procesy zachodzą jednocześnie, i wyjaśnij, dlaczego mózg potrzebuje obu.</li>
         <li class="s7" data-session="7"><span class="question-num">31</span>Osoba autystyczna w hałaśliwej stołówce jest przytłoczona bodźcami. Ta sama osoba zauważa drobną regularność w układzie kafelków na podłodze, którą nikt inny nie widzi. Jedno wygląda jak deficyt, drugie jak zdolność. Wyjaśnij, używając modelu Pellicano i Burr (2012), dlaczego oba wynikają z tego samego parametru. Następnie wyjaśnij, dlaczego stimming jest racjonalną odpowiedzią organizmu na ten stan.</li>
         <li class="s7" data-session="7"><span class="question-num">32</span>Dziecko z ADHD nie potrafi skupić się na lekcji dłużej niż pięć minut. To samo dziecko gra w grę komputerową cztery godziny bez przerwy. Rodzic mówi: "Może nie ma ADHD, skoro potrafi się skupić, gdy chce." Wyjaśnij, używając D1/D2 i pojęcia saliencji bodźca, dlaczego hiperfokus i rozproszenie to dwa oblicza tego samego mechanizmu.</li>
+        <li class="s8" data-session="8"><span class="question-num">33</span>Gärdenfors opisuje pojęcia jako regiony w wielowymiarowej przestrzeni. Rosch opisuje prototypy jako najlepsze przykłady kategorii. Bellmund et al. proponują, że myślenie to nawigacja po tych przestrzeniach. Połącz te trzy teorie w jedno spójne wyjaśnienie tego, co się dzieje w Twoim mózgu, gdy ktoś pyta Cię: "Podaj przykład ptaka."</li>
+        <li class="s8" data-session="8"><span class="question-num">34</span>Quiroga et al. odkryli komórki pojęciowe w hipokampie, a McClelland et al. opisali komplementarne systemy uczenia. Egzemplarze w hipokampie, prototypy w korze nowej. Opisz, co dzieje się na poziomie tych dwóch systemów, gdy dziecko w ZOO widzi po raz pierwszy pingwina. Czy to asymilacja czy akomodacja? Dlaczego?</li>
+        <li class="s8" data-session="8"><span class="question-num">35</span>Afazja Broki i afazja Wernickego to podwójna dysocjacja: składnia (IFG) i semantyka (STG/MTG) rozpadają się osobno. Chomsky twierdził, że struktura języka jest niezależna od znaczenia. Czy afazje wspierają czy podważają tezę Chomsky'ego? Uzasadnij, odwołując się do konkretnych objawów.</li>
+        <li class="s8" data-session="8"><span class="question-num">36</span>LTP wymaga jednoczesnej aktywności neuronu pre- i postsynaptycznego (receptor NMDA jako detektor koincydencji). SWS replay odtwarza sekwencje z dnia w kompresji czasowej. Wyjaśnij, dlaczego replay napędza LTP w korze nowej, i jak to łączy się z dojrzewaniem engramów korowych opisanym przez Kitamurę et al.</li>
+        <li class="s8" data-session="8"><span class="question-num">37</span>Hipoteza Sapira-Whorfa mówi, że język wpływa na percepcję. Barrett mówi, że bogactwo słownictwa emocjonalnego wpływa na granularność doświadczenia emocjonalnego. Gärdenfors mówi, że pojęcia to regiony w przestrzeni. Połącz te trzy perspektywy: co dokładnie robi nowe słowo z Twoją przestrzenią pojęciową?</li>
       </ol>
     </div>
 
@@ -1598,6 +1691,20 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         <li class="s7" data-session="7"><span class="question-num">69</span>Który szlak (D1 czy D2) odpowiada za utrzymanie bieżącej trajektorii działania?</li>
         <li class="s7" data-session="7"><span class="question-num">70</span>Co to jest efekt z odbicia (rebound) przy metylfenidacie?</li>
         <li class="s7" data-session="7"><span class="question-num">71</span>Jak model Pellicano i Burr opisuje percepcję w autyzmie?</li>
+        <li class="s8" data-session="8"><span class="question-num">72</span>Co to jest pojęcie według Gärdenfors?</li>
+        <li class="s8" data-session="8"><span class="question-num">73</span>Czym różni się prototyp od egzemplarza?</li>
+        <li class="s8" data-session="8"><span class="question-num">74</span>Który system (hipokamp czy kora nowa) przechowuje egzemplarze?</li>
+        <li class="s8" data-session="8"><span class="question-num">75</span>Co to są komórki pojęciowe (concept cells)?</li>
+        <li class="s8" data-session="8"><span class="question-num">76</span>Co kodują komórki lokalizacyjne w korze przyhipokampalnej?</li>
+        <li class="s8" data-session="8"><span class="question-num">77</span>Co to jest one-shot learning?</li>
+        <li class="s8" data-session="8"><span class="question-num">78</span>Co to jest LTP?</li>
+        <li class="s8" data-session="8"><span class="question-num">79</span>Co robi receptor NMDA?</li>
+        <li class="s8" data-session="8"><span class="question-num">80</span>Czym różni się LTD od LTP?</li>
+        <li class="s8" data-session="8"><span class="question-num">81</span>Co to jest rozmaitość (manifold) w kontekście przestrzeni pojęciowych?</li>
+        <li class="s8" data-session="8"><span class="question-num">82</span>Co to jest afazja Broki?</li>
+        <li class="s8" data-session="8"><span class="question-num">83</span>Co to jest afazja Wernickego?</li>
+        <li class="s8" data-session="8"><span class="question-num">84</span>Jak brzmi słaba wersja hipotezy Sapira-Whorfa?</li>
+        <li class="s8" data-session="8"><span class="question-num">85</span>Co łączy hipotezę Sapira-Whorfa z granulacją emocjonalną Barrett?</li>
       </ol>
     </div>
 
@@ -1648,6 +1755,14 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item s6" data-session="6">Kitamura, T., Ogawa, S. K., Roy, D. S., Okuyama, T., Morrissey, M. D., Smith, L. M., Redondo, R. L., &amp; Tonegawa, S. (2017). Engrams and circuits crucial for systems consolidation of a memory. <em>Science, 356</em>(6333), 73-78. <a href="https://doi.org/10.1126/science.aam6808" target="_blank">doi:10.1126/science.aam6808</a></p>
       <p class="bib-item s7" data-session="7">Pellicano, E., &amp; Burr, D. (2012). When the world becomes 'too real': a Bayesian explanation of autistic perception. <em>Trends in Cognitive Sciences, 16</em>(10), 504-510. <a href="https://doi.org/10.1016/j.tics.2012.08.009" target="_blank">doi:10.1016/j.tics.2012.08.009</a></p>
       <p class="bib-item s7" data-session="7">Wang, G.-J., et al. (2013). Long-term stimulant treatment affects brain dopamine transporter level in patients with attention deficit hyperactive disorder. <em>PLoS ONE, 8</em>(5), e63023. <a href="https://doi.org/10.1371/journal.pone.0063023" target="_blank">doi:10.1371/journal.pone.0063023</a></p>
+      <p class="bib-item s8" data-session="8">Gärdenfors, P. (2000). <em>Conceptual Spaces: The Geometry of Thought</em>. MIT Press.</p>
+      <p class="bib-item s8" data-session="8">Rosch, E. (1975). Cognitive representations of semantic categories. <em>Journal of Experimental Psychology: General, 104</em>(3), 192-233. <a href="https://doi.org/10.1037/0096-3445.104.3.192" target="_blank">doi:10.1037/0096-3445.104.3.192</a></p>
+      <p class="bib-item s8" data-session="8">Bellmund, J. L. S., Gärdenfors, P., Moser, E. I., &amp; Doeller, C. F. (2018). Navigating cognition: Spatial codes for human thinking. <em>Science, 362</em>(6415), eaat6766. <a href="https://doi.org/10.1126/science.aat6766" target="_blank">doi:10.1126/science.aat6766</a></p>
+      <p class="bib-item s8" data-session="8">Quian Quiroga, R., Reddy, L., Kreiman, G., Koch, C., &amp; Fried, I. (2005). Invariant visual representation by single neurons in the human brain. <em>Nature, 435</em>(7045), 1102-1107. <a href="https://doi.org/10.1038/nature03687" target="_blank">doi:10.1038/nature03687</a></p>
+      <p class="bib-item s8" data-session="8">Mackay, C. E., et al. (2024). Concept and location neurons in the human brain provide the building blocks for holistic scene representations. <em>Nature Communications, 15</em>, 5424. <a href="https://doi.org/10.1038/s41467-024-49775-5" target="_blank">doi:10.1038/s41467-024-49775-5</a></p>
+      <p class="bib-item s8" data-session="8">McClelland, J. L., McNaughton, B. L., &amp; O'Reilly, R. C. (1995). Why there are complementary learning systems in the hippocampus and neocortex. <em>Psychological Review, 102</em>(3), 419-457. <a href="https://doi.org/10.1037/0033-295X.102.3.419" target="_blank">doi:10.1037/0033-295X.102.3.419</a></p>
+      <p class="bib-item s8" data-session="8">Chomsky, N. (1965). <em>Aspects of the Theory of Syntax</em>. MIT Press.</p>
+      <p class="bib-item s8" data-session="8">Friston, K. (2010). The free-energy principle: a unified brain theory? <em>Nature Reviews Neuroscience, 11</em>(2), 127-138. <a href="https://doi.org/10.1038/nrn2787" target="_blank">doi:10.1038/nrn2787</a></p>
     </div>
 
   </div>
