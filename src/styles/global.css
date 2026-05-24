@@ -29,7 +29,16 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  background: var(--bg-deep);
+  background:
+    linear-gradient(to right,
+      rgba(182, 142, 92, 0.10) 0%,
+      rgba(182, 142, 92, 0.04) 8%,
+      transparent 18%,
+      transparent 82%,
+      rgba(182, 142, 92, 0.04) 92%,
+      rgba(182, 142, 92, 0.10) 100%
+    ) fixed,
+    var(--bg-deep);
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 15px;
@@ -40,26 +49,6 @@ body {
 }
 
 a { color: inherit; }
-
-/* === EDGE GLOW === */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: 0;
-  background: linear-gradient(to right,
-    rgba(182, 142, 92, 0.10) 0%,
-    rgba(182, 142, 92, 0.04) 8%,
-    transparent 18%,
-    transparent 82%,
-    rgba(182, 142, 92, 0.04) 92%,
-    rgba(182, 142, 92, 0.10) 100%
-  );
-}
 
 /* === CANDLELIGHT AMBIENT === */
 .candle-ambient {
@@ -78,15 +67,15 @@ body::after {
   );
   pointer-events: none;
   z-index: 0;
+  opacity: 0.9;
+  will-change: opacity;
   animation: candleFlicker 8s ease-in-out infinite alternate;
 }
 
 @keyframes candleFlicker {
-  0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
-  25% { opacity: 1; transform: translateX(-50%) scale(1.02); }
-  50% { opacity: 0.85; transform: translateX(-50%) scale(0.98); }
-  75% { opacity: 0.95; transform: translateX(-50%) scale(1.01); }
-  100% { opacity: 0.9; transform: translateX(-50%) scale(1); }
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.85; }
 }
 
 /* === HERO (image-based, styles in page) === */
