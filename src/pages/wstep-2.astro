@@ -115,6 +115,26 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     overflow: hidden;
   }
 
+  /* ── Scroll offset for sticky header ── */
+  [id^="sec-"], [id^="sub-"] {
+    scroll-margin-top: 90px;
+  }
+
+  /* ── Nav subsection links ── */
+  .nav-sidebar a.nav-sub {
+    font-size: 11px;
+    padding-left: 20px;
+    color: color-mix(in srgb, var(--text-dim) 80%, transparent);
+  }
+  .nav-sidebar a.nav-sub:hover {
+    color: var(--text-dim);
+  }
+  .nav-sidebar a.nav-sub.active {
+    color: var(--text-secondary);
+    border-left-color: color-mix(in srgb, var(--warm-glow) 50%, transparent);
+    font-weight: 400;
+  }
+
   /* ── Responsive: collapse sidebars below 1200px ── */
   @media (max-width: 1200px) {
     .course-layout {
@@ -1023,10 +1043,20 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <div class="nav-sidebar-inner">
       <div class="nav-label">Sekcje</div>
       <a href="#sec-pojecia" data-nav="sec-pojecia">Podstawowe pojęcia</a>
+      <a href="#sub-model" data-nav="sub-model" class="nav-sub">Model</a>
+      <a href="#sub-stadia" data-nav="sub-stadia" data-session="2" class="nav-sub">Stadia rozwoju</a>
+      <a href="#sub-ltp" data-nav="sub-ltp" data-session="8" class="nav-sub">LTP i LTD</a>
+      <a href="#sub-predykcja" data-nav="sub-predykcja" class="nav-sub">Predykcja</a>
+      <a href="#sub-informacja" data-nav="sub-informacja" class="nav-sub">Informacja</a>
       <a href="#sec-predykcja" data-nav="sec-predykcja">Poziomy predykcji</a>
+      <a href="#sub-afordancje" data-nav="sub-afordancje" class="nav-sub">Afordancje</a>
+      <a href="#sub-pojecia" data-nav="sub-pojecia" data-session="8" class="nav-sub">Pojęcia</a>
+      <a href="#sub-pamiec" data-nav="sub-pamiec" data-session="5" class="nav-sub">Pamięć</a>
       <a href="#sec-emocje" data-nav="sec-emocje" data-session="4">Emocje</a>
       <a href="#sec-spor" data-nav="sec-spor" data-session="2">Ciągłość vs. przepaść</a>
       <a href="#sec-dmn" data-nav="sec-dmn">DMN i ewolucja</a>
+      <a href="#sub-lustrzane" data-nav="sub-lustrzane" class="nav-sub">Neurony lustrzane</a>
+      <a href="#sub-jezyk" data-nav="sub-jezyk" data-session="2" class="nav-sub">Język</a>
       <a href="#sec-pytania" data-nav="sec-pytania">Pytania</a>
     </div>
   </nav>
@@ -1067,7 +1097,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <hr class="section-divider" />
 
-    <h3>Model</h3>
+    <h3 id="sub-model">Model</h3>
     <p>Doświadczana "rzeczywistość" to model powstały w wyniku wielu lat treningu Twoich biologicznych sieci neuronowych. Doświadczasz modelu generowanego przez aktywność swoich sieci mózgowych. Treść doświadczenia to model. Uszkodzenie zakrętu wrzecionowatego wykasuje twarze z treści Twojego doświadczenia; uszkodzenie V5/MT sprawi, że odświeżanie rzeczywistości zwolni do kilku klatek na sekundę; uszkodzenie prawej kory ciemieniowej tymczasowo wymaże lewą stronę doświadczenia.</p>
     <p>"Ty" też jesteś modelem. Jesteś historią swoich wcześniejszych doświadczeń, opowieścią, jaką kultywujesz w swojej spójnej narracji tłumaczącej Twoje życie. Jak myślisz o sobie? Jak się zmieniasz? Czy masz jedno czy wiele żyć? Możliwe, że jesteś pomocną i życzliwą osobą, ale uszkodzenie mózgu może sprawić, że zmienisz się diametralnie, jak Phineas Gage. W innych przypadkach tożsamość może zniknąć całkiem: demencja uniemożliwia tworzenie spójnej narracji o sobie i zapamiętywanie swojej historii. <span class="s2" data-session="2">Ten model budujesz od momentu urodzenia (Piaget), wzorując się na afordancjach zapewnianych przez bliskich (Vygotsky).</span></p>
     <p class="s5" data-session="5">W 1953 roku chirurg William Beecher Scoville usunął obustronne przyśrodkowe płaty skroniowe u pacjenta Henry'ego Molaisona (H.M.), próbując leczyć ciężką epilepsję. Operacja objęła hipokamp (strukturę głęboko w płacie skroniowym, kluczową dla pamięci), korę śródwęchową (bramę, przez którą informacje trafiają do hipokampa) i ciało migdałowate. Epilepsja ustąpiła, ale H.M. stracił zdolność tworzenia nowych wspomnień deklaratywnych. Mógł pamiętać dzieciństwo, ale nie potrafił zapamiętać osoby, którą poznał pięć minut temu. Jego model świata zamroził się w 1953 roku.</p>
@@ -1085,7 +1115,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         ></iframe>
       </div>
     </div>
-    <h3 class="s2" data-session="2">Budowanie modelu: stadia rozwoju</h3>
+    <h3 id="sub-stadia" class="s2" data-session="2">Budowanie modelu: stadia rozwoju</h3>
     <p class="s2" data-session="2">Piaget opisał ten proces jako stadia rozwoju. Odzwierciedlają one trening kolejnych sieci neuronowych (sensomotorycznych, uwagi, kontroli, domyślnej). Sieci przekazują informacje między sobą, dostarczając sobie błędy predykcyjne (bottom-up) i predykcje (top-down). Stadia rozwoju wskazują na kolejność wyłaniania się kompetencji, jednak ich rozwój trwa całe życie. Stadium sensomotoryczne (i pierwszorzędowe sieci oraz sieć uwagowa) to fundament, na którym budowane są struktury kolejnych sieci.</p>
     <p class="s2" data-session="2"><strong>Sensoryczno-motoryczne (0-2 lata):</strong> świat jest czystym doznaniem. Dotyk, smak, ruch. Chwytasz, wkładasz do ust, rzucasz. Powoli odkrywasz, że rzeczy istnieją nawet gdy na nie nie patrzysz. Twój pierwszy model: świat trwa. Ten model buduje się we wspólnej przestrzeni wraz z opiekunami (we-space). Opiekun dostarcza pierwsze i najważniejsze (z perspektywy dziecka) afordancje. Sieci sensoryczne (01) dominują. Wszystko jest bottom-up. Komunikacja jest przedwerbalna: synchronizacja spojrzenia, mimiki, wokalizacji.</p>
     <div class="video-grid s2" data-session="2" style="grid-template-columns: repeat(2, 1fr);">
@@ -1186,7 +1216,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <figcaption>Kitamura et al. (2017), Fig. 4L. Po lewej: dzień uczenia. Hipokamp (HPC) i ciało migdałowate (BLA) generują niedojrzałe engramy w korze przedczołowej (PFC). Po prawej: po konsolidacji. PFC przejmuje przypominanie, HPC milknie, BLA utrzymuje walencję emocjonalną. Źródło: Kitamura et al. (2017), <em>Science</em>.</figcaption>
     </figure>
 
-    <h3 class="s8" data-session="8">Mechanizm synaptyczny: LTP i LTD</h3>
+    <h3 id="sub-ltp" class="s8" data-session="8">Mechanizm synaptyczny: LTP i LTD</h3>
     <p class="s8" data-session="8">Konsolidacja w śnie działa na poziomie systemów: hipokamp odtwarza, kora nowa przejmuje. Ale co dokładnie zmienia się w synapsie? <strong>Długotrwałe wzmocnienie synaptyczne</strong> (LTP, Long-Term Potentiation): gdy dwa neurony wielokrotnie aktywują się jednocześnie, synapsa między nimi się wzmacnia. "Cells that fire together, wire together." Kluczowy jest receptor <strong>NMDA</strong>: otwiera się tylko wtedy, gdy jednocześnie dociera glutaminian z neuronu presynaptycznego ORAZ błona postsynaptyczna jest depolaryzowana. Receptor NMDA to detektor koincydencji. Wymaga, żeby obie strony były aktywne w tym samym momencie.</p>
     <p class="s8" data-session="8"><strong>Długotrwałe osłabienie synaptyczne</strong> (LTD, Long-Term Depression): gdy timing jest niedokładny albo aktywność słaba, synapsy słabną. Przycinanie, które wyostrza model. LTP buduje, LTD rzeźbi. Sharp-wave ripples podczas SWS odtwarzają sekwencje neuronów z dnia, wymuszając jednoczesną aktywację: to napędza LTP w synapsach korowych. Dojrzewanie engramów opisane przez Kitamurę to właśnie efekt powtarzanego LTP w korze przedczołowej, napędzanego przez nocne odtwarzanie w hipokampie. Homeostaza synaptyczna Tononiego (LTD) i aktywna konsolidacja Borna (LTP) nie są sprzeczne. Działają równolegle: LTP wzmacnia ślady, które replay aktywował, LTD osłabia te, których nie aktywował.</p>
 
@@ -1218,7 +1248,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <hr class="section-divider" />
 
-    <h3>Predykcja</h3>
+    <h3 id="sub-predykcja">Predykcja</h3>
     <p>Sieci neuronowe nie czekają na informacje ze świata, żeby potem zareagować. Sieci cały czas aktywnie przewidują przyszłe informacje. Są jak surferzy pokonujący fale - muszą przewidywać, co będzie za chwilę.</p>
     <p>Prowadzisz samochód na autostradzie. Zmieniasz pasy, wyprzedzasz, jedziesz płynnie. Mimo prędkości wszystko jest... przewidywalne. Sterujesz swoim samochodem, wiesz, jak zareaguje na naciśnięcie pedałów, skręt kierownicy - Twoje sieci mózgowe są już wytrenowane. Nie to co na początku! Wtedy przecież nawet płynne ruszenie było wyzwaniem.</p>
     <p>To jest predykcja: nieustanne generowanie hipotez o tym, co zaraz nastąpi. Percepcja to weryfikowanie hipotez o świecie. <span class="s8" data-session="8">Karl Friston sformalizował tę intuicję: organizm minimalizuje <strong>energię swobodną</strong> (free energy), różnicę między tym, co model przewiduje, a tym, co dociera ze zmysłów. Każda akcja, każda percepcja, każda myśl to krok ku mniejszemu zaskoczeniu. Sięgasz po kubek z kawą. Kubek jest lżejszy niż się spodziewałeś. Przez ułamek sekundy świat jest dziwny: ręka wyskoczyła za wysoko, kawa zachlupotała. Błąd predykcyjny. Następnym razem Twój model wie, że ten kubek jest lekki.</span> <span class="s4" data-session="4">Silna predykcja potrafi wygenerować oczekiwany stan ciała zanim bodziec nadejdzie. Placebo to najczystszy dowód: mózg produkuje ulgę zanim substancja cokolwiek zrobi. Albo kiedy substancja jest chemicznie obojętna.</span></p>
@@ -1284,7 +1314,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <hr class="section-divider" />
 
-    <h3>Informacja</h3>
+    <h3 id="sub-informacja">Informacja</h3>
     <p>Skąd sieci mózgowe czerpią materiał do tych hipotez? Z trzech źródeł.</p>
     <ul>
       <li><strong>Eksterocepcja:</strong> wzrok, słuch, węch, smak, dotyk - sygnały o tym, co dzieje się na granicy ciała i świata.</li>
@@ -1395,7 +1425,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <hr class="section-divider" />
 
-    <h3>Afordancje</h3>
+    <h3 id="sub-afordancje">Afordancje</h3>
     <p>Afordancje nie są w przedmiocie. Nie są w Tobie. Są <em>między wami</em>.</p>
     <p>Ten sam kamień: turlanie dla dziecka, siedzenie dla zmęczonego wędrowca, budulec dla architekta. Kamień się nie zmienił. Zmieniła się relacja, kontekst, potrzeba.</p>
     <ul>
@@ -1447,7 +1477,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s8" data-session="8">Organizmy budują nisze w świecie fizycznym. Mózg buduje nisze w przestrzeni pojęciowej. Z czego ta wewnętrzna nisza jest zbudowana? Z pojęć: regionów w wielowymiarowej przestrzeni, które pozwalają nawigować po abstrakcjach tak, jak kora ciemieniowa nawiguje po pokoju.</p>
 
-    <h3 class="s8" data-session="8">Pojęcia: budulec modeli</h3>
+    <h3 id="sub-pojecia" class="s8" data-session="8">Pojęcia: budulec modeli</h3>
     <p class="s8" data-session="8">Z czego zbudowana jest nisza poznawcza? Z pojęć. Ale pojęcie to nie słowo i nie etykieta. Peter Gärdenfors proponuje, że pojęcie to <strong>region w wielowymiarowej przestrzeni</strong>. Pomyśl o kolorach. Każdy kolor ma odcień, nasycenie i jasność. Te trzy wymiary tworzą przestrzeń. "Czerwony" to nie punkt w tej przestrzeni. To region: zbiór punktów, które Twoje sieci neuronowe klasyfikują jako wystarczająco podobne. W centrum tego regionu siedzi prototyp: najlepszy przykład kategorii.</p>
     <p class="s8" data-session="8">Eleanor Rosch pokazała, że Twój mózg tak właśnie organizuje kategorie. Kiedy myślisz "ptak", aktywujesz prototyp: wróbla, rudzika. Nie pingwina. Pingwin jest daleko od centrum regionu "ptak" w przestrzeni pojęciowej, choć ciągle wewnątrz granicy. <strong>Teoria prototypów:</strong> kategorie mają centrum (typowy egzemplarz) i rozmyte granice. Obiekty bliżej centrum są "bardziej" kategorią.</p>
     <p class="s8" data-session="8"><strong>Teoria egzemplarzy</strong> mówi co innego: nie przechowujesz skompresowanego prototypu. Przechowujesz konkretne spotkania. Każdy nowy ptak jest porównywany z zapamiętanymi ptakami, jeden po jednym. Która teoria ma rację?</p>
@@ -1459,7 +1489,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s8" data-session="8">Pojęcia żyją na <strong>rozmaitościach</strong> (manifolds): niskowymiarowych powierzchniach zanurzonych w wielowymiarowej przestrzeni cech. Przestrzeń cech ptaka jest ogromna (kolor, rozmiar, kształt dzioba, śpiew, siedlisko...), ale konkretne ptaki, które spotkałeś, leżą na niższej wymiarowo powierzchni. Nie przeszukujesz całej przestrzeni. Nawigujesz po wyuczonej rozmaitości. Zespoły engramowe (ensembles) kreślą trajektorie po tych powierzchniach: myśl to ścieżka, nie punkt.</p>
     <p class="s8" data-session="8">Karl Friston łączy to z predykcją. Organizm minimalizuje zaskoczenie (energię swobodną) nawigując ku stanom, które model przewiduje. W przestrzeni pojęciowej: myślenie to ruch ku regionom, które minimalizują błąd predykcyjny. Asymilacja to pozostanie na rozmaitości. Akomodacja to skok na nową. A Piaget, który opisał te mechanizmy u dzieci dekady temu, opisał nawigację po przestrzeniach pojęciowych zanim ktokolwiek wiedział, że hipokamp je mapuje.</p>
 
-    <h3 class="s5" data-session="5">Pamięć jako symulacja: hipokamp buduje przyszłość z przeszłości</h3>
+    <h3 id="sub-pamiec" class="s5" data-session="5">Pamięć jako symulacja: hipokamp buduje przyszłość z przeszłości</h3>
     <p class="s5" data-session="5">Zamknij oczy i przypomnij sobie wczorajszy obiad. A teraz wyobraź sobie jutrzejszy. Addis, Wong i Schacter (2007) pokazali w fMRI, że Twój mózg aktywuje dokładnie tę samą sieć w obu przypadkach: hipokamp, korę śródwęchową, mPFC i PCC (tylna kora zakrętu obręczy). Sieć domyślna. Ten sam aparat, który rekonstruuje przeszłość, buduje przyszłość.</p>
     <p class="s5" data-session="5">Implikacja jest fundamentalna: fałszywe wspomnienia to koszt architektury zoptymalizowanej pod symulację. System, który potrafi rekombinować elementy przeszłości w nowe scenariusze, z konieczności może też rekombinować je w scenariusze, które nigdy się nie wydarzyły. Fałszywe wspomnienia z eksperymentu Loftus to produkt tego samego mechanizmu, który pozwala Ci wyobrazić sobie, co zrobisz jutro.</p>
     <p class="s5" data-session="5">H.M. stracił tę zdolność razem z hipokampem. Nie tylko nie tworzył nowych wspomnień; nie potrafił wyobrażać sobie przyszłości. Gdy proszono go o opisanie jutra, nie potrafił skonstruować żadnej sceny. Odpowiadał ogólnikami albo milczał. Twoja nisza poznawcza rozciąga się od wspomnień dzieciństwa po plany na przyszły tydzień. Nisza H.M. zwężyła się do teraźniejszości. Bez hipokampa mapa czasowa znikła tak samo jak mapa przestrzenna.</p>
@@ -1614,7 +1644,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <figcaption>Garin et al. (2022). U człowieka mPFC i PCC tworzą silną oś DMN (<em>Default mode</em>). U naczelnych niehominidowych ta oś jest słaba lub nieobecna - widoczne są natomiast sieci fronto-ciemieniowa i fronto-skroniowa.</figcaption>
     </figure>
 
-    <h3>Neurony lustrzane</h3>
+    <h3 id="sub-lustrzane">Neurony lustrzane</h3>
     <p>Neurony lustrzane odkryto przypadkowo w korze przedruchowej makaka (obszar F5): neurony, które aktywowały się zarówno gdy małpa chwytała orzeszek, jak i gdy obserwowała, jak ktoś inny go chwyta. Nie reagowały na sam widok orzeszka ani na ruch bez celu. Reagowały na działanie skierowane ku celowi. U ludzi ich odpowiedniki znaleziono w obszarze Broki i dolnym płaciku ciemieniowym (IPL).</p>
     <p>W zależności od publikacji, obszar Broki jest zaangażowany w sieć domyślną, kontroli i istotności. IPL to obszar, gdzie sieć uwagi i kontroli spotykają się z DMN.ToM w okolicach TPJ. Kiedy obserwujesz kogoś sięgającego po kubek, te (i inne) obszary współpracują ze sobą, kierując wzrok, generując predykcję działania i aktualizując model agenta ("chce się napić").</p>
     <p>Neurony lustrzane to mechanizm predykcji działania na poziomie motorycznym. Most między poziomem 1 a poziomem 3 jest zbudowany z kaskady: obszar Broki przewiduje ruch, IPL przewiduje cel ruchu, TPJp przewiduje intencję za celem. Każda warstwa dodaje jeden poziom abstrakcji. <span class="s2" data-session="2">Neurony lustrzane to jedna z czterech nakładających się sieci mózgu społecznego, które aktywują się progresywnie w miarę jak pogłębia się Twój model innej osoby:</span></p>
@@ -1640,7 +1670,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <!-- ==================== JĘZYK ==================== -->
     <hr class="section-divider s2" data-session="2" />
-    <h3 class="s2" data-session="2">Język: co jest wyjątkowe?</h3>
+    <h3 id="sub-jezyk" class="s2" data-session="2">Język: co jest wyjątkowe?</h3>
     <p class="s2" data-session="2">Zwierzęta mają złożoną komunikację. Pszczoły: taniec waggle. Kanzi (szympans bonobo): setki symboli na klawiaturze, rozumienie angielskiego na poziomie 2-latka. Delfiny: indywidualne "imiona."</p>
     <p class="s2" data-session="2">Co język ludzki ma ponad to?</p>
     <ul class="s2" data-session="2">
@@ -2124,22 +2154,37 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     // ── Section navigator: scroll tracking ──
     const navLinks = document.querySelectorAll('.nav-sidebar a[data-nav]');
+    const allNavIds = [
+      'sec-pojecia', 'sub-model', 'sub-stadia', 'sub-ltp', 'sub-predykcja', 'sub-informacja',
+      'sec-predykcja', 'sub-afordancje', 'sub-pojecia', 'sub-pamiec',
+      'sec-emocje', 'sec-spor',
+      'sec-dmn', 'sub-lustrzane', 'sub-jezyk',
+      'sec-pytania'
+    ];
+    const allNavEls = allNavIds.map(id => document.getElementById(id)).filter(Boolean);
     const sectionIds = ['sec-pojecia', 'sec-predykcja', 'sec-emocje', 'sec-spor', 'sec-dmn', 'sec-pytania'];
-    const sectionEls = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+    let currentNav = '';
     let currentSection = '';
 
     function updateNavHighlight() {
       const scrollY = window.scrollY + 120;
       let active = '';
-      for (const el of sectionEls) {
-        if (el.offsetTop <= scrollY) active = el.id;
+      let activeSection = '';
+      for (const el of allNavEls) {
+        if (el.offsetParent !== null && el.offsetTop <= scrollY) {
+          active = el.id;
+          if (sectionIds.includes(el.id)) activeSection = el.id;
+        }
       }
-      if (active !== currentSection) {
-        currentSection = active;
+      if (active !== currentNav) {
+        currentNav = active;
         navLinks.forEach(link => {
           link.classList.toggle('active', link.dataset.nav === active);
         });
-        updateGlossary(active);
+      }
+      if (activeSection !== currentSection) {
+        currentSection = activeSection;
+        updateGlossary(activeSection);
       }
     }
 
