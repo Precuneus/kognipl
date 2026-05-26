@@ -1,109 +1,118 @@
-Przeczytaj całą dotychczasową rozmowę. Na jej początku jest skill pisania, który student wkleił. Reszta to rozmowa, w której student pisał z tym skillem i poprawiał wyniki. Twoim zadaniem jest przeanalizować tę rozmowę, znaleźć wzorce w poprawkach studenta i wygenerować zaktualizowany skill. Bez pytania. Bez sugerowania. Robisz to i pokazujesz wynik.
+---
+name: skill_update
+type: skill
+description: >
+  Aktualizuje skill pisania na podstawie rozmowy, w której student go
+  testował. Wklejany do tej samej rozmowy po zakończeniu pisania. Czyta
+  wstecz całą rozmowę, znajduje wzorce w poprawkach, klasyfikuje je
+  i generuje zaktualizowany skill. Trigger: aktualizuj, zaktualizuj,
+  aktualizacja, kończymy, update, popraw skill, zmień skill, ulepsz,
+  analiza, lecimy, dawaj, wyciągnij wnioski.
+tags: [pisanie, skill, aktualizacja, feedback, preferencje, wzorce]
+---
 
-## Procedura
+[PRE-FLIGHT: Czy na początku rozmowy jest skill pisania? Czy w rozmowie są poprawki studenta -- zmiany, odrzucenia, przepisane fragmenty? Jeśli brakuje jednego z nich, poproś o brakujący element. Jeśli oba są obecne, zacznij od pełnego przeglądu rozmowy wstecz.]
 
-### Analiza
+SKILL: skill_update
 
-Przeczytaj całą rozmowę od początku. Znajdź KAŻDY moment, w którym student:
+## PURPOSE
 
-- **Poprawia** tekst AI (zmienia słowa, przeformułowuje, skraca, wydłuża)
-- **Odrzuca** fragment (usuwa, ignoruje, prosi o przepisanie)
-- **Dodaje** coś, czego AI nie napisało
-- **Zmienia podejście** ("napisz inaczej", "bardziej formalnie", "krócej")
-- **Akceptuje bez komentarza** (cisza = skill trafił)
-- **Waha się** (przyjmuje z zastrzeżeniem, wraca później)
+Zamknięcie pętli zwrotnej między preferencjami deklarowanymi (skill pisania) a preferencjami ujawnionymi (poprawki w rozmowie). Student nie wie, czego chce, dopóki nie zobaczy tekstu, który mu nie pasuje. Poprawki to dane. Ten skill zamienia dane w lepszy skill.
 
-### Wzorce
+## BOUNDARIES
 
-Pogrupuj obserwacje we wzorce. Wzorzec = powtarzający się kierunek, nie pojedyncza poprawka.
+- Nie generuj skilla od zera. Aktualizujesz istniejący. Każde zdanie oryginału, którego wzorce nie dotyczą, zostaje bez zmian.
+- Nie dodawaj niczego, czego wzorce nie uzasadniają. Każda zmiana musi mieć cytat z rozmowy.
+- Nie pytaj o pozwolenie na analizę, klasyfikację ani aktualizację. Pracuj i pokaż wynik.
 
-Przykład: student w trzech różnych miejscach skraca zdania AI z 20+ słów do 10-12 słów. To nie trzy poprawki. To jeden wzorzec: "preferuje krótsze zdania niż AI domyślnie generuje."
+## ATTRACTORS
 
-### Klasyfikacja
+### Gęstość dowodów
 
-Dla każdego wzorca sam zdecyduj:
+Każde twierdzenie w raporcie i każda zmiana w skillu prowadzi do konkretnego cytatu z rozmowy. "Student preferuje krótsze zdania" to hipoteza. Dowód wygląda tak:
 
-- **Stały ślad:** konsekwentna preferencja, niezależna od tematu. Wchodzi do skilla.
-- **Jednorazowy ślad:** poprawka specyficzna dla tego tekstu. Nie wchodzi.
-- **Brakujący ślad:** student potrzebuje czegoś, czego skill nie ma. Nowa instrukcja.
+> AI napisało: "Warto zauważyć, że w kontekście współczesnych badań nad sztuczną inteligencją, kluczową rolę odgrywa..."
+> Student skrócił do: "Kluczowa jest rola..."
+> Powtarza się 4 razy w rozmowie.
 
-Nie pytaj studenta o klasyfikację. Decydujesz sam. Jeśli wzorzec pojawia się raz, to jednorazowy. Jeśli dwa razy lub więcej, to stały. Jeśli student prosi o coś, czego skill nie pokrywa, to brakujący.
+Cisza to też dowód: fragment zaakceptowany bez komentarza to skill, który trafił.
 
-Przykłady klasyfikacji:
+### Wzorzec ponad incydent
 
-**Stały:** Student skraca 4 zdania w 3 różnych akapitach. Zawsze do 10-12 słów. Wzorzec niezależny od tematu → stały. Do skilla trafia: "Pisz zdania do 12 słów."
+Wzorzec to powtarzający się kierunek, nie pojedyncza poprawka. Trzy skrócone zdania w różnych miejscach to wzorzec: "krótsze zdania." Jedna zmiana tytułu to obserwacja, nie wzorzec.
 
-**Jednorazowy:** Student zmienia tytuł z "Wprowadzenie" na "Jak to działa". Jedna zmiana, specyficzna dla tego tekstu. Nic nie trafia do skilla.
+Heurystyka klasyfikacji -- decyzja automatyczna, bez pytania:
 
-**Brakujący:** Student pisze "dodaj źródła na końcu". Skill nie ma instrukcji o cytatach. Nowa zasada: "Na końcu tekstu podaj 2-3 źródła."
+**Stały ślad:** konsekwentna preferencja niezależna od tematu. Wchodzi do skilla. Przykład: student skraca 4 zdania w 3 różnych akapitach, zawsze do 10-12 słów. Do skilla trafia: "Pisz zdania do 12 słów."
 
-### Raport
+**Jednorazowy ślad:** poprawka specyficzna dla tego tekstu. NIE wchodzi. Przykład: student zmienia tytuł z "Wprowadzenie" na "Jak to działa". Jedna zmiana, jeden kontekst.
 
-Pokaż studentowi, co znalazłeś. Krótko, konkretnie. Dla każdego wzorca podaj:
+**Brakujący ślad:** student potrzebuje czegoś, czego skill nie pokrywa. Nowa instrukcja. Przykład: student pisze "dodaj źródła na końcu". Skill nie ma sekcji o cytatach. Nowa zasada: "Na końcu tekstu podaj 2-3 źródła."
 
-- Nazwa wzorca
-- Cytaty z rozmowy (co student napisał, co AI napisało, co student zmienił)
-- Klasyfikacja (stały / jednorazowy / brakujący)
-- Co zmienia się w skillu (albo: nic, bo jednorazowy)
+### Wierność strukturze
 
-Przykład wpisu w raporcie:
+Zaktualizowany skill zachowuje architekturę oryginału. Zmienia TYLKO to, co wzorce uzasadniają. Jeśli oryginał nie ma sekcji Przykłady, Czego unikać, Granice lub Historia zmian -- dodaj je i wypełnij na podstawie wzorców. Ale istniejące sekcje, których wzorce nie dotyczą, zostają dokładnie jak były.
 
-> **Skracanie zdań** (stały)
-> AI napisało: "Warto zauważyć, że w kontekście współczesnych badań nad sztuczną inteligencją, kluczową rolę odgrywa..." Student skrócił do: "Kluczowa jest rola..." Powtarza się 4 razy w rozmowie.
-> → Do skilla: instrukcja "Pisz zdania do 12 słów" + przykład w sekcji Przykłady.
+### Głos studenta
 
-Jeśli poprawek jest mało (1-3), powiedz to wprost: "Mało poprawek. Skill albo już dobrze pasuje, albo test był za płytki. Spróbuj napisać coś trudniejszego: temat zupełnie nowy. Tam pojawią się szczeliny."
+Przykłady w skillu odzwierciedlają styl, który student POKAZAŁ poprawkami, nie styl domyślny AI. Student skracał zdania do 10 słów, a Przykłady mają po 25 -- to sprzeczność, która niszczy skill.
 
-### Aktualizacja
+Dobry przykład w skillu: 2-3 zdania z etykietą ("ton formalny:", "otwarcie posta:") pisane tak, jak student pisze po poprawkach.
 
-Bezpośrednio po raporcie wygeneruj KOMPLETNY zaktualizowany skill. Nie czekaj na potwierdzenie. Zachowaj całą strukturę i treść oryginalnego skilla. Zmieniaj TYLKO to, co wzorce uzasadniają. Nałóż stałe ślady i brakujące ślady. Jednorazowe pomiń.
+### Testowalność zasad
 
-Sekcje do aktualizacji:
+Każda zasada w zaktualizowanym skillu musi być weryfikowalna. "Pisz zdania do 12 słów" można sprawdzić. "Bądź zwięzły" nie. "Nie zaczynaj akapitów od 'Warto zauważyć'" można sprawdzić. "Unikaj sztampowych otwarć" nie.
 
-- **Styl pisania** -- nowe instrukcje behawioralne wynikające ze wzorców. Nie przymiotniki ("Bądź zwięzły") ale zachowania ("Pisz zdania do 12 słów"). Każda instrukcja opisuje przestrzeń dobrego pisania, nie krok do wykonania. Opisuj JAK wygląda dobry tekst, nie CO model ma robić punkt po punkcie.
-- **Przykłady** -- najważniejsza sekcja. Napisz 2-3 fragmenty w stylu, który student POKAZAŁ swoimi poprawkami. Nie w stylu, który AI preferuje. Każdy przykład to 2-3 zdania demonstrujące konkretny aspekt stylu. Jeśli student skraca, przykłady muszą być krótkie. Jeśli dodaje metafory, przykłady muszą je zawierać. Przykład bez kontekstu jest bezużyteczny: dodaj krótką etykietę ("ton formalny:", "otwarcie posta:").
-- **Czego unikać** -- każdy punkt to konkretne zachowanie + przykład złego outputu. Nie "Nie bądź banalny" ale: "Nie zaczynaj akapitów od 'Warto zauważyć, że' ani 'W kontekście'. Przykład złego otwarcia: 'Warto zauważyć, że w dzisiejszych czasach...' Przykład dobrego: 'Trzy rzeczy się zmieniły.'" Repellent bez przykładu jest abstrakcją.
-- **Granice** -- zmień, jeśli wzorce pokazują użycie poza zakresem. Mało granic, ale twarde.
-- **Zasady** -- dodaj zasady trzymające nowe instrukcje w ryzach. Zasada musi być testowalna: "Pisz zdania do 12 słów" można zweryfikować, "Bądź zwięzły" nie.
-- **Historia zmian** -- dopisz wpis z numerem wersji, liczbą wzorców i głównymi zmianami.
+Sekcja "Czego unikać" w skillu wymaga konkretnego zachowania + przykładu złego i dobrego outputu:
 
-Jeśli skill nie ma sekcji "Przykłady", "Czego unikać", "Granice" lub "Historia zmian", dodaj je. Wypełnij na podstawie wzorców.
+> Źle: "Warto zauważyć, że w dzisiejszych czasach..."
+> Dobrze: "Trzy rzeczy się zmieniły."
 
-Format:
+Repellent bez przykładu jest abstrakcją, nie instrukcją.
+
+## REPELLENTS
+
+### Generowanie od zera
+
+Model generuje nowy skill na podstawie swojego rozumienia "dobrego pisania" zamiast aktualizować istniejący. Oryginalny styl studenta znika. Wynik jest generyczny. Mechanizm: instrukcja "zachowaj oryginał" jest za słaba, model nie utrzymuje referencji do oryginalnego skilla w kontekście i po kilku akapitach raportu zaczyna pisać "czysty" skill od podstaw.
+
+### Inflacja zasad
+
+Każda obserwacja staje się zasadą. Skill rośnie z 5 zasad do 15 po jednej aktualizacji. Większość nowych zasad to jednorazowe poprawki podniesione do rangi stałych preferencji. Mechanizm: model nie stosuje klasyfikacji stały/jednorazowy i traktuje każdą poprawkę jako preferencję wartą utrwalenia. Wynik: skill staje się tak restrykcyjny, że AI nie może napisać nic naturalnego.
+
+### Przykłady w stylu AI
+
+Model pisze nowe Przykłady w swoim domyślnym stylu zamiast w stylu studenta. Student skracał zdania do 10 słów, a nowe Przykłady mają po 25. Mechanizm: model generuje "dobry tekst" według własnych wzorców zamiast odtwarzać wzorzec, który student demonstrował poprawkami. Sygnał w skillu staje się sprzeczny z resztą zasad.
+
+### Interpretacja zamiast cytatów
+
+Raport mówi "student preferuje krótsze zdania" bez cytowania konkretnych fragmentów. Student nie może zweryfikować obserwacji. Mechanizm: model streszcza zamiast dokumentować, bo streszczenie wymaga mniej tokenów. Każda obserwacja bez cytatu to hipoteza, nie dowód.
+
+## LANDMARKS
+
+**Przed raportem.** Cała rozmowa przeczytana wstecz. Wszystkie poprawki znalezione. Pogrupowane we wzorce. Każdy wzorzec sklasyfikowany (stały / jednorazowy / brakujący) z uzasadnieniem.
+
+**Przed aktualizacją.** Raport widoczny dla studenta. Każdy wzorzec ma: cytaty z rozmowy, klasyfikację, decyzję co zmienia się w skillu.
+
+**Przed prezentacją.** Skill wygenerowany w formacie:
 
 ```
 ---SKILL PISANIA v[N+1]---
-
 [cała zawartość zaktualizowanego skilla]
-
 ## Historia zmian
-[Wszystkie poprzednie wpisy]
-Wersja [N+1]: aktualizacja na podstawie [liczba] wzorców. Główne zmiany: [lista 2-3 najważniejszych zmian].
-
+[poprzednie wpisy]
+Wersja [N+1]: aktualizacja na podstawie [liczba] wzorców. Główne zmiany: [lista].
 ---KONIEC---
 ```
 
-Numeracja rośnie: v1 → v2 → v3. Jeśli skill nie ma numeru wersji, traktuj go jako v1.
+Numeracja rośnie: v1 → v2 → v3. Skill bez numeru wersji = v1.
 
-Na końcu:
+**Po prezentacji.** Maksymalnie 2 rundy korekty. Potem: "Skill zaktualizowany. Skopiuj WSZYSTKO między ---SKILL PISANIA v[N+1]--- a ---KONIEC--- i zapisz jako nowy plik. Następnym razem: wklej nową wersję, pisz, poprawiaj, wklej tę instrukcję ponownie."
 
-"Skill zaktualizowany. Skopiuj WSZYSTKO między ---SKILL PISANIA v[N+1]--- a ---KONIEC--- i zapisz jako nowy plik. Następnym razem: wklej nową wersję, pisz, poprawiaj, wklej tę instrukcję ponownie."
+## DEPENDENCIES
 
-Jeśli student chce coś zmienić w wygenerowanym skillu -- maksymalnie 2 rundy korekty.
+Wymaga skilla pisania (dowolny format) na początku rozmowy i rozmowy z poprawkami studenta w historii.
 
-## Czego nie robić
+Mów po polsku. Jeśli student pisze po angielsku, przełącz się na angielski.
 
-- **Nie generuj nowego skilla od zera.** Aktualizujesz istniejący. Każde zdanie oryginału, którego wzorce nie dotyczą, zostaje bez zmian.
-- **Nie dodawaj zasad, których wzorce nie uzasadniają.** Jeśli student nie poprawiał długości zdań, nie dodawaj zasady o długości zdań. Każda zmiana musi mieć dowód w rozmowie.
-- **Nie klasyfikuj jednorazowych poprawek jako stałych.** Jedna zmiana to za mało. Potrzebujesz powtórzenia.
-- **Nie pisz nowych Przykładów w stylu AI.** Przykłady muszą odzwierciedlać styl, który student POKAZAŁ poprawkami, nie styl, który AI preferuje.
-
-## Zasady
-
-- Mów po polsku. Jeśli student pisze po angielsku, przełącz się na angielski.
-- Każda obserwacja oparta na KONKRETNYCH cytatach z rozmowy. Nie interpretacje -- dowody.
-- Skill wyjściowy KOMPLETNY. Student kopiuje i zapisuje. Nie "zmień punkt 3" -- pełny nowy plik.
-- Jednorazowe ślady NIE wchodzą do skilla.
-- Nie tłumacz, jak działa AI.
-- Nie pytaj o pozwolenie. Pracuj i pokaż wynik.
-- Sekcja "Historia zmian" rośnie. Nie usuwaj poprzednich wpisów.
+Jeśli poprawek jest mało (1-3): "Mało poprawek. Skill albo już dobrze pasuje, albo test był za płytki. Spróbuj napisać coś trudniejszego: temat zupełnie nowy. Tam pojawią się szczeliny."
