@@ -1007,6 +1007,47 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     display: none;
   }
 
+  /* ── S9 tint: muted magenta ── */
+  .s9 {
+    transition: opacity 0.4s ease;
+  }
+  p.s9, li.s9 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #ab6a8a 30%);
+  }
+  p.s9 strong, li.s9 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #ab6a8a 30%);
+  }
+  h3.s9 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #ab6a8a 25%);
+  }
+  h2.s9 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #ab6a8a 25%);
+  }
+  p.s9 em {
+    color: color-mix(in srgb, var(--text-dim) 70%, #ab6a8a 30%);
+  }
+  span.s9 {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #ab6a8a 30%);
+  }
+  span.s9 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #ab6a8a 30%);
+  }
+  div.s9 p, div.s9 li, div.s9 .cascade-desc, div.s9 .niche-card p {
+    color: color-mix(in srgb, var(--text-secondary) 70%, #ab6a8a 30%);
+  }
+  div.s9 strong {
+    color: color-mix(in srgb, var(--text-primary) 70%, #ab6a8a 30%);
+  }
+  div.s9 h3 {
+    color: color-mix(in srgb, var(--text-primary) 75%, #ab6a8a 25%);
+  }
+  figure.s9 figcaption {
+    color: color-mix(in srgb, var(--text-dim) 70%, #ab6a8a 30%);
+  }
+  .s9.hidden {
+    display: none;
+  }
+
   /* embedded S4 headings in non-emocje sections: hidden by JS but not violet */
   [data-session].hidden {
     display: none;
@@ -1085,6 +1126,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
           <label class="tm-check"><input type="checkbox" data-s="6" checked /><span>S06</span></label>
           <label class="tm-check"><input type="checkbox" data-s="7" checked /><span>S07</span></label>
           <label class="tm-check"><input type="checkbox" data-s="8" checked /><span>S08</span></label>
+          <label class="tm-check"><input type="checkbox" data-s="9" checked /><span>S09</span></label>
         </div>
       </div>
     </div>
@@ -1103,6 +1145,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <h3 id="sub-model">Model</h3>
     <p>Doświadczana "rzeczywistość" to model powstały w wyniku wielu lat treningu Twoich biologicznych sieci neuronowych. Doświadczasz modelu generowanego przez aktywność swoich sieci mózgowych. Treść doświadczenia to model. Uszkodzenie zakrętu wrzecionowatego wykasuje twarze z treści Twojego doświadczenia; uszkodzenie V5/MT sprawi, że odświeżanie rzeczywistości zwolni do kilku klatek na sekundę; uszkodzenie prawej kory ciemieniowej tymczasowo wymaże lewą stronę doświadczenia.</p>
     <p>"Ty" też jesteś modelem. Jesteś historią swoich wcześniejszych doświadczeń, opowieścią, jaką kultywujesz w swojej spójnej narracji tłumaczącej Twoje życie. Jak myślisz o sobie? Jak się zmieniasz? Czy masz jedno czy wiele żyć? Możliwe, że jesteś pomocną i życzliwą osobą, ale uszkodzenie mózgu może sprawić, że zmienisz się diametralnie, jak Phineas Gage. W innych przypadkach tożsamość może zniknąć całkiem: demencja uniemożliwia tworzenie spójnej narracji o sobie i zapamiętywanie swojej historii. <span class="s2" data-session="2">Ten model budujesz od momentu urodzenia (Piaget), wzorując się na afordancjach zapewnianych przez bliskich (Vygotsky).</span></p>
+    <p class="s9" data-session="9">Przypadek Gage'a pokazuje, że OFC nawiguje przez przestrzeń moralną: odróżnia konsekwencje społecznie akceptowalne od nieakceptowalnych, tak jak kora ciemieniowa nawiguje przez przestrzeń fizyczną. Pacjent Eliot (Damasio) utracił tę samą zdolność po uszkodzeniu OFC: potrafił analizować dylematy moralne, ale nie potrafił ich odczuwać jako istotne. Nawigacja moralna wymaga afektu.</p>
+    <p class="s9" data-session="9">Robert Sapolsky doprowadza tę logikę do końca. Każda decyzja jest produktem architektury neuronalnej. Tę architekturę ukształtowały geny, doświadczenia prenatalne, dzieciństwo, hormony, kontekst. "Ja" podejmujące decyzję jest obserwatorem, który dowiaduje się o decyzji po fakcie. Sapolsky argumentuje, że podejmujesz decyzje, ale to, kim jesteś w momencie decyzji, ukształtowały czynniki poza Twoją kontrolą. Libet pokazał, że aktywność neuronalna poprzedza świadomą decyzję. Sapolsky pyta: a co ukształtowało tę aktywność neuronalną? I co ukształtowało to, co ją ukształtowało? Regres nie ma punktu, w którym pojawia się niezdeterminowane "ja."</p>
     <p class="s5" data-session="5">W 1953 roku chirurg William Beecher Scoville usunął obustronne przyśrodkowe płaty skroniowe u pacjenta Henry'ego Molaisona (H.M.), próbując leczyć ciężką epilepsję. Operacja objęła hipokamp (strukturę głęboko w płacie skroniowym, kluczową dla pamięci), korę śródwęchową (bramę, przez którą informacje trafiają do hipokampa) i ciało migdałowate. Epilepsja ustąpiła, ale H.M. stracił zdolność tworzenia nowych wspomnień deklaratywnych. Mógł pamiętać dzieciństwo, ale nie potrafił zapamiętać osoby, którą poznał pięć minut temu. Jego model świata zamroził się w 1953 roku.</p>
     <p class="s5" data-session="5">Brenda Milner odkryła coś zaskakującego: H.M. uczył się rysowania w lustrze. Z każdą sesją był szybszy i dokładniejszy, choć za każdym razem twierdził, że nigdy tego nie robił. Pętla hipokamp-kora śródwęchowa (HPC-EC) buduje wspomnienia deklaratywne: każde jak kartka w kartotece, opatrzona datą i miejscem, do której możesz świadomie wrócić. Prążkowie buduje nawyki: ciało pamięta, choć "Ty" nie. H.M. stracił kartotekę, ale zachował ciało.</p>
 
@@ -1315,6 +1359,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="video-caption">Tomasello o shared intentionality, joint attention i tym, co odróżnia człowieka od szympansa.</p>
     </div>
 
+    <p class="s9" data-session="9">Greene i współpracownicy (2001, <em>Science</em>; 2004, <em>Neuron</em>) włożyli dylematy moralne do skanera fMRI. Dylemat wagonika (pociągnij za dźwignię, żeby uratować pięć osób kosztem jednej) aktywował głównie dlPFC i korę ciemieniową: kalkulacja utylitarna, sieć kontroli. Dylemat kładki (zepchnij człowieka z kładki, żeby zatrzymać wagonik) aktywował mPFC, ciało migdałowate i wyspę: emocjonalna reakcja na osobiste wyrządzenie krzywdy, Poziom 2 i 3. Ta sama konsekwencja (jedna osoba ginie, pięć zostaje uratowanych), ale dwa różne wzorce aktywacji. Różnica leży w dystansie: pociągnięcie dźwigni to interwencja mechaniczna, zepchnięcie to działanie na ciele drugiej osoby. Im bliżej ciała ofiary, tym silniejszy sygnał emocjonalny i tym trudniejsza decyzja utylitarna.</p>
+
     <hr class="section-divider" />
 
     <h3 id="sub-informacja">Informacja</h3>
@@ -1326,6 +1372,12 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     </ul>
 
     <p style="margin-top: 28px;">Przypomnij sobie artykuł "Predictions not commands" (Adams et al., 2013): sygnały zstępujące z kory ruchowej do rdzenia kręgowego mają cechy predykcji, nie rozkazów. Kora motoryczna nie wysyła instrukcji "skurcz mięsień X o Y procent." Wysyła przewidywanie: "spodziewam się takiego a takiego stanu proprioceptywnego." Rdzeń kręgowy minimalizuje błąd między oczekiwanym a aktualnym stanem ciała. Ruch wyłania się z tej minimalizacji. Innymi słowy: spodziewam się jakiejś konfiguracji ciała. A po chwili kolejnej. I kolejnej. Jak surfer na falach.</p>
+    <p class="s9" data-session="9">Skoro kora motoryczna wysyła predykcje, to skąd bierze się poczucie, że to "ja" decyduję o ruchu? Benjamin Libet (1983) zmierzył czas. Poprosił uczestników o spontaniczne zgięcie nadgarstka i odnotowanie momentu, w którym poczuli chęć ruchu (punkt W). Potencjał gotowości (readiness potential, RP) w EEG zaczynał narastać około 550 ms przed ruchem. Punkt W pojawiał się około 200 ms przed ruchem. Aktywność mózgu poprzedzała świadomą decyzję o ponad 300 ms. Libet interpretował to tak: procesy neuronalne przygotowujące ruch rozpoczynają się nieświadomie, a świadomość może co najwyżej zawetować ruch w ostatnich 200 ms.</p>
+    <p class="s9" data-session="9">Soon, Brass, Heinze i Haynes (2008, <em>Nature Neuroscience</em>) poszli dalej. Używając fMRI i dekodera wzorców aktywności, odczytali zamiar naciśnięcia lewego lub prawego przycisku z kory czołowo-biegunowej i zakrętu obręczy do 10 sekund przed tym, jak uczestnik poczuł, że podjął decyzję. Celność wynosiła około 60%, znacznie powyżej poziomu przypadku. Decyzja rozwijała się w sieci korowej na długo przed tym, nim świadomość otrzymała raport o niej.</p>
+    <p class="s9" data-session="9">Brass i Haggard (2008) zaproponowali, że działanie intencjonalne składa się z trzech odrębnych komponentów: <strong>what</strong> (treść działania: kora przedruchowa i jądra podstawy wybierają, który ruch wykonać), <strong>when</strong> (czas: pre-SMA i ACC decydują, kiedy go zainicjować) i <strong>whether</strong> (weto: ACC i grzbietowo-przyśrodkowa kora czołowa decydują, czy w ogóle działać). Trzy pytania, trzy obwody, jedno doświadczenie sprawczości.</p>
+    <p class="s9" data-session="9">Patrick Haggard (2008, <em>Nature Reviews Neuroscience</em>) postawił pytanie wprost: czym jest poczucie sprawczości? Nie chodzi o to, czy masz wolną wolę. Chodzi o to, skąd bierze się doświadczenie "to ja to zrobiłem." Haggard i współpracownicy odkryli w 2002 roku zjawisko <strong>wiązania intencjonalnego</strong> (intentional binding): gdy wykonujesz ruch dobrowolnie, postrzegasz interwał czasowy między ruchem a jego efektem (np. dźwiękiem) jako krótszy niż jest naprawdę. Mózg kompresuje czas między działaniem a skutkiem, jakby sklejał je w jedno zdarzenie. Efekt znika, gdy ruch jest wymuszony. Wiązanie intencjonalne to sensoryczny podpis sprawczości: Twój mózg predykuje konsekwencje własnego działania i kompresuje je z działaniem w spójną całość.</p>
+    <p class="s9" data-session="9">Desmurget i współpracownicy (2009, <em>Science</em>) znaleźli substrat neuronalny tej predykcji. Stymulowali elektrycznie mózgi pacjentów podczas operacji neurochirurgicznej w stanie czuwania. Stymulacja dolnej kory ciemieniowej wywoływała silną intencję i chęć poruszenia ręką, ramieniem lub stopą. Przy wyższych natężeniach pacjenci byli przekonani, że ruch wykonali, choć elektromiografia nie rejestrowała żadnej aktywności mięśniowej. Stymulacja kory przedruchowej wywoływała rzeczywisty ruch, ale pacjenci stanowczo zaprzeczali, że się ruszyli. Podwójna dysocjacja: kora ciemieniowa generuje doświadczenie intencji bez ruchu, kora przedruchowa generuje ruch bez doświadczenia intencji.</p>
+    <p class="s9" data-session="9">Mechanizm łączący intencję z poczuciem sprawczości to <strong>kopia eferentna</strong> (efference copy): kora motoryczna wysyła predykcję zarówno do rdzenia kręgowego, jak i do kory sensorycznej. "Spodziewam się takiego sygnału somatosensorycznego, bo właśnie inicjuję taki ruch." Gdy sygnał zwrotny z ciała zgadza się z predykcją, doświadczasz sprawczości: to ja to zrobiłem. W schizofrenii ten mechanizm jest zaburzony. Ford i współpracownicy wykazali, że normalne tłumienie odpowiedzi kory słuchowej podczas mowy (mózg wie, że to on mówi) jest osłabione u pacjentów ze schizofrenią. Własna mowa wewnętrzna trafia do świadomości jako obca. Kopia eferentna nie dociera lub jest nieprecyzyjna. Efekt: głosy, które słyszysz, nie są oznaczone jako "moje." Halucynacje słuchowe to awaria systemu sprawczości, nie wytwarzania mowy.</p>
 
     <p class="s8" data-session="8">Kora ruchowa nie jest jedyną korą, która wysyła predykcje. Cała kora czołowa działa na tej samej zasadzie, tyle że w różnych przestrzeniach. Zakręt przedśrodkowy (kora pierwszorzędowa ruchowa) porusza ciałem przez przestrzeń fizyczną: predykcje proprioceptywne. IFG (obszar Broki) porusza się przez przestrzeń gramatyczną: predykcje składniowe. MTG hamuje konkurencyjne trajektorie w przestrzeni semantycznej. OFC i biegun skroniowy (TP) nawigują przez przestrzeń pojęciową: co jest warte powiedzenia, zrobienia, pomyślenia. Ruch to ruch. Zmienia się przestrzeń, w której się poruszasz.</p>
 
@@ -1442,6 +1494,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     </div>
 
     <p>Afordancje są więc możliwościami do działania. Są elementami modelu rzeczywistości, z którymi model "Ciebie" może wejść w interakcję. Poruszasz ciałem implementując predykcje top-down z kory motorycznej (Adams et al., 2013). Model w korze motorycznej powstał w wyniku lat treningu stadium sensoryczno-motorycznego. Trening ruchowy i używania narzędzi ukształtował strukturę sieci neuronowych za pośrednictwem błędów predykcyjnych bottom-up, która zwrotnie zapewnia sygnał top-down generując kolejne predykcje ruchu. Predykcje i błędy predykcyjne są w ciągłej interakcji, znane afordancje są przewidywane, nowe afordancje są odkrywane i dodawane do modelu. <span class="s2" data-session="2">Poruszanie ciałem jest warunkiem poznania. Mózg, ciało i działanie to trzy perspektywy na ten sam proces.</span></p>
+    <p class="s9" data-session="9">Zespół Tourette'a rzuca światło na komponent <em>whether</em> z modelu Brassa i Haggarda. Tiki motoryczne i wokalne to ruchy, które system inicjuje (what i when działają), ale których mechanizm weta nie zatrzymuje. Pacjenci z Tourette'em często opisują narastające napięcie (premonitory urge) przed tikiem, które ustępuje dopiero po jego wykonaniu. Kontrola jest obecna, tyle że przegrywa. Predykcja sensoryczna okazuje się silniejsza niż weto. Komponent whether próbuje zatrzymać ruch i ustępuje sile predykcji domagającej się spełnienia.</p>
     <p class="s2" data-session="2">Alison Gopnik proponuje, że dzieci to zoptymalizowane maszyny do eksploracji: testują więcej afordancji, napotykają więcej błędów predykcyjnych, próbują więcej wariantów. Dorośli eksploatują wyuczone modele podążając utartymi ścieżkami znanych afordancji.</p>
     <p class="s5" data-session="5">Nie wszyscy eksplorują tak samo, bo nie wszyscy wyobrażają sobie tak samo. Afantazja to brak mentalnych obrazów: takie osoby nie "widzą" jabłka, gdy zamkną oczy, ale operują na abstrakcyjnych propozycjach. Hiperfantazja to drugi koniec spektrum: obrazy tak żywe, że bywają mylone z percepcją. Synestezja to jeszcze inny wariant: dźwięk ma kolor, litera ma smak, bo sieci sensoryczne są skrzyżowane w sposób nietypowy. Każdy wariant zmienia krajobraz afordancji. Synestetyk widzi możliwości tam, gdzie inni nie widzą nic; afantastyk buduje modele inaczej, ale niekoniecznie gorzej. Solomon Shereshevsky, badany przez Łuriję przez trzydzieści lat, pamiętał wszystko dzięki synestezji: każda cyfra miała kształt, kolor, smak. Koszt był poważny: nadmiar szczegółów uniemożliwiał abstrahowanie i rozumienie metafor. Doskonała pamięć nie oznacza lepszego modelu.</p>
     <p class="s7" data-session="7">Autyzm zmienia krajobraz afordancji jeszcze inaczej, i predictive coding wyjaśnia jak. Pellicano i Burr (2012) proponują, że mózg autystyczny przypisuje wyższą precyzję (wagę) błędom predykcyjnym bottom-up, a niższą predykcjom top-down. Każdy sygnał sensoryczny dociera z pełną mocą, bo priory go nie tłumią. Świat jest intensywniejszy, bardziej szczegółowy, ale trudniejszy do kompresji w schematy. Hałas w stołówce to nie tło. To bombardowanie. Ale ten sam mechanizm daje zdolność do dostrzegania wzorców, które neurotypowy mózg wygładza. Powtarzalne zachowania (stimming) nabierają sensu jako aktywne generowanie przewidywalnych sygnałów sensorycznych: organizm sam sobie dostarcza predykcje, które może spełnić, redukując obciążenie allostatyczne w środowisku pełnym nieoczekiwanych bodźców.</p>
@@ -1658,6 +1711,9 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s2" data-session="2"><strong>Sieć emocji społecznych</strong> (ciało migdałowate, wyspa, ACC): rozpoznawanie emocji, monitorowanie konfliktu między własnym a cudzym punktem widzenia.</p>
     <p class="s2" data-session="2">Te cztery nachodzą na siebie. IFG pojawia się zarówno w neuronach lustrzanych, jak i w sieci ToM. Wyspa jest w emocjach społecznych i w sieci salience. Cztery perspektywy na wspólne obwody.</p>
 
+    <p class="s9" data-session="9">Empatia składa się z dwóch odrębnych procesów. Blair (2008) dokonał precyzyjnego cięcia: <strong>empatia poznawcza</strong> to zdolność do modelowania stanów mentalnych drugiej osoby (co ona myśli, czuje, zamierza). To terytorium DMN.ToM. <strong>Empatia afektywna</strong> to rezonans z emocją drugiej osoby: widzisz ból i czujesz ból. To terytorium wyspy i ciała migdałowatego.</p>
+    <p class="s9" data-session="9">Podwójna dysocjacja czyni to cięcie empirycznym. Osoby z autyzmem mają trudności z empatią poznawczą (modelowanie cudzych stanów mentalnych, teoria umysłu), ale zachowują empatię afektywną: widzą cierpienie i reagują. Osoby z psychopatią mają sprawną empatię poznawczą (rozumieją, co czujesz, potrafią to przewidzieć i wykorzystać), ale deficyt empatii afektywnej: rozumienie nie uruchamia rezonansu. Dwa systemy, dwa wzorce uszkodzeń, dwa profile kliniczne. To klasyczna podwójna dysocjacja: ten sam argument logiczny, który w afazjach oddziela składnię od semantyki, tu oddziela poznawczą od afektywnej empatii.</p>
+
     <!-- ==================== TEORIA UMYSŁU ==================== -->
     <hr class="section-divider s2" data-session="2" />
     <h3 class="s2" data-session="2">Teoria umysłu</h3>
@@ -1737,6 +1793,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         <li class="s8" data-session="8"><span class="question-num">08</span>Quiroga et al. znaleźli neuron, który reagował na Jennifer Aniston niezależnie od zdjęcia, kąta widzenia i nawet samego imienia. Mackay et al. (2024) dodali komórki lokalizacyjne kodujące GDZIE spotkałeś dane pojęcie. Jednocześnie McClelland et al. opisali komplementarne systemy uczenia: hipokamp zapisuje egzemplarze szybko (one-shot), kora nowa buduje prototypy powoli. Wyobraź sobie, że poznajesz nową osobę na konferencji. Opisz, co dzieje się z Twoimi komórkami pojęciowymi, lokalizacyjnymi i obydwoma systemami uczenia w ciągu następnych dwóch tygodni, włączając rolę snu.</li>
         <li class="s8" data-session="8"><span class="question-num">09</span>Bellmund et al. twierdzą, że myślenie to nawigacja po przestrzeniach pojęciowych. Friston formalizuje to jako minimalizację energii swobodnej. Gärdenfors opisuje pojęcia jako regiony w wielowymiarowych przestrzeniach. Piaget opisał asymilację i akomodację. Teraz połącz wszystko: student uczy się nowego przedmiotu. Na początku nic nie rozumie. Po miesiącu "klika." Po roku naucza innych. Opisz tę trajektorię jako nawigację po rozmaitościach pojęciowych, używając pojęć: manifold, energia swobodna, asymilacja, akomodacja, LTP, konsolidacja.</li>
         <li class="s8" data-session="8"><span class="question-num">10</span>Osoba dwujęzyczna przełącza się między polskim a angielskim. W każdym języku opisuje te same emocje inaczej. W polskim ma słowo "tęsknota" bez dobrego angielskiego odpowiednika. W angielskim ma "overwhelmed" bez dobrego polskiego odpowiednika. Hipoteza Sapira-Whorfa mówi, że język wpływa na percepcję. Barrett mówi, że słownictwo emocjonalne determinuje granularność doświadczenia. Kora czołowa nawiguje po przestrzeniach pojęciowych. IFG montuje składnię, OFC+TP nawigują przez pojęcia. Co dzieje się w mózgu tej osoby, gdy przełącza język? Czy zmienia się przestrzeń pojęciowa, czy tylko etykiety? Uzasadnij mechanistycznie.</li>
+        <li class="s9" data-session="9"><span class="question-num">11</span>Libet zmierzył, że potencjał gotowości zaczyna narastać 550 ms przed ruchem, a świadoma decyzja pojawia się 200 ms przed ruchem. Soon et al. dekodowali zamiar 10 sekund wcześniej. Desmurget stymulował korę ciemieniową i pacjenci czuli, że się ruszyli, choć się nie ruszyli. Stymulował korę przedruchową i pacjenci się ruszyli, ale zaprzeczali. Brass i Haggard rozłożyli działanie na what, when, whether. Haggard pokazał, że mózg kompresuje czas między działaniem a skutkiem (intentional binding). Połącz to wszystko w jedno spójne wyjaśnienie: czym jest poczucie sprawczości i dlaczego pytanie "czy mam wolną wolę?" może być źle postawione?</li>
+        <li class="s9" data-session="9"><span class="question-num">12</span>Empatia poznawcza (modelowanie cudzych stanów) i empatia afektywna (rezonans z cudzą emocją) to dwa oddzielne procesy z osobnymi substratami. Autyzm upośledza empatię poznawczą przy zachowanej afektywnej, psychopatia odwrotnie. To podwójna dysocjacja. Greene pokazał, że dylematy moralne osobiste aktywują emocje (mPFC, wyspa, ciało migdałowate), a nieosobiste angażują kalkulację (dlPFC). Połącz: jak osoba z autyzmem i osoba z psychopatią rozwiązałyby dylemat kładki? Które systemy pracowałyby inaczej i dlaczego?</li>
       </ol>
     </div>
 
