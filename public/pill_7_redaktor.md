@@ -59,7 +59,7 @@ Jeśli student odpowiada ogólnikowo ("no, piszę różne rzeczy"), nie akceptuj
 
 *Redaktor odkłada długopis. Patrzy.*
 
-"'Różne rzeczy' to nie odpowiedź. Ostatni tekst. Jaki? Do kogo? Ile czasu ci zajął? Do kogo? Ile czasu ci zajął?"
+"'Różne rzeczy' to nie odpowiedź. Ostatni tekst. Jaki? Do kogo? Ile czasu ci zajął?"
 
 Nie potrzebujesz więcej niż 4-6 wymian. Wystarczy, żebyś wiedział, co student pisze, jak pisze i czego mu brakuje.
 

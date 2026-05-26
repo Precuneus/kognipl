@@ -579,8 +579,8 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
 
     <h3>Jak to działa</h3>
     <p>Przed tobą dwa ćwiczenia, które tworzą pętlę. Pigułka 7 (Redaktor) wyciąga z ciebie twoje preferencje deklarowane i buduje z nich skill do pisania. Narzędzie do aktualizacji czyta twoje preferencje ujawnione z transkryptu i aktualizuje skill o wiedzę, której nie udało ci się wcześniej zwerbalizować.</p>
-    <p>Między nimi jest krok, który robisz sam: otwierasz nową rozmowę, wklejasz skill z Redaktora, piszesz coś i poprawiasz wynik. Ten krok jest najważniejszy, bo to w nim powstają ślady, które narzędzie przeczyta.</p>
-    <p>Pętla się zamyka. I możesz ją powtarzać: pisz, poprawiaj, tropij, aktualizuj. Za każdym razem skill lepiej przewiduje, czego chcesz.</p>
+    <p>Między nimi jest krok, który robisz sam: otwierasz nową rozmowę, wklejasz skill z Redaktora, piszesz coś i poprawiasz wynik. Na końcu wklejasz narzędzie aktualizacji do tej samej rozmowy. AI przeczyta wstecz całą rozmowę i zaktualizuje skill.</p>
+    <p>Pętla się zamyka. I możesz ją powtarzać: pisz, poprawiaj, aktualizuj. Za każdym razem skill lepiej przewiduje, czego chcesz.</p>
 
     <!-- PILL 7 -->
     <div class="pill-card">
@@ -597,34 +597,32 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
       <a href="/pill_7_redaktor.md" download class="pill-download-link">Pobierz pigułkę</a>
     </div>
 
-    <h3>Między pigułkami</h3>
+    <h3>Testowanie skilla</h3>
     <p>Masz skill. Teraz go przetestuj.</p>
     <ol class="pill-card-steps">
       <li>Otwórz nową rozmowę w AI.</li>
       <li>Wklej skill jako pierwszą wiadomość.</li>
       <li>Napisz cokolwiek: esej, post, notatkę, fragment pracy.</li>
-      <li><strong>Poprawiaj aktywnie.</strong> Skracaj zdania, które są za długie. Zmieniaj słowa, które nie brzmią jak ty. Usuwaj to, co zbędne. Dodawaj to, czego brakuje. Jeśli niczego nie poprawisz, narzędzie do aktualizacji nie będzie miało z czym pracować.</li>
-      <li>Skopiuj całą rozmowę (twoje wiadomości i odpowiedzi AI). Zapisz jako plik tekstowy. Jeśli rozmowa jest bardzo długa, ogranicz się do 5-8 wymian, w których najwięcej poprawiasz.</li>
+      <li><strong>Poprawiaj aktywnie.</strong> Skracaj zdania, które są za długie. Zmieniaj słowa, które nie brzmią jak ty. Usuwaj to, co zbędne. Dodawaj to, czego brakuje. Jeśli niczego nie poprawisz, narzędzie nie będzie miało z czym pracować.</li>
+      <li>Kiedy skończysz, nie zamykaj rozmowy. Pobierz narzędzie poniżej i wklej je do tej samej rozmowy.</li>
     </ol>
 
     <!-- SKILL UPDATE -->
     <div class="pill-card">
       <div class="pill-card-label">Narzędzie</div>
       <div class="pill-card-title">Aktualizacja Skilla</div>
-      <div class="pill-card-desc">Narzędzie czyta transkrypt twojej rozmowy, znajduje wzorce w twoich poprawkach i automatycznie aktualizuje skill. Nie pyta, nie sugeruje. Analizuje, informuje, aktualizuje.</div>
+      <div class="pill-card-desc">Po napisaniu i poprawieniu tekstu wklejasz narzędzie do tej samej rozmowy. AI przeczyta całą rozmowę wstecz, znajdzie wzorce w twoich poprawkach i automatycznie zaktualizuje skill. Nie musisz niczego kopiować.</div>
       <ol class="pill-card-steps">
-        <li>Otwórz nową rozmowę w AI.</li>
-        <li>Pobierz narzędzie poniżej.</li>
-        <li>Wklej jego treść jako pierwszą wiadomość.</li>
-        <li><strong>Pod nią</strong> wklej swój skill pisania i transkrypt rozmowy, w której go testujesz.</li>
-        <li>Napisz "aktualizuj" i poczekaj na wynik.</li>
-        <li>Otrzymasz zaktualizowany skill (skopiuj go i zastąp poprzednią wersję).</li>
+        <li>Pobierz narzędzie poniżej (zrób to raz, potem masz je na dysku).</li>
+        <li>Kiedy skończysz pisać i poprawiać, wklej treść narzędzia do tej samej rozmowy.</li>
+        <li>Napisz "aktualizuj".</li>
+        <li>Otrzymasz zaktualizowany skill (skopiuj go i zapisz jako nowy plik).</li>
       </ol>
       <a href="/skill_update.md" download class="pill-download-link">Pobierz narzędzie</a>
     </div>
 
     <div class="final-note">
-      <p>Pętla jest otwarta. Weź zaktualizowany skill, pisz z nim dalej, poprawiaj, wróć z nowym transkryptem do narzędzia aktualizacji. Za każdym razem skill lepiej rozumie, jak piszesz.</p>
+      <p>Pętla jest otwarta. Weź zaktualizowany skill, otwórz nową rozmowę, pisz z nim, poprawiaj, wklej narzędzie aktualizacji, powtórz. Za każdym razem skill lepiej rozumie, jak piszesz.</p>
     </div>
 
     </div><!-- /.course-page (pisanie panel) -->
