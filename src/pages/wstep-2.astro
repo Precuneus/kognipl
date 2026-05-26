@@ -1747,7 +1747,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <ol class="question-list">
         <li class="s1" data-session="1"><span class="question-num">01</span>Czym różni się joint attention od shared intentionality? Dwoje szympansów i człowiek wspólnie wyciągają jedzenie ze skrzynki za pomocą liny - każdy musi pociągnąć swój koniec jednocześnie. Który podpoziom osiągają szympansy? Co by musiało się zmienić, żeby to był podpoziom B?</li>
         <li class="s1" data-session="1"><span class="question-num">02</span>Samochód przed Tobą nagle hamuje. Opisz tę sytuację jako błąd predykcyjny. Która sieć (01-05) pierwsza go wykrywa? Jak daleko w górę kaskady wspina się ten błąd, jeśli to zwykłe hamowanie vs. jeśli samochód uderza w barierę?</li>
-        <li class="s1" data-session="1"><span class="question-num">03</span>Garin pokazał, że pętla mPFC-PCC jest słaba u naczelnych niehominidowych. Gdyby ta pętla była silna u szympansów - co konkretnie powinniśmy zaobserwować w ich zachowaniu społecznym, czego teraz nie obserwujemy?</li>
+        <li class="s1" data-session="1"><span class="question-num">03</span>Garin pokazał, że pętla mPFC-PCC jest słaba u naczelnych niehominidowych. Gdyby ta pętla była silna u szympansów - co konkretnie powinniśmy zaobserwować w ich zachowaniu społecznym, czego teraz nie obserwujemy? Dlaczego?</li>
         <li class="s1" data-session="1"><span class="question-num">04</span>Tworzysz nowy język migowy z przyjacielem na własny użytek. Opisz, jak zmienia się twoja nisza neuronalna, poznawcza i ekologiczna w trakcie tego procesu.</li>
         <li class="s1" data-session="1"><span class="question-num">05</span>Makak bierze grabki po raz pierwszy. Jego kora ciemieniowa musi przewidywać trzy razy większą przestrzeń. Opisz tę sytuację jako trening sieci: które sieci (01-05) generują błędy predykcyjne? Jak zmienia się nisza neuronalna po tygodniach ćwiczeń?</li>
         <li class="s2" data-session="2"><span class="question-num">06</span>Osoba dorastająca w kulturze, gdzie duchy przodków są realnie obecni w codziennym życiu, podejmuje decyzje uwzględniając ich "opinie." Opisz to zachowanie przez pryzmat teorii umysłu i afordancji.</li>
@@ -1932,7 +1932,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item s8" data-session="8">Friston, K. (2010). The free-energy principle: a unified brain theory? <em>Nature Reviews Neuroscience, 11</em>(2), 127-138. <a href="https://doi.org/10.1038/nrn2787" target="_blank">doi:10.1038/nrn2787</a></p>
     </div>
 
-    <div style="background: var(--warm-glow-soft); border: 1px solid var(--border-warm); padding: 20px 24px; margin-top: 48px; border-radius: 8px;">
+    <div class="kolokwium-box" style="background: var(--warm-glow-soft); border: 1px solid var(--border-warm); padding: 20px 24px; margin-top: 48px; border-radius: 8px;">
       <h2 style="margin-top: 0; font-size: 18px;">Kolokwium końcowe</h2>
       <p>Kolokwium końcowe obejmuje cały materiał. Będzie więcej pytań i więcej czasu na napisanie niż na kolokwiach cząstkowych.</p>
       <p><strong>Format:</strong></p>
@@ -2062,6 +2062,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         if (el.closest('[data-session]')) return false;
         if (el.closest('.time-machine')) return false;
         if (el.closest('.questions-section')) return false;
+        if (el.closest('.kolokwium-box')) return false;
         if (el.classList.contains('meta')) return false;
         return true;
       });
