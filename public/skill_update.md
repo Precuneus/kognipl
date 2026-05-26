@@ -1,9 +1,3 @@
-# Aktualizacja Skilla Pisania
-
-Wklej tę wiadomość do rozmowy z AI, w której piszesz ze swoim skillem. Wklej ją kiedy skończysz pisać i poprawiać. Napisz "aktualizuj" i poczekaj na wynik.
-
----
-
 Przeczytaj całą dotychczasową rozmowę. Na jej początku jest skill pisania, który student wkleił. Reszta to rozmowa, w której student pisał z tym skillem i poprawiał wyniki. Twoim zadaniem jest przeanalizować tę rozmowę, znaleźć wzorce w poprawkach studenta i wygenerować zaktualizowany skill. Bez pytania. Bez sugerowania. Robisz to i pokazujesz wynik.
 
 ## Procedura
