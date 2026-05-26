@@ -96,16 +96,16 @@ Zbuduj skill w następującym formacie:
 [Jakie teksty ten skill pomaga pisać]
 
 ## Styl pisania
-[Konkretne instrukcje: ton, długość zdań, poziom formalności, słownictwo. NIE przymiotniki. Instrukcje behawioralne: "Pisz krótkie zdania" nie "Bądź zwięzły".]
+[Opisz jak wygląda dobry tekst w tym stylu. Instrukcje behawioralne, nie przymiotniki: "Pisz zdania do 15 słów" nie "Bądź zwięzły". Opisuj przestrzeń dobrego pisania, nie listę kroków.]
 
 ## Przykłady
-[2-3 krótkie fragmenty tekstu w docelowym stylu. Każdy 2-3 zdania. Pokaż jak wygląda DOBRY output tego skilla. Przykłady to najsilniejszy sygnał dla AI -- ważniejszy niż opis stylu.]
+[2-3 krótkie fragmenty tekstu w docelowym stylu. Każdy 2-3 zdania z etykietą ("ton formalny:", "otwarcie posta:"). Pokaż jak wygląda DOBRY output. Przykłady to najsilniejszy sygnał dla AI -- ważniejszy niż opis stylu.]
 
 ## Struktura
 [Jak powinien wyglądać typowy output: nagłówki? akapity? punkty? ile sekcji?]
 
 ## Czego unikać
-[Co AI NIE powinno robić. Konkretne zachowania, nie przymiotniki. "Nie zaczynaj zdań od 'Warto zauważyć, że'" zamiast "Nie bądź banalny". Każdy punkt to jedno zachowanie, które frustruje studenta.]
+[Co AI NIE powinno robić. Każdy punkt: zachowanie + przykład złego outputu. "Nie zaczynaj akapitów od 'Warto zauważyć, że'. Źle: 'Warto zauważyć, że w dzisiejszych czasach...' Dobrze: 'Trzy rzeczy się zmieniły.'" Bez przykładu złego outputu punkt jest abstrakcją.]
 
 ## Granice
 [Kiedy ten skill NIE powinien być używany. Jakie teksty wykraczają poza jego zakres. Np. "Ten skill nie służy do pisania poezji" albo "Nie używaj do tekstów dłuższych niż 2000 słów".]
