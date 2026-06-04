@@ -427,6 +427,30 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     font-style: italic;
   }
 
+  /* -- Debate grid (representationalism vs direct perception) -- */
+  .debate-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0 28px;
+  }
+  @media (max-width: 640px) { .debate-grid { grid-template-columns: 1fr; } }
+  .debate-side {
+    border: 1px solid var(--border-subtle);
+    border-top: 2px solid var(--warm-glow);
+    background: var(--bg-card);
+    padding: 16px 18px;
+  }
+  .debate-author {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.3px;
+    margin-bottom: 8px;
+  }
+  .debate-side p { margin: 0; font-size: 14px; }
+
   /* ── Table ── */
   .course-page table {
     width: 100%;
@@ -731,6 +755,73 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   .tm-check input[type="checkbox"]:checked + span {
     color: var(--warm-glow);
     font-weight: 600;
+  }
+  /* -- Master toggle (all on/off), sits before S01 -- */
+  .tm-all {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    flex: 0 0 auto;
+    padding: 4px 0;
+  }
+  .tm-all input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--text-dim);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .tm-all input[type="checkbox"]:checked {
+    background: var(--text-secondary);
+    border-color: var(--text-secondary);
+  }
+  .tm-all input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 9px;
+    border: solid var(--bg-card);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .tm-all input[type="checkbox"]:indeterminate {
+    background: var(--border-subtle);
+    border-color: var(--text-dim);
+  }
+  .tm-all input[type="checkbox"]:indeterminate::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 7px;
+    width: 10px;
+    height: 0;
+    border-top: 2px solid var(--bg-card);
+  }
+  .tm-all span {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.01em;
+  }
+  .tm-divider {
+    width: 1px;
+    align-self: stretch;
+    background: var(--border-subtle);
+    margin: 2px 4px;
+    flex: 0 0 auto;
   }
   @media (max-width: 560px) {
     .time-machine-inner {
@@ -1048,6 +1139,30 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     display: none;
   }
 
+  /* -- S10 tint: teal (psychodeliki) -- */
+  .s10 { transition: opacity 0.4s ease; }
+  p.s10, li.s10 { color: color-mix(in srgb, var(--text-secondary) 70%, #4a9d9d 30%); }
+  p.s10 strong, li.s10 strong { color: color-mix(in srgb, var(--text-primary) 70%, #4a9d9d 30%); }
+  h2.s10, h3.s10 { color: color-mix(in srgb, var(--text-primary) 75%, #4a9d9d 25%); }
+  p.s10 em { color: color-mix(in srgb, var(--text-dim) 70%, #4a9d9d 30%); }
+  span.s10 { color: color-mix(in srgb, var(--text-secondary) 70%, #4a9d9d 30%); }
+  span.s10 strong { color: color-mix(in srgb, var(--text-primary) 70%, #4a9d9d 30%); }
+  figure.s10 figcaption { color: color-mix(in srgb, var(--text-dim) 70%, #4a9d9d 30%); }
+  .s10.hidden { display: none; }
+
+  /* -- S11 tint: indigo (reprezentacjonizm) -- */
+  .s11 { transition: opacity 0.4s ease; }
+  p.s11, li.s11 { color: color-mix(in srgb, var(--text-secondary) 70%, #7a6bbf 30%); }
+  p.s11 strong, li.s11 strong { color: color-mix(in srgb, var(--text-primary) 70%, #7a6bbf 30%); }
+  h2.s11, h3.s11 { color: color-mix(in srgb, var(--text-primary) 75%, #7a6bbf 25%); }
+  p.s11 em, span.s11 em { color: color-mix(in srgb, var(--text-dim) 70%, #7a6bbf 30%); }
+  span.s11 { color: color-mix(in srgb, var(--text-secondary) 70%, #7a6bbf 30%); }
+  span.s11 strong { color: color-mix(in srgb, var(--text-primary) 70%, #7a6bbf 30%); }
+  div.s11 p, div.s11 .debate-side p { color: color-mix(in srgb, var(--text-secondary) 70%, #7a6bbf 30%); }
+  div.s11 strong { color: color-mix(in srgb, var(--text-primary) 70%, #7a6bbf 30%); }
+  figure.s11 figcaption { color: color-mix(in srgb, var(--text-dim) 70%, #7a6bbf 30%); }
+  .s11.hidden { display: none; }
+
   /* embedded S4 headings in non-emocje sections: hidden by JS but not violet */
   [data-session].hidden {
     display: none;
@@ -1097,6 +1212,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <a href="#sub-afordancje" data-nav="sub-afordancje" class="nav-sub">Afordancje</a>
       <a href="#sub-pojecia" data-nav="sub-pojecia" data-session="8" class="nav-sub">Pojęcia</a>
       <a href="#sub-pamiec" data-nav="sub-pamiec" data-session="5" class="nav-sub">Pamięć</a>
+      <a href="#sec-percepcja" data-nav="sec-percepcja" data-session="11">Reprezentacjonizm</a>
       <a href="#sec-emocje" data-nav="sec-emocje" data-session="4">Emocje</a>
       <a href="#sec-spor" data-nav="sec-spor" data-session="2">Ciągłość czy przepaść?</a>
       <a href="#sec-dmn" data-nav="sec-dmn">Mózg społeczny</a>
@@ -1118,6 +1234,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <div class="time-machine">
       <div class="time-machine-inner">
         <div class="tm-checks">
+          <label class="tm-all"><input type="checkbox" id="tm-all-toggle" checked /><span>Wsz.</span></label>
+          <span class="tm-divider" aria-hidden="true"></span>
           <label class="tm-check"><input type="checkbox" data-s="1" checked /><span>S01</span></label>
           <label class="tm-check"><input type="checkbox" data-s="2" checked /><span>S02</span></label>
           <label class="tm-check"><input type="checkbox" data-s="3" checked /><span>S03</span></label>
@@ -1127,6 +1245,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
           <label class="tm-check"><input type="checkbox" data-s="7" checked /><span>S07</span></label>
           <label class="tm-check"><input type="checkbox" data-s="8" checked /><span>S08</span></label>
           <label class="tm-check"><input type="checkbox" data-s="9" checked /><span>S09</span></label>
+          <label class="tm-check"><input type="checkbox" data-s="10" checked /><span>S10</span></label>
+          <label class="tm-check"><input type="checkbox" data-s="11" checked /><span>S11</span></label>
         </div>
       </div>
     </div>
@@ -1144,6 +1264,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <h3 id="sub-model">Model</h3>
     <p>Doświadczana "rzeczywistość" to model powstały w wyniku wielu lat treningu Twoich biologicznych sieci neuronowych. Doświadczasz modelu generowanego przez aktywność swoich sieci mózgowych. Treść doświadczenia to model. Uszkodzenie zakrętu wrzecionowatego wykasuje twarze z treści Twojego doświadczenia; uszkodzenie V5/MT sprawi, że odświeżanie rzeczywistości zwolni do kilku klatek na sekundę; uszkodzenie prawej kory ciemieniowej tymczasowo wymaże lewą stronę doświadczenia.</p>
+    <p class="s11" data-session="11">To słowo, <em>model</em>, kryje spór, do którego wrócimy: czy doświadczasz świata, czy tylko własnej rekonstrukcji świata? Trzymaj to pytanie z tyłu głowy.</p>
     <p>"Ty" też jesteś modelem. Jesteś historią swoich wcześniejszych doświadczeń, opowieścią, jaką kultywujesz w swojej spójnej narracji tłumaczącej Twoje życie. Jak myślisz o sobie? Jak się zmieniasz? Czy masz jedno czy wiele żyć? Możliwe, że jesteś pomocną i życzliwą osobą, ale uszkodzenie mózgu może sprawić, że zmienisz się diametralnie, jak Phineas Gage. W innych przypadkach tożsamość może zniknąć całkiem: demencja uniemożliwia tworzenie spójnej narracji o sobie i zapamiętywanie swojej historii. <span class="s2" data-session="2">Ten model budujesz od momentu urodzenia (Piaget), wzorując się na afordancjach zapewnianych przez bliskich (Vygotsky).</span></p>
     <p class="s9" data-session="9">Przypadek Gage'a pokazuje, że OFC nawiguje przez przestrzeń moralną: odróżnia konsekwencje społecznie akceptowalne od nieakceptowalnych, tak jak kora ciemieniowa nawiguje przez przestrzeń fizyczną. Pacjent Eliot (Damasio) utracił tę samą zdolność po uszkodzeniu OFC: potrafił analizować dylematy moralne, ale nie potrafił ich odczuwać jako istotne. Nawigacja moralna wymaga afektu.</p>
     <p class="s9" data-session="9">Robert Sapolsky doprowadza tę logikę do końca. Każda decyzja jest produktem architektury neuronalnej. Tę architekturę ukształtowały geny, doświadczenia prenatalne, dzieciństwo, hormony, kontekst. "Ja" podejmujące decyzję jest obserwatorem, który dowiaduje się o decyzji po fakcie. Sapolsky argumentuje, że podejmujesz decyzje, ale to, kim jesteś w momencie decyzji, ukształtowały czynniki poza Twoją kontrolą. Libet pokazał, że aktywność neuronalna poprzedza świadomą decyzję. Sapolsky pyta: a co ukształtowało tę aktywność neuronalną? I co ukształtowało to, co ją ukształtowało? Regres nie ma punktu, w którym pojawia się niezdeterminowane "ja."</p>
@@ -1299,12 +1420,26 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p>Sieci neuronowe nie czekają na informacje ze świata, żeby potem zareagować. Sieci cały czas aktywnie przewidują przyszłe informacje. Są jak surferzy pokonujący fale - muszą przewidywać, co będzie za chwilę.</p>
     <p>Prowadzisz samochód na autostradzie. Zmieniasz pasy, wyprzedzasz, jedziesz płynnie. Mimo prędkości wszystko jest... przewidywalne. Sterujesz swoim samochodem, wiesz, jak zareaguje na naciśnięcie pedałów, skręt kierownicy - Twoje sieci mózgowe są już wytrenowane. Nie to co na początku! Wtedy przecież nawet płynne ruszenie było wyzwaniem.</p>
     <p>To jest predykcja: nieustanne generowanie hipotez o tym, co zaraz nastąpi. Percepcja to weryfikowanie hipotez o świecie. <span class="s8" data-session="8">Karl Friston sformalizował tę intuicję: organizm minimalizuje <strong>energię swobodną</strong> (free energy), różnicę między tym, co model przewiduje, a tym, co dociera ze zmysłów. Każda akcja, każda percepcja, każda myśl to krok ku mniejszemu zaskoczeniu. Sięgasz po kubek z kawą. Kubek jest lżejszy niż się spodziewałeś. Przez ułamek sekundy świat jest dziwny: ręka wyskoczyła za wysoko, kawa zachlupotała. Błąd predykcyjny. Następnym razem Twój model wie, że ten kubek jest lekki.</span> <span class="s4" data-session="4">Silna predykcja potrafi wygenerować oczekiwany stan ciała zanim bodziec nadejdzie. Placebo to najczystszy dowód: mózg produkuje ulgę zanim substancja cokolwiek zrobi. Albo kiedy substancja jest chemicznie obojętna.</span></p>
+
+    <div class="video-block s8" data-session="8">
+      <div class="video-label">Veritasium · The Bayesian Trap (pułapka bayesowska)</div>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/R13BD8qKeTg"
+          title="Veritasium - The Bayesian Trap"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+    <p class="s8" data-session="8">Friston nadaje tej intuicji formalną nazwę: predykcja jest wnioskowaniem <em>bayesowskim</em>. Masz przekonanie wstępne (prior), dociera dane (sygnał z receptorów), i aktualizujesz przekonanie proporcjonalnie do tego, jak bardzo dane Cię zaskoczyły. Im silniejszy prior, tym mniej go rusza pojedyncza obserwacja. To dokładnie ten sam rachunek, który napędza węża z kabla i ulgę z placebo: model waży to, czego się spodziewa, względem tego, co przychodzi.</p>
     <p class="s5" data-session="5">Pamięć działa tak samo. Wspomnienie nie jest nagraniem. Za każdym razem, gdy coś sobie "przypominasz", hipokamp rekonstruuje scenę z rozproszonych fragmentów: kontekst z kory śródwęchowej, szczegóły sensoryczne z kory asocjacyjnej (obszarów łączących różne zmysły), emocjonalny koloryt z ciała migdałowatego. Rekonstrukcja podlega aktualnym priorom. Loftus i Palmer (1974) pokazali to jednym słowem: uczestnicy oglądali film z wypadkiem samochodowym, a potem odpowiadali na pytanie o prędkość. Gdy pytanie zawierało "smashed" zamiast "hit", szacunki prędkości wzrosły o 20%, a tydzień później ci sami ludzie "pamiętali" potłuczone szkło, którego nigdy nie było. Predykcja top-down nadpisała ślad pamięciowy. Schacter i Addis (2007) nazwą później ten sam mechanizm konstruktywną symulacją epizodyczną: aparat, który pozwala Ci wyobrażać sobie przyszłość, jest tym samym aparatem, który rekonstruuje przeszłość.</p>
+    <p class="s11" data-session="11">Jeśli wspomnienie jest rekonstrukcją, a nie nagraniem, to nasuwa się niewygodne pytanie: może i percepcja teraźniejszości jest rekonstrukcją? Do tego wrócimy.</p>
 
 
     <p>Nagle samochód przed Tobą zaczyna hamować. Automatycznie reagujesz. Wciskasz hamulec, odbijasz kierownicę, w międzyczasie zerkając w lusterko, czy pas obok jest wolny. Samochód przed Tobą zachował się niespodziewanie - zaskoczył Cię.</p>
     <p>Załóżmy, że samochód przed Tobą to było BMW. Po kilku tygodniach sytuacja się powtarza. Kolejne BMW zaskakuje Cię na drodze i nagle zmienia pas, zajeżdżając Ci drogę. Po kilku tygodniach samochód za Tobą miga Ci długimi po oczach, znów BMW! Zaczynasz spodziewać się nieprzewidywalnych rzeczy, gdy spotykasz samochody tej marki na drodze. Wcześniejsze sytuacje dotrenowały Twoje sieci mózgowe. <span class="s2" data-session="2">Koncept BMW jest zakomodowany: samochody tej marki mają specjalne miejsce w Twoim modelu, do czego utworzenia sama asymilacja by nie wystarczyła.</span> <span class="s3" data-session="3">Pierwsze BMW, które Cię zajechało: nieoczekiwane, dopamina zalewa, kontekst zakodowany szeroko (która droga, jaka pora, jaki samochód). Po kilku BMW: skojarzenie jest skonsolidowane, dopamina przesuwa się z kodowania na odtwarzanie. Widzisz BMW i predykcja odpala zanim cokolwiek się stanie.</span></p>
-    <p>Błędy predykcyjne to niespodziewane informacje, które wędrują w górę (bottom-up) i kształtują sieci tak, aby w przyszłości te informacje były już spodziewane (top-down). Cała historia ewolucyjna, kulturowa i indywidualna kształtuje architekturę sieci neuronowych. <span class="s4" data-session="4">Prior potrafi też nadpisać sygnał bottom-up z tkanek. Wchodzisz do ciemnego pokoju i widzisz węża na podłodze. Serce przyspiesza, cofasz się. Włączasz światło: to kabel od ładowarki. Prior "to może być wąż" miał wyższy priorytet niż sygnał wzrokowy w ciemności. Kora przedczołowa przepisuje predykcję z ciała: "za chwilę będzie lepiej" lub "za chwilę będzie boleć." Oczekiwanie zmienia afekt zanim afekt nadejdzie. Nocebo to ten sam mechanizm odwrócony: "to będzie boleć" prime'uje wyspę do znajdowania bólu w niejednoznacznych sygnałach ciałowych.</span> <span class="s2" data-session="2">Ale czy budujesz swój model świata sam? Lev Vygotsky dodałby: inna osoba jest źródłem skalibrowanych błędów predykcyjnych dla Twojego mózgu dopasowanych do Twojego poziomu. Dostarcza Ci afordancji za którymi możesz podążać.</span> <span class="s3" data-session="3">Kluczowe jest przypisanie przyczyn obecnego doświadczenia (credit assignment), znalezienie przyczyny błędu predykcyjnego. Jakie wcześniejsze informacje mogą sugerować obecne doświadczenie?</span></p>
+    <p>Błędy predykcyjne to niespodziewane informacje, które wędrują w górę (bottom-up) i kształtują sieci tak, aby w przyszłości te informacje były już spodziewane (top-down). Cała historia ewolucyjna, kulturowa i indywidualna kształtuje architekturę sieci neuronowych. <span class="s4" data-session="4">Prior potrafi też nadpisać sygnał bottom-up z tkanek. Wchodzisz do ciemnego pokoju i widzisz węża na podłodze. Serce przyspiesza, cofasz się. Włączasz światło: to kabel od ładowarki. Prior "to może być wąż" miał wyższy priorytet niż sygnał wzrokowy w ciemności. Kora przedczołowa przepisuje predykcję z ciała: "za chwilę będzie lepiej" lub "za chwilę będzie boleć." Oczekiwanie zmienia afekt zanim afekt nadejdzie. Nocebo to ten sam mechanizm odwrócony: "to będzie boleć" prime'uje wyspę do znajdowania bólu w niejednoznacznych sygnałach ciałowych.</span> <span class="s11" data-session="11">To moment, w którym prior wygrywa z sygnałem ze świata: percepcja jest tu wnioskiem, nie odbiorem.</span> <span class="s2" data-session="2">Ale czy budujesz swój model świata sam? Lev Vygotsky dodałby: inna osoba jest źródłem skalibrowanych błędów predykcyjnych dla Twojego mózgu dopasowanych do Twojego poziomu. Dostarcza Ci afordancji za którymi możesz podążać.</span> <span class="s3" data-session="3">Kluczowe jest przypisanie przyczyn obecnego doświadczenia (credit assignment), znalezienie przyczyny błędu predykcyjnego. Jakie wcześniejsze informacje mogą sugerować obecne doświadczenie?</span></p>
 
     <p class="s3" data-session="3">Dodatkowo, zidentyfikowano wpływ SN i LC na hipokamp w badaniach na ludziach (Kaminski et al., 2018) i myszach (Takeuchi et al., 2016). Aktywność dopaminergiczna jest potrzebna do utworzenia wspomnienia o relacjach między informacjami. W sytuacji gdy zablokujemy tę aktywność lub nie jest obserwowana, organizm nie utworzy mapy poznawczej (cf. Tolman). Dopamina jest więc potrzebna do aktualizacji modelu. Najnowsze dane (Adam, Nature 2026) pokazują coś szerszego: neurony dopaminergiczne reagują na zagrożenia, nowe bodźce, ruch i predykcje ruchowe. Dopamina to sygnał konsolidacyjny. Wzmacnia skojarzenie między tym, co się wydarzyło, a okolicznościami, w których się wydarzyło.</p>
     <p class="s3" data-session="3">Rola dopaminy jest więc podwójna, przy pewnych przyczynach wyrzut dopaminy następuje podczas wskazówek. Dopamina inicjuje automatyczną sekwencję ruchu (D1) w kierunku znanych konsekwencji. Kiedy jednak następuje błąd predykcyjny (informacje bottom-up nie zgadzają się z modelem top-down), wyrzut dopaminy następuje w momencie zaskoczenia. W tym kontekście, dopamina uczestniczy w konsolidacji informacji poprzedzających zaskoczenie. Co doprowadziło do danego doświadczenia? Kiedy okoliczności są niejasne (50%), system nie wie jeszcze, które zmienne są istotne, więc zapisuje wszystko. Kodowanie jest stopniowe. Z każdym doświadczeniem system zawęża, które zmienne niosą predykcję, a balans między kodowaniem (eksploracją), a odtwarzaniem (eksploatacją) dynamicznie się dostosowuje.</p>
@@ -1480,10 +1615,17 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <figcaption>Szlak bezpośredni i pośredni w jądrach podstawy. Szlak bezpośredni (D1) przygotowuje zestaw możliwych akcji. Szlak pośredni (D2) zawęża wybór. Źródło: Wikimedia Commons.</figcaption>
     </figure>
 
+    <p class="s3" data-session="3">Te szlaki nie działają w próżni: domykają wielką pętlę kora &rarr; prążkowie &rarr; gałka blada &rarr; wzgórze &rarr; kora. Kora wysyła pobudzenie do prążkowia (warstwa V), prążkowie przez szlaki bezpośredni i pośredni steruje gałką bladą i istotą czarną, te hamują wzgórze, a wzgórze wraca do kory. Dopamina z SNc i VTA ustawia czułość całej pętli. To jest pętla korowo-prążkowiowo-wzgórzowo-korowa: ten sam obwód, który wybiera ruch, na bardziej brzusznym końcu wybiera cel i decyzję.</p>
+    <figure class="figure-block s3" data-session="3">
+      <img src="/images/cbgtc_loop.png" alt="Petla korowo-prazkowiowo-wzgorzowo-korowa: szlaki bezposredni, posredni i hiperbezposredni z modulacja dopaminergiczna" />
+      <figcaption>Pętla korowo-prążkowiowo-wzgórzowo-korowa (CBGTC). Kora pobudza prążkowie; szlak bezpośredni (D1) odhamowuje wzgórze, szlak pośredni (D2, przez GPe i STN) je hamuje, a szlak hiperbezpośredni (kora &rarr; STN) dodaje szybki, globalny hamulec. Dopamina z SNc moduluje selekcję. Źródło: Mikael Häggström, Wikimedia Commons, CC BY-SA 3.0.</figcaption>
+    </figure>
+
     <hr class="section-divider" />
 
     <h3 id="sub-afordancje">Afordancje</h3>
     <p>Afordancje nie są w przedmiocie. Nie są w Tobie. Są <em>między wami</em>.</p>
+    <p class="s11" data-session="11">To teza Gibsona w czystej postaci: afordancję wyłapujesz wprost z otoczenia, bez modelu pośrodku. Zapamiętaj ją, bo w sekcji o reprezentacjonizmie zderzy się z Fristonem.</p>
     <p>Ten sam kamień: turlanie dla dziecka, siedzenie dla zmęczonego wędrowca, budulec dla architekta. Kamień się nie zmienił. Zmieniła się relacja, kontekst, potrzeba.</p>
     <ul>
       <li><strong>Relacyjne:</strong> nie istnieją bez konkretnego organizmu.</li>
@@ -1535,6 +1677,34 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s8" data-session="8">Organizmy budują nisze w świecie fizycznym. Mózg buduje nisze w przestrzeni pojęciowej. Z czego ta wewnętrzna nisza jest zbudowana? Z pojęć: regionów w wielowymiarowej przestrzeni, które pozwalają nawigować po abstrakcjach tak, jak kora ciemieniowa nawiguje po pokoju.</p>
 
+    <!-- ==================== REPREZENTACJONIZM ==================== -->
+    <hr id="sec-percepcja" class="section-divider s11" data-session="11" />
+
+    <h2 id="sec-percepcja" class="s11" data-session="11">Reprezentacjonizm czy percepcja bezpośrednia?</h2>
+
+    <p class="s11" data-session="11">Cały ten kurs zaczął się od jednego słowa: <em>model</em>. Doświadczasz modelu, nie świata. Ale to słowo kryje najstarszy spór w nauce o poznaniu, i czas go nazwać.</p>
+
+    <div class="debate-grid s11" data-session="11">
+      <div class="debate-side">
+        <div class="debate-author">James Gibson &middot; percepcja bezpośrednia</div>
+        <p>Nie ma żadnego modelu pomiędzy. Świat sam oferuje afordancje, a Ty je <em>wyłapujesz</em> wprost z otoczenia. Informacja jest w świetle, w dźwięku, w układzie powierzchni. Percepcja to nie wnioskowanie, lecz rezonans organizmu ze strukturą, która już tam jest.</p>
+      </div>
+      <div class="debate-side">
+        <div class="debate-author">Karl Friston &middot; wnioskowanie predykcyjne</div>
+        <p>Nigdy nie dotykasz świata. Dociera do Ciebie tylko aktywność receptorów, a mózg zgaduje, co ją wywołało. Percepcja to najlepsza hipoteza modelu o ukrytej przyczynie. Doświadczasz wniosku, nie źródła.</p>
+      </div>
+    </div>
+
+    <p class="s11" data-session="11">Wygląda na sprzeczność nie do pogodzenia: albo widzisz świat, albo widzisz swój model. Ale przypomnij sobie dystans receptorowy. Oba opisy są trafne, tylko w różnych miejscach tej samej osi.</p>
+
+    <p class="s11" data-session="11"><strong>Blisko receptorów Gibson ma rację.</strong> Sprzężenie modelu z bodźcem jest tak ciasne, że model jest przezroczysty: percepcja <em>czuje się</em> bezpośrednia, bo nie da się zobaczyć modelu, którym się JEST. <strong>Daleko od receptorów Friston ma rację.</strong> Model jest odsprzężony, abstrakcyjny, więc poznanie czuje się jak wysiłek, jak konstrukcja, i własny model staje się widoczny jako model. To gradient przezroczystości: ten sam, którym chwilowo przesuwają Cię psychodeliki w stronę gibsonowskiego końca. Spór znika, gdy zrozumiesz, że to nie dwie teorie, lecz jeden proces oglądany z dwóch stron: od środka (przezroczystego) i z perspektywy modelarza (który widzi konstrukcję).</p>
+
+    <h3 id="sub-przyczyny" class="s11" data-session="11">Przyczyny jako źródła i przyczyny jako wyjaśnienia</h3>
+
+    <p class="s11" data-session="11">Ten sam podział wraca w pytaniu o przyczynę. <strong>Przyczyna jako źródło</strong> to realna rzecz w świecie, która rzuca energię na Twoje receptory: gibsonowska informacja, która jest <em>na zewnątrz</em>. <strong>Przyczyna jako wyjaśnienie</strong> to ukryta zmienna, którą model zakłada, żeby zredukować zaskoczenie: fristonowska przyczyna, która jest <em>wywnioskowana</em>. Blisko ciała te dwie zbiegają się: źródło i wyjaśnienie to niemal to samo. Daleko od ciała rozjeżdżają się, i właśnie w tej szczelinie mieszka błędne przypisanie. Grecki żeglarz przypisuje wyjaśnienie (gniewny Posejdon) tam, gdzie nie ma źródła (tylko pogoda). Przypisanie przyczyny (credit assignment), które poznałeś przy dopaminie, jest właśnie ruchem między tymi dwoma rodzajami przyczyn: jakie źródło wytworzyło ten sygnał, kontra jakie wyjaśnienie najlepiej redukuje moje zaskoczenie.</p>
+
+    <p class="s11" data-session="11">Sieci mózgu rozkładają ten gradient na poziomy. Pierwszorzędowe sieci (01) operują przy źródłach: prawie czysty rezonans Gibsona. Sieć domyślna (05) operuje przy wyjaśnieniach: konstrukcja Fristona, najdalej od ciała, gdzie modelujesz siebie, innych i nieobecnych bogów. Między nimi rozciąga się cała oś od percepcji bezpośredniej do wnioskowania, i Ty jesteś na niej w każdej chwili naraz.</p>
+
     <h3 id="sub-pojecia" class="s8" data-session="8">Pojęcia</h3>
     <p class="s8" data-session="8">Z czego zbudowana jest nisza poznawcza? Z pojęć. Ale pojęcie to nie słowo i nie etykieta. Peter Gärdenfors proponuje, że pojęcie to <strong>region w wielowymiarowej przestrzeni</strong>. Pomyśl o kolorach. Każdy kolor ma odcień, nasycenie i jasność. Te trzy wymiary tworzą przestrzeń. "Czerwony" to nie punkt w tej przestrzeni. To region: zbiór punktów, które Twoje sieci neuronowe klasyfikują jako wystarczająco podobne. W centrum tego regionu siedzi prototyp: najlepszy przykład kategorii.</p>
     <p class="s8" data-session="8">Eleanor Rosch pokazała, że Twój mózg tak właśnie organizuje kategorie. Kiedy myślisz "ptak", aktywujesz prototyp: wróbla, rudzika. Nie pingwina. Pingwin jest daleko od centrum regionu "ptak" w przestrzeni pojęciowej, choć ciągle wewnątrz granicy. <strong>Teoria prototypów:</strong> kategorie mają centrum (typowy egzemplarz) i rozmyte granice. Obiekty bliżej centrum są "bardziej" kategorią.</p>
@@ -1562,6 +1732,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s3" data-session="3">Amfetaminy blokują DAT i odwracają działanie transportera. DAT normalnie zabiera dopaminę ze szczeliny synaptycznej do neuronu presynaptycznego. DAT do którego przyłączyła się amfetamina działa pod prąd. Transportuje dopaminę z neuronu presynaptycznego do szczeliny synaptycznej. Sprawia to, że neuron uwalnia dopaminę bez generowania potencjału czynnościowego.</p>
     <p class="s3" data-session="3">Opiaty działają inaczej: hamują interneurony GABAergiczne w VTA, które normalnie hamują neurony dopaminergiczne. Hamulec na hamulcu przestaje działać. Jednocześnie opiaty bezpośrednio produkują zmianę interoceptywną: ból znika, ciepło zalewa.</p>
     <p class="s3" data-session="3">Wszystkie trzy substancje wpływają na uwalnianie dopaminy w różnych miejscach w różny sposób. Substancje produkują sygnał naturalnie nie doświadczany. Każdy detal eksteroceptywny obecny podczas zażycia (pokój, ludzie, muzyka) zostaje skonsolidowany z nadludzką siłą. Dlatego kontekst wyzwala nawrót. Te skojarzenia zostały wykute sygnałem, do którego architektura nigdy nie była skalibrowana.</p>
+
+    <p class="s10" data-session="10">Substancje psychodeliczne (psylocybina, LSD) działają na ten system z drugiej strony. Pobudzają receptory serotoninowe 5-HT2A na neuronach piramidowych głębokich warstw kory, a to rozluźnia priory najwyższego poziomu. Model Carhart-Harrisa i Fristona (2019), nazwany REBUS, ujmuje to wprost: gdy precyzja predykcji top-down spada, sygnał bottom-up z receptorów wspina się wyżej niż zwykle. To ta sama gałka precyzji, którą widziałeś w autyzmie (Pellicano i Burr), tylko przekręcona w drugą stronę: nie chronicznie, lecz na kilka godzin i farmakologicznie. Świat staje się intensywniejszy, granice pojęć miękną, a model, który normalnie jest przezroczysty, na chwilę staje się widoczny jako model. Wracasz do tego pomysłu w sekcji o reprezentacjonizmie poniżej.</p>
     <p class="s3" data-session="3"><em>Ćwiczenie:</em> jeśli choroba Parkinsona to degeneracja neuronów SNc (Substantia Nigra pars compacta; mniej dopaminy w prążkowiu grzbietowym), a kokaina blokuje DAT (utrzymuje dopaminę w synapsie dłużej), to czy kokaina mogłaby pomóc?</p>
     <p class="s3" data-session="3">Teoretycznie tak, ale problem w tym, że kokaina jest nieselektywna: blokuje DAT, NET i SERT jednocześnie, wywołując szerokie spektrum efektów ubocznych i uzależnienie. L-DOPA stosowana w leczeniu działa inaczej: dostarcza prekursora do neuronów dopaminergicznych, które mają enzym DOPA dekarboksylazę do konwersji. To zwiększa dostępność dopaminy w całym mózgu, nie tylko w SN. Efektem ubocznym jest zwiększona aktywność szlaku mezolimbicznego: pacjenci z Parkinsonem leczeni L-DOPA czasem rozwijają kompulsywne zachowania (hazard, zakupy). Ten sam lek, który przywraca kontrolę ruchową przez szlak nigrostriatalny, może zaburzyć kontrolę impulsów przez szlak mezolimbiczny.</p>
 
@@ -1724,6 +1896,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s2" data-session="2">Ale zdanie testu to dopiero początek. Model innych ludzi pogłębia się latami. Pomocna jest intuicja gradientu: od braku modelu (drugi człowiek to obiekt fizyczny), przez modelowanie przekonań ("ona myśli X"), modelowanie emocjonalnych konsekwencji ("jeśli powiem Y, poczuje Z": tu znika brutalna szczerość dzieci), po modelowanie tego, co ktoś myśli o Twoim modelu ("ona myśli, że ja myślę W": białe kłamstwa, dyplomacja). Rekurencja pogłębia się: "wiem, że wiesz, że wiem." To jest terytorium shared intentionality.</p>
     <p class="s2" data-session="2">Im głębszy model, tym więcej sieci. Modelowanie przekonań angażuje DMN.ToM. Modelowanie emocjonalnych konsekwencji dociąga emocje społeczne (ciało migdałowate, wyspa). Modelowanie strategiczne wymaga kalkulacji kosztu (OFC). Cztery sieci mózgu społecznego to warstwy, które aktywują się progresywnie w miarę pogłębiania modelu.</p>
     <p class="s2" data-session="2">Grecki żeglarz na wzburzonym morzu robił dokładnie to samo. Odbierał sygnały sensoryczne: fale, wiatr, grzmot. Najlepszym modelem tłumaczącym te informacje zmysłowe był wściekły Posejdon. Mechanizm predykcyjny był identyczny jak przy modelowaniu człowieka. Różnił się tylko obiekt modelowania.</p>
+    <p class="s11" data-session="11">Zapamiętaj żeglarza: przypisał <em>przyczynę-wyjaśnienie</em> (gniew boga) tam, gdzie była tylko <em>przyczyna-źródło</em> (pogoda). Ta różnica wraca w sekcji o reprezentacjonizmie.</p>
     <p class="s2" data-session="2">Bogowie, duchy, przodkowie: to modele agentów przekazywane kulturowo z pokolenia na pokolenie. Shared intentionality umożliwiła ich przechowywanie i transmisję: "my wszyscy wiemy, czego chce Posejdon, i wszyscy wiemy, że wszyscy wiemy." Nisza poznawcza rozszerzyła się poza świat fizyczny, w przestrzeń agentów niewidzialnych. <span class="s2" data-session="2">Ale kultura kształtuje też tempo, w jakim teoria umysłu się rozwija.</span></p>
     <p class="s2" data-session="2">Model agenta to nie tylko obiekt wiedzy. To źródło afordancji. Posejdon oferował afordancje przebłagania: można było złożyć ofiarę, zmienić kurs, odmówić modlitwę. Te afordancje są równie realne dla sieci mózgowych jak afordancja kamienia dla zmęczonego wędrowca: generują motywację, kierują działaniem, kształtują decyzje.</p>
     <p class="s2" data-session="2">Dzieci samoańskie nie przechodzą testu Sally-Anne do 8 roku życia. 1/3 dzieci w wieku 10-13 lat wciąż go nie przechodzi (Mayer i Träuble, 2013, N>300). Zachodnie dzieci przechodzą ok. 4-5 roku. Mechanizm: Samoa i kultury Pacyfiku (Kaluli/Bosavi w PNG, Tonga, Vanuatu) praktykują "doktrynę nieprzejrzystości umysłów" (Robbins i Rumsey, 2008). Dorośli nigdy nie przypisują intencji niemowlęcym wokalizacjom. Dzieci uczone są raportować co ktoś <em>zrobił</em>, nie co ktoś <em>czuł</em>.</p>
@@ -1762,6 +1935,12 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s8" data-session="8">Trzy trakty to uproszczenie. Pełny przepływ produkcji językowej to kaskada: abstrakcyjne pojęcie w TP i OFC (co chcesz powiedzieć i jaka jest tego wartość emocjonalna) przechodzi przez przedni zakręt czołowy środkowy (aMFG, selekcja leksykalna), dalej do tylnego MFG i SFG (planowanie sekwencji), do IFG (montaż składniowy i fonologiczny), do kory somatosensorycznej (SSC, wykonanie motoryczne: wargi, język, krtań) i z powrotem przez korę słuchową (A1) jako feedback. Słyszysz własny głos i porównujesz z predykcją. Błąd predykcyjny koryguje następne słowo.</p>
 
+    <p class="s8" data-session="8">Te trakty układają się w większy wzorzec, który neurobiologia języka nazywa <strong>modelem dwóch strumieni</strong> (Hickok i Poeppel, 2007). Strumień <em>brzuszny</em> niesie znaczenie: od bieguna skroniowego (TP) i OFC, przez aMTG i pMTG, ku obszarowi Broki. Strumień <em>grzbietowy</em> niesie dźwięk ku artykulacji: od okolicy Wernickego (tylny STG) pęczkiem łukowatym do Broki, a stamtąd do kory ruchowej (M1) i mięśni mowy. Mówienie zamyka pętlę: wytworzony dźwięk wraca przez korę słuchową (A1) z powrotem do Wernickego, który porównuje go z tym, co Broca zamierzała powiedzieć. Słyszysz siebie, a błąd predykcyjny poprawia kolejne słowo. Język nie jest linią produkcyjną. Jest pętlą sprzężenia zwrotnego, dokładnie tą, której awarię widziałeś w kopii eferentnej i głosach w schizofrenii.</p>
+    <figure class="figure-block s8" data-session="8">
+      <img src="/images/dualstream_language.png" alt="Model dwóch strumieni przetwarzania języka: strumień brzuszny (znaczenie) i grzbietowy (dźwięk do artykulacji)" />
+      <figcaption>Model dwóch strumieni. Strumień grzbietowy (Wernicke &rarr; pęczek łukowaty &rarr; Broca &rarr; kora ruchowa) mapuje dźwięk na artykulację. Strumień brzuszny (biegun skroniowy / aMTG &rarr; pMTG &rarr; Broca) niesie znaczenie. Kora słuchowa (A1) domyka pętlę sprzężenia zwrotnego. Źródło: Bhatnagar et al. (2020), <em>Annals of Indian Academy of Neurology</em>, 23(1), 73, ryc. 1, licencja CC BY-NC-SA.</figcaption>
+    </figure>
+
     <h3 class="s8" data-session="8">Afazja Broki i afazja Wernickego</h3>
     <p class="s8" data-session="8">Uszkodzenie IFG (obszar Broki) daje <strong>afazję Broki:</strong> rozumiesz język, ale nie możesz złożyć wypowiedzi. Wiesz, co chcesz powiedzieć. Nie potrafisz zbudować sekwencji motorycznej, żeby to powiedzieć. Mowa jest powolna, telegraficzna, pozbawiona gramatyki. Struktura (składnia) jest złamana. Znaczenie (semantyka) jest nietknięte.</p>
     <p class="s8" data-session="8">Uszkodzenie tylnego STG (obszar Wernickego) daje <strong>afazję Wernickego:</strong> mówisz płynnie, gramatycznie poprawnie. Zdania brzmią jak zdania. Ale nie znaczą nic. Semantyka jest złamana. Składnia jest nietknięta. Podwójna dysocjacja: struktura (IFG) i znaczenie (STG/MTG) to osobne procesy z osobnymi substratami neuronalnymi. Noam Chomsky argumentował to od lat pięćdziesiątych: istnieje <strong>gramatyka uniwersalna</strong>, wrodzona zdolność do przetwarzania struktury językowej, niezależna od konkretnego języka i niezależna od znaczenia. Afazje dostarczają jej neuroanatomicznego wsparcia.</p>
@@ -1778,6 +1957,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s4" data-session="4">Lieberman i współpracownicy (2007): samo nadanie nazwy uczuciu redukuje aktywację ciała migdałowatego. Akt budowania słowa tłumi surowy sygnał. Słownictwo emocjonalne jest regulacyjne. Dlatego opiekun, który mówi dziecku "jesteś sfrustrowany, bo chciałeś sięgnąć po zabawkę i nie mogłeś" nie tylko etykietuje. Instaluje szablon konstrukcyjny na całe życie. Narzędzie emocjonalne przekazane przez MKO, zinternalizowane. Dokładnie mechanizm Wygotskiego, stosowany do regulacji afektu.</p>
 
     <p class="s8" data-session="8">Sztuczna inteligencja buduje analogiczne przestrzenie. Duże modele językowe (LLM) konstruują przestrzenie embeddingów: wielowymiarowe rozmaitości, na których słowa, zdania i pojęcia mają pozycje i dystanse. "Król" minus "mężczyzna" plus "kobieta" równa się "królowa": operacja geometryczna w przestrzeni pojęciowej. Ludzie i LLM-y są wrażliwi na prompty z tego samego powodu: prompt ustawia punkt startowy na rozmaitości. Inny punkt startowy, inna trajektoria, inny wynik.</p>
+    <p class="s11" data-session="11">Jest w tym głębsza analogia: model językowy też nigdy nie dotyka świata, ma tylko swoje embeddingi. Ta sama granica epistemiczna, którą Friston przypisuje Tobie, dotyczy każdego modelu.</p>
 
     <!-- ==================== PYTANIA ==================== -->
     <!-- ==================== KOMPLEKSOWE PYTANIA ==================== -->
@@ -1989,6 +2169,9 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item s8" data-session="8">McClelland, J. L., McNaughton, B. L., &amp; O'Reilly, R. C. (1995). Why there are complementary learning systems in the hippocampus and neocortex. <em>Psychological Review, 102</em>(3), 419-457. <a href="https://doi.org/10.1037/0033-295X.102.3.419" target="_blank">doi:10.1037/0033-295X.102.3.419</a></p>
       <p class="bib-item s8" data-session="8">Chomsky, N. (1965). <em>Aspects of the Theory of Syntax</em>. MIT Press.</p>
       <p class="bib-item s8" data-session="8">Friston, K. (2010). The free-energy principle: a unified brain theory? <em>Nature Reviews Neuroscience, 11</em>(2), 127-138. <a href="https://doi.org/10.1038/nrn2787" target="_blank">doi:10.1038/nrn2787</a></p>
+      <p class="bib-item s8" data-session="8">Hickok, G., &amp; Poeppel, D. (2007). The cortical organization of speech processing. <em>Nature Reviews Neuroscience, 8</em>(5), 393-402. <a href="https://doi.org/10.1038/nrn2113" target="_blank">doi:10.1038/nrn2113</a></p>
+      <p class="bib-item s3" data-session="3">Carhart-Harris, R. L., &amp; Friston, K. J. (2019). REBUS and the anarchic brain: toward a unified model of the brain action of psychedelics. <em>Pharmacological Reviews, 71</em>(3), 316-344. <a href="https://doi.org/10.1124/pr.118.017160" target="_blank">doi:10.1124/pr.118.017160</a></p>
+      <p class="bib-item s8" data-session="8">Bhatnagar, S. C., et al. (2020). Newer paradigms in language neurobiology. <em>Annals of Indian Academy of Neurology, 23</em>(1), 73-80. <a href="https://doi.org/10.4103/aian.AIAN_426_19" target="_blank">doi:10.4103/aian.AIAN_426_19</a></p>
     </div>
 
     <div class="kolokwium-box" style="background: var(--warm-glow-soft); border: 1px solid var(--border-warm); padding: 20px 24px; margin-top: 48px; border-radius: 8px;">
@@ -2201,17 +2384,39 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       }
     }
 
+    // Master toggle: check/uncheck all session boxes at once
+    const allToggle = document.getElementById('tm-all-toggle');
+
+    function syncAllToggle() {
+      if (!allToggle) return;
+      const total = checkboxes.length;
+      let on = 0;
+      checkboxes.forEach(cb => { if (cb.checked) on++; });
+      allToggle.checked = on === total;
+      allToggle.indeterminate = on > 0 && on < total;
+    }
+
+    if (allToggle) {
+      allToggle.addEventListener('change', () => {
+        const turnOn = allToggle.checked;
+        checkboxes.forEach(cb => { cb.checked = turnOn; });
+        allToggle.indeterminate = false;
+        updateSessionVisibility();
+      });
+    }
+
     checkboxes.forEach(cb => {
-      cb.addEventListener('change', () => updateSessionVisibility());
+      cb.addEventListener('change', () => { updateSessionVisibility(); syncAllToggle(); });
     });
 
     updateSessionVisibility();
+    syncAllToggle();
 
     // ── Section navigator: scroll tracking ──
     const navLinks = document.querySelectorAll('.nav-sidebar a[data-nav]');
     const allNavIds = [
       'sec-pojecia', 'sub-model', 'sub-stadia', 'sub-ltp', 'sub-predykcja', 'sub-informacja',
-      'sec-predykcja', 'sub-afordancje', 'sub-pojecia', 'sub-pamiec',
+      'sec-predykcja', 'sub-afordancje', 'sub-pojecia', 'sub-pamiec', 'sec-percepcja',
       'sec-emocje', 'sec-spor',
       'sec-dmn', 'sub-lustrzane', 'sub-jezyk',
       'sec-pytania'
