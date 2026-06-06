@@ -1257,12 +1257,18 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <a href="#sub-informacja" data-nav="sub-informacja" class="nav-sub">Informacja</a>
       <a href="#sec-architektura" data-nav="sec-architektura">Model to architektura sieci</a>
       <a href="#sub-sieci" data-nav="sub-sieci" class="nav-sub">Z czego zbudowany jest model</a>
-      <a href="#sub-nisze" data-nav="sub-nisze" class="nav-sub">Nisze</a>
-      <a href="#sec-daleko" data-nav="sec-daleko">Daleko od receptorów</a>
-      <a href="#sub-dmn" data-nav="sub-dmn" class="nav-sub">Sieć trybu domyślnego</a>
-      <a href="#sub-hipokamp" data-nav="sub-hipokamp" class="nav-sub">Hipokamp</a>
-      <a href="#sub-pamiec" data-nav="sub-pamiec" class="nav-sub">Pamięć i symulacja</a>
+      <a href="#sub-stadia" data-nav="sub-stadia" class="nav-sub">Stadia rozwoju</a>
+      <a href="#sub-asymilacja" data-nav="sub-asymilacja" class="nav-sub">Asymilacja, akomodacja i strefa najbliższego rozwoju</a>
+      <a href="#sub-przywiazanie" data-nav="sub-przywiazanie" class="nav-sub">Style przywiązania</a>
       <a href="#sub-sen" data-nav="sub-sen" class="nav-sub">Sen i konsolidacja</a>
+      <a href="#sub-ltp" data-nav="sub-ltp" class="nav-sub">LTP i LTD</a>
+      <a href="#sub-depresja" data-nav="sub-depresja" class="nav-sub">Depresja</a>
+      <a href="#sub-pamiec" data-nav="sub-pamiec" class="nav-sub">Pamięć i symulacja</a>
+      <a href="#sub-przejecie" data-nav="sub-przejecie" class="nav-sub">Gdy system zostaje przejęty</a>
+      <a href="#sec-daleko" data-nav="sec-daleko">Daleko od receptorów</a>
+      <a href="#sub-hipokamp" data-nav="sub-hipokamp" class="nav-sub">Hipokamp</a>
+      <a href="#sub-afordancje" data-nav="sub-afordancje" class="nav-sub">Afordancje</a>
+      <a href="#sub-nisze" data-nav="sub-nisze" class="nav-sub">Nisze</a>
       <a href="#sub-pojecia" data-nav="sub-pojecia" class="nav-sub">Pojęcia</a>
       <a href="#sub-myslenie" data-nav="sub-myslenie" class="nav-sub">Myślenie jako nawigacja</a>
       <a href="#sub-ciaglosc" data-nav="sub-ciaglosc" class="nav-sub">Ciągłość czy przepaść?</a>
@@ -1270,14 +1276,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <a href="#sub-lustrzane" data-nav="sub-lustrzane" class="nav-sub">Neurony lustrzane</a>
       <a href="#sub-teoria-umyslu" data-nav="sub-teoria-umyslu" class="nav-sub">Teoria umysłu</a>
       <a href="#sec-blisko" data-nav="sec-blisko">Blisko od receptorów</a>
-      <a href="#sub-afordancje" data-nav="sub-afordancje" class="nav-sub">Afordancje</a>
-      <a href="#sub-4e" data-nav="sub-4e" class="nav-sub">Poznanie 4E</a>
-      <a href="#sec-uczenie" data-nav="sec-uczenie">Modele w czasie</a>
-      <a href="#sub-stadia" data-nav="sub-stadia" class="nav-sub">Stadia rozwoju</a>
-      <a href="#sub-asymilacja" data-nav="sub-asymilacja" class="nav-sub">Asymilacja, akomodacja i strefa najbliższego rozwoju</a>
-      <a href="#sub-przywiazanie" data-nav="sub-przywiazanie" class="nav-sub">Style przywiązania</a>
-      <a href="#sub-ltp" data-nav="sub-ltp" class="nav-sub">LTP i LTD</a>
-      <a href="#sub-przejecie" data-nav="sub-przejecie" class="nav-sub">Gdy system zostaje przejęty</a>
       <a href="#sec-jezyk" data-nav="sec-jezyk">Pętla: język</a>
       <a href="#sub-jezyk" data-nav="sub-jezyk" class="nav-sub">Język</a>
       <a href="#sub-afazja" data-nav="sub-afazja" class="nav-sub">Afazja Broki i afazja Wernickego</a>
@@ -1289,7 +1287,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <a href="#sub-sm" data-nav="sub-sm" class="nav-sub">Pacjent S.M.</a>
       <a href="#sub-koregulacja" data-nav="sub-koregulacja" class="nav-sub">Od koregulacji do integracji</a>
       <a href="#sub-granulacja" data-nav="sub-granulacja" class="nav-sub">Granulacja emocjonalna</a>
-      <a href="#sub-depresja" data-nav="sub-depresja" class="nav-sub">Depresja</a>
       <a href="#sec-wnioski" data-nav="sec-wnioski">Wnioski</a>
       <a href="#sub-reprezentacjonizm" data-nav="sub-reprezentacjonizm" class="nav-sub">Reprezentacjonizm czy percepcja bezpośrednia?</a>
       <a href="#sub-przyczyny" data-nav="sub-przyczyny" class="nav-sub">Przyczyny jako źródła i przyczyny jako wyjaśnienia</a>
@@ -1302,6 +1299,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <a href="/kursy" class="back-link">&larr; Kursy</a>
     <h1>Wstęp do kognitywistyki II</h1>
     <p class="meta">ćwiczenia · I rok · semestr letni 2025/2026 · 30h</p>
+
+
 
     <!-- ==================== SESSION TOGGLES (fixed bottom) ==================== -->
     <div class="time-machine">
@@ -1323,6 +1322,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         </div>
       </div>
     </div>
+
+
 
     <!-- ==================== PODSTAWOWE POJĘCIA ==================== -->
     <h2 id="sec-perspektywy">Twoje modele świata</h2>
@@ -1423,7 +1424,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         </tr>
       </tbody>
     </table>
-    <p class="s3" data-session="3">W obu typach przewidywanym stanem ciała jest <strong>interocepcja</strong>. W warunkowaniu instrumentalnym propriocepcja jest wymogiem eksperymentalnym, w klasycznym może pojawiać się spontanicznie. To sugeruje, że organizm przypisuje credit assignment do losowych ruchów ciała, na przykład w eksperymentach z autoshapingiem albo podczas wiary w przesądy.</p>
+    <p class="s3" data-session="3">Oba typy celują w to samo: <strong>interocepcję</strong> jako przewidywany stan ciała. Różni je to, który wymiar niesie predykcję, świat przez eksterocepcję, czy Ty przez propriocepcję.</p>
+    <p class="s3" data-session="3">Ten podział należy jednak do eksperymentu. Organizm i tak próbuje działać, nawet gdy pokarm nadchodzi niezależnie od ruchu: w autoshapingu gołąb dziobie podświetlony klawisz w czysto pawłowowskim układzie, choć to niczego nie zmienia. Cały czas buduje modele przyczynowe i działaniem sprawdza, czy propriocepcja należy do łańcucha kończącego się na interocepcji.</p>
 
     <hr class="section-divider" />
     <h2 id="sec-architektura">Model to architektura sieci</h2>
@@ -1489,7 +1491,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       </div>
       <div class="vs-text"><span class="vs-title">Rudebeck i Murray (2014) · The Orbitofrontal Oracle</span>Wideo-abstrakt do pracy, w której autorzy nazwali OFC wyrocznią. W kilka minut tłumaczą, dlaczego rolą OFC jest przewidywanie i wycena wartości konkretnych skutków. To ujęcie wykracza poza dawne etykiety hamowania i emocji.</div>
     </div>
-    <p class="s9" data-session="9">Przypadek Phineasa Gage'a, któremu wypadek przy pracy zniszczył korę okołooczodołową (OFC), pokazuje, czym ta okolica się zajmuje. Rudebeck i Murray (2014) nazwali tę okolicę wyrocznią: OFC przewiduje i wycenia wartość konkretnych skutków działania, uczy się, co do czego prowadzi, i aktualizuje te wyceny, gdy świat się zmienia. Moralność jest jednym rodzajem takiej wyceny. To wartość przypisana społecznym skutkom czynu, ocena tego, co wypada zrobić w danych okolicznościach. Reguły moralne w dużej mierze kształtuje środowisko, więc każdy ma własną wycenę. Pacjent Eliot (Damasio) po uszkodzeniu OFC stracił właśnie tę zdolność. Potrafił przeanalizować skutki, ale nie potrafił przypisać im wartości, więc wybór restauracji na obiad paraliżował go tak samo jak dylemat moralny. Bez wyceny skutków decyzja nie ma się o co oprzeć.</p>
+    <p class="s9" data-session="9">Przypadek Phineasa Gage'a, któremu wypadek przy pracy zniszczył korę oczodołowo-czołową (OFC), pokazuje, czym ta okolica się zajmuje. Rudebeck i Murray (2014) nazwali tę okolicę wyrocznią: OFC przewiduje i wycenia wartość konkretnych skutków działania, uczy się, co do czego prowadzi, i aktualizuje te wyceny, gdy świat się zmienia. Moralność jest jednym rodzajem takiej wyceny. To wartość przypisana społecznym skutkom czynu, ocena tego, co wypada zrobić w danych okolicznościach. Reguły moralne w dużej mierze kształtuje środowisko, więc każdy ma własną wycenę. Pacjent Eliot (Damasio) po uszkodzeniu OFC stracił właśnie tę zdolność. Potrafił przeanalizować skutki, ale nie potrafił przypisać im wartości, więc wybór restauracji na obiad paraliżował go tak samo jak dylemat moralny. Bez wyceny skutków decyzja nie ma się o co oprzeć.</p>
     <div class="video-side s9" data-session="9">
       <div class="video-wrapper">
         <iframe
@@ -1520,7 +1522,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     </figure>
     <p class="s5" data-session="5">Brenda Milner odkryła coś zaskakującego: H.M. uczył się rysowania w lustrze. Z każdą sesją był szybszy i dokładniejszy, choć za każdym razem twierdził, że nigdy tego nie robił. Pętla hipokamp-kora śródwęchowa (HPC-EC) buduje wspomnienia deklaratywne: każde jak kartka w kartotece, opatrzona datą i miejscem, do której możesz świadomie wrócić. Prążkowie buduje nawyki: ciało pamięta, choć "Ty" nie. H.M. stracił kartotekę, ale zachował ciało.</p>
 
-    <p>Doświadczenie uwzględnia doświadczaną treść i perspektywę, z której się dzieje. Cały świat, jakiego doświadczasz, oraz to, z jakiej perspektywy doświadczasz, to modele. <span class="s2" data-session="2">Obejrzyj z tej perspektywy poniższy filmik Joschy Bacha, w którym zauważa, że Genesis może być interpretowane jako budowanie modeli świata przez dziecko przychodzące na świat.</span></p>
+
+    <p>Wróćmy do modeli. Modele powstają podczas lat treningu. <span class="s2" data-session="2">Joscha Bach zauważa, że Genesis może być interpretowane jako budowanie modeli świata przez dziecko przychodzące na świat.</span></p>
     <div class="video-side video-block s2" data-session="2">
       <div class="video-wrapper">
         <iframe
@@ -1532,40 +1535,187 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       </div>
       <div class="vs-text"><span class="vs-title">Joscha Bach · Genesis jako budowanie modelu świata</span>Bach czyta Księgę Rodzaju jako opis dziecka, które przychodzi na świat i od zera buduje modele rzeczywistości. Dobry punkt wyjścia do myślenia o doświadczeniu jako wytrenowanym modelu.</div>
     </div>
+    <h3 id="sub-stadia" class="s2" data-session="2">Stadia rozwoju</h3>
+    <p class="s2" data-session="2">Piaget opisał budowanie modeli świata jako kolejne stadia rozwoju. Odzwierciedlają one trening kolejnych sieci neuronowych (sensomotorycznych, uwagi, kontroli, domyślnej). Sieci przekazują informacje między sobą, dostarczając sobie błędy predykcyjne (bottom-up) i predykcje (top-down). Stadia rozwoju wskazują na kolejność wyłaniania się kompetencji, jednak ich rozwój trwa całe życie. Stadium sensomotoryczne (pierwszorzędowe sieci oraz sieć uwagowa) to fundament, na którym budowane są struktury kolejnych sieci.</p>
+    <p class="s2" data-session="2"><strong>Sensoryczno-motoryczne (0-2 lata):</strong> świat jest czystym doznaniem. Dotyk, smak, ruch. Chwytasz, wkładasz do ust, rzucasz. Powoli odkrywasz, że rzeczy istnieją nawet gdy na nie nie patrzysz. Twoje pierwsze modele: świat trwa. Te modele budują się we wspólnej przestrzeni wraz z opiekunami (we-space). Opiekun dostarcza pierwsze i najważniejsze (z perspektywy dziecka) afordancje. Sieci sensoryczne (SMN, VIS) dominują. Wszystko jest bottom-up. Komunikacja jest przedwerbalna: synchronizacja spojrzenia, mimiki, wokalizacji.</p>
+    <p class="s2" data-session="2"><strong>Przedoperacyjne (2-7 lat):</strong> pojawiają się symbole. Słowa. Zabawa "na niby." Wspólna przestrzeń się rozpada: masz teraz swoją własną perspektywę. Swoje własne zdanie. Symbole tworzą nową kategorię afordancji: możesz nazwać rzeczy, udawać, że klocek to samochód. Twoje modele mają jedną perspektywę. Błędy predykcyjne generujesz samodzielnie, przez zabawę i eksplorację. IFG zaczyna przetwarzać język. Mowa jest społeczna: mówisz do ludzi. Około trzeciego roku życia zaczynasz mówić do siebie na głos. Budujesz wieżę z klocków i komentujesz: "teraz ten... za duży... ten mały..." Język staje się narzędziem kierowania własnym działaniem.</p>
+    <p class="s2" data-session="2"><strong>Operacji konkretnych (7-11 lat):</strong> Zaczynasz modelować ciągi przyczynowo-skutkowe. Możesz sortować, klasyfikować, szeregować. Afordancje stają się przewidywalne, łączą się w ciągi: wiesz, co się stanie, gdy coś zrobisz. Potrafisz symulować w swoim modelu błędy predykcyjne zanim wystąpią. Sieć kontroli (CON) angażuje się coraz silniej: "co z tym zrobić?" Mowa prywatna cichnie. Internalizuje się. Staje się myśleniem słowami. Działania wcześniej komentowane na głos teraz komentowane są prywatnie.</p>
+    <p class="s2" data-session="2"><strong>Operacji formalnych (11+ lat):</strong> Modelujesz swoje modele siebie. Możesz myśleć o myśleniu. Przewidywać hipotetyczne scenariusze, co by było gdyby? Ciągi afordancji stają się coraz bardziej złożone, stany mentalne innych osób coraz bardziej kompleksowe. Twoje modele świata stają się bogatsze i dostrzegasz unikalne możliwości do działania. Ten pomysł, na który nikt nigdy jeszcze nie wpadł? To afordancja, którą widzisz tylko Ty, dzięki Twojemu unikalnemu doświadczeniu w przeszłości. Sieć domyślna (DMN) dominuje: Twoja nisza poznawcza rozszerza się poza tu i teraz. Błędy predykcyjne mogą dotyczyć dowolnych światów. Mowa wewnętrzna operuje na abstrakcjach. Możesz prowadzić dialog samemu ze sobą na tematy, które tylko Ty zrozumiesz.</p>
+    <p class="s2" data-session="2">Uczenie się polega na modyfikacji struktury połączeń neuronalnych w efekcie ekspozycji na specyficzne bodźce. <span class="s3" data-session="3">Gdy bodźce są zaskakujące, skutkują wyrzutem dopaminy, a w efekcie zapisaniem zaskakującej informacji w strukturze sieci neuronowej. Po to, żeby na przyszłość modele lepiej przewidywały, co się stanie.</span> Ekspozycja na określone bodźce w określonym czasie jest konieczna do skutecznego treningu sieci neuronalnych. Gdy bodźce nie docierają w oknie krytycznym, sieć nie kształtuje się odpowiednio i zdolności do przetwarzania bodźców zostają na stałe upośledzone.</p>
+    <p class="s3" data-session="3">Z drugiej strony, trening sieci mózgowych w traumatycznych warunkach będzie skutkował nauczeniem się nieoptymalnych wzorców, jak choćby style przywiązania nabywane w dzieciństwie. Skrajnym przypadkiem jest eksperyment Watsona na Małym Albercie, gdzie połączenie białego szczura z nieprzyjemnym dźwiękiem straumatyzowało chłopca do końca jego życia. Ten eksperyment boleśnie pokazuje, że doświadczenie nabywane od dziecka, w okresach gdzie nie ma żadnej kontroli nad okolicznościami, może rzutować na całe życie.</p>
 
-    <h3 id="sub-nisze">Nisze</h3>
-    <p>Doświadczane modele identyczne z aktywnością sieci mózgowych są nazywane przez niektórych badaczy niszami: poznawczą, ekologiczną i neuronalną. Nisze poznawcze to modele hostowane głównie przez DMN; nisze ekologiczne głównie przez DAN, a neuronalne odzwierciedlają rozrost struktur mózgowych właściwych dla tych dwóch pierwszych. Iriki i Taoka zwracali uwagę, że trzy nisze powstają jednocześnie w oparciu o badania na makakach.</p>
-    <p>Makak używający grabek integruje wzrok, dotyk, słuch i propriocepcję w schemat ciała (DAN). Do sieci mózgowych dociera mnóstwo zaskakujących informacji z receptorów. Sieci muszą wybudować modele, jak używać narzędzia. Po kilku tygodniach jego kora ciemieniowa rozrasta się fizycznie. Pola recepcyjne neuronów rozszerzają się na całą długość narzędzia. Grabki przestają być przedmiotem trzymanym w łapie. Stają się częścią ciała w wytrenowanych sieciach: somatomotorycznej, wzrokowej, uwagowej, kontroli.</p>
-    <p>Iriki i Taoka (2012) opisują trzy płaszczyzny, na których ta zmiana się odbywa:</p>
+    <div class="video-side video-block s3" data-session="3">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/FMnhyGozLyE"
+          title="Little Albert Experiment"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <div class="vs-text"><span class="vs-title">Eksperyment z Małym Albertem (Watson, 1920)</span>Nagranie klasycznego, dziś nieetycznego eksperymentu, w którym niemowlę nauczono bać się białego szczura. Pokazuje, jak trwały ślad zostawia trening w okresie bez żadnej kontroli nad sytuacją.</div>
+    </div>
+    <p class="s2" data-session="2">Najnowsze badania pokazują, że uczenie się zachodzi również w organizmach jednokomórkowych, a nawet w cząsteczkach chemicznych:</p>
+    <div class="video-side video-block s2" data-session="2">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/aQa0DowQ_oE"
+          title="Uczenie się w organizmach jednokomórkowych i cząsteczkach chemicznych"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <div class="vs-text"><span class="vs-title">Uczenie się w organizmach jednokomórkowych</span>Uczenie się nie wymaga mózgu. Film pokazuje, że nawet pojedyncze komórki i sieci molekularne zmieniają reakcje pod wpływem doświadczenia, co rozszerza pojęcie predykcji daleko poza neurony.</div>
+    </div>
+    <p class="s2" data-session="2">Jednokomórkowce są w stanie uczyć się wykorzystując wewnętrzną maszynerię komórkową. Najnowsze badania wskazują, że nawet sieci molekularne regulujące geny zmieniają swoje reakcje w wyniku treningu (<a href="https://www.nature.com/articles/s42003-025-08411-2" target="_blank">Bhatt et al., 2025</a>). Te badania nawiązują do koncepcji <a href="https://www.scientificamerican.com/article/brains-are-not-required-when-it-comes-to-thinking-and-solving-problems-simple-cells-can-do-it/" target="_blank">"basal cognition" Michaela Levina</a>.</p>
+    <p class="s2" data-session="2">Wracając do bardziej złożonych organizmów.</p>
+    <p class="s2" data-session="2"><strong>Hubel i Wiesel</strong> zakryli jedno oko kociętom w pierwszych tygodniach życia. Kolumny dominacji ocznej w pierwszorzędowej korze wzrokowej (V1) trwale nie rozwinęły się dla tego oka. Otworzenie oka po okresie krytycznym nie naprawiło szkody. Sieć nie dostała błędów predykcyjnych, których potrzebowała do ukształtowania swojej struktury.</p>
+    <p class="s2" data-session="2"><strong>Colin Blakemore</strong> hodował kocięta wyłącznie w środowisku z pionowymi liniami. Neurony V1 dostosowały się do dostępnych bodźców, nie rozwijając selektywności na linie o poziomej orientacji. Sieć wzrokowa wybudowała model w oparciu o dostępne informacje.</p>
+    <p class="s2" data-session="2"><strong>Genie:</strong> dziewczynka izolowana od ludzi do 13 roku życia. Po uwolnieniu: ograniczony rozwój językowy mimo intensywnej terapii. Okno dla języka zamknęło się.</p>
+    <p class="s2" data-session="2"><strong>Dzieci rumuńskie</strong> z domów dziecka Ceaușescu. Poważne deficyty poznawcze i emocjonalne. Częściowa odwracalność zależna od wieku adopcji: im wcześniej dziecko trafiło do rodziny, tym więcej udało się odzyskać. Ale nie wszystko.</p>
+    <p class="s2" data-session="2"><em>Eksperymenty Hubela i Wiesela, Blakemore'a oraz Watsona budzą poważne wątpliwości etyczne z dzisiejszej perspektywy. Standardy ochrony zarówno zwierząt laboratoryjnych, jak i uczestników badań zmieniły się fundamentalnie od początku XX wieku. Dziś żadna komisja etyczna nie zaakceptowałaby tych procedur.</em></p>
+    <h3 id="sub-asymilacja" class="s2" data-session="2">Asymilacja, akomodacja i strefa najbliższego rozwoju</h3>
+    <p class="s2" data-session="2">Dwa mechanizmy kształtują rozwój. <strong>Asymilacja:</strong> nowe doświadczenie pasuje do istniejących modeli, może je lekko zmodyfikować małym błędem predykcyjnym. Na przykład pies bez ogona to też pies. <strong>Akomodacja:</strong> doświadczenie jest zbyt zaskakujące i potrzebne są nowe modele. Na przykład dziecko na wycieczce do ZOO spotyka wilka. Mimo podobieństwa do psa, widzi i słucha o tym, że wilki są dzikie: potrzeba nowych modeli "wilka" oddzielnych od modeli "psa".</p>
 
-    <div class="niche-cards">
-      <div class="niche-card">
-        <div class="niche-label">Nisza neuronalna</div>
-        <p>Architektura sieci mózgowych: które połączenia istnieją, jak silne są, jakie wzorce aktywności są możliwe. Makak po tygodniach ćwiczeń z grabkami ma inną niszę neuronalną niż makak bez narzędzi.</p>
+    <p class="s2" data-session="2"><strong>Strefa najbliższego rozwoju (ZPD)</strong> to przestrzeń między tym, co potrafisz samemu, a tym, co potrafisz z pomocą kogoś bardziej doświadczonego. Ktoś bardziej doświadczony pomaga Ci wytrenować Twoje modele świata.</p>
+    <p class="s2" data-session="2"><strong>Scaffolding</strong> to rusztowanie: struktura wsparcia, która stopniowo się wycofuje, w miarę jak Twoje modele się kalibrują. Na początku duże wsparcie, duże błędy predykcyjne. Na końcu: samemu budujesz predykcje. Rusztowanie znika, bo Twoje sieci przejęły jego funkcję.</p>
+    <p class="s2" data-session="2"><strong>MKO</strong> (More Knowledgeable Other) to osoba z lepiej skalibrowanymi modelami. Nie musi być nauczycielem. Może być rówieśnikiem, rodzicem, a nawet technologią. Kluczem jest to, że MKO generuje błędy predykcyjne we właściwej strefie: nie za łatwe (brak uczenia) i nie za trudne (brak integracji).</p>
+    <p class="s2" data-session="2">Piaget opisuje podstawy budowania modeli. Vygotsky zwraca uwagę, że budowanie modeli ma komponent społeczny. Oba mechanizmy działają jednocześnie. Uczysz się przez doświadczenie i często ta nauka jest wspomagana przez MKO, który tworzy scaffolding w Twoim ZPD.</p>
+
+    <h3 id="sub-przywiazanie" class="s4" data-session="4">Style przywiązania</h3>
+    <p class="s4" data-session="4">Style przywiązania Bowlby'ego to cztery różne odpowiedzi tej samej architektury na jedno pytanie: <em>jak przewidywalna jest moja opiekunka jako zasób regulacyjny?</em> Inaczej: wewnętrzny model roboczy = system predykcji dotyczący dostępności zewnętrznego regulatora.</p>
+    <ul>
+      <li class="s4" data-session="4"><strong>Bezpieczny:</strong> opiekun konsekwentnie dostępny. vmPFC-ciało migdałowate rozwija się z niezawodnymi zewnętrznymi modelami jako scaffoldem.</li>
+      <li class="s4" data-session="4"><strong>Lękowo-ambiwalentny:</strong> opiekun niekonsekwentny. System przywiązania pozostaje hiper-aktywowany. Ciało migdałowate uczy się: alarm włączony, bo odpowiedź jest nieprzewidywalna. Koszt: chroniczne pobudzenie, nadwrażliwość na sygnały porzucenia.</li>
+      <li class="s4" data-session="4"><strong>Unikający:</strong> opiekun konsekwentnie nieresponsywny. Dziecko deaktywuje sygnalizację przywiązania. Wygląda jak niezależność. To wyłączony obwód przywiązania. Kosztem jest niedostępność własnych stanów interoceptywnych.</li>
+      <li class="s4" data-session="4"><strong>Zdezorganizowany:</strong> opiekun jest jednocześnie źródłem zagrożenia i jedynym bezpiecznym portem. System otrzymuje sprzeczne polecenia. Najsilniejszy predyktor późniejszej psychopatologii i dysocjacji.</li>
+    </ul>
+    <p class="s4" data-session="4">Teoria przywiązania i predictive processing opisują tę samą architekturę w różnych słownikach. Styl przywiązania to kalibracja modeli predykcyjnych dotyczących regulatora zewnętrznego, które kształtują połączenia vmPFC-ciało migdałowate przez powtarzaną koregulację.</p>
+
+    <p>Najogólniej mówiąc, uczenie się to proces budowania modeli świata. Wcześniejsze doświadczenia trenują Twoje sieci i kształtują predykcje na przyszłość.</p>
+
+    <h3 id="sub-sen" class="s6" data-session="6">Sen i konsolidacja</h3>
+    <p class="s6" data-session="6">Kiedy zachodzi konsolidacja? W nocy. Sen to tryb offline: mózg reorganizuje modele bez dopływu danych sensorycznych. Każda faza snu robi co innego. <strong>SWS (N3)</strong> to archiwista. Twój hipokamp odtwarza sekwencje neuronów z dnia (HPC replay) w kompresji czasowej, dwadzieścia razy szybciej niż na jawie. Sharp-wave ripples, eksplozje aktywności trwające 50-150 ms, przenoszą wspomnienia do kory nowej. Dopamina z SN i LC (Kaminski 2018, Takeuchi 2016) działa przy tym jako sygnał konsolidacyjny: decyduje, które ze śladów hipokampalnych zostaną utrwalone w korze nowej, a które znikną.</p>
+    <p class="s6" data-session="6"><strong>REM</strong> to terapeuta i trener. Walker opisuje to jako "sleep to forget, sleep to remember": REM redukuje ładunek emocjonalny wspomnienia bez usuwania jego treści. Jednocześnie konsoliduje umiejętności motoryczne. Ostatnie dwie godziny snu, w których REM dominuje, są nieproporcjonalnie ważne: każde skrócenie uderza tu najsilniej. <strong>NREM2</strong> to polerowanie umiejętności. Wrzeciona senne (12-15 Hz, generowane przez wzgórze) korelują z uczeniem proceduralnym. Muzycy i sportowcy podczas intensywnego treningu mają ich więcej. Dwie hipotezy konsolidacji działają równolegle: homeostaza synaptyczna (Tononi i Cirelli) osłabia niepotrzebne synapsy, aktywna konsolidacja (Diekelmann i Born) wzmacnia ważne ślady.</p>
+    <p class="s6" data-session="6">Kitamura et al. (2017) pokazali, że przenoszenie wspomnień z hipokampa do kory nie jest powolnym kopiowaniem. Komórki engramowe w korze przedczołowej (PFC) powstają już w dniu uczenia, ale są niedojrzałe: nie da się ich aktywować naturalnymi wskazówkami. Dojrzewają w kolejnych dniach, pod wpływem sygnałów z hipokampa, i właśnie SWS replay jest mechanizmem, przez który te sygnały docierają. Jednocześnie komórki engramowe w hipokampie stopniowo milkną: po dwóch tygodniach nie aktywują się przy naturalnym przypominaniu, choć wciąż można je wybudzić optogenetycznie. Komórki BLA (ciała migdałowatego podstawno-bocznego), kodujące walencję emocjonalną, utrzymują się przez cały proces: dlatego fakty blakną, ale emocjonalny ślad zostaje.</p>
+    <figure class="figure-block s6" data-session="6">
+      <img src="/images/kitamura2017_fig4L.png" alt="Model konsolidacji systemowej Kitamury et al. (2017)" />
+      <figcaption>Kitamura et al. (2017), Fig. 4L. Po lewej: dzień uczenia. Hipokamp (HPC) i ciało migdałowate (BLA) generują niedojrzałe engramy w korze przedczołowej (PFC). Po prawej: po konsolidacji. PFC przejmuje przypominanie, HPC milknie, BLA utrzymuje walencję emocjonalną. Źródło: Kitamura et al. (2017), <em>Science</em>.</figcaption>
+    </figure>
+
+    <h3 id="sub-ltp" class="s8" data-session="8">LTP i LTD</h3>
+    <p class="s8" data-session="8">Konsolidacja w śnie działa na poziomie systemów: hipokamp odtwarza, kora nowa przejmuje. Ale co dokładnie zmienia się w synapsie? <strong>Długotrwałe wzmocnienie synaptyczne</strong> (LTP, Long-Term Potentiation): gdy dwa neurony wielokrotnie aktywują się jednocześnie, synapsa między nimi się wzmacnia. "Cells that fire together, wire together." Kluczowy jest receptor <strong>NMDA</strong>: otwiera się tylko wtedy, gdy jednocześnie dociera glutaminian z neuronu presynaptycznego ORAZ błona postsynaptyczna jest depolaryzowana. Receptor NMDA to detektor koincydencji. Wymaga, żeby obie strony były aktywne w tym samym momencie.</p>
+    <p class="s8" data-session="8"><strong>Długotrwałe osłabienie synaptyczne</strong> (LTD, Long-Term Depression): gdy timing jest niedokładny albo aktywność słaba, synapsy słabną. Przycinanie, które wyostrza model. LTP buduje, LTD rzeźbi. Sharp-wave ripples podczas SWS odtwarzają sekwencje neuronów z dnia, wymuszając jednoczesną aktywację: to napędza LTP w synapsach korowych. Dojrzewanie engramów opisane przez Kitamurę to właśnie efekt powtarzanego LTP w korze przedczołowej, napędzanego przez nocne odtwarzanie w hipokampie. Homeostaza synaptyczna Tononiego (LTD) i aktywna konsolidacja Borna (LTP) są zgodne i działają równolegle: LTP wzmacnia ślady, które replay aktywował, LTD osłabia te, których nie aktywował.</p>
+
+    <p class="s3" data-session="3"><strong>Struktury mogące uwalniać dopaminę:</strong></p>
+    <ul class="s3" data-session="3">
+      <li class="s3" data-session="3"><strong>Pole brzuszne nakrywki</strong> (VTA, Ventral Tegmental Area)</li>
+      <li class="s3" data-session="3"><strong>Istota czarna</strong> (SN, Substantia Nigra)</li>
+      <li class="s3" data-session="3"><strong>Miejsce sinawe</strong> (LC, Locus Coeruleus): uwalnia głównie noradrenalinę, ale może też dopaminę</li>
+    </ul>
+
+    <p class="s3" data-session="3"><strong>Szlaki dopaminergiczne:</strong></p>
+    <ul class="s3" data-session="3">
+      <li class="s3" data-session="3"><strong>Nigrostriatalny</strong> (SN &rarr; prążkowie grzbietowe): kontrola ruchowa i uczenie nawykowe. Degeneracja tego szlaku to choroba Parkinsona.</li>
+      <li class="s3" data-session="3"><strong>Mezolimbiczny</strong> (VTA &rarr; jądro półleżące, NAcc): wartościowanie wyniku, motywacja, uczenie się przez nagrodę.</li>
+      <li class="s3" data-session="3"><strong>Mezokortykalny</strong> (VTA &rarr; kora przedczołowa): pamięć robocza, planowanie, kontrola impulsów.</li>
+    </ul>
+
+    <div class="video-side video-block s3" data-session="3">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/Wa8_nLwQIpg"
+          title="2-Minute Neuroscience: Dopamine"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
       </div>
-      <div class="niche-card">
-        <div class="niche-label">Nisza ekologiczna</div>
-        <p>Model środowiska złożony z afordancji. Makak używający grabek modyfikuje swoją niszę ekologiczną, odkrywając nowe możliwości do działania, które generują nowe błędy predykcyjne i nowe wymagania dla sieci. Bardziej dotyczy modeli w sieciach somatosensorycznej, wzrokowej, uwagowej.</p>
-      </div>
-      <div class="niche-card">
-        <div class="niche-label">Nisza poznawcza</div>
-        <p>Ta sama nisza poznawcza, która w stadium operacji formalnych rozszerzyła się poza tu i teraz. Przestrzeń odleglejszych czasoprzestrzennie afordancji. Makak z rozszerzoną korą ciemieniową dosłownie rozważa więcej możliwości działania: użycie narzędzi, odległy cel, interakcja społeczna. Bardziej dotyczy modeli w sieciach kontroli i domyślnej. Według autorów ten proces leży u podłoża ewolucji złożonych czynności poznawczych przez ludzi.</p>
-      </div>
+      <div class="vs-text"><span class="vs-title">2-Minute Neuroscience · Dopamina</span>Dwuminutowe, rzeczowe wprowadzenie do anatomii układu dopaminergicznego: skąd dopamina wypływa, dokąd dociera i jakie pełni funkcje. Tło do dalszej rozmowy o szlakach i nagrodzie.</div>
     </div>
 
-    <p>Trzy nisze to trzy opisy tego samego procesu: jak doświadczenie i sieci zwrotnie się kształtują. <span class="s2" data-session="2">Każde dziecko konstruuje wszystkie trzy nisze jednocześnie.</span></p>
-    <p>Te same trzy nisze wyznaczają oś całego kursu: oś odległości od receptorów. Nisza neuronalna to architektura sieci, którą właśnie opisaliśmy, czyli połączenia, ich siła i możliwe wzorce aktywności. Nisza poznawcza pracuje daleko od receptorów, w sieciach kontroli i domyślnej, gdzie modele odrywają się od bieżącego sygnału; od niej zaczynamy. Nisza ekologiczna pracuje blisko receptorów, w sieciach somatosensorycznej, wzrokowej i uwagowej, gdzie modele trzymają się świata przez afordancje; do niej przejdziemy potem. Z zewnątrz to trzy nisze, od środka jedno doświadczenie. Ta oś porządkuje modele w przestrzeni; ich zmianę w czasie prześledzimy w sekcji Modele w czasie.</p>
+    <p class="s3" data-session="3">Dodatkowo, zidentyfikowano wpływ SN i LC na hipokamp w badaniach na ludziach (Kaminski et al., 2018) i myszach (Takeuchi et al., 2016). Aktywność dopaminergiczna jest potrzebna do utworzenia wspomnienia o relacjach między informacjami. Gdy tę aktywność zablokujemy albo gdy jej brakuje, organizm nie utworzy mapy poznawczej. Dopamina jest więc potrzebna do aktualizacji modeli. Najnowsze dane (Adam, Nature 2026) pokazują coś szerszego: neurony dopaminergiczne reagują na zagrożenia, nowe bodźce, ruch i predykcje ruchowe. Dopamina to sygnał konsolidacyjny. Wzmacnia skojarzenie między tym, co się wydarzyło, a okolicznościami, w których się wydarzyło.</p>
+    <p class="s3" data-session="3">Rola dopaminy jest więc podwójna. Czasem wyrzut następuje już przy wskazówce, czasem dopiero w momencie zaskoczenia. Dopamina inicjuje automatyczną sekwencję ruchu (D1) w kierunku znanych konsekwencji. Kiedy jednak następuje błąd predykcyjny (informacje bottom-up nie zgadzają się z modelem top-down), wyrzut dopaminy następuje w momencie zaskoczenia. W tym kontekście, dopamina uczestniczy w konsolidacji informacji poprzedzających zaskoczenie. Co doprowadziło do danego doświadczenia? Kiedy okoliczności są niejasne (50%), system nie wie jeszcze, które zmienne są istotne, więc zapisuje wszystko. Kodowanie jest stopniowe. Z każdym doświadczeniem system zawęża, które zmienne niosą predykcję, a balans między kodowaniem (eksploracją), a odtwarzaniem (eksploatacją) dynamicznie się dostosowuje.</p>
+
+    <div class="video-side video-block s3" data-session="3">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/axrywDP9Ii0"
+          title="Robert Sapolsky - Dopamine Jackpot"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <div class="vs-text"><span class="vs-title">Robert Sapolsky · Dopamina i niepewność</span>Sapolsky tłumaczy, dlaczego dopamina najmocniej reaguje na niepewność nagrody. Sama nagroda porusza ją słabiej. To klucz do eksploracji, scrollowania i tego, co napędza poszukiwanie.</div>
+    </div>
+
+    <!-- ==================== POZIOMY PREDYKCJI ==================== -->
+    <figure class="figure-block s3" data-session="3">
+      <img src="/images/dopamine_pathways.png" alt="Trzy główne szlaki dopaminergiczne mózgu" />
+      <figcaption>Trzy główne szlaki dopaminergiczne: nigrostriatalny (SN &rarr; prążkowie), mezolimbiczny (VTA &rarr; NAcc) i mezokortykalny (VTA &rarr; kora przedczołowa). Źródło: Wikimedia Commons, Public Domain.</figcaption>
+    </figure>
+
+    <p class="s3" data-session="3">Jak system decyduje, którą trajektorię przez kaskadę realizować? Dwa szlaki w jądrach podstawy działają jak mechanizm selekcji:</p>
+    <p class="s3" data-session="3"><strong>Szlak bezpośredni,</strong> w którym szybko uwalniana dopamina (phasic) łączy się z receptorami D1, które są aktywujące. Ułatwia wybraną akcję, mapuje możliwe afordancje do działania.</p>
+    <p class="s3" data-session="3"><strong>Szlak pośredni,</strong> w którym powoli uwalniana dopamina (tonic) łączy się z receptorami D2, które są hamujące. Efektem jest tłumienie konkurencyjnych akcji i utrzymywanie trajektorii na danej afordancji.</p>
+    <p class="s3" data-session="3">To wygodny pierwszy obraz: jeden szlak wybiera, drugi blokuje. Nowsze dane pokazują jednak, że w momencie inicjacji oba szlaki są aktywne <em>jednocześnie</em>: wąska grupa neuronów szlaku bezpośredniego (D1) wybiera konkretną akcję, a szeroka grupa szlaku pośredniego (D2) w tym samym czasie tłumi alternatywy (Cui et al., 2013). Selekcja i hamowanie dzieją się razem, nie po kolei.</p>
+    <p class="s3" data-session="3">Robisz sekwencję afordancji: wstań, zrób kawę, idź do łazienki, ubierz się. D1 ułatwia każdy krok sekwencji. D2 tłumi rozpraszacze. Kiedy dopaminy w prążkowiu jest za mało (jak w chorobie Parkinsona), aktywność szlaku bezpośredniego jest zmniejszona relatywnie do szlaku pośredniego: problem z inicjacją ruchu.</p>
+
+    <p class="s7" data-session="7">ADHD to zaburzenie tej równowagi. Transporter dopaminy (DAT) w prążkowiu jest nadmiernie aktywny: wciąga dopaminę z przestrzeni synaptycznej, zanim zdąży zadziałać. Toniczny poziom dopaminy spada, a z nim aktywność szlaku pośredniego (D2). D2 nie ma czym tłumić konkurencyjnych trajektorii. Każdy nowy bodziec odpala szlak bezpośredni (D1), który inicjuje nową akcję, bo nic nie trzyma poprzedniej. Efekt: ciągłe przeskakiwanie między afordancjami, agitacja motoryczna, rozbiegany wzrok. Metylfenidat (Ritalin, Concerta) blokuje DAT, zatrzymując dopaminę w synapsie dłużej. Paradoks: stymulant uspokaja osobę z ADHD. Ale paradoks znika, gdy rozumiesz mechanizm. Metylfenidat podnosi toniczny poziom dopaminy, przywracając D2 zdolność do hamowania. Szlak pośredni znów trzyma trajektorię. Stymulant nie dodaje pobudzenia. Przywraca hamulec, którego brakowało.</p>
+    <p class="s7" data-session="7">Farmakologia ma cenę. Przewlekłe blokowanie DAT wywołuje kompensację: mózg produkuje więcej transportera (+24% gęstości DAT po roku stosowania, Wang et al., 2013). Kiedy lek przestaje działać, więcej DAT oznacza szybsze usuwanie dopaminy niż przed leczeniem. To efekt z odbicia (rebound): wieczorem, gdy lek opada, objawy wracają silniejsze niż rano. System, który kompensował brak dopaminy, teraz kompensuje jej sztuczną obecność.</p>
+
+    <h3 id="sub-depresja" class="s4" data-session="4">Depresja</h3>
+
+    <p class="s4" data-session="4">"Depresja to niewidzenie innych opcji." Mechanizm: predykcje są tak silnie negatywne, że system nie generuje pozytywnych kandydatów do działania. Każda opcja przewiduje porażkę.</p>
+    <p class="s4" data-session="4">Kolaps zachodzi na każdym poziomie hierarchii jednocześnie: neutralne stany ciała są etykietowane przez DMN jako ciężkość i bezwartościowość; ta sama fizjologiczna ekscytacja jest konstruowana jako groza; każde działanie jest oceniane przez prior porażki zanim zostanie zainicjowane. Od środka nie czujesz złamanego mechanizmu predykcji. Czujesz, że nic nie ma sensu i nic nie jest warte wysiłku.</p>
+
+    <figure class="figure-block s3" data-session="3">
+      <img src="/images/basal_ganglia.png" alt="Szlak bezpośredni i pośredni w jądrach podstawy" />
+      <figcaption>Szlak bezpośredni i pośredni w jądrach podstawy. Szlak bezpośredni (D1) przygotowuje zestaw możliwych akcji. Szlak pośredni (D2) zawęża wybór. Źródło: Wikimedia Commons.</figcaption>
+    </figure>
+
+    <p class="s3" data-session="3">Te szlaki nie działają w próżni: domykają wielką pętlę kora &rarr; prążkowie &rarr; gałka blada &rarr; wzgórze &rarr; kora. Kora wysyła pobudzenie do prążkowia (warstwa V), prążkowie przez szlaki bezpośredni i pośredni steruje gałką bladą i istotą czarną, te hamują wzgórze, a wzgórze wraca do kory. Dopamina z SNc i VTA ustawia czułość całej pętli. To jest pętla korowo-prążkowiowo-wzgórzowo-korowa: ten sam obwód, który wybiera ruch, na bardziej brzusznym końcu wybiera cel i decyzję. Diagram poniżej pokazuje tę pętlę z perspektywy pojedynczej kolumny korowej: warstwy kory na górze, a pod nimi jądra podstawy, wzgórze i dopaminergiczne wejście z VTA.</p>
+    <p class="s10" data-session="10">Tak wyglądają naprawdę warstwy kory. Rekonstrukcja pięciu kolumn korowych pokazuje sześć warstw, od powierzchni mózgu (pial surface) po istotę białą (white matter). Schemat pętli pod nią rysuje te same warstwy już jako obwód.</p>
+    <figure class="figure-block s10" data-session="10">
+      <img src="/images/cortical_columns.jpg" alt="Rekonstrukcja 3D pięciu kolumn korowych z oznaczonymi sześcioma warstwami, od powierzchni opony miękkiej po istotę białą" />
+      <figcaption>Rekonstrukcja 3D pięciu kolumn korowych w korze beczułkowej szczura, z oznaczonymi warstwami L1-L6, powierzchnią opony miękkiej (pial surface) i istotą białą (white matter). Źródło: Bodysurfinyon, na podstawie Marcel Oberländer, "Beyond the Cortical Column" (Neuroinformatics 2012), Wikimedia Commons, CC BY-SA 4.0.</figcaption>
+    </figure>
+    <figure class="figure-block s3" data-session="3">
+      <img src="/images/minicolumn_loop.png" alt="Kolumna korowa z warstwami L1-L6 połączona z jądrami podstawy, wzgórzem i polem brzusznym nakrywki przez pętle dopaminergiczne" />
+      <figcaption>Kolumna korowa wpięta w pętlę podkorową. Warstwy L1-L6 (z neuronem piramidowym) wysyłają pobudzenie glutaminianergiczne (Glu) z warstw L5/L6 do jąder podstawy (BG). BG rzutuje na wzgórze (TH), które odsyła sygnał GABA-ergiczny z powrotem do warstw kory. Pole brzuszne nakrywki (VTA) zasila warstwę L2/3 dopaminą (DA), ustawiając czułość całej pętli. Źródło: Opris, Chang i Noga (2017), <em>Frontiers in Neuroanatomy</em>, 11:116, licencja CC BY.</figcaption>
+    </figure>
+
+    <h3 id="sub-pamiec" class="s5" data-session="5">Pamięć i symulacja</h3>
+    <p class="s5" data-session="5">Zamknij oczy i przypomnij sobie wczorajszy obiad. A teraz wyobraź sobie jutrzejszy. Addis, Wong i Schacter (2007) pokazali w fMRI, że Twój mózg aktywuje dokładnie tę samą sieć w obu przypadkach: hipokamp, korę śródwęchową, mPFC i PCC (tylna kora zakrętu obręczy). Sieć domyślna. Ten sam aparat, który rekonstruuje przeszłość, buduje przyszłość.</p>
+    <p class="s5" data-session="5">Implikacja jest fundamentalna: fałszywe wspomnienia to koszt architektury zoptymalizowanej pod symulację. System, który potrafi rekombinować elementy przeszłości w nowe scenariusze, z konieczności może też rekombinować je w scenariusze, które nigdy się nie wydarzyły. Fałszywe wspomnienia z eksperymentu Loftus to produkt tego samego mechanizmu, który pozwala Ci wyobrazić sobie, co zrobisz jutro.</p>
+    <p class="s5" data-session="5">H.M. stracił tę zdolność razem z hipokampem. Nie tylko nie tworzył nowych wspomnień; nie potrafił wyobrażać sobie przyszłości. Gdy proszono go o opisanie jutra, nie potrafił skonstruować żadnej sceny. Odpowiadał ogólnikami albo milczał. Twoja nisza poznawcza rozciąga się od wspomnień dzieciństwa po plany na przyszły tydzień. Nisza H.M. zwężyła się do teraźniejszości. Bez hipokampa mapa czasowa znikła tak samo jak mapa przestrzenna.</p>
+
+    <p class="s3" data-session="3">Ten sam system konsolidacyjny, który podczas snu odtwarza i wzmacnia adaptacyjne wspomnienia, może zostać przejęty. Substancje psychoaktywne produkują sygnał dopaminergiczny o sile, do jakiej architektura nigdy nie była kalibrowana. Konsekwencja: konsolidacja uruchamia się na pełnych obrotach, ale koduje kontekst zażycia, a nie kontekst przetrwania.</p>
+
+    <h3 id="sub-przejecie" class="s3" data-session="3">Gdy system zostaje przejęty</h3>
+    <p class="s3" data-session="3">W 1954 roku Olds i Milner przypadkowo odkryli, że szczury naciskają dźwignię tysiące razy na godzinę, by stymulować elektrycznie własny mózg. Elektroda była umieszczona w podwzgórzu bocznym, ale stymulowała pęczek przyśrodkowy przodomózgowia: szlak dopaminergiczny z VTA do NAcc. Późniejsze badania pokazały, że to właśnie aktywacja NAcc tak bardzo uzależnia.</p>
+
+    <p class="s3" data-session="3">Substancje przejmują ten sam system konsolidacji.</p>
+    <p class="s3" data-session="3">Kokaina blokuje transporter dopaminy (DAT, Dopamine Transporter). W efekcie transporter nie zbiera dopaminy z przestrzeni synaptycznych do neuronu presynaptycznego i dopamina tam obecna dłużej aktywuje receptory postsynaptyczne. Kokaina blokuje też transporter noradrenaliny (NET) i serotoniny (SERT): jest potrójnym inhibitorem wychwytu zwrotnego. Efekty sercowo-naczyniowe (tachykardia, nadciśnienie) wynikają z blokady NET, efekty nastroju z blokady SERT, uzależnienie z blokady DAT.</p>
+    <p class="s3" data-session="3">Amfetaminy blokują DAT i odwracają działanie transportera. DAT normalnie zabiera dopaminę ze szczeliny synaptycznej do neuronu presynaptycznego. DAT, do którego przyłączyła się amfetamina, działa pod prąd. Transportuje dopaminę z neuronu presynaptycznego do szczeliny synaptycznej. Sprawia to, że neuron uwalnia dopaminę bez generowania potencjału czynnościowego.</p>
+    <p class="s3" data-session="3">Opiaty działają inaczej: hamują interneurony GABAergiczne w VTA, które normalnie hamują neurony dopaminergiczne. Hamulec na hamulcu przestaje działać. Jednocześnie opiaty bezpośrednio produkują zmianę interoceptywną: ból znika, rozlewa się ciepło.</p>
+    <p class="s3" data-session="3">Wszystkie trzy substancje wpływają na uwalnianie dopaminy w różnych miejscach w różny sposób. Substancje produkują sygnał naturalnie nie doświadczany. Każdy detal eksteroceptywny obecny podczas zażycia (pokój, ludzie, muzyka) zostaje skonsolidowany z nadludzką siłą. Dlatego kontekst wyzwala nawrót. Te skojarzenia zostały wykute sygnałem, do którego architektura nigdy nie była skalibrowana.</p>
+
+    <p class="s10" data-session="10">Substancje psychodeliczne (psylocybina, LSD) działają na ten system z drugiej strony. Pobudzają receptory serotoninowe 5-HT2A na neuronach piramidowych głębokich warstw kory, a to rozluźnia priory najdalsze od zmysłów. Model Carhart-Harrisa i Fristona (2019), nazwany REBUS, ujmuje to wprost: gdy precyzja predykcji top-down spada, sygnał bottom-up z receptorów dociera dalej niż zwykle. To ta sama gałka precyzji, którą widziałeś w autyzmie (Pellicano i Burr), tylko przekręcona w drugą stronę: na kilka godzin i farmakologicznie, zamiast na stałe. Świat staje się intensywniejszy, granice pojęć miękną, a modele, które normalnie są przezroczyste, na chwilę stają się widoczne jako modele. To ten sam gradient przezroczystości, do którego wrócimy w zakończeniu, tu przesunięty farmakologicznie ku gibsonowskiemu krańcowi.</p>
+    <p class="s3" data-session="3"><em>Ćwiczenie:</em> jeśli choroba Parkinsona to degeneracja neuronów SNc (Substantia Nigra pars compacta; mniej dopaminy w prążkowiu grzbietowym), a kokaina blokuje DAT (utrzymuje dopaminę w synapsie dłużej), to czy kokaina mogłaby pomóc?</p>
+    <p class="s3" data-session="3">Teoretycznie tak, ale problem w tym, że kokaina jest nieselektywna: blokuje DAT, NET i SERT jednocześnie, wywołując szerokie spektrum efektów ubocznych i uzależnienie. L-DOPA stosowana w leczeniu działa inaczej: dostarcza prekursora do neuronów dopaminergicznych, które mają enzym DOPA dekarboksylazę do konwersji. To zwiększa dostępność dopaminy w całym mózgu. Efektem ubocznym jest zwiększona aktywność szlaku mezolimbicznego: pacjenci z Parkinsonem leczeni L-DOPA czasem rozwijają kompulsywne zachowania (hazard, zakupy). Ten sam lek, który przywraca kontrolę ruchową przez szlak nigrostriatalny, może zaburzyć kontrolę impulsów przez szlak mezolimbiczny.</p>
 
     <!-- ==================== EMOCJE ==================== -->
     <hr class="section-divider" />
     <h2 id="sec-daleko">Daleko od receptorów</h2>
-    <p>Najogólniej mówiąc, uczenie się to proces budowania modeli świata. Wcześniejsze doświadczenia trenują Twoje sieci i kształtują predykcje na przyszłość.</p>
-    <p>Zacznijmy od sieci najdalej od zmysłów. Tu mieszkają modele oderwane od bieżącego bodźca: pojęcia, myśli, plany i modele cudzych umysłów.</p>
-    <h3 id="sub-dmn">Sieć trybu domyślnego (DMN)</h3>
-    <p>DMN pracuje najdalej od receptorów i buduje modele, przez pryzmat których interpretujesz to, co bliżej zmysłów. Aktywność DMN jest tym, co od środka przeżywasz jako myślenie: o sobie, o innych, o przeszłości i przyszłości.</p>
+    <p>Zacznijmy od końca najdalszego od zmysłów. Tu mieszkają modele oderwane od bieżącego bodźca: pojęcia, myśli, plany i modele cudzych umysłów.</p>
     <h3 id="sub-hipokamp" class="s8" data-session="8">Hipokamp</h3>
-    <p class="s8" data-session="8">Hipokamp bierze udział w nawigacji, kodowaniu wspomnień, pamięci epizodycznej i planowaniu. Te wszystkie funkcje łączy jedno: konstrukcja sceny (scene construction; Maguire i Mullally, 2013). Hipokamp tworzy scenę relacji między dowolnymi obiektami, na przykład jak ułożone są przedmioty na stole lub na ekranie albo jaka jest struktura firmy, w której pracujesz.</p>
-    <p class="s8" data-session="8">Badania nad hipokampem sięgają eksperymentów ze szczurami swobodnie eksplorującymi labirynty (Tolman, 1948). Szczury zbudowały mapę poznawczą, która pozwoliła im tworzyć skróty, gdy pojawiła się nagroda. Mapy poznawcze łączą relacje między informacjami z receptorów dzięki aktywnościom komórek miejsca w hipokampie (HPC) i komórek siatki w korze śródwęchowej (Entorhinal Cortex, EC). Godden i Baddeley (1975) dodali, że mapa nie jest abstrakcyjna: nurkowie, którzy uczyli się słów pod wodą, przypominali je lepiej pod wodą niż na lądzie. Kontekst jest częścią śladu pamięciowego: Twój hipokamp koduje treść razem z okolicznościami, w których ją napotkałeś.</p>
+    <p class="s8" data-session="8">Tolman pokazał, że modele budują się cały czas. Szczury, które eksplorowały labirynt bez nagrody, zbudowały mapę poznawczą, która pozwoliła im tworzyć skróty, gdy pojawiła się nagroda. Mapy poznawcze łączą relacje między informacjami z receptorów dzięki aktywnościom komórek miejsca w hipokampie (HPC) i komórek siatki w korze śródwęchowej (Entorhinal Cortex, EC).</p>
+    <p class="s8" data-session="8">W miarę jak model staje się niezawodny przez powtarzanie, zachowanie stopniowo przenosi się z hipokampa (elastyczny, deklaratywny: "pamiętam, jak tam dojechać") do prążkowia grzbietowo-bocznego (automatyczny, nawykowy: "ciało samo jedzie"). Alternatywne scenariusze nie muszą już być modelowane w HPC, bo dany ciąg afordancji zawsze niesie ze sobą przewidywalne informacje i wystarczy nawykowo powtórzyć to, co zawsze działało.</p>
+    <p class="s8" data-session="8">Thorndike widział uczenie się jako mechaniczne wzmacnianie połączeń bodziec-reakcja: kot w puzzle box próbuje losowo, przypadkowo trafia, i to połączenie się wzmacnia. Tolman pokazał, że szczury robią coś fundamentalnie innego: budują model przestrzeni i używają go elastycznie. To różnica między nawykiem a mapą. Nawyk to prążkowie: "skręć w lewo." Mapa to hipokamp: "wyjście jest na północ, mogę tam dotrzeć różnymi drogami." Godden i Baddeley (1975) dodali, że mapa nie jest abstrakcyjna: nurkowie, którzy uczyli się słów pod wodą, przypominali je lepiej pod wodą niż na lądzie. Kontekst jest częścią śladu pamięciowego: Twój hipokamp koduje treść razem z okolicznościami, w których ją napotkałeś.</p>
+    <p class="s8" data-session="8">Rekonsolidacja komplikuje obraz. Przypominasz sobie kłótnię sprzed roku. W momencie przywoływania wspomnienie otwiera się na modyfikację: przez krótkie okno jest podatne na zmianę, zanim hipokamp ponownie je skonsoliduje (Nader et al., 2000). To mechanizm aktualizacji: stare modele spotykają nowe dane i mogą się zmienić. Nawyk w prążkowiu nie podlega tej samej plastyczności. Dlatego trauma zakodowana deklaratywnie w hipokampie jest potencjalnie modyfikowalna (na tym bazuje terapia ekspozycyjna), podczas gdy nawyk unikania, skonsolidowany w prążkowiu, opiera się zmianie.</p>
+    <p class="s8" data-session="8">Najdalsze modele wyrastają z aparatu, który pierwotnie mapował przestrzeń fizyczną. Komórki miejsca i komórki siatki budują mapy pokoju, ale hipokamp mapuje też coś więcej. Quian Quiroga i współpracownicy (2005) mierzyli aktywność neuronów u pacjentów z epilepsją i odkryli coś zaskakującego: pojedyncze neurony w hipokampie reagowały na konkretną osobę, niezależnie od zdjęcia, kąta widzenia, a nawet samego imienia. Jeden neuron aktywował się na każde przedstawienie Jennifer Aniston: zdjęcie z profilu, z przodu, napis "Jennifer Aniston." Nie reagował na cechy wzrokowe. Reagował na <strong>pojęcie</strong>.</p>
+    <p class="s8" data-session="8">Te <strong>komórki pojęciowe</strong> (concept cells) to neurony, które kompresują rozproszoną aktywność kory nowej w jedno pojęcie. Kora wzrokowa przetwarza piksele. Kora asocjacyjna łączy cechy. Hipokamp robi snapshot: jedno pojęcie, jedna komórka. Mackay i współpracownicy (2024) dodali drugi element: w korze przyhipokampalnej (parahippocampal cortex) odkryli <strong>komórki lokalizacyjne</strong>, które kodują GDZIE spotkałeś dane pojęcie. Komórki pojęciowe dostarczają "co", komórki lokalizacyjne dostarczają "gdzie." Razem budują adres wspomnienia epizodycznego.</p>
+    <p class="s8" data-session="8">Hipokamp potrafi to zrobić w jednym podejściu. <strong>One-shot learning:</strong> jedno spotkanie wystarczy, żeby utworzyć nowe wiązanie pojęcie-kontekst. Kora nowa potrzebuje setek powtórzeń, żeby wybudować prototyp. Hipokamp zapisuje egzemplarz od razu. To dlatego przechowywanie egzemplarzy jest hipokampalne, a prototypów korowe.</p>
     <div class="video-side video-block s8" data-session="8">
       <div class="video-wrapper">
         <iframe
@@ -1577,36 +1727,91 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       </div>
       <div class="vs-text"><span class="vs-title">Artem Kirsanov · Mapy poznawcze i przestrzenie abstrakcyjne</span>Kirsanov tłumaczy komórki miejsca i siatki oraz to, jak ten sam aparat, który mapuje pokój, mapuje też przestrzenie pojęć. Bezpośrednie rozwinięcie sekcji o myśleniu jako nawigacji.</div>
     </div>
-    <p class="s8" data-session="8">W miarę jak model staje się dokładniejszy przez powtarzanie, zachowanie stopniowo przenosi się z hipokampa (elastyczny, deklaratywny: "pamiętam, jak tam dojechać") do prążkowia grzbietowo-bocznego (automatyczny, nawykowy: "ciało samo jedzie"). Alternatywne scenariusze nie muszą już być modelowane w HPC, bo dany ciąg afordancji zawsze niesie ze sobą przewidywalne informacje i wystarczy nawykowo powtórzyć to, co zawsze działało.</p>
-    <p class="s8" data-session="8">Wracając do hipokampa, komórki miejsca i komórki siatki budują mapy pokoju, ale hipokamp mapuje też coś więcej. Quian Quiroga i współpracownicy (2005) mierzyli aktywność neuronów u pacjentów z epilepsją i odkryli coś zaskakującego: pojedyncze neurony w hipokampie reagowały na konkretną osobę, niezależnie od zdjęcia, kąta widzenia, a nawet samego imienia. Jeden neuron aktywował się na każde przedstawienie Jennifer Aniston: zdjęcie z profilu, z przodu, napis "Jennifer Aniston." Reagował na <strong>pojęcie</strong>, niezależnie od tego, jak było przedstawione.</p>
-    <p class="s8" data-session="8">Te <strong>komórki pojęciowe</strong> (concept cells) to neurony w MTL, które odzwierciedlają globalną aktywność mózgu na potrzeby zapisania wspomnienia. To odzwierciedlenie jest tymczasowe, bo pacjent H.M. wciąż rozpoznawał obiekty i pojęcia. Jego deficyty pokazywały niezdolność do tworzenia nowych wspomnień i do epizodycznej podróży w czasie, czyli przywoływania przeszłości i wyobrażania sobie przyszłości.</p>
-    <p class="s8" data-session="8">Reasumując, hipokamp robi snapshot: komórki reagują na pojęcia, których doświadczasz w danej sytuacji. Mackay i współpracownicy (2024) dodali drugi element: w korze przyhipokampalnej (parahippocampal cortex) odkryli <strong>komórki lokalizacyjne</strong>, które kodują, GDZIE spotkałeś dane pojęcie. Komórki pojęciowe dostarczają "co", komórki lokalizacyjne "gdzie", a razem budują adres wspomnienia epizodycznego. Hipokamp robi to w jednym podejściu: <strong>one-shot learning</strong>, w którym jedno spotkanie wystarczy, żeby utworzyć nowe wiązanie pojęcie-kontekst.</p>
 
-    <h3 id="sub-pamiec" class="s5" data-session="5">Pamięć i symulacja</h3>
-    <p class="s5" data-session="5">Zamknij oczy i przypomnij sobie wczorajszy obiad. A teraz wyobraź sobie jutrzejszy. Addis, Wong i Schacter (2007) pokazali w fMRI, że Twój mózg aktywuje dokładnie tę samą sieć w obu przypadkach: HPC, EC, mPFC i PCC (tylna kora zakrętu obręczy). To elementy DMN. Przypominanie sobie przeszłości i budowanie przyszłości to ta sama sieć w działaniu, raz zwrócona wstecz, raz w przód. DMN-HPC tworzy modele oderwane od zmysłów, które stymulują top-down inne sieci, jednocześnie zapisując pobudzenie z tych sieci zwrotnie do hipokampa w formie nowych śladów pamięciowych. Dlatego każde przypomnienie sobie przeszłości to rekonstrukcja, a wspomnienia z czasem ulegają modyfikacji.</p>
-    <p class="s5" data-session="5">H.M. stracił strukturę umożliwiającą tworzenie i zapis scen niezależnych od zmysłów, przez co nie doświadczał epizodycznych podróży w czasie i był uwięziony w wiecznej teraźniejszości. Nie tworzył nowych wspomnień, nie potrafił wyobrażać sobie przyszłości. Gdy proszono go o opisanie jutra, nie potrafił skonstruować żadnej sceny. Odpowiadał ogólnikami albo milczał. Twoja nisza poznawcza rozciąga się od wspomnień dzieciństwa po plany na przyszły tydzień. Nisza H.M. zwężyła się do teraźniejszości. Bez hipokampa mapa czasowa znikła tak samo jak mapa przestrzenna.</p>
+    <p><strong>Poziom 2 - emocje innych</strong> (de Waal, Goodall): Szympans widzi, że innemu szympansowi jest źle. Przewiduje jego ból i podchodzi pocieszyć. To jest empatia jako mechanizm predykcyjny - uniwersalny dla wielu gatunków.</p>
 
-    <h3 id="sub-sen" class="s6" data-session="6">Sen i konsolidacja</h3>
-    <p class="s6" data-session="6">Konsolidacja zachodzi głównie podczas snu, gdy mózg przechodzi w tryb offline i reorganizuje modele bez dopływu danych sensorycznych. Najwięcej dla pamięci dzieje się w fazie snu wolnofalowego (SWS, N3), najgłębszej fazie snu, w której korę zalewają powolne fale. Hipokamp odtwarza wtedy sekwencje neuronów z minionego dnia (HPC replay) w kompresji czasowej, nawet dwadzieścia razy szybciej niż na jawie. Nośnikiem tego odtwarzania są ostre fale-zmarszczki (sharp-wave ripples, SWR): krótkie, trwające 50-150 ms eksplozje zsynchronizowanej aktywności hipokampa, w których ślad pamięciowy zostaje przekazany korze nowej. Dopamina z istoty czarnej (SN) i miejsca sinawego (LC, locus coeruleus) rozstrzyga przy tym, które ze śladów hipokampalnych przetrwają, a które znikną (Kaminski, 2018; Takeuchi, 2016).</p>
-    <p class="s6" data-session="6">Na poziomie komórkowym wspomnienia, czyli aktualizacje modeli, zapisują się jako engramy: populacje neuronów kodujące dany ślad. U myszy w chwili klasycznego warunkowania negatywnego (eksterocepcja klatki prowadzi do interocepcji szoku) engramy tworzą się jednocześnie w hipokampie i w korze nowej (Kitamura et al., 2017), a do ich utrwalenia potrzebna jest dopamina z miejsca sinawego (Wagatsuma et al., 2018). Po warunkowaniu mysz reaguje strachem na klatkę. Gdy optogenetycznie wyłączymy engram hipokampalny tuż po warunkowaniu, strach znika; gdy wyłączymy engram korowy dwa tygodnie później, również go nie ma. Wspomnienie najpierw wymaga hipokampa, a potem konsoliduje się do kory nowej. Pacjent H.M. po usunięciu hipokampa nie pamiętał okresu tuż przed operacją, ale zachował odleglejsze wspomnienia. Komórki BLA w ciele migdałowatym podstawno-bocznym, kodujące walencję emocjonalną, utrzymują się przez cały proces, dlatego z czasem fakty blakną, a ślad emocjonalny zostaje.</p>
-    <figure class="figure-block s6" data-session="6">
-      <img src="/images/kitamura2017_fig4L.png" alt="Model konsolidacji systemowej Kitamury et al. (2017)" />
-      <figcaption>Kitamura et al. (2017), Fig. 4L. Po lewej: dzień uczenia. Hipokamp (HPC) i ciało migdałowate (BLA) generują niedojrzałe engramy w korze przedczołowej (PFC). Po prawej: po konsolidacji. PFC przejmuje przypominanie, HPC milknie, BLA utrzymuje walencję emocjonalną. Źródło: Kitamura et al. (2017), <em>Science</em>.</figcaption>
-    </figure>
+    <p><strong>Poziom 3 - intencje innych</strong> (Tomasello): Szympans przewiduje, co inny zrobi. Człowiek przewiduje, co inny chce, żebym wiedział. Z tej różnicy wynika kumulatywna kultura: każde pokolenie zaczyna tam, gdzie skończyło poprzednie.</p>
+    <p>Poziom 3 ma dwa podpoziomy:</p>
+    <ul>
+      <li><strong>Podpoziom A - joint attention:</strong> "Skupiamy uwagę na tym samym." Trójstronna relacja: ja, ty, obiekt. Oboje wiemy, że oboje patrzymy. Szympansy to potrafią, choć słabiej niż ludzie.</li>
+      <li><strong>Podpoziom B - shared intentionality:</strong> "Mamy różne role w tym samym planie i oboje to rozumiemy." Tu pojawia się rekurencja: wiem że ty wiesz że ja wiem, i razem działamy na podstawie tej wzajemnej świadomości. Tutaj szympansy radzą sobie gorzej - zazwyczaj dominujący osobnik nie przyjmuje perspektywy współpracownika.</li>
+    </ul>
+
+    <div class="video-side video-block">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/BNbeleWvXyQ"
+          title="Michael Tomasello - What Makes Us Human?"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <div class="vs-text"><span class="vs-title">Michael Tomasello · What Makes Us Human?</span>Tomasello tłumaczy, czym wspólna intencjonalność różni się od zwykłej koordynacji i dlaczego właśnie ona odróżnia ludzkie poznanie od małpiego. Sam intelekt tu nie wystarcza.</div>
+    </div>
+
+    <h3 id="sub-afordancje">Afordancje</h3>
+    <p>Afordancje powstają <em>między Tobą a światem</em>: ani w samym przedmiocie, ani w samym Tobie.</p>
+    <p class="s11" data-session="11">To teza Gibsona: afordancję odbierasz tuż przy receptorach, gdzie modele trzymają się świata tak ciasno, że ich praca jest niewidoczna. Pod koniec kursu zobaczysz, że to bliski kraniec tej samej osi, na której drugim końcu pracuje Friston.</p>
+    <p>Ten sam kamień: turlanie dla dziecka, siedzenie dla zmęczonego wędrowca, budulec dla architekta. Kamień się nie zmienił. Zmieniła się relacja, kontekst, potrzeba.</p>
+    <ul>
+      <li><strong>Relacyjne:</strong> nie istnieją bez konkretnego organizmu.</li>
+      <li><strong>Kontekstualne:</strong> ten sam obiekt, inne możliwości w innych sytuacjach.</li>
+      <li><strong>Dynamiczne:</strong> zmieniają się wraz z predykcjami.</li>
+    </ul>
+
+    <div class="formula-box">
+      afordancje + motywacja = akcja
+    </div>
+
+    <p>Afordancje są więc możliwościami do działania. Są elementami modeli rzeczywistości, z którymi modele "Ciebie" mogą wejść w interakcję. Poruszasz ciałem, implementując predykcje top-down z kory motorycznej (Adams et al., 2013). Model w korze motorycznej powstał w wyniku lat treningu stadium sensoryczno-motorycznego. Trening ruchu i używania narzędzi ukształtował strukturę sieci neuronowych za pośrednictwem błędów predykcyjnych bottom-up. Ta wytrenowana struktura zwrotnie dostarcza sygnał top-down, generując kolejne predykcje ruchu. Predykcje i błędy predykcyjne są w ciągłej interakcji, znane afordancje są przewidywane, nowe afordancje są odkrywane i dodawane do modeli. <span class="s2" data-session="2">Poruszanie ciałem jest warunkiem poznania. Mózg, ciało i działanie to trzy perspektywy na ten sam proces.</span></p>
+    <p class="s9" data-session="9">Zespół Tourette'a rzuca światło na komponent <em>whether</em> z modelu Brassa i Haggarda. Tiki motoryczne i wokalne to ruchy, które system inicjuje (what i when działają), ale których mechanizm weta nie zatrzymuje. Pacjenci z Tourette'em często opisują narastające napięcie (premonitory urge) przed tikiem, które ustępuje dopiero po jego wykonaniu. Kontrola jest obecna, tyle że przegrywa. Predykcja sensoryczna okazuje się silniejsza niż weto. Komponent whether próbuje zatrzymać ruch i ustępuje sile predykcji domagającej się spełnienia.</p>
+    <p class="s2" data-session="2">Alison Gopnik proponuje, że dzieci to zoptymalizowane maszyny do eksploracji: testują więcej afordancji, napotykają więcej błędów predykcyjnych, próbują więcej wariantów. Dorośli eksploatują wyuczone modele, podążając utartymi ścieżkami znanych afordancji.</p>
+    <p class="s7" data-session="7">Autyzm zmienia krajobraz afordancji jeszcze inaczej, i predictive coding wyjaśnia jak. Pellicano i Burr (2012) proponują, że mózg autystyczny przypisuje wyższą precyzję (wagę) błędom predykcyjnym bottom-up, a niższą predykcjom top-down. Każdy sygnał sensoryczny dociera z pełną mocą, bo priory go nie tłumią. Świat jest intensywniejszy, bardziej szczegółowy, ale trudniejszy do kompresji w schematy. Hałas w stołówce staje się bombardowaniem. Ale ten sam mechanizm daje zdolność do dostrzegania wzorców, które neurotypowy mózg wygładza. Powtarzalne zachowania (stimming) nabierają sensu jako aktywne generowanie przewidywalnych sygnałów sensorycznych: organizm sam sobie dostarcza predykcje, które może spełnić, redukując obciążenie allostatyczne w środowisku pełnym nieoczekiwanych bodźców.</p>
+
+    <p>Motywacja to konkretne przyciąganie: coś wydaje się atrakcyjne, przyjemne, warte zachodu. Zmęczony wędrowiec nie analizuje kamienia. Kamień go po prostu <em>przyciąga</em> jako miejsce odpoczynku, bo jego ciało tego właśnie chce.</p>
+
+    <p class="s3" data-session="3">Motywacja na tej stronie to właściwie dwa oddzielne systemy.</p>
+    <p class="s3" data-session="3"><strong>Chcenie</strong> (dopaminergiczne) = motywacja. Zbliżenie, przyciąganie ku afordancji. Afekt mówi "to jest dobre/złe." Chcenie mówi "idź tam." Nie musisz czegoś lubić, żeby tego chcieć. Afekt nadaje wartość, chcenie nadaje kierunek.</p>
+    <p class="s3" data-session="3"><strong>Lubienie</strong> (opioidergiczne): odpowiedź hedoniczna, gdy faktycznie doświadczasz nagrody. Receptory mu-opioidowe, brzuszna gałka blada. Rzadsze niż chcenie.</p>
+    <p class="s3" data-session="3">Podczas scrollowania każde przesunięcie to kolejna afordancja nowości. Feed to nieskończony ciąg afordancji. Większość treści jest neutralna albo lekko irytująca. A mimo to scrollujesz dalej.</p>
+    <p class="s3" data-session="3">Gdyby dopamina dotyczyła przyjemności, zatrzymałbyś się po trzech nienagrodzonych scrollach. Scrollujesz dalej, bo dopamina napędza eksplorację. Algorytm gwarantuje, że credit assignment nigdy się nie rozwiąże: nie ma stabilnej reguły przewidującej, który scroll przyniesie coś dobrego. Cały czas eksplorujesz, próbując znaleźć regułę, ale jej brak zostawia Cię ze zmęczeniem i mglistym wspomnieniem kilku rolek.</p>
+    <p class="s3" data-session="3">Twoja architektura eksploracji ewoluowała dla skończonych nisz ekologicznych. Sawanna w końcu staje się znajoma. Media społecznościowe to ciąg niepowiązanych ze sobą afordancji, z których nie da się zbudować schematu.</p>
+
+    <h3 id="sub-nisze">Nisze</h3>
+    <p>Makak bierze grabki. Wzrok, dotyk, słuch, propriocepcja. Do sieci mózgowych dociera mnóstwo zaskakujących informacji z receptorów. Sieci muszą wybudować modele, jak używać narzędzia. Po kilku tygodniach jego kora ciemieniowa rozrasta się fizycznie. Pola recepcyjne neuronów rozszerzają się na całą długość narzędzia. Grabki przestają być przedmiotem trzymanym w łapie. Stają się częścią ciała w wytrenowanych sieciach: somatomotorycznej, wzrokowej, uwagowej, kontroli.</p>
+    <p>Iriki i Taoka (2012) opisują trzy płaszczyzny, na których ta zmiana się odbywa:</p>
+
+    <div class="niche-cards">
+      <div class="niche-card">
+        <div class="niche-label">Nisza neuronalna</div>
+        <p>Architektura sieci mózgowych: które połączenia istnieją, jak silne są, jakie wzorce aktywności są możliwe. Makak po tygodniach ćwiczeń z grabkami ma inną niszę neuronalną niż makak bez narzędzi.</p>
+      </div>
+      <div class="niche-card">
+        <div class="niche-label">Nisza ekologiczna</div>
+        <p>Środowisko złożone z dostępnych afordancji. Makak używający grabek zmienia otoczenie, tworzy nowe relacje, które generują nowe błędy predykcyjne i nowe wymagania dla sieci. Bardziej dotyczy modeli w sieciach somatosensorycznej, wzrokowej, uwagowej.</p>
+      </div>
+      <div class="niche-card">
+        <div class="niche-label">Nisza poznawcza</div>
+        <p>Ta sama nisza poznawcza, która w stadium operacji formalnych rozszerzyła się poza tu i teraz. Przestrzeń odleglejszych czasoprzestrzennie afordancji. Makak z rozszerzoną korą ciemieniową dosłownie widzi więcej możliwości działania: użycie narzędzi, odległy cel, interakcja społeczna. Bardziej dotyczy modeli w sieciach kontroli i domyślnej.</p>
+      </div>
+    </div>
+
+    <p>Trzy nisze to trzy opisy tego samego procesu: jak doświadczenie i sieci zwrotnie się kształtują. <span class="s2" data-session="2">Każde dziecko konstruuje wszystkie trzy nisze jednocześnie.</span></p>
+
+    <p class="s8" data-session="8">Organizmy budują nisze w świecie fizycznym. Mózg buduje nisze w przestrzeni pojęciowej. Z czego ta wewnętrzna nisza jest zbudowana? Z pojęć: regionów w wielowymiarowej przestrzeni, które pozwalają nawigować po abstrakcjach tak, jak kora ciemieniowa nawiguje po pokoju.</p>
 
     <!-- ==================== REPREZENTACJONIZM ==================== -->
     <h3 id="sub-pojecia" class="s8" data-session="8">Pojęcia</h3>
-    <p class="s8" data-session="8">Modele blisko i daleko receptorów to odpowiednio nisze ekologiczne i poznawcze. Podstawowym budulcem modeli są pojęcia.</p>
-    <p class="s8" data-session="8">Pojęcia to coś więcej niż słowo czy etykieta. Peter Gärdenfors proponuje, że pojęcia to regiony w wielowymiarowej przestrzeni poznawczej. Pomyśl o kolorach. Każdy kolor ma odcień, nasycenie i jasność. Te trzy wymiary tworzą przestrzeń. "Czerwony" jest regionem w tej przestrzeni: zbiorem punktów, które Twoje sieci neuronowe klasyfikują jako wystarczająco podobne. W centrum tego regionu siedzi prototyp: najlepszy przykład kategorii.</p>
-    <p class="s8" data-session="8">Innym przykładem będzie przestrzeń grzybów o kapeluszach i nóżkach różnych kształtów, rozmiarów i kolorów. Dla Ciebie przestrzeń grzybów będzie się zapewne składać z kilkunastu gatunków. Dla pasjonata przestrzeń ta będzie miała ogromnie większą rozdzielczość. Szczegóły eksteroceptywne trenują modele w rozpoznawaniu coraz subtelniejszych niuansów danej przestrzeni poznawczej.</p>
-    <p class="s8" data-session="8">Każdy nowy grzyb to nowy egzemplarz w kategorii. Egzemplarze kurek, boczniaków, prawdziwków, gąsek. Kiedy napotykasz te grzyby, uczysz się ich cech charakterystycznych. Im więcej egzemplarzy, tym bogatsze kategorie. Pomyśl o znalezieniu idealnego prawdziwka, takiego jak z okładki. To Twój prototyp prawdziwka, najbardziej prawdziwkowaty spośród prawdziwków. Ilustruje to teorię prototypów Eleanor Rosch. Według teorii prototypów: kategorie mają centrum (typowy egzemplarz) i rozmyte granice. Obiekty bliżej centrum są "bardziej" typowe.</p>
-    <p class="s8" data-session="8">Teoria egzemplarzy opisuje przetwarzanie bottom-up: eksterocepcja obiektu jest dopasowywana do modeli. Zwrotnie nowe obiekty trochę zmieniają modele, mogą przesuwać granice kategorii i modyfikować prototypy. Przestrzenie pojęciowe mogą zwiększać szczegółowość (borowik szlachetny, ceglastopory, sosnowy). Im więcej egzemplarzy doświadczysz bottom-up, tym więcej błędów predykcyjnych dostarczysz swoim przestrzeniom poznawczym i tym bardziej szczegółowe się staną.</p>
-    <p class="s8" data-session="8">Proces trenowania modeli opisał Piaget w ramach psychologii rozwojowej jako asymilację i akomodację. Asymilacja: nowy punkt wpada do istniejącego regionu pojęciowego i nie wymaga zmiany granic. Akomodacja: punkt wypada poza region, więc granice muszą zostać przerysowane albo musi powstać nowy region. Dziecko w lesie widzi goryczaka żółciowego podobnego do borowika szlachetnego i początkowo asymiluje go do kategorii "prawdziwków", dopóki nie spróbuje smaku. Gorzki smak zdradza pomyłkę i powstaje nowa kategoria.</p>
+    <p class="s8" data-session="8">Z czego zbudowana jest nisza poznawcza? Z pojęć. Pojęcie to coś więcej niż słowo czy etykieta. Peter Gärdenfors proponuje, że pojęcie to <strong>region w wielowymiarowej przestrzeni</strong>. Pomyśl o kolorach. Każdy kolor ma odcień, nasycenie i jasność. Te trzy wymiary tworzą przestrzeń. "Czerwony" jest regionem w tej przestrzeni: zbiorem punktów, które Twoje sieci neuronowe klasyfikują jako wystarczająco podobne. W centrum tego regionu siedzi prototyp: najlepszy przykład kategorii.</p>
+    <p class="s8" data-session="8">Eleanor Rosch pokazała, że Twój mózg tak właśnie organizuje kategorie. Kiedy myślisz "ptak", aktywujesz prototyp: wróbla, rudzika. Nie pingwina. Pingwin jest daleko od centrum regionu "ptak" w przestrzeni pojęciowej, choć ciągle wewnątrz granicy. <strong>Teoria prototypów:</strong> kategorie mają centrum (typowy egzemplarz) i rozmyte granice. Obiekty bliżej centrum są "bardziej" kategorią.</p>
+    <p class="s8" data-session="8"><strong>Teoria egzemplarzy</strong> mówi co innego: nie przechowujesz skompresowanego prototypu. Przechowujesz konkretne spotkania. Każdy nowy ptak jest porównywany z zapamiętanymi ptakami, jeden po jednym. Która teoria ma rację?</p>
+    <p class="s8" data-session="8">Obie. Bo opisują różne systemy. Teoria egzemplarzy opisuje przetwarzanie bottom-up: widzisz obiekt i porównujesz go z zapamiętanymi instancjami. To jest hipokamp: szybkie, epizodyczne, wiernie zapisuje pojedyncze spotkania. Teoria prototypów opisuje przetwarzanie top-down: myślisz o kategorii i generujesz skompresowaną statystykę. To jest kora nowa: powolna, semantyczna, buduje uogólnienia z wielu doświadczeń. Dwa systemy uczenia się, opisane niezależnie przez teorię komplementarnych systemów uczenia (CLS, McClelland et al., 1995). Egzemplarz i prototyp to dwa końce tej samej architektury.</p>
+    <p class="s8" data-session="8">Asymilacja i akomodacja Piageta nabierają teraz geometrycznego sensu. Asymilacja: nowy punkt wpada do istniejącego regionu pojęciowego. Nie wymaga zmiany granic. Akomodacja: punkt wypada poza region. Granice muszą zostać przerysowane albo musi powstać nowy region. Dziecko w ZOO widzi wilka: za daleko od regionu "pies", żeby asymilować. Nowy region, nowe pojęcie.</p>
 
     <h3 id="sub-myslenie" class="s8" data-session="8">Myślenie jako nawigacja</h3>
-    <p class="s8" data-session="8">Bellmund i współpracownicy (2018) w pracy <em>Navigating cognition</em> ujęli to wprost: <strong>myślenie jest ruchem przez przestrzenie poznawcze</strong>. Hipokamp wyewoluował do nawigacji po niszach ekologicznych i zaadaptował się do nawigacji po niszach poznawczych. Jako jeden z hubów DMN pozwala myśleć o przeszłości i przyszłości z uwzględnieniem siebie (mPFC) oraz innych (TPJ, biegun skroniowy).</p>
-    <p class="s8" data-session="8">Pojęcia żyją na <strong>rozmaitościach</strong> (manifolds): niskowymiarowych powierzchniach zanurzonych w wielowymiarowej przestrzeni cech. Przestrzeń cech grzyba jest ogromna (kolor, rozmiar, kształt kapelusza, smak, siedlisko...), ale konkretne grzyby, które spotkałeś, leżą na niskowymiarowej powierzchni. Nie przeszukujesz całej przestrzeni. Nawigujesz po wyuczonej rozmaitości. Populacje engramów (ensembles) kreślą trajektorie po tych powierzchniach.</p>
-    <p class="s8" data-session="8">Wiąże się to z predykcją: organizmy minimalizują zaskoczenie (energię swobodną) przez nieustanną aktualizację modeli. Asymilacja to pozostanie na danej rozmaitości. Akomodacja to wytworzenie nowej. Piaget, który opisał te mechanizmy u dzieci dekady temu, opisał nawigację po przestrzeniach pojęciowych, zanim ktokolwiek wiedział, że hipokamp je mapuje.</p>
+    <p class="s8" data-session="8">Bellmund, Gärdenfors, Moser i Doeller (2018) postawili tezę wprost: <strong>myślenie to nawigowanie po przestrzeniach pojęciowych</strong>. Ten sam system hipokamp-kora śródwęchowa, który nawiguje Cię przez pokój, nawiguje Cię przez pojęcia. Komórki siatki, które tworzą heksagonalną siatkę współrzędnych w przestrzeni fizycznej, tworzą analogiczną siatkę w przestrzeni abstrakcyjnej. Kiedy porównujesz dwa pojęcia (np. "pies" i "wilk"), Twój mózg oblicza dystans w przestrzeni pojęciowej, używając tego samego kodu, którego używa do obliczania dystansu w przestrzeni fizycznej.</p>
+    <p class="s8" data-session="8">Pojęcia żyją na <strong>rozmaitościach</strong> (manifolds): niskowymiarowych powierzchniach zanurzonych w wielowymiarowej przestrzeni cech. Przestrzeń cech ptaka jest ogromna (kolor, rozmiar, kształt dzioba, śpiew, siedlisko...), ale konkretne ptaki, które spotkałeś, leżą na niższej wymiarowo powierzchni. Nie przeszukujesz całej przestrzeni. Nawigujesz po wyuczonej rozmaitości. Zespoły engramowe (ensembles) kreślą trajektorie po tych powierzchniach: myśl to ścieżka, nie punkt.</p>
+    <p class="s8" data-session="8">Karl Friston łączy to z predykcją. Organizm minimalizuje zaskoczenie (energię swobodną) nawigując ku stanom, które modele przewidują. W przestrzeni pojęciowej: myślenie to ruch ku regionom, które minimalizują błąd predykcyjny. Asymilacja to pozostanie na rozmaitości. Akomodacja to skok na nową. A Piaget, który opisał te mechanizmy u dzieci dekady temu, opisał nawigację po przestrzeniach pojęciowych zanim ktokolwiek wiedział, że hipokamp je mapuje.</p>
 
     <hr class="section-divider s2" data-session="2" />
     <h3 id="sub-ciaglosc" class="s2" data-session="2">Ciągłość czy przepaść?</h3>
@@ -1675,29 +1880,9 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       </tbody>
     </table>
 
-    <p><strong>Poziom 2 - emocje innych</strong> (de Waal, Goodall): Szympans widzi, że innemu szympansowi jest źle. Przewiduje jego ból i podchodzi pocieszyć. To jest empatia jako mechanizm predykcyjny - uniwersalny dla wielu gatunków.</p>
-
-    <p><strong>Poziom 3 - intencje innych</strong> (Tomasello): Szympans przewiduje, co inny zrobi. Człowiek przewiduje, co inny chce, żebym wiedział. Z tej różnicy wynika kumulatywna kultura: każde pokolenie zaczyna tam, gdzie skończyło poprzednie.</p>
-    <p>Poziom 3 ma dwa podpoziomy:</p>
-    <ul>
-      <li><strong>Podpoziom A - joint attention:</strong> "Skupiamy uwagę na tym samym." Trójstronna relacja: ja, ty, obiekt. Oboje wiemy, że oboje patrzymy. Szympansy to potrafią, choć słabiej niż ludzie.</li>
-      <li><strong>Podpoziom B - shared intentionality:</strong> "Mamy różne role w tym samym planie i oboje to rozumiemy." Tu pojawia się rekurencja: wiem że ty wiesz że ja wiem, i razem działamy na podstawie tej wzajemnej świadomości. Tutaj szympansy radzą sobie gorzej - zazwyczaj dominujący osobnik nie przyjmuje perspektywy współpracownika.</li>
-    </ul>
-
-    <div class="video-side video-block">
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/BNbeleWvXyQ"
-          title="Michael Tomasello - What Makes Us Human?"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
-      <div class="vs-text"><span class="vs-title">Michael Tomasello · What Makes Us Human?</span>Tomasello tłumaczy, czym wspólna intencjonalność różni się od zwykłej koordynacji i dlaczego właśnie ona odróżnia ludzkie poznanie od małpiego. Sam intelekt tu nie wystarcza.</div>
-    </div>
-
     <p>Garin i współpracownicy (2022) porównali sieć spoczynkową (DMN) u czterech gatunków (człowiek, makak, marmozeta, mysz lemur). U naczelnych niehominidowych mPFC i PCC są słabo połączone. U człowieka to kluczowe połączenie DMN. Ludzki DMN, z jego pętlą mPFC-PCC, pojawił się stosunkowo późno w ewolucji naczelnych. Może to sugerować, że główna oś DMN (myślenie o sobie) jest nowym ewolucyjnie nabytkiem i to właśnie odróżnia ludzi od innych zwierząt.</p>
     <p class="s5" data-session="5">DMN to silnik symulacji. Kiedy nie jesteś zajęty zadaniem, DMN rekombinuje fragmenty z hipokampa: sceny z przeszłości, fragmenty rozmów, interoceptywny koloryt emocji. Produkuje kandydatów do przyszłości: "co by było gdyby", "a może", "co jeśli." Te symulacje nie są przypadkowe; są karmione sygnałem interoceptywnym z wyspy (jak się teraz czujesz?) i fragmentami epizodycznymi z hipokampa (co ci to przypomina?). Wyobraź sobie jutrzejszy egzamin: serce przyspiesza, czujesz napięcie. DMN planuje i generuje afekt prospektywny. Podróż w czasie jest cielesna.</p>
+
 
     <figure class="figure-block">
       <img src="/images/garin2022_dmn.png" alt="Schemat połączeń DMN u człowieka i naczelnych niehominidowych (Garin et al., 2022)" />
@@ -1738,41 +1923,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p>Bliżej receptorów modele trzymają się świata znacznie ciaśniej. Sieci modelują tu kształt, ruch, dotyk i położenie ciała, niemal wprost z sygnału zmysłowego.</p>
     <p>Błędy predykcyjne to niespodziewane informacje, które płyną od receptorów (bottom-up) i kształtują sieci tak, aby w przyszłości te informacje były już spodziewane (top-down). Cała historia ewolucyjna, kulturowa i indywidualna kształtuje architekturę sieci neuronowych. <span class="s2" data-session="2">Lev Vygotsky dodałby: inna osoba jest źródłem skalibrowanych błędów predykcyjnych dla Twojego mózgu dopasowanych do Twojego poziomu. Dostarcza Ci afordancji, za którymi możesz podążać.</span> <span class="s3" data-session="3">Kluczowe jest przypisanie przyczyn obecnego doświadczenia (credit assignment), znalezienie przyczyny błędu predykcyjnego. Jakie wcześniejsze informacje mogą sugerować obecne doświadczenie?</span></p>
 
-    <h3 id="sub-afordancje">Afordancje</h3>
-    <p>Afordancje powstają <em>między Tobą a światem</em>: ani w samym przedmiocie, ani w samym Tobie.</p>
-    <p class="s11" data-session="11">To teza Gibsona: afordancję odbierasz tuż przy receptorach, gdzie modele trzymają się świata tak ciasno, że ich praca jest niewidoczna. Pod koniec kursu zobaczysz, że to bliski kraniec tej samej osi, na której drugim końcu pracuje Friston.</p>
-    <p>Ten sam kamień: turlanie dla dziecka, siedzenie dla zmęczonego wędrowca, budulec dla architekta. Kamień się nie zmienił. Zmieniła się relacja, kontekst, potrzeba.</p>
-    <ul>
-      <li><strong>Relacyjne:</strong> nie istnieją bez konkretnego organizmu.</li>
-      <li><strong>Kontekstualne:</strong> ten sam obiekt, inne możliwości w innych sytuacjach.</li>
-      <li><strong>Dynamiczne:</strong> zmieniają się wraz z predykcjami.</li>
-    </ul>
-
-    <div class="formula-box">
-      afordancje + motywacja = akcja
-    </div>
-
-    <p>Afordancje są więc możliwościami do działania. Są elementami modeli rzeczywistości, z którymi modele "Ciebie" mogą wejść w interakcję. Poruszasz ciałem, implementując predykcje z kory motorycznej (Adams et al., 2013). Model w korze motorycznej powstał w wyniku lat treningu stadium sensoryczno-motorycznego. Trening ruchu i używania narzędzi ukształtował strukturę sieci neuronowych za pośrednictwem błędów predykcyjnych bottom-up. Ta wytrenowana struktura zwrotnie dostarcza sygnał top-down, generując kolejne predykcje ruchu. Predykcje i błędy predykcyjne są w ciągłej interakcji, znane afordancje są przewidywane, nowe afordancje są odkrywane i dodawane do modeli. <span class="s2" data-session="2">Poruszanie ciałem jest warunkiem poznania. Mózg, ciało i działanie to trzy perspektywy na ten sam proces.</span></p>
-    <p class="s9" data-session="9">Zespół Tourette'a rzuca światło na komponent <em>whether</em> z modelu Brassa i Haggarda. Tiki motoryczne i wokalne to ruchy, które system inicjuje (what i when działają), ale których mechanizm weta nie zatrzymuje. Pacjenci z Tourette'em często opisują narastające napięcie (premonitory urge) przed tikiem, które ustępuje dopiero po jego wykonaniu. Kontrola jest obecna, tyle że przegrywa. Predykcja sensoryczna okazuje się silniejsza niż weto. Komponent whether próbuje zatrzymać ruch i ustępuje sile predykcji domagającej się spełnienia.</p>
-    <p class="s2" data-session="2">Alison Gopnik proponuje, że dzieci to zoptymalizowane maszyny do eksploracji: testują więcej afordancji, napotykają więcej błędów predykcyjnych, próbują więcej wariantów. Dorośli eksploatują wyuczone modele, podążając utartymi ścieżkami znanych afordancji.</p>
-    <p class="s7" data-session="7">Autyzm zmienia krajobraz afordancji jeszcze inaczej, i predictive coding wyjaśnia jak. Pellicano i Burr (2012) proponują, że mózg autystyczny przypisuje wyższą precyzję (wagę) błędom predykcyjnym bottom-up, a niższą predykcjom top-down. Każdy sygnał sensoryczny dociera z pełną mocą, bo priory go nie tłumią. Świat jest intensywniejszy, bardziej szczegółowy, ale trudniejszy do kompresji w schematy. Hałas w stołówce staje się bombardowaniem. Ale ten sam mechanizm daje zdolność do dostrzegania wzorców, które neurotypowy mózg wygładza. Powtarzalne zachowania (stimming) nabierają sensu jako aktywne generowanie przewidywalnych sygnałów sensorycznych: organizm sam sobie dostarcza predykcje, które może spełnić, redukując obciążenie allostatyczne w środowisku pełnym nieoczekiwanych bodźców.</p>
-
-    <p>Motywacja to konkretne przyciąganie: coś wydaje się atrakcyjne, przyjemne, warte zachodu. Zmęczony wędrowiec nie analizuje kamienia. Kamień go po prostu <em>przyciąga</em> jako miejsce odpoczynku, bo jego ciało tego właśnie chce.</p>
-
-    <p class="s3" data-session="3">Motywacja na tej stronie to właściwie dwa oddzielne systemy.</p>
-    <p class="s3" data-session="3"><strong>Chcenie</strong> (dopaminergiczne) = motywacja. Zbliżenie, przyciąganie ku afordancji. Afekt mówi "to jest dobre/złe." Chcenie mówi "idź tam." Nie musisz czegoś lubić, żeby tego chcieć. Afekt nadaje wartość, chcenie nadaje kierunek.</p>
-    <p class="s3" data-session="3"><strong>Lubienie</strong> (opioidergiczne): odpowiedź hedoniczna, gdy faktycznie doświadczasz nagrody. Receptory mu-opioidowe, brzuszna gałka blada. Rzadsze niż chcenie.</p>
-    <p class="s3" data-session="3">Podczas scrollowania każde przesunięcie to kolejna afordancja nowości. Feed to nieskończony ciąg afordancji. Większość treści jest neutralna albo lekko irytująca. A mimo to scrollujesz dalej.</p>
-    <p class="s3" data-session="3">Gdyby dopamina dotyczyła przyjemności, zatrzymałbyś się po trzech nienagrodzonych scrollach. Scrollujesz dalej, bo dopamina napędza eksplorację. Algorytm gwarantuje, że credit assignment nigdy się nie rozwiąże: nie ma stabilnej reguły przewidującej, który scroll przyniesie coś dobrego. Cały czas eksplorujesz, próbując znaleźć regułę, ale jej brak zostawia Cię ze zmęczeniem i mglistym wspomnieniem kilku rolek.</p>
-    <p class="s3" data-session="3">Twoja architektura eksploracji ewoluowała dla skończonych nisz ekologicznych. Sawanna w końcu staje się znajoma. Media społecznościowe to ciąg niepowiązanych ze sobą afordancji, z których nie da się zbudować schematu.</p>
-
-    <h3 id="sub-4e">Poznanie 4E</h3>
-    <p>Poznanie blisko receptorów ma cztery oblicza, znane jako 4E.</p>
-    <p><strong>Ucieleśnione (embodied).</strong> Modele rozwijają się z ciała. Sygnały proprioceptywne i interoceptywne budują je, zanim pojawi się jakakolwiek abstrakcja, a kształt dłoni współdecyduje, co da się chwycić.</p>
-    <p><strong>Osadzone (embedded).</strong> Modele wspierają się na świecie. Afordancja leży na zewnątrz, w świetle i dźwięku, więc część pracy poznawczej przejmuje otoczenie.</p>
-    <p><strong>W działaniu (enacted).</strong> Modele kształtują się w działaniu. Afordancję odkrywasz, działając, a kora ruchowa wysyła przewidywania, które ruch spełnia (Adams et al., 2013). Percepcja i działanie to jedna pętla.</p>
-    <p><strong>Rozszerzone (extended).</strong> Modele wychodzą poza skórę. Notatnik, telefon i mapa stają się częścią modeli, tak jak narzędzie wchodzi do schematu ciała i rozrasta korę ciemieniową. Granica między Tobą a światem jest ruchoma.</p>
-
     <p>Sieci mózgowe przewidują na kilku poziomach jednocześnie.</p>
     <p><strong>Poziom 1 - ciało i narzędzia</strong> (Iriki &amp; Taoka): Makak bierze grabki. Jego kora ciemieniowa musi nagle przewidywać trzy razy większą przestrzeń pełną nowych afordancji. Przestrzeń peripersonalna rozszerza się na koniec narzędzia. Narzędzia modyfikują dostępne możliwości do działania, tak jak nauczenie się jazdy samochodem modyfikuje, jak pewnie się czujesz za kierownicą i co jest osiągalne.</p>
     <p class="s8" data-session="8">Predykcje wysyła cała kora czołowa, każda w swojej przestrzeni, nie tylko kora ruchowa. Zakręt przedśrodkowy (kora pierwszorzędowa ruchowa) porusza ciałem przez przestrzeń fizyczną: predykcje proprioceptywne. IFG (obszar Broki) porusza się przez przestrzeń gramatyczną: predykcje składniowe. MTG hamuje konkurencyjne trajektorie w przestrzeni semantycznej. OFC i biegun skroniowy (TP) nawigują przez przestrzeń pojęciową: co jest warte powiedzenia, zrobienia, pomyślenia. Ruch to ruch. Zmienia się przestrzeń, w której się poruszasz.</p>
@@ -1807,158 +1957,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     </div>
 
     <p class="s5" data-session="5">Nie wszyscy eksplorują tak samo, bo nie wszyscy wyobrażają sobie tak samo. Afantazja to brak mentalnych obrazów: takie osoby nie "widzą" jabłka, gdy zamkną oczy, ale operują na abstrakcyjnych propozycjach. Hiperfantazja to drugi koniec spektrum: obrazy tak żywe, że bywają mylone z percepcją. Synestezja to jeszcze inny wariant: dźwięk ma kolor, litera ma smak, bo sieci sensoryczne są skrzyżowane w sposób nietypowy. Każdy wariant zmienia krajobraz afordancji. Synestetyk widzi możliwości tam, gdzie inni nie widzą nic; afantastyk buduje modele inaczej, ale niekoniecznie gorzej. Solomon Shereshevsky, badany przez Łuriję przez trzydzieści lat, pamiętał wszystko dzięki synestezji: każda cyfra miała kształt, kolor, smak. Koszt był poważny: nadmiar szczegółów uniemożliwiał abstrahowanie i rozumienie metafor. Doskonała pamięć nie oznacza lepszego modelu.</p>
-    <hr class="section-divider" />
-    <h2 id="sec-uczenie">Modele w czasie</h2>
-    <p>Konfiguracja sieci zmienia się przez całe życie, napędzana błędem predykcyjnym. Ma swój rozwój w stadiach, swój rytm w śnie, swój mechanizm w synapsie i swój układ wyboru w dopaminie. Gdy ten sam układ zostaje przejęty, powstaje uzależnienie.</p>
-
-    <h3 id="sub-stadia" class="s2" data-session="2">Stadia rozwoju</h3>
-    <p class="s2" data-session="2">Piaget opisał budowanie modeli świata jako kolejne stadia rozwoju. Odzwierciedlają one trening kolejnych sieci neuronowych (sensomotorycznych, uwagi, kontroli, domyślnej). Sieci przekazują informacje między sobą, dostarczając sobie błędy predykcyjne (bottom-up) i predykcje (top-down). Stadia rozwoju wskazują na kolejność wyłaniania się kompetencji, jednak ich rozwój trwa całe życie. Stadium sensomotoryczne (pierwszorzędowe sieci oraz sieć uwagowa) to fundament, na którym budowane są struktury kolejnych sieci.</p>
-    <p class="s2" data-session="2"><strong>Sensoryczno-motoryczne (0-2 lata):</strong> świat jest czystym doznaniem. Dotyk, smak, ruch. Chwytasz, wkładasz do ust, rzucasz. Powoli odkrywasz, że rzeczy istnieją nawet gdy na nie nie patrzysz. Twoje pierwsze modele: świat trwa. Te modele budują się we wspólnej przestrzeni wraz z opiekunami (we-space). Opiekun dostarcza pierwsze i najważniejsze (z perspektywy dziecka) afordancje. Sieci sensoryczne (SMN, VIS) dominują. Wszystko jest bottom-up. Komunikacja jest przedwerbalna: synchronizacja spojrzenia, mimiki, wokalizacji.</p>
-    <p class="s2" data-session="2"><strong>Przedoperacyjne (2-7 lat):</strong> pojawiają się symbole. Słowa. Zabawa "na niby." Wspólna przestrzeń się rozpada: masz teraz swoją własną perspektywę. Swoje własne zdanie. Symbole tworzą nową kategorię afordancji: możesz nazwać rzeczy, udawać, że klocek to samochód. Twoje modele mają jedną perspektywę. Błędy predykcyjne generujesz samodzielnie, przez zabawę i eksplorację. IFG zaczyna przetwarzać język. Mowa jest społeczna: mówisz do ludzi. Około trzeciego roku życia zaczynasz mówić do siebie na głos. Budujesz wieżę z klocków i komentujesz: "teraz ten... za duży... ten mały..." Język staje się narzędziem kierowania własnym działaniem.</p>
-    <p class="s2" data-session="2"><strong>Operacji konkretnych (7-11 lat):</strong> Zaczynasz modelować ciągi przyczynowo-skutkowe. Możesz sortować, klasyfikować, szeregować. Afordancje stają się przewidywalne, łączą się w ciągi: wiesz, co się stanie, gdy coś zrobisz. Potrafisz symulować w swoim modelu błędy predykcyjne zanim wystąpią. Sieć kontroli (CON) angażuje się coraz silniej: "co z tym zrobić?" Mowa prywatna cichnie. Internalizuje się. Staje się myśleniem słowami. Działania wcześniej komentowane na głos teraz komentowane są prywatnie.</p>
-    <p class="s2" data-session="2"><strong>Operacji formalnych (11+ lat):</strong> Modelujesz swoje modele siebie. Możesz myśleć o myśleniu. Przewidywać hipotetyczne scenariusze, co by było gdyby? Ciągi afordancji stają się coraz bardziej złożone, stany mentalne innych osób coraz bardziej kompleksowe. Twoje modele świata stają się bogatsze i dostrzegasz unikalne możliwości do działania. Ten pomysł, na który nikt nigdy jeszcze nie wpadł? To afordancja, którą widzisz tylko Ty, dzięki Twojemu unikalnemu doświadczeniu w przeszłości. Sieć domyślna (DMN) dominuje: Twoja nisza poznawcza rozszerza się poza tu i teraz. Błędy predykcyjne mogą dotyczyć dowolnych światów. Mowa wewnętrzna operuje na abstrakcjach. Możesz prowadzić dialog samemu ze sobą na tematy, które tylko Ty zrozumiesz.</p>
-    <p class="s2" data-session="2">Uczenie się polega na modyfikacji struktury połączeń neuronalnych w efekcie ekspozycji na specyficzne bodźce. <span class="s3" data-session="3">Gdy bodźce są zaskakujące, skutkują wyrzutem dopaminy, a w efekcie zapisaniem zaskakującej informacji w strukturze sieci neuronowej. Po to, żeby na przyszłość modele lepiej przewidywały, co się stanie.</span> Ekspozycja na określone bodźce w określonym czasie jest konieczna do skutecznego treningu sieci neuronalnych. Gdy bodźce nie docierają w oknie krytycznym, sieć nie kształtuje się odpowiednio i zdolności do przetwarzania bodźców zostają na stałe upośledzone.</p>
-    <p class="s3" data-session="3">Z drugiej strony, trening sieci mózgowych w traumatycznych warunkach będzie skutkował nauczeniem się nieoptymalnych wzorców, jak choćby style przywiązania nabywane w dzieciństwie. Skrajnym przypadkiem jest eksperyment Watsona na Małym Albercie, gdzie połączenie białego szczura z nieprzyjemnym dźwiękiem straumatyzowało chłopca do końca jego życia. Ten eksperyment boleśnie pokazuje, że doświadczenie nabywane od dziecka, w okresach gdzie nie ma żadnej kontroli nad okolicznościami, może rzutować na całe życie.</p>
-
-    <div class="video-side video-block s3" data-session="3">
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/FMnhyGozLyE"
-          title="Little Albert Experiment"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
-      <div class="vs-text"><span class="vs-title">Eksperyment z Małym Albertem (Watson, 1920)</span>Nagranie klasycznego, dziś nieetycznego eksperymentu, w którym niemowlę nauczono bać się białego szczura. Pokazuje, jak trwały ślad zostawia trening w okresie bez żadnej kontroli nad sytuacją.</div>
-    </div>
-    <p class="s2" data-session="2">Najnowsze badania pokazują, że uczenie się zachodzi również w organizmach jednokomórkowych, a nawet w cząsteczkach chemicznych:</p>
-    <div class="video-side video-block s2" data-session="2">
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/aQa0DowQ_oE"
-          title="Uczenie się w organizmach jednokomórkowych i cząsteczkach chemicznych"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
-      <div class="vs-text"><span class="vs-title">Uczenie się w organizmach jednokomórkowych</span>Uczenie się nie wymaga mózgu. Film pokazuje, że nawet pojedyncze komórki i sieci molekularne zmieniają reakcje pod wpływem doświadczenia, co rozszerza pojęcie predykcji daleko poza neurony.</div>
-    </div>
-    <p class="s2" data-session="2">Jednokomórkowce są w stanie uczyć się wykorzystując wewnętrzną maszynerię komórkową. Najnowsze badania wskazują, że nawet sieci molekularne regulujące geny zmieniają swoje reakcje w wyniku treningu (<a href="https://www.nature.com/articles/s42003-025-08411-2" target="_blank">Bhatt et al., 2025</a>). Te badania nawiązują do koncepcji <a href="https://www.scientificamerican.com/article/brains-are-not-required-when-it-comes-to-thinking-and-solving-problems-simple-cells-can-do-it/" target="_blank">"basal cognition" Michaela Levina</a>.</p>
-    <p class="s2" data-session="2">Wracając do bardziej złożonych organizmów.</p>
-    <p class="s2" data-session="2"><strong>Hubel i Wiesel</strong> zakryli jedno oko kociętom w pierwszych tygodniach życia. Kolumny dominacji ocznej w pierwszorzędowej korze wzrokowej (V1) trwale nie rozwinęły się dla tego oka. Otworzenie oka po okresie krytycznym nie naprawiło szkody. Sieć nie dostała błędów predykcyjnych, których potrzebowała do ukształtowania swojej struktury.</p>
-    <p class="s2" data-session="2"><strong>Colin Blakemore</strong> hodował kocięta wyłącznie w środowisku z pionowymi liniami. Neurony V1 dostosowały się do dostępnych bodźców, nie rozwijając selektywności na linie o poziomej orientacji. Sieć wzrokowa wybudowała model w oparciu o dostępne informacje.</p>
-    <p class="s2" data-session="2"><strong>Genie:</strong> dziewczynka izolowana od ludzi do 13 roku życia. Po uwolnieniu: ograniczony rozwój językowy mimo intensywnej terapii. Okno dla języka zamknęło się.</p>
-    <p class="s2" data-session="2"><strong>Dzieci rumuńskie</strong> z domów dziecka Ceaușescu. Poważne deficyty poznawcze i emocjonalne. Częściowa odwracalność zależna od wieku adopcji: im wcześniej dziecko trafiło do rodziny, tym więcej udało się odzyskać. Ale nie wszystko.</p>
-    <p class="s2" data-session="2"><em>Eksperymenty Hubela i Wiesela, Blakemore'a oraz Watsona budzą poważne wątpliwości etyczne z dzisiejszej perspektywy. Standardy ochrony zarówno zwierząt laboratoryjnych, jak i uczestników badań zmieniły się fundamentalnie od początku XX wieku. Dziś żadna komisja etyczna nie zaakceptowałaby tych procedur.</em></p>
-    <h3 id="sub-asymilacja" class="s2" data-session="2">Asymilacja, akomodacja i strefa najbliższego rozwoju</h3>
-    <p class="s2" data-session="2">Dwa mechanizmy kształtują rozwój. <strong>Asymilacja:</strong> nowe doświadczenie pasuje do istniejących modeli, może je lekko zmodyfikować małym błędem predykcyjnym. Na przykład pies bez ogona to też pies. <strong>Akomodacja:</strong> doświadczenie jest zbyt zaskakujące i potrzebne są nowe modele. Na przykład dziecko na wycieczce do ZOO spotyka wilka. Mimo podobieństwa do psa, widzi i słucha o tym, że wilki są dzikie: potrzeba nowych modeli "wilka" oddzielnych od modeli "psa".</p>
-
-    <p class="s2" data-session="2"><strong>Strefa najbliższego rozwoju (ZPD)</strong> to przestrzeń między tym, co potrafisz samemu, a tym, co potrafisz z pomocą kogoś bardziej doświadczonego. Ktoś bardziej doświadczony pomaga Ci wytrenować Twoje modele świata.</p>
-    <p class="s2" data-session="2"><strong>Scaffolding</strong> to rusztowanie: struktura wsparcia, która stopniowo się wycofuje, w miarę jak Twoje modele się kalibrują. Na początku duże wsparcie, duże błędy predykcyjne. Na końcu: samemu budujesz predykcje. Rusztowanie znika, bo Twoje sieci przejęły jego funkcję.</p>
-    <p class="s2" data-session="2"><strong>MKO</strong> (More Knowledgeable Other) to osoba z lepiej skalibrowanymi modelami. Nie musi być nauczycielem. Może być rówieśnikiem, rodzicem, a nawet technologią. Kluczem jest to, że MKO generuje błędy predykcyjne we właściwej strefie: nie za łatwe (brak uczenia) i nie za trudne (brak integracji).</p>
-    <p class="s2" data-session="2">Piaget opisuje podstawy budowania modeli. Vygotsky zwraca uwagę, że budowanie modeli ma komponent społeczny. Oba mechanizmy działają jednocześnie. Uczysz się przez doświadczenie i często ta nauka jest wspomagana przez MKO, który tworzy scaffolding w Twoim ZPD.</p>
-
-    <h3 id="sub-przywiazanie" class="s4" data-session="4">Style przywiązania</h3>
-    <p class="s4" data-session="4">Style przywiązania Bowlby'ego to cztery różne odpowiedzi tej samej architektury na jedno pytanie: <em>jak przewidywalna jest moja opiekunka jako zasób regulacyjny?</em> Inaczej: wewnętrzny model roboczy = system predykcji dotyczący dostępności zewnętrznego regulatora.</p>
-    <ul>
-      <li class="s4" data-session="4"><strong>Bezpieczny:</strong> opiekun konsekwentnie dostępny. vmPFC-ciało migdałowate rozwija się z niezawodnymi zewnętrznymi modelami jako scaffoldem.</li>
-      <li class="s4" data-session="4"><strong>Lękowo-ambiwalentny:</strong> opiekun niekonsekwentny. System przywiązania pozostaje hiper-aktywowany. Ciało migdałowate uczy się: alarm włączony, bo odpowiedź jest nieprzewidywalna. Koszt: chroniczne pobudzenie, nadwrażliwość na sygnały porzucenia.</li>
-      <li class="s4" data-session="4"><strong>Unikający:</strong> opiekun konsekwentnie nieresponsywny. Dziecko deaktywuje sygnalizację przywiązania. Wygląda jak niezależność. To wyłączony obwód przywiązania. Kosztem jest niedostępność własnych stanów interoceptywnych.</li>
-      <li class="s4" data-session="4"><strong>Zdezorganizowany:</strong> opiekun jest jednocześnie źródłem zagrożenia i jedynym bezpiecznym portem. System otrzymuje sprzeczne polecenia. Najsilniejszy predyktor późniejszej psychopatologii i dysocjacji.</li>
-    </ul>
-    <p class="s4" data-session="4">Teoria przywiązania i predictive processing opisują tę samą architekturę w różnych słownikach. Styl przywiązania to kalibracja modeli predykcyjnych dotyczących regulatora zewnętrznego, które kształtują połączenia vmPFC-ciało migdałowate przez powtarzaną koregulację.</p>
-
-    <h3 id="sub-ltp" class="s8" data-session="8">LTP i LTD</h3>
-    <p class="s8" data-session="8">Konsolidacja w śnie działa na poziomie systemów: hipokamp odtwarza, kora nowa przejmuje. Ale co dokładnie zmienia się w synapsie? <strong>Długotrwałe wzmocnienie synaptyczne</strong> (LTP, Long-Term Potentiation): gdy dwa neurony wielokrotnie aktywują się jednocześnie, synapsa między nimi się wzmacnia. "Cells that fire together, wire together." Kluczowy jest receptor <strong>NMDA</strong>: otwiera się tylko wtedy, gdy jednocześnie dociera glutaminian z neuronu presynaptycznego ORAZ błona postsynaptyczna jest depolaryzowana. Receptor NMDA to detektor koincydencji. Wymaga, żeby obie strony były aktywne w tym samym momencie.</p>
-    <p class="s8" data-session="8"><strong>Długotrwałe osłabienie synaptyczne</strong> (LTD, Long-Term Depression): gdy timing jest niedokładny albo aktywność słaba, synapsy słabną. Przycinanie, które wyostrza model. LTP buduje, LTD rzeźbi. Sharp-wave ripples podczas SWS odtwarzają sekwencje neuronów z dnia, wymuszając jednoczesną aktywację: to napędza LTP w synapsach korowych. Dojrzewanie engramów opisane przez Kitamurę to właśnie efekt powtarzanego LTP w korze przedczołowej, napędzanego przez nocne odtwarzanie w hipokampie. Homeostaza synaptyczna Tononiego (LTD) i aktywna konsolidacja Borna (LTP) są zgodne i działają równolegle: LTP wzmacnia ślady, które replay aktywował, LTD osłabia te, których nie aktywował.</p>
-
-    <p class="s3" data-session="3"><strong>Struktury mogące uwalniać dopaminę:</strong></p>
-    <ul class="s3" data-session="3">
-      <li class="s3" data-session="3"><strong>Pole brzuszne nakrywki</strong> (VTA, Ventral Tegmental Area)</li>
-      <li class="s3" data-session="3"><strong>Istota czarna</strong> (SN, Substantia Nigra)</li>
-      <li class="s3" data-session="3"><strong>Miejsce sinawe</strong> (LC, Locus Coeruleus): uwalnia głównie noradrenalinę, ale może też dopaminę</li>
-    </ul>
-
-    <p class="s3" data-session="3"><strong>Szlaki dopaminergiczne:</strong></p>
-    <ul class="s3" data-session="3">
-      <li class="s3" data-session="3"><strong>Nigrostriatalny</strong> (SN &rarr; prążkowie grzbietowe): kontrola ruchowa i uczenie nawykowe. Degeneracja tego szlaku to choroba Parkinsona.</li>
-      <li class="s3" data-session="3"><strong>Mezolimbiczny</strong> (VTA &rarr; jądro półleżące, NAcc): wartościowanie wyniku, motywacja, uczenie się przez nagrodę.</li>
-      <li class="s3" data-session="3"><strong>Mezokortykalny</strong> (VTA &rarr; kora przedczołowa): pamięć robocza, planowanie, kontrola impulsów.</li>
-    </ul>
-
-    <div class="video-side video-block s3" data-session="3">
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/Wa8_nLwQIpg"
-          title="2-Minute Neuroscience: Dopamine"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
-      <div class="vs-text"><span class="vs-title">2-Minute Neuroscience · Dopamina</span>Dwuminutowe, rzeczowe wprowadzenie do anatomii układu dopaminergicznego: skąd dopamina wypływa, dokąd dociera i jakie pełni funkcje. Tło do dalszej rozmowy o szlakach i nagrodzie.</div>
-    </div>
-
-    <p class="s3" data-session="3">Dodatkowo, zidentyfikowano wpływ SN i LC na hipokamp w badaniach na ludziach (Kaminski et al., 2018) i myszach (Takeuchi et al., 2016). Aktywność dopaminergiczna jest potrzebna do utworzenia wspomnienia o relacjach między informacjami. Gdy tę aktywność zablokujemy albo gdy jej brakuje, organizm nie utworzy mapy poznawczej. Dopamina jest więc potrzebna do aktualizacji modeli. Najnowsze dane (Adam, Nature 2026) pokazują coś szerszego: neurony dopaminergiczne reagują na zagrożenia, nowe bodźce, ruch i predykcje ruchowe. Dopamina to sygnał konsolidacyjny. Wzmacnia skojarzenie między tym, co się wydarzyło, a okolicznościami, w których się wydarzyło.</p>
-    <p class="s3" data-session="3">Rola dopaminy jest więc podwójna. Czasem wyrzut następuje już przy wskazówce, czasem dopiero w momencie zaskoczenia. Dopamina inicjuje automatyczną sekwencję ruchu (D1) w kierunku znanych konsekwencji. Kiedy jednak następuje błąd predykcyjny (informacje bottom-up nie zgadzają się z modelem top-down), wyrzut dopaminy następuje w momencie zaskoczenia. W tym kontekście, dopamina uczestniczy w konsolidacji informacji poprzedzających zaskoczenie. Co doprowadziło do danego doświadczenia? Kiedy okoliczności są niejasne (50%), system nie wie jeszcze, które zmienne są istotne, więc zapisuje wszystko. Kodowanie jest stopniowe. Z każdym doświadczeniem system zawęża, które zmienne niosą predykcję, a balans między kodowaniem (eksploracją), a odtwarzaniem (eksploatacją) dynamicznie się dostosowuje.</p>
-
-    <div class="video-side video-block s3" data-session="3">
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/axrywDP9Ii0"
-          title="Robert Sapolsky - Dopamine Jackpot"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
-      <div class="vs-text"><span class="vs-title">Robert Sapolsky · Dopamina i niepewność</span>Sapolsky tłumaczy, dlaczego dopamina najmocniej reaguje na niepewność nagrody. Sama nagroda porusza ją słabiej. To klucz do eksploracji, scrollowania i tego, co napędza poszukiwanie.</div>
-    </div>
-
-    <!-- ==================== POZIOMY PREDYKCJI ==================== -->
-    <figure class="figure-block s3" data-session="3">
-      <img src="/images/dopamine_pathways.png" alt="Trzy główne szlaki dopaminergiczne mózgu" />
-      <figcaption>Trzy główne szlaki dopaminergiczne: nigrostriatalny (SN &rarr; prążkowie), mezolimbiczny (VTA &rarr; NAcc) i mezokortykalny (VTA &rarr; kora przedczołowa). Źródło: Wikimedia Commons, Public Domain.</figcaption>
-    </figure>
-
-    <p class="s3" data-session="3">Jak system decyduje, którą trajektorię przez kaskadę realizować? Dwa szlaki w jądrach podstawy działają jak mechanizm selekcji:</p>
-    <p class="s3" data-session="3"><strong>Szlak bezpośredni,</strong> w którym szybko uwalniana dopamina (phasic) łączy się z receptorami D1, które są aktywujące. Ułatwia wybraną akcję, mapuje możliwe afordancje do działania.</p>
-    <p class="s3" data-session="3"><strong>Szlak pośredni,</strong> w którym powoli uwalniana dopamina (tonic) łączy się z receptorami D2, które są hamujące. Efektem jest tłumienie konkurencyjnych akcji i utrzymywanie trajektorii na danej afordancji.</p>
-    <p class="s3" data-session="3">To wygodny pierwszy obraz: jeden szlak wybiera, drugi blokuje. Nowsze dane pokazują jednak, że w momencie inicjacji oba szlaki są aktywne <em>jednocześnie</em>: wąska grupa neuronów szlaku bezpośredniego (D1) wybiera konkretną akcję, a szeroka grupa szlaku pośredniego (D2) w tym samym czasie tłumi alternatywy (Cui et al., 2013). Selekcja i hamowanie dzieją się razem, nie po kolei.</p>
-    <p class="s3" data-session="3">Robisz sekwencję afordancji: wstań, zrób kawę, idź do łazienki, ubierz się. D1 ułatwia każdy krok sekwencji. D2 tłumi rozpraszacze. Kiedy dopaminy w prążkowiu jest za mało (jak w chorobie Parkinsona), aktywność szlaku bezpośredniego jest zmniejszona relatywnie do szlaku pośredniego: problem z inicjacją ruchu.</p>
-
-    <p class="s7" data-session="7">ADHD to zaburzenie tej równowagi. Transporter dopaminy (DAT) w prążkowiu jest nadmiernie aktywny: wciąga dopaminę z przestrzeni synaptycznej, zanim zdąży zadziałać. Toniczny poziom dopaminy spada, a z nim aktywność szlaku pośredniego (D2). D2 nie ma czym tłumić konkurencyjnych trajektorii. Każdy nowy bodziec odpala szlak bezpośredni (D1), który inicjuje nową akcję, bo nic nie trzyma poprzedniej. Efekt: ciągłe przeskakiwanie między afordancjami, agitacja motoryczna, rozbiegany wzrok. Metylfenidat (Ritalin, Concerta) blokuje DAT, zatrzymując dopaminę w synapsie dłużej. Paradoks: stymulant uspokaja osobę z ADHD. Ale paradoks znika, gdy rozumiesz mechanizm. Metylfenidat podnosi toniczny poziom dopaminy, przywracając D2 zdolność do hamowania. Szlak pośredni znów trzyma trajektorię. Stymulant nie dodaje pobudzenia. Przywraca hamulec, którego brakowało.</p>
-    <p class="s7" data-session="7">Farmakologia ma cenę. Przewlekłe blokowanie DAT wywołuje kompensację: mózg produkuje więcej transportera (+24% gęstości DAT po roku stosowania, Wang et al., 2013). Kiedy lek przestaje działać, więcej DAT oznacza szybsze usuwanie dopaminy niż przed leczeniem. To efekt z odbicia (rebound): wieczorem, gdy lek opada, objawy wracają silniejsze niż rano. System, który kompensował brak dopaminy, teraz kompensuje jej sztuczną obecność.</p>
-
-    <figure class="figure-block s3" data-session="3">
-      <img src="/images/basal_ganglia.png" alt="Szlak bezpośredni i pośredni w jądrach podstawy" />
-      <figcaption>Szlak bezpośredni i pośredni w jądrach podstawy. Szlak bezpośredni (D1) przygotowuje zestaw możliwych akcji. Szlak pośredni (D2) zawęża wybór. Źródło: Wikimedia Commons.</figcaption>
-    </figure>
-
-    <p class="s3" data-session="3">Te szlaki nie działają w próżni: domykają wielką pętlę kora &rarr; prążkowie &rarr; gałka blada &rarr; wzgórze &rarr; kora. Kora wysyła pobudzenie do prążkowia (warstwa V), prążkowie przez szlaki bezpośredni i pośredni steruje gałką bladą i istotą czarną, te hamują wzgórze, a wzgórze wraca do kory. Dopamina z SNc i VTA ustawia czułość całej pętli. Serotonina dostraja tę pętlę od strony kory: receptory 5-HT2A na neuronach piramidowych warstwy V regulują siłę sygnału, który kora wysyła do prążkowia. To jest pętla korowo-prążkowiowo-wzgórzowo-korowa: ten sam obwód, który wybiera ruch, na bardziej brzusznym końcu wybiera cel i decyzję. Diagram poniżej pokazuje tę pętlę z perspektywy pojedynczej kolumny korowej: warstwy kory na górze, a pod nimi jądra podstawy, wzgórze i dopaminergiczne wejście z VTA.</p>
-    <p class="s10" data-session="10">Tak wyglądają naprawdę warstwy kory. Rekonstrukcja pięciu kolumn korowych pokazuje sześć warstw, od powierzchni mózgu (pial surface) po istotę białą (white matter). Schemat pętli pod nią rysuje te same warstwy już jako obwód.</p>
-    <figure class="figure-block s10" data-session="10">
-      <img src="/images/cortical_columns.jpg" alt="Rekonstrukcja 3D pięciu kolumn korowych z oznaczonymi sześcioma warstwami, od powierzchni opony miękkiej po istotę białą" />
-      <figcaption>Rekonstrukcja 3D pięciu kolumn korowych w korze beczułkowej szczura, z oznaczonymi warstwami L1-L6, powierzchnią opony miękkiej (pial surface) i istotą białą (white matter). Źródło: Bodysurfinyon, na podstawie Marcel Oberländer, "Beyond the Cortical Column" (Neuroinformatics 2012), Wikimedia Commons, CC BY-SA 4.0.</figcaption>
-    </figure>
-    <figure class="figure-block s3" data-session="3">
-      <img src="/images/minicolumn_loop.png" alt="Kolumna korowa z warstwami L1-L6 połączona z jądrami podstawy, wzgórzem i polem brzusznym nakrywki przez pętle dopaminergiczne" />
-      <figcaption>Kolumna korowa wpięta w pętlę podkorową. Warstwy L1-L6 (z neuronem piramidowym) wysyłają pobudzenie glutaminianergiczne (Glu) z warstw L5/L6 do jąder podstawy (BG). BG rzutuje na wzgórze (TH), które odsyła sygnał GABA-ergiczny z powrotem do warstw kory. Pole brzuszne nakrywki (VTA) zasila warstwę L2/3 dopaminą (DA), ustawiając czułość całej pętli. Źródło: Opris, Chang i Noga (2017), <em>Frontiers in Neuroanatomy</em>, 11:116, licencja CC BY.</figcaption>
-    </figure>
-
-    <p class="s3" data-session="3">Ten sam system konsolidacyjny, który podczas snu odtwarza i wzmacnia adaptacyjne wspomnienia, może zostać przejęty. Substancje psychoaktywne produkują sygnał dopaminergiczny o sile, do jakiej architektura nigdy nie była kalibrowana. Konsekwencja: konsolidacja uruchamia się na pełnych obrotach, ale koduje kontekst zażycia zamiast kontekstu przetrwania.</p>
-
-    <h3 id="sub-przejecie" class="s3" data-session="3">Gdy system zostaje przejęty</h3>
-    <p class="s3" data-session="3">W 1954 roku Olds i Milner przypadkowo odkryli, że szczury naciskają dźwignię tysiące razy na godzinę, by stymulować elektrycznie własny mózg. Elektroda była umieszczona w podwzgórzu bocznym, ale stymulowała pęczek przyśrodkowy przodomózgowia: szlak dopaminergiczny z VTA do NAcc. Późniejsze badania pokazały, że to właśnie aktywacja NAcc tak bardzo uzależnia.</p>
-
-    <p class="s3" data-session="3">Substancje przejmują ten sam system konsolidacji.</p>
-    <p class="s3" data-session="3">Kokaina blokuje transporter dopaminy (DAT, Dopamine Transporter). W efekcie transporter nie zbiera dopaminy z przestrzeni synaptycznych do neuronu presynaptycznego i dopamina tam obecna dłużej aktywuje receptory postsynaptyczne. Kokaina blokuje też transporter noradrenaliny (NET) i serotoniny (SERT): jest potrójnym inhibitorem wychwytu zwrotnego. Efekty sercowo-naczyniowe (tachykardia, nadciśnienie) wynikają z blokady NET, efekty nastroju z blokady SERT, uzależnienie z blokady DAT.</p>
-    <p class="s3" data-session="3">Amfetaminy blokują DAT i odwracają działanie transportera. DAT normalnie zabiera dopaminę ze szczeliny synaptycznej do neuronu presynaptycznego. DAT, do którego przyłączyła się amfetamina, działa pod prąd. Transportuje dopaminę z neuronu presynaptycznego do szczeliny synaptycznej. Sprawia to, że neuron uwalnia dopaminę bez generowania potencjału czynnościowego.</p>
-    <p class="s3" data-session="3">Opiaty działają inaczej: hamują interneurony GABAergiczne w VTA, które normalnie hamują neurony dopaminergiczne. Hamulec na hamulcu przestaje działać. Jednocześnie opiaty bezpośrednio produkują zmianę interoceptywną: ból znika, rozlewa się ciepło.</p>
-    <p class="s3" data-session="3">Wszystkie trzy substancje wpływają na uwalnianie dopaminy w różnych miejscach w różny sposób. Substancje produkują sygnał naturalnie nie doświadczany. Każdy detal eksteroceptywny obecny podczas zażycia (pokój, ludzie, muzyka) zostaje skonsolidowany z nadludzką siłą. Dlatego kontekst wyzwala nawrót. Te skojarzenia zostały wykute sygnałem, do którego architektura nigdy nie była skalibrowana.</p>
-
-    <p class="s10" data-session="10">Substancje psychodeliczne (psylocybina, LSD) działają na ten system z drugiej strony. Pobudzają receptory serotoninowe 5-HT2A na neuronach piramidowych głębokich warstw kory, a to rozluźnia priory najdalsze od zmysłów. Model Carhart-Harrisa i Fristona (2019), nazwany REBUS, ujmuje to wprost: gdy precyzja predykcji top-down spada, sygnał bottom-up z receptorów dociera dalej niż zwykle. To ta sama gałka precyzji, którą widziałeś w autyzmie (Pellicano i Burr), tylko przekręcona w drugą stronę: na kilka godzin i farmakologicznie, zamiast na stałe. Świat staje się intensywniejszy, granice pojęć miękną, a modele, które normalnie są przezroczyste, na chwilę stają się widoczne jako modele. To ten sam gradient przezroczystości, do którego wrócimy w zakończeniu, tu przesunięty farmakologicznie ku gibsonowskiemu krańcowi.</p>
-    <p class="s3" data-session="3"><em>Ćwiczenie:</em> jeśli choroba Parkinsona to degeneracja neuronów SNc (Substantia Nigra pars compacta; mniej dopaminy w prążkowiu grzbietowym), a kokaina blokuje DAT (utrzymuje dopaminę w synapsie dłużej), to czy kokaina mogłaby pomóc?</p>
-    <p class="s3" data-session="3">Teoretycznie tak, ale problem w tym, że kokaina jest nieselektywna: blokuje DAT, NET i SERT jednocześnie, wywołując szerokie spektrum efektów ubocznych i uzależnienie. L-DOPA stosowana w leczeniu działa inaczej: dostarcza prekursora do neuronów dopaminergicznych, które mają enzym DOPA dekarboksylazę do konwersji. To zwiększa dostępność dopaminy w całym mózgu. Efektem ubocznym jest zwiększona aktywność szlaku mezolimbicznego: pacjenci z Parkinsonem leczeni L-DOPA czasem rozwijają kompulsywne zachowania (hazard, zakupy). Ten sam lek, który przywraca kontrolę ruchową przez szlak nigrostriatalny, może zaburzyć kontrolę impulsów przez szlak mezolimbiczny.</p>
-
     <hr class="section-divider" />
     <h2 id="sec-jezyk">Pętla: język</h2>
     <hr class="section-divider s2" data-session="2" />
@@ -2092,11 +2090,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s4" data-session="4">Lieberman i współpracownicy (2007): samo nadanie nazwy uczuciu redukuje aktywację ciała migdałowatego. Akt budowania słowa tłumi surowy sygnał. Słownictwo emocjonalne jest regulacyjne. Dlatego opiekun, który mówi dziecku "jesteś sfrustrowany, bo chciałeś sięgnąć po zabawkę i nie mogłeś", robi coś więcej niż etykietowanie. Instaluje szablon konstrukcyjny na całe życie. Narzędzie emocjonalne przekazane przez MKO, zinternalizowane. Dokładnie mechanizm Vygotsky'ego, stosowany do regulacji afektu.</p>
 
-    <h3 id="sub-depresja" class="s4" data-session="4">Depresja</h3>
-
-    <p class="s4" data-session="4">"Depresja to niewidzenie innych opcji." Mechanizm: predykcje są tak silnie negatywne, że system nie generuje pozytywnych kandydatów do działania. Każda opcja przewiduje porażkę.</p>
-    <p class="s4" data-session="4">Kolaps zachodzi na każdym poziomie hierarchii jednocześnie: neutralne stany ciała są etykietowane przez DMN jako ciężkość i bezwartościowość; ta sama fizjologiczna ekscytacja jest konstruowana jako groza; każde działanie jest oceniane przez prior porażki zanim zostanie zainicjowane. Od środka nie czujesz złamanego mechanizmu predykcji. Czujesz, że nic nie ma sensu i nic nie jest warte wysiłku.</p>
-
     <hr class="section-divider" />
     <h2 id="sec-wnioski">Wnioski</h2>
     <p>Zbierzmy to w całość. Skoro model jest aktywnością sieci, a sieci ciągną się od bieguna źródeł po biegun wyjaśnień, to nawet poczucie własnej sprawczości i stary spór o percepcję dają się umieścić na tej jednej osi.</p>
@@ -2105,7 +2098,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s9" data-session="9">Ale to, że aktywność poprzedza decyzję, nie znaczy jeszcze, że decyzja jest już podjęta. Schurger i współpracownicy (2012) zaproponowali inną interpretację: potencjał gotowości to stopniowe narastanie szumu neuronalnego ku progowi. Decyzja zapada dopiero w chwili jego przekroczenia. Ruch następuje, gdy aktywność ten próg przekroczy. W tym ujęciu nie ma w mózgu osobnego "decydenta", który wyprzedza Ciebie. Sama decyzja <em>jest</em> przekroczeniem progu, a potencjał gotowości to po prostu narastanie do niego. Te dane dopuszczają więc także inną lekturę niż mocny wniosek Libeta.</p>
     <p class="s9" data-session="9">Brass i Haggard (2008) zaproponowali, że działanie intencjonalne składa się z trzech odrębnych komponentów: <strong>what</strong> (treść działania: kora przedruchowa i jądra podstawy wybierają, który ruch wykonać), <strong>when</strong> (czas: pre-SMA i ACC decydują, kiedy go zainicjować) i <strong>whether</strong> (weto: ACC i grzbietowo-przyśrodkowa kora czołowa decydują, czy w ogóle działać). Trzy pytania, trzy obwody, jedno doświadczenie sprawczości.</p>
     <p class="s9" data-session="9">Patrick Haggard (2008, <em>Nature Reviews Neuroscience</em>) postawił pytanie wprost: czym jest poczucie sprawczości? Nie chodzi o to, czy masz wolną wolę. Chodzi o to, skąd bierze się doświadczenie "to ja to zrobiłem." Haggard i współpracownicy odkryli w 2002 roku zjawisko <strong>wiązania intencjonalnego</strong> (intentional binding): gdy wykonujesz ruch dobrowolnie, postrzegasz interwał czasowy między ruchem a jego efektem (np. dźwiękiem) jako krótszy niż jest naprawdę. Mózg kompresuje czas między działaniem a skutkiem, jakby sklejał je w jedno zdarzenie. Efekt znika, gdy ruch jest wymuszony. Wiązanie intencjonalne to sensoryczny podpis sprawczości: Twój mózg predykuje konsekwencje własnego działania i kompresuje je z działaniem w spójną całość.</p>
-    <p class="s9" data-session="9">Desmurget i współpracownicy (2009, <em>Science</em>) znaleźli substrat neuronalny tej predykcji. Stymulowali elektrycznie mózgi pacjentów podczas operacji neurochirurgicznej w stanie czuwania. Stymulacja dolnej kory ciemieniowej wywoływała silną intencję i chęć poruszenia ręką, ramieniem lub stopą. Przy wyższych natężeniach pacjenci byli przekonani, że ruch wykonali, choć elektromiografia nie rejestrowała żadnej aktywności mięśniowej. Stymulacja kory przedruchowej wywoływała rzeczywisty ruch, ale pacjenci stanowczo zaprzeczali, że się ruszyli. Podwójna dysocjacja: aktywność kory ciemieniowej jest doświadczana jako intencja bez ruchu, kora przedruchowa generuje ruch bez doświadczenia intencji.</p>
+    <p class="s9" data-session="9">Desmurget i współpracownicy (2009, <em>Science</em>) znaleźli substrat neuronalny tej predykcji. Stymulowali elektrycznie mózgi pacjentów podczas operacji neurochirurgicznej w stanie czuwania. Stymulacja dolnej kory ciemieniowej wywoływała silną intencję i chęć poruszenia ręką, ramieniem lub stopą. Przy wyższych natężeniach pacjenci byli przekonani, że ruch wykonali, choć elektromiografia nie rejestrowała żadnej aktywności mięśniowej. Stymulacja kory przedruchowej wywoływała rzeczywisty ruch, ale pacjenci stanowczo zaprzeczali, że się ruszyli. Podwójna dysocjacja: kora ciemieniowa generuje doświadczenie intencji bez ruchu, kora przedruchowa generuje ruch bez doświadczenia intencji.</p>
     <p class="s9" data-session="9">Mechanizm łączący intencję z poczuciem sprawczości to <strong>kopia eferentna</strong> (efference copy): kora motoryczna wysyła predykcję zarówno do rdzenia kręgowego, jak i do kory sensorycznej. "Spodziewam się takiego sygnału somatosensorycznego, bo właśnie inicjuję taki ruch." Gdy sygnał zwrotny z ciała zgadza się z predykcją, doświadczasz sprawczości: to ja to zrobiłem. W schizofrenii ten mechanizm jest zaburzony. Ford i współpracownicy wykazali, że normalne tłumienie odpowiedzi kory słuchowej podczas mowy (mózg wie, że to on mówi) jest osłabione u pacjentów ze schizofrenią. Własna mowa wewnętrzna trafia do świadomości jako obca. Kopia eferentna nie dociera lub jest nieprecyzyjna. Efekt: głosy, które słyszysz, nie są oznaczone jako "moje." Halucynacje słuchowe to awaria systemu sprawczości: mowa powstaje normalnie, a system błędnie przypisuje jej autorstwo.</p>
 
     <hr id="sec-percepcja" class="section-divider s11" data-session="11" />
@@ -2138,6 +2131,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s11" data-session="11">Przykład. Jeśli Twoje modele Wojtka uwzględniają jego sarkazm, to kamienna twarz i zimny ton wzbudzą inną interpretację, niż gdyby Twoje modele Wojtka były pogodne. Inny przykład, z afordancjami. Twoje modele lasu określają, jakie afordancje w nim dostrzegasz. Afordancje to kluczowy termin Gibsona; pisał o bezpośredniej percepcji afordancji. A jednak to, które z nich widzisz, zależy od tego, czy jesteś grzybiarzem, myśliwym, drwalem, czy sarną. Sieci odległe od zmysłów tworzą interpretację top-down dla sieci bliżej zmysłów.</p>
 
     <p class="s11" data-session="11">Daleki koniec tej osi to sieć domyślna. Kiedy żadne źródło nie dostarcza przyczyny, DMN dopowiada ją w trzech kierunkach. Wstecz, do tego, co już było, czyli pamięć. W przód, do tego, co może nadejść, czyli symulacja i plan. I w bok, do cudzych umysłów, do tego, w co ktoś wierzy, czego chce i co zamierza. Pamięć, wyobraźnia przyszłości i modelowanie innych ludzi to jeden mechanizm wyjaśniania, skierowany w trzy strony, gdy świat milczy o przyczynie.</p>
+
 
     <hr id="sec-pytania" class="section-divider" />
     <div class="questions-section">
@@ -2333,8 +2327,10 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item s5" data-session="5">Addis, D. R., Wong, A. T., &amp; Schacter, D. L. (2007). Remembering the past and imagining the future: common and distinct neural substrates during event construction and elaboration. <em>Neuropsychologia, 45</em>(7), 1363-1377. <a href="https://doi.org/10.1016/j.neuropsychologia.2006.10.016" target="_blank">doi:10.1016/j.neuropsychologia.2006.10.016</a></p>
       <p class="bib-item s5" data-session="5">Godden, D. R., &amp; Baddeley, A. D. (1975). Context-dependent memory in two natural environments: on land and underwater. <em>British Journal of Psychology, 66</em>(3), 325-331. <a href="https://doi.org/10.1111/j.2044-8295.1975.tb01468.x" target="_blank">doi:10.1111/j.2044-8295.1975.tb01468.x</a></p>
       <p class="bib-item s5" data-session="5">Nader, K., Schafe, G. E., &amp; Le Doux, J. E. (2000). Fear memories require protein synthesis in the amygdala for reconsolidation after retrieval. <em>Nature, 406</em>(6797), 722-726. <a href="https://doi.org/10.1038/35021052" target="_blank">doi:10.1038/35021052</a></p>
+      <p class="bib-item s6" data-session="6">Walker, M. P. (2017). <em>Why We Sleep: Unlocking the Power of Sleep and Dreams</em>. Scribner.</p>
+      <p class="bib-item s6" data-session="6">Diekelmann, S., &amp; Born, J. (2010). The memory function of sleep. <em>Nature Reviews Neuroscience, 11</em>(2), 114-126. <a href="https://doi.org/10.1038/nrn2762" target="_blank">doi:10.1038/nrn2762</a></p>
+      <p class="bib-item s6" data-session="6">Tononi, G., &amp; Cirelli, C. (2006). Sleep function and synaptic homeostasis. <em>Sleep Medicine Reviews, 10</em>(1), 49-62. <a href="https://doi.org/10.1016/j.smrv.2005.05.002" target="_blank">doi:10.1016/j.smrv.2005.05.002</a></p>
       <p class="bib-item s6" data-session="6">Kitamura, T., Ogawa, S. K., Roy, D. S., Okuyama, T., Morrissey, M. D., Smith, L. M., Redondo, R. L., &amp; Tonegawa, S. (2017). Engrams and circuits crucial for systems consolidation of a memory. <em>Science, 356</em>(6333), 73-78. <a href="https://doi.org/10.1126/science.aam6808" target="_blank">doi:10.1126/science.aam6808</a></p>
-      <p class="bib-item s6" data-session="6">Wagatsuma, A., Okuyama, T., Sun, C., Smith, L. M., Abe, K., &amp; Tonegawa, S. (2018). Locus coeruleus input to hippocampal CA3 drives single-trial learning of a novel context. <em>Proceedings of the National Academy of Sciences, 115</em>(2), E310-E316. <a href="https://doi.org/10.1073/pnas.1714082115" target="_blank">doi:10.1073/pnas.1714082115</a></p>
       <p class="bib-item s7" data-session="7">Pellicano, E., &amp; Burr, D. (2012). When the world becomes 'too real': a Bayesian explanation of autistic perception. <em>Trends in Cognitive Sciences, 16</em>(10), 504-510. <a href="https://doi.org/10.1016/j.tics.2012.08.009" target="_blank">doi:10.1016/j.tics.2012.08.009</a></p>
       <p class="bib-item s7" data-session="7">Wang, G.-J., et al. (2013). Long-term stimulant treatment affects brain dopamine transporter level in patients with attention deficit hyperactive disorder. <em>PLoS ONE, 8</em>(5), e63023. <a href="https://doi.org/10.1371/journal.pone.0063023" target="_blank">doi:10.1371/journal.pone.0063023</a></p>
       <p class="bib-item s8" data-session="8">Gärdenfors, P. (2000). <em>Conceptual Spaces: The Geometry of Thought</em>. MIT Press.</p>
@@ -2342,7 +2338,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item s8" data-session="8">Bellmund, J. L. S., Gärdenfors, P., Moser, E. I., &amp; Doeller, C. F. (2018). Navigating cognition: Spatial codes for human thinking. <em>Science, 362</em>(6415), eaat6766. <a href="https://doi.org/10.1126/science.aat6766" target="_blank">doi:10.1126/science.aat6766</a></p>
       <p class="bib-item s8" data-session="8">Quian Quiroga, R., Reddy, L., Kreiman, G., Koch, C., &amp; Fried, I. (2005). Invariant visual representation by single neurons in the human brain. <em>Nature, 435</em>(7045), 1102-1107. <a href="https://doi.org/10.1038/nature03687" target="_blank">doi:10.1038/nature03687</a></p>
       <p class="bib-item s8" data-session="8">Mackay, C. E., et al. (2024). Concept and location neurons in the human brain provide the building blocks for holistic scene representations. <em>Nature Communications, 15</em>, 5424. <a href="https://doi.org/10.1038/s41467-024-49775-5" target="_blank">doi:10.1038/s41467-024-49775-5</a></p>
-      <p class="bib-item s8" data-session="8">Maguire, E. A., &amp; Mullally, S. L. (2013). The hippocampus: a manifesto for change. <em>Journal of Experimental Psychology: General, 142</em>(4), 1180-1189. <a href="https://doi.org/10.1037/a0033650" target="_blank">doi:10.1037/a0033650</a></p>
       <p class="bib-item s8" data-session="8">McClelland, J. L., McNaughton, B. L., &amp; O'Reilly, R. C. (1995). Why there are complementary learning systems in the hippocampus and neocortex. <em>Psychological Review, 102</em>(3), 419-457. <a href="https://doi.org/10.1037/0033-295X.102.3.419" target="_blank">doi:10.1037/0033-295X.102.3.419</a></p>
       <p class="bib-item s8" data-session="8">Chomsky, N. (1965). <em>Aspects of the Theory of Syntax</em>. MIT Press.</p>
       <p class="bib-item s8" data-session="8">Friston, K. (2010). The free-energy principle: a unified brain theory? <em>Nature Reviews Neuroscience, 11</em>(2), 127-138. <a href="https://doi.org/10.1038/nrn2787" target="_blank">doi:10.1038/nrn2787</a></p>
@@ -2383,7 +2378,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <div class="glossary-entry" data-sections="sec-dmn"><span class="abbr-key">mPFC</span> <span class="abbr-full">przyśrodkowa kora przedczołowa</span></div>
       <div class="glossary-entry" data-sections="sec-dmn"><span class="abbr-key">PCC</span> <span class="abbr-full">tylna kora zakrętu obręczy</span></div>
       <div class="glossary-entry" data-sections="sec-dmn sec-predykcja"><span class="abbr-key">TP</span> <span class="abbr-full">biegun skroniowy (temporal pole)</span></div>
-      <div class="glossary-entry" data-sections="sec-dmn sec-predykcja"><span class="abbr-key">OFC</span> <span class="abbr-full">kora okołooczodołowa</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn sec-predykcja"><span class="abbr-key">OFC</span> <span class="abbr-full">kora oczodołowo-czołowa</span></div>
       <div class="glossary-entry" data-sections="sec-dmn sec-predykcja sec-pojecia"><span class="abbr-key">IFG</span> <span class="abbr-full">zakręt czołowy dolny (inferior frontal gyrus), obszar Broki</span></div>
       <div class="glossary-entry" data-sections="sec-dmn"><span class="abbr-key">aMFG</span> <span class="abbr-full">przedni zakręt czołowy środkowy</span></div>
       <div class="glossary-entry" data-sections="sec-dmn sec-predykcja"><span class="abbr-key">MTG</span> <span class="abbr-full">zakręt skroniowy środkowy</span></div>
@@ -2591,7 +2586,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     // ── Section navigator: scroll tracking ──
     const navLinks = document.querySelectorAll('.nav-sidebar a[data-nav]');
-    const sectionIds = ['sec-perspektywy','sub-perspektywy','sub-model','sec-zasady','sub-predykcja','sub-informacja','sec-architektura','sub-sieci','sub-nisze','sec-daleko','sub-dmn','sub-hipokamp','sub-pamiec','sub-sen','sub-pojecia','sub-myslenie','sub-ciaglosc','sub-spoleczny','sub-lustrzane','sub-teoria-umyslu','sec-blisko','sub-afordancje','sub-4e','sec-uczenie','sub-stadia','sub-asymilacja','sub-przywiazanie','sub-ltp','sub-przejecie','sec-jezyk','sub-jezyk','sub-afazja','sub-jezyk-myslenie','sec-salience','sub-lancuch','sub-emocje','sub-afekt','sub-sm','sub-koregulacja','sub-granulacja','sub-depresja','sec-wnioski','sub-reprezentacjonizm','sub-przyczyny','sec-pytania'];
+    const sectionIds = ['sec-perspektywy','sub-perspektywy','sub-model','sec-zasady','sub-predykcja','sub-informacja','sec-architektura','sub-sieci','sub-stadia','sub-asymilacja','sub-przywiazanie','sub-sen','sub-ltp','sub-depresja','sub-pamiec','sub-przejecie','sec-daleko','sub-hipokamp','sub-afordancje','sub-nisze','sub-pojecia','sub-myslenie','sub-ciaglosc','sub-spoleczny','sub-lustrzane','sub-teoria-umyslu','sec-blisko','sec-jezyk','sub-jezyk','sub-afazja','sub-jezyk-myslenie','sec-salience','sub-lancuch','sub-emocje','sub-afekt','sub-sm','sub-koregulacja','sub-granulacja','sec-wnioski','sub-reprezentacjonizm','sub-przyczyny','sec-pytania'];
     const allNavEls = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
     let currentNav = '';
     let currentSection = '';
