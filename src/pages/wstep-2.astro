@@ -433,6 +433,19 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     margin-left: auto;
     margin-right: auto;
   }
+  .figure-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .figure-row .figure-block {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+  }
+  @media (max-width: 640px) {
+    .figure-row { flex-direction: column; }
+  }
   .figure-block img {
     width: 100%;
     display: block;
@@ -1852,14 +1865,16 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s10" data-session="10">Tę samą serotoninę podnoszą leki przeciwdepresyjne z grupy SSRI (selektywne inhibitory wychwytu zwrotnego serotoniny, jak fluoksetyna czy sertralina). Blokują SERT, transporter zbierający serotoninę ze szczeliny synaptycznej, więc serotonina działa na receptory dłużej. Stężenie rośnie od razu, ale poprawa nastroju przychodzi dopiero po kilku tygodniach. Ta zwłoka jest wskazówką: SSRI nie działają przez sam wzrost serotoniny, lecz przez powolną zmianę, którą ten wzrost wywołuje w sieciach, czyli zwiększoną plastyczność i rozluźnienie zbyt sztywnych priorów. Tam, gdzie psychodeliki rozluźniają priory gwałtownie i na godziny, SSRI robią to łagodnie i przez tygodnie.</p>
     <p class="s10" data-session="10">Serotonina i dopamina współregulują sposób przetwarzania informacji przez sieci mózgowe.</p>
     <p class="s10" data-session="10">Kora nowa ma 6 (L1-L6) warstw; neurony piramidowe w warstwie L5 wyposażone w receptory serotoninergiczne 5-HT2A wysyłają projekcje między innymi do wzgórza i jąder podstawy (BG), modulując ich aktywność.</p>
-    <figure class="figure-block fig-small s10" data-session="10">
+    <div class="figure-row">
+    <figure class="figure-block s10" data-session="10">
       <img src="/images/cortical_columns.jpg" alt="Rekonstrukcja 3D pięciu kolumn korowych (Wikimedia Commons)" />
       <figcaption>Rekonstrukcja 3D pięciu kolumn korowych w korze beczułkowej szczura, z oznaczonymi warstwami L1-L6, powierzchnią opony miękkiej (pial surface) i istotą białą (white matter). Źródło: Bodysurfinyon, na podstawie Marcel Oberländer, "Beyond the Cortical Column" (Neuroinformatics 2012), Wikimedia Commons, CC BY-SA 4.0.</figcaption>
     </figure>
-    <figure class="figure-block fig-small s10" data-session="10">
+    <figure class="figure-block s10" data-session="10">
       <img src="/images/minicolumn_loop.png" alt="Kolumna korowa wpięta w pętlę podkorową (Opris et al., 2017)" />
       <figcaption>Schemat pętli rysuje te same warstwy już jako obwód: warstwy kory na górze, a pod nimi jądra podstawy, wzgórze i dopaminergiczne wejście z VTA. Źródło: Opris, Chang i Noga (2017), Frontiers in Neuroanatomy, 11:116, licencja CC BY.</figcaption>
     </figure>
+    </div>
     <p class="s10" data-session="10">Szlaki dopaminergiczne i serotoninergiczne domykają wielką pętlę kora &rarr; prążkowie &rarr; gałka blada &rarr; wzgórze &rarr; kora. Kora wysyła pobudzenie do prążkowia, prążkowie przez szlaki bezpośredni i pośredni steruje gałką bladą i istotą czarną, te hamują wzgórze, a wzgórze wraca do kory. Dopamina z SNc i VTA ustawia czułość całej pętli. Serotonina dostraja tę pętlę od strony kory: receptory 5-HT2A na neuronach piramidowych warstwy V regulują siłę sygnału, który kora wysyła do prążkowia. To jest pętla korowo-prążkowiowo-wzgórzowo-korowa: ten sam obwód, który wybiera ruch, na bardziej brzusznym końcu wybiera cel i decyzję. Diagram powyżej pokazuje tę pętlę z perspektywy pojedynczej kolumny korowej: warstwy kory na górze, a pod nimi jądra podstawy, wzgórze i dopaminergiczne wejście z VTA.</p>
 
     <h2 id="sec-jezyk">Pętla: język</h2>
