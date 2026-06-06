@@ -1683,78 +1683,82 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <!-- ==================== JĘZYK ==================== -->
     <hr class="section-divider" />
     <h2 id="sec-blisko">Blisko od receptorów</h2>
-    <p>Bliżej receptorów modele trzymają się świata znacznie ciaśniej. Sieci modelują tu kształt, ruch, dotyk i położenie ciała, niemal wprost z sygnału zmysłowego.</p>
-    <p>Błędy predykcyjne to niespodziewane informacje, które płyną od receptorów (bottom-up) i kształtują sieci tak, aby w przyszłości te informacje były już spodziewane (top-down). Cała historia ewolucyjna, kulturowa i indywidualna kształtuje architekturę sieci neuronowych. <span class="s2" data-session="2">Lev Vygotsky dodałby: inna osoba jest źródłem skalibrowanych błędów predykcyjnych dla Twojego mózgu dopasowanych do Twojego poziomu. Dostarcza Ci afordancji, za którymi możesz podążać.</span> <span class="s3" data-session="3">Kluczowe jest przypisanie przyczyn obecnego doświadczenia (credit assignment), znalezienie przyczyny błędu predykcyjnego. Jakie wcześniejsze informacje mogą sugerować obecne doświadczenie?</span></p>
+    <p>Sieci VIS, SMN i DAN modelują informacje blisko receptorów: kształt, ruch, dotyk i położenie ciała.</p>
+    <p>Schemat ciała w DAN powstaje z połączenia informacji z VIS, SMN oraz A1. Używanie narzędzi zmienia organizację struktur składających się na DAN (Iriki i Taoka, 2012). Kora ciemieniowa makaka uczącego się grabek musi nagle przewidywać trzy razy większą przestrzeń, pełną nowych afordancji. Schemat ciała poszerza się, a wraz z nim przestrzeń peripersonalna: interfejs między ciałem (propriocepcja) a środowiskiem (eksterocepcja). Narzędzia modyfikują dostępne możliwości działania, tak jak nauka jazdy samochodem zmienia to, jak pewnie czujesz się za kierownicą i co jest dla Ciebie osiągalne (Serino, 2019).</p>
+    <p>Komplementarne do badań nad schematem ciała i przestrzenią peripersonalną w korze ciemieniowej są badania nad etologicznymi mapami akcji w korze czołowej (Graziano, 2016). Górna część kory ruchowej i przedruchowej uczestniczy w ruchach całego ciała, środkowa w ruchach rąk przed oczami, a dolna (tuż nad bruzdą Sylwiusza) w precyzyjnych ruchach ust i dłoni.</p>
+    <figure class="figure-block">
+      <img src="/images/graziano_action_maps.png" alt="Etologiczne mapy akcji w korze ruchowej (Graziano, 2016)" />
+      <figcaption>Etologiczne mapy akcji: wzdłuż kory ruchowej i przedruchowej sąsiadują strefy odpowiadające całym kategoriom zachowań, od ruchów całego ciała, przez sięganie, po ruchy ręki przed twarzą i precyzyjne ruchy ust i dłoni. Źródło: na podstawie Graziano (2016), <em>Trends in Cognitive Sciences</em>. [grafika do wstawienia]</figcaption>
+    </figure>
+    <p class="s8" data-session="8">Gdy masz wybudowane modele daleko od receptorów (DMN, CON), wysyłają one predykcje do DAN, VIS i SMN o planowanych działaniach. Na przykładzie kory czołowej:</p>
+    <ul class="s8" data-session="8">
+      <li class="s8" data-session="8"><strong>OFC i biegun skroniowy (TP)</strong>: nawigują przez przestrzeń pojęciową, czyli to, co warto powiedzieć, zrobić, pomyśleć.</li>
+      <li class="s8" data-session="8"><strong>MTG</strong>: hamuje konkurencyjne trajektorie w przestrzeni semantycznej.</li>
+      <li class="s8" data-session="8"><strong>IFG (obszar Broki)</strong>: porusza się przez przestrzeń gramatyczną, generując predykcje składniowe.</li>
+      <li class="s8" data-session="8"><strong>Zakręt przedśrodkowy (kora pierwszorzędowa ruchowa)</strong>: porusza ciałem przez przestrzeń fizyczną, generując predykcje proprioceptywne.</li>
+    </ul>
+    <p class="s8" data-session="8">Kaskada predykcji postępuje, urzeczywistniając plan działania w konkretne ruchy ciała.</p>
 
     <h3 id="sub-afordancje">Afordancje</h3>
-    <p>Afordancje powstają <em>między Tobą a światem</em>: ani w samym przedmiocie, ani w samym Tobie.</p>
-    <p class="s11" data-session="11">To teza Gibsona: afordancję odbierasz tuż przy receptorach, gdzie modele trzymają się świata tak ciasno, że ich praca jest niewidoczna. Pod koniec kursu zobaczysz, że to bliski kraniec tej samej osi, na której drugim końcu pracuje Friston.</p>
-    <p>Ten sam kamień: turlanie dla dziecka, siedzenie dla zmęczonego wędrowca, budulec dla architekta. Kamień się nie zmienił. Zmieniła się relacja, kontekst, potrzeba.</p>
-    <ul>
-      <li><strong>Relacyjne:</strong> nie istnieją bez konkretnego organizmu.</li>
-      <li><strong>Kontekstualne:</strong> ten sam obiekt, inne możliwości w innych sytuacjach.</li>
-      <li><strong>Dynamiczne:</strong> zmieniają się wraz z predykcjami.</li>
-    </ul>
-
+    <p>Wykonywanie działań to podążanie za afordancjami. Afordancje to relacje między propriocepcją, eksterocepcją a interocepcją, interpretowane przez pryzmat już wybudowanych modeli. W zależności od wspomnień, planów i teorii umysłu ta sama informacja na receptorach jest inaczej interpretowana i stanowi inne afordancje. Grzyb z gatunku błyskoporek podkorowy zostanie zapewne niezauważony przez niewprawne oko, a dla grzybiarza będzie stanowić silną afordancję zebrania.</p>
     <div class="formula-box">
-      afordancje + motywacja = akcja
+      afordancje + motywacja (chcenie) = akcja
     </div>
-
-    <p>Afordancje są więc możliwościami do działania. Są elementami modeli rzeczywistości, z którymi modele "Ciebie" mogą wejść w interakcję. Poruszasz ciałem, implementując predykcje z kory motorycznej (Adams et al., 2013). Model w korze motorycznej powstał w wyniku lat treningu stadium sensoryczno-motorycznego. Trening ruchu i używania narzędzi ukształtował strukturę sieci neuronowych za pośrednictwem błędów predykcyjnych bottom-up. Ta wytrenowana struktura zwrotnie dostarcza sygnał top-down, generując kolejne predykcje ruchu. Predykcje i błędy predykcyjne są w ciągłej interakcji, znane afordancje są przewidywane, nowe afordancje są odkrywane i dodawane do modeli. <span class="s2" data-session="2">Poruszanie ciałem jest warunkiem poznania. Mózg, ciało i działanie to trzy perspektywy na ten sam proces.</span></p>
-    <p class="s9" data-session="9">Zespół Tourette'a rzuca światło na komponent <em>whether</em> z modelu Brassa i Haggarda. Tiki motoryczne i wokalne to ruchy, które system inicjuje (what i when działają), ale których mechanizm weta nie zatrzymuje. Pacjenci z Tourette'em często opisują narastające napięcie (premonitory urge) przed tikiem, które ustępuje dopiero po jego wykonaniu. Kontrola jest obecna, tyle że przegrywa. Predykcja sensoryczna okazuje się silniejsza niż weto. Komponent whether próbuje zatrzymać ruch i ustępuje sile predykcji domagającej się spełnienia.</p>
-    <p class="s2" data-session="2">Alison Gopnik proponuje, że dzieci to zoptymalizowane maszyny do eksploracji: testują więcej afordancji, napotykają więcej błędów predykcyjnych, próbują więcej wariantów. Dorośli eksploatują wyuczone modele, podążając utartymi ścieżkami znanych afordancji.</p>
-    <p class="s7" data-session="7">Autyzm zmienia krajobraz afordancji jeszcze inaczej, i predictive coding wyjaśnia jak. Pellicano i Burr (2012) proponują, że mózg autystyczny przypisuje wyższą precyzję (wagę) błędom predykcyjnym bottom-up, a niższą predykcjom top-down. Każdy sygnał sensoryczny dociera z pełną mocą, bo priory go nie tłumią. Świat jest intensywniejszy, bardziej szczegółowy, ale trudniejszy do kompresji w schematy. Hałas w stołówce staje się bombardowaniem. Ale ten sam mechanizm daje zdolność do dostrzegania wzorców, które neurotypowy mózg wygładza. Powtarzalne zachowania (stimming) nabierają sensu jako aktywne generowanie przewidywalnych sygnałów sensorycznych: organizm sam sobie dostarcza predykcje, które może spełnić, redukując obciążenie allostatyczne w środowisku pełnym nieoczekiwanych bodźców.</p>
-
-    <p>Motywacja to konkretne przyciąganie: coś wydaje się atrakcyjne, przyjemne, warte zachodu. Zmęczony wędrowiec nie analizuje kamienia. Kamień go po prostu <em>przyciąga</em> jako miejsce odpoczynku, bo jego ciało tego właśnie chce.</p>
-
-    <p class="s3" data-session="3">Motywacja na tej stronie to właściwie dwa oddzielne systemy.</p>
-    <p class="s3" data-session="3"><strong>Chcenie</strong> (dopaminergiczne) = motywacja. Zbliżenie, przyciąganie ku afordancji. Afekt mówi "to jest dobre/złe." Chcenie mówi "idź tam." Nie musisz czegoś lubić, żeby tego chcieć. Afekt nadaje wartość, chcenie nadaje kierunek.</p>
-    <p class="s3" data-session="3"><strong>Lubienie</strong> (opioidergiczne): odpowiedź hedoniczna, gdy faktycznie doświadczasz nagrody. Receptory mu-opioidowe, brzuszna gałka blada. Rzadsze niż chcenie.</p>
-    <p class="s3" data-session="3">Podczas scrollowania każde przesunięcie to kolejna afordancja nowości. Feed to nieskończony ciąg afordancji. Większość treści jest neutralna albo lekko irytująca. A mimo to scrollujesz dalej.</p>
-    <p class="s3" data-session="3">Gdyby dopamina dotyczyła przyjemności, zatrzymałbyś się po trzech nienagrodzonych scrollach. Scrollujesz dalej, bo dopamina napędza eksplorację. Algorytm gwarantuje, że credit assignment nigdy się nie rozwiąże: nie ma stabilnej reguły przewidującej, który scroll przyniesie coś dobrego. Cały czas eksplorujesz, próbując znaleźć regułę, ale jej brak zostawia Cię ze zmęczeniem i mglistym wspomnieniem kilku rolek.</p>
+    <p>Afordancje są więc możliwościami do działania ukształtowanymi przez całą ewolucyjną, kulturową i indywidualną historię treningu sieci neuronowych. <span class="s2" data-session="2">Lev Vygotsky dodałby: inna osoba jest źródłem skalibrowanych błędów predykcyjnych dla Twojego mózgu, dopasowanych do Twojego poziomu, i dostarcza Ci afordancji, za którymi możesz podążać. Inna osoba jest dosłownie w Twoich sieciach mózgowych: budujesz model tej osoby, tego, czego się po niej spodziewać, oraz tego, czego ona spodziewa się po Tobie.</span></p>
+    <p>Rozwój jednostki to początkowo eksploracja, służąca optymalizacji sieci. Niektóre doświadczenia muszą nastąpić w określonym czasie (okresy krytyczne): gdy zabraknie sygnału bottom-up z receptorów, sieci nie ukształtują się poprawnie i organizm nie będzie widział linii o danym nachyleniu albo nie posługuje się językiem. Gdy modele są już wybudowane, zaskoczeń jest coraz mniej, predykcje top-down pokrywają informacje z receptorów i organizm zaczyna bardziej eksploatować niż eksplorować. Dorośli eksploatują wyuczone modele, podążając utartymi ścieżkami znanych afordancji.</p>
+    <p class="s3" data-session="3">Motywacja (chcenie) sprawia, że nieznane afordancje są eksplorowane działaniem: coś wydaje się atrakcyjne, przyjemne, warte zachodu. Zmęczony wędrowiec nie analizuje kamienia. Kamień go po prostu <em>przyciąga</em> jako miejsce odpoczynku, bo jego ciało tego właśnie chce. Motywacja jest blisko związana z dopaminą.</p>
+    <p class="s3" data-session="3">Dopamina bywa mylona z nagrodą. Dokładniejsze badania wskazują, że za nagrodę odpowiada raczej system opioidowy: nagroda (lubienie) to odpowiedź hedoniczna, gdy doświadczenie sprawia przyjemność.</p>
+    <p class="s3" data-session="3">Często chcesz rzeczy przyjemnych, więc te dwa systemy są ze sobą sprzężone, ale można je oddzielić. Genetycznie zmodyfikowane myszy z wyłączoną dopaminą stały się apatyczne i nie wykonywały działań: nawet głodne nie zrobiły kilku kroków w stronę jedzenia. Jednak gdy dostały jedzenie wprost do pyszczków, jadły, a ich mimika wskazywała na odczuwanie przyjemności (Cannon i Palmiter, 2003).</p>
+    <p class="s3" data-session="3">Innym przykładem jest scrollowanie, gdzie każde przesunięcie to kolejna afordancja nowości. Feed to nieskończony ciąg afordancji. Większość treści jest neutralna albo lekko irytująca, a mimo to scrollujesz dalej. Dopamina napędza eksplorację: poczucie, że może teraz się uda. Algorytm gwarantuje, że credit assignment nigdy się nie rozwiąże, bo nie ma stabilnej reguły przewidującej, który scroll przyniesie coś dobrego. Cały czas eksplorujesz, a brak reguły zostawia Cię ze zmęczeniem i mglistym wspomnieniem kilku rolek.</p>
+    <div class="video-side video-block s3" data-session="3">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/axrywDP9Ii0" title="Robert Sapolsky · Dopamina i niepewność" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="vs-text"><span class="vs-title">Robert Sapolsky · Dopamina i niepewność</span>Sapolsky tłumaczy, dlaczego dopamina najmocniej reaguje na niepewność nagrody. Sama nagroda porusza ją słabiej. To klucz do eksploracji, scrollowania i tego, co napędza poszukiwanie.</div>
+    </div>
     <p class="s3" data-session="3">Twoja architektura eksploracji ewoluowała dla skończonych nisz ekologicznych. Sawanna w końcu staje się znajoma. Media społecznościowe to ciąg niepowiązanych ze sobą afordancji, z których nie da się zbudować schematu.</p>
 
     <h3 id="sub-4e">Poznanie 4E</h3>
-    <p>Poznanie blisko receptorów ma cztery oblicza, znane jako 4E.</p>
-    <p><strong>Ucieleśnione (embodied).</strong> Modele rozwijają się z ciała. Sygnały proprioceptywne i interoceptywne budują je, zanim pojawi się jakakolwiek abstrakcja, a kształt dłoni współdecyduje, co da się chwycić.</p>
-    <p><strong>Osadzone (embedded).</strong> Modele wspierają się na świecie. Afordancja leży na zewnątrz, w świetle i dźwięku, więc część pracy poznawczej przejmuje otoczenie.</p>
-    <p><strong>W działaniu (enacted).</strong> Modele kształtują się w działaniu. Afordancję odkrywasz, działając, a kora ruchowa wysyła przewidywania, które ruch spełnia (Adams et al., 2013). Percepcja i działanie to jedna pętla.</p>
-    <p><strong>Rozszerzone (extended).</strong> Modele wychodzą poza skórę. Notatnik, telefon i mapa stają się częścią modeli, tak jak narzędzie wchodzi do schematu ciała i rozrasta korę ciemieniową. Granica między Tobą a światem jest ruchoma.</p>
-
-    <p>Sieci mózgowe przewidują na kilku poziomach jednocześnie.</p>
-    <p><strong>Poziom 1 - ciało i narzędzia</strong> (Iriki &amp; Taoka): Makak bierze grabki. Jego kora ciemieniowa musi nagle przewidywać trzy razy większą przestrzeń pełną nowych afordancji. Przestrzeń peripersonalna rozszerza się na koniec narzędzia. Narzędzia modyfikują dostępne możliwości do działania, tak jak nauczenie się jazdy samochodem modyfikuje, jak pewnie się czujesz za kierownicą i co jest osiągalne.</p>
-    <p class="s8" data-session="8">Predykcje wysyła cała kora czołowa, każda w swojej przestrzeni, nie tylko kora ruchowa. Zakręt przedśrodkowy (kora pierwszorzędowa ruchowa) porusza ciałem przez przestrzeń fizyczną: predykcje proprioceptywne. IFG (obszar Broki) porusza się przez przestrzeń gramatyczną: predykcje składniowe. MTG hamuje konkurencyjne trajektorie w przestrzeni semantycznej. OFC i biegun skroniowy (TP) nawigują przez przestrzeń pojęciową: co jest warte powiedzenia, zrobienia, pomyślenia. Ruch to ruch. Zmienia się przestrzeń, w której się poruszasz.</p>
-
+    <p>Umysł bywa określany jako 4E, co różnie się interpretuje. Przez pryzmat tego kursu rozumiemy 4E tak:</p>
+    <ul>
+      <li><strong>Ucieleśnione (embodied)</strong>: modelowanie przepływu informacji proprioceptywnej i eksteroceptywnej przez SMN, VIS i A1.</li>
+      <li><strong>Rozszerzone (extended)</strong>: dołączasz narzędzia, by sterować przepływem informacji.</li>
+      <li><strong>Osadzone (embedded)</strong>: informacje interpretujesz w kontekście modeli daleko od receptorów.</li>
+      <li><strong>W działaniu (enacted)</strong>: informacje dynamicznie się zmieniają, tworząc pętle zwrotne działania. Podążanie za afordancjami otwiera nowe afordancje.</li>
+    </ul>
     <div class="video-grid-label">Zmysły w działaniu</div>
-    <div class="video-grid">
-      <div class="video-grid-item">
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/J0B_-lZFlL0" title="Zmysły 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      </div>
-      <div class="video-grid-item">
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/ryGMI3SpxCE" title="Zmysły 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      </div>
-      <div class="video-grid-item">
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/eQEaiZ2j9oc" title="Zmysły 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      </div>
-      <div class="video-grid-item">
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/TbDFrbXiz2s?start=532" title="Zmysły 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-    <div class="video-grid-solo">
+    <div class="video-side video-block">
       <div class="video-wrapper">
-        <iframe src="https://www.youtube.com/embed/MgMNUne9j9c?start=566" title="Zmysły 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/J0B_-lZFlL0" title="Kora somatosensoryczna (SMN) · ciało na mapie" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
+      <div class="vs-text"><span class="vs-title">Kora somatosensoryczna (SMN) · ciało na mapie</span>Jak dotyk, temperatura i propriocepcja trafiają z ciała na mapę kory somatosensorycznej. To wejście, z którego DAN buduje schemat ciała.</div>
     </div>
+    <div class="video-side video-block">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/ryGMI3SpxCE" title="Układ przedsionkowy · równowaga i położenie głowy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="vs-text"><span class="vs-title">Układ przedsionkowy · równowaga i położenie głowy</span>Zmysł, którego zwykle nie zauważasz: błędnik melduje przyspieszenia i pozycję głowy, dostarczając sieciom sygnału o tym, gdzie jest ciało w przestrzeni.</div>
+    </div>
+    <div class="video-side video-block">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/eQEaiZ2j9oc" title="Droga dźwięku do mózgu (A1)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="vs-text"><span class="vs-title">Droga dźwięku do mózgu (A1)</span>Od fali ciśnienia w uchu po pierwszorzędową korę słuchową. Ścieżka, którą eksterocepcja słuchowa dociera do modeli blisko receptorów.</div>
+    </div>
+    <div class="video-side video-block">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/TbDFrbXiz2s?start=532" title="Szlaki wzrokowe · od oka do kory" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="vs-text"><span class="vs-title">Szlaki wzrokowe · od oka do kory</span>Jak sygnał z siatkówki wędruje przez wzgórze do kory wzrokowej. Anatomia wejścia, na którym pracuje sieć VIS.</div>
+    </div>
+    <div class="video-side video-block">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/MgMNUne9j9c?start=566" title="Kora wzrokowa (VIS) · budowanie obrazu" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="vs-text"><span class="vs-title">Kora wzrokowa (VIS) · budowanie obrazu</span>Jak kora wzrokowa składa krawędzie, ruch i głębię w model sceny. Przykład sieci blisko receptorów dopasowującej hipotezy do sygnału.</div>
+    </div>
+    <p>Relacja między organizmem a środowiskiem może być obserwowana na sieciach mózgowych tego organizmu. Organizm widzi świat swoimi zmysłami, więc jego środowisko trafia do jego sieci. To, co opisują etologiczne mapy akcji, schemat ciała i przestrzeń peripersonalna, to właśnie relacja między organizmem a środowiskiem zmapowana na sieci mózgowe. VIS, A1, SMN i DAN kształtują interfejs do balansowania informacjami proprioceptywnymi i eksteroceptywnymi, aby uniknąć interoceptywnych błędów predykcyjnych.</p>
 
-    <p class="s5" data-session="5">Nie wszyscy eksplorują tak samo, bo nie wszyscy wyobrażają sobie tak samo. Afantazja to brak mentalnych obrazów: takie osoby nie "widzą" jabłka, gdy zamkną oczy, ale operują na abstrakcyjnych propozycjach. Hiperfantazja to drugi koniec spektrum: obrazy tak żywe, że bywają mylone z percepcją. Synestezja to jeszcze inny wariant: dźwięk ma kolor, litera ma smak, bo sieci sensoryczne są skrzyżowane w sposób nietypowy. Każdy wariant zmienia krajobraz afordancji. Synestetyk widzi możliwości tam, gdzie inni nie widzą nic; afantastyk buduje modele inaczej, ale niekoniecznie gorzej. Solomon Shereshevsky, badany przez Łuriję przez trzydzieści lat, pamiętał wszystko dzięki synestezji: każda cyfra miała kształt, kolor, smak. Koszt był poważny: nadmiar szczegółów uniemożliwiał abstrahowanie i rozumienie metafor. Doskonała pamięć nie oznacza lepszego modelu.</p>
     <hr class="section-divider" />
     <h2 id="sec-uczenie">Modele w czasie</h2>
     <p>Konfiguracja sieci zmienia się przez całe życie, napędzana błędem predykcyjnym. Ma swój rozwój w stadiach, swój rytm w śnie, swój mechanizm w synapsie i swój układ wyboru w dopaminie. Gdy ten sam układ zostaje przejęty, powstaje uzależnienie.</p>
@@ -2250,6 +2254,9 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item">Gibson, J. J. (1979). <em>The Ecological Approach to Visual Perception</em>. Houghton Mifflin.</p>
       <p class="bib-item">Goodall, J. (1986). <em>The Chimpanzees of Gombe: Patterns of Behavior</em>. Harvard University Press.</p>
       <p class="bib-item">Iriki, A., &amp; Taoka, M. (2012). Triadic (ecological, neural, cognitive) niche construction. <em>Philosophical Transactions of the Royal Society B, 367</em>(1585), 10-23. <a href="https://doi.org/10.1098/rstb.2011.0190" target="_blank">doi:10.1098/rstb.2011.0190</a></p>
+      <p class="bib-item">Graziano, M. S. A. (2016). Ethological action maps: a paradigm shift for the motor cortex. <em>Trends in Cognitive Sciences, 20</em>(2), 121-132. <a href="https://doi.org/10.1016/j.tics.2015.10.008" target="_blank">doi:10.1016/j.tics.2015.10.008</a></p>
+      <p class="bib-item">Serino, A. (2019). Peripersonal space (PPS) as a multisensory interface between the individual and the environment, defining the space of the self. <em>Neuroscience &amp; Biobehavioral Reviews, 99</em>, 138-159. <a href="https://doi.org/10.1016/j.neubiorev.2019.01.016" target="_blank">doi:10.1016/j.neubiorev.2019.01.016</a></p>
+      <p class="bib-item s3" data-session="3">Cannon, C. M., &amp; Palmiter, R. D. (2003). Reward without dopamine. <em>Journal of Neuroscience, 23</em>(34), 10827-10831. <a href="https://doi.org/10.1523/JNEUROSCI.23-34-10827.2003" target="_blank">doi:10.1523/JNEUROSCI.23-34-10827.2003</a></p>
       <p class="bib-item">Tomasello, M. (2019). <em>Becoming Human: A Theory of Ontogeny</em>. Harvard University Press.</p>
       <p class="bib-item s2" data-session="2">Piaget, J. (1952). <em>The Origins of Intelligence in Children</em>. International Universities Press.</p>
       <p class="bib-item s2" data-session="2">Vygotsky, L. S. (1978). <em>Mind in Society: The Development of Higher Psychological Processes</em>. Harvard University Press.</p>
