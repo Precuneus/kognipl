@@ -1342,7 +1342,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <a href="#sub-stadia" data-nav="sub-stadia" class="nav-sub">Stadia rozwoju</a>
       <a href="#sub-przywiazanie" data-nav="sub-przywiazanie" class="nav-sub">Style przywiązania</a>
       <a href="#sub-dopamina" data-nav="sub-dopamina" class="nav-sub">Dopamina</a>
-      <a href="#sub-przyczyny" data-nav="sub-przyczyny" class="nav-sub">Przyczyny-źródła i przyczyny-wyjaśnienia</a>
       <a href="#sub-przejecie" data-nav="sub-przejecie" class="nav-sub">Gdy system zostaje przejęty</a>
       <a href="#sub-serotonina" data-nav="sub-serotonina" class="nav-sub">Serotonina</a>
       <a href="#sec-jezyk" data-nav="sec-jezyk">Pętla: język</a>
@@ -1357,6 +1356,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <a href="#sub-koregulacja" data-nav="sub-koregulacja" class="nav-sub">Od koregulacji do integracji</a>
       <a href="#sub-granulacja" data-nav="sub-granulacja" class="nav-sub">Granulacja emocjonalna</a>
       <a href="#sec-wnioski" data-nav="sec-wnioski">Podsumowanie</a>
+      <a href="#sub-przyczyny" data-nav="sub-przyczyny" class="nav-sub">Przyczyny-źródła i przyczyny-wyjaśnienia</a>
       <a href="#sec-pytania" data-nav="sec-pytania">Pytania</a>
     </div>
   </nav>
@@ -1630,7 +1630,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <h2 id="sec-daleko">Daleko od receptorów</h2>
     <p>Najogólniej mówiąc, uczenie się to proces budowania modeli świata. Wcześniejsze doświadczenia trenują Twoje sieci i kształtują predykcje na przyszłość.</p>
     <p>Zacznijmy od sieci najdalej od zmysłów. Tu mieszkają modele oderwane od bieżącego bodźca: pojęcia, myśli, plany i modele cudzych umysłów.</p>
-    <p class="s11" data-session="11">Te najdalsze sieci konstruują modele i wnioskują ukrytą przyczynę tego, co dociera z receptorów (Friston). Stawiają hipotezy, co wywołało sygnał, i poprawiają się, gdy się mylą. To wnioskowanie predykcyjne, rdzeń reprezentacjonalizmu.</p>
     <h3 id="sub-dmn">Sieć trybu domyślnego (DMN)</h3>
     <p>DMN pracuje najdalej od receptorów i buduje modele, przez pryzmat których interpretujesz to, co bliżej zmysłów. Aktywność DMN jest tym, co od środka przeżywasz jako myślenie: o sobie, o innych, o przeszłości i przyszłości.</p>
     <h3 id="sub-hipokamp" class="s8" data-session="8">Hipokamp</h3>
@@ -1730,7 +1729,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s2" data-session="2">Dzieci samoańskie nie przechodzą testu Sally-Anne do 8 roku życia. 1/3 dzieci w wieku 10-13 lat wciąż go nie przechodzi (Mayer i Träuble, 2013, N>300). Mechanizm: Samoa i kultury Pacyfiku (Kaluli/Bosavi w PNG, Tonga, Vanuatu) praktykują "doktrynę nieprzejrzystości umysłów" (Robbins i Rumsey, 2008). Dorośli nigdy nie przypisują intencji niemowlęcym wokalizacjom. Dzieci uczone są raportować, co ktoś <em>zrobił</em>, a nie co ktoś <em>czuł</em>.</p>
     <p class="s2" data-session="2">Ale zdanie testu to dopiero początek. Model innych ludzi pogłębia się latami. Pomocna jest intuicja gradientu: od braku modeli (drugi człowiek to obiekt fizyczny), przez modelowanie przekonań ("ona myśli X"), modelowanie emocjonalnych konsekwencji ("jeśli powiem Y, poczuje Z": tu znika brutalna szczerość dzieci), po modelowanie tego, co ktoś myśli o Twoich modelach ("ona myśli, że ja myślę W": białe kłamstwa, dyplomacja). Rekurencja pogłębia się: "wiem, że wiesz, że wiem." To jest terytorium shared intentionality.</p>
     <p class="s2" data-session="2">Grecki żeglarz na wzburzonym morzu robił dokładnie to samo. Odbierał sygnały sensoryczne: fale, wiatr, grzmot. Wściekły Posejdon był najlepszym wyjaśnieniem, jakie dawały jego modele. Bogowie, duchy, przodkowie to modele agentów przekazywane kulturowo z pokolenia na pokolenie. Shared intentionality umożliwiła ich przechowywanie i transmisję: "my wszyscy wiemy, czego chce Posejdon, i wszyscy wiemy, że wszyscy wiemy." Mechanizm predykcyjny był identyczny jak przy modelowaniu człowieka. Różnił się tylko obiekt modelowania.</p>
-    <p class="s11" data-session="11">Zapamiętaj żeglarza: przypisał <em>przyczynę-wyjaśnienie</em> (gniew boga) tam, gdzie była tylko <em>przyczyna-źródło</em> (pogoda). Tę różnicę, źródło kontra wyjaśnienie, rozwiniemy przy dopaminie.</p>
+    <p class="s11" data-session="11">Zapamiętaj żeglarza: przypisał <em>przyczynę-wyjaśnienie</em> (gniew boga) tam, gdzie była tylko <em>przyczyna-źródło</em> (pogoda). Tę różnicę, źródło kontra wyjaśnienie, rozwiniemy w zakończeniu kursu.</p>
     <p class="s2" data-session="2">Modele agentów są źródłem afordancji. Posejdon oferował afordancje przebłagania: można było złożyć ofiarę, zmienić kurs, odmówić modlitwę. Te afordancje są równie realne dla sieci mózgowych jak afordancja kamienia dla zmęczonego wędrowca: generują motywację, kierują działaniem, kształtują decyzje.</p>
     <p class="s2" data-session="2">Im głębszy model, tym więcej sieci. Modelowanie przekonań angażuje DMN.ToM. Modelowanie emocjonalnych konsekwencji dociąga emocje społeczne (ciało migdałowate, wyspa). Modelowanie strategiczne wymaga kalkulacji konsekwencji i alternatyw (OFC).</p>
     <p class="s2" data-session="2">Rozumienie intencji innych osób jest wspomagane przez tzw. neurony lustrzane, odkryte w korze przedruchowej makaków (obszar F5) oraz w IFG i IPL u ludzi. Neurony lustrzane aktywują się zarówno przy działaniu, jak i przy obserwacji, gdy ktoś inny działa. W zależności od publikacji obszar Broki (czyli IFG) bywa zaliczany do sieci domyślnej, kontroli i istotności. IPL pokrywa się z TPJ, a więc jest obszarem, w którym spotykają się DMN, CON i DAN. Kiedy obserwujesz kogoś sięgającego po kubek, te (i inne) obszary współpracują ze sobą, kierując wzrok, generując predykcję działania i aktualizując modele agenta ("chce się napić").</p>
@@ -1741,8 +1740,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <hr class="section-divider" />
     <h2 id="sec-blisko">Blisko od receptorów</h2>
     <p>Sieci VIS, SMN i DAN modelują informacje blisko receptorów: kształt, ruch, dotyk i położenie ciała.</p>
-    <p class="s11" data-session="11">Sieci blisko receptorów odbierają świat bezpośrednio, najbliżej receptorów, jak się da.</p>
-    <p class="s11" data-session="11">Gibson i Friston to reprezentanci dwóch stron jednego z najstarszych sporów o poznanie. Czy percepcja jest bezpośrednim odbiorem świata, czy wnioskowaniem o nim? W kontekście naszego kursu obie strony mają rację: te blisko receptorów są gibsonowskie, te daleko od nich fristonowskie.</p>
     <p>Schemat ciała w DAN powstaje z połączenia informacji z VIS, SMN oraz A1. Używanie narzędzi zmienia organizację struktur składających się na DAN (Iriki i Taoka, 2012). Kora ciemieniowa makaka uczącego się grabek musi nagle przewidywać trzy razy większą przestrzeń, pełną nowych afordancji. Schemat ciała poszerza się, a wraz z nim przestrzeń peripersonalna: interfejs między ciałem (propriocepcja) a środowiskiem (eksterocepcja). Narzędzia modyfikują dostępne możliwości działania, tak jak nauka jazdy samochodem zmienia to, jak pewnie czujesz się za kierownicą i co jest dla Ciebie osiągalne (Serino, 2019).</p>
     <p class="s2" data-session="2">Kiedy trening sieci blisko receptorów jest zaburzony modele nie rozwijają się poprawnie. Przykładowo, Colin Blakemore hodował kocięta wyłącznie w środowisku z pionowymi liniami. Neurony V1 dostosowały się do dostępnych bodźców, nie rozwijając selektywności na linie o poziomej orientacji. Sieć wzrokowa wybudowała model w oparciu o dostępne informacje.</p>
     <figure class="figure-block fig-small">
@@ -1893,10 +1890,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     </figure>
     <p class="s3" data-session="3">Najnowsze dane (Adam, Nature 2026) pokazują, że neurony dopaminergiczne reagują na zagrożenia, nowe bodźce, ruch i predykcje ruchowe. Dopamina to sygnał do kodowania informacji. Wzmacnia skojarzenie między tym, co się wydarzyło, a okolicznościami, w których się wydarzyło.</p>
     <p class="s3" data-session="3">Rola dopaminy jest więc podwójna. Uczestniczy zarówno w kodowaniu jak i przywoływaniu engramów. Dopamina inicjuje automatyczną sekwencję ruchu (D1) w kierunku znanych konsekwencji. Kiedy jednak następuje błąd predykcyjny (informacje bottom-up nie zgadzają się z modelem top-down), wyrzut dopaminy następuje w momencie zaskoczenia. W tym kontekście, dopamina uczestniczy w kodowaniu informacji poprzedzających zaskoczenie. Co doprowadziło do danego doświadczenia? Kiedy okoliczności są niejasne (50%), system nie wie jeszcze, które zmienne są istotne, więc zapisuje wszystko. Kodowanie jest stopniowe. Z każdym doświadczeniem system zawęża, które zmienne niosą predykcję, a balans między kodowaniem (eksploracją), a odtwarzaniem (eksploatacją) dynamicznie się dostosowuje.</p>
-
-    <h3 id="sub-przyczyny" class="s11" data-session="11">Przyczyny-źródła i przyczyny-wyjaśnienia</h3>
-    <p class="s11" data-session="11">Przyczyna-źródło to bodziec stojący za pobudzeniem receptorów, gibsonowska informacja z zewnątrz. Przyczyna-wyjaśnienie to uzasadnienie stojące za pobudzeniem receptorów, fristonowskie wywnioskowanie dlaczego.</p>
-    <p class="s11" data-session="11">Grecki żeglarz przypisuje wyjaśnienie swojej bezpośredniej eksterocepcji. Posejdon się gniewa i dlatego widzę wzburzone morze. Co widzę, to przyczyna-źródło. Dlaczego to widzę, to przyczyna-wyjaśnienie. Widzę kosz pełen grzybów. Dlaczego? Pewnie ktoś z domowników nazbierał.</p>
 
     <h3 id="sub-przejecie" class="s3" data-session="3">Gdy system zostaje przejęty</h3>
     <p class="s3" data-session="3">W 1954 roku Olds i Milner przypadkowo odkryli, że szczury naciskają dźwignię tysiące razy na godzinę, by stymulować elektrycznie własny mózg. Elektroda była umieszczona w podwzgórzu bocznym, ale stymulowała pęczek przyśrodkowy przodomózgowia: szlak dopaminergiczny z VTA do NAcc. Późniejsze badania pokazały, że to właśnie aktywacja NAcc tak bardzo uzależnia.</p>
@@ -2054,7 +2047,19 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s1" data-session="1">Ale jest coś, co masz i czego być może nie doceniasz. Sprawczość. Kiedy myślisz o przyszłości i podejmujesz decyzję to wtedy doświadczasz aktywności swojej DMN. To jest przyszłość, potencjalna, możliwa, jeszcze nie zrealizowana. Jednak kiedy przy udziale OFC zdecydujesz się na próbę jej urzeczywistnienia, odpalisz kaskadę przez kolejne sieci, która finalnie poskutkuje zmianą informacji proprioceptywnej. Niektóre cele zajmują lata spójnej nawigacji proprioceptywnej dyktowanej przez przestrzenie poznawcze. Ale czas i tak upłynie, a Ty przez ten czas możesz gdzieś dojść.</p>
 
-    <p class="s1" data-session="1">Cały ten kurs zaczął się od jednego słowa: <em>model</em>. Doświadczasz modeli świata. Twoje sieci budują go, a Ty żyjesz w środku.</p>
+    <p class="s1" data-session="1">Cały ten kurs zaczął się od jednego słowa: <em>model</em>. Doświadczasz modeli świata. Twoje sieci budują go, a Ty żyjesz w środku. Zostało jedno pytanie: skąd ten model bierze przyczyny tego, co przewiduje.</p>
+
+    <p class="s11" data-session="11">Gibson i psychologia ekologiczna mówią o bezpośredniej percepcji afordancji. Karl Friston argumentuje na rzecz wnioskowania predykcyjngo i reprezentacjonalizmu.</p>
+
+    <p class="s11" data-session="11">Gibson i Friston stoją po dwóch stronach jednego z najstarszych sporów o poznanie: czy percepcja jest bezpośrednim odbiorem świata, czy wnioskowaniem o nim. Spór znika, kiedy przestajesz pytać, która teoria jest prawdziwa, a zaczynasz pytać, o których sieciach każda z nich mówi. Obie mają rację, tylko o różnych sieciach.</p>
+
+    <p class="s11" data-session="11">Sieci blisko receptorów robią dokładnie to, co opisał Gibson. Odbierają świat bezpośrednio (najbliżej receptorów jak się da). Sieci daleko od receptorów robią dokładnie to, co opisał Friston. Konstruują modele i wnioskują ukrytą przyczynę. Błąd dawnego sporu polegał na tym, że każda strona brała swój trafny opis części układu i rozciągała go na cały mózg. Tę pułapkę rozbraja teza, od której zaczął się kurs. Skoro doświadczenie jest tym samym, co aktywność konkretnych sieci, można po prostu zapytać, które sieci są gibsonowskie, a które fristonowskie. Identyczność doświadczenia i mózgu rozpuszcza spór.</p>
+
+    <h3 id="sub-przyczyny" class="s11" data-session="11">Przyczyny-źródła i przyczyny-wyjaśnienia</h3>
+
+    <p class="s11" data-session="11">Ten sam podział wraca w pytaniu o przyczynę. <strong>Przyczyna jako źródło</strong> to bodziec stojący za pobudzeniem receptorów: gibsonowska informacja, która jest <em>na zewnątrz</em>. <strong>Przyczyna jako wyjaśnienie</strong> to ukryta zmienna, którą modele zakładają, żeby zredukować zaskoczenie: fristonowska przyczyna, która jest <em>wywnioskowana</em>.</p>
+
+    <p class="s11" data-session="11">Grecki żeglarz przypisuje wyjaśnienie (gniewny Posejdon) tam, gdzie nie ma źródła (tylko pogoda). Przypisanie przyczyny (credit assignment), które omawialiśmy przy dopaminie, jest właśnie ruchem między tymi dwoma rodzajami przyczyn: jakie źródło wytworzyło ten sygnał, kontra jakie wyjaśnienie najlepiej redukuje moje zaskoczenie. Co widzę (przyczyna jako źródło), dlaczego to widzę (przyczyna jako wyjaśnienie). Widzę kosz pełen grzybów. Dlaczego? Pewnie ktoś z domowników nazbierał.</p>
 
     <p class="s11" data-session="11">Każdy z nas jest sam w swojej własnej głowie. Otoczony marzeniami, obawami, niepewnościami, nadziejami, kompleksami, planami, emocjami... Przybieramy maski przed innymi i przed sobą. Udajemy, że wiemy, co robimy... albo przynajmniej mamy nadzieję, że inni nie zauważą, że nie wiemy. Płyniemy przez życie, próbując się odnaleźć. I w pewnym momencie okazuje się, że nikt nie zna kierunku. I wszyscy wierzą w Posejdona.</p>
 
@@ -2529,7 +2534,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     // ── Section navigator: scroll tracking ──
     const navLinks = document.querySelectorAll('.nav-sidebar a[data-nav]');
-    const sectionIds = ['sec-perspektywy','sub-perspektywy','sub-model','sec-zasady','sub-predykcja','sub-informacja','sec-architektura','sub-sieci','sub-nisze','sec-daleko','sub-dmn','sub-hipokamp','sub-pamiec','sub-sen','sub-pojecia','sub-myslenie','sub-spoleczny','sub-teoria-umyslu','sec-blisko','sub-afordancje','sub-4e','sec-uczenie','sub-stadia','sub-przywiazanie','sub-dopamina','sub-przyczyny','sub-przejecie','sub-serotonina','sec-jezyk','sub-jezyk','sub-afazja','sub-jezyk-myslenie','sec-salience','sub-lancuch','sub-emocje','sub-afekt','sub-sm','sub-koregulacja','sub-granulacja','sec-wnioski','sec-pytania'];
+    const sectionIds = ['sec-perspektywy','sub-perspektywy','sub-model','sec-zasady','sub-predykcja','sub-informacja','sec-architektura','sub-sieci','sub-nisze','sec-daleko','sub-dmn','sub-hipokamp','sub-pamiec','sub-sen','sub-pojecia','sub-myslenie','sub-spoleczny','sub-teoria-umyslu','sec-blisko','sub-afordancje','sub-4e','sec-uczenie','sub-stadia','sub-przywiazanie','sub-dopamina','sub-przejecie','sub-serotonina','sec-jezyk','sub-jezyk','sub-afazja','sub-jezyk-myslenie','sec-salience','sub-lancuch','sub-emocje','sub-afekt','sub-sm','sub-koregulacja','sub-granulacja','sec-wnioski','sub-przyczyny','sec-pytania'];
     const allNavEls = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
     let currentNav = '';
     let currentSection = '';
