@@ -1732,8 +1732,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s2" data-session="2">Modele agentów są źródłem afordancji. Posejdon oferował afordancje przebłagania: można było złożyć ofiarę, zmienić kurs, odmówić modlitwę. Te afordancje są równie realne dla sieci mózgowych jak afordancja kamienia dla zmęczonego wędrowca: generują motywację, kierują działaniem, kształtują decyzje.</p>
     <p class="s2" data-session="2">Im głębszy model, tym więcej sieci. Modelowanie przekonań angażuje DMN.ToM. Modelowanie emocjonalnych konsekwencji dociąga emocje społeczne (ciało migdałowate, wyspa). Modelowanie strategiczne wymaga kalkulacji konsekwencji i alternatyw (OFC).</p>
     <p class="s2" data-session="2">Rozumienie intencji innych osób jest wspomagane przez tzw. neurony lustrzane, odkryte w korze przedruchowej makaków (obszar F5) oraz w IFG i IPL u ludzi. Neurony lustrzane aktywują się zarówno przy działaniu, jak i przy obserwacji, gdy ktoś inny działa. W zależności od publikacji obszar Broki (czyli IFG) bywa zaliczany do sieci domyślnej, kontroli i istotności. IPL pokrywa się z TPJ, a więc jest obszarem, w którym spotykają się DMN, CON i DAN. Kiedy obserwujesz kogoś sięgającego po kubek, te (i inne) obszary współpracują ze sobą, kierując wzrok, generując predykcję działania i aktualizując modele agenta ("chce się napić").</p>
-    <p class="s7" data-session="7">Rozumienie innych uwzględnia również rozumienie ich stanów emocjonalnych. Blair (2008) dokonał precyzyjnego podziału: <strong>empatia poznawcza</strong> to zdolność do modelowania stanów mentalnych drugiej osoby (co ona myśli, czuje, zamierza). To terytorium DMN.ToM. <strong>Empatia afektywna</strong> to rezonans z emocją drugiej osoby: widzisz ból i czujesz ból. To terytorium wyspy i ciała migdałowatego.</p>
-    <p class="s7" data-session="7">Te dwa rodzaje empatii są niezależne. Osoby z autyzmem mają trudności z empatią poznawczą (modelowanie cudzych stanów mentalnych, teoria umysłu), ale zachowują empatię afektywną: widzą cierpienie i reagują. Osoby z psychopatią mają sprawną empatię poznawczą (rozumieją, co czujesz, potrafią to przewidzieć i wykorzystać), ale deficyt empatii afektywnej: rozumienie nie uruchamia rezonansu. Dwa systemy, dwa wzorce uszkodzeń, dwa profile kliniczne. To klasyczna podwójna dysocjacja: ten sam argument logiczny, który w afazjach oddziela składnię od semantyki, tu oddziela poznawczą od afektywnej empatii.</p>
+    <p class="s2" data-session="2">Rozumienie innych uwzględnia również rozumienie ich stanów emocjonalnych. Blair (2008) dokonał precyzyjnego podziału: <strong>empatia poznawcza</strong> to zdolność do modelowania stanów mentalnych drugiej osoby (co ona myśli, czuje, zamierza). To terytorium DMN.ToM. <strong>Empatia afektywna</strong> to rezonans z emocją drugiej osoby: widzisz ból i czujesz ból. To terytorium wyspy i ciała migdałowatego.</p>
+    <p class="s2" data-session="2">Te dwa rodzaje empatii są niezależne. Osoby z autyzmem mają trudności z empatią poznawczą (modelowanie cudzych stanów mentalnych, teoria umysłu), ale zachowują empatię afektywną: widzą cierpienie i reagują. Osoby z psychopatią mają sprawną empatię poznawczą (rozumieją, co czujesz, potrafią to przewidzieć i wykorzystać), ale deficyt empatii afektywnej: rozumienie nie uruchamia rezonansu. Dwa systemy, dwa wzorce uszkodzeń, dwa profile kliniczne. To klasyczna podwójna dysocjacja: ten sam argument logiczny, który w afazjach oddziela składnię od semantyki, tu oddziela poznawczą od afektywnej empatii.</p>
 
     <!-- ==================== JĘZYK ==================== -->
     <hr class="section-divider" />
@@ -2091,21 +2091,21 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         <li class="s2" data-session="2"><span class="question-num">08</span>Garin pokazał słabą pętlę mPFC-PCC u naczelnych niehominidowych. Gdyby ta pętla była silna u szympansów, co konkretnie zobaczylibyśmy w ich zachowaniu społecznym, czego teraz nie widać? Dlaczego?</li>
         <li class="s2" data-session="2"><span class="question-num">09</span>Grecki żeglarz na wzburzonym morzu modli się do Posejdona. Połącz teorię umysłu, afordancje i niszę poznawczą w jednym spójnym wyjaśnieniu tego zachowania.</li>
         <li class="s2" data-session="2"><span class="question-num">10</span>Noworodek synchronizuje spojrzenie z opiekunem, dwulatek mówi "nie!" i odwraca się. Opisz zmianę między tymi dwoma momentami przez stadia Piageta oraz pojęcia we-space, perspektywa i afordancja.</li>
-        <li class="s3" data-session="3"><span class="question-num">11</span>Warunkowanie klasyczne (Pawłow) i instrumentalne (Skinner) różnią się tym, który wymiar informacji niesie predykcję. Opisz scrollowanie mediów społecznościowych: to który typ? Który wymiar niesie predykcję i dlaczego credit assignment nigdy się nie rozwiązuje?</li>
-        <li class="s3" data-session="3"><span class="question-num">12</span>Kokaina i amfetamina obie podnoszą dopaminę w szczelinie synaptycznej, ale przez różne mechanizmy. Opisz oba i wyjaśnij, na czym dokładnie polega różnica w działaniu transportera.</li>
-        <li class="s3" data-session="3"><span class="question-num">13</span>Budzisz się bez budzika i rozpoczynasz poranną rutynę: łazienka, kawa, ubranie. Opisz rolę dopaminy fazowej (D1) i tonicznej (D2) w tej sekwencji. Co się dzieje, gdy odkrywasz, że kawa się skończyła?</li>
-        <li class="s3" data-session="3"><span class="question-num">14</span>Dziecko w nieprzewidywalnym domu uczy się, że zachowanie opiekuna jest nieprzewidywalne. Co dzieje się z credit assignment, gdy okoliczności są zawsze niejasne, i jak to wpływa na eksplorację i eksploatację w dorosłości?</li>
-        <li class="s3" data-session="3"><span class="question-num">15</span>Szczury Oldsa i Milnera naciskały dźwignię tysiące razy na godzinę, by stymulować własny mózg. Połącz to odkrycie z mechanizmem, przez który substancje takie jak kokaina czy opiaty przejmują system konsolidacji.</li>
-        <li class="s4" data-session="4"><span class="question-num">16</span>Szybki puls i spocone dłonie pojawiają się, gdy czekasz na wynik egzaminu, i gdy wchodzi osoba, która Ci się podoba. Ta sama fizjologia, inne uczucie. Opisz oba przypadki przez afekt, emocję i uczucie.</li>
-        <li class="s4" data-session="4"><span class="question-num">17</span>Pacjentka S.M. nie boi się węży ani broni przystawionej do twarzy, ale panikuje po inhalacji CO2. Opisz obie sytuacje mechanistycznie: która droga do strachu jest zerwana, a która nienaruszona?</li>
-        <li class="s4" data-session="4"><span class="question-num">18</span>Dwoje dzieci, jedno z bezpiecznym, drugie z unikającym stylem przywiązania, reaguje na to samo zdarzenie: opiekun wychodzi z pokoju. Opisz reakcję każdego jako predykcję. Co przewiduje każde z nich?</li>
-        <li class="s4" data-session="4"><span class="question-num">19</span>Wściekłe dziecko nie reaguje na słowa "spokojnie, oddychaj", ale uspokaja się, gdy rodzic przytula je i oddycha razem z nim. Dopiero potem słyszy słowa. Dlaczego słowa nie działały, a koregulacja tak? Odnieś się do dlPFC, ciała migdałowatego i dojrzewania.</li>
-        <li class="s5" data-session="5"><span class="question-num">20</span>Loftus i Palmer zmienili wspomnienie świadków jednym słowem ("smashed" zamiast "hit"), a tydzień później "pamiętali" potłuczone szkło, którego nie było. Wyjaśnij ten wynik jako błąd predykcyjny w systemie pamięci, używając pojęć rekonstrukcja i prior.</li>
-        <li class="s5" data-session="5"><span class="question-num">21</span>Addis, Wong i Schacter pokazali, że wspominanie przeszłości i wyobrażanie przyszłości aktywują tę samą sieć. H.M. stracił obie zdolności naraz. Dlaczego pamięć i wyobraźnia to ten sam system i jaki jest koszt tej architektury?</li>
-        <li class="s5" data-session="5"><span class="question-num">22</span>Nurkowie Goddena i Baddeleya lepiej przypominali sobie słowa pod wodą, gdy uczyli się ich pod wodą. Wyjaśnij ten wynik przez hipokamp, kontekst i korę śródwęchową. Dlaczego nawyk (prążkowie) nie wykazuje tej samej zależności?</li>
-        <li class="s6" data-session="6"><span class="question-num">23</span>Podczas snu wolnofalowego hipokamp odtwarza sekwencje z dnia w kompresji czasowej. Opisz, jak ślad pamięciowy wędruje z hipokampa do kory nowej i co rozstrzyga, które ślady przetrwają, a które znikną.</li>
-        <li class="s7" data-session="7"><span class="question-num">24</span>Dziecko z ADHD nie skupi się na lekcji dłużej niż pięć minut, ale gra w grę cztery godziny bez przerwy. Wyjaśnij przez D1, D2 i toniczny poziom dopaminy, dlaczego rozproszenie i hiperfokus to dwa oblicza tego samego mechanizmu.</li>
-        <li class="s7" data-session="7"><span class="question-num">25</span>Osoba z autyzmem i osoba z psychopatią obie w pewnym sensie "rozumieją" innych, ale inaczej. Rozłóż to na empatię poznawczą i afektywną oraz ich substraty. Dlaczego to klasyczna podwójna dysocjacja?</li>
+        <li class="s2" data-session="2"><span class="question-num">11</span>Osoba z autyzmem i osoba z psychopatią obie w pewnym sensie "rozumieją" innych, ale inaczej. Rozłóż to na empatię poznawczą i afektywną oraz ich substraty. Dlaczego to klasyczna podwójna dysocjacja?</li>
+        <li class="s3" data-session="3"><span class="question-num">12</span>Warunkowanie klasyczne (Pawłow) i instrumentalne (Skinner) różnią się tym, który wymiar informacji niesie predykcję. Opisz scrollowanie mediów społecznościowych: to który typ? Który wymiar niesie predykcję i dlaczego credit assignment nigdy się nie rozwiązuje?</li>
+        <li class="s3" data-session="3"><span class="question-num">13</span>Kokaina i amfetamina obie podnoszą dopaminę w szczelinie synaptycznej, ale przez różne mechanizmy. Opisz oba i wyjaśnij, na czym dokładnie polega różnica w działaniu transportera.</li>
+        <li class="s3" data-session="3"><span class="question-num">14</span>Budzisz się bez budzika i rozpoczynasz poranną rutynę: łazienka, kawa, ubranie. Opisz rolę dopaminy fazowej (D1) i tonicznej (D2) w tej sekwencji. Co się dzieje, gdy odkrywasz, że kawa się skończyła?</li>
+        <li class="s3" data-session="3"><span class="question-num">15</span>Dziecko w nieprzewidywalnym domu uczy się, że zachowanie opiekuna jest nieprzewidywalne. Co dzieje się z credit assignment, gdy okoliczności są zawsze niejasne, i jak to wpływa na eksplorację i eksploatację w dorosłości?</li>
+        <li class="s3" data-session="3"><span class="question-num">16</span>Szczury Oldsa i Milnera naciskały dźwignię tysiące razy na godzinę, by stymulować własny mózg. Połącz to odkrycie z mechanizmem, przez który substancje takie jak kokaina czy opiaty przejmują system konsolidacji.</li>
+        <li class="s4" data-session="4"><span class="question-num">17</span>Szybki puls i spocone dłonie pojawiają się, gdy czekasz na wynik egzaminu, i gdy wchodzi osoba, która Ci się podoba. Ta sama fizjologia, inne uczucie. Opisz oba przypadki przez afekt, emocję i uczucie.</li>
+        <li class="s4" data-session="4"><span class="question-num">18</span>Pacjentka S.M. nie boi się węży ani broni przystawionej do twarzy, ale panikuje po inhalacji CO2. Opisz obie sytuacje mechanistycznie: która droga do strachu jest zerwana, a która nienaruszona?</li>
+        <li class="s4" data-session="4"><span class="question-num">19</span>Dwoje dzieci, jedno z bezpiecznym, drugie z unikającym stylem przywiązania, reaguje na to samo zdarzenie: opiekun wychodzi z pokoju. Opisz reakcję każdego jako predykcję. Co przewiduje każde z nich?</li>
+        <li class="s4" data-session="4"><span class="question-num">20</span>Wściekłe dziecko nie reaguje na słowa "spokojnie, oddychaj", ale uspokaja się, gdy rodzic przytula je i oddycha razem z nim. Dopiero potem słyszy słowa. Dlaczego słowa nie działały, a koregulacja tak? Odnieś się do dlPFC, ciała migdałowatego i dojrzewania.</li>
+        <li class="s5" data-session="5"><span class="question-num">21</span>Loftus i Palmer zmienili wspomnienie świadków jednym słowem ("smashed" zamiast "hit"), a tydzień później "pamiętali" potłuczone szkło, którego nie było. Wyjaśnij ten wynik jako błąd predykcyjny w systemie pamięci, używając pojęć rekonstrukcja i prior.</li>
+        <li class="s5" data-session="5"><span class="question-num">22</span>Addis, Wong i Schacter pokazali, że wspominanie przeszłości i wyobrażanie przyszłości aktywują tę samą sieć. H.M. stracił obie zdolności naraz. Dlaczego pamięć i wyobraźnia to ten sam system i jaki jest koszt tej architektury?</li>
+        <li class="s5" data-session="5"><span class="question-num">23</span>Nurkowie Goddena i Baddeleya lepiej przypominali sobie słowa pod wodą, gdy uczyli się ich pod wodą. Wyjaśnij ten wynik przez hipokamp, kontekst i korę śródwęchową. Dlaczego nawyk (prążkowie) nie wykazuje tej samej zależności?</li>
+        <li class="s6" data-session="6"><span class="question-num">24</span>Podczas snu wolnofalowego hipokamp odtwarza sekwencje z dnia w kompresji czasowej. Opisz, jak ślad pamięciowy wędruje z hipokampa do kory nowej i co rozstrzyga, które ślady przetrwają, a które znikną.</li>
+        <li class="s7" data-session="7"><span class="question-num">25</span>Dziecko z ADHD nie skupi się na lekcji dłużej niż pięć minut, ale gra w grę cztery godziny bez przerwy. Wyjaśnij przez D1, D2 i toniczny poziom dopaminy, dlaczego rozproszenie i hiperfokus to dwa oblicza tego samego mechanizmu.</li>
         <li class="s8" data-session="8"><span class="question-num">26</span>Gärdenfors opisuje pojęcia jako regiony w przestrzeni, Rosch jako prototypy, Bellmund jako nawigację po przestrzeniach. Połącz te trzy ujęcia w jedno wyjaśnienie tego, co dzieje się w Twoim mózgu, gdy ktoś prosi: "podaj przykład grzyba".</li>
         <li class="s8" data-session="8"><span class="question-num">27</span>Dziecko w lesie bierze goryczaka za prawdziwka, dopóki nie spróbuje smaku. Opisz to przez asymilację i akomodację oraz przez egzemplarze i prototypy. Czy granice kategorii się przesunęły, czy nowy punkt wpadł do istniejącego regionu?</li>
         <li class="s8" data-session="8"><span class="question-num">28</span>Quian Quiroga odkrył komórki pojęciowe, Mackay komórki lokalizacyjne. Opisz, jak razem budują adres wspomnienia epizodycznego i czym jest one-shot learning.</li>
@@ -2151,75 +2151,74 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
         <li class="s2" data-session="2"><span class="question-num">24</span>Co to jest scaffolding i kto to jest MKO?</li>
         <li class="s2" data-session="2"><span class="question-num">25</span>Co to jest mowa prywatna?</li>
         <li class="s2" data-session="2"><span class="question-num">26</span>Co odkrył Blakemore, hodując kocięta w środowisku z samymi pionowymi liniami?</li>
-        <li class="s2" data-session="2"><span class="question-num">27</span>Co to jest wspólna intencjonalność (shared intentionality)?</li>
-        <li class="s3" data-session="3"><span class="question-num">28</span>Czym różni się warunkowanie klasyczne od instrumentalnego?</li>
-        <li class="s3" data-session="3"><span class="question-num">29</span>Co to jest credit assignment?</li>
-        <li class="s3" data-session="3"><span class="question-num">30</span>Czym różni się chcenie od lubienia?</li>
-        <li class="s3" data-session="3"><span class="question-num">31</span>Wymień trzy struktury, które mogą uwalniać dopaminę.</li>
-        <li class="s3" data-session="3"><span class="question-num">32</span>Wymień trzy szlaki dopaminergiczne.</li>
-        <li class="s3" data-session="3"><span class="question-num">33</span>Degeneracja którego szlaku powoduje chorobę Parkinsona?</li>
-        <li class="s3" data-session="3"><span class="question-num">34</span>Czym różni się dopamina fazowa (phasic) od tonicznej (tonic)?</li>
-        <li class="s3" data-session="3"><span class="question-num">35</span>Który receptor, D1 czy D2, ułatwia wybraną akcję, a który tłumi konkurencyjne trajektorie?</li>
-        <li class="s3" data-session="3"><span class="question-num">36</span>Co blokuje kokaina i czym jej mechanizm różni się od amfetaminy?</li>
-        <li class="s3" data-session="3"><span class="question-num">37</span>Jak opiaty zwiększają aktywność dopaminergiczną?</li>
-        <li class="s3" data-session="3"><span class="question-num">38</span>Dlaczego kontekst zażycia substancji wyzwala nawrót?</li>
-        <li class="s3" data-session="3"><span class="question-num">39</span>Co odkryli Olds i Milner w 1954 roku?</li>
-        <li class="s4" data-session="4"><span class="question-num">40</span>Czym różni się afekt od emocji?</li>
-        <li class="s4" data-session="4"><span class="question-num">41</span>Czym różni się emocja od uczucia?</li>
-        <li class="s4" data-session="4"><span class="question-num">42</span>Co robi vmPFC w łańcuchu emocji?</li>
-        <li class="s4" data-session="4"><span class="question-num">43</span>Co robi dlPFC i na czym polega reappraisal?</li>
-        <li class="s4" data-session="4"><span class="question-num">44</span>Dlaczego S.M. doświadcza strachu po inhalacji CO2, choć nie boi się węży?</li>
-        <li class="s4" data-session="4"><span class="question-num">45</span>Wymień cztery style przywiązania Bowlby'ego.</li>
-        <li class="s4" data-session="4"><span class="question-num">46</span>Co to jest koregulacja?</li>
-        <li class="s4" data-session="4"><span class="question-num">47</span>Co to jest granulacja emocjonalna?</li>
-        <li class="s4" data-session="4"><span class="question-num">48</span>Co pokazali Lieberman i współpracownicy o nazywaniu uczuć?</li>
-        <li class="s4" data-session="4"><span class="question-num">49</span>Dlaczego placebo działa, mimo że substancja jest chemicznie obojętna?</li>
-        <li class="s5" data-session="5"><span class="question-num">50</span>Kim jest H.M. i co stracił po operacji?</li>
-        <li class="s5" data-session="5"><span class="question-num">51</span>Czym różni się pamięć deklaratywna od nawykowej i które struktury je budują?</li>
-        <li class="s5" data-session="5"><span class="question-num">52</span>Co to jest konstruktywna symulacja epizodyczna (Schacter i Addis)?</li>
-        <li class="s5" data-session="5"><span class="question-num">53</span>Dlaczego każde przypomnienie sobie przeszłości jest rekonstrukcją?</li>
-        <li class="s5" data-session="5"><span class="question-num">54</span>Co pokazał eksperyment Loftus i Palmer (1974)?</li>
-        <li class="s5" data-session="5"><span class="question-num">55</span>Co to jest zależność kontekstowa pamięci (Godden i Baddeley)?</li>
-        <li class="s5" data-session="5"><span class="question-num">56</span>Dlaczego pamięć i wyobraźnia korzystają z tej samej sieci?</li>
-        <li class="s6" data-session="6"><span class="question-num">57</span>Co dzieje się z wspomnieniami z dnia podczas snu wolnofalowego (SWS)?</li>
-        <li class="s6" data-session="6"><span class="question-num">58</span>Co to są ostre fale-zmarszczki (sharp-wave ripples)?</li>
-        <li class="s6" data-session="6"><span class="question-num">59</span>Co pokazali Kitamura i współpracownicy o dojrzewaniu engramów w korze przedczołowej?</li>
-        <li class="s6" data-session="6"><span class="question-num">60</span>Jaką rolę pełni dopamina w tym, które ślady hipokampalne przetrwają?</li>
-        <li class="s7" data-session="7"><span class="question-num">61</span>Co jest nadmiernie aktywne w prążkowiu w ADHD i jaki to ma skutek dla równowagi D1/D2?</li>
-        <li class="s7" data-session="7"><span class="question-num">62</span>Co blokuje metylfenidat i jak przywraca szlakowi pośredniemu (D2) zdolność hamowania?</li>
-        <li class="s7" data-session="7"><span class="question-num">63</span>Co to jest efekt z odbicia (rebound) przy przewlekłym leczeniu stymulantami?</li>
-        <li class="s7" data-session="7"><span class="question-num">64</span>Czym różni się empatia poznawcza od empatii afektywnej?</li>
-        <li class="s7" data-session="7"><span class="question-num">65</span>Który typ empatii jest upośledzony w autyzmie, a który w psychopatii?</li>
-        <li class="s8" data-session="8"><span class="question-num">66</span>Co to jest pojęcie według Gärdenforsa?</li>
-        <li class="s8" data-session="8"><span class="question-num">67</span>Czym różni się prototyp od egzemplarza?</li>
-        <li class="s8" data-session="8"><span class="question-num">68</span>Czym różni się asymilacja od akomodacji?</li>
-        <li class="s8" data-session="8"><span class="question-num">69</span>Co to są komórki pojęciowe (concept cells) i gdzie się znajdują?</li>
-        <li class="s8" data-session="8"><span class="question-num">70</span>Co kodują komórki lokalizacyjne w korze przyhipokampalnej?</li>
-        <li class="s8" data-session="8"><span class="question-num">71</span>Co to jest one-shot learning?</li>
-        <li class="s8" data-session="8"><span class="question-num">72</span>Co to jest rozmaitość (manifold) w kontekście przestrzeni pojęciowych?</li>
-        <li class="s8" data-session="8"><span class="question-num">73</span>Co odkrył Tolman w eksperymentach ze szczurami w labiryntach?</li>
-        <li class="s8" data-session="8"><span class="question-num">74</span>Co to jest konstrukcja sceny (scene construction) w hipokampie?</li>
-        <li class="s8" data-session="8"><span class="question-num">75</span>Co to jest afazja Broki?</li>
-        <li class="s8" data-session="8"><span class="question-num">76</span>Co to jest afazja Wernickego?</li>
-        <li class="s8" data-session="8"><span class="question-num">77</span>Co głosi teza o gramatyce uniwersalnej Chomsky'ego?</li>
-        <li class="s8" data-session="8"><span class="question-num">78</span>Jak brzmi słaba wersja hipotezy Sapira-Whorfa?</li>
-        <li class="s8" data-session="8"><span class="question-num">79</span>Jak duże modele językowe (LLM) budują przestrzenie pojęciowe?</li>
-        <li class="s8" data-session="8"><span class="question-num">80</span>Jak model dwóch strumieni opisuje przetwarzanie języka?</li>
-        <li class="s9" data-session="9"><span class="question-num">81</span>Jaką funkcję pełni OFC według Rudebecka i Murraya, którzy nazwali ją "wyrocznią"?</li>
-        <li class="s9" data-session="9"><span class="question-num">82</span>Co stracił pacjent Eliot po uszkodzeniu OFC?</li>
-        <li class="s9" data-session="9"><span class="question-num">83</span>Na czym polega regres przyczynowy w argumencie Sapolsky'ego o decyzji?</li>
-        <li class="s9" data-session="9"><span class="question-num">84</span>Dlaczego moralność jest jednym z rodzajów wyceny dokonywanej przez OFC?</li>
-        <li class="s10" data-session="10"><span class="question-num">85</span>Na które receptory działają psychodeliki i co to robi z priorami najdalej od zmysłów?</li>
-        <li class="s10" data-session="10"><span class="question-num">86</span>Co opisuje model REBUS Carhart-Harrisa i Fristona?</li>
-        <li class="s10" data-session="10"><span class="question-num">87</span>Jak działają leki SSRI i dlaczego poprawa nastroju przychodzi z opóźnieniem?</li>
-        <li class="s10" data-session="10"><span class="question-num">88</span>Czym różni się rozluźnienie priorów przez psychodeliki od rozluźnienia przez SSRI?</li>
-        <li class="s10" data-session="10"><span class="question-num">89</span>Które neurony kory niosą receptory 5-HT2A i dokąd wysyłają projekcje?</li>
-        <li class="s10" data-session="10"><span class="question-num">90</span>Jak nazywa się wielka pętla, którą domykają szlaki dopaminergiczny i serotoninergiczny?</li>
-        <li class="s11" data-session="11"><span class="question-num">91</span>Na czym polega wnioskowanie bayesowskie w predykcji i czym jest prior?</li>
-        <li class="s11" data-session="11"><span class="question-num">92</span>Co głosi Gibson o percepcji afordancji?</li>
-        <li class="s11" data-session="11"><span class="question-num">93</span>Co głosi Friston o percepcji?</li>
-        <li class="s11" data-session="11"><span class="question-num">94</span>Jak kurs rozpuszcza spór Gibson kontra Friston?</li>
-        <li class="s11" data-session="11"><span class="question-num">95</span>Czym różni się przyczyna-źródło od przyczyny-wyjaśnienia?</li>
+        <li class="s2" data-session="2"><span class="question-num">27</span>Czym różni się empatia poznawcza od empatii afektywnej?</li>
+        <li class="s2" data-session="2"><span class="question-num">28</span>Co to jest wspólna intencjonalność (shared intentionality)?</li>
+        <li class="s3" data-session="3"><span class="question-num">29</span>Czym różni się warunkowanie klasyczne od instrumentalnego?</li>
+        <li class="s3" data-session="3"><span class="question-num">30</span>Co to jest credit assignment?</li>
+        <li class="s3" data-session="3"><span class="question-num">31</span>Czym różni się chcenie od lubienia?</li>
+        <li class="s3" data-session="3"><span class="question-num">32</span>Wymień trzy struktury, które mogą uwalniać dopaminę.</li>
+        <li class="s3" data-session="3"><span class="question-num">33</span>Wymień trzy szlaki dopaminergiczne.</li>
+        <li class="s3" data-session="3"><span class="question-num">34</span>Degeneracja którego szlaku powoduje chorobę Parkinsona?</li>
+        <li class="s3" data-session="3"><span class="question-num">35</span>Czym różni się dopamina fazowa (phasic) od tonicznej (tonic)?</li>
+        <li class="s3" data-session="3"><span class="question-num">36</span>Który receptor, D1 czy D2, ułatwia wybraną akcję, a który tłumi konkurencyjne trajektorie?</li>
+        <li class="s3" data-session="3"><span class="question-num">37</span>Co blokuje kokaina i czym jej mechanizm różni się od amfetaminy?</li>
+        <li class="s3" data-session="3"><span class="question-num">38</span>Jak opiaty zwiększają aktywność dopaminergiczną?</li>
+        <li class="s3" data-session="3"><span class="question-num">39</span>Dlaczego kontekst zażycia substancji wyzwala nawrót?</li>
+        <li class="s3" data-session="3"><span class="question-num">40</span>Co odkryli Olds i Milner w 1954 roku?</li>
+        <li class="s4" data-session="4"><span class="question-num">41</span>Czym różni się afekt od emocji?</li>
+        <li class="s4" data-session="4"><span class="question-num">42</span>Czym różni się emocja od uczucia?</li>
+        <li class="s4" data-session="4"><span class="question-num">43</span>Co robi vmPFC w łańcuchu emocji?</li>
+        <li class="s4" data-session="4"><span class="question-num">44</span>Co robi dlPFC i na czym polega reappraisal?</li>
+        <li class="s4" data-session="4"><span class="question-num">45</span>Dlaczego S.M. doświadcza strachu po inhalacji CO2, choć nie boi się węży?</li>
+        <li class="s4" data-session="4"><span class="question-num">46</span>Wymień cztery style przywiązania Bowlby'ego.</li>
+        <li class="s4" data-session="4"><span class="question-num">47</span>Co to jest koregulacja?</li>
+        <li class="s4" data-session="4"><span class="question-num">48</span>Co to jest granulacja emocjonalna?</li>
+        <li class="s4" data-session="4"><span class="question-num">49</span>Co pokazali Lieberman i współpracownicy o nazywaniu uczuć?</li>
+        <li class="s4" data-session="4"><span class="question-num">50</span>Dlaczego placebo działa, mimo że substancja jest chemicznie obojętna?</li>
+        <li class="s5" data-session="5"><span class="question-num">51</span>Kim jest H.M. i co stracił po operacji?</li>
+        <li class="s5" data-session="5"><span class="question-num">52</span>Czym różni się pamięć deklaratywna od nawykowej i które struktury je budują?</li>
+        <li class="s5" data-session="5"><span class="question-num">53</span>Co to jest konstruktywna symulacja epizodyczna (Schacter i Addis)?</li>
+        <li class="s5" data-session="5"><span class="question-num">54</span>Dlaczego każde przypomnienie sobie przeszłości jest rekonstrukcją?</li>
+        <li class="s5" data-session="5"><span class="question-num">55</span>Co pokazał eksperyment Loftus i Palmer (1974)?</li>
+        <li class="s5" data-session="5"><span class="question-num">56</span>Co to jest zależność kontekstowa pamięci (Godden i Baddeley)?</li>
+        <li class="s5" data-session="5"><span class="question-num">57</span>Dlaczego pamięć i wyobraźnia korzystają z tej samej sieci?</li>
+        <li class="s6" data-session="6"><span class="question-num">58</span>Co dzieje się z wspomnieniami z dnia podczas snu wolnofalowego (SWS)?</li>
+        <li class="s6" data-session="6"><span class="question-num">59</span>Co to są ostre fale-zmarszczki (sharp-wave ripples)?</li>
+        <li class="s6" data-session="6"><span class="question-num">60</span>Co pokazali Kitamura i współpracownicy o dojrzewaniu engramów w korze przedczołowej?</li>
+        <li class="s6" data-session="6"><span class="question-num">61</span>Jaką rolę pełni dopamina w tym, które ślady hipokampalne przetrwają?</li>
+        <li class="s7" data-session="7"><span class="question-num">62</span>Co jest nadmiernie aktywne w prążkowiu w ADHD i jaki to ma skutek dla równowagi D1/D2?</li>
+        <li class="s7" data-session="7"><span class="question-num">63</span>Co blokuje metylfenidat i jak przywraca szlakowi pośredniemu (D2) zdolność hamowania?</li>
+        <li class="s7" data-session="7"><span class="question-num">64</span>Co to jest efekt z odbicia (rebound) przy przewlekłym leczeniu stymulantami?</li>
+        <li class="s8" data-session="8"><span class="question-num">65</span>Co to jest pojęcie według Gärdenforsa?</li>
+        <li class="s8" data-session="8"><span class="question-num">66</span>Czym różni się prototyp od egzemplarza?</li>
+        <li class="s8" data-session="8"><span class="question-num">67</span>Czym różni się asymilacja od akomodacji?</li>
+        <li class="s8" data-session="8"><span class="question-num">68</span>Co to są komórki pojęciowe (concept cells) i gdzie się znajdują?</li>
+        <li class="s8" data-session="8"><span class="question-num">69</span>Co kodują komórki lokalizacyjne w korze przyhipokampalnej?</li>
+        <li class="s8" data-session="8"><span class="question-num">70</span>Co to jest one-shot learning?</li>
+        <li class="s8" data-session="8"><span class="question-num">71</span>Co to jest rozmaitość (manifold) w kontekście przestrzeni pojęciowych?</li>
+        <li class="s8" data-session="8"><span class="question-num">72</span>Co odkrył Tolman w eksperymentach ze szczurami w labiryntach?</li>
+        <li class="s8" data-session="8"><span class="question-num">73</span>Co to jest konstrukcja sceny (scene construction) w hipokampie?</li>
+        <li class="s8" data-session="8"><span class="question-num">74</span>Co to jest afazja Broki?</li>
+        <li class="s8" data-session="8"><span class="question-num">75</span>Co to jest afazja Wernickego?</li>
+        <li class="s8" data-session="8"><span class="question-num">76</span>Co głosi teza o gramatyce uniwersalnej Chomsky'ego?</li>
+        <li class="s8" data-session="8"><span class="question-num">77</span>Jak brzmi słaba wersja hipotezy Sapira-Whorfa?</li>
+        <li class="s8" data-session="8"><span class="question-num">78</span>Jak duże modele językowe (LLM) budują przestrzenie pojęciowe?</li>
+        <li class="s8" data-session="8"><span class="question-num">79</span>Jak model dwóch strumieni opisuje przetwarzanie języka?</li>
+        <li class="s9" data-session="9"><span class="question-num">80</span>Jaką funkcję pełni OFC według Rudebecka i Murraya, którzy nazwali ją "wyrocznią"?</li>
+        <li class="s9" data-session="9"><span class="question-num">81</span>Co stracił pacjent Eliot po uszkodzeniu OFC?</li>
+        <li class="s9" data-session="9"><span class="question-num">82</span>Na czym polega regres przyczynowy w argumencie Sapolsky'ego o decyzji?</li>
+        <li class="s9" data-session="9"><span class="question-num">83</span>Dlaczego moralność jest jednym z rodzajów wyceny dokonywanej przez OFC?</li>
+        <li class="s10" data-session="10"><span class="question-num">84</span>Na które receptory działają psychodeliki i co to robi z priorami najdalej od zmysłów?</li>
+        <li class="s10" data-session="10"><span class="question-num">85</span>Co opisuje model REBUS Carhart-Harrisa i Fristona?</li>
+        <li class="s10" data-session="10"><span class="question-num">86</span>Jak działają leki SSRI i dlaczego poprawa nastroju przychodzi z opóźnieniem?</li>
+        <li class="s10" data-session="10"><span class="question-num">87</span>Czym różni się rozluźnienie priorów przez psychodeliki od rozluźnienia przez SSRI?</li>
+        <li class="s10" data-session="10"><span class="question-num">88</span>Które neurony kory niosą receptory 5-HT2A i dokąd wysyłają projekcje?</li>
+        <li class="s10" data-session="10"><span class="question-num">89</span>Jak nazywa się wielka pętla, którą domykają szlaki dopaminergiczny i serotoninergiczny?</li>
+        <li class="s11" data-session="11"><span class="question-num">90</span>Na czym polega wnioskowanie bayesowskie w predykcji i czym jest prior?</li>
+        <li class="s11" data-session="11"><span class="question-num">91</span>Co głosi Gibson o percepcji afordancji?</li>
+        <li class="s11" data-session="11"><span class="question-num">92</span>Co głosi Friston o percepcji?</li>
+        <li class="s11" data-session="11"><span class="question-num">93</span>Jak kurs rozpuszcza spór Gibson kontra Friston?</li>
+        <li class="s11" data-session="11"><span class="question-num">94</span>Czym różni się przyczyna-źródło od przyczyny-wyjaśnienia?</li>
       </ol>
     </div>
 
@@ -2242,6 +2241,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item s2" data-session="2">Gopnik, A., Meltzoff, A. N., &amp; Kuhl, P. K. (1999). <em>The Scientist in the Crib: Minds, Brains, and How Children Learn</em>. William Morrow.</p>
       <p class="bib-item s2" data-session="2">Mayer, A., &amp; Träuble, B. E. (2013). Synchrony in the onset of mental state understanding across cultures? <em>International Journal of Behavioral Development, 37</em>(1), 21-28.</p>
       <p class="bib-item s2" data-session="2">Robbins, J., &amp; Rumsey, A. (2008). Introduction: Cultural and Linguistic Anthropology and the Opacity of Other Minds. <em>Anthropological Quarterly, 81</em>(2), 407-420.</p>
+      <p class="bib-item s2" data-session="2">Hubel, D. H., &amp; Wiesel, T. N. (1970). The period of susceptibility to the physiological effects of unilateral eye closure in kittens. <em>The Journal of Physiology, 206</em>(2), 419-436.</p>
       <p class="bib-item s2" data-session="2">Blakemore, C., &amp; Cooper, G. F. (1970). Development of the brain depends on the visual environment. <em>Nature, 228</em>(5270), 477-478.</p>
       <p class="bib-item s8" data-session="8">Tolman, E. C. (1948). Cognitive maps in rats and men. <em>Psychological Review, 55</em>(4), 189-208.</p>
       <p class="bib-item s8" data-session="8">O'Keefe, J., &amp; Nadel, L. (1978). <em>The Hippocampus as a Cognitive Map</em>. Oxford University Press.</p>
@@ -2252,6 +2252,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item s3" data-session="3">Sapolsky, R. M. (2017). <em>Behave: The Biology of Humans at Our Best and Worst</em>. Penguin Press.</p>
       <p class="bib-item s3" data-session="3">Berridge, K. C., &amp; Robinson, T. E. (2016). Liking, wanting, and the incentive-sensitization theory of addiction. <em>American Psychologist, 71</em>(8), 670-679.</p>
       <p class="bib-item s3" data-session="3">Olds, J., &amp; Milner, P. (1954). Positive reinforcement produced by electrical stimulation of septal area and other regions of rat brain. <em>Journal of Comparative and Physiological Psychology, 47</em>(6), 419-427.</p>
+      <p class="bib-item s3" data-session="3">Watson, J. B., &amp; Rayner, R. (1920). Conditioned emotional reactions. <em>Journal of Experimental Psychology, 3</em>(1), 1-14.</p>
       <p class="bib-item s3" data-session="3">Adam, D. (2026). Dopamine takes a hit: how neuroscience is rethinking the 'feel-good' chemical. <em>Nature</em>. <a href="https://www.nature.com/articles/d41586-026-00836-x" target="_blank">doi:10.1038/d41586-026-00836-x</a></p>
       <p class="bib-item s4" data-session="4">Barrett, L. F. (2017). <em>How Emotions Are Made: The Secret Life of the Brain</em>. Houghton Mifflin Harcourt.</p>
       <p class="bib-item s4" data-session="4">Lieberman, M. D., Eisenberger, N. I., Crockett, M. J., Tom, S. M., Pfeifer, J. H., &amp; Way, B. M. (2007). Putting feelings into words: affect labeling disrupts amygdala activity in response to affective stimuli. <em>Psychological Science, 18</em>(5), 421-428. <a href="https://doi.org/10.1111/j.1467-9280.2007.01916.x" target="_blank">doi:10.1111/j.1467-9280.2007.01916.x</a></p>
@@ -2265,6 +2266,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <p class="bib-item s5" data-session="5">Nader, K., Schafe, G. E., &amp; Le Doux, J. E. (2000). Fear memories require protein synthesis in the amygdala for reconsolidation after retrieval. <em>Nature, 406</em>(6797), 722-726. <a href="https://doi.org/10.1038/35021052" target="_blank">doi:10.1038/35021052</a></p>
       <p class="bib-item s6" data-session="6">Kitamura, T., Ogawa, S. K., Roy, D. S., Okuyama, T., Morrissey, M. D., Smith, L. M., Redondo, R. L., &amp; Tonegawa, S. (2017). Engrams and circuits crucial for systems consolidation of a memory. <em>Science, 356</em>(6333), 73-78. <a href="https://doi.org/10.1126/science.aam6808" target="_blank">doi:10.1126/science.aam6808</a></p>
       <p class="bib-item s6" data-session="6">Wagatsuma, A., Okuyama, T., Sun, C., Smith, L. M., Abe, K., &amp; Tonegawa, S. (2018). Locus coeruleus input to hippocampal CA3 drives single-trial learning of a novel context. <em>Proceedings of the National Academy of Sciences, 115</em>(2), E310-E316. <a href="https://doi.org/10.1073/pnas.1714082115" target="_blank">doi:10.1073/pnas.1714082115</a></p>
+      <p class="bib-item s7" data-session="7">Pellicano, E., &amp; Burr, D. (2012). When the world becomes 'too real': a Bayesian explanation of autistic perception. <em>Trends in Cognitive Sciences, 16</em>(10), 504-510. <a href="https://doi.org/10.1016/j.tics.2012.08.009" target="_blank">doi:10.1016/j.tics.2012.08.009</a></p>
       <p class="bib-item s7" data-session="7">Wang, G.-J., et al. (2013). Long-term stimulant treatment affects brain dopamine transporter level in patients with attention deficit hyperactive disorder. <em>PLoS ONE, 8</em>(5), e63023. <a href="https://doi.org/10.1371/journal.pone.0063023" target="_blank">doi:10.1371/journal.pone.0063023</a></p>
       <p class="bib-item s8" data-session="8">Gärdenfors, P. (2000). <em>Conceptual Spaces: The Geometry of Thought</em>. MIT Press.</p>
       <p class="bib-item s8" data-session="8">Rosch, E. (1975). Cognitive representations of semantic categories. <em>Journal of Experimental Psychology: General, 104</em>(3), 192-233. <a href="https://doi.org/10.1037/0096-3445.104.3.192" target="_blank">doi:10.1037/0096-3445.104.3.192</a></p>
