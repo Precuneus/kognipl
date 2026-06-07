@@ -27,6 +27,7 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow-x: clip; }
 
 body {
   background:
@@ -303,12 +304,13 @@ a { color: inherit; }
 
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
-  .site-nav { gap: 16px; }
-  .site-nav a { font-size: 11px; letter-spacing: 1px; }
+  .site-header { padding: 22px 20px 18px; }
+  .site-nav { gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .site-nav a { font-size: 11px; letter-spacing: 1px; padding: 7px 13px; }
   .section-title { font-size: 24px; }
 }
 
 @media (max-width: 480px) {
-  .site-header { flex-direction: column; gap: 16px; }
+  .site-header { flex-direction: column; gap: 14px; align-items: center; padding: 18px 16px 14px; }
   .site-nav { flex-wrap: wrap; justify-content: center; }
 }

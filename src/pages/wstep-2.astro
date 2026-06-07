@@ -899,7 +899,18 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   }
   @media (max-width: 560px) {
     .time-machine-inner {
-      padding: 0 16px;
+      padding: 0 12px;
+    }
+    .tm-checks {
+      overflow-x: auto;
+      justify-content: flex-start;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tm-checks::-webkit-scrollbar { display: none; }
+    .tm-check {
+      flex: 0 0 auto;
+      min-width: 38px;
     }
     .tm-check span {
       font-size: 10px;
