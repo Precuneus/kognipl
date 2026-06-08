@@ -1388,7 +1388,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       </div>
     </div>
 
-    <!-- ==================== TWOJE MODELE ŚWIATA ==================== -->
+    <!-- ==================== PODSTAWOWE POJĘCIA ==================== -->
     <h2 id="sec-perspektywy">Twoje modele świata</h2>
 
     <h3 id="sub-perspektywy">Dwie perspektywy</h3>
@@ -1504,7 +1504,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <div class="cascade-step">
         <div class="cascade-num">SMN</div>
         <div class="cascade-content">
-          <div class="cascade-name">Sieć somatomotoryczna <span class="cascade-abbr">SMN</span></div>
+          <div class="cascade-name">Sieć somatosensoryczna <span class="cascade-abbr">SMN</span></div>
           <div class="cascade-desc">Modeluje ciało: dotyk, temperaturę, ból, położenie kończyn. Tu mieszczą się też etologiczne mapy akcji, czyli ruchy właściwe dla gatunku (Graziano, 2016).</div>
         </div>
       </div>
@@ -1557,7 +1557,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       </div>
       <div class="vs-text"><span class="vs-title">Rudebeck i Murray (2014) · The Orbitofrontal Oracle</span>Wideo-abstrakt do pracy, w której autorzy nazwali OFC wyrocznią. W kilka minut tłumaczą, dlaczego rolą OFC jest przewidywanie i wycena wartości konkretnych skutków. To ujęcie wykracza poza dawne etykiety hamowania i emocji.</div>
     </div>
-    <p class="s9" data-session="9">Przypadek Phineasa Gage'a, któremu wypadek przy pracy zniszczył korę okołooczodołową (OFC), pokazuje, czym ta okolica się zajmuje. Rudebeck i Murray (2014) nazwali tę okolicę wyrocznią: OFC przewiduje i wycenia wartość konkretnych skutków działania, uczy się, co do czego prowadzi, i aktualizuje te wyceny, gdy świat się zmienia. Moralność jest jednym rodzajem takiej wyceny. To wartość przypisana społecznym skutkom czynu, ocena tego, co wypada zrobić w danych okolicznościach. Reguły moralne w dużej mierze kształtuje środowisko, więc każdy ma własną wycenę. Pacjent Elliot (Damasio) po uszkodzeniu OFC stracił właśnie tę zdolność. Potrafił przeanalizować skutki, ale nie potrafił przypisać im wartości, więc wybór restauracji na obiad paraliżował go tak samo jak dylemat moralny. Bez wyceny skutków decyzja nie ma się o co oprzeć.</p>
+    <p class="s9" data-session="9">Przypadek Phineasa Gage'a, któremu wypadek przy pracy zniszczył korę okołooczodołową (OFC), pokazuje, czym ta okolica się zajmuje. Rudebeck i Murray (2014) nazwali tę okolicę wyrocznią: OFC przewiduje i wycenia wartość konkretnych skutków działania, uczy się, co do czego prowadzi, i aktualizuje te wyceny, gdy świat się zmienia. Moralność jest jednym rodzajem takiej wyceny. To wartość przypisana społecznym skutkom czynu, ocena tego, co wypada zrobić w danych okolicznościach. Reguły moralne w dużej mierze kształtuje środowisko, więc każdy ma własną wycenę. Pacjent Eliot (Damasio) po uszkodzeniu OFC stracił właśnie tę zdolność. Potrafił przeanalizować skutki, ale nie potrafił przypisać im wartości, więc wybór restauracji na obiad paraliżował go tak samo jak dylemat moralny. Bez wyceny skutków decyzja nie ma się o co oprzeć.</p>
     <div class="video-side s9" data-session="9">
       <div class="video-wrapper">
         <iframe
@@ -1625,7 +1625,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p>Trzy nisze to trzy opisy tego samego procesu: jak doświadczenie i sieci zwrotnie się kształtują. <span class="s2" data-session="2">Każde dziecko konstruuje wszystkie trzy nisze jednocześnie.</span></p>
     <p>Te same trzy nisze wyznaczają oś całego kursu: oś odległości od receptorów. Nisza neuronalna to architektura sieci, którą właśnie opisaliśmy, czyli połączenia, ich siła i możliwe wzorce aktywności. Nisza poznawcza pracuje daleko od receptorów, w sieciach kontroli i domyślnej, gdzie modele odrywają się od bieżącego sygnału; od niej zaczynamy. Nisza ekologiczna pracuje blisko receptorów, w sieciach somatosensorycznej, wzrokowej i uwagowej, gdzie modele trzymają się świata przez afordancje; do niej przejdziemy potem. Z zewnątrz to trzy nisze, od środka jedno doświadczenie. Ta oś porządkuje modele w przestrzeni; ich zmianę w czasie prześledzimy w sekcji Modele w czasie.</p>
 
-    <!-- ==================== DALEKO OD RECEPTORÓW ==================== -->
+    <!-- ==================== EMOCJE ==================== -->
     <hr class="section-divider" />
     <h2 id="sec-daleko">Daleko od receptorów</h2>
     <p>Najogólniej mówiąc, uczenie się to proces budowania modeli świata. Wcześniejsze doświadczenia trenują Twoje sieci i kształtują predykcje na przyszłość.</p>
@@ -1665,7 +1665,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       <figcaption>Kitamura et al. (2017), Fig. 4L. Po lewej: dzień uczenia. Hipokamp (HPC) i ciało migdałowate (BLA) generują niedojrzałe engramy w korze przedczołowej (PFC). Po prawej: po konsolidacji. PFC przejmuje przypominanie, HPC milknie, BLA utrzymuje walencję emocjonalną. Źródło: Kitamura et al. (2017), <em>Science</em>.</figcaption>
     </figure>
 
-    <!-- ==================== POJĘCIA ==================== -->
+    <!-- ==================== REPREZENTACJONIZM ==================== -->
     <h3 id="sub-pojecia" class="s8" data-session="8">Pojęcia</h3>
     <p class="s8" data-session="8">Pojęcia to coś więcej niż słowo czy etykieta. Peter Gärdenfors proponuje, że pojęcia to regiony w wielowymiarowej przestrzeni poznawczej. Pomyśl o kolorach. Każdy kolor ma odcień, nasycenie i jasność. Te trzy wymiary tworzą przestrzeń. "Czerwony" jest regionem w tej przestrzeni: zbiorem punktów, które Twoje sieci neuronowe klasyfikują jako wystarczająco podobne. W centrum tego regionu siedzi prototyp: najlepszy przykład kategorii.</p>
     <p class="s8" data-session="8">Innym przykładem będzie przestrzeń grzybów o kapeluszach i nóżkach różnych kształtów, rozmiarów i kolorów. Dla Ciebie przestrzeń grzybów będzie się zapewne składać z kilkunastu gatunków. Dla pasjonata przestrzeń ta będzie miała ogromnie większą rozdzielczość. Szczegóły eksteroceptywne trenują modele w rozpoznawaniu coraz subtelniejszych niuansów danej przestrzeni poznawczej.</p>
@@ -1737,7 +1737,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s7" data-session="7">Rozumienie innych uwzględnia również rozumienie ich stanów emocjonalnych. Blair (2008) dokonał precyzyjnego podziału: <strong>empatia poznawcza</strong> to zdolność do modelowania stanów mentalnych drugiej osoby (co ona myśli, czuje, zamierza). To terytorium DMN.ToM. <strong>Empatia afektywna</strong> to rezonans z emocją drugiej osoby: widzisz ból i czujesz ból. To terytorium wyspy i ciała migdałowatego.</p>
     <p class="s7" data-session="7">Te dwa rodzaje empatii są niezależne. Osoby z autyzmem mają trudności z empatią poznawczą (modelowanie cudzych stanów mentalnych, teoria umysłu), ale zachowują empatię afektywną: widzą cierpienie i reagują. Osoby z psychopatią mają sprawną empatię poznawczą (rozumieją, co czujesz, potrafią to przewidzieć i wykorzystać), ale deficyt empatii afektywnej: rozumienie nie uruchamia rezonansu. Dwa systemy, dwa wzorce uszkodzeń, dwa profile kliniczne. To klasyczna podwójna dysocjacja: ten sam argument logiczny, który w afazjach oddziela składnię od semantyki, tu oddziela poznawczą od afektywnej empatii.</p>
 
-    <!-- ==================== BLISKO OD RECEPTORÓW ==================== -->
+    <!-- ==================== JĘZYK ==================== -->
     <hr class="section-divider" />
     <h2 id="sec-blisko">Blisko od receptorów</h2>
     <p>Sieci VIS, SMN i DAN modelują informacje blisko receptorów: kształt, ruch, dotyk i położenie ciała.</p>
@@ -1924,7 +1924,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <p class="s10" data-session="10">Szlaki dopaminergiczne i serotoninergiczne domykają wielką pętlę kora &rarr; prążkowie &rarr; gałka blada &rarr; wzgórze &rarr; kora. Kora wysyła pobudzenie do prążkowia, prążkowie przez szlaki bezpośredni i pośredni steruje gałką bladą i istotą czarną, te hamują wzgórze, a wzgórze wraca do kory. Dopamina z SNc i VTA ustawia czułość całej pętli. Serotonina dostraja tę pętlę od strony kory: receptory 5-HT2A na neuronach piramidowych warstwy V regulują siłę sygnału, który kora wysyła do prążkowia. To jest pętla korowo-prążkowiowo-wzgórzowo-korowa: ten sam obwód, który wybiera ruch, na bardziej brzusznym końcu wybiera cel i decyzję. Diagram powyżej pokazuje tę pętlę z perspektywy pojedynczej kolumny korowej: warstwy kory na górze, a pod nimi jądra podstawy, wzgórze i dopaminergiczne wejście z VTA.</p>
 
     <h2 id="sec-jezyk">Pętla: język</h2>
-    <p class="s8" data-session="8">Język to forma komunikacji umożliwiająca przekazywanie złożonych idei za pomocą precyzyjnie generowanych ruchów proprioceptywnych. Zazwyczaj za pomocą ust i strun głosowych, dzięki czemu wydawane dźwięki mogą być odebrane i zrozumiane przez innych.</p>
+    <p class="s8" data-session="8">Język to forma komunikacji umożliwiająca przekazywanie złożonych idei za precyzyjnie generowanych ruchów proprioceptywnych. Zazwyczaj za pomocą ust i strun głosowych, dzięki czemu wydawane dźwięki mogą być odebrane i zrozumiane przez innych.</p>
     <hr class="section-divider s8" data-session="8" />
     <h3 id="sub-jezyk" class="s8" data-session="8">Język</h3>
     <p class="s8" data-session="8">Generowanie złożonych wypowiedzi zaczyna się od sieci domyślnej: TP dostarcza wiedzę społeczno-semantyczną, OFC oznacza ją wartością emocjonalną. Stąd informacja biegnie trzema równoległymi torami do obszaru Broki:</p>
@@ -1959,7 +1959,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     <h3 id="sub-jezyk-myslenie" class="s8" data-session="8">Język kształtuje myślenie?</h3>
     <p class="s8" data-session="8">Chomsky twierdzi, że zdolność językowa jest wrodzona: mózg przychodzi z generatywną maszynerią, która ze skończonego zestawu reguł produkuje nieskończoną liczbę zdań. Język generatywny ma dwa niezależne wymiary: <strong>składnię</strong> (struktura, "kto komu co zrobił") i <strong>semantykę</strong> (znaczenie, "co to wszystko znaczy"). Afazje pokazują, że mózg przetwarza je osobno.</p>
     <p class="s8" data-session="8">Ale czy język wpływa na to, jak myślisz? <strong>Hipoteza Sapira-Whorfa</strong> mówi: tak. Wersja silna (język determinuje myślenie) jest w większości odrzucona. Wersja słaba (język wpływa na myślenie) ma solidne wsparcie. Pomyśl o kolorach. Język eskimoski ma wiele słów na "biały." Języki amazońskie mają wiele słów na "zielony." Liczba etykiet w danej domenie koreluje z dokładnością percepcji w tej domenie. Więcej słów na odcienie bieli: lepsza dyskryminacja odcieni bieli.</p>
-    <p class="s8" data-session="8">Język i formy komunikacji dźwiękowej towarzyszyły hominidom od dawna. Pismo natomiast jest relatywnie nowym wynalazkiem. Mimo tego, pisanie angażuje te same struktury co mówienie.</p>
+    <p class="s8" data-session="8">Język i formy komunikacji dźwiękowej towarzyszyły homonoidom od dawna. Pismo natomiast jest relatywnie nowym wynalazkiem. Mimo tego, pisanie angażuje te same struktury co mówienie.</p>
     <div class="video-side video-block s8" data-session="8">
       <div class="video-wrapper">
         <iframe
@@ -1975,7 +1975,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s8" data-session="8">Sztuczna inteligencja buduje analogiczne przestrzenie. Duże modele językowe (LLM) konstruują przestrzenie embeddingów: wielowymiarowe rozmaitości, na których słowa, zdania i pojęcia mają pozycje i dystanse. "Król" minus "mężczyzna" plus "kobieta" równa się "królowa": operacja geometryczna w przestrzeni pojęciowej. Ludzie i LLM-y są wrażliwi na prompty z tego samego powodu: prompt ustawia punkt startowy na rozmaitości. Inny punkt startowy, inna trajektoria, inny wynik.</p>
 
-    <!-- ==================== ISTOTNOŚĆ I EMOCJE ==================== -->
+    <!-- ==================== PYTANIA ==================== -->
+    <!-- ==================== KOMPLEKSOWE PYTANIA ==================== -->
     <hr class="section-divider" />
     <h2 id="sec-salience">Istotność i emocje</h2>
     <p>Istotność to kluczowy sygnał reorientujący wszystkie sieci. Niezależnie od tego, jak daleko od receptorów pracuje sieć, coś musi rozstrzygać, co jest teraz ważne. To zadanie ciała migdałowatego i wyspy.</p>
@@ -1983,7 +1984,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s4" data-session="4">Kilka struktur jest kluczowych:</p>
     <ul>
-      <li class="s4" data-session="4"><strong>Ciało migdałowate:</strong> detektor istotności. Reaguje na cokolwiek ważne dla organizmu: nowe, nagradzające, zagrażające. Moduluje uczenie się emocjonalne i dostęp do zasobów uwagowych.</li>
+      <li class="s4" data-session="4"><strong>Ciało migdałowate:</strong> detektor istotnośi. Reaguje na cokolwiek ważne dla organizmu: nowe, nagradzające, zagrażające. Moduluje uczenie się emocjonalne i dostęp do zasobów uwagowych.</li>
       <li class="s4" data-session="4"><strong>Wzgórze:</strong> router sensoryczny. Przetwarza i przekierowuje informacje ze wszystkich wymiarów.</li>
       <li class="s4" data-session="4"><strong>Wyspa</strong> (insula): przetwarza informacje interoceptywne.</li>
       <li class="s4" data-session="4"><strong>vmPFC</strong> (brzuszno-przyśrodkowa kora przedczołowa): integruje kontekst z afektem. Ustawia predykcję o tym, czego ciało zaraz doświadczy.</li>
@@ -1995,7 +1996,7 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
 
     <p class="s4" data-session="4">Historia badań nad emocją zaczyna się od sześciu ekspresji twarzy (szczęście, smutek, strach, wstręt, gniew, zaskoczenie), które rozpoznają ludzie na wszystkich kontynentach, niezależnie od kultury. Mikroekspresje trwające ułamek sekundy wskazują na biologiczną podstawę emocji jako wrodzonych uniwersalnych kategorii.</p>
 
-    <p class="s4" data-session="4">Lisa Feldman Barrett argumentuje inaczej. Sugeruje, że jest afekt: ciągły sygnał walencji (dobre/złe) i pobudzenia (wysokie/niskie) płynący z ciała. I jest kontekst: historia życia, kultura, język, sytuacja. Mózg bierze ten surowy materiał i <em>tworzy</em> instancję emocji, w czasie rzeczywistym, za każdym razem od nowa. Dwie osoby z szybko bijącym sercem i spoconymi dłońmi: jedna czuje strach, druga podekscytowanie. Ta sama fizjologia, inna emocja. Dlatego że kontekst ustawia predykcję.</p>
+    <p class="s4" data-session="4">Lisa Feldman Barrett argumentuje inaczej, Sugeruje, że jest afekt: ciągły sygnał walencji (dobre/złe) i pobudzenia (wysokie/niskie) płynący z ciała. I jest kontekst: historia życia, kultura, język, sytuacja. Mózg bierze ten surowy materiał i <em>tworzy</em> instancję emocji, w czasie rzeczywistym, za każdym razem od nowa. Dwie osoby z szybko bijącym sercem i spoconymi dłońmi: jedna czuje strach, druga podekscytowanie. Ta sama fizjologia, inna emocja. Dlatego że kontekst ustawia predykcję.</p>
 
     <div class="video-side video-block s4" data-session="4">
       <div class="video-wrapper">
@@ -2295,36 +2296,41 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
   <aside class="glossary-sidebar" aria-label="Słowniczek skrótów">
     <div class="glossary-sidebar-inner">
       <div class="glossary-label">Skróty</div>
-      <div class="glossary-entry" data-sections="sub-pojecia sub-predykcja sub-dmn"><span class="abbr-key">DMN</span> <span class="abbr-full">Default Mode Network, sieć domyślna</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">DAN</span> <span class="abbr-full">Dorsal Attention Network, grzbietowa sieć uwagi</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">VAN</span> <span class="abbr-full">Ventral Attention Network, brzuszna sieć uwagi</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">SAL</span> <span class="abbr-full">Salience Network, sieć istotności</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">CON</span> <span class="abbr-full">Control Network, sieć kontroli</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">SMN</span> <span class="abbr-full">Somatomotor Network, sieć somatomotoryczna</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">VIS</span> <span class="abbr-full">Visual Network, sieć wzrokowa</span></div>
-      <div class="glossary-entry" data-sections="sub-pojecia sub-predykcja"><span class="abbr-key">fMRI</span> <span class="abbr-full">funkcjonalny rezonans magnetyczny</span></div>
-      <div class="glossary-entry" data-sections="sub-pojecia sub-predykcja"><span class="abbr-key">HPC</span> <span class="abbr-full">hipokamp (hippocampus)</span></div>
-      <div class="glossary-entry" data-sections="sub-pojecia sub-predykcja"><span class="abbr-key">EC</span> <span class="abbr-full">kora śródwęchowa (entorhinal cortex)</span></div>
-      <div class="glossary-entry" data-sections="sub-emocje sub-predykcja"><span class="abbr-key">vmPFC</span> <span class="abbr-full">brzuszno-przyśrodkowa kora przedczołowa</span></div>
-      <div class="glossary-entry" data-sections="sub-dmn"><span class="abbr-key">mPFC</span> <span class="abbr-full">przyśrodkowa kora przedczołowa</span></div>
-      <div class="glossary-entry" data-sections="sub-dmn"><span class="abbr-key">PCC</span> <span class="abbr-full">tylna kora zakrętu obręczy</span></div>
-      <div class="glossary-entry" data-sections="sub-dmn sub-predykcja"><span class="abbr-key">TP</span> <span class="abbr-full">biegun skroniowy (temporal pole)</span></div>
-      <div class="glossary-entry" data-sections="sub-dmn sub-predykcja"><span class="abbr-key">OFC</span> <span class="abbr-full">kora okołooczodołowa</span></div>
-      <div class="glossary-entry" data-sections="sub-dmn sub-predykcja sub-pojecia"><span class="abbr-key">IFG</span> <span class="abbr-full">zakręt czołowy dolny (inferior frontal gyrus), obszar Broki</span></div>
-      <div class="glossary-entry" data-sections="sub-dmn sub-predykcja"><span class="abbr-key">MTG</span> <span class="abbr-full">zakręt skroniowy środkowy</span></div>
-      <div class="glossary-entry" data-sections="sub-dmn"><span class="abbr-key">A1</span> <span class="abbr-full">pierwszorzędowa kora słuchowa</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">VTA</span> <span class="abbr-full">pole brzuszne nakrywki (ventral tegmental area)</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">NAcc</span> <span class="abbr-full">jądro półleżące (nucleus accumbens)</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja sub-pojecia"><span class="abbr-key">SN</span> <span class="abbr-full">istota czarna (substantia nigra)</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">SNc</span> <span class="abbr-full">istota czarna, część zbita</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">LC</span> <span class="abbr-full">miejsce sinawe (locus coeruleus)</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">D1</span> <span class="abbr-full">receptor dopaminowy D1, szlak bezpośredni</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">D2</span> <span class="abbr-full">receptor dopaminowy D2, szlak pośredni</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">DAT</span> <span class="abbr-full">transporter dopaminy</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">NET</span> <span class="abbr-full">transporter noradrenaliny</span></div>
-      <div class="glossary-entry" data-sections="sub-predykcja"><span class="abbr-key">SERT</span> <span class="abbr-full">transporter serotoniny</span></div>
-      <div class="glossary-entry" data-sections="sub-pojecia"><span class="abbr-key">ZPD</span> <span class="abbr-full">strefa najbliższego rozwoju (Vygotsky)</span></div>
-      <div class="glossary-entry" data-sections="sub-pojecia"><span class="abbr-key">MKO</span> <span class="abbr-full">More Knowledgeable Other</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia sec-predykcja sec-dmn"><span class="abbr-key">DMN</span> <span class="abbr-full">Default Mode Network, sieć domyślna</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">DAN</span> <span class="abbr-full">Dorsal Attention Network, grzbietowa sieć uwagi</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">VAN</span> <span class="abbr-full">Ventral Attention Network, brzuszna sieć uwagi</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">SAL</span> <span class="abbr-full">Salience Network, sieć istotności</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">CON</span> <span class="abbr-full">Control Network, sieć kontroli</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia sec-predykcja"><span class="abbr-key">fMRI</span> <span class="abbr-full">funkcjonalny rezonans magnetyczny</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia"><span class="abbr-key">BOLD</span> <span class="abbr-full">Blood-Oxygen-Level-Dependent, sygnał tlenowy</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia sec-predykcja"><span class="abbr-key">HPC</span> <span class="abbr-full">hipokamp (hippocampus)</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia sec-predykcja"><span class="abbr-key">EC</span> <span class="abbr-full">kora śródwęchowa (entorhinal cortex)</span></div>
+      <div class="glossary-entry" data-sections="sec-emocje sec-predykcja"><span class="abbr-key">vmPFC</span> <span class="abbr-full">brzuszno-przyśrodkowa kora przedczołowa</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn"><span class="abbr-key">mPFC</span> <span class="abbr-full">przyśrodkowa kora przedczołowa</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn"><span class="abbr-key">PCC</span> <span class="abbr-full">tylna kora zakrętu obręczy</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn sec-predykcja"><span class="abbr-key">TP</span> <span class="abbr-full">biegun skroniowy (temporal pole)</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn sec-predykcja"><span class="abbr-key">OFC</span> <span class="abbr-full">kora okołooczodołowa</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn sec-predykcja sec-pojecia"><span class="abbr-key">IFG</span> <span class="abbr-full">zakręt czołowy dolny (inferior frontal gyrus), obszar Broki</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn sec-predykcja"><span class="abbr-key">MTG</span> <span class="abbr-full">zakręt skroniowy środkowy</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn"><span class="abbr-key">A1</span> <span class="abbr-full">pierwszorzędowa kora słuchowa</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia"><span class="abbr-key">LTP</span> <span class="abbr-full">Long-Term Potentiation, wzmocnienie synaptyczne</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia"><span class="abbr-key">LTD</span> <span class="abbr-full">Long-Term Depression, osłabienie synaptyczne</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia"><span class="abbr-key">NMDA</span> <span class="abbr-full">receptor NMDA, bramka synaptyczna</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">VTA</span> <span class="abbr-full">pole brzuszne nakrywki (ventral tegmental area)</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">NAcc</span> <span class="abbr-full">jądro półleżące (nucleus accumbens)</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja sec-pojecia"><span class="abbr-key">SN</span> <span class="abbr-full">istota czarna (substantia nigra)</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">SNc</span> <span class="abbr-full">istota czarna, część zbita</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">LC</span> <span class="abbr-full">miejsce sinawe (locus coeruleus)</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">D1</span> <span class="abbr-full">receptor dopaminowy D1, szlak bezpośredni</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">D2</span> <span class="abbr-full">receptor dopaminowy D2, szlak pośredni</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">DAT</span> <span class="abbr-full">transporter dopaminy</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">NET</span> <span class="abbr-full">transporter noradrenaliny</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">SERT</span> <span class="abbr-full">transporter serotoniny</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">L-DOPA</span> <span class="abbr-full">lewodopa, prekursor dopaminy</span></div>
+      <div class="glossary-entry" data-sections="sec-predykcja"><span class="abbr-key">CLS</span> <span class="abbr-full">Complementary Learning Systems</span></div>
+      <div class="glossary-entry" data-sections="sec-dmn"><span class="abbr-key">UG</span> <span class="abbr-full">Universal Grammar, gramatyka uniwersalna</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia"><span class="abbr-key">ZPD</span> <span class="abbr-full">strefa najbliższego rozwoju (Vygotsky)</span></div>
+      <div class="glossary-entry" data-sections="sec-pojecia"><span class="abbr-key">MKO</span> <span class="abbr-full">More Knowledgeable Other</span></div>
       <div class="session-legend">
         <div class="glossary-label">Tematy sesji</div>
         <div class="session-row" style="color: var(--text-secondary)"><span class="s-key">s1</span> Modele świata</div>
