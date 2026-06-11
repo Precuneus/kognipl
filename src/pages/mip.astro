@@ -83,6 +83,14 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
     .video-grid-solo { max-width: 100%; }
   }
 
+  /* Video, side format (smaller, with description) */
+  .video-block { margin: 28px 0; }
+  .video-side { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; margin: 28px 0; }
+  .video-side .video-wrapper { margin: 0; }
+  .video-side .vs-text { font-family: var(--font-body); font-size: 13px; font-weight: 300; line-height: 1.7; color: var(--text-secondary); align-self: center; }
+  .video-side .vs-text .vs-title { display: block; font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+  @media (max-width: 560px) { .video-side { grid-template-columns: 1fr; gap: 12px; } }
+
   /* Term popover */
   .term { cursor: pointer; transition: color 0.2s, border-color 0.2s; }
   .term:hover { color: var(--warm-glow); border-color: rgba(232,168,76,0.4); }
@@ -143,7 +151,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
   /* Figure images */
   .fig-block { margin: 24px 0; }
-  .fig-block img { width: 100%; max-width: 600px; display: block; margin: 0 auto; border: 1px solid var(--border-subtle); }
+  .fig-block img { width: 100%; max-width: 420px; display: block; margin: 0 auto; border: 1px solid var(--border-subtle); }
   .fig-block.fig-small img { max-width: 280px; }
   .fig-block.fig-right { float: right; margin: 0 0 16px 24px; max-width: 240px; }
   .fig-block.fig-right img { max-width: 100%; }
@@ -158,22 +166,22 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
   /* PPS layer — reinterpretacja przez soczewkę Serino */
   p.pps, li.pps {
-    color: color-mix(in srgb, var(--text-secondary) 70%, #c8956c 30%);
+    color: color-mix(in srgb, var(--text-secondary) 70%, var(--warm-glow) 30%);
   }
   p.pps strong, li.pps strong {
-    color: color-mix(in srgb, var(--text-primary) 70%, #c8956c 30%);
+    color: color-mix(in srgb, var(--text-primary) 70%, var(--warm-glow) 30%);
   }
   h3.pps {
-    color: color-mix(in srgb, var(--text-primary) 75%, #c8956c 25%);
+    color: color-mix(in srgb, var(--text-primary) 75%, var(--warm-glow) 25%);
   }
   p.pps em {
-    color: color-mix(in srgb, var(--text-dim) 70%, #c8956c 30%);
+    color: color-mix(in srgb, var(--text-dim) 70%, var(--warm-glow) 30%);
   }
   span.pps {
-    color: color-mix(in srgb, var(--text-secondary) 70%, #c8956c 30%);
+    color: color-mix(in srgb, var(--text-secondary) 70%, var(--warm-glow) 30%);
   }
   span.pps strong {
-    color: color-mix(in srgb, var(--text-primary) 70%, #c8956c 30%);
+    color: color-mix(in srgb, var(--text-primary) 70%, var(--warm-glow) 30%);
   }
 </style>
 
@@ -203,44 +211,40 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
         <p style="font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px;">Biologiczne sieci neuronowe zbudowane są z... neuronów. A neurony to komórki, zawierające białka i lipidy w ciągłym ruchu. Wszystko tam buzuje i przekształca się w zorganizowany sposób. Animacja poniżej pozwala wyobrazić sobie jak życie funkcjonuje w tej skali. To, co widzisz na filmiku dzieje się w tej chwili w każdej z miliardów komórek w Twoim ciele.</p>
 
-        <div class="video-block" style="margin: 20px 0;">
-          <div class="video-label">Inner Life of a Cell · Harvard / XVIVO (2006)</div>
+        <div class="video-side video-block">
           <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/yKW4F0Nu-UY" title="Inner Life of a Cell" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
-          <p class="video-caption">Zsynchronizowany taniec maszynerii komórkowej.</p>
+          <div class="vs-text"><span class="vs-title">Inner Life of a Cell · Harvard / XVIVO (2006)</span> Zsynchronizowany taniec maszynerii komórkowej.</div>
         </div>
 
         <p style="font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px;"><strong>Hubel &amp; Wiesel:</strong> przeprowadzali eksperymenty na kotach badając kolumny dominacji ocznej w pierwszorzędowej korze wzrokowej. Zamknięcie jednego oka w okresie krytycznym trwale reorganizuje korę wzrokową. Oko pozostaje zdrowe, ale kora przestaje na nie odpowiadać.</p>
 
-        <div class="video-block" style="margin: 20px 0;">
-          <div class="video-label">Hubel &amp; Wiesel · odkrycie kolumn dominacji ocznej</div>
+        <div class="video-side video-block">
           <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/IOHayh06LJ4" title="Hubel and Wiesel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
-          <p class="video-caption">Brak informacji wzrokowej z jednego oka w okresie krytycznym sprawi, że kora wzrokowa stanie się niezdolna do wychwytywania informacji, której brakowało w okresie krytycznym.</p>
+          <div class="vs-text"><span class="vs-title">Hubel &amp; Wiesel · odkrycie kolumn dominacji ocznej</span> Brak informacji wzrokowej z jednego oka w okresie krytycznym sprawi, że kora wzrokowa stanie się niezdolna do wychwytywania informacji, której brakowało w okresie krytycznym.</div>
         </div>
 
         <p class="pps">Kolumny dominacji ocznej, które formują się pod wpływem wczesnych doświadczeń wzrokowych, przekazują informację do sieci obliczającej, co jest w zasięgu ręki, przez szlak grzbietowy. Ta kalibracja jest fundamentem <strong>przestrzeni peripersonalnej</strong>.</p>
 
         <p style="font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px;"><strong>Dzikie dziecko (feral child):</strong> brak bodźców językowych w okresie krytycznym. Niemożność nabycia gramatyki języka po jego zamknięciu. Słownictwo można nabyć w każdym wieku. Strukturę zdaniową: tylko w okresie krytycznym.</p>
 
-        <div class="video-block" style="margin: 20px 0;">
-          <div class="video-label">Genie Wiley · tajemnica dzikiego dziecka (TLC, 2003)</div>
+        <div class="video-side video-block">
           <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/xtgnjRY_Z7w" title="Genie Wiley TLC documentary" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
-          <p class="video-caption">Brak ekspozycji na gramatykę w okresie krytycznym nigdy nie został zrekompensowany.</p>
+          <div class="vs-text"><span class="vs-title">Genie Wiley · tajemnica dzikiego dziecka (TLC, 2003)</span> Brak ekspozycji na gramatykę w okresie krytycznym nigdy nie został zrekompensowany.</div>
         </div>
 
         <p style="font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px;"><strong>Pacjentka DF (Goodale &amp; Milner):</strong> uszkodzenie szlaku brzusznego. Nienaruszone działanie przy zaburzonej percepcji świadomej. DF nie może opisać orientacji szczeliny, ale wsuwa kopertę bezbłędnie. Dwa szlaki wzrokowe, dwie odrębne funkcje.</p>
 
-        <div class="video-block" style="margin: 20px 0;">
-          <div class="video-label">Melvyn Goodale · dwa układy wzrokowe: percepcja i działanie</div>
+        <div class="video-side video-block">
           <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/-_VvS9MnfN8?start=237" title="Melvyn Goodale two visual systems" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
-          <p class="video-caption">Przypadek pacjentki DF pokazuje różnicę między brzusznym a grzbietowym szlakiem przetwarzania wzrokowego.</p>
+          <div class="vs-text"><span class="vs-title">Melvyn Goodale · dwa układy wzrokowe: percepcja i działanie</span> Przypadek pacjentki DF pokazuje różnicę między brzusznym a grzbietowym szlakiem przetwarzania wzrokowego.</div>
         </div>
 
         <p class="pps">DF straciła szlak brzuszny. Zachowała grzbietowy. Szlak grzbietowy przekazuje informację do <strong>przestrzeni peripersonalnych</strong> w SPL i IPS. Jej percepcja jest zaburzona. Jej PPS działa. Dwa szlaki: jeden do rozpoznawania, jeden do działania.</p>
@@ -254,12 +258,11 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
         <p style="font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px;">Sieci decydują o tym, co widzisz i o tym jak reagujesz na ból, krzywdę i piękno. Ten sam gest uderzenia może mieć zupełnie inną biologię w zależności od tego, kto uderza i dlaczego.</p>
 
-        <div class="video-block" style="margin: 20px 0;">
-          <div class="video-label">Robert Sapolsky · The Biology of Our Best and Worst Selves (TED, 2017)</div>
+        <div class="video-side video-block">
           <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/ORthzIOEf30" title="Sapolsky TED Biology of Best and Worst" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
-          <p class="video-caption">Na dane zachowanie składa się mnogość przyczyn osadzonych w przeszłości.</p>
+          <div class="vs-text"><span class="vs-title">Robert Sapolsky · The Biology of Our Best and Worst Selves (TED, 2017)</span> Na dane zachowanie składa się mnogość przyczyn osadzonych w przeszłości.</div>
         </div>
 
       </div>
@@ -726,7 +729,6 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
         <p class="block-label">Lektura</p>
         <div class="reading">
           Adam, D. (2026). What does dopamine actually do? <em>Nature, 651</em>, 572&ndash;574.
-          <span class="reading-note">Wejściówka z tego artykułu na następnych zajęciach.</span>
         </div>
       </div>
     </div>
@@ -760,13 +762,12 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
       <p>Badania nad hipokampem sięgają eksperymentów ze szczurami swobodnie eksplorującymi labirynty (Tolman, 1948). Szczury zbudowały <strong>mapę poznawczą</strong>, która pozwoliła im tworzyć skróty, gdy pojawiła się nagroda. Mapy poznawcze łączą relacje między informacjami z receptorów dzięki <strong>komórkom miejsca</strong> w hipokampie (HPC) i <strong>komórkom siatki</strong> w korze śródwęchowej (Entorhinal Cortex, EC).</p>
       <p>Kontekst jest częścią śladu pamięciowego. Nurkowie, którzy uczyli się słów pod wodą, przypominali je lepiej pod wodą niż na lądzie (Godden i Baddeley, 1975). Twój hipokamp koduje treść razem z okolicznościami, w których ją napotkałeś.</p>
 
-      <div class="video-block" style="margin: 20px 0;">
-        <div class="video-label">Artem Kirsanov · Mapy poznawcze i przestrzenie abstrakcyjne</div>
-        <div class="video-wrapper">
+      <div class="video-side video-block">
+          <div class="video-wrapper">
           <iframe src="https://www.youtube.com/embed/iV-EMA5g288" title="Place cells: How your brain creates maps of abstract spaces" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
-        <p class="video-caption">Ten sam aparat, który mapuje pokój, mapuje też przestrzenie pojęć.</p>
-      </div>
+          <div class="vs-text"><span class="vs-title">Artem Kirsanov · Mapy poznawcze i przestrzenie abstrakcyjne</span> Ten sam aparat, który mapuje pokój, mapuje też przestrzenie pojęć.</div>
+        </div>
 
       <p>Komórki miejsca i komórki siatki budują mapy pokoju, ale hipokamp mapuje coś więcej. Quian Quiroga i współpracownicy (2005) mierzyli aktywność neuronów u pacjentów z epilepsją: pojedyncze neurony reagowały na konkretną osobę niezależnie od zdjęcia, kąta widzenia, a nawet imienia. Jeden neuron aktywował się na każde przedstawienie Jennifer Aniston: profil, twarz, napis. Reagował na <strong>pojęcie</strong>.</p>
       <p>Te <strong>komórki pojęciowe</strong> (concept cells) to neurony w MTL. Mackay i współpracownicy (2024) dodali <strong>komórki lokalizacyjne</strong> w korze przyhipokampalnej, które kodują, gdzie spotkałeś dane pojęcie. Komórki pojęciowe dostarczają „co", komórki lokalizacyjne „gdzie", a razem budują adres wspomnienia epizodycznego. Hipokamp robi to w jednym podejściu: <strong>one-shot learning</strong>, w którym jedno spotkanie tworzy nowe wiązanie pojęcie-kontekst.</p>
@@ -807,7 +808,6 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
         <p class="block-label">Lektura</p>
         <div class="reading">
           Bellmund, J. L. S., Gärdenfors, P., Moser, E. I., &amp; Doeller, C. F. (2018). Navigating cognition: Spatial codes for human thinking. <em>Science, 362</em>(6415), eaat6766.
-          <span class="reading-note">Wejściówka z tego artykułu.</span>
         </div>
       </div>
     </div>
@@ -838,13 +838,12 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
       <h3>Eksploracja i eksploatacja</h3>
       <p>Dopamina najmocniej reaguje na niepewność nagrody; sama nagroda porusza ją słabiej. To paliwo eksploracji: poczucie, że może tym razem się uda. Scrollowanie pokazuje ten mechanizm w czystej postaci. Feed jest nieskończonym ciągiem afordancji nowości. Większość treści jest neutralna albo lekko irytująca, a mimo to scrollujesz dalej. Algorytm dba o to, by <strong>credit assignment</strong> nigdy się nie rozwiązał: nie ma stabilnej reguły przewidującej, który scroll przyniesie coś dobrego. Cały czas eksplorujesz, a brak reguły zostawia Cię ze zmęczeniem i mglistym wspomnieniem kilku rolek.</p>
 
-      <div class="video-block" style="margin: 20px 0;">
-        <div class="video-label">Robert Sapolsky · Dopamina i niepewność</div>
-        <div class="video-wrapper">
+      <div class="video-side video-block">
+          <div class="video-wrapper">
           <iframe src="https://www.youtube.com/embed/axrywDP9Ii0" title="Robert Sapolsky - Dopamina i niepewność" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
-        <p class="video-caption">Dlaczego dopamina najmocniej reaguje na niepewność nagrody.</p>
-      </div>
+          <div class="vs-text"><span class="vs-title">Robert Sapolsky · Dopamina i niepewność</span> Dlaczego dopamina najmocniej reaguje na niepewność nagrody.</div>
+        </div>
 
       <p>Twoja architektura eksploracji wyewoluowała dla skończonych nisz ekologicznych. Sawanna w końcu staje się znajoma i można przejść do eksploatacji wyuczonych ścieżek. Feed pozostaje otwarty w nieskończoność, więc nigdy nie domyka się w model.</p>
 
