@@ -6,7 +6,18 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 <Base title="Mózg i poznanie - kogni.pl" activePage="kursy">
 
 <style is:global>
-  .course-page { max-width: 760px; margin: 0 auto; padding: 48px 24px 96px; }
+  .course-page { max-width: 760px; width: 100%; min-width: 0; margin: 0 auto; padding: 48px 24px 96px; grid-column: 2; }
+  .course-layout { display: grid; grid-template-columns: 1fr minmax(0, 760px) 1fr; gap: 0; max-width: 1320px; margin: 0 auto; padding: 0 16px; }
+  .nav-sidebar { grid-column: 1; position: relative; }
+  .nav-sidebar-inner { position: sticky; top: 100px; padding: 24px 12px 24px 28px; max-height: calc(100vh - 160px); overflow-y: auto; scrollbar-width: none; }
+  .nav-sidebar-inner::-webkit-scrollbar { display: none; }
+  .nav-sidebar .nav-label { font-family: var(--font-body); font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px; padding-left: 12px; }
+  .nav-sidebar a { display: block; font-family: var(--font-body); font-size: 13px; font-weight: 400; color: var(--text-dim); text-decoration: none; padding: 6px 12px; border-left: 2px solid transparent; transition: color 0.25s, border-color 0.25s; line-height: 1.4; }
+  .nav-sidebar a:hover { color: var(--text-secondary); }
+  .nav-sidebar a.active { color: var(--text-primary); border-left-color: var(--warm-glow); font-weight: 500; }
+  .nav-sidebar a.nav-sub { font-size: 12px; padding-left: 22px; color: color-mix(in srgb, var(--text-dim) 80%, transparent); }
+  .nav-sidebar a.nav-sub.active { color: var(--text-secondary); border-left-color: color-mix(in srgb, var(--warm-glow) 50%, transparent); font-weight: 400; }
+  @media (max-width: 1200px) { .course-layout { grid-template-columns: minmax(0, 1fr); } .nav-sidebar { display: none; } .course-page { grid-column: 1; } }
 
   .course-page h1 { font-family: var(--font-display); font-size: 36px; font-weight: 400; color: var(--text-primary); letter-spacing: 2px; margin-bottom: 8px; text-align: center; }
   .course-page .meta { font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-dim); text-align: center; letter-spacing: 1px; margin-bottom: 6px; }
@@ -186,6 +197,41 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 </style>
 
 <PasswordGate title="Mózg i poznanie" subtitle="Semestr letni 2025/2026" passwordHash={HASH} sessionKey="mip">
+  <div class="course-layout">
+  <nav class="nav-sidebar" aria-label="Nawigacja po sekcjach">
+    <div class="nav-sidebar-inner">
+      <div class="nav-label">Sesje</div>
+      <a href="#sesja-1" data-nav="sesja-1">1 · Architektura i doświadczenie</a>
+      <a href="#sesja-2" data-nav="sesja-2">2 · Systemy sensoryczne i sieci mózgowe</a>
+      <a href="#mozg-i-doswiadczenie" data-nav="mozg-i-doswiadczenie" class="nav-sub">Mózg i doświadczenie</a>
+      <a href="#model" data-nav="model" class="nav-sub">Model</a>
+      <a href="#predykcja" data-nav="predykcja" class="nav-sub">Predykcja</a>
+      <a href="#informacja" data-nav="informacja" class="nav-sub">Informacja</a>
+      <a href="#afordancje" data-nav="afordancje" class="nav-sub">Afordancje</a>
+      <a href="#sesja-3" data-nav="sesja-3">3 · Ciało, narzędzia i predykcja</a>
+      <a href="#poznanie-4e" data-nav="poznanie-4e" class="nav-sub">Poznanie 4E</a>
+      <a href="#gibson-i-percepcja-bezposrednia" data-nav="gibson-i-percepcja-bezposrednia" class="nav-sub">Gibson i percepcja bezpośrednia</a>
+      <a href="#sesja-4" data-nav="sesja-4">4 · Dopamina, nawyki i stopnie swobody</a>
+      <a href="#sesja-5" data-nav="sesja-5">5 · Pamięć i nawigacja</a>
+      <a href="#przyczyny-zrodla-i-przyczyny-wyjasnien" data-nav="przyczyny-zrodla-i-przyczyny-wyjasnien" class="nav-sub">Przyczyny-źródła i wyjaśnienia</a>
+      <a href="#hipokamp-i-mapy-poznawcze" data-nav="hipokamp-i-mapy-poznawcze" class="nav-sub">Hipokamp i mapy poznawcze</a>
+      <a href="#pamiec-i-symulacja" data-nav="pamiec-i-symulacja" class="nav-sub">Pamięć i symulacja</a>
+      <a href="#sen-i-konsolidacja" data-nav="sen-i-konsolidacja" class="nav-sub">Sen i konsolidacja</a>
+      <a href="#pojecia" data-nav="pojecia" class="nav-sub">Pojęcia</a>
+      <a href="#myslenie-jako-nawigacja" data-nav="myslenie-jako-nawigacja" class="nav-sub">Myślenie jako nawigacja</a>
+      <a href="#sesja-6" data-nav="sesja-6">6 · Wartość i decyzja</a>
+      <a href="#chcenie-i-lubienie" data-nav="chcenie-i-lubienie" class="nav-sub">Chcenie i lubienie</a>
+      <a href="#eksploracja-i-eksploatacja" data-nav="eksploracja-i-eksploatacja" class="nav-sub">Eksploracja i eksploatacja</a>
+      <a href="#cele-i-nawyki" data-nav="cele-i-nawyki" class="nav-sub">Cele i nawyki</a>
+      <a href="#jak-mozg-wybiera-akcje" data-nav="jak-mozg-wybiera-akcje" class="nav-sub">Jak mózg wybiera akcję</a>
+      <a href="#podsumowanie" data-nav="podsumowanie">Podsumowanie</a>
+      <a href="#jedna-maszyna" data-nav="jedna-maszyna" class="nav-sub">Jedna maszyna</a>
+      <a href="#trzy-strumienie-wzrokowe" data-nav="trzy-strumienie-wzrokowe" class="nav-sub">Trzy strumienie wzrokowe</a>
+      <a href="#w-gore-plynie-trening" data-nav="w-gore-plynie-trening" class="nav-sub">W górę płynie trening</a>
+      <a href="#w-dol-plynie-ruch" data-nav="w-dol-plynie-ruch" class="nav-sub">W dół płynie ruch</a>
+      <a href="#gdzie-pojecia-sie-spotykaja" data-nav="gdzie-pojecia-sie-spotykaja" class="nav-sub">Gdzie pojęcia się spotykają</a>
+    </div>
+  </nav>
   <div class="course-page">
     <a href="/kursy" class="back-link">&larr; Kursy</a>
     <div style="text-align: center; font-size: 18px; color: var(--warm-glow); opacity: 0.6; letter-spacing: 10px; margin-bottom: 28px;">&#10038; &#10038; &#10038;</div>
@@ -196,7 +242,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
     <p class="section-label">Sesje</p>
 
     <!-- SESJA 1 -->
-    <div class="session">
+    <div class="session" id="sesja-1">
       <div class="session-header">
         <span class="session-numeral">1</span>
         <span class="session-title">Architektura i doświadczenie</span>
@@ -275,7 +321,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
       </div>
     </div>
 
-    <div class="session">
+    <div class="session" id="sesja-2">
       <div class="session-header">
         <span class="session-numeral">2</span>
         <span class="session-title">Systemy sensoryczne i sieci mózgowe</span>
@@ -285,13 +331,13 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
       <h2>Podstawowe pojęcia</h2>
 
-    <h3>Mózg i doświadczenie</h3>
+    <h3 id="mozg-i-doswiadczenie">Mózg i doświadczenie</h3>
     <p>Czytasz płynnie te słowa dzięki dekadom treningu swoich sieci neuronowych. Gdyby ktoś skanował Ci mózg, widziałby wzorce aktywności elektrycznej, przepływ krwi, sygnały BOLD w fMRI. Z boku widać Twoje oczy poruszające się wzdłuż tekstu, wyraz twarzy, może skinienie głową. Od środka... po prostu czytasz. Doświadczasz znaczenia tekstu.</p>
     <p>Dwie perspektywy: od wewnątrz i z zewnątrz. Od tego zaczynamy ten kurs.</p>
 
     <hr class="section-divider" />
 
-    <h3>Model</h3>
+    <h3 id="model">Model</h3>
     <p>Doświadczana „rzeczywistość" to model powstały w wyniku wielu lat treningu Twoich biologicznych sieci neuronowych. Doświadczasz modelu generowanego przez aktywność swoich sieci mózgowych. Treść doświadczenia to model. Uszkodzenie zakrętu wrzecionowatego wykasuje twarze z treści Twojego doświadczenia; uszkodzenie V5/MT sprawi, że odświeżanie rzeczywistości zwolni do kilku klatek na sekundę; uszkodzenie prawej kory ciemieniowej tymczasowo wymaże lewą stronę doświadczenia.</p>
     <p>Model powstał podczas lat treningu. Wiesz, czym skutkuje zaburzenie treningu podczas okresów krytycznych.</p>
     <div class="fig-block fig-right">
@@ -306,7 +352,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
     <hr class="section-divider" />
 
-    <h3>Predykcja</h3>
+    <h3 id="predykcja">Predykcja</h3>
     <p>Sieci neuronowe nie czekają na informacje ze świata, żeby potem zareagować. Sieci cały czas aktywnie przewidują przyszłe informacje. Są jak surferzy pokonujący fale: muszą przewidywać, co będzie za chwilę.</p>
     <p>Prowadzisz samochód na autostradzie. Zmieniasz pasy, wyprzedzasz, jedziesz płynnie. Mimo prędkości wszystko jest... przewidywalne. Sterujesz swoim samochodem, wiesz, jak zareaguje na naciśnięcie pedałów, skręt kierownicy. Twoje sieci mózgowe są już wytrenowane. Nie to co na początku! Wtedy przecież nawet płynne ruszenie było wyzwaniem.</p>
     <p>To jest predykcja: nieustanne generowanie hipotez o tym, co zaraz nastąpi. Percepcja to weryfikowanie hipotez o nim.</p>
@@ -317,7 +363,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
     <hr class="section-divider" />
 
-    <h3>Informacja</h3>
+    <h3 id="informacja">Informacja</h3>
     <p>Skąd sieci mózgowe czerpią materiał do tych hipotez? Z trzech źródeł.</p>
     <ul>
       <li><strong>Eksterocepcja:</strong> wzrok, słuch, węch, smak, dotyk: sygnały o tym, co dzieje się na granicy ciała i świata.</li>
@@ -455,7 +501,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
     <hr class="section-divider" />
 
-    <h3>Afordancje</h3>
+    <h3 id="afordancje">Afordancje</h3>
     <p>Afordancje nie są w przedmiocie. Nie są w Tobie. Są <em>między wami</em>.</p>
     <p>Ten sam kamień: turlanie dla dziecka, siedzenie dla zmęczonego wędrowca, budulec dla architekta. Kamień się nie zmienił. Zmieniła się relacja, kontekst, potrzeba.</p>
     <ul>
@@ -559,7 +605,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
     </div>
 
     <!-- SESJA 3 -->
-    <div class="session">
+    <div class="session" id="sesja-3">
       <div class="session-header">
         <span class="session-numeral">3</span>
         <span class="session-title">Ciało, narzędzia i predykcja</span>
@@ -634,16 +680,16 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
       <hr class="section-divider" />
 
-      <h3>Poznanie 4E</h3>
+      <h3 id="poznanie-4e">Poznanie 4E</h3>
       <p>Ucieleśnione poznanie ma cztery wymiary, cztery „E". <strong>Ucieleśnione</strong> (embodied): modele opierają się na sygnałach proprioceptywnych i eksteroceptywnych płynących przez SMN, VIS i A1. <strong>Rozszerzone</strong> (extended): narzędzie wchodzi w schemat ciała i steruje przepływem informacji, jak grabki makaka. <strong>Osadzone</strong> (embedded): sygnał z receptorów nabiera sensu w kontekście modeli daleko od receptorów. <strong>W działaniu</strong> (enacted): podążanie za afordancją zmienia świat i otwiera kolejne afordancje, domykając pętlę.</p>
 
-      <h3>Gibson i percepcja bezpośrednia</h3>
+      <h3 id="gibson-i-percepcja-bezposrednia">Gibson i percepcja bezpośrednia</h3>
       <p>Afordancja jest pojęciem Jamesa Gibsona, twórcy <strong>psychologii ekologicznej</strong>. Gibson twierdził, że otoczenie oferuje możliwości działania wprost: organizm odbiera afordancje bezpośrednio ze struktury świata, bez pośredniczącego modelu. To stanowisko przeciwne reprezentacjonizmowi. Spór rozstrzyga się przez odległość od receptorów: percepcja blisko receptorów jest gibsonowska i bezpośrednia, modelowanie daleko od nich jest fristonowskie i wnioskujące. Sesja 5 podejmuje ten spór jako zawias całego kursu.</p>
 
     </div>
 
     <!-- SESJA 4 -->
-    <div class="session">
+    <div class="session" id="sesja-4">
       <div class="session-header">
         <span class="session-numeral">4</span>
         <span class="session-title">Dopamina, nawyki i stopnie swobody</span>
@@ -734,7 +780,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
     </div>
 
     <!-- SESJA 5 -->
-    <div class="session">
+    <div class="session" id="sesja-5">
       <div class="session-header">
         <span class="session-numeral">5</span>
         <span class="session-title">Pamięć i nawigacja</span>
@@ -750,14 +796,14 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
       <hr class="section-divider" />
 
-      <h3>Przyczyny-źródła i przyczyny-wyjaśnienia</h3>
+      <h3 id="przyczyny-zrodla-i-przyczyny-wyjasnien">Przyczyny-źródła i przyczyny-wyjaśnienia</h3>
       <p>Gibson i Friston to dwie strony jednego z najstarszych sporów o poznanie. Czy percepcja jest bezpośrednim odbiorem świata, czy wnioskowaniem o nim? W naszym kursie obie strony mają rację: sieci blisko receptorów są gibsonowskie, sieci daleko od nich fristonowskie.</p>
       <p><strong>Przyczyna-źródło</strong> to bodziec stojący za pobudzeniem receptorów, gibsonowska informacja z zewnątrz. <strong>Przyczyna-wyjaśnienie</strong> to uzasadnienie stojące za pobudzeniem receptorów, fristonowskie wywnioskowanie dlaczego.</p>
       <p>Grecki żeglarz przypisuje wyjaśnienie swojej bezpośredniej eksterocepcji. Posejdon się gniewa i dlatego widzę wzburzone morze. Co widzę, to przyczyna-źródło. Dlaczego to widzę, to przyczyna-wyjaśnienie. Widzę kosz pełen grzybów. Dlaczego? Pewnie ktoś z domowników nazbierał.</p>
 
       <hr class="section-divider" />
 
-      <h3>Hipokamp i mapy poznawcze</h3>
+      <h3 id="hipokamp-i-mapy-poznawcze">Hipokamp i mapy poznawcze</h3>
       <p>Hipokamp bierze udział w nawigacji, kodowaniu wspomnień, pamięci epizodycznej i planowaniu. Te wszystkie funkcje łączy <strong>konstrukcja sceny</strong> (scene construction; Maguire i Mullally, 2013). Hipokamp tworzy scenę relacji między dowolnymi obiektami: jak ułożone są przedmioty na stole albo jaka jest struktura firmy, w której pracujesz.</p>
       <p>Badania nad hipokampem sięgają eksperymentów ze szczurami swobodnie eksplorującymi labirynty (Tolman, 1948). Szczury zbudowały <strong>mapę poznawczą</strong>, która pozwoliła im tworzyć skróty, gdy pojawiła się nagroda. Mapy poznawcze łączą relacje między informacjami z receptorów dzięki <strong>komórkom miejsca</strong> w hipokampie (HPC) i <strong>komórkom siatki</strong> w korze śródwęchowej (Entorhinal Cortex, EC).</p>
       <p>Kontekst jest częścią śladu pamięciowego. Nurkowie, którzy uczyli się słów pod wodą, przypominali je lepiej pod wodą niż na lądzie (Godden i Baddeley, 1975). Twój hipokamp koduje treść razem z okolicznościami, w których ją napotkałeś.</p>
@@ -774,13 +820,13 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
       <hr class="section-divider" />
 
-      <h3>Pamięć i symulacja</h3>
+      <h3 id="pamiec-i-symulacja">Pamięć i symulacja</h3>
       <p>Zamknij oczy i przypomnij sobie wczorajszy obiad. A teraz wyobraź sobie jutrzejszy. Addis, Wong i Schacter (2007) pokazali w fMRI, że mózg aktywuje tę samą sieć w obu przypadkach: HPC, EC, mPFC i PCC, elementy DMN. Przypominanie przeszłości i budowanie przyszłości to ta sama sieć, raz zwrócona wstecz, raz w przód. Dlatego każde przypomnienie jest rekonstrukcją, a wspomnienia z czasem ulegają modyfikacji.</p>
       <p class="pps">Twoja nisza poznawcza rozciąga się od wspomnień dzieciństwa po plany na przyszły tydzień. To czasowy zasięg tej samej <strong>przestrzeni peripersonalnej</strong>, która w sesji 3 sięgała końca grabek makaka: hipokamp rozszerza przewidywanie poza to, co teraz w zasięgu ciała, na to, co było i co będzie. Pacjent H.M. po obustronnym usunięciu hipokampa stracił tę mapę czasową. Jego nisza zwęziła się do teraźniejszości: nie tworzył nowych wspomnień i poproszony o opisanie jutra nie potrafił skonstruować żadnej sceny.</p>
 
       <hr class="section-divider" />
 
-      <h3>Sen i konsolidacja</h3>
+      <h3 id="sen-i-konsolidacja">Sen i konsolidacja</h3>
       <p>Konsolidacja zachodzi głównie podczas snu, gdy mózg przechodzi w tryb offline i reorganizuje modele bez dopływu danych z receptorów. Najwięcej dla pamięci dzieje się w fazie snu wolnofalowego (SWS, N3). Hipokamp odtwarza wtedy sekwencje z minionego dnia (HPC replay) w kompresji czasowej, nawet dwadzieścia razy szybciej niż na jawie. Nośnikiem są <strong>sharp-wave ripples</strong> (SWR): krótkie eksplozje zsynchronizowanej aktywności hipokampa, w których ślad pamięciowy zostaje przekazany korze nowej.</p>
       <p>Na poziomie komórkowym wspomnienia zapisują się jako <strong>engramy</strong>: populacje neuronów kodujące dany ślad. U myszy engramy tworzą się jednocześnie w hipokampie i w korze nowej (Kitamura et al., 2017). Wyłączenie engramu hipokampalnego tuż po uczeniu usuwa strach przed klatką; dwa tygodnie później trzyma go już engram korowy. Wspomnienie najpierw wymaga hipokampa, a potem konsoliduje się do kory nowej. Komórki w ciele migdałowatym (BLA) utrzymują walencję emocjonalną przez cały proces, dlatego z czasem fakty blakną, a ślad emocjonalny zostaje.</p>
 
@@ -793,13 +839,13 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
       <hr class="section-divider" />
 
-      <h3>Pojęcia</h3>
+      <h3 id="pojecia">Pojęcia</h3>
       <p>Peter Gärdenfors proponuje, że pojęcia to regiony w wielowymiarowej <strong>przestrzeni poznawczej</strong>. Pomyśl o kolorach. Każdy ma odcień, nasycenie i jasność, a te trzy wymiary tworzą przestrzeń. „Czerwony" jest regionem w tej przestrzeni, a w jego centrum siedzi <strong>prototyp</strong>: najlepszy przykład kategorii (Rosch).</p>
       <p>Każdy nowy grzyb to nowy egzemplarz. Im więcej egzemplarzy doświadczysz bottom-up, tym bogatsze kategorie i tym subtelniejsze granice. Piaget opisał to jako asymilację i akomodację. Asymilacja: nowy punkt wpada do istniejącego regionu pojęciowego. Akomodacja: punkt wypada poza region, więc granice trzeba przerysować albo utworzyć nowy region. Dziecko widzi goryczaka żółciowego podobnego do borowika i asymiluje go do „prawdziwków", dopóki gorzki smak nie zdradzi pomyłki i nie powstanie nowa kategoria.</p>
 
       <hr class="section-divider" />
 
-      <h3>Myślenie jako nawigacja</h3>
+      <h3 id="myslenie-jako-nawigacja">Myślenie jako nawigacja</h3>
       <p>Bellmund i współpracownicy (2018) w pracy <em>Navigating cognition</em> ujęli to wprost: <strong>myślenie jest ruchem przez przestrzenie poznawcze</strong>. Hipokamp wyewoluował do nawigacji po niszach ekologicznych i zaadaptował się do nawigacji po niszach poznawczych. Jako jeden z hubów DMN pozwala myśleć o przeszłości i przyszłości z uwzględnieniem siebie (mPFC) oraz innych (TPJ, biegun skroniowy).</p>
       <p>Pojęcia żyją na <strong>rozmaitościach</strong> (manifolds): niskowymiarowych powierzchniach zanurzonych w wielowymiarowej przestrzeni cech. Konkretne grzyby, które spotkałeś, leżą na takiej powierzchni. Nawigujesz po wyuczonej rozmaitości zamiast przeszukiwać całą przestrzeń.</p>
       <p class="pps">Organizmy minimalizują zaskoczenie (<strong>energię swobodną</strong>) przez nieustanną aktualizację modeli. Asymilacja to pozostanie na danej rozmaitości, akomodacja to wytworzenie nowej. To ten sam ruch, który w przestrzeni peripersonalnej prowadził ciało za afordancją: tutaj prowadzi myśl przez przestrzeń pojęć. Piaget opisał nawigację po przestrzeniach pojęciowych dekady wcześniej, zanim ktokolwiek wiedział, że hipokamp je mapuje.</p>
@@ -813,7 +859,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
     </div>
 
     <!-- SESJA 6 -->
-    <div class="session">
+    <div class="session" id="sesja-6">
       <div class="session-header">
         <span class="session-numeral">6</span>
         <span class="session-title">Wartość i decyzja</span>
@@ -828,14 +874,14 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
       <hr class="section-divider" />
 
-      <h3>Chcenie i lubienie</h3>
+      <h3 id="chcenie-i-lubienie">Chcenie i lubienie</h3>
       <p>Dopamina bywa mylona z nagrodą. Dokładniejsze badania wskazują, że za samą nagrodę odpowiada raczej system opioidowy: nagroda (<strong>lubienie</strong>) jest odpowiedzią hedoniczną, gdy doświadczenie sprawia przyjemność. Dopamina koduje <strong>chcenie</strong>, czyli pociąg do afordancji.</p>
       <p>Często chcesz rzeczy przyjemnych, więc oba systemy są ze sobą sprzężone, ale można je rozdzielić. Genetycznie zmodyfikowane myszy z wyłączoną dopaminą stały się apatyczne i nie wykonywały działań: nawet głodne nie zrobiły kilku kroków w stronę jedzenia. Gdy jednak dostały jedzenie wprost do pyszczków, jadły, a ich mimika wskazywała na przyjemność (Cannon i Palmiter, 2003). Chcenie zniknęło, lubienie zostało.</p>
       <p>W 1954 roku Olds i Milner odkryli, że szczury naciskają dźwignię tysiące razy na godzinę, byle stymulować szlak dopaminergiczny z VTA do jądra półleżącego (NAcc). To w NAcc dopamina wartościuje wynik. Chcenie potrafi oderwać się od jakiejkolwiek przyjemności i napędzać samo siebie.</p>
 
       <hr class="section-divider" />
 
-      <h3>Eksploracja i eksploatacja</h3>
+      <h3 id="eksploracja-i-eksploatacja">Eksploracja i eksploatacja</h3>
       <p>Dopamina najmocniej reaguje na niepewność nagrody; sama nagroda porusza ją słabiej. To paliwo eksploracji: poczucie, że może tym razem się uda. Scrollowanie pokazuje ten mechanizm w czystej postaci. Feed jest nieskończonym ciągiem afordancji nowości. Większość treści jest neutralna albo lekko irytująca, a mimo to scrollujesz dalej. Algorytm dba o to, by <strong>credit assignment</strong> nigdy się nie rozwiązał: nie ma stabilnej reguły przewidującej, który scroll przyniesie coś dobrego. Cały czas eksplorujesz, a brak reguły zostawia Cię ze zmęczeniem i mglistym wspomnieniem kilku rolek.</p>
 
       <div class="video-side video-block">
@@ -849,13 +895,13 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
       <hr class="section-divider" />
 
-      <h3>Cele i nawyki</h3>
+      <h3 id="cele-i-nawyki">Cele i nawyki</h3>
       <p>Decyzja korzysta z dwóch systemów (Dolan i Dayan, 2013). System <strong>celowy</strong> (model-based) używa modelu świata: symuluje skutki możliwych działań i wybiera to, które prowadzi do cenionego wyniku. Jest elastyczny i kosztowny, a opiera się na korze przedczołowej (OFC, vmPFC) i przyśrodkowym prążkowiu. System <strong>nawykowy</strong> (model-free) sięga po wartości zapamiętane przez błąd predykcyjny: jest szybki, automatyczny i niewrażliwy na to, że wynik stracił już wartość. Mieszka w prążkowiu grzbietowo-bocznym, tym samym, które w sesji 4 konsolidowało nawyki.</p>
       <p>Im więcej powtórzeń, tym bardziej kontrola przesuwa się z systemu celowego do nawykowego. Cel pyta „co teraz przyniesie wartość", nawyk odpowiada „rób to, co zawsze działało". <strong>OFC</strong> i biegun skroniowy nawigują tu przez przestrzeń wartości: to, co warto powiedzieć, zrobić, pomyśleć.</p>
 
       <hr class="section-divider" />
 
-      <h3>Jak mózg wybiera akcję</h3>
+      <h3 id="jak-mozg-wybiera-akcje">Jak mózg wybiera akcję</h3>
       <p>Szlak nigrostriatalny rozdziela się w jądrach podstawy na dwa szlaki sterujące działaniem. <strong>Szlak bezpośredni</strong> łączy szybko uwalnianą dopaminę (phasic) z pobudzającymi receptorami D1: ułatwia wybraną akcję i mapuje możliwe afordancje. <strong>Szlak pośredni</strong> łączy wolno uwalnianą dopaminę (tonic) z hamującymi receptorami D2: tłumi konkurencyjne akcje i utrzymuje trajektorię na jednej afordancji.</p>
       <p>Robisz poranną sekwencję afordancji: wstań, zrób kawę, idź do łazienki, ubierz się. D1 ułatwia każdy krok, D2 tłumi rozpraszacze. Wybór akcji jest równowagą między otwieraniem możliwości a zawężaniem ich do jednej.</p>
 
@@ -878,7 +924,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
     </div>
 
     <!-- PODSUMOWANIE -->
-    <div class="session">
+    <div class="session" id="podsumowanie">
       <div class="session-header">
         <span class="session-numeral">&#10038;</span>
         <span class="session-title">Podsumowanie</span>
@@ -886,27 +932,27 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
       <hr class="session-rule">
       <p class="zasada">Cały kurs opisuje jedną maszynę predykcyjną. Mózg modeluje świat, a modele układają się według odległości od receptorów. W górę strumieniami płynie błąd predykcyjny i trenuje sieci. W dół kaskadą płynie predykcja i staje się ruchem.</p>
 
-      <h3>Jedna maszyna</h3>
+      <h3 id="jedna-maszyna">Jedna maszyna</h3>
       <p>Doświadczasz modeli świata, a te modele są aktywnością Twoich sieci mózgowych. To teza tożsamości: aktywność sieci jest doświadczeniem. Sieci układają się według odległości od receptorów. Blisko zmysłów sieć wzrokowa (VIS) i somatomotoryczna (SMN) modelują to, co widzisz i co czujesz w ciele. Dalej grzbietowa sieć uwagi (DAN) trzyma schemat ciała i przestrzeń peripersonalną: to, co jest w zasięgu ręki. Najdalej sieć domyślna (DMN) modeluje Ciebie: pamięć, plany, pojęcia i umysły innych.</p>
 
       <hr class="section-divider" />
 
-      <h3>Trzy strumienie wzrokowe</h3>
+      <h3 id="trzy-strumienie-wzrokowe">Trzy strumienie wzrokowe</h3>
       <p>Sieć wzrokowa rozsyła informację trzema strumieniami i każdy kończy bieg gdzie indziej. Strumień grzbietowy biegnie do DAN: rozstrzyga, gdzie i jak działać, i to w nim schemat ciała rozszerza się o narzędzia (Maravita i Iriki). Strumień brzuszny biegnie przez zakręt wrzecionowaty, korę skroniową, przyhipokampalną i śródwęchową do hipokampa: rozpoznaje, co widzisz, i karmi pamięć oraz mapy poznawcze. Strumień boczny biegnie do pSTS: czyta umysły innych. Dwa z trzech strumieni kończą bieg w podsieciach DMN, w hipokampie i w pSTS. Trzecia podsieć, mPFC z PCC, jest tym „Ty", do którego pozostałe się odnoszą.</p>
 
       <hr class="section-divider" />
 
-      <h3>W górę płynie trening</h3>
+      <h3 id="w-gore-plynie-trening">W górę płynie trening</h3>
       <p>Skąd sieci wiedzą, co przewidywać? Uczą się. W górę strumieniami wędruje błąd predykcyjny, różnica między tym, czego sieć się spodziewała, a tym, co nadeszło. Okresy krytyczne ustalają, jakie predykcje są w ogóle możliwe (Sesja 1). Błąd predykcyjny stroi modele (Sesja 2). Dopamina rozstrzyga, które skojarzenia zostaną skonsolidowane (Sesja 4). Każde doświadczenie dostraja sieci tak, żeby następnym razem zaskoczenie było mniejsze.</p>
 
       <hr class="section-divider" />
 
-      <h3>W dół płynie ruch</h3>
+      <h3 id="w-dol-plynie-ruch">W dół płynie ruch</h3>
       <p>Wytrenowana sieć działa też w drugą stronę. DMN wyobraża sobie przyszłość i waży ją przez wartość: tę pracę wykonuje OFC w jej obrębie. Predykcja schodzi kaskadą: DMN, DAN, CEN, SMN. Na samym dole staje się predykcją proprioceptywną, przewidywaniem stanu ciała: „spodziewam się takiego ułożenia". Ciało rusza się, żeby to przewidywanie urzeczywistnić, a sam ruch domyka różnicę między przewidywaniem a aktualną propriocepcją (Adams i Friston, „predictions not commands"). Tak myśl staje się obserwowalnym ruchem.</p>
 
       <hr class="section-divider" />
 
-      <h3>Gdzie pojęcia się spotykają</h3>
+      <h3 id="gdzie-pojecia-sie-spotykaja">Gdzie pojęcia się spotykają</h3>
       <p class="pps">W tej pętli pojęcia z całego kursu trafiają na swoje miejsce. Afordancje to punkty zaczepienia, po które pętla sięga w przestrzeni peripersonalnej. Nawigacja to ten sam ruch prowadzony dalej od receptorów: hipokamp, który mapuje pokój, mapuje też przestrzeń pojęć (Bellmund). Pamięć jest predykcją zwróconą wstecz, a plan predykcją zwróconą w przód, obie w hipokampie i DMN. Wartość przechyla, którą predykcję mózg spróbuje urzeczywistnić. Trzy nisze nazywają zasięg tej maszyny: nisza ekologiczna to fizyczny zasięg przestrzeni peripersonalnej, nisza poznawcza to czasowy i pojęciowy zasięg DMN, a nisza neuronalna to sama architektura sieci, która wyznacza, jakie predykcje są możliwe.</p>
 
       <p class="pps">Aktywność tych sieci jest Twoim doświadczeniem. Najdalszy model, jaki buduje ta maszyna, to „Ty", które nawiguje po przestrzeniach w większości dla siebie niewidocznych i wciąż przewiduje, dokąd zmierza. Kurs zaczął się od jednego słowa: model. Doświadczasz modeli, a one rosną z błędów płynących w górę i rozładowują się w ruchu płynącym w dół.</p>
@@ -914,6 +960,7 @@ const HASH = "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4";
 
     <div class="ornament-divider"><span>&#9998;</span></div>
 
+  </div>
   </div>
 </PasswordGate>
 
@@ -1024,3 +1071,26 @@ document.addEventListener('click', () => {
 </script>
 
 </Base>
+
+<script>
+  (function () {
+    const navLinks = document.querySelectorAll('.nav-sidebar a[data-nav]');
+    if (!navLinks.length) return;
+    const navEls = [...navLinks].map(l => document.getElementById(l.dataset.nav)).filter(Boolean);
+    let current = '';
+    function update() {
+      const y = window.scrollY + 120;
+      let active = '';
+      for (const el of navEls) { if (el.offsetTop <= y) active = el.id; }
+      if (active !== current) {
+        current = active;
+        navLinks.forEach(l => l.classList.toggle('active', l.dataset.nav === active));
+      }
+    }
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(() => { update(); ticking = false; }); ticking = true; }
+    }, { passive: true });
+    update();
+  })();
+</script>
