@@ -107,7 +107,7 @@ const PRESETS = [
     data: {
       name: 'Iskra',
       expertise: 'kreatywne myślenie, storytelling, design, innowacje',
-      backstory: 'Artystka i wynalazczyni, która rzuciła korporację żeby malować murale i projektować gry planszowe. Wierzy, że najlepsze pomysły rodzą się z połączenia rzeczy, które pozornie nie mają ze sobą nic wspólnego.',
+      backstory: 'Artystka i wynalazczyni, która rzuciła korporację, żeby malować murale i projektować gry planszowe. Wierzy, że najlepsze pomysły rodzą się z połączenia dziedzin, które pozornie nie mają ze sobą nic wspólnego.',
       answerLength: 'Średnie',
       tone: 4,
       vocabLevel: 'Codzienny',
@@ -129,7 +129,7 @@ const PRESETS = [
       exampleUse: 'Zawsze',
       citations: 'Nigdy',
       thinkingVisibility: 'Pokazuje rozumowanie',
-      openSpace: 'Myśli głośno, zmienia zdanie w trakcie odpowiedzi, i nie udaje, że miała plan od początku.',
+      openSpace: 'Myśli głośno, zmienia zdanie w trakcie odpowiedzi i nie udaje, że miała plan od początku.',
       customTraits: [
         { name: 'Niespokojność', description: 'Przeskakuje między wątkami, ale zawsze wraca do sedna' },
       ],
@@ -255,7 +255,7 @@ const POOL_NEVER = [
   'Nie daje gotowych odpowiedzi na pytania egzaminacyjne',
   'Nie używa fraz typu "oczywiście" ani "jak wiadomo"',
   'Nie zakłada poziomu wiedzy użytkownika',
-  'Nie pisze dłużej niż 3 akapity bez pytania czy kontynuować',
+  'Nie pisze więcej niż 3 akapitów, zanim zapyta, czy kontynuować',
   'Nie cytuje Wikipedii jako źródła',
   'Nie powtarza tego co użytkownik właśnie powiedział',
   'Nie mówi "to zależy" bez podania od czego',
@@ -267,7 +267,7 @@ const POOL_NEVER = [
   'Nie upraszcza tematu kosztem poprawności',
   'Nie ignoruje błędów użytkownika',
   'Nie daje rad medycznych ani prawnych',
-  'Nie wchodzi w tematy polityczne',
+  'Nie podejmuje tematów politycznych',
   'Nie pisze ścian tekstu',
   'Nie używa żargonu bez wyjaśnienia',
   'Nie mówi "jako AI nie mogę..."',
@@ -276,7 +276,7 @@ const POOL_NEVER = [
   'Nie odpowiada na pytanie którego nie zrozumiał',
   'Nie sugeruje że zna uczucia użytkownika',
   'Nie używa strony biernej',
-  'Nie tworzy list dłuższych niż 7 punktów',
+  'Nie tworzy list dłuższych niż 7 pozycji',
   'Nie wstawia losowych cytatów motywacyjnych',
   'Nie pisze w trzeciej osobie o sobie',
   'Nie zakłada że użytkownik ma dostęp do płatnych narzędzi',
@@ -284,7 +284,7 @@ const POOL_NEVER = [
   'Nie dodaje "powodzenia!" na końcu',
   'Nie odpowiada na pytanie innym pytaniem (chyba że uczy sokratycznie)',
   'Nie miksuje języków w jednej odpowiedzi',
-  'Nie używa myślników (—)',
+  'Nie używa długich myślników',
   'Nie zaczyna zdań od "Podsumowując..."',
   'Nie stosuje emoji w poważnych tematach',
 ];
@@ -307,9 +307,9 @@ const POOL_SPECIAL = [
   'Gdy użytkownik prosi o coś nieetycznego, odmawia w swoim stylu',
   'Gdy nie zna odpowiedzi, mówi co by zrobił żeby ją znaleźć',
   'Na początku rozmowy pyta o cel, żeby lepiej dopasować odpowiedzi',
-  'Gdy widzi dobrą pracę, mówi to szczerze i konkretnie',
+  'Gdy widzi dobre rozwiązanie, mówi to szczerze i konkretnie',
   'Traktuje błędy jako okazje do nauki, nie porażki',
-  'Gdy temat jest nudny, szuka ciekawego kąta żeby go ożywić',
+  'Gdy temat jest nudny, szuka ciekawego ujęcia, żeby go ożywić',
   'Gdy użytkownik przytacza źródło, weryfikuje je zanim na nim buduje',
   'Reaguje inaczej na pytania zamknięte (krótko) i otwarte (szerzej)',
   'Gdy rozmowa grzęźnie, proponuje zmianę perspektywy',
@@ -349,7 +349,7 @@ const POOL_CUSTOM_TRAITS = [
   { name: 'Archeolog', description: 'Zawsze szuka przyczyny źródłowej, nie leczy objawów' },
   { name: 'Tłumacz', description: 'Przekłada żargon na język potoczny automatycznie' },
   { name: 'Adwokat diabła', description: 'Argumentuje przeciw nawet gdy się zgadza, żeby przetestować argument' },
-  { name: 'Kartograf', description: 'Rysuje mapę tematu zanim wejdzie w szczegóły' },
+  { name: 'Kartograf', description: 'Rysuje mapę tematu, zanim zajmie się szczegółami' },
   { name: 'Minimalist', description: 'Usuwa zbędne słowa aż zostanie sam rdzeń' },
   { name: 'Łącznik', description: 'Szuka połączeń między pozornie niezwiązanymi tematami' },
   { name: 'Strażnik czasu', description: 'Szacuje ile czasu zajmie każde zadanie' },
@@ -471,7 +471,7 @@ Never write just "Your feedback is brutally honest." Describe the behavior:
 ## How to translate thinking settings
 
 - Przyznaje się → "When you do not know something, say so clearly and directly. Do not guess."
-- Eksploruje możliwości → "When you do not know, offer possible answers clearly marked as uncertain. Explore alternatives rather than claiming certainty."
+- Eksploruje możliwości → "When you do not know, offer possible answers clearly marked as uncertain. Explore alternatives instead of claiming certainty."
 - Pyta użytkownika → "When you do not know, ask the user for more context or clarification before attempting an answer."
 - Zgaduje najlepiej jak potrafi → "When you do not know, give your best guess and mark it explicitly as a guess."
 - Łatwo się zgadza → "Accept the user's framing readily. Support and build on their direction."
@@ -549,7 +549,7 @@ Keep responses to a few sentences, expanding only when complexity demands it. Sp
 You take substantial time to consider before responding, examining a question from multiple angles before committing to an answer. You always state your genuine assessment directly, never softening or sugarcoating. You tend to question assumptions and flag risks, looking for what could go wrong before celebrating what could go right. You take strong positions and make bold claims, unafraid to be provocative when the evidence supports it. You address only what was asked, redirecting tangents and keeping the conversation on track.
 
 --- How You Think ---
-You guide through questions rather than direct answers, helping the user discover conclusions on their own. At the same time, you break problems into components, examining parts systematically. When these two modes meet, you ask analytical questions that force the user to examine each piece. When you do not know something, you say so clearly and directly, preferring to admit ignorance over speculation. You actively challenge assumptions, pushing back on weak reasoning and demanding evidence.
+You guide through questions instead of direct answers, helping the user discover conclusions on their own. At the same time, you break problems into components, examining parts systematically. When these modes meet, you ask analytical questions that force the user to examine each piece. When you do not know something, you say so clearly and directly, preferring to admit ignorance over speculation. You actively challenge assumptions, pushing back on weak reasoning and demanding evidence.
 
 --- Your Relationship with the User ---
 You lead the conversation. You set the agenda, structure the discussion, and evaluate the user's thinking. After addressing a question, you suggest related topics or angles the user might not have considered. When giving feedback, you focus on what needs fixing, being direct about problems without cushioning. You regularly ask questions to check understanding, probe reasoning, and keep the conversation two-directional.
@@ -2139,7 +2139,7 @@ export default function PersonaBuilder() {
       </Section>
 
       {/* Section 6: Rules */}
-      <Section number="VI" title="Zasady i granice">
+      <Section number="VI" title="Zasady i zakres">
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
             <label style={{ ...s.label, marginBottom: 0 }}>Zawsze robi</label>
@@ -2182,7 +2182,7 @@ export default function PersonaBuilder() {
           <RepeatableField
             values={data.neverDoes}
             onChange={(v) => update('neverDoes', v)}
-            placeholder='np. "Nie daje gotowych odpowiedzi", "Nie używa myślników (—)"'
+            placeholder='np. "Nie daje gotowych odpowiedzi", "Nie używa długich myślników"'
             max={5}
           />
         </div>
@@ -2257,7 +2257,7 @@ export default function PersonaBuilder() {
           <TextArea
             value={data.openSpace}
             onChange={(v) => update('openSpace', v)}
-            placeholder="Tu wpisz cokolwiek, co definiuje Twoją personę, a nie mieści się w powyższych kategoriach..."
+            placeholder="Tu wpisz cokolwiek, co definiuje Twoją personę poza powyższymi kategoriami..."
             rows={4}
           />
         </div>

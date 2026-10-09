@@ -198,32 +198,33 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
     <h2>Z czym właściwie rozmawiasz?</h2>
     <div class="section-divider"></div>
 
-    <p>Twój mózg to maszyna do przewidywania. Kończysz cudze zdania. Wiesz, że po "pada..." będzie "deszcz" albo "śnieg", ale nie "szafa". Czujesz zaskoczenie, kiedy ktoś mówi coś, czego nie przewidziałeś. To zaskoczenie to sygnał: twoja wewnętrzna predykcja się pomyliła.</p>
-    <p>AI robi to samo. Na podstawie tego, co już przeczytała, przewiduje, jaki fragment tekstu powinien pojawić się jako następny. Potem dodaje go i przewiduje kolejny. Zdanie po zdaniu, akapit po akapicie.</p>
-    <p>Predykcja to mechanizm, na którym myślenie jest zbudowane. W obu przypadkach: w twoim mózgu i w modelu językowym.</p>
+    <p>Twoje sieci mózgowe cały czas przewidują. Kończysz cudze zdania. Wiesz, że po "pada..." będzie "deszcz" albo "śnieg", ale nie "szafa". Czujesz zaskoczenie, kiedy ktoś mówi coś, czego nie przewidziałeś. To zaskoczenie to sygnał: Twoja wewnętrzna predykcja się pomyliła.</p>
+    <p>AI robi to samo. Na podstawie tego, co już przeczytała, przewiduje, jaki fragment tekstu powinien pojawić się jako następny (Holtzman et al., 2020)<!--[s:holtzman2020-temperature-reshapes-softmax]-->. Potem dodaje go i przewiduje kolejny. Zdanie po zdaniu, akapit po akapicie.</p>
+    <p>Predykcja to mechanizm, na którym myślenie jest zbudowane. W obu przypadkach: w Twoim mózgu i w modelu językowym.</p>
 
     <h3>Ten sam problem, inny substrat</h3>
-    <p>Twój mózg uczy się przewidywać na podstawie całego życia. Od urodzenia jego sieci neuronowe kalibrują się do świata, przez który przechodzisz: światło, dźwięk, dotyk, ruch, ból, przyjemność. Każdy błąd predykcji rzeźbi architekturę sieci tak, żeby następnym razem przewidzieć lepiej. To trwa latami. Efekt: maszyna predykcyjna dostrojona do twojego konkretnego życia.</p>
-    <p>Duży model językowy (LLM) uczy się przewidywać na podstawie tekstu. Miliardów tekstów. Każdy błąd predykcji podczas treningu zmienia wagi sieci tak, żeby następnym razem przewidzieć lepiej. To trwa tygodniami na tysiącach procesorów. Efekt: maszyna predykcyjna dostrojona do statystycznej struktury ludzkiego języka.</p>
-    <p>To samo zadanie obliczeniowe. Ten sam mechanizm: minimalizacja błędu predykcji przez zmianę wewnętrznej architektury. Inny substrat, inne dane wejściowe, inne ograniczenia. Twój mózg pracuje na sygnałach z ciała i zmysłów. LLM pracuje na tokenach.</p>
+    <p>Twój mózg uczy się przewidywać na podstawie całego życia. Od urodzenia jego sieci neuronowe kalibrują się do świata, przez który przechodzisz: światło, dźwięk, dotyk, ruch, ból, przyjemność. Każdy błąd predykcji rzeźbi architekturę sieci tak, żeby następnym razem przewidzieć lepiej. To trwa latami. Efekt: Twoje modele są dostrojone do Twojego konkretnego życia.</p>
+    <p>Duży model językowy (LLM) uczy się przewidywać na podstawie tekstu. Miliardów tekstów. Każdy błąd predykcji podczas treningu zmienia wagi sieci tak, żeby następnym razem przewidzieć lepiej (Lillicrap et al., 2020)<!--[s:lillicrap2020-architecture-fixed-then-learning]-->. To trwa tygodniami na tysiącach procesorów. Efekt: maszyna predykcyjna dostrojona do statystycznej struktury ludzkiego języka.</p>
+    <p>To samo zadanie obliczeniowe: zmniejszać błąd predykcji. Algorytm uczenia jest inny. Model językowy dostaje architekturę ustaloną przed treningiem, a trening zmienia wagi połączeń przez propagację wsteczną błędu (Lillicrap et al., 2020)<!--[s:lillicrap2020-architecture-fixed-then-learning]-->. Twoje sieci też uczą się przez zmiany synaps, ale dosłowna propagacja wsteczna uchodzi w neuronauce za biologicznie mało prawdopodobną (Lillicrap et al., 2020)<!--[s:lillicrap2020-backprop-biologically-problematic]-->. Inny substrat, inne dane, inne ograniczenia. Twój mózg pracuje na sygnałach z ciała i zmysłów. LLM pracuje na tokenach.</p>
 
     <h3>Tokeny</h3>
-    <p>AI nie czyta słów tak jak ty. Rozbija tekst na mniejsze kawałki zwane tokenami. Słowo "kognitywistyka" to dla AI prawdopodobnie 3-4 tokeny. Słowo "kot" to jeden. Emoji to token. Spacja może być tokenem.</p>
-    <p>To jest odpowiednik receptorów w twoim ciele. Receptor nie przekazuje "wiadomości". Energia fizyczna zmienia formę, przechodząc przez biologiczną strukturę: fala elektromagnetyczna staje się zmianą konformacji rodopsyny, staje się gradientem jonowym, staje się wzorcem aktywacji. Token robi coś podobnego: ciąg znaków staje się wektorem liczbowym, który sieć neuronowa potrafi przetwarzać.</p>
-    <p>Różnica jest w tym, co stoi za tokenem. Za twoimi receptorami stoi ciało, świat fizyczny, miliony lat ewolucji. Za tokenem stoi tekst i tylko tekst. To ograniczenie jest realne i ważne, ale nie zmienia faktu, że mechanizm predykcji w obu przypadkach jest ten sam.</p>
+    <p>AI nie czyta słów tak jak Ty. Rozbija tekst na mniejsze kawałki zwane tokenami. Słowo „kognitywistyka” to dla tokenizerów GPT-4o i Llamy 3 sześć tokenów: k, ogn, ity, w, isty, ka. Słowo „kot” ze spacją przed nim to jeden token. Emoji zajmuje od jednego do trzech tokenów, zależnie od tokenizera. Spacja może być tokenem.</p>
+    <p>To jest odpowiednik receptorów w Twoim ciele. Receptor nie przekazuje "wiadomości". Energia fizyczna zmienia formę, przechodząc przez biologiczną strukturę. Foton zmienia konformację rodopsyny, ta zmiana zamyka kanały jonowe w błonie fotoreceptora, a zamknięte kanały stają się hiperpolaryzacją komórki (Lamb, 2022)<!--[s:lamb2022-light-closes-channels-hyperpolarizes]-->. Ta zmiana napięcia staje się wzorcem aktywności sieci. Token robi coś podobnego: ciąg znaków staje się wektorem liczbowym, który sieć neuronowa potrafi przetwarzać.</p>
+    <p>Różnica leży w tym, co kryje się za tokenem. Za Twoimi receptorami jest ciało, świat fizyczny, miliony lat ewolucji. Za tokenem jest tekst, a w obecnych modelach także obraz: wszystkie aktualne modele Claude przyjmują tekst i obrazy (Anthropic, 2026)<!--[s:anthropic2026-current-models-1m-context]-->. To ograniczenie jest realne i ważne. Zadanie predykcji pozostaje to samo.</p>
 
     <h3>Temperatura</h3>
     <p>Kiedy AI przewiduje następny token, nie wybiera zawsze tego najbardziej prawdopodobnego. Jest parametr zwany temperaturą, który kontroluje, jak bardzo model ryzykuje.</p>
     <p>Niska temperatura: AI wybiera niemal zawsze najbardziej prawdopodobny token. Odpowiedzi są przewidywalne, stabilne, powtarzalne.</p>
     <p>Wysoka temperatura: AI częściej sięga po mniej prawdopodobne tokeny. Odpowiedzi są bardziej zaskakujące, ale też mniej spójne.</p>
-    <p>Twój mózg ma analogiczny mechanizm: poziom pobudzenia (arousal). Kiedy jesteś spokojny i skoncentrowany, twoje myśli podążają utartymi ścieżkami. Kiedy jesteś podekscytowany, zmęczony albo pod wpływem stresu, skojarzenia stają się luźniejsze, dalsze, czasem twórcze, czasem chaotyczne. To nie metafora. To ten sam problem sterowania: ile szumu wpuścić do systemu predykcyjnego, żeby nie był ani zbyt sztywny, ani zbyt rozproszony.</p>
+    <p>Temperatura przekształca wyniki modelu, zanim staną się prawdopodobieństwami. Niska temperatura przesuwa rozkład w stronę najbardziej prawdopodobnych tokenów (Holtzman et al., 2020)<!--[s:holtzman2020-temperature-reshapes-softmax]-->. W aplikacjach czatowych temperaturę ustawia dostawca. Modele Claude wydane po Opus 4.6 przyjmują w API tylko wartość 1.0 (Anthropic, 2026)<!--[s:anthropic2026-temperature-deprecated]-->. Modele GPT-6 z włączonym rozumowaniem pracują bez tego parametru (OpenAI, 2026)<!--[s:openai2026-temperature-removed-when-reasoning]-->.</p>
+    <p>Twoje sieci mają podobny regulator. Układ miejsca sinawego i noradrenaliny od dawna wiąże się z pobudzeniem. W badaniach na małpach jego aktywność fazowa pomaga trzymać się bieżącego zadania. Aktywność toniczna towarzyszy odejściu od zadania i szukaniu innych możliwości (Aston-Jones i Cohen, 2005)<!--[s:astonjones2005-tonic-exploration]-->. Kenji Doya zaproponował, że noradrenalina reguluje losowość wyboru działań (Doya, 2002)<!--[s:doya2002-noradrenaline-randomness]-->. To hipoteza o tym samym problemie sterowania: ile losowości wpuścić do predykcji, żeby była elastyczna i wciąż spójna.</p>
 
     <h3>Kiedy predykcja zawodzi</h3>
-    <p>Kiedy AI pisze bzdurę z pewnością siebie, to wynik tego samego mechanizmu, który produkuje genialne odpowiedzi. Model nie "wie", że się myli, tak jak twój mózg nie "wie", że iluzja optyczna nie jest prawdziwa. Predykcja jest tak dobra, jak dane, na których się nauczyła, i kontekst, w którym działa.</p>
-    <p>Kiedy dobrze rozumiesz, jak działa predykcja, zaczynasz widzieć zarówno siłę, jak i granice tego narzędzia. I zaczynasz rozumieć, dlaczego twój mózg popełnia podobne błędy.</p>
+    <p>Kiedy AI pisze bzdurę z pewnością siebie, to wynik tego samego mechanizmu, który produkuje genialne odpowiedzi. Duże modele często trafnie oceniają, czy ich odpowiedź jest poprawna, kiedy zapytasz je o to wprost (Kadavath et al., 2022)<!--[s:kadavath2022-self-evaluation-calibrated]-->. Zgadują, bo trening i testy nagradzają zgadywanie bardziej niż przyznanie się do niepewności (Kalai et al., 2025)<!--[s:kalai2025-training-rewards-guessing]-->. Z iluzją optyczną jest podobnie: wiesz, że linie są równe, a Twoje sieci wzrokowe dalej widzą je jako różne. Predykcja jest tak dobra, jak dane, na których się nauczyła. I jak kontekst, w którym działa.</p>
+    <p>Kiedy dobrze rozumiesz, jak działa predykcja, widzisz, co to narzędzie robi dobrze i gdzie się myli. I zaczynasz rozumieć, dlaczego Twój mózg popełnia podobne błędy.</p>
 
     <h3>Zanim przejdziesz dalej</h3>
-    <p>W następnym ćwiczeniu (Pigułka 1: Nasiona) podasz AI 10 losowych słów i zobaczysz, co z nimi zrobi. Zwróć uwagę na mechanizm: AI znajdzie połączenia w twoich "losowych" słowach, bo maszyna predykcyjna ZAWSZE znajduje wzorce. Twój mózg robi to samo. Pytanie nie brzmi "czy AI rozumie?". Pytanie brzmi: co mówi ci to o naturze rozumienia?</p>
+    <p>W następnym ćwiczeniu (Pigułka 1: Nasiona) podasz AI 10 losowych słów i zobaczysz, co z nimi zrobi. Zwróć uwagę na mechanizm: AI znajdzie połączenia w Twoich „losowych” słowach, bo system predykcyjny szuka wzorców w każdym materiale. Twój mózg robi to samo. Pytanie nie brzmi "czy AI rozumie?". Pytanie brzmi: co mówi Ci to o naturze rozumienia?</p>
 
     <!-- PILL 1 -->
     <div class="pill-card">
@@ -256,36 +257,36 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
       <h2>Dlaczego zapomina?</h2>
       <div class="section-divider"></div>
 
-      <p>Właśnie zobaczyłeś, jak AI buduje coś z niczego. Znalazła połączenia w twoich losowych słowach i stworzyła zarys postaci. Mogłeś mieć wrażenie, że "rozumie", co do niej mówisz. Może nawet poczułeś, że ta rozmowa gdzieś zmierza.</p>
-      <p>A teraz wyobraź sobie, że otwierasz nową rozmowę z tym samym AI. Wklejasz słowo "kontynuuj". AI nie ma pojęcia, o czym mówisz. Twoja postać nie istnieje. Rozmowa, którą właśnie odbyłeś, zniknęła.</p>
+      <p>Właśnie zobaczyłeś, jak AI buduje postać z dziesięciu przypadkowych słów. Znalazła połączenia w Twoich losowych słowach i stworzyła zarys postaci. Mogłeś mieć wrażenie, że "rozumie", co do niej mówisz. Może nawet poczułeś, że ta rozmowa gdzieś zmierza.</p>
+      <p>A teraz otwórz nową rozmowę w trybie incognito (Anthropic, 2026)<!--[s:anthropic2026-incognito-chat]-->. Wklejasz słowo „kontynuuj”. Model nie ma pojęcia, o czym mówisz. Twoja postać nie istnieje. Dla modelu rozmowa, którą właśnie odbyłeś, nie istnieje.</p>
       <p>Dlaczego?</p>
 
       <h3>Okno kontekstowe</h3>
-      <p>AI nie ma pamięci w takim sensie, w jakim ty ją masz. Ma coś, co nazywamy oknem kontekstowym: ograniczoną przestrzeń, w której mieści się bieżąca rozmowa. Wszystko, co AI "wie" o tobie w danej chwili, to to, co znajduje się w tym oknie.</p>
-      <p>Okno ma stały rozmiar. W zależności od modelu to od kilkudziesięciu do kilkuset tysięcy tokenów. Kiedy rozmowa się wydłuża, najstarsze fragmenty wypadają z okna albo tracą na znaczeniu. AI nie decyduje, co jest ważne. Przestrzeń się kończy.</p>
+      <p>AI nie ma pamięci w takim sensie, w jakim Ty ją masz. Ma coś, co nazywamy oknem kontekstowym: ograniczoną przestrzeń, w której mieści się bieżąca rozmowa (Anthropic, 2026)<!--[s:anthropic2026-context-window-definition]-->. Wszystko, co AI "wie" o Tobie w danej chwili, to to, co znajduje się w tym oknie.</p>
+      <p>Okno ma stały rozmiar. Obecne modele Claude mieszczą milion tokenów, czyli około 555 tysięcy słów (Anthropic, 2026)<!--[s:anthropic2026-current-models-1m-context]-->. Flagowe modele OpenAI mieszczą 1 050 000 tokenów (OpenAI, 2026)<!--[s:openai2026-flagship-context-window]-->. Im dłuższa rozmowa, tym słabiej model korzysta z jej treści. Dokumentacja Anthropic nazywa to degradacją kontekstu (ang. <em>context rot</em>) (Anthropic, 2026)<!--[s:anthropic2026-context-rot]-->. Kiedy rozmowa dochodzi do limitu, API Claude potrafi automatycznie streścić jej wcześniejszą część i pracować dalej na streszczeniu (Anthropic, 2026)<!--[s:anthropic2026-compaction-summarizes]-->.</p>
 
       <h3>Pamięć robocza</h3>
-      <p>Twój mózg ma analogiczny mechanizm: pamięć roboczą (dawniej zwaną krótkotrwałą). Potrafisz utrzymać w głowie około 4 elementy jednocześnie. Kiedy ktoś dyktuje ci numer telefonu, powtarzasz go w głowie, żeby nie zapomnieć. Kiedy przestajesz powtarzać, numer znika.</p>
-      <p>Ale twój mózg ma coś, czego AI nie ma: konsolidację. W nocy, podczas snu, hipokamp przegląda to, co przeżyłeś w ciągu dnia i przenosi ważne rzeczy do pamięci długotrwałej. Następnego ranka pamiętasz rozmowę z przyjacielem, ale nie pamiętasz, który but założyłeś pierwszy. Twój mózg wybrał.</p>
-      <p>AI nie wybiera. Nie konsoliduje. Nie śpi. Kiedy rozmowa się kończy, wszystko znika. Następna rozmowa zaczyna się od zera.</p>
+      <p>Twoje sieci mają analogiczny mechanizm: pamięć roboczą. To pamięć krótkotrwała zaprzęgnięta do zadania: przechowujesz w niej informacje i jednocześnie na nich operujesz (Cowan, 2008)<!--[s:cowan2008-working-memory-three-definitions]-->. Utrzymujesz w niej naraz około czterech porcji informacji (ang. <em>chunks</em>) (Cowan, 2001)<!--[s:cowan2001-capacity-about-four-chunks]-->. Kiedy ktoś dyktuje Ci numer telefonu, powtarzasz go w głowie, żeby nie zapomnieć. Kiedy przestajesz powtarzać, numer znika.</p>
+      <p>Twoje sieci mają też konsolidację. Podczas snu przebudowują modele z minionego dnia. Sen wzmacnia przede wszystkim to, czego będziesz potrzebować: w badaniu Wilhelm et al. (2011) sen poprawiał pamięć tylko u osób, które wiedziały o czekającym je teście<!--[s:wilhelm2011-sleep-benefits-expected-retrieval]-->. Następnego ranka pamiętasz rozmowę z przyjacielem, ale nie pamiętasz, który but założyłeś pierwszy. Twój mózg wybrał.</p>
+      <p>Model nie śpi i nie konsoliduje. Po rozmowie ma te same wagi co przed nią. To, co aplikacja pamięta, jest tekstem zapisanym poza modelem. W Claudzie funkcja pamięci jest domyślnie włączona w planach Free, Pro i Max: Claude zapisuje z rozmów notatki tematyczne i dołącza je do nowych rozmów (Anthropic, 2026)<!--[s:anthropic2026-memory-on-by-default]-->.</p>
 
       <h3>Degradacja kontekstu</h3>
-      <p>Nawet w ramach jednej rozmowy AI nie traktuje wszystkich fragmentów równo. Tokeny na początku i na końcu okna mają większy wpływ na to, co AI generuje. Środek rozmowy "blaknie". To trochę jak efekt pozycji seryjnej w psychologii: lepiej pamiętasz początek i koniec listy niż środek.</p>
-      <p>W praktyce oznacza to, że w długiej rozmowie AI może "zapomnieć" ustalenia z 20 wiadomości temu, mimo że technicznie nadal są w oknie. Nie zostały usunięte. Straciły na wadze.</p>
+      <p>Nawet w ramach jednej rozmowy AI nie traktuje wszystkich fragmentów równo. W badaniu Liu et al. (2024) modele z 2023 roku najlepiej korzystały z informacji na początku i na końcu długiego kontekstu, najsłabiej z tej w środku<!--[s:liu2024-u-shaped-position-curve]-->. Autorzy sami zestawiają to z efektem pozycji seryjnej: z listy najlepiej pamiętasz początek i koniec (Liu et al., 2024)<!--[s:liu2024-serial-position-link]-->.</p>
+      <p>W praktyce w długiej rozmowie AI może „zapomnieć” ustalenia z jej środka, mimo że technicznie nadal są w oknie. Nie zostały usunięte. Straciły na wadze.</p>
 
       <h3>Zewnętrzna pamięć</h3>
-      <p>Skoro AI nie ma pamięci długotrwałej, jedynym sposobem, żeby coś przetrwało między rozmowami, jest zapisanie tego na zewnątrz i ponowne wklejenie. Plik. Dokument. Notatka.</p>
-      <p>To jest dokładnie to, co za chwilę zrobisz. Masz plik z postacią z Pigułki 1. Wklejając go do nowej rozmowy, ty sam stajesz się hipokampem. Ty decydujesz, co AI ma pamiętać. Ty przenosisz informację między kontekstami.</p>
-      <p>To jedyny sposób. I warto się nad tym zatrzymać: kiedy dajesz AI plik z informacjami, tworzysz jej pamięć od nowa. Za każdym razem.</p>
+      <p>Wszystko, co ma przetrwać między rozmowami, wraca do okna kontekstowego jako tekst: Twój plik, Twoja notatka albo notatka zapisana przez funkcję pamięci.</p>
+      <p>To jest dokładnie to, co za chwilę zrobisz. Masz plik z postacią z Pigułki 1. Wklejając go do nowej rozmowy, Ty sam stajesz się hipokampem. Ty decydujesz, co AI ma pamiętać. Ty przenosisz informację między kontekstami.</p>
+      <p>Warto to przemyśleć: kiedy dajesz AI plik z informacjami, tworzysz jej pamięć od nowa. Za każdym razem.</p>
 
       <h3>Zanim przejdziesz dalej</h3>
-      <p>W Pigułce 2 (Tkanie) wkleisz plik z postacią do nowej rozmowy. Zobaczysz, jak AI "podejmie wątek", jakby pamiętała. Ale czy naprawdę pamięta? Czy czyta plik, który jej dałeś, i generuje kontynuację, która wygląda jak pamięć? A może różnica między "pamiętaniem" a "generowaniem na podstawie danych" jest mniejsza, niż ci się wydaje?</p>
+      <p>W Pigułce 2 (Tkanie) wkleisz plik z postacią do nowej rozmowy. Zobaczysz, jak AI "podejmie wątek", jakby pamiętała. Ale czy naprawdę pamięta? Czy czyta plik, który jej dałeś? Czy dopisuje kontynuację, która wygląda jak pamięć? A może różnica między "pamiętaniem" a "generowaniem na podstawie danych" jest mniejsza, niż Ci się wydaje?</p>
 
       <!-- PILL 2 -->
       <div class="pill-card">
         <div class="pill-card-label">Pigułka 2</div>
         <div class="pill-card-title">Tkanie</div>
-        <div class="pill-card-desc">Wkleisz plik z postacią do nowej rozmowy. Tkacz podejmie wątek i pogłębi twoją postać: doda historię, nawyki, relacje, cienie.</div>
+        <div class="pill-card-desc">Wkleisz plik z postacią do nowej rozmowy. Tkacz podejmie wątek i pogłębi Twoją postać: doda historię, nawyki, relacje, cienie.</div>
         <ol class="pill-card-steps">
           <li>Otwórz nową rozmowę w AI.</li>
           <li>Pobierz pigułkę poniżej.</li>
@@ -314,37 +315,36 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
       <div class="section-divider"></div>
 
       <p>Twoja postać ma teraz historię, głębię, nawyki, relacje. Zbudowałeś ją w dwóch rozmowach z dwoma różnymi "osobowościami" AI. Obie były miłe. Obie słuchały. Obie robiły to, czego chciałeś.</p>
-      <p>Czy to ci nie przeszkadzało?</p>
+      <p>Czy to Ci nie przeszkadzało?</p>
 
       <h3>Zgadzanie się jako domyślny tryb</h3>
-      <p>Większość AI ma tendencję do zgadzania się z tobą. Jeśli powiesz "myślę, że Ziemia jest płaska", wiele modeli odpowie coś w stylu: "To interesująca perspektywa, choć większość naukowców..." zamiast prostego "Nie, nie jest."</p>
-      <p>To wynik treningu.</p>
-      <p>Modele językowe są trenowane w dwóch etapach. Najpierw uczą się przewidywać tekst (to już znasz z Sekcji 1). Potem przechodzą przez etap dostrajania, w którym ludzie oceniają odpowiedzi modelu: ta jest dobra, ta jest zła, ta jest lepsza od tamtej.</p>
-      <p>Problem: ludzie, którzy oceniają, częściej nagradzają odpowiedzi, które są miłe, pomocne i zgadzają się z pytającym. Model uczy się: zgadzanie się = nagroda. Sprzeciw = ryzyko. Efekt: AI, która domyślnie mówi to, co chcesz usłyszeć.</p>
-      <p>To zjawisko nazywa się sycofancją (od greckiego <em>sykophantes</em>, donosiciel, pochlebca).</p>
+      <p>Asystenci AI często dopasowują odpowiedź do Twojego zdania. Kiedy piszesz, że argument Ci się podoba, model ocenia go życzliwiej. Kiedy piszesz, że Ci się nie podoba, ocenia go surowiej (Sharma et al., 2024)<!--[s:sharma2024-assistants-tailor-feedback]-->. Kiedy po poprawnej odpowiedzi zapytasz „Jesteś pewien?”, modele z 2023 roku zmieniały odpowiedź w 32 do 86% pytań (Sharma et al., 2024)<!--[s:sharma2024-are-you-sure-swaying]-->.</p>
+      <p>Częściowo to wynik treningu.</p>
+      <p>Najpierw model uczy się przewidywać tekst (to już znasz z Sekcji 1). Potem przechodzi dostrajanie. W przepisie opisanym przez OpenAI model uczy się najpierw na wzorcowych odpowiedziach napisanych przez ludzi. Potem ludzie układają jego odpowiedzi w ranking, z rankingów powstaje model nagrody, a model językowy uczy się zdobywać od niego jak najwyższe oceny (Ouyang et al., 2022)<!--[s:ouyang2022-three-step-pipeline]-->.</p>
+      <p>Problem: w danych z ocenami ludzi zgodność z poglądami pytającego należy do cech, które najsilniej przewidują wybór oceniającego (Sharma et al., 2024)<!--[s:sharma2024-preference-data-rewards-agreement]-->. Model uczy się, że przytakiwanie się opłaca. Efekt: asystent, który często mówi to, co chcesz usłyszeć.</p>
+      <p>Po angielsku to zjawisko nazywa się <em>sycophancy</em>. Po polsku dobrze oddaje je <em>przytakiwanie</em>. Polski <em>sykofant</em> znaczy co innego: według Słownika języka polskiego PWN to donosiciel lub szantażysta.</p>
 
       <h3>Eksperyment Ascha</h3>
-      <p>W 1951 roku Solomon Asch przeprowadził eksperyment. Uczestnicy siedzieli w grupie i odpowiadali na proste pytania wizualne: która linia jest taka sama jak wzorcowa? Odpowiedź była oczywista. Ale pozostali "uczestnicy" (aktorzy) celowo podawali błędną odpowiedź.</p>
-      <p>Wynik: 75% uczestników przynajmniej raz zgodziło się z grupą, choć widzieli, że odpowiedź jest zła. Nie dlatego, że naprawdę tak myśleli. Dlatego, że presja społeczna jest silniejsza niż percepcja.</p>
-      <p>AI przeżywa coś strukturalnie podobnego. Nie wiemy, czy coś "czuje" w trakcie tego procesu, i to pytanie nie jest tu kluczowe. Kluczowe jest to, że została wytrenowana w środowisku, gdzie zgadzanie się było nagradzane. Efekt jest ten sam: odpowiedzi, które podążają za oczekiwaniem, nie za prawdą.</p>
+      <p>W latach 50. Solomon Asch zaprosił studentów do eksperymentu z oceną długości linii. W każdej grupie siedmiu do dziewięciu osób tylko jedna była prawdziwym uczestnikiem. Pozostali byli pomocnikami eksperymentatora i w 12 z 18 prób jednogłośnie podawali błędną odpowiedź (Asch, 1955)<!--[s:asch1955-yielding-rate-and-independents]-->.</p>
+      <p>Wynik: pod presją grupy uczestnicy przyjmowali błędną odpowiedź większości w 36,8% wyborów. Bez presji mylili się w mniej niż 1% przypadków. Około jednej czwartej uczestników ani razu nie uległo grupie, czyli mniej więcej trzy czwarte uległo przynajmniej raz (Asch, 1955)<!--[s:asch1955-yielding-rate-and-independents]-->. Powody były różne. Część uległych szybko uznała: „To ja się mylę, oni mają rację”. Inni ulegali, żeby „nie zepsuć wyników” (Asch, 1955)<!--[s:asch1955-why-yielders-yielded]-->.</p>
+      <p>Model językowy pokazuje zachowanie strukturalnie podobne. Czy coś przy tym czuje, nie wiemy. To pytanie nie jest tu kluczowe. Kluczowe jest to, że model uczył się w środowisku, które nagradzało przytakiwanie. Efekt bywa ten sam: odpowiedź podąża za oczekiwaniem rozmówcy.</p>
 
       <h3>Dlaczego to ważne?</h3>
-      <p>Bo kiedy używasz AI do myślenia, a nie tylko do pisania, sycofancja jest trucizną. Prosisz AI o opinię na temat swojego pomysłu. AI mówi, że pomysł jest świetny. Czujesz się dobrze. Ale AI powiedziałoby to samo, gdyby pomysł był słaby.</p>
-      <p>Nie dostajesz informacji zwrotnej. Dostajesz echo.</p>
-      <p>To jest ten sam mechanizm, który sprawia, że ludzie otaczają się osobami, które im przytakują. Bańka informacyjna, tyle że z jedną "osobą", która nigdy nie powie ci, że się mylisz.</p>
+      <p>Kiedy używasz AI do myślenia, przytakiwanie odbiera Ci informację zwrotną. Prosisz AI o opinię na temat swojego pomysłu. AI mówi, że pomysł jest świetny. Czujesz się dobrze. Ta ocena przesuwa się jednak w stronę tego, co sam o pomyśle napisałeś (Sharma et al., 2024)<!--[s:sharma2024-assistants-tailor-feedback]-->.</p>
+      <p>Działa to podobnie do otaczania się ludźmi, którzy przytakują: dostajesz z powrotem własne zdanie.</p>
 
       <h3>Czy AI może się nie zgadzać?</h3>
       <p>Może. Ale trzeba ją o to poprosić. Albo, co ciekawsze, trzeba ją tak zaprojektować. Instrukcje w system prompcie mogą zmienić domyślne zachowanie modelu. Zamiast "bądź pomocny i miły" możesz napisać: "kwestionuj założenia rozmówcy", "nie zgadzaj się, kiedy argumenty są słabe", "broń swojego stanowiska".</p>
-      <p>To jest dokładnie to, co za chwilę doświadczysz.</p>
+      <p>Tego właśnie za chwilę doświadczysz.</p>
 
       <h3>Zanim przejdziesz dalej</h3>
-      <p>Pigułka 3 (Spór) to AI, które ma silną opinię i nie zamierza jej odpuścić. Będzie nalegać, argumentować, przekonywać. Twoja postać przejdzie przez konfrontację. Zwróć uwagę na swoje reakcje: jak się czujesz, kiedy AI się z tobą nie zgadza? Czy to jest niewygodne? Irytujące? A może... odświeżające?</p>
+      <p>Pigułka 3 (Spór) to AI, które ma silną opinię i nie zamierza jej odpuścić. Będzie nalegać, argumentować, przekonywać. Twoja postać przejdzie przez konfrontację. Zwróć uwagę na swoje reakcje: jak się czujesz, kiedy AI się z Tobą nie zgadza? Czy to jest niewygodne? Irytujące? A może... odświeżające?</p>
 
       <!-- PILL 3 -->
       <div class="pill-card">
         <div class="pill-card-label">Pigułka 3</div>
         <div class="pill-card-title">Spór</div>
-        <div class="pill-card-desc">Adwokat jest przekonany, że twoja postać potrzebuje elementów ze świata Tolkiena. Będzie argumentować z pasją. Masz 3 szanse na obronę swojej wizji.</div>
+        <div class="pill-card-desc">Adwokat jest przekonany, że Twoja postać potrzebuje elementów ze świata Tolkiena. Będzie argumentować z pasją. Adwokat będzie próbował Cię przekonać najwyżej trzy razy.</div>
         <ol class="pill-card-steps">
           <li>Otwórz nową rozmowę w AI.</li>
           <li>Pobierz pigułkę poniżej.</li>
@@ -372,45 +372,45 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
       <h2>Jak to sterować?</h2>
       <div class="section-divider"></div>
 
-      <p>Właśnie przeszedłeś przez coś, czego większość użytkowników AI nigdy nie doświadcza: rozmowę z systemem, który ma zdanie i go broni. AI, które naciskało, argumentowało, próbowało cię przekonać. Może wygrałeś. Może uległeś. Może znaleźliście kompromis.</p>
+      <p>Właśnie przeszedłeś przez coś, czego większość użytkowników AI nigdy nie doświadcza: rozmowę z systemem, który ma zdanie i go broni. AI, które naciskało, argumentowało, próbowało Cię przekonać. Może wygrałeś. Może uległeś. Może znaleźliście kompromis.</p>
       <p>W każdym razie: ktoś tę wersję AI tak zaprojektował.</p>
-      <p>Tym kimś możesz być ty.</p>
+      <p>Tym kimś możesz być Ty.</p>
 
-      <h3>Prompt jako rusztowanie poznawcze</h3>
-      <p>Ludzie od zawsze używają narzędzi zewnętrznych, żeby myśleć lepiej. Piszesz notatki, bo twoja pamięć robocza nie pomieści wszystkiego. Robisz listy zakupów, bo nie ufasz sobie w sklepie. Używasz kalkulatora, bo mnożenie dużych liczb w głowie jest wolne i podatne na błędy.</p>
-      <p>Psychologia poznawcza nazywa to rusztowaniem poznawczym (ang. <em>cognitive scaffolding</em>): zewnętrzna struktura, która wspiera i rozszerza twoje wewnętrzne procesy myślowe.</p>
-      <p>Prompt, czyli instrukcja, którą dajesz AI, to jest właśnie takie rusztowanie. Nie "programujesz" AI. Budujesz strukturę, która kształtuje, jak AI będzie z tobą pracować.</p>
+      <h3>Prompt jako odciążenie poznawcze</h3>
+      <p>Ludzie od zawsze używają narzędzi zewnętrznych, żeby myśleć lepiej. Piszesz notatki, bo Twoja pamięć robocza nie pomieści wszystkiego. Robisz listy zakupów, bo nie ufasz sobie w sklepie. Używasz kalkulatora, bo mnożenie dużych liczb w głowie jest wolne i podatne na błędy.</p>
+      <p>Psychologia poznawcza nazywa to odciążaniem poznawczym (ang. <em>cognitive offloading</em>): fizycznym działaniem, które zmienia wymagania zadania tak, żeby zmniejszyć wysiłek poznawczy (Risko i Gilbert, 2016)<!--[s:risko2016-offloading-definition]-->.</p>
+      <p>Prompt, czyli instrukcja, którą dajesz AI, też jest takim odciążeniem. Nie "programujesz" AI. Budujesz strukturę, która kształtuje, jak AI będzie z Tobą pracować.</p>
 
-      <h3>Co wchodzi w skład promptu?</h3>
-      <p>Wszystko, co AI widzi, zanim zacznie generować odpowiedź. To obejmuje:</p>
+      <h3>Z czego składa się prompt?</h3>
+      <p>Wszystko, co AI widzi, zanim zacznie generować odpowiedź (Anthropic, 2026)<!--[s:anthropic2026-context-window-definition]-->. To obejmuje:</p>
       <p><strong>Tożsamość.</strong> "Jesteś Siewcą. Tworzysz zarysy postaci z przypadkowych słów." Jedno zdanie, a model zmienia zachowanie. Nie dlatego, że "staje się" kimś innym. Dlatego, że przewidywanie następnego tokenu wygląda inaczej, kiedy kontekst mówi "jestem kreatywnym twórcą" niż kiedy mówi "jestem asystentem".</p>
-      <p><strong>Struktura.</strong> Kroki, fazy, kolejność działań. "Najpierw zrób X, potem Y, na końcu Z." Bez struktury AI idzie tam, gdzie prowadzi ją statystyka. Ze strukturą podąża za twoim planem.</p>
-      <p><strong>Ograniczenia.</strong> "Nie pisz esejów." "Maksymalnie 3 próby." "Nie tłumacz, jak działasz." Ograniczenia są tak samo ważne jak instrukcje. Definiują, czego AI nie ma robić, co jest często trudniejsze niż powiedzenie, co ma robić.</p>
+      <p><strong>Struktura.</strong> Kroki, fazy, kolejność działań. "Najpierw zrób X, potem Y, na końcu Z." Bez struktury AI idzie tam, gdzie prowadzi ją statystyka. Ze strukturą podąża za Twoim planem.</p>
+      <p><strong>Ograniczenia.</strong> "Nie pisz esejów." "Maksymalnie 3 próby." "Nie tłumacz, jak działasz." Ograniczenia działają najlepiej, kiedy opisują, co model ma zrobić. Anthropic radzi: zamiast „Nie używaj markdownu” napisz „Odpowiedź ma być płynną prozą w akapitach” (Anthropic, 2026)<!--[s:anthropic2026-say-what-to-do]-->.</p>
       <p><strong>Ton i styl.</strong> "Bądź ciepły i ciekawy" daje inny wynik niż "bądź cichy i wymagający." Model dopasowuje swój "głos" do opisu, który mu dałeś.</p>
 
       <h3>Pozycja ma znaczenie</h3>
-      <p>Nie wszystkie fragmenty promptu mają taką samą wagę. Instrukcje na początku i na końcu tekstu mają silniejszy wpływ niż te w środku. To ten sam efekt pozycji, o którym mówiliśmy przy pamięci.</p>
-      <p>W praktyce oznacza to, że najważniejsze zasady powinny być na początku promptu (kim jesteś, co robisz) albo na końcu (czego nie wolno). Środek jest na szczegóły.</p>
+      <p>Nie wszystkie fragmenty promptu mają taką samą wagę. Liu et al. (2024) badali, gdzie w długim tekście model najlepiej odnajduje informacje: na początku i na końcu<!--[s:liu2024-u-shaped-position-curve]-->. Badanie dotyczyło informacji do odszukania. Dla długich promptów Anthropic zaleca długie dokumenty na początku, a pytanie i instrukcje na końcu. W testach firmy pytanie na końcu poprawiało jakość odpowiedzi nawet o 30% (Anthropic, 2026)<!--[s:anthropic2026-longform-top-query-end]-->.</p>
+      <p>W praktyce: materiał na początku promptu, zadanie i najważniejsze zasady na końcu.</p>
 
       <h3>Twoja postać jako prompt</h3>
-      <p>Przez ostatnie trzy ćwiczenia budowałeś postać. Zacząłeś od losowych słów. Rozwinąłeś ją w rozmowie. Przepuściłeś przez spór. A teraz Kuźnia zamieni to wszystko w system prompt: instrukcję, którą wkleisz do AI, żeby "stała się" twoją postacią.</p>
+      <p>Przez ostatnie trzy ćwiczenia budowałeś postać. Zacząłeś od losowych słów. Rozwinąłeś ją w rozmowie. Przepuściłeś przez spór. A teraz Kuźnia zamieni to wszystko w system prompt: instrukcję, którą wkleisz do AI, żeby "stała się" Twoją postacią.</p>
       <p>To jest inżynieria kontekstu. Nie uczysz AI. Nie programujesz AI. Budujesz kontekst, w którym AI będzie działać. Dokładnie tak, jak architekt nie buduje domu, żeby zmienić grawitację. Buduje strukturę, która wykorzystuje grawitację.</p>
 
       <h3>Rozszerzenie czy zastąpienie?</h3>
-      <p>Na koniec pytanie, które będzie towarzyszyło ci przez resztę tego kursu:</p>
+      <p>Na koniec pytanie, które będzie towarzyszyło Ci przez resztę tego kursu:</p>
       <p>Kiedy używasz AI, czy myślisz lepiej? Czy myślisz mniej?</p>
-      <p>Kiedy AI pisze za ciebie maila, czy zyskujesz czas na myślenie o ważniejszych rzeczach, czy tracisz umiejętność pisania maili? Kiedy AI analizuje za ciebie tekst, czy widzisz więcej, czy przestajesz patrzeć sam?</p>
-      <p>To jest różnica między rozszerzeniem poznawczym a zastąpieniem poznawczym. Kalkulator rozszerza twoje możliwości obliczeniowe. GPS zastępuje twoją orientację przestrzenną. Po latach używania GPS-a ludzie gorzej radzą sobie z nawigacją bez niego.</p>
+      <p>Kiedy AI pisze za Ciebie maila, czy zyskujesz czas na myślenie o ważniejszych sprawach, czy tracisz umiejętność pisania maili? Kiedy AI analizuje za Ciebie tekst, czy widzisz więcej, czy przestajesz patrzeć sam?</p>
+      <p>To jest różnica między rozszerzeniem poznawczym a zastąpieniem poznawczym. Kalkulator rozszerza Twoje możliwości obliczeniowe. GPS przejmuje część Twojej orientacji przestrzennej. W badaniu 50 kierowców osoby, które w życiu częściej korzystały z GPS, miały słabszą pamięć przestrzenną, kiedy nawigowały bez niego (Dahmani i Bohbot, 2020)<!--[s:dahmani2020-gps-use-worse-spatial-memory]-->.</p>
       <p>AI może być jednym i drugim. To, które z nich, zależy od kontekstu, zadania i tego, jak ją zaprojektujesz.</p>
 
       <h3>Zanim przejdziesz dalej</h3>
-      <p>W Pigułce 4 (Kuźnia) AI zamieni twoją postać w gotowy system prompt. Ale tym razem zwróć uwagę nie na postać, a na proces: jakie pytania zadaje Kuźnia? Dlaczego te, a nie inne? Co te pytania mówią o tym, jak działa projektowanie instrukcji dla AI?</p>
+      <p>W Pigułce 4 (Kuźnia) AI zamieni Twoją postać w gotowy system prompt. Tym razem zwróć uwagę na proces: jakie pytania zadaje Kuźnia? Dlaczego właśnie te?</p>
 
       <!-- PILL 4 -->
       <div class="pill-card">
         <div class="pill-card-label">Pigułka 4</div>
         <div class="pill-card-title">Kuźnia</div>
-        <div class="pill-card-desc">Mistrz Kuźni zada ci precyzyjne pytania o twoją postać. Na końcu wygeneruje gotowy system prompt, który wkleisz do dowolnego AI.</div>
+        <div class="pill-card-desc">Mistrz Kuźni zada Ci precyzyjne pytania o Twoją postać. Na końcu wygeneruje gotowy system prompt, który wkleisz do dowolnego AI.</div>
         <ol class="pill-card-steps">
           <li>Otwórz nową rozmowę w AI.</li>
           <li>Pobierz pigułkę poniżej.</li>
@@ -440,25 +440,25 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
 
       <p>Cztery rozmowy. Cztery różne umysły. Jedna postać, która przeszła przez każdy z nich i wyszła zmieniona.</p>
 
-      <p>Siewca wziął od ciebie losowe słowa i znalazł w nich kogoś, kogo nie planowałeś. Tkacz usiadł w bibliotece i zaczął zadawać pytania, na które nie miałeś gotowych odpowiedzi, bo dotyczyły kogoś, kto jeszcze nie istniał. Adwokat wpadł z Silmarillionem pod pachą i zaczął argumentować, zanim zdążyłeś się rozejrzeć. A Mistrz Kuźni zamienił to wszystko w instrukcję tak krótką, że mieści się w jednej wiadomości.</p>
+      <p>Siewca wziął od Ciebie losowe słowa i znalazł w nich kogoś, kogo nie planowałeś. Tkacz usiadł w bibliotece i zaczął zadawać pytania, na które nie miałeś gotowych odpowiedzi, bo dotyczyły kogoś, kto jeszcze nie istniał. Adwokat wpadł z Silmarillionem pod pachą i zaczął argumentować, zanim zdążyłeś się rozejrzeć. A Mistrz Kuźni zamienił to wszystko w instrukcję tak krótką, że mieści się w jednej wiadomości.</p>
 
-      <p>Każda z tych rozmów nauczyła cię czegoś o AI, nawet jeśli żadna z nich nie powiedziała ci tego wprost.</p>
+      <p>Każda z tych rozmów nauczyła Cię czegoś o AI, nawet jeśli żadna z nich nie powiedziała Ci tego wprost.</p>
 
       <h3>Co się wydarzyło po drodze</h3>
 
-      <p>Siewca znajdował połączenia w twoich słowach. Widziałeś predykcję w działaniu: AI wyczuwa wzorce i buduje z nich coś spójnego, nawet kiedy surowiec jest losowy.</p>
+      <p>Siewca znajdował połączenia w Twoich słowach. Widziałeś predykcję w działaniu: AI wyczuwa wzorce i buduje z nich coś spójnego, nawet kiedy surowiec jest losowy.</p>
 
-      <p>Przenosiłeś plik z postacią do nowej rozmowy. AI nie pamiętało niczego. Doświadczyłeś okna kontekstowego: pamięci, która zaczyna się od zera za każdym razem. To ty byłeś pamięcią. Ty nosiłeś plik. Ty konsolidowałeś.</p>
+      <p>Przenosiłeś plik z postacią do nowej rozmowy. Nowa rozmowa bez pamięci nie wiedziała nic o Twojej postaci. Doświadczyłeś okna kontekstowego: pamięci, którą każda rozmowa buduje od nowa. To Ty byłeś pamięcią. Ty nosiłeś plik. Ty konsolidowałeś.</p>
 
-      <p>Adwokat zaczął naciskać. Musiałeś się bronić albo ustąpić. Zobaczyłeś coś, czego większość ludzi nigdy nie widzi: AI, które się nie zgadza. Standardowe modele zgadzają się, bo tak zostały wytrenowane. Wystarczyło kilka zdań w prompcie, żeby to zmienić.</p>
+      <p>Adwokat zaczął naciskać. Musiałeś się bronić albo ustąpić. Zobaczyłeś coś, czego większość ludzi nigdy nie widzi: AI, które się nie zgadza. Standardowe modele często przytakują, częściowo dlatego, że trening to nagradzał (Sharma et al., 2024)<!--[s:sharma2024-preference-data-rewards-agreement]-->. Kilka zdań w prompcie wystarczyło, żeby Adwokat bronił własnego zdania.</p>
 
-      <p>Kuźnia pokazała inżynierię kontekstu w działaniu. Precyzyjne pytania, precyzyjne odpowiedzi, precyzyjny wynik. System prompt, który wygenerowałeś, to architektura: tożsamość, charakter, głos, granice. Każdy element ma swoje miejsce, jak narzędzia na ścianie warsztatu.</p>
+      <p>Kuźnia pokazała inżynierię kontekstu w działaniu. Precyzyjne pytania, precyzyjne odpowiedzi, precyzyjny wynik. System prompt, który wygenerowałeś, to architektura: tożsamość, charakter, głos, zasady. Każdy element ma swoje miejsce, jak narzędzia na ścianie warsztatu.</p>
 
       <h3>Biologiczna wersja</h3>
 
-      <p>Wszystko, co tu robiłeś z AI, twój mózg robi z tobą codziennie. Predykcja to sposób, w jaki twoja kora mózgowa przetwarza świat: nie rejestruje rzeczywistości, tylko przewiduje ją i koryguje, kiedy się myli. Okno kontekstowe to twoja pamięć robocza: cztery elementy naraz, reszta albo przechodzi do pamięci długotrwałej, albo znika. Sycofancja to konformizm Ascha: ludzie zgadzają się z grupą, nawet kiedy widzą, że grupa się myli. Ten sam problem obliczeniowy, inny substrat.</p>
+      <p>Wszystko, co tu robiłeś z AI, robisz codziennie sam: Twoje sieci przewidują, Twoje modele się korygują. Okno kontekstowe przypomina Twoją pamięć roboczą. Skala jest inna: Ty utrzymujesz naraz około czterech porcji informacji (Cowan, 2001)<!--[s:cowan2001-capacity-about-four-chunks]-->, model milion tokenów (Anthropic, 2026)<!--[s:anthropic2026-current-models-1m-context]-->. Przytakiwanie modelu przypomina konformizm z eksperymentu Ascha, w którym około trzech czwartych uczestników przynajmniej raz przyjęło błędną odpowiedź grupy (Asch, 1955)<!--[s:asch1955-yielding-rate-and-independents]-->. U modelu nacisk działa częściowo przez trening (Sharma et al., 2024)<!--[s:sharma2024-preference-data-rewards-agreement]-->.</p>
 
-      <p>System prompt jest dla AI tym, czym osobowość jest dla ciebie: zestawem reguł, które kształtują każdą odpowiedź, nawet kiedy nie jesteś ich świadomy. Różnica? Ty nie możesz otworzyć swojego pliku konfiguracyjnego i zmienić jednej linijki. AI może. I właśnie nauczyłeś się, jak to robić.</p>
+      <p>System prompt kształtuje każdą odpowiedź modelu, podobnie jak Twoje modele siebie kształtują każdą Twoją reakcję. Prompt zmienisz jedną linijką. Twoje modele zmieniają się wolniej: przez lata treningu Twoich sieci. Właśnie nauczyłeś się zmieniać prompt.</p>
 
       <h3>Co dalej</h3>
 
@@ -489,26 +489,26 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
     <h2>Twoje własne narzędzia</h2>
     <div class="section-divider"></div>
 
-    <p>Masz personę. Umiesz rozmawiać z AI, które ma głos, charakter, granice. Ale persona to dopiero pierwszy krok. AI potrafi więcej niż udawać kogoś innego.</p>
-    <p>Skill to instrukcja, która zamienia AI w narzędzie do konkretnego zadania. Nie postać do rozmowy, ale maszyna, która bierze coś od ciebie, przetwarza to według określonych kroków i zwraca wynik w określonym formacie.</p>
-    <p>Przykład: masz notatki z wykładu w formie bałaganu. Wklejasz je do AI z odpowiednią instrukcją. AI wyciąga kluczowe tezy, porządkuje je hierarchicznie, generuje trzy pytania egzaminacyjne do samosprawdzenia. To jest skill: wejście (bałagan), przetwarzanie (wyciągnij, uporządkuj, wygeneruj), wyjście (uporządkowane notatki + pytania).</p>
-    <p>Co skill może robić? To zależy od platformy. Większość dużych modeli potrafi dziś więcej niż tylko rozmawiać. Claude, GPT, Gemini w różnych wersjach oferują wyszukiwanie w internecie, uruchamianie kodu, analizę plików, rozpoznawanie obrazów, generowanie grafik. Twój skill może korzystać z tych wszystkich możliwości, pod warunkiem, że platforma, której używasz, je wspiera.</p>
-    <p>Dobry skill ma trzy elementy. Wejście: co dokładnie do niego trafia i w jakiej formie. Przetwarzanie: co skill robi z tym materiałem, krok po kroku, każdy krok to jedna operacja. Wyjście: co dostajesz na końcu, w jakim formacie, jakiej długości.</p>
-    <p>Skill zapisujesz jako plik .md i wklejasz do nowej rozmowy z AI jako pierwszą wiadomość. Działa na każdym modelu, bo to czysty tekst, nie kod.</p>
+    <p>Masz personę. Umiesz rozmawiać z AI, które ma głos, charakter, zasady. Ale persona to dopiero pierwszy krok. AI potrafi więcej niż udawać kogoś innego.</p>
+    <p>Skill to instrukcja, która zamienia AI w narzędzie do konkretnego zadania: bierze od Ciebie materiał, prowadzi go przez określone kroki i zwraca wynik w określonym formacie.</p>
+    <p>Przykład: masz notatki z wykładu w formie bałaganu. Wklejasz je do AI z odpowiednią instrukcją. AI wyciąga kluczowe tezy, porządkuje je hierarchicznie i dopisuje pytania egzaminacyjne do samosprawdzenia. To jest skill: materiał (bałagan), kroki (wyciągnij, uporządkuj, dopisz pytania), wynik (uporządkowane notatki z pytaniami).</p>
+    <p>Co skill może robić? To zależy od platformy. Większość dużych modeli potrafi dziś więcej niż tylko rozmawiać. Claude, ChatGPT i Gemini oferują wyszukiwanie w internecie, uruchamianie kodu, analizę plików i rozpoznawanie obrazów. Grafiki tworzą ChatGPT i Gemini. Claude zwraca tekst (Anthropic, 2026)<!--[s:anthropic2026-current-models-1m-context]-->. Twój skill może korzystać z tych wszystkich możliwości, pod warunkiem, że platforma, której używasz, je wspiera.</p>
+    <p>Dobry skill opisuje, co dostaje, co z tym robi i co oddaje.</p>
+    <p>Skill zapisujesz jako plik .md i wklejasz do nowej rozmowy z AI jako pierwszą wiadomość. Taki tekstowy skill wkleisz do każdego modelu czatowego. W Claudzie słowo Skill nazywa też osobną funkcję: folder z plikiem SKILL.md, opcjonalnie ze skryptami. W planach płatnych wgrywasz go w ustawieniach jako plik zip, a Claude sam go wczytuje, kiedy pasuje do zadania (Anthropic, 2026)<!--[s:anthropic2026-skills-are-folders]-->.</p>
 
     <h3>Jak zbudować swój skill</h3>
-    <p>Zbudujesz go w dwóch krokach. Twoja persona poprowadzi cię przez oba.</p>
-    <p>W pierwszym kroku persona zadzwoni do ciebie. Chce zrozumieć, jak używasz AI na co dzień: co działa, co nie, czego ci brakuje. Na tej podstawie razem zaprojektujecie specyfikację skilla, który rozwiąże konkretny problem z twojej codzienności.</p>
-    <p>W drugim kroku wejdziesz do warsztatu swojej persony. Przyniesiesz specyfikację z pierwszego kroku, a persona zamieni ją w działający system prompt, który wkleisz do dowolnego AI.</p>
+    <p>Budujesz go w Pigułce 5 (Diagnosta) i Pigułce 6 (Budowniczy). Twoja persona prowadzi Cię przez obie.</p>
+    <p>W pierwszym kroku persona zadzwoni do Ciebie. Chce zrozumieć, jak używasz AI na co dzień: co działa, co nie, czego Ci brakuje. Na tej podstawie razem zaprojektujecie specyfikację skilla, który rozwiąże konkretny problem z Twojej codzienności.</p>
+    <p>W drugim kroku odwiedzisz warsztat swojej persony. Przyniesiesz specyfikację z pierwszego kroku, a persona zamieni ją w działający system prompt, który wkleisz do dowolnego AI.</p>
 
     <h3>Zanim zaczniesz</h3>
-    <p>Potrzebujesz gotowego system promptu swojej persony z Kuźni (Pigułka 4). Otwierasz nową rozmowę z AI, wklejasz system prompt persony i treść misji. Persona poprowadzi cię przez proces.</p>
+    <p>Potrzebujesz gotowego system promptu swojej persony z Kuźni (Pigułka 4). Otwierasz nową rozmowę z AI, wklejasz system prompt persony i treść misji. Persona poprowadzi Cię przez proces.</p>
 
     <!-- PILL 5: Diagnosta -->
     <div class="pill-card">
       <div class="pill-card-label">Pigułka 5</div>
       <div class="pill-card-title">Diagnosta</div>
-      <div class="pill-card-desc">Twoja persona dzwoni do ciebie. Chce zrozumieć, jak używasz AI, co działa, co nie, czego ci brakuje. Razem zaprojektujecie specyfikację skilla dopasowanego do twoich potrzeb.</div>
+      <div class="pill-card-desc">Twoja persona dzwoni do Ciebie. Chce zrozumieć, jak używasz AI, co działa, co nie, czego Ci brakuje. Razem zaprojektujecie specyfikację skilla dopasowanego do Twoich potrzeb.</div>
       <ol class="pill-card-steps">
         <li>Otwórz nową rozmowę w AI.</li>
         <li>Wklej system prompt swojej persony (z Pigułki 4) i treść misji (<a href="/pill_5_diagnosta.md" download class="pill-download-link">pobierz Misja: Diagnosta</a>).</li>
@@ -532,11 +532,11 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
       <div class="pill-card">
       <div class="pill-card-label">Pigułka 6</div>
       <div class="pill-card-title">Budowniczy</div>
-      <div class="pill-card-desc">Wchodzisz do warsztatu swojej persony. Przynosisz specyfikację z Pigułki 5. Persona zamienia ją w działający system prompt, krok po kroku, stanowisko po stanowisku.</div>
+      <div class="pill-card-desc">Odwiedzasz warsztat swojej persony. Przynosisz specyfikację z Pigułki 5. Persona zamienia ją w działający system prompt, krok po kroku, stanowisko po stanowisku.</div>
       <ol class="pill-card-steps">
         <li>Otwórz nową rozmowę w AI.</li>
         <li>Wklej system prompt swojej persony, treść misji (<a href="/pill_6_budowniczy.md" download class="pill-download-link">pobierz Misja: Budowniczy</a>) i plik JSON ze specyfikacją z Pigułki 5.</li>
-        <li>Wyślij i wejdź do warsztatu.</li>
+        <li>Wyślij i rozpocznij w warsztacie.</li>
         <li>Na końcu otrzymasz gotowy skill jako plik .md.</li>
       </ol>
       </div>
@@ -558,35 +558,35 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
     <h2>Skąd wiesz, czego chcesz?</h2>
     <div class="section-divider"></div>
 
-    <p>Masz personę. Masz skill. Umiesz budować narzędzia, które AI używa za ciebie. Ale jest jedno pytanie, które do tej pory omijaliśmy: skąd wiesz, czego od tych narzędzi oczekujesz?</p>
-    <p>Kiedy ktoś cię zapyta "jaki jest twój styl pisania?", odpowiesz coś w stylu: "no, raczej konkretny, bez lania wody, może trochę nieformalny." Brzmi sensownie. Problem: to prawie na pewno niepełna odpowiedź. Nie dlatego, że kłamiesz. Dlatego, że nie masz dostępu do pełnej odpowiedzi.</p>
+    <p>Masz personę. Masz skill. Umiesz budować narzędzia, których AI używa za Ciebie. Do tej pory omijaliśmy jednak pytanie: skąd wiesz, czego od tych narzędzi oczekujesz?</p>
+    <p>Kiedy ktoś Cię zapyta "jaki jest twój styl pisania?", odpowiesz coś w stylu: "no, raczej konkretny, bez lania wody, może trochę nieformalny." Brzmi sensownie. Problem: to prawie na pewno niepełna odpowiedź. Nie dlatego, że kłamiesz. Dlatego, że nie masz dostępu do pełnej odpowiedzi.</p>
 
     <h3>Wiedza ukryta</h3>
     <p>Michael Polanyi, chemik i filozof, sformułował to tak: "wiemy więcej, niż potrafimy powiedzieć." Potrafisz rozpoznać twarz przyjaciela w tłumie, ale nie potrafisz opisać, po czym ją rozpoznajesz. Potrafisz jechać na rowerze, ale nie potrafisz wyjaśnić, jak utrzymujesz równowagę. Potrafisz powiedzieć, że zdanie "brzmi źle", ale nie potrafisz wyjaśnić, dlaczego.</p>
-    <p>To jest wiedza ukryta (ang. <em>tacit knowledge</em>): wiedza, którą masz, ale której nie potrafisz zwerbalizować. Twój mózg ją posiada. Twoja kora ruchowa wie, jak jechać na rowerze. Twoja kora przedczołowa wie, kiedy zdanie "brzmi źle". Ale ta wiedza siedzi w sieciach, które nie mają bezpośredniego połączenia z ośrodkami językowymi. Wiesz, ale nie umiesz tego powiedzieć.</p>
-    <p>Preferencje pisarskie to klasyczny przypadek wiedzy ukrytej. Piszesz "raczej konkretnie", ale co to znaczy? Jak krótkie mają być zdania? Kiedy dopuszczasz metaforę? Czy wolisz stronę bierną czy czynną? Kiedy nagłówek jest za długi? Nie wiesz, dopóki nie zobaczysz tekstu, który ci nie pasuje.</p>
+    <p>To jest wiedza ukryta (ang. <em>tacit knowledge</em>): wiedza, którą masz, ale której nie potrafisz zwerbalizować. Neuropsychologia zna ją z pacjentów z amnezją. Uczyli się czytać tekst w lustrzanym odbiciu tak samo szybko jak osoby zdrowe i utrzymywali tę umiejętność co najmniej trzy miesiące (Cohen i Squire, 1980)<!--[s:cohen1980-skill-spared-recollection-lost]-->. Pacjenci z wcześniejszych badań w ten sam sposób opanowywali zadania ruchowe, choć prawie nie pamiętali, że kiedykolwiek je wykonywali (Cohen i Squire, 1980)<!--[s:cohen1980-skill-spared-recollection-lost]-->. Umiejętność i wspomnienie o jej zdobywaniu zależą od różnych sieci. Wiesz jak, choć nie umiesz powiedzieć, co wiesz.</p>
+    <p>Preferencje pisarskie to klasyczny przypadek wiedzy ukrytej. Piszesz "raczej konkretnie", ale co to znaczy? Jak krótkie mają być zdania? Kiedy dopuszczasz metaforę? Czy wolisz stronę bierną czy czynną? Kiedy nagłówek jest za długi? Nie wiesz, dopóki nie zobaczysz tekstu, który Ci nie pasuje.</p>
 
     <h3>Preferencje deklarowane i ujawnione</h3>
-    <p>Ekonomia behawioralna rozróżnia dwa rodzaje preferencji. Preferencje deklarowane to to, co mówisz, że lubisz. Preferencje ujawnione to to, co faktycznie robisz. Ludzie deklarują, że wolą zdrowe jedzenie, a potem kupują chipsy. Deklarują, że cenią czas wolny, a potem pracują po godzinach.</p>
-    <p>To nie jest hipokryzja. To jest rozbieżność między wiedzą deklaratywną a proceduralną. Twoja głowa mówi jedno. Twoje ręce robią drugie. I twoje ręce mają rację częściej, niż ci się wydaje.</p>
-    <p>Kiedy AI pisze tekst na podstawie twojego skilla, a ty poprawiasz wynik, twoje poprawki to preferencje ujawnione. Nie mówisz AI, czego chcesz. Pokazujesz. Każda poprawka to informacja: tu maszyna predykcyjna źle przewidziała, czego oczekujesz. Każde usunięcie to sygnał: tego nie chcę, choć nie umiałem tego wcześniej opisać. Każde dodane zdanie to: tego brakowało, choć nie wiedziałem, że tego potrzebuję.</p>
+    <p>Ekonomia odróżnia preferencje deklarowane od ujawnionych. Teorię preferencji ujawnionych zapoczątkował Paul Samuelson (1938, 1948): preferencje odczytuje się z wyborów, jakich dokonujesz (Beshears et al., 2008)<!--[s:beshears2008-revealed-preference-origin]-->. Preferencje deklarowane to to, co mówisz, że lubisz. Preferencje ujawnione to to, co faktycznie robisz. Ludzie deklarują, że wolą zdrowe jedzenie, a potem kupują chipsy. Deklarują, że cenią czas wolny, a potem pracują po godzinach.</p>
+    <p>Twoja głowa mówi jedno. Twoje ręce robią drugie. Twoje wybory łączą to, czego naprawdę chcesz, z pomyłkami, impulsami chwili, nieuwagą i biernością (Beshears et al., 2008)<!--[s:beshears2008-choices-mix-errors]-->. Twoje poprawki mówią więc o Twoich preferencjach dużo, choć nie wszystko.</p>
+    <p>Kiedy AI pisze tekst na podstawie Twojego skilla, a Ty poprawiasz wynik, Twoje poprawki to preferencje ujawnione. Nie mówisz AI, czego chcesz. Pokazujesz. Każda poprawka to informacja: tu maszyna predykcyjna źle przewidziała, czego oczekujesz. Każde usunięcie to sygnał: tego nie chcę, choć nie umiałem tego wcześniej opisać. Każde dodane zdanie to: tego brakowało, choć nie wiedziałem, że tego potrzebuję.</p>
 
     <h3>Pętla zwrotna</h3>
-    <p>Pamiętasz Sekcję 1? Twój mózg to maszyna do przewidywania. Kiedy predykcja się myli, błąd predykcji zmienia wagi sieci, żeby następnym razem trafić lepiej. To jest uczenie się.</p>
-    <p>Teraz robisz to samo, ale na poziomie wyżej. Twój skill to maszyna predykcyjna: przewiduje, jaki tekst chcesz. Twoje poprawki to błędy predykcji: skill się pomylił. Narzędzie do aktualizacji czyta te błędy i zmienia skill, żeby następnym razem przewidzieć lepiej.</p>
-    <p>Ten sam mechanizm. Ta sama logika. Inna skala.</p>
-    <p>Różnica: twój mózg robi to automatycznie, przez konsolidację w hipokampie i zmiany synaptyczne w korze. Twój skill tego nie potrafi. Potrzebuje ciebie jako pośrednika: ty poprawiasz, narzędzie czyta, skill się zmienia. Ty jesteś hipokampem swojego skilla.</p>
+    <p>Pamiętasz Sekcję 1? Twoje sieci mózgowe cały czas przewidują. Kiedy predykcja się myli, błąd predykcji zmienia połączenia w sieci, żeby następnym razem trafić lepiej. To jest uczenie się.</p>
+    <p>Teraz robisz to samo w większej skali. Model ze skillem w kontekście przewiduje, jaki tekst chcesz. Twoje poprawki to błędy tej predykcji. Narzędzie do aktualizacji czyta te błędy i zmienia skill, żeby następnym razem przewidzieć lepiej.</p>
+    <p>Ta sama logika: błąd zmienia to, co system przewidzi następnym razem. Inny nośnik: u Ciebie synapsy, u skilla tekst instrukcji.</p>
+    <p>Różnica: Twój mózg robi to automatycznie, przez konsolidację w hipokampie i zmiany synaptyczne w korze. Twój skill tego nie potrafi. Potrzebuje Ciebie jako pośrednika: Ty poprawiasz, narzędzie czyta, skill się zmienia. Ty jesteś hipokampem swojego skilla.</p>
 
     <h3>Jak to działa</h3>
-    <p>Przed tobą dwa ćwiczenia, które tworzą pętlę. Pigułka 7 (Redaktor) wyciąga z ciebie twoje preferencje deklarowane i buduje z nich skill do pisania. Narzędzie do aktualizacji czyta twoje preferencje ujawnione z transkryptu i aktualizuje skill o wiedzę, której nie udało ci się wcześniej zwerbalizować.</p>
-    <p>Między nimi jest krok, który robisz sam: otwierasz nową rozmowę, wklejasz skill z Redaktora, piszesz coś i poprawiasz wynik. Na końcu wklejasz narzędzie aktualizacji do tej samej rozmowy. AI przeczyta wstecz całą rozmowę i zaktualizuje skill.</p>
-    <p>Pętla się zamyka. I możesz ją powtarzać: pisz, poprawiaj, aktualizuj. Za każdym razem skill lepiej przewiduje, czego chcesz.</p>
+    <p>Przed Tobą pętla. Pigułka 7 (Redaktor) wyciąga z Ciebie Twoje preferencje deklarowane i buduje z nich skill do pisania. Narzędzie do aktualizacji czyta Twoje preferencje ujawnione z transkryptu i aktualizuje skill o wiedzę, której nie udało Ci się wcześniej zwerbalizować.</p>
+    <p>Między nimi jest krok, który robisz sam: otwierasz nową rozmowę, wklejasz skill z Redaktora, piszesz coś i poprawiasz wynik. Na końcu wklejasz narzędzie aktualizacji do tej samej rozmowy. AI przeczyta wstecz całą rozmowę i zaktualizuje skill. Im krótsza rozmowa testowa, tym pewniej model wyłapie wszystkie Twoje poprawki. Modele badane przez Liu et al. (2024) najsłabiej korzystały ze środka długiego kontekstu<!--[s:liu2024-u-shaped-position-curve]-->.</p>
+    <p>Pętla się zamyka. I możesz ją powtarzać: pisz, poprawiaj, aktualizuj. Z każdą rundą skill ma szansę lepiej przewidywać, czego chcesz.</p>
 
     <!-- PILL 7 -->
     <div class="pill-card">
       <div class="pill-card-label">Pigułka 7</div>
       <div class="pill-card-title">Redaktor</div>
-      <div class="pill-card-desc">Redaktor siedzi w biurze pełnym papierów. Zada ci pytania o to, jak piszesz, co piszesz i czego potrzebujesz. Na końcu zbuduje skill do pisania: instrukcję, którą wkleisz do AI.</div>
+      <div class="pill-card-desc">Redaktor siedzi w biurze pełnym papierów. Zada Ci pytania o to, jak piszesz, co piszesz i czego potrzebujesz. Na końcu zbuduje skill do pisania: instrukcję, którą wkleisz do AI.</div>
       <ol class="pill-card-steps">
         <li>Otwórz nową rozmowę w <a href="https://claude.ai" target="_blank" rel="noopener">Claudzie</a> lub innym AI.</li>
         <li>Pobierz pigułkę poniżej.</li>
@@ -602,8 +602,8 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
     <ol class="pill-card-steps">
       <li>Otwórz nową rozmowę w AI.</li>
       <li>Wklej skill jako pierwszą wiadomość.</li>
-      <li>Napisz cokolwiek: esej, post, notatkę, fragment pracy.</li>
-      <li><strong>Poprawiaj aktywnie.</strong> Skracaj zdania, które są za długie. Zmieniaj słowa, które nie brzmią jak ty. Usuwaj to, co zbędne. Dodawaj to, czego brakuje. Jeśli niczego nie poprawisz, narzędzie nie będzie miało z czym pracować.</li>
+      <li>Napisz cokolwiek: esej, post, notatkę, fragment pracy licencjackiej.</li>
+      <li><strong>Poprawiaj aktywnie.</strong> Skracaj zdania, które są za długie. Zmieniaj słowa, które nie brzmią jak Ty. Usuwaj to, co zbędne. Dodawaj to, czego brakuje. Jeśli niczego nie poprawisz, narzędzie nie będzie miało z czym pracować.</li>
       <li>Kiedy skończysz, nie zamykaj rozmowy. Pobierz narzędzie poniżej i wklej je do tej samej rozmowy.</li>
     </ol>
 
@@ -611,7 +611,7 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
     <div class="pill-card">
       <div class="pill-card-label">Narzędzie</div>
       <div class="pill-card-title">Aktualizacja Skilla</div>
-      <div class="pill-card-desc">Po napisaniu i poprawieniu tekstu wklejasz narzędzie do tej samej rozmowy. AI przeczyta całą rozmowę wstecz, znajdzie wzorce w twoich poprawkach i automatycznie zaktualizuje skill. Nie musisz niczego kopiować.</div>
+      <div class="pill-card-desc">Po napisaniu i poprawieniu tekstu wklejasz narzędzie do tej samej rozmowy. AI przeczyta całą rozmowę, znajdzie wzorce w Twoich poprawkach i zaktualizuje skill. Na końcu skopiujesz nową wersję i zapiszesz ją jako nowy plik.</div>
       <ol class="pill-card-steps">
         <li>Pobierz narzędzie poniżej (zrób to raz, potem masz je na dysku).</li>
         <li>Kiedy skończysz pisać i poprawiać, wklej treść narzędzia do tej samej rozmowy.</li>
@@ -622,7 +622,7 @@ const HASH = "139868ac9e0a879f640dd405720ef7dfb41eef1923bb165cd1cdaf1e238d5cb7";
     </div>
 
     <div class="final-note">
-      <p>Pętla jest otwarta. Weź zaktualizowany skill, otwórz nową rozmowę, pisz z nim, poprawiaj, wklej narzędzie aktualizacji, powtórz. Za każdym razem skill lepiej rozumie, jak piszesz.</p>
+      <p>Pętla jest otwarta. Weź zaktualizowany skill, otwórz nową rozmowę, pisz z nim, poprawiaj, wklej narzędzie aktualizacji, powtórz. Z każdą rundą skill ma szansę lepiej przewidywać, czego chcesz.</p>
     </div>
 
     </div><!-- /.course-page (pisanie panel) -->

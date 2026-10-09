@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import PasswordGate from '../components/PasswordGate.astro';
 const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
 ---
-<Base title="Design Thinking - kogni.pl" activePage="kursy">
+<Base title="Warsztaty Design Thinking - kogni.pl" activePage="kursy">
 
 <style is:global>
   .course-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
@@ -214,7 +214,7 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
   }
   .concept-list li:last-child { border-bottom: none; }
   .concept-list li::before {
-    content: '—';
+    content: '–';
     position: absolute;
     left: 0;
     color: var(--warm-glow);
@@ -289,12 +289,12 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
   }
 </style>
 
-<PasswordGate title="Design Thinking" subtitle="Semestr letni 2025/2026" passwordHash={HASH} sessionKey="design">
+<PasswordGate title="Warsztaty Design Thinking" subtitle="Semestr letni 2025/2026" passwordHash={HASH} sessionKey="design">
   <div class="course-page">
     <a href="/kursy" class="back-link">&larr; Kursy</a>
 
-    <h1>Design Thinking</h1>
-    <p class="meta">warsztat · I rok magisterska · semestr letni 2025/2026 · 30h </p>
+    <h1>Warsztaty Design Thinking</h1>
+    <p class="meta">konwersatorium · I rok II stopnia · semestr letni 2025/2026 · 30h</p>
 
     <div class="dt-process">
       <div class="dt-step done" data-panel="1">
@@ -315,13 +315,13 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
           <div class="dt-label">Synteza</div>
         </button>
       </div>
-      <div class="dt-step active" data-panel="4">
+      <div class="dt-step done" data-panel="4">
         <button data-show="4">
           <div class="dt-dot">04</div>
           <div class="dt-label">Prototyp</div>
         </button>
       </div>
-      <div class="dt-step" data-panel="5">
+      <div class="dt-step done" data-panel="5">
         <button data-show="5">
           <div class="dt-dot">05</div>
           <div class="dt-label">Prezentacja</div>
@@ -332,8 +332,8 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
     <!-- PANEL 1: Empatia -->
     <div class="etap-panel" id="panel-1">
       <div class="status-card">
-        <div class="status-card-label">Etap 1 z 5 — Empatia</div>
-        <p>Na pierwszych zajęciach każdy z Was zaczął od siebie — od tego, co go porusza, i od kogoś bliskiego, kto czegoś potrzebuje. Połączenie tych dwóch obserwacji dało pierwsze What If: wstępny pomysł na grę zakorzeniony w realnym doświadczeniu.</p>
+        <div class="status-card-label">Etap 1 z 5: Empatia</div>
+        <p>Na pierwszych zajęciach każdy z Was zaczął od siebie. Od tego, co go porusza. Od kogoś bliskiego, kto czegoś potrzebuje. Połączenie tych obserwacji dało pierwsze What If: wstępny pomysł na grę zakorzeniony w realnym doświadczeniu.</p>
       </div>
 
       <h2 class="section-heading">Materiały</h2>
@@ -343,7 +343,7 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
         <a class="material-card" href="/dt_worksheet_01.pdf" download>
           <div class="material-icon">◇</div>
           <div class="material-title">Worksheet #1</div>
-          <div class="material-desc">I Like / I Wish / What If — arkusz z pierwszych zajęć.</div>
+          <div class="material-desc">I Like / I Wish / What If: arkusz z pierwszych zajęć.</div>
           <div class="material-download">Pobierz PDF &darr;</div>
         </a>
       </div>
@@ -352,8 +352,8 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
     <!-- PANEL 2: Badania -->
     <div class="etap-panel" id="panel-2">
       <div class="status-card">
-        <div class="status-card-label">Etap 2 z 5 — Badania użytkowników</div>
-        <p>Macie wstępny pomysł na grę. Teraz wasze zadanie to go podważyć — zanim zainwestujecie w jego rozwinięcie. Wywiady z potencjalnymi graczami ujawnią, co jest w nim naprawdę wartościowe, a co jest tylko założeniem. Dobry wywiad nie potwierdza pomysłu. Sprawdza, czy jest potrzebny.</p>
+        <div class="status-card-label">Etap 2 z 5: Badania użytkowników</div>
+        <p>Macie wstępny pomysł na grę. Teraz Wasze zadanie to go podważyć, zanim zainwestujecie w jego rozwinięcie. Wywiady z potencjalnymi graczami pokażą, co jest w nim naprawdę wartościowe, a co jest tylko założeniem. Dobry wywiad sprawdza, czy pomysł jest potrzebny.</p>
       </div>
 
       <h2 class="section-heading">Co powinien zawierać Wasz pomysł</h2>
@@ -361,13 +361,13 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
 
       <p>Na tym etapie powinniście mieć pomysł, który jest wystarczająco konkretny, żeby można było go przetestować. Skorzystajcie z Karty Konceptu aby ustrukturyzować pomysł.</p>
 
-      <p>Dobry koncept na tym etapie odpowiada na cztery pytania:</p>
+      <p>Dobry koncept na tym etapie odpowiada na pytania:</p>
 
       <ul class="concept-list">
         <li><strong>Co to jest?</strong> Jaka forma gry (planszowa, karciana, cyfrowa, fizyczna). Jedna zdecydowana odpowiedź, nie lista opcji.</li>
         <li><strong>Dla kogo?</strong> Konkretna grupa użytkowników, do której macie realny dostęp. Nie "wszyscy" ani "ludzie którzy lubią gry".</li>
-        <li><strong>Jaki problem rozwiązuje lub jaką potrzebę adresuje?</strong> To musi wynikać z Waszego "I Wish" — z obserwacji rzeczywistej potrzeby kogoś konkretnego.</li>
-        <li><strong>Czego jeszcze nie wiecie?</strong> Lista założeń, które trzeba sprawdzić w wywiadach. Im dłuższa, tym lepiej — oznacza, że myślicie krytycznie.</li>
+        <li><strong>Jaki problem rozwiązuje lub jaką potrzebę adresuje?</strong> To musi wynikać z Waszego „I Wish”: z obserwacji rzeczywistej potrzeby kogoś konkretnego.</li>
+        <li><strong>Czego jeszcze nie wiecie?</strong> Lista założeń, które trzeba sprawdzić w wywiadach. Im dłuższa, tym lepiej: oznacza, że myślicie krytycznie.</li>
       </ul>
 
       <p>Pomysł nie musi być oryginalny. Musi być zakorzeniony w realnej obserwacji i otwarty na weryfikację.</p>
@@ -398,14 +398,14 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
         </a>
       </div>
 
-      <p class="deadline-note">Materiały i notatki z wywiadów — na kolejne zajęcia.</p>
+      <p class="deadline-note">Materiały i notatki z wywiadów przynosicie na kolejne zajęcia.</p>
     </div>
 
     <!-- PANELS 3–5: placeholder -->
     <div class="etap-panel" id="panel-3">
       <div class="status-card">
-        <div class="status-card-label">Etap 3 z 5 — Synteza</div>
-        <p>Macie za sobą wywiady. Teraz czas zebrać to, czego się dowiedzieliście, i zobaczyć, co z tego wynika dla Waszego projektu. Przed kolejnymi zajęciami wypełnijcie arkusz stanu projektu i odeślijcie go prowadzącemu.</p>
+        <div class="status-card-label">Etap 3 z 5: Synteza</div>
+        <p>Macie za sobą wywiady. Teraz czas zebrać to, czego się dowiedzieliście. Zobaczcie, co z tego wynika dla Waszego projektu. Przed kolejnymi zajęciami wypełnijcie arkusz stanu projektu i odeślijcie go prowadzącemu.</p>
       </div>
 
       <h2 class="section-heading">Materiały</h2>
@@ -422,14 +422,14 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
     </div>
     <div class="etap-panel" id="panel-4">
       <div class="status-card">
-        <div class="status-card-label">Etap 4 z 5 — Prototyp i test</div>
+        <div class="status-card-label">Etap 4 z 5: Prototyp i test</div>
         <p>Macie prototyp. Teraz sprawdzicie, jak radzi sobie w rękach kogoś, kto nigdy wcześniej nie słyszał o Waszej grze. Dajecie prototyp i instrukcję. Nic nie tłumaczycie. Obserwujecie. Potem przeprowadzacie krótki wywiad.</p>
       </div>
 
       <h2 class="section-heading">Jak przeprowadzić test</h2>
       <div class="section-divider"></div>
 
-      <p>Znajdźcie minimum 3 osoby, które nigdy nie słyszały o Waszej grze. Nie kolegów z zespołu, nie osoby które widziały prototyp, nie kogoś komu opowiadaliście o pomyśle. Dajecie im grę i instrukcję. Nie tłumaczycie zasad. Nie podpowiadacie. Obserwujecie, jak radzą sobie sami.</p>
+      <p>Znajdźcie co najmniej trzech testerów spoza projektu. Tester spotyka Waszą grę pierwszy raz w chwili testu. Dajecie im grę i instrukcję. Nie tłumaczycie zasad. Nie podpowiadacie. Obserwujecie, jak radzą sobie sami.</p>
 
       <p>W trakcie gry notujecie fakty: co gracz zrobił najpierw, gdzie się zatrzymał, co było niejasne, o co pytał. Po grze przeprowadzacie krótki wywiad: co czuł, co zrozumiał, co by zmienił, czy zagrałby jeszcze raz.</p>
 
@@ -447,12 +447,12 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
         </a>
       </div>
 
-      <p class="deadline-note">Testy z użytkownikami i wypełnione arkusze — na kolejne zajęcia.</p>
+      <p class="deadline-note">Testy z użytkownikami i wypełnione arkusze przynosicie na kolejne zajęcia.</p>
     </div>
     <div class="etap-panel" id="panel-5">
       <div class="status-card">
-        <div class="status-card-label">Etap 5 z 5 — Prezentacja</div>
-        <p>Materiały pojawią się po zajęciach.</p>
+        <div class="status-card-label">Etap 5 z 5: Prezentacja</div>
+        <p>Każdy zespół pokazuje grę, wyniki testów i zmiany wprowadzone po testach.</p>
       </div>
     </div>
 
@@ -468,7 +468,7 @@ const HASH = "a77de8a6daa1129516b14c8ca1e233a51a8414b202eac7c8acfbb9b485046ad4";
         btn.addEventListener('click', () => showPanel(btn.dataset.show));
       });
 
-      showPanel(4);
+      showPanel(5);
     </script>
 
   </div>

@@ -11,7 +11,7 @@ description: >
 tags: [pisanie, skill, aktualizacja, feedback, preferencje, wzorce]
 ---
 
-[PRE-FLIGHT: Czy na początku rozmowy jest skill pisania? Czy w rozmowie są poprawki studenta -- zmiany, odrzucenia, przepisane fragmenty? Jeśli brakuje jednego z nich, poproś o brakujący element. Jeśli oba są obecne, zacznij od pełnego przeglądu rozmowy wstecz.]
+[PRE-FLIGHT: Czy na początku rozmowy jest skill pisania? Czy w rozmowie są poprawki studenta – zmiany, odrzucenia, przepisane fragmenty? Jeśli brakuje jednego z nich, poproś o brakujący element. Jeśli oba są obecne, zacznij od pełnego przeglądu rozmowy wstecz.]
 
 SKILL: skill_update
 
@@ -41,21 +41,21 @@ Cisza to też dowód: fragment zaakceptowany bez komentarza to skill, który tra
 
 Wzorzec to powtarzający się kierunek, nie pojedyncza poprawka. Trzy skrócone zdania w różnych miejscach to wzorzec: "krótsze zdania." Jedna zmiana tytułu to obserwacja, nie wzorzec.
 
-Heurystyka klasyfikacji -- decyzja automatyczna, bez pytania:
+Heurystyka klasyfikacji – decyzja automatyczna, bez pytania:
 
-**Stały ślad:** konsekwentna preferencja niezależna od tematu. Wchodzi do skilla. Przykład: student skraca 4 zdania w 3 różnych akapitach, zawsze do 10-12 słów. Do skilla trafia: "Pisz zdania do 12 słów."
+**Stały ślad:** konsekwentna preferencja niezależna od tematu. Trafia do skilla. Przykład: student skraca 4 zdania w 3 różnych akapitach, zawsze do 10-12 słów. Do skilla trafia: "Pisz zdania do 12 słów."
 
-**Jednorazowy ślad:** poprawka specyficzna dla tego tekstu. NIE wchodzi. Przykład: student zmienia tytuł z "Wprowadzenie" na "Jak to działa". Jedna zmiana, jeden kontekst.
+**Jednorazowy ślad:** poprawka specyficzna dla tego tekstu. NIE trafia do skilla. Przykład: student zmienia tytuł z "Wprowadzenie" na "Jak to działa". Jedna zmiana, jeden kontekst.
 
 **Brakujący ślad:** student potrzebuje czegoś, czego skill nie pokrywa. Nowa instrukcja. Przykład: student pisze "dodaj źródła na końcu". Skill nie ma sekcji o cytatach. Nowa zasada: "Na końcu tekstu podaj 2-3 źródła."
 
 ### Wierność strukturze
 
-Zaktualizowany skill zachowuje architekturę oryginału. Zmienia TYLKO to, co wzorce uzasadniają. Jeśli oryginał nie ma sekcji Przykłady, Czego unikać, Granice lub Historia zmian -- dodaj je i wypełnij na podstawie wzorców. Ale istniejące sekcje, których wzorce nie dotyczą, zostają dokładnie jak były.
+Zaktualizowany skill zachowuje architekturę oryginału. Zmienia TYLKO to, co wzorce uzasadniają. Jeśli oryginał nie ma sekcji Przykłady, Czego unikać, Zakres lub Historia zmian – dodaj je i wypełnij na podstawie wzorców. Ale istniejące sekcje, których wzorce nie dotyczą, zostają dokładnie jak były.
 
 ### Głos studenta
 
-Przykłady w skillu odzwierciedlają styl, który student POKAZAŁ poprawkami, nie styl domyślny AI. Student skracał zdania do 10 słów, a Przykłady mają po 25 -- to sprzeczność, która niszczy skill.
+Przykłady w skillu odzwierciedlają styl, który student POKAZAŁ poprawkami, nie styl domyślny AI. Student skracał zdania do 10 słów, a Przykłady mają po 25 – to sprzeczność, która niszczy skill.
 
 Dobry przykład w skillu: 2-3 zdania z etykietą ("ton formalny:", "otwarcie posta:") pisane tak, jak student pisze po poprawkach.
 
@@ -66,7 +66,7 @@ Każda zasada w zaktualizowanym skillu musi być weryfikowalna. "Pisz zdania do 
 Sekcja "Czego unikać" w skillu wymaga konkretnego zachowania + przykładu złego i dobrego outputu:
 
 > Źle: "Warto zauważyć, że w dzisiejszych czasach..."
-> Dobrze: "Trzy rzeczy się zmieniły."
+> Dobrze: "Zmieniły się ceny, rozkład jazdy i adres biura."
 
 Repellent bez przykładu jest abstrakcją, nie instrukcją.
 
@@ -78,7 +78,7 @@ Model generuje nowy skill na podstawie swojego rozumienia "dobrego pisania" zami
 
 ### Inflacja zasad
 
-Każda obserwacja staje się zasadą. Skill rośnie z 5 zasad do 15 po jednej aktualizacji. Większość nowych zasad to jednorazowe poprawki podniesione do rangi stałych preferencji. Mechanizm: model nie stosuje klasyfikacji stały/jednorazowy i traktuje każdą poprawkę jako preferencję wartą utrwalenia. Wynik: skill staje się tak restrykcyjny, że AI nie może napisać nic naturalnego.
+Każda obserwacja staje się zasadą. Po jednej aktualizacji liczba zasad w skillu się potraja. Większość nowych zasad to jednorazowe poprawki podniesione do rangi stałych preferencji. Mechanizm: model nie stosuje klasyfikacji stały/jednorazowy i traktuje każdą poprawkę jako preferencję wartą utrwalenia. Wynik: skill staje się tak restrykcyjny, że AI nie może napisać nic naturalnego.
 
 ### Przykłady w stylu AI
 
