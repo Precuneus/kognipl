@@ -2560,6 +2560,8 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
       });
     }
 
+    const navLinks = document.querySelectorAll('.nav-sidebar a[data-nav]');
+
     checkboxes.forEach(cb => {
       cb.addEventListener('change', () => { updateSessionVisibility(); syncAllToggle(); });
     });
@@ -2568,7 +2570,6 @@ const HASH = "f4af56884306e3a5bc827f87770f843ec80be636fba15386e940a64d99d29a63";
     syncAllToggle();
 
     // ── Section navigator: scroll tracking ──
-    const navLinks = document.querySelectorAll('.nav-sidebar a[data-nav]');
     const sectionIds = ['sec-perspektywy','sub-perspektywy','sub-model','sec-zasady','sub-predykcja','sub-informacja','sec-architektura','sub-sieci','sub-nisze','sec-daleko','sub-dmn','sub-hipokamp','sub-pamiec','sub-sen','sub-pojecia','sub-myslenie','sub-spoleczny','sub-teoria-umyslu','sec-blisko','sub-afordancje','sub-4e','sec-uczenie','sub-stadia','sub-przywiazanie','sub-dopamina','sub-przyczyny','sub-przejecie','sub-serotonina','sec-jezyk','sub-jezyk','sub-afazja','sub-jezyk-myslenie','sec-salience','sub-lancuch','sub-emocje','sub-afekt','sub-sm','sub-koregulacja','sub-granulacja','sec-wnioski','sec-pytania'];
     const allNavEls = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
     let currentNav = '';
