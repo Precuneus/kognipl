@@ -2,15 +2,53 @@
 import Base from '../layouts/Base.astro';
 import { latest } from '../rocznik/data.js';
 const KURS = { Intro: 'Wstęp do kognitywistyki I', Neurokogni: 'Neurokognitywistyka' };
+// The brain of the karta page (views/karta.js), each network in its own colour.
 // Order: from the receptors to the default network (connectivity gradient, Margulies et al. 2016).
 const SIECI = [
-  { k: 'vis', kod: 'VIS', kolor: '#ee6b6f', nazwa: 'sieć wzrokowa', obszary: 'biegun potyliczny', rola: [['', '„Widzę.”']] },
-  { k: 'smn', kod: 'SMN', kolor: '#f9d780', nazwa: 'sieć czuciowo-ruchowa', obszary: 'MC, SSC, PN', rola: [['', '„Czuję ciało i się ruszam.”']] },
-  { k: 'dan', kod: 'DAN', kolor: '#e58e76', nazwa: 'sieć grzbietowa uwagi', obszary: 'FEF, IFJ, SPL, IPS, V3, V5', rola: [['', '„Koordynuję oko i rękę.”']] },
-  { k: 'sn', kod: 'SN · VAN', kolor: '#8e9881', nazwa: 'sieć istotności i sieć brzuszna uwagi', obszary: 'aINS, ACC, TPJ', rola: [['SN', '„Coś zagraża schematowi ciała.”'], ['VAN', '„Coś przerywa plan.”']] },
-  { k: 'cn', kod: 'CN', kolor: '#f69959', nazwa: 'sieć kontroli', obszary: 'dlPFC, rPFC, aIPL', rola: [['', '„Trzymam zadanie.”']] },
-  { k: 'dmn', kod: 'DMN', kolor: '#bb6fb2', nazwa: 'sieć domyślna', obszary: 'mPFC, IFG, STS, MTG, pIPL, AG', rola: [['', '„Ja, przeszłość i przyszłość, inni ludzie.”']] },
+  { k: 'vis', kod: 'VIS', kolor: '#ee6b6f', nazwa: 'sieć wzrokowa', obszary: 'biegun potyliczny, bruzda ostrogowa', rola: '„Widzę.”' },
+  { k: 'smn', kod: 'SMN', kolor: '#f9d780', nazwa: 'sieć czuciowo-ruchowa', obszary: 'kora ruchowa i czuciowa, kora słuchowa', rola: '„Czuję ciało i się ruszam.”' },
+  { k: 'dan', kod: 'DAN', kolor: '#e58e76', nazwa: 'sieć grzbietowa uwagi', obszary: 'FEF, SPL, IPS, V5', rola: '„Koordynuję oko i rękę.”' },
+  { k: 'van', kod: 'VAN', kolor: '#6fb3a8', nazwa: 'sieć brzuszna uwagi', obszary: 'TPJ, IFG', rola: '„Coś przerywa plan.”' },
+  { k: 'sn', kod: 'SN', kolor: '#a9b26f', nazwa: 'sieć istotności', obszary: 'aINS, dACC', rola: '„Coś zagraża schematowi ciała.”' },
+  { k: 'cn', kod: 'CN', kolor: '#f69959', nazwa: 'sieć kontroli', obszary: 'dlPFC, aIPL', rola: '„Trzymam zadanie.”' },
+  { k: 'dmn', kod: 'DMN', kolor: '#bb6fb2', nazwa: 'sieć domyślna', obszary: 'mPFC, PCC, AG, MTG, MTL', rola: '„Ja, przeszłość i przyszłość, inni ludzie.”' },
 ];
+const COL = Object.fromEntries(SIECI.map((s) => [s.k, s.kolor]));
+const OUTLINE = [
+  ['M 34 104 C 20 80, 26 46, 58 30 C 88 14, 132 10, 168 18 C 200 26, 226 48, 232 78 C 236 98, 226 114, 212 118 C 196 122, 180 120, 168 124 C 152 136, 130 146, 108 144 C 88 142, 74 132, 70 120 C 62 122, 52 120, 46 116 C 40 113, 36 109, 34 104 Z', 'rgba(226,221,212,0.04)', 'rgba(226,221,212,0.45)', 1.2],
+  ['M 170 124 C 186 118, 214 120, 220 134 C 224 148, 204 156, 186 152 C 172 149, 162 138, 170 124 Z', 'rgba(226,221,212,0.03)', 'rgba(226,221,212,0.3)', 1],
+  ['M 150 134 C 152 148, 154 160, 156 170 L 168 170 C 166 158, 165 146, 167 130', 'none', 'rgba(226,221,212,0.3)', 1],
+];
+const VIEWS = [
+  {
+    dx: 0, cap: 'z boku',
+    lines: [
+      ['M 74 116 C 96 102, 126 96, 160 100', 'none'],
+      ['M 130 16 C 126 38, 118 62, 112 96', 'none'],
+    ],
+    blobs: [
+      ['vis', 224, 100, 10, 15], ['smn', 120, 56, 10, 36, 14], ['smn', 124, 106, 11, 5],
+      ['dan', 100, 36, 8, 8], ['dan', 156, 36, 16, 10], ['dan', 204, 110, 7, 6],
+      ['van', 168, 96, 10, 8], ['van', 66, 82, 7, 6], ['sn', 96, 108, 10, 5],
+      ['cn', 62, 56, 14, 11], ['cn', 176, 64, 11, 8], ['dmn', 198, 82, 9, 9], ['dmn', 124, 128, 18, 6],
+    ],
+    labels: [['vis', 224, 103], ['smn', 119, 62], ['dan', 156, 39], ['van', 168, 99], ['sn', 96, 111], ['cn', 62, 59], ['dmn', 124, 131]],
+  },
+  {
+    dx: 244, cap: 'od środka',
+    lines: [
+      ['M 92 88 C 112 70, 170 68, 194 84 C 198 92, 190 96, 184 92 C 166 80, 118 82, 100 96 C 94 98, 88 94, 92 88 Z', 'rgba(226,221,212,0.08)'],
+      ['M 60 70 C 80 50, 150 44, 186 64', 'none'],
+      ['M 200 104 C 210 102, 222 100, 232 96', 'none'],
+    ],
+    blobs: [
+      ['vis', 214, 104, 15, 9], ['smn', 126, 22, 16, 8], ['sn', 104, 70, 13, 7], ['sn', 100, 30, 9, 6],
+      ['dmn', 50, 76, 12, 16], ['dmn', 180, 64, 13, 12], ['dmn', 136, 124, 18, 6],
+    ],
+    labels: [['vis', 214, 107], ['smn', 126, 25], ['sn', 104, 73], ['dmn', 50, 79]],
+  },
+];
+const KOD = Object.fromEntries(SIECI.map((s) => [s.k, s.kod]));
 const R2025 = [['/2025/', 'Strona startowa'], ['/2025/wstep-2/', 'Wstęp do kognitywistyki II'], ['/2025/mip/', 'Mózg i poznanie'], ['/2025/design/', 'Warsztaty Design Thinking'], ['/2025/drugi-mozg/', 'Drugi mózg z AI']];
 const R2026 = [['/2026/', 'Płótno'], ['/2026/osnowy/', 'Osnowy'], ['/2026/watki/', 'Wątki'], ['/2026/wstep-1/', 'Wstęp do kognitywistyki I'], ['/2026/neurocogni/', 'Neurokognitywistyka']];
 ---
@@ -20,32 +58,34 @@ const R2026 = [['/2026/', 'Płótno'], ['/2026/osnowy/', 'Osnowy'], ['/2026/watk
 <section class="sieci" aria-labelledby="sieci-h">
   <p class="sieci-lead">Doświadczenie jest aktywnością sieci Twojego mózgu: od środka czytasz te słowa, a z boku przyrządy mierzą rzut tej samej aktywności.</p>
   <h2 class="sr-only" id="sieci-h">Sieci mózgu</h2>
-  <div class="sieci-grid">
-    <figure class="sieci-fig">
-      <div class="sieci-stack" data-sieci>
-        <img class="sieci-all" src="/images/2026/sieci.webp" width="1200" height="900" alt="Boczny widok lewej półkuli mózgu z obszarami sieci w kolorach: biegun potyliczny, kora ruchowa i czuciowa, sieć grzbietowa uwagi, sieć istotności, sieć kontroli i sieć domyślna, z podpisami obszarów." />
-        {SIECI.map((s) => <img class="sieci-layer" data-k={s.k} data-src={'/images/2026/sieci-' + s.k + '.webp'} width="1200" height="900" alt="" aria-hidden="true" />)}
-      </div>
-      <figcaption>Rysunek mózgu: Patrick J. Lynch i C. Carl Jaffe, CC BY 2.5. Sieci i podpisy: Olgierd Borowiecki.</figcaption>
-    </figure>
-    <div class="sieci-side">
-      <ul class="sieci-legend" aria-label="Sieci mózgu i ich role">
-        {SIECI.map((s) => (
-          <li>
-            <button type="button" data-k={s.k} aria-pressed="false" style={'--c:' + s.kolor}>
-              <span class="sieci-sw" aria-hidden="true"></span>
-              <span class="sieci-txt">
-                <span class="sieci-kod">{s.kod}</span> <span class="sieci-nazwa">{s.nazwa}</span>
-                {s.rola.map(([who, r]) => <span class="sieci-rola">{who && <b>{who}</b>}{r}</span>)}
-                <span class="sieci-obszary">{s.obszary}</span>
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
-      <p class="sieci-note">Od receptorów do sieci domyślnej, według gradientu łączności (Margulies i in. 2016). <a href="/2026/karty/sieci-wielkoskalowe/">Karta: Sieci wielkoskalowe →</a></p>
-    </div>
-  </div>
+  <figure class="sieci-fig">
+    <svg class="sieci-svg" data-sieci viewBox="16 6 466 170" role="img" aria-label="Sieci mózgu na półkuli z boku i od środka: wzrokowa, czuciowo-ruchowa, grzbietowa uwagi, brzuszna uwagi, istotności, kontroli i domyślna.">
+      {VIEWS.map((v) => (
+        <g transform={'translate(' + v.dx + ' 0)'}>
+          {OUTLINE.map(([d, fill, stroke, w]) => <path d={d} fill={fill} stroke={stroke} stroke-width={w} />)}
+          {v.lines.map(([d, fill]) => <path d={d} fill={fill} stroke="rgba(226,221,212,0.28)" stroke-width="1" />)}
+          {v.blobs.map(([k, cx, cy, rx, ry, rot]) => <ellipse class="nb" data-k={k} cx={cx} cy={cy} rx={rx} ry={ry} fill={COL[k]} transform={rot ? 'rotate(' + rot + ' ' + cx + ' ' + cy + ')' : undefined} />)}
+          {v.labels.map(([k, x, y]) => <text class="nl" data-k={k} x={x} y={y} text-anchor="middle">{KOD[k]}</text>)}
+          <text class="ncap" x="130" y="168" text-anchor="middle">{v.cap}</text>
+        </g>
+      ))}
+    </svg>
+  </figure>
+  <ul class="sieci-legend" aria-label="Sieci mózgu i ich role">
+    {SIECI.map((s) => (
+      <li>
+        <button type="button" data-k={s.k} aria-pressed="false" style={'--c:' + s.kolor}>
+          <span class="sieci-sw" aria-hidden="true"></span>
+          <span class="sieci-txt">
+            <span class="sieci-kod">{s.kod}</span> <span class="sieci-nazwa">{s.nazwa}</span>
+            <span class="sieci-rola">{s.rola}</span>
+            <span class="sieci-obszary">{s.obszary}</span>
+          </span>
+        </button>
+      </li>
+    ))}
+  </ul>
+  <p class="sieci-note">Od receptorów do sieci domyślnej, według gradientu łączności (Margulies i in. 2016). <a href="/2026/karty/sieci-wielkoskalowe/">Karta: Sieci wielkoskalowe →</a></p>
 </section>
 
 <section class="drzwi" aria-label="Roczniki">
@@ -65,32 +105,32 @@ const R2026 = [['/2026/', 'Płótno'], ['/2026/osnowy/', 'Osnowy'], ['/2026/watk
 </section>
 
 <script>
-  const stack = document.querySelector('[data-sieci]');
+  const svg = document.querySelector('[data-sieci]');
+  const parts = [...svg.querySelectorAll('[data-k]')];
   const buttons = [...document.querySelectorAll('.sieci-legend button')];
+  const fine = matchMedia('(hover: hover)').matches;
   let pinned = '';
-  let loaded = false;
-  const load = () => {
-    if (loaded) return;
-    loaded = true;
-    stack.querySelectorAll('.sieci-layer').forEach((img) => { img.src = img.dataset.src; });
-  };
   const show = (k) => {
-    stack.classList.toggle('has-on', !!k);
-    stack.querySelectorAll('.sieci-layer').forEach((img) => img.classList.toggle('on', img.dataset.k === k));
+    svg.classList.toggle('has-on', !!k);
+    parts.forEach((p) => p.classList.toggle('on', p.dataset.k === k));
     buttons.forEach((b) => b.classList.toggle('on', b.dataset.k === k));
   };
-  const fine = matchMedia('(hover: hover)').matches;
+  const pin = (k) => {
+    pinned = pinned === k ? '' : k;
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.k === pinned)));
+    show(pinned || (fine ? k : ''));
+  };
   buttons.forEach((b) => {
-    b.addEventListener('pointerenter', () => { load(); if (fine) show(b.dataset.k); });
+    b.addEventListener('pointerenter', () => { if (fine) show(b.dataset.k); });
     b.addEventListener('pointerleave', () => { if (fine) show(pinned); });
-    b.addEventListener('focus', () => { load(); show(b.dataset.k); });
+    b.addEventListener('focus', () => show(b.dataset.k));
     b.addEventListener('blur', () => show(pinned));
-    b.addEventListener('click', () => {
-      load();
-      pinned = pinned === b.dataset.k ? '' : b.dataset.k;
-      buttons.forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.k === pinned)));
-      show(pinned || (fine ? b.dataset.k : ''));
-    });
+    b.addEventListener('click', () => pin(b.dataset.k));
+  });
+  svg.querySelectorAll('.nb').forEach((e) => {
+    e.addEventListener('pointerenter', () => { if (fine) show(e.dataset.k); });
+    e.addEventListener('pointerleave', () => { if (fine) show(pinned); });
+    e.addEventListener('click', () => pin(e.dataset.k));
   });
 </script>
 </Base>
