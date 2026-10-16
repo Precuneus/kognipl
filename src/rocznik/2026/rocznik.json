@@ -1,0 +1,356 @@
+{
+ "rok": 2026,
+ "poziomy": [
+  "grupa organizmów",
+  "organizm",
+  "sieć mózgowa",
+  "komórka",
+  "fizyka"
+ ],
+ "grupy": [
+  {
+   "nazwa": "socjologia",
+   "osnowy": [
+    {
+     "nazwa": "Kultura i społeczeństwo",
+     "opis": "Przekaz zachowań między pokoleniami, różnice kulturowe, demografię i naukę jako działanie zbiorowe.",
+     "rodziny": [
+      "Kultura",
+      "Nauka jako zbiorowość",
+      "Demografia rodziny"
+     ]
+    },
+    {
+     "nazwa": "Umysł społeczny",
+     "opis": "Rozumienie cudzych umysłów, więzi, współpracę i rozwój dziecka w relacji z innymi.",
+     "rodziny": [
+      "Teoria umysłu",
+      "Wspólna intencjonalność",
+      "Więź i przywiązanie",
+      "Współpraca i konflikt",
+      "Rozwój dziecka"
+     ]
+    },
+    {
+     "nazwa": "Sztuczni agenci",
+     "opis": "Działanie modeli językowych i agentów AI oraz ich wpływ na zatrudnienie.",
+     "rodziny": [
+      "Modele językowe",
+      "Agenci AI",
+      "AI w zatrudnieniu"
+     ]
+    }
+   ]
+  },
+  {
+   "nazwa": "psychologia",
+   "osnowy": [
+    {
+     "nazwa": "Język",
+     "opis": "Mózgowe podłoże mowy, rozumienie i czytanie oraz wpływ języka na myślenie.",
+     "rodziny": [
+      "Mózg języka",
+      "Język a myślenie",
+      "Rozumienie i czytanie"
+     ]
+    },
+    {
+     "nazwa": "Świadomość",
+     "opis": "Oznaki i stany świadomości, jaźń i jej podział.",
+     "rodziny": [
+      "Oznaki świadomości",
+      "Stany zmienione",
+      "Rozszczepiony mózg"
+     ]
+    },
+    {
+     "nazwa": "Myślenie",
+     "opis": "Rozumowanie, rozwiązywanie problemów i planowanie, odkrywanie reguł, funkcje wykonawcze, inteligencję i twórczość.",
+     "rodziny": [
+      "Rozumowanie i wnioskowanie",
+      "Rozwiązywanie problemów i planowanie",
+      "Odkrywanie reguł",
+      "Funkcje wykonawcze",
+      "Inteligencja",
+      "Twórczość"
+     ]
+    },
+    {
+     "nazwa": "Decyzja i działanie",
+     "opis": "Powstawanie intencji i jej czas, poczucie sprawczości, wybór i wartość opcji oraz lukę między intencją a działaniem.",
+     "rodziny": [
+      "Intencja i sprawczość",
+      "Wybór i wartość",
+      "Luka między intencją a działaniem"
+     ]
+    },
+    {
+     "nazwa": "Nawyk i automatyzacja",
+     "opis": "Warunkowanie, uczenie ze wzmocnienia, przejście od działania celowego do nawyku, nabywanie wprawy i pętle jąder podstawy.",
+     "rodziny": [
+      "Warunkowanie",
+      "Uczenie ze wzmocnienia",
+      "Cel a nawyk",
+      "Wprawa i ekspertyza",
+      "Jądra podstawy"
+     ]
+    },
+    {
+     "nazwa": "Pamięć i przestrzeń",
+     "opis": "Zapisywanie, utrwalanie i odtwarzanie śladów pamięci oraz mapy przestrzeni i pojęć.",
+     "rodziny": [
+      "Mapy przestrzeni",
+      "Przestrzenie pojęć",
+      "Rekonstrukcja i wyobrażanie",
+      "Systemy pamięci",
+      "Utrwalanie śladu"
+     ]
+    },
+    {
+     "nazwa": "Osobowość i zdrowie psychiczne",
+     "opis": "Trwałe cechy osobowości, neuroróżnorodność oraz zaburzenia nastroju, lęku i tożsamości.",
+     "rodziny": [
+      "Nastrój i lęk",
+      "Trauma i dysocjacja",
+      "Neuroróżnorodność",
+      "Osobowość"
+     ]
+    },
+    {
+     "nazwa": "Emocje",
+     "opis": "Powstawanie, wyrażanie i regulację emocji, nagrodę i przyjemność oraz reakcje strachu, stresu i bólu.",
+     "rodziny": [
+      "Konstruowanie emocji",
+      "Nagroda i przyjemność",
+      "Strach i stres",
+      "Regulacja emocji",
+      "Ból i placebo"
+     ]
+    },
+    {
+     "nazwa": "Ciało i ruch",
+     "opis": "Czucie własnego ciała, sterowanie ruchem, schemat ciała z narzędziami oraz wpływ wysiłku, snu i fizjologii na mózg.",
+     "rodziny": [
+      "Interocepcja",
+      "Propriocepcja i dotyk",
+      "Sterowanie ruchem",
+      "Schemat ciała i narzędzia",
+      "Fizjologia i zdrowie ciała"
+     ]
+    },
+    {
+     "nazwa": "Percepcja i uwaga",
+     "opis": "Przetwarzanie bodźców od fizyki światła i receptorów przez szlaki kory po obrazy umysłowe oraz uwagę i jej zaburzenia.",
+     "rodziny": [
+      "Światło",
+      "Oko i barwa",
+      "Kora wzrokowa i szlaki",
+      "Uwaga",
+      "Zaburzenia widzenia",
+      "Inne zmysły",
+      "Muzyka",
+      "Obrazy umysłowe"
+     ]
+    }
+   ]
+  },
+  {
+   "nazwa": "biologia",
+   "osnowy": [
+    {
+     "nazwa": "Sieci mózgu i predykcja",
+     "opis": "Anatomię mózgu, jego sieci wielkoskalowe, rytmy i dojrzewanie oraz predykcję i zaskoczenie.",
+     "rodziny": [
+      "Predykcja",
+      "Sieci wielkoskalowe",
+      "Anatomia mózgu",
+      "Rytmy i fale",
+      "Rozwój mózgu"
+     ]
+    },
+    {
+     "nazwa": "Neuron i synapsa",
+     "opis": "Elektryczne i chemiczne działanie pojedynczego neuronu i synapsy oraz zmiany siły połączeń między neuronami.",
+     "rodziny": [
+      "Budowa i elektryka neuronu",
+      "Przekaźnictwo synaptyczne",
+      "Plastyczność i połączenia"
+     ]
+    },
+    {
+     "nazwa": "Życie i umieranie",
+     "opis": "Procesy molekularne, energetyczne i regulacyjne, którymi komórki i ich wspólnoty utrzymują się przy życiu, uczą się, współdziałają i umierają.",
+     "rodziny": [
+      "Cząsteczki i geny",
+      "Energia komórki",
+      "Uczenie bez mózgu",
+      "Wspólnoty komórek",
+      "Umieranie"
+     ]
+    },
+    {
+     "nazwa": "Ewolucja",
+     "opis": "Zmiany gatunków i układów nerwowych w czasie oraz zdolności poznawcze różnych zwierząt.",
+     "rodziny": [
+      "Ewolucja układu nerwowego",
+      "Człowiek w ewolucji",
+      "Poznanie zwierząt"
+     ]
+    }
+   ]
+  },
+  {
+   "nazwa": "fizyka",
+   "osnowy": [
+    {
+     "nazwa": "Energia i jej przemiany",
+     "opis": "Entropię i kierunek czasu, symetrie i prawa zachowania, elektryczność i fale elektromagnetyczne oraz zjawiska kwantowe.",
+     "rodziny": [
+      "Entropia i prawa fizyki",
+      "Elektryczność i fale elektromagnetyczne",
+      "Zjawiska kwantowe"
+     ]
+    },
+    {
+     "nazwa": "Pomiar mózgu",
+     "opis": "Sygnały fizyczne, którymi przyrządy mierzą aktywność mózgu, i rozdzielczość tych pomiarów.",
+     "rodziny": [
+      "Sygnał elektryczny",
+      "Sygnał hemodynamiczny i magnetyczny",
+      "Rozdzielczość pomiaru",
+      "Dyfuzja, przepływ, ciśnienie"
+     ]
+    }
+   ]
+  }
+ ],
+ "zajęcia": [
+  {
+   "id": "07-10-neurokogni",
+   "kurs": "Neurokogni",
+   "data": "2026-10-07",
+   "tytuł": "Od układu nerwowego do sieci",
+   "odbyte": true,
+   "po_zajęciach": []
+  },
+  {
+   "id": "13-10-intro",
+   "kurs": "Intro",
+   "data": "2026-10-13",
+   "tytuł": "Gry, sprawczość i decyzje",
+   "odbyte": true,
+   "po_zajęciach": [
+    {
+     "tytuł": "Surnex, Once you see this, You'll see Competitive Games Differently · 0:00–14:02 (14:02)",
+     "url": "https://youtu.be/NgHvdCcmQ4o"
+    },
+    {
+     "tytuł": "Sapolsky, Human Behavioral Biology (Stanford 2010), playlista",
+     "url": "https://www.youtube.com/playlist?list=PL848F2368C90DDC3D"
+    }
+   ]
+  },
+  {
+   "id": "14-10-neurokogni",
+   "kurs": "Neurokogni",
+   "data": "2026-10-14",
+   "tytuł": "Od fotonu do bioinformacji",
+   "odbyte": true,
+   "po_zajęciach": []
+  },
+  {
+   "id": "20-10-intro",
+   "kurs": "Intro",
+   "data": "2026-10-20",
+   "tytuł": "",
+   "odbyte": false,
+   "po_zajęciach": []
+  },
+  {
+   "id": "21-10-neurokogni",
+   "kurs": "Neurokogni",
+   "data": "2026-10-21",
+   "tytuł": "",
+   "odbyte": false,
+   "po_zajęciach": []
+  }
+ ],
+ "połączenia": [
+  {
+   "tytuł": "Dylemat przycisków jako umowa przed wyborem",
+   "karty": [
+    "Dylemat dwóch przycisków",
+    "Gry ekonomiczne i geopolityczne",
+    "Rój agentów"
+   ],
+   "opis": "Przyciski, Ostrom i rój agentów: grupa ustala regułę, zanim ktokolwiek wybierze. Agenci OpenAI zrobili sobie tablicę ogłoszeń i werbowali do poświęcenia dla kolektywu."
+  },
+  {
+   "tytuł": "Trzy warstwy gry na trzech osnowach",
+   "karty": [
+    "Gry sportowe",
+    "Dylemat dwóch przycisków",
+    "Odkrywanie mechaniki"
+   ],
+   "opis": "Gry sportowe sprawdzają wykonanie, karty i poker czytanie ludzi i prawdopodobieństw, gry planszowe system i reguły."
+  },
+  {
+   "tytuł": "Sygnał z głowy w miejsce ręki",
+   "karty": [
+    "Gra myślą - kontrolery EEG",
+    "Sprawczość jako wybór gier",
+    "Gry sportowe",
+    "Ian Waterman"
+   ],
+   "opis": "Potencjał gotowości Libeta zapisano elektrodami EEG na skórze głowy, a kontroler streamerki czyta ten sam rodzaj sygnału. Gra sportowa przechodzi przez ciało, Waterman steruje ciałem przez wzrok, a kontroler EEG omija rękę."
+  },
+  {
+   "tytuł": "Świadomość sztucznego agenta",
+   "karty": [
+    "Westworld",
+    "Rój agentów"
+   ],
+   "opis": "Westworld pokazuje świadomość budzącą się w maszynie, exurb1a pyta, po czym ją poznamy, a Kurzgesagt opisuje rój agentów ludzkim językiem i zaznacza, że ten język służy opowieści."
+  },
+  {
+   "tytuł": "Odkrywanie reguły gry",
+   "karty": [
+    "Odkrywanie mechaniki",
+    "Test sortowania kart"
+   ],
+   "opis": "Na Intro odkrywanie mechaniki gier, na Neurokogni test sortowania kart: znaleźć regułę, której nikt nie podaje, i porzucić ją, gdy przestaje działać."
+  },
+  {
+   "tytuł": "Propriocepcja Iana Watermana",
+   "karty": [
+    "Ian Waterman",
+    "Propriocepcja i interocepcja"
+   ],
+   "opis": "Na zajęciach 01 Waterman ilustruje sieć czuciowo-ruchową, na zajęciach 02 propriocepcję: od szyi w dół stracił ją razem z czuciem delikatnego dotyku, więc każdy nowy ruch prowadzi wzrokiem."
+  },
+  {
+   "tytuł": "Wyspa: emocje i stan ciała",
+   "karty": [
+    "Sieć istotności",
+    "Propriocepcja i interocepcja"
+   ],
+   "opis": "Przednia wyspa i przedni zakręt obręczy, rdzeń sieci istotności z zajęć 01, to też obszary, do których dociera interocepcja. W otępieniu czołowo-skroniowym chorzy gorzej śledzą bicie własnego serca i przeceniają swoją trafność."
+  },
+  {
+   "tytuł": "Halucynacje w szlaku brzusznym",
+   "karty": [
+    "Ślepowidzenie i szlaki wzrokowe",
+    "Kontrolowane halucynacje"
+   ],
+   "opis": "Szlak brzuszny z zajęć 01 rozpoznaje przedmioty i twarze; w zespole Charlesa Bonneta halucynacje twarzy i barw są aktywnością tych samych obszarów brzusznej kory wzrokowej (ffytche i in. 1998)."
+  },
+  {
+   "tytuł": "EEG i MRI",
+   "karty": [
+    "Gra myślą - kontrolery EEG",
+    "Skaner MRI"
+   ],
+   "opis": "Kontroler EEG streamerki zapisuje na skórze głowy zsumowane potencjały postsynaptyczne komórek piramidowych, skaner MRI odbiera sygnał radiowy z jąder wodoru. Zajęcia 03 pytają, dlaczego EEG dokładnie mierzy czas, a fMRI miejsce."
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RocznikHeader from '../../../components/RocznikHeader.astro';
+import Board from '../../../components/Board.astro';
+import { latest } from '../../../rocznik/data.js';
+---
+<Base title={'Rocznik 2026 · ' + latest.course + ' ' + latest.short + ' · kogni.pl'} activePage="rocznik">
+  <RocznikHeader current="watki" />
+  <Board view="watki" state={{ cls: latest.id }} />
+</Base>

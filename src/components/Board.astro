@@ -1,0 +1,46 @@
+---
+import '../rocznik/rocznik.css';
+import { toHTML } from '../rocznik/engine.js';
+import * as plotno from '../rocznik/views/plotno.js';
+import * as osnowy from '../rocznik/views/osnowy.js';
+import * as watki from '../rocznik/views/watki.js';
+import * as karta from '../rocznik/views/karta.js';
+import { viewData } from '../rocznik/data.js';
+
+interface Props { view: 'plotno' | 'osnowy' | 'watki' | 'karta'; state?: Record<string, unknown> }
+const { view, state = {} } = Astro.props;
+const views = { plotno, osnowy, watki, karta };
+const props = { data: viewData(view), ...state };
+const html = toHTML(views[view], props);
+const json = JSON.stringify(props).replace(/</g, '\\u003c');
+---
+<div class={'rocznik rocznik-' + view} data-board={view}><Fragment set:html={html} /></div>
+<script type="application/json" data-board-props set:html={json}></script>
+
+<script>
+  import { mount } from '../rocznik/engine.js';
+  import * as plotno from '../rocznik/views/plotno.js';
+  import * as osnowy from '../rocznik/views/osnowy.js';
+  import * as watki from '../rocznik/views/watki.js';
+  import * as karta from '../rocznik/views/karta.js';
+  const views = { plotno, osnowy, watki, karta };
+  document.querySelectorAll('[data-board]').forEach((el) => {
+    const kind = el.getAttribute('data-board');
+    const props = JSON.parse(el.nextElementSibling.textContent);
+    if (kind === 'osnowy') {
+      const o = new URLSearchParams(location.search).get('o');
+      if (o) props.on = [o];
+    }
+    const c = mount(el, views[kind], props);
+    if (kind === 'osnowy' && props.on && props.on.length) {
+      const row = Array.from(el.querySelectorAll('.osn-name')).find((b) => b.textContent === props.on[0]);
+      if (row) row.scrollIntoView({ block: 'center' });
+    }
+    if (kind === 'watki') {
+      history.replaceState({ cls: c.state.cls }, '');
+      window.addEventListener('popstate', (e) => {
+        if (e.state && e.state.cls) { Object.assign(c.state, { cls: e.state.cls, focus: null }); c._redraw(); }
+      });
+    }
+  });
+</script>

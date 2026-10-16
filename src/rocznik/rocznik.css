@@ -1,0 +1,35 @@
+/* Rocznik 2026: the canvas styles, scoped */
+.rocznik-head{max-width:1360px;margin:0 auto;padding:36px 40px 0;display:flex;flex-direction:column;align-items:center;gap:16px}
+.rocznik-title{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px 20px}
+.rocznik-logo{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:500;letter-spacing:2px;line-height:1;color:#e2ddd4;text-decoration:none}
+.rocznik-i{position:relative;display:inline-block}
+.rocznik-knot{position:absolute;left:calc(50% - 5px);top:0.01em;width:6px;height:6px;border-radius:50%;background:#f0c060;box-shadow:0 0 0 2.5px #0e0d0b,0 0 0 4px rgba(240,192,96,0.8),0 0 10px 3px rgba(240,192,96,0.3)}
+.rocznik-bar{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;line-height:1;color:#8f877a}
+.rocznik-name{margin:0;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:400;line-height:1;color:#e2ddd4}
+.rocznik-views{display:flex;gap:28px;font-size:14px}
+.rocznik-views a{color:#a09888;text-decoration:none}
+.rocznik-views a.on{color:#f0c060}
+.rocznik-views a:hover{color:#e2ddd4}
+.rocznik{color:#e2ddd4;font-family:'Inter',sans-serif;font-weight:300;font-size:15px;line-height:1.7}
+.rocznik a{color:#e8a84c;text-underline-offset:3px}
+.rocznik a:hover{color:#f0c060}
+.rocznik button:focus-visible,.rocznik a:focus-visible,.rocznik-views a:focus-visible{outline:2px solid #f0c060;outline-offset:3px}
+.rocznik .enter{transition:box-shadow .18s ease,color .18s ease}
+.rocznik .enter:hover{color:#f0c060;box-shadow:0 0 14px rgba(240,192,96,0.45)}
+.rocznik .knot span{transition:transform .18s ease}
+.rocznik .knot:hover span{transform:scale(1.2)}
+.rocznik .osn-name:hover{color:#f0e6d2 !important}
+.rocznik .w-axis{--tx:310px}
+.rocznik .wp-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start}
+@media (max-width:960px){.rocznik .wp-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:720px){
+  .rocznik-head{padding:24px 16px 0}
+  .rocznik .w-label{flex-basis:120px !important;width:120px !important}
+  .rocznik .w-cordzone{flex-basis:16px !important;width:16px !important}
+  .rocznik .w-nic{left:185px !important}
+  .rocznik .w-axis{--tx:158px}
+  .rocznik-karta .w-nic{left:225px !important}
+  .rocznik main{padding-left:16px !important;padding-right:16px !important}
+}
+.rocznik-fallback{max-width:820px;margin:0 auto;padding:24px 16px}
+body:has(.rocznik){background:#0e0d0b}

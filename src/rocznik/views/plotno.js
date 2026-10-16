@@ -1,0 +1,167 @@
+import { DCLogic } from '../engine.js';
+
+export const template = "<main style=\"max-width: 1360px; margin: 0 auto; padding: 40px 40px 72px\">\n    <div style=\"min-width: 0\">\n      <div style=\"overflow-x: auto; padding-bottom: 8px\">\n        <div style=\"{{gridStyle}}\">\n          <sc-for list=\"{{cols}}\" as=\"c\" hint-placeholder-count=\"5\">\n            <div style=\"{{c.headStyle}}\">\n              <div style=\"{{c.courseStyle}}\">{{c.course}}</div>\n              <div style=\"{{c.dateStyle}}\">{{c.short}}</div>\n            </div>\n            <sc-if value=\"{{c.future}}\" hint-placeholder-val=\"{{false}}\">\n              <div style=\"{{c.boxStyle}}\"></div>\n            </sc-if>\n          </sc-for>\n          <sc-for list=\"{{bands}}\" as=\"b\" hint-placeholder-count=\"5\">\n            <div style=\"{{b.nameStyle}}\">{{b.label}}</div>\n            <span aria-hidden=\"true\" style=\"{{b.railStyle}}\"></span>\n          </sc-for>\n          <sc-for list=\"{{rows}}\" as=\"r\" hint-placeholder-count=\"19\">\n            <div style=\"{{r.style}}\">\n              <span style=\"{{r.labelStyle}}\">{{r.name}}</span>\n            </div>\n            <span aria-hidden=\"true\" style=\"{{r.warpStyle}}\"></span>\n          </sc-for>\n          <sc-for list=\"{{halos}}\" as=\"hl\" hint-placeholder-count=\"20\">\n            <span aria-hidden=\"true\" style=\"{{hl.style}}\"></span>\n          </sc-for>\n          <sc-for list=\"{{threads}}\" as=\"t\" hint-placeholder-count=\"2\">\n            <span aria-hidden=\"true\" style=\"{{t.style}}\"></span>\n          </sc-for>\n          <sc-for list=\"{{unders}}\" as=\"u\" hint-placeholder-count=\"16\">\n            <span aria-hidden=\"true\" style=\"{{u.shadowStyle}}\"></span>\n            <span aria-hidden=\"true\" style=\"{{u.patchStyle}}\"></span>\n          </sc-for>\n          <sc-if value=\"{{pop.open}}\" hint-placeholder-val=\"{{true}}\">\n            <button type=\"button\" aria-label=\"Zamknij\" onClick=\"{{pop.close}}\" style=\"position: fixed; inset: 0; z-index: 5; margin: 0; padding: 0; border: 0; background: transparent; cursor: default\"></button>\n          </sc-if>\n          <sc-for list=\"{{knots}}\" as=\"k\" hint-placeholder-count=\"20\">\n            <button type=\"button\" class=\"knot\" aria-label=\"{{k.label}}\" aria-expanded=\"{{k.pressed}}\" onClick=\"{{k.pick}}\" style=\"{{k.style}}\"><span style=\"{{k.dot}}\"></span></button>\n          </sc-for>\n          <sc-if value=\"{{pop.open}}\" hint-placeholder-val=\"{{true}}\">\n            <span aria-hidden=\"true\" style=\"{{pop.b1}}\"></span>\n            <span aria-hidden=\"true\" style=\"{{pop.b2}}\"></span>\n            <div role=\"dialog\" aria-label=\"{{pop.title}}\" style=\"{{pop.style}}\">\n              <h2 style=\"margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 25px; line-height: 1.15; color: #e2ddd4\">{{pop.title}}</h2>\n              <p style=\"margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: #e2ddd4\">{{pop.desc}}</p>\n              <div style=\"display: flex; justify-content: flex-end; margin-top: 6px\">\n                <a class=\"enter\" href=\"{{pop.url}}\" aria-label=\"Cała karta\" title=\"Cała karta\" style=\"display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(232,168,76,0.45); color: #e8a84c; text-decoration: none\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"6\" cy=\"4\" r=\"2\" fill=\"currentColor\" stroke=\"none\"></circle><path d=\"M6 7 V12 Q6 16 10 16 H18\"></path><path d=\"M14.5 12.5 L18 16 L14.5 19.5\"></path></svg></a>\n              </div>\n            </div>\n          </sc-if>\n        </div>\n      </div>\n    </div>\n  </main>";
+
+export class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { f: "all", sel: null };
+  }
+  D() {
+    return this.props.data;
+  }
+  renderVals() {
+    const { OS, BAND, GN, LV, CL, SP, CN } = this.D();
+    const f = this.state.f;
+    const sel = this.state.sel;
+    const COL = { i: "#f0c060", n: "#edbbc5" };
+    const RGB = { i: "240,192,96", n: "237,187,197" };
+    const LT = { i: "255,241,201", n: "244,220,225" };
+    const rgba = (c, a) => "rgba(" + RGB[c] + "," + a + ")";
+    const TONE = { i: { hi: "#f5da98", base: "#f0c060", dark: "#8c6420" }, n: { hi: "#f4dce1", base: "#edbbc5", dark: "#74444d" } };
+    const GR = [
+      { ink: "#b3c39b", on: { hi: "#d5e0c2", base: "#8fa274", dark: "#262c1d" }, off: { hi: "#8c9878", base: "#5d6a4c", dark: "#1b2015" } },
+      { ink: "#8fc4bf", on: { hi: "#c2e2de", base: "#5f9a96", dark: "#1a2a29" }, off: { hi: "#7e9e9b", base: "#3f6563", dark: "#13201f" } },
+      { ink: "#9fb7da", on: { hi: "#c8d6ec", base: "#6585b0", dark: "#1c2433" }, off: { hi: "#8191aa", base: "#435875", dark: "#151b26" } },
+      { ink: "#b4aada", on: { hi: "#d6cfec", base: "#8577b3", dark: "#251f35" }, off: { hi: "#8f88aa", base: "#584f77", dark: "#1a1626" } }
+    ];
+    const GL = ["213,224,194", "194,226,222", "200,214,236", "214,207,236"];
+    const X0 = 382, CW = 96, Y0 = 64, RH = 40, W = 862, LX = 122;
+    const BG = 10;
+    const rowY = [], rowG = [], bands = [];
+    let yc = Y0;
+    BAND.forEach((cnt, b) => {
+      const g = GR[b];
+      bands.push({
+        label: GN[b],
+        nameStyle: "position:absolute;left:0;top:" + (yc + 6) + "px;width:104px;padding-right:12px;box-sizing:border-box;text-align:right;font-size:11px;line-height:14px;letter-spacing:0.06em;text-transform:uppercase;color:" + g.ink,
+        railStyle: "position:absolute;left:108px;top:" + (yc + 6) + "px;width:6px;height:" + (cnt * RH - 12) + "px;border-radius:3px;background:linear-gradient(to right," + g.on.base + " 0%," + g.on.hi + " 30%," + g.on.base + " 60%," + g.on.dark + " 100%);box-shadow:1px 1px 3px rgba(0,0,0,0.6)"
+      });
+      for (let k = 0; k < cnt; k++) { rowY.push(yc); rowG.push(b); yc += RH; }
+      yc += BG;
+    });
+    const YA = 46, YB = yc - BG;
+    const WW = 10, WH = 7, TW = 6;
+    const colIndex = {};
+    CL.forEach((c, j) => { colIndex[c.id] = j; });
+    const clsOf = (id) => CL[colIndex[id]];
+    const vis = (c) => f === "all" || f === c;
+    const cx = (j) => X0 + j * CW + CW / 2;
+    const cy = (i) => rowY[i] + RH / 2;
+    const hitSet = new Set(SP.map((s) => s.cls + "|" + s.o));
+    const isHit = (c, n) => hitSet.has(c.id + "|" + n);
+    const held = CL.filter((c) => c.held);
+    const tubeH = (t) => "linear-gradient(to bottom," + t.base + " 0%," + t.hi + " 30%," + t.base + " 62%," + t.dark + " 100%)";
+    const tubeV = (t) => "linear-gradient(to right," + t.base + " 0%," + t.hi + " 28%," + t.base + " 58%," + t.dark + " 100%)";
+    const twist = (deg) => "linear-gradient(" + deg + "deg,rgba(0,0,0,0.12) 25%,rgba(0,0,0,0) 25%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.12) 50%,rgba(0,0,0,0.12) 75%,rgba(0,0,0,0) 75%)";
+    const twistH = twist(45), twistV = twist(-45);
+    const sizes = "100% 100%,100% 100%," + TW + "px " + TW + "px,100% 100%";
+    const selS = SP.find((s) => s.id === sel) || null;
+    const rel = new Set();
+    if (selS) CN.forEach((c) => { if (c.m.indexOf(selS.id) >= 0) c.m.forEach((x) => { if (x !== selS.id) rel.add(x); }); });
+    const cols = CL.map((c, j) => ({
+      course: c.course, short: c.short, future: !c.held,
+      headStyle: "position:absolute;left:" + (X0 + j * CW) + "px;top:0;width:" + CW + "px;height:56px;text-align:center;opacity:" + (vis(c.c) ? 1 : 0.35),
+      courseStyle: "font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:" + (c.held ? COL[c.c] : "#8f877a"),
+      dateStyle: "font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.1;color:" + (c.held ? "#e2ddd4" : "#8f877a"),
+      boxStyle: "position:absolute;left:" + (X0 + j * CW + 8) + "px;top:" + (Y0 - 2) + "px;width:" + (CW - 16) + "px;height:" + (YB - Y0 + 4) + "px;border-radius:12px;background:rgba(180,155,100,0.04)"
+    }));
+    const hitRows = new Set(SP.filter((s) => vis(clsOf(s.cls).c)).map((s) => s.o));
+    const rows = OS.map((n, i) => {
+      const t = GR[rowG[i]].off;
+      const lights = ["rgba(0,0,0,0) 0px"];
+      const shade = ["rgba(0,0,0,0.14) 0px"];
+      const crowns = ["rgba(255,248,225,0) 0px"];
+      const L = GL[rowG[i]];
+      held.forEach((c) => {
+        if (!vis(c.c)) return;
+        const x = cx(colIndex[c.id]) - X0;
+        const hit = isHit(c, n);
+        const a = hit ? 0 : 0.72;
+        shade.push("rgba(0,0,0,0.14) " + (x - 18) + "px", "rgba(0,0,0," + a + ") " + (x - 6) + "px", "rgba(0,0,0," + a + ") " + (x + 6) + "px", "rgba(0,0,0,0.14) " + (x + 18) + "px");
+        if (hit) lights.push("rgba(" + L + ",0) " + (x - 46) + "px", "rgba(" + L + ",0.28) " + (x - 20) + "px", "rgba(" + L + ",0.5) " + x + "px", "rgba(" + L + ",0.28) " + (x + 20) + "px", "rgba(" + L + ",0) " + (x + 46) + "px");
+        if (hit) crowns.push("rgba(255,248,225,0) " + (x - 14) + "px", "rgba(255,248,225,0.3) " + x + "px", "rgba(255,248,225,0) " + (x + 14) + "px");
+      });
+      shade.push("rgba(0,0,0,0.14) 100%");
+      const mask = "linear-gradient(to right,transparent 0px,#000 14px,#000 calc(100% - 14px),transparent 100%)";
+      return {
+        name: n,
+        style: "position:absolute;left:" + LX + "px;top:" + rowY[i] + "px;width:" + (X0 - LX) + "px;height:" + RH + "px;display:flex;align-items:center",
+        labelStyle: "font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.1;padding-right:12px;color:" + (hitRows.has(n) ? "#e2ddd4" : "#8f877a"),
+        warpStyle: "position:absolute;left:" + X0 + "px;top:" + (cy(i) - WH / 2) + "px;width:" + (W - X0) + "px;height:" + WH + "px;border-radius:3px;background-image:linear-gradient(to right," + crowns.join(",") + "),linear-gradient(to right," + shade.join(",") + "),linear-gradient(to right," + lights.join(",") + ")," + twistH + "," + tubeH(t) + ";background-size:100% 100%," + sizes + ";-webkit-mask-image:" + mask + ";mask-image:" + mask
+      };
+    });
+    const threads = held.map((c) => {
+      const tn = TONE[c.c];
+      const shade = OS.map((n, i) => "rgba(0,0,0," + (isHit(c, n) ? 0.36 : 0) + ") " + (cy(i) - YA) + "px");
+      const crowns = ["rgba(255,248,225,0) 0px"];
+      OS.forEach((n, i) => {
+        if (isHit(c, n)) return;
+        const y = cy(i) - YA;
+        crowns.push("rgba(255,248,225,0) " + (y - 12) + "px", "rgba(255,248,225,0.26) " + y + "px", "rgba(255,248,225,0) " + (y + 12) + "px");
+      });
+      const mask = "linear-gradient(to bottom,transparent 0px,#000 22px,#000 calc(100% - 30px),transparent 100%)";
+      return {
+        style: "position:absolute;left:" + (cx(colIndex[c.id]) - WW / 2) + "px;top:" + YA + "px;width:" + WW + "px;height:" + (YB - YA) + "px;border-radius:5px;pointer-events:none;background-image:linear-gradient(to bottom," + crowns.join(",") + "),linear-gradient(to bottom," + shade.join(",") + ")," + twistV + "," + tubeV(tn) + ";background-size:" + sizes + ";box-shadow:1px 2px 5px rgba(0,0,0,0.75);-webkit-mask-image:" + mask + ";mask-image:" + mask + ";opacity:" + (vis(c.c) ? 1 : 0.18)
+      };
+    });
+    const unders = [];
+    held.forEach((c) => {
+      const x = cx(colIndex[c.id]);
+      OS.forEach((n, i) => {
+        if (!isHit(c, n)) return;
+        const t = GR[rowG[i]].off;
+        const L = GL[rowG[i]];
+        const left = x - WW / 2 - 4;
+        unders.push({
+          shadowStyle: "position:absolute;left:" + (x - WW / 2) + "px;top:" + (cy(i) - 11) + "px;width:" + WW + "px;height:22px;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,0) 0px,rgba(0,0,0,0.7) 7px,rgba(0,0,0,0.7) 15px,rgba(0,0,0,0) 22px);opacity:" + (vis(c.c) ? 1 : 0.18),
+          patchStyle: "position:absolute;left:" + left + "px;top:" + (cy(i) - WH / 2) + "px;width:" + (WW + 8) + "px;height:" + WH + "px;pointer-events:none;background-image:radial-gradient(ellipse at 50% 50%,rgba(255,248,225,0.3) 0px,rgba(255,248,225,0) 70%),linear-gradient(rgba(" + L + ",0.5),rgba(" + L + ",0.5))," + twistH + "," + tubeH(t) + ";background-size:100% 100%,100% 100%," + TW + "px " + TW + "px,100% 100%;background-position:0 0,0 0," + (-((left - X0) % TW)) + "px 0,0 0"
+        });
+      });
+    });
+    const halos = SP.map((s) => {
+      const c = clsOf(s.cls);
+      const x = cx(colIndex[s.cls]), y = cy(OS.indexOf(s.o));
+      const L = GL[rowG[OS.indexOf(s.o)]];
+      return { style: "position:absolute;left:" + (x - 56) + "px;top:" + (y - 13) + "px;width:112px;height:26px;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,rgba(" + L + ",0.2) 0%,rgba(" + L + ",0) 70%);opacity:" + (vis(c.c) ? 1 : 0.2) };
+    });
+    const knots = SP.map((s) => {
+      const c = clsOf(s.cls);
+      const on = !!selS && s.id === selS.id;
+      const r = rel.has(s.id);
+      const sheen = "radial-gradient(circle at 50% 50%," + rgba(c.c, on ? 0.22 : 0.1) + " 0px," + rgba(c.c, 0) + " " + (on ? 20 : 18) + "px)";
+      const ring = on ? "0 0 0 1.5px #fff4dc,0 0 0 4px " + rgba(c.c, 0.25) + ",0 0 16px " + rgba(c.c, 0.45) : "0 0 0 1.5px " + rgba(c.c, 0.8) + ",0 0 10px " + rgba(c.c, 0.3) + (r ? ",0 0 0 4px " + rgba(c.c, 0.18) : "");
+      return {
+        label: s.o + ", " + c.course + ", " + c.date,
+        pressed: on,
+        pick: () => this.setState({ sel: this.state.sel === s.id ? null : s.id }),
+        style: "position:absolute;left:" + (cx(colIndex[s.cls]) - 22) + "px;top:" + (cy(OS.indexOf(s.o)) - 16) + "px;width:44px;height:32px;padding:0;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:16px;z-index:6;opacity:" + (vis(c.c) ? 1 : 0.2),
+        dot: "display:block;width:26px;height:26px;border-radius:50%;background:" + sheen + ";box-shadow:" + ring
+      };
+    });
+    let pop = { open: false, close: () => this.setState({ sel: null }) };
+    if (selS) {
+      const c0 = clsOf(selS.cls);
+      const kx = cx(colIndex[selS.cls]), ky = cy(OS.indexOf(selS.o));
+      const PW = 290;
+      const right = kx + 40 + PW <= W;
+      const up = OS.indexOf(selS.o) >= 12;
+      const dir = right ? 1 : -1;
+      const left = right ? kx + 40 : kx - 40 - PW;
+      const bub = (dx, dy, d) => "position:absolute;left:" + (kx + dir * dx - d / 2) + "px;top:" + (ky + dy - d / 2) + "px;width:" + d + "px;height:" + d + "px;border-radius:50%;box-sizing:border-box;background:#16140f;border:1.5px solid " + rgba(c0.c, 0.75) + ";z-index:7;pointer-events:none";
+      pop = {
+        open: true,
+        close: () => this.setState({ sel: null }),
+        title: selS.h, desc: selS.d, url: selS.url,
+        b1: bub(20, up ? 12 : -12, 7),
+        b2: bub(31, up ? 22 : -22, 11),
+        style: "position:absolute;left:" + left + "px;top:" + (up ? ky + 34 : ky - 34) + "px;" + (up ? "transform:translateY(-100%);" : "") + "width:" + PW + "px;box-sizing:border-box;padding:16px 18px 8px;background:#16140f;border:1px solid " + rgba(c0.c, 0.55) + ";border-radius:16px;box-shadow:0 14px 40px rgba(0,0,0,0.65);z-index:7;text-align:left"
+      };
+    }
+    return {
+      cols, bands, rows, halos, threads, unders, knots,
+      gridStyle: "position:relative;width:" + W + "px;height:" + (YB + 8) + "px",
+      pop
+    };
+  }
+}
