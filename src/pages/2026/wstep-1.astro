@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import PasswordGate from '../../components/PasswordGate.astro';
+const HASH = "2728ca17b7eeb44389e3601218ebd0d76aedda367554c19ef5935d49021b2bd6";
+---
+<Base title="Wstęp do kognitywistyki I - kogni.pl" activePage="kursy" rocznik="2026">
+
+<style is:global>
+  .course-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+  .course-page h1 { font-family: var(--font-display); font-size: 36px; font-weight: 400; color: var(--text-primary); letter-spacing: 2px; margin-bottom: 8px; text-align: center; }
+  .course-page .meta { font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-dim); text-align: center; letter-spacing: 1px; margin-bottom: 48px; }
+  .course-page h2 { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--text-primary); margin: 40px 0 16px; }
+  .course-page p { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; }
+  .back-link { display: inline-block; font-family: var(--font-body); font-size: 12px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; margin-bottom: 32px; transition: color 0.3s; }
+  .back-link:hover { color: var(--warm-glow); }
+</style>
+
+<PasswordGate title="Wstęp do kognitywistyki I" subtitle="Semestr zimowy 2026/2027" passwordHash={HASH} sessionKey="wstep-1">
+  <div class="course-page">
+    <a href="/2026/kursy/" class="back-link">&larr; Kursy</a>
+    <h1>Wstęp do kognitywistyki I</h1>
+    <p class="meta">wykład i ćwiczenia · I rok I stopnia · semestr zimowy 2026/2027 · 60h</p>
+    <h2>Opis kursu</h2>
+    <p>Zajęcia prowadzone dyskusją. Tematy przynosicie Wy. Szukasz własnej drogi do aktywności. To ćwiczenie sprawczości.</p>
+    <h2>Harmonogram</h2>
+    <p>Zajęcia organizacyjne dla całego roku odbyły się we wtorek w sali 303. Tematy kolejnych zajęć wyłaniają się z grupy: temat na następny tydzień wysyłasz mailem do północy w dniu zajęć. Materiały do każdego tematu to filmy z YouTube, filmy fabularne, seriale, czasem tekst pisany. Oglądasz je w domu, a na zajęciach o nich rozmawiamy.</p>
+    <h2>Zasady zaliczenia</h2>
+    <p>Na zajęciach pracujesz bez telefonu, tabletu i laptopa. Notujesz ręcznie w zeszycie w twardej oprawie, w formacie A4 lub A3. Ostatnie 15 minut zajęć to wspólne pisanie w ciszy.</p>
+    <p>Obecność daje ocenę 3, aktywność daje 5. Dozwolone są dwie nieobecności. Formę aktywności wybierasz Ty: dyskusja, przygotowany temat, rozmowa na konsultacjach, zadany materiał. Na koniec semestru wpisuję oceny wstępne w USOS, a o każdej ocenie możemy porozmawiać.</p>
+  </div>
+</PasswordGate>
+
+</Base>

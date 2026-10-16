@@ -1,17 +1,27 @@
 ---
-interface Props { current?: string; heading?: boolean }
-const { current = '', heading = false } = Astro.props;
-const views = [['plotno', 'Płótno', '/2026/'], ['osnowy', 'Osnowy', '/2026/osnowy/'], ['watki', 'Wątki', '/2026/watki/']];
+interface Props { rocznik?: string; current?: string }
+const { rocznik = '', current = '' } = Astro.props;
+const NAV: Record<string, string[][]> = {
+  '2026': [['plotno', 'Płótno', '/2026/'], ['osnowy', 'Osnowy', '/2026/osnowy/'], ['watki', 'Wątki', '/2026/watki/'], ['kursy', 'Kursy', '/2026/kursy/']],
+  '2025': [['start', 'Start', '/2025/'], ['wstep-2', 'Wstęp II', '/2025/wstep-2/'], ['mip', 'Mózg i poznanie', '/2025/mip/'], ['design', 'Design Thinking', '/2025/design/'], ['drugi-mozg', 'Drugi mózg', '/2025/drugi-mozg/']],
+};
+const SITE = [['kik', 'KiK UwB', '/kik'], ['kontakt', 'Kontakt', '/kontakt']];
+const own = NAV[rocznik] || [];
+const item = ([k, label, href]: string[]) => ({ label, href, on: current === k });
 ---
-<div class="rocznik-head">
+<header class={'rocznik-head' + (rocznik ? '' : ' rocznik-head-start')}>
   <div class="rocznik-title">
     <a href="/" aria-label="kogni.pl, strona główna" class="rocznik-logo">kogn<span class="rocznik-i">ı<span class="rocznik-knot"></span></span>.pl</a>
     <span aria-hidden="true" class="rocznik-bar">|</span>
-    {heading ? <h1 class="rocznik-name">Rocznik 2026</h1> : <p class="rocznik-name">Rocznik 2026</p>}
+    <nav aria-label="Roczniki" class="rocznik-years">
+      {['2025', '2026'].map((y) => (
+        <a href={'/' + y + '/'} class={rocznik === y ? 'on' : ''} aria-current={rocznik === y ? 'true' : undefined}>Rocznik {y}</a>
+      ))}
+    </nav>
   </div>
-  <nav aria-label="Widoki" class="rocznik-views">
-    {views.map(([k, label, href]) => (
-      <a href={href} aria-current={current === k ? 'page' : undefined} class={current === k ? 'on' : ''}>{label}</a>
-    ))}
+  <nav aria-label="Menu" class="rocznik-views">
+    {own.map(item).map((x) => <a href={x.href} class={x.on ? 'on' : ''} aria-current={x.on ? 'page' : undefined}>{x.label}</a>)}
+    {own.length > 0 && <span class="rocznik-sep" aria-hidden="true"></span>}
+    {SITE.map(item).map((x) => <a href={x.href} class={x.on ? 'on' : ''} aria-current={x.on ? 'page' : undefined}>{x.label}</a>)}
   </nav>
-</div>
+</header>

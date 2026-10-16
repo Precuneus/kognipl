@@ -1,33 +1,15 @@
 ---
-import Base from '../layouts/Base.astro';
-import PasswordGate from '../components/PasswordGate.astro';
-const HASH = "2728ca17b7eeb44389e3601218ebd0d76aedda367554c19ef5935d49021b2bd6";
+const to = '/2026/neurocogni/';
 ---
-<Base title="Neurokognitywistyka - kogni.pl" activePage="kursy">
-
-<style is:global>
-  .course-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
-  .course-page h1 { font-family: var(--font-display); font-size: 36px; font-weight: 400; color: var(--text-primary); letter-spacing: 2px; margin-bottom: 8px; text-align: center; }
-  .course-page .meta { font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-dim); text-align: center; letter-spacing: 1px; margin-bottom: 48px; }
-  .course-page h2 { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--text-primary); margin: 40px 0 16px; }
-  .course-page p { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; }
-  .back-link { display: inline-block; font-family: var(--font-body); font-size: 12px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; margin-bottom: 32px; transition: color 0.3s; }
-  .back-link:hover { color: var(--warm-glow); }
-</style>
-
-<PasswordGate title="Neurokognitywistyka" subtitle="Semestr zimowy 2026/2027" passwordHash={HASH} sessionKey="neurocogni">
-  <div class="course-page">
-    <a href="/kursy" class="back-link">&larr; Kursy</a>
-    <h1>Neurokognitywistyka</h1>
-    <p class="meta">wykład i ćwiczenia · I rok I stopnia · semestr zimowy 2026/2027 · 60h</p>
-    <h2>Opis kursu</h2>
-    <p>Zrozumienie mózgu budowane wysiłkiem. Zaczynamy od sieci mózgowych: od tego, co sieci robią. Potem bioinformacja i fizyka: fala elektromagnetyczna, receptory, białka, synapsy. Fizykę pomiaru poznajesz zawsze w parze z receptorem Twojego ciała, który odbiera to samo.</p>
-    <h2>Harmonogram</h2>
-    <p>Pierwsze zajęcia: sieci mózgowe, czyli co sieci robią. Od drugich zajęć: bioinformacja i fizyka. W semestrze piszesz trzy egzaminy.</p>
-    <h2>Zasady zaliczenia</h2>
-    <p>Na początku zajęć piszesz krótki sprawdzian. Egzaminy trwają po godzinie, a zaraz po każdym omawiamy pytania.</p>
-    <p>Pracujesz bez elektroniki: sieci mózgowe, receptory, synapsy i drogi rysujesz na papierze. Przynosisz blok techniczny A3 lub A4, osobny zeszyt w kratkę formatu A4, ołówek, gumkę i kolorowe markery.</p>
-  </div>
-</PasswordGate>
-
-</Base>
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>kogni.pl</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href={'https://kogni.pl' + to}>
+<meta http-equiv="refresh" content={'0; url=' + to}>
+<script is:inline define:vars={{ to }}>location.replace(to + location.search + location.hash);</script>
+</head>
+<body><p><a href={to}>{'kogni.pl' + to}</a></p></body>
+</html>

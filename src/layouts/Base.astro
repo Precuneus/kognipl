@@ -1,12 +1,16 @@
 ---
 import '../styles/global.css';
+import '../rocznik/rocznik.css';
+import RocznikHeader from '../components/RocznikHeader.astro';
 
 interface Props {
   title?: string;
   activePage?: string;
+  rocznik?: string;
+  description?: string;
 }
 
-const { title = 'kogni.pl', activePage = '' } = Astro.props;
+const { title = 'kogni.pl', activePage = '', rocznik = '', description = '' } = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang="pl">
@@ -14,22 +18,14 @@ const { title = 'kogni.pl', activePage = '' } = Astro.props;
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
+  {description && <meta name="description" content={description}>}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header class="site-header">
-  <a href="/" class="logo">kogni<span>.</span>pl</a>
-  <nav class="site-nav">
-    <a href="/" class={activePage === 'start' ? 'active' : ''}>Start</a>
-    <a href="/2026/" class={activePage === 'rocznik' ? 'active' : ''}>Rocznik 2026</a>
-    <a href="/kik" class={activePage === 'kik' ? 'active' : ''}>KiK UwB</a>
-    <a href="/kursy" class={activePage === 'kursy' ? 'active' : ''}>Kursy</a>
-    <a href="/kontakt" class={activePage === 'kontakt' ? 'active' : ''}>Kontakt</a>
-  </nav>
-</header>
+<RocznikHeader rocznik={rocznik} current={activePage} />
 
 <slot />
 

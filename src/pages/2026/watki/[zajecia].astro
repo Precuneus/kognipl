@@ -1,6 +1,5 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import RocznikHeader from '../../../components/RocznikHeader.astro';
 import Board from '../../../components/Board.astro';
 import { held } from '../../../rocznik/data.js';
 export function getStaticPaths() {
@@ -8,7 +7,6 @@ export function getStaticPaths() {
 }
 const { c } = Astro.props;
 ---
-<Base title={'Rocznik 2026 · ' + c.course + ' ' + c.short + ': ' + c.title + ' · kogni.pl'} activePage="rocznik">
-  <RocznikHeader current="watki" />
+<Base title={'Rocznik 2026 · ' + c.course + ' ' + c.short + ': ' + c.title + ' · kogni.pl'} activePage="watki" rocznik="2026">
   <Board view="watki" state={{ cls: c.id }} />
 </Base>
