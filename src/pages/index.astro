@@ -63,10 +63,13 @@ const PANELE = [
       {PANELE.map((p) => (
         <div class="roj-panel">
           <p class="roj-duze">{p.duze}</p>
-          {p.nici.map((t, i) => <p class={'roj-nic n' + i}><span style={'color:' + OSNOWY[i][1]}>{OSNOWY[i][0]}</span>{t}</p>)}
+          {p.nici.map((t, i) => <p class={'roj-nic n' + i}>{t}</p>)}
         </div>
       ))}
-    </div></div>
+    </div>
+    {OSNOWY.map(([n, c], i) => <span class={'roj-nitka n' + i} style={'color:' + c} aria-hidden="true">{n}</span>)}
+    <a class="roj-ku-plotnu" href="/2026/" aria-label="Rocznik 2026: Płótno"></a>
+    </div>
   </section>
   <section class="roj-st kropka" data-k="kropka" aria-label="kogniwiki">
     <div class="roj-lepki">
@@ -107,7 +110,10 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-panel p{position:absolute;left:clamp(30px,9vw,140px);max-width:min(760px,80vw)}
 .roj-panel .roj-duze{top:6vh;font-size:clamp(28px,2.8vw,40px)}
 .roj-nic{font-family:var(--font-display);font-style:italic;font-size:clamp(19px,1.6vw,24px);line-height:1.45;color:var(--mgla);font-weight:300;max-width:min(980px,84vw)!important}
-.roj-nic span{display:block;font:400 12px var(--font-body);font-style:normal;letter-spacing:.08em;margin-bottom:4px}
+.roj-nitka{position:absolute;left:clamp(30px,9vw,140px);top:0;padding:3px 10px;background:#000;font:400 12px var(--font-body);letter-spacing:.08em;white-space:nowrap;transform:translateY(-50%);opacity:0;pointer-events:none;will-change:transform}
+.roj-nitka.n0{top:40vh}.roj-nitka.n1{top:58vh}.roj-nitka.n2{top:76vh}.roj-nitka.n3{top:94vh}
+.roj .roj-ku-plotnu{position:absolute;top:0;right:0;bottom:0;width:26vw;border:0;background:linear-gradient(90deg,rgba(240,192,96,0),rgba(240,192,96,0));transition:background .3s ease}
+.roj .roj-ku-plotnu:hover,.roj .roj-ku-plotnu:focus-visible{background:linear-gradient(90deg,rgba(240,192,96,0),rgba(240,192,96,.07));outline:0}
 .roj-nic.n0{bottom:calc(60vh + 12px)}.roj-nic.n1{bottom:calc(42vh + 12px)}.roj-nic.n2{bottom:calc(24vh + 12px)}.roj-nic.n3{bottom:calc(6vh + 12px)}
 .roj-st.kropka{display:block;height:260vh;padding:0}
 .roj .roj-kropka{position:absolute;left:50%;top:50%;width:120px;height:120px;margin:-60px 0 0 -60px;border:0;border-radius:50%;opacity:0;pointer-events:none;transition:opacity .6s ease}
@@ -128,6 +134,9 @@ body:has(.roj) .site-footer::before{display:none}
   .roj-t p{font-size:15px}
   .roj-panel .roj-duze{top:4vh;font-size:26px}
   .roj-nic{font-size:18px;line-height:1.35}
+  .roj-panel p{max-width:74vw}
+  .roj-nic{max-width:74vw!important}
+  .roj .roj-ku-plotnu{width:18vw}
 }
 @media (prefers-reduced-motion:reduce){.roj-t{opacity:1;transform:none;transition:none}.roj-kropka{transition:none}}
 </style>
@@ -151,6 +160,10 @@ const rnd = (s: number) => () => { s = (s * 16807) % 2147483647; return (s - 1) 
 const cl = (t: number) => Math.max(0, Math.min(1, t));
 const sm = (t: number) => t * t * (3 - 2 * t);
 const tor = document.querySelector('.roj-tor') as HTMLElement;
+// nazwy osnów jadą po swoich niciach w prawo, aż do strefy po prawej, która prowadzi do Płótna 2026
+const nitki = [...document.querySelectorAll('.roj-nitka')] as HTMLElement[];
+const kuPlotnu = document.querySelector('.roj-ku-plotnu') as HTMLElement;
+let HOVP = false;
 const poziom = document.querySelector('.roj-st.poziom') as HTMLElement;
 const kropka = document.querySelector('.roj-st.kropka') as HTMLElement;
 const kLepki = kropka.querySelector('.roj-lepki') as HTMLElement;
@@ -190,7 +203,10 @@ function st(k: string, p: any, lp: number) {
     else a = (net ? .95 : .42) * (1 - fq) + (net ? .14 : .08) * fq;
   }
   else if (k === 'jest') { x = p.sx * W; y = p.sy * H; a = .22; }
-  else if (k === 'osnowy') { const L = LN; x = L.x0 + p.lx * (L.x1 - L.x0); y = L.y[p.ln] + (p.cr - .5) * 5; a = .6; c = hex(OSN[p.ln]); s = .85; }
+  else if (k === 'osnowy') {
+    const L = LN; x = L.x0 + p.lx * (L.x1 - L.x0); y = L.y[p.ln] + (p.cr - .5) * 5; a = .6; c = hex(OSN[p.ln]); s = .85;
+    if (HOVP && x > W - kuPlotnu.offsetWidth) { a = .95; s = 1.1; }
+  }
   else if (k === 'kropka') {
     // rój osnów rozpryskuje się na cały ekran, potem zbiera się w kropkę: rdzeń i pierścień jak w logo
     const cx = W / 2, cy = KY, R0 = Math.hypot(W, H) * .5, rc = MOB ? 11 : 14, rr = MOB ? 24 : 30;
@@ -281,6 +297,11 @@ function frame() {
   }
   const wA = (A.k === 'osnowy' ? 1 - t : 0) + (B.k === 'osnowy' ? t : 0);
   tor.style.transform = 'translateX(' + (wA > .02 ? LN.off : 0) + 'px)';
+  const pr = W ? cl(-LN.off / W) : 0, zw = kuPlotnu.offsetWidth;
+  for (const n of nitki) {
+    const dx = pr * Math.max(0, W - zw - n.offsetLeft - n.offsetWidth - 16);
+    n.style.transform = 'translate(' + dx + 'px,-50%)'; n.style.opacity = String(cl(wA));
+  }
   const wK = (A.k === 'kropka' ? 1 - (B !== A ? t : 0) : 0) + (B.k === 'kropka' && B !== A ? t : 0);
   const kw = wK * sm(cl((K - .6) / .18));
   if (kw > .01) knot(kw);
@@ -311,6 +332,8 @@ let tk = false;
 addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(() => { frame(); tk = false; }); } }, { passive: true });
 addEventListener('resize', () => { size(); frame(); });
 kDot.addEventListener('pointerenter', () => { HOV = true; });
+kuPlotnu.addEventListener('pointerenter', () => { HOVP = true; requestAnimationFrame(frame); });
+kuPlotnu.addEventListener('pointerleave', () => { HOVP = false; requestAnimationFrame(frame); });
 kDot.addEventListener('pointerleave', () => { HOV = false; });
 kDot.addEventListener('focus', () => { HOV = true; });
 kDot.addEventListener('blur', () => { HOV = false; });
