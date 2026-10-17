@@ -290,7 +290,7 @@ const teza = document.querySelector('.roj-duze.zl') as HTMLElement | null;
 const twarzP = SEKCJE.twarz ? SEKCJE.twarz.querySelector('.roj-t > p:last-child') as HTMLElement : null;
 const IS: any = { x: 0, y: 0, vx: 0, vy: 0, kontakt: false, lot: false, kuc: 0, sq: 0, sqv: 0, id: '', dom: true, start: false,
   bi: 0, bang: 0, blen: 0, bhalf: .28, look: -1, last: 0, r: 4.4, grow: 0, py: 0,
-  gx: 0, gy: 0, pd: 1, lid: 1, zdz: 0, joy: 0, lean: 0, mrug: -1e9, nast: 0 };
+  gx: 0, gy: 0, pd: 1, lid: 1, zdz: 0, joy: 0, lean: 0, rot: 0, mrug: -1e9, nast: 0 };
 // kierunek przewijania: w dół iskra idzie naprzód, ciekawa; w górę wraca, ogląda się za siebie, przygasa
 let KIER = 1, KIER_T = -1e9, OSTATNI_Y = scrollY, WSTECZ = 0;
 const DIP = new Map<HTMLElement, number[]>();
@@ -347,8 +347,8 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number): 
   } else if (S.k === 'osnowy') {
     // ślizga się po nici biologii, szybciej niż nazwy osnów, i cieszy się tym; przy Płótnie czeka i zagląda w prawo
     const n = nitki[2], xs = n.offsetLeft + n.offsetWidth + 26, xe = W - kuPlotnu.offsetWidth - 22;
-    const pr = W ? cl(-LN.off / W) : 0, pos = Math.min(1, pr * 1.8);
-    c = { id: 'osnowy', tryb: 'stoj', x: xs + pos * (xe - xs), y: LN.y[2] - 3 - r, I: .35, ang: 0, len: W * .28, half: .14, hop: 1e9, gaze: 0, czeka: pos >= 1 ? 1 : 0, slizg: 1 };
+    const pr = W ? cl(-LN.off / W) : 0, pos = Math.min(1, pr * 2.4);
+    c = { id: 'osnowy', tryb: 'stoj', x: xs + pos * (xe - xs), xs, xe, y: LN.y[2] - 3 - r, I: .3, ang: 0, len: W * .22, half: .14, hop: 1e9, gaze: 0, czeka: pos >= 1 ? 1 : 0, slizg: 1 };
   } else if (S.k === 'kropka') {
     c = { id: 'kropka', tryb: 'lot', x: W / 2, y: KY, I: 0, grow: sm(cl((K - .15) / .4)) };
   }
@@ -375,10 +375,37 @@ function dip(el: HTMLElement | undefined, v: number) {
   if (!el || CICHO) return;
   const d = DIP.get(el) || [0, 0]; d[1] += Math.min(240, v * .1); DIP.set(el, d);
 }
+// Łyżwy: na osnowach iskra jeździ jak na łyżwach: odpycha się i sunie wokół punktu, który biegnie przed nazwami osnów,
+// podskakuje z radości, czasem z obrotem; przewijanie w górę: jedzie tyłem, wciąż przodem do czytelnika.
+const SK = { bx: 0, vb: 0, faza: 0, krok: 0, hop: 0, air: false, spin: 0, t0: 0, T: .3 };
+function lyzwy(dt: number, c: any, now: number) {
+  const S = SK, amp = Math.min(150, W * .09);
+  S.vb += ((dt > 0 ? (c.x - S.bx) / dt : 0) - S.vb) * Math.min(1, dt * 6); S.bx = c.x;
+  S.faza += dt * (1.5 + Math.min(2.5, Math.abs(S.vb) / 300));
+  const xt = Math.max(c.xs, Math.min(c.xe, c.x + amp * (c.czeka ? .9 * Math.sin(S.faza) - .5 : .5 + Math.sin(S.faza))));
+  const kraw = () => { if (IS.x < c.xs - 20) { IS.x = c.xs - 20; IS.vx = Math.abs(IS.vx) * .5; } if (IS.x > c.xe) { IS.x = c.xe; IS.vx = -Math.abs(IS.vx) * .4; } };
+  if (!S.air) {
+    IS.y = c.y; IS.kontakt = true;
+    if (now > S.krok) { IS.vx += ((xt - IS.x) * 2.4 + S.vb * 1.15 - IS.vx) * .7; IS.sq = Math.max(IS.sq, .13); S.krok = now + 380 + Math.random() * 260; }
+    IS.vx *= Math.exp(-dt * .5); IS.vx += (xt - IS.x) * 1.2 * dt; IS.x += IS.vx * dt; kraw();
+    if (now > S.hop) {
+      const h = 22 + Math.random() * 36; IS.vy = -Math.sqrt(2 * G * h); IS.kontakt = false; S.air = true; IS.sq = -.2;
+      S.spin = Math.random() < .35 ? (IS.vx >= 0 ? 1 : -1) : 0; S.t0 = now; S.T = 2 * Math.sqrt(2 * h / G); S.hop = now + 1400 + Math.random() * 1800;
+    }
+  } else {
+    IS.vy += G * dt; IS.y += IS.vy * dt; IS.x += IS.vx * dt; kraw();
+    if (IS.vy > 0 && IS.y >= c.y) { IS.y = c.y; IS.sq = Math.min(.35, IS.vy / 1500); IS.sqv = 0; IS.vy = 0; IS.kontakt = true; S.air = false; S.spin = 0; }
+  }
+  IS.rot = S.spin ? S.spin * 6.2832 * sm(cl((now - S.t0) / (S.T * 1000))) : 0;
+  c.ang = IS.vx < -60 && WSTECZ < .05 ? Math.PI : 0;
+}
 function krok(dt: number, c: any, now: number) {
   const zmiana = c.id !== IS.id; IS.id = c.id;
   if (!IS.start || CICHO) { IS.x = c.x; IS.y = c.y; IS.vx = IS.vy = 0; IS.kontakt = c.tryb === 'stoj'; IS.start = true; IS.dom = c.id === 'dom'; return; }
-  if (c.tryb === 'lot') {
+  if (!c.slizg) { SK.air = false; IS.rot = 0; }
+  else if (zmiana) { SK.bx = c.x; SK.vb = 0; SK.hop = now + 700; SK.krok = 0; }
+  if (c.slizg && (SK.air || (IS.kontakt && IS.kuc <= 0 && Math.abs(c.y - IS.y) < 4))) lyzwy(dt, c, now);
+  else if (c.tryb === 'lot') {
     IS.kontakt = false; IS.lot = false; IS.kuc = 0;
     const k = c.id === 'dom' ? 110 : 60, d = 2 * Math.sqrt(k) * .8;
     IS.vx += ((c.x - IS.x) * k - IS.vx * d) * dt; IS.vy += ((c.y - IS.y) * k - IS.vy * d) * dt;
@@ -444,19 +471,20 @@ function oko(dt: number, c: any, now: number) {
   else if (v > 60) { ang = Math.atan2(IS.vy, IS.vx); amt = Math.min(1, v / 420); }
   else if (c.gaze !== undefined) { ang = c.gaze; amt = .8; }
   // wstecz: ogląda się za siebie, w stronę, z której przyszła (w górę strony; na nici w lewo)
-  if (WSTECZ > .05 && IS.bi < .3) { ang = c.id === 'osnowy' ? Math.PI : -Math.PI / 2; amt = Math.max(amt, .9 * WSTECZ); }
+  if (WSTECZ > .05 && IS.bi < .3) { ang = c.id === 'osnowy' ? 0 : -Math.PI / 2; amt = Math.max(amt, .9 * WSTECZ); }
   const m = c.mood || { pd: 1, lid: 1 }, jit = m.jit || 0;
   if (jit > 0) { ang += Math.sin(now / 97) * 1.6 * jit + Math.sin(now / 41) * .7 * jit; amt = Math.max(amt, .75); }
   if (c.id === 'kropka' || c.id === 'dom') amt = 0;
   const e = CICHO ? 1 : Math.min(1, dt * 11);
   IS.gx += (Math.cos(ang) * amt - IS.gx) * e; IS.gy += (Math.sin(ang) * amt - IS.gy) * e;
   IS.zdz *= Math.exp(-dt * 2.6);
-  IS.pd += ((m.pd || 1) * (1 - .12 * WSTECZ) + IS.zdz * .45 - IS.pd) * Math.min(1, dt * 7);
+  IS.pd += ((m.pd || 1) * (1 - .12 * WSTECZ) + IS.zdz * .45 + (SK.air && c.slizg ? .3 : 0) - IS.pd) * Math.min(1, dt * 7);
   IS.lid += ((m.lid || 1) * (1 - .14 * WSTECZ) - IS.lid) * Math.min(1, dt * 6);
   // rzadkie pojedyncze mrugnięcie, tylko w ruchu i nie przy radości
   if (!CICHO && now > IS.nast) { if (IS.nast && IS.joy < .1) IS.mrug = now; IS.nast = now + 9000 + Math.random() * 7000; }
   // radość (oczy w łuk, policzek podnosi dolną powiekę) i przechył w stronę ślizgu
-  IS.joy += ((m.joy || 0) * (1 - .35 * WSTECZ) - IS.joy) * Math.min(1, dt * 5);
+  // w powietrzu oczy szeroko otwarte z ekscytacji, po lądowaniu znów uśmiech
+  IS.joy += ((m.joy || 0) * (1 - .35 * WSTECZ) * (SK.air && c.slizg ? .15 : 1) - IS.joy) * Math.min(1, dt * 9);
   IS.lean += ((c.slizg && IS.kontakt ? Math.max(-.35, Math.min(.35, IS.vx / 700)) : 0) - IS.lean) * Math.min(1, dt * 8);
 }
 function rysujIskre(kw: number) {
@@ -473,7 +501,7 @@ function rysujIskre(kw: number) {
   // kropka: żar, pierścień, rdzeń; zgniata się przy lądowaniu, wydłuża w locie
   const st = IS.kontakt ? 0 : Math.min(.22, Math.abs(IS.vy) / 3000), sx = (1 + IS.sq * .9) * (1 - st * .5), sy = (1 - IS.sq * .7) * (1 + st);
   g.save(); g.globalCompositeOperation = 'source-over';
-  g.translate(IS.x, IS.y + r * 1.95); g.rotate(IS.lean); g.scale(big * sx, big * sy); g.translate(0, -r * 1.95);
+  g.translate(IS.x, IS.y + r * 1.95); g.rotate(IS.lean); g.scale(big * sx, big * sy); g.translate(0, -r * 1.95); g.rotate(IS.rot);
   const gl = g.createRadialGradient(0, 0, r * .5, 0, 0, r * 5.5);
   gl.addColorStop(0, 'rgba(240,192,96,' + .4 * A + ')'); gl.addColorStop(1, 'rgba(240,192,96,0)');
   g.globalAlpha = 1; g.fillStyle = gl; g.beginPath(); g.arc(0, 0, r * 5.5, 0, 6.283); g.fill();
@@ -541,7 +569,7 @@ function frame() {
   const dipRuch = dipy(dt);
   if (wid) rysujIskre(kw);
   // pętla klatek tylko wtedy, gdy coś się rusza: puls kropki na ekranie albo iskra w ruchu
-  const iskraRuch = !!c && !CICHO && (!IS.dom && (Math.hypot(IS.vx, IS.vy) > 6 || Math.hypot(c.x - IS.x, c.y - IS.y) > .8 || (c.tryb === 'stoj' && !IS.kontakt))
+  const iskraRuch = !!c && !CICHO && (!!c.slizg || !IS.dom && (Math.hypot(IS.vx, IS.vy) > 6 || Math.hypot(c.x - IS.x, c.y - IS.y) > .8 || (c.tryb === 'stoj' && !IS.kontakt))
     || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || (IS.look > 0 && now - IS.look < 2700) || (c.flicker > 0 && IS.bi > .03) || Math.abs((c.I || 0) - IS.bi) > .01
     || (!IS.dom && (now - IS.mrug < 170 || IS.zdz > .02 || Math.abs(IS.pd - ((c.mood && c.mood.pd) || 1)) > .01 || Math.abs(IS.lid - ((c.mood && c.mood.lid) || 1)) > .01 || (c.mood && c.mood.jit > .02)
       || Math.abs(IS.joy - ((c.mood && c.mood.joy) || 0) * (1 - .35 * WSTECZ)) > .01 || Math.abs(IS.lean) > .005 || WSTECZ > .01)));
