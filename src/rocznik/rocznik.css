@@ -3,7 +3,7 @@
 .rocznik-title{display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;gap:8px 18px}
 .rocznik-logo{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:500;letter-spacing:2px;line-height:1;color:#e2ddd4;text-decoration:none}
 .rocznik-i{position:relative;display:inline-block}
-.rocznik-knot{position:absolute;left:calc(50% - 5px);top:0.01em;width:6px;height:6px;border-radius:50%;background:#f0c060;box-shadow:0 0 0 2.5px #0e0d0b,0 0 0 4px rgba(240,192,96,0.8),0 0 10px 3px rgba(240,192,96,0.3)}
+.rocznik-knot{position:absolute;left:calc(50% - .19em);top:-.07em;width:.26em;height:.26em;border-radius:50%;background:#f0c060;box-shadow:0 0 0 .075em #0e0d0b,0 0 0 .12em rgba(240,192,96,.9),0 0 .45em .14em rgba(240,192,96,.45)}
 .rocznik-bar{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;line-height:1;color:#8f877a}
 .rocznik-years{display:flex;align-items:baseline;gap:18px}
 .rocznik-years a{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:400;line-height:1;color:#6f685d;text-decoration:none;transition:color .18s ease}
