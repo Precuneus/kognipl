@@ -123,6 +123,9 @@ body:has(.roj) .site-footer::before{display:none}
   .roj-st.lewo .roj-t{max-width:none}
   .roj-st.pierwszy{padding-top:calc(34vh + 33vw + 16px)!important}
   .roj-st.poziom,.roj-st.kropka{padding:0!important}
+  .roj-st.poziom{height:240vh}
+  .roj-st.kropka{height:180vh}
+  .roj-st.dlugi{min-height:130vh}
   .roj-st.srodek{padding-top:18vh!important}
   .roj-t p{font-size:15px}
   .roj-panel .roj-duze{top:4vh;font-size:26px}
@@ -133,8 +136,10 @@ body:has(.roj) .site-footer::before{display:none}
 
 <script>
 // Rój: cząstki próbkowane z masek sieci (BraiNets_MASKS) w kolorach sieci kogni.pl.
+// Mapa etykiet 240×180 zapisana jako przebiegi „wartość+długość(base36)”; bez odczytu pikseli z canvasu,
+// bo Safari zaszumia getImageData (ochrona przed fingerprintingiem) i psuje etykiety.
 // Ruch wyłącznie przy przewijaniu: każdy ekran ma swój stan, przejścia przewijają się w obie strony.
-const MAPA = 'data:image/png;base64,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';
+const MAPA = '02h,1c,068,16,46,1k,05h,1c,4d,1m,04,15,04w,1f,4j,1y,03,1a,04b,19,4t,1v,31,1h,046,1b,4v,1r,37,13,38,15,042,1c,4w,1q,39,11,3a,15,03z,1e,4x,1p,3k,17,03w,1f,4x,1o,3l,1a,03r,1h,4y,1n,3l,11,48,18,03j,1j,4y,1l,3m,4e,16,03e,1n,4w,1l,3m,4h,15,03a,1v,4r,1j,3n,4k,14,036,1w,4s,1j,3m,4n,13,033,1z,4s,1i,3m,4p,13,02z,114,4p,1i,3m,4r,13,02v,118,4n,1i,3l,4u,12,02t,1x,55,1a,4l,1g,3m,4w,12,02p,1v,5c,19,4j,1g,3m,4y,12,02l,1t,5j,18,4h,1g,3m,4z,13,02i,1r,5n,17,4h,1g,3m,410,16,02c,1q,5q,18,4g,1g,3m,4e,11,4n,17,027,1p,5u,17,4f,1h,3m,49,18,4m,18,024,1o,5v,19,4e,1h,3l,48,1b,4m,19,021,1n,5x,19,4e,1h,3l,48,12,48,12,4m,19,01y,1o,5z,18,4e,1h,3l,11,4j,11,4l,1b,01v,1n,512,17,4d,1h,3m,11,416,1b,01t,1n,515,15,4d,1h,3l,11,418,1b,01r,1m,519,14,4c,1g,3m,41a,1b,01p,1m,51c,12,4b,1h,3m,4p,11,4k,1c,01n,1l,51g,4b,1g,3m,11,41a,1d,01l,1l,51h,4a,1g,3n,12,4a,13,4w,1d,01k,1k,51j,49,1h,3n,14,42,1i,4n,1e,01i,1k,51k,49,1g,3n,1p,52,4k,1f,01i,1i,51m,48,1g,3o,1n,56,4h,1h,01g,1i,51o,46,1g,3p,1l,5a,4c,52,1i,01f,1i,51q,44,1h,3o,1l,5c,4b,53,1i,01d,1i,51s,1j,3p,1j,5f,4a,54,1h,01d,1h,51t,1j,3p,1i,5i,46,51,41,54,1i,01b,1h,51t,1k,38,11,3g,1h,5k,46,56,1j,019,1h,51t,1j,39,11,3g,1f,5o,44,57,1j,017,1h,51u,1j,38,11,3g,1f,510,1k,016,1g,51u,1k,3p,1d,512,1l,014,1g,51v,1k,39,11,34,12,39,1c,511,1o,012,1h,51u,1k,3p,1b,513,1p,010,1h,51u,1l,3b,11,3d,1a,511,1t,0y,1h,51v,1l,3c,11,3b,1a,511,72,1t,0x,1h,51v,1k,3c,11,3c,19,511,75,1r,0w,1h,51w,1k,3o,19,512,78,1p,0u,1h,51x,1k,3n,19,511,7b,1p,0t,1e,520,1j,3o,19,510,7d,1p,0r,1f,520,1j,3n,19,510,7f,1o,0r,1e,520,1j,3o,19,5z,7h,1o,0p,1f,520,1j,3n,1a,5y,7j,1n,0p,1f,51z,1j,3o,1a,5w,11,7l,1n,0o,1e,520,1j,3o,1b,5u,7o,1m,0o,1e,51z,1k,3o,1b,5t,12,7n,1n,0m,1e,51z,1k,3p,1c,5s,12,7o,1m,0m,1e,51y,1l,3p,1e,5p,12,71,11,7o,1m,0l,1d,51y,1l,3q,1h,5k,14,7q,1m,0l,1d,51x,1m,3q,1l,5e,16,7r,1l,0l,1c,51w,1o,3p,116,7s,1k,0k,1d,518,46,5e,12,47,1i,3r,1k,67,1e,7t,1j,0k,1c,519,4a,16,4f,1g,3r,1h,6c,1b,7v,1j,0j,1c,518,4w,1g,3r,1f,6f,1a,7w,1i,0i,1c,518,11,4w,1g,3r,1e,6h,19,7x,1i,0h,1b,519,11,4v,1g,3s,1e,6i,18,7x,1j,0g,1b,519,12,4u,1g,3s,1d,6k,17,7y,1j,0f,1b,51a,13,4r,1h,3b,11,3g,1c,6m,16,7y,1g,42,13,0c,1b,51b,16,4l,72,1i,3r,1d,6c,11,69,16,7y,1f,45,12,0b,1b,51c,1g,7e,1g,3a,11,3g,1d,6c,13,68,15,7y,1d,48,12,0a,1b,51b,1f,7g,1g,3a,11,3f,1d,6o,15,7y,1d,49,12,09,1b,51b,1f,7h,1g,3o,1e,6o,15,7y,1c,4a,12,09,1b,51a,15,7b,11,7h,1f,3o,1e,6o,14,710,1b,4b,12,08,1a,519,16,7u,1f,3o,1e,6n,15,73,11,710,17,4b,12,08,19,517,18,7w,1e,3o,1d,6o,15,715,16,4c,12,07,18,516,12,75,14,7v,1e,3o,1d,6n,16,715,16,4c,12,07,18,514,13,79,11,7v,1f,3o,1b,6m,18,75,11,7h,11,7h,16,4c,12,07,18,513,13,7b,11,7v,1e,3p,1a,6k,1b,7m,11,7h,16,4d,11,08,17,511,15,7c,11,7u,1f,3o,1a,6j,1c,714,16,4d,11,08,18,5x,17,718,1f,3o,1b,6g,1d,715,16,4d,11,08,18,5s,1c,7e,11,7u,1f,3n,1c,6c,1f,715,17,4d,11,08,19,5o,17,71h,1f,3l,115,715,17,4d,11,09,18,5n,15,71k,1g,3i,117,715,17,4d,12,08,18,5l,15,71n,1f,3f,11a,714,18,4d,12,08,18,5k,14,71p,1f,3a,11,31,11e,713,18,4c,12,21,08,18,5j,14,71q,1f,3a,11,61,11f,711,19,4c,11,22,11,07,18,5j,13,71r,1f,39,63,11g,7z,1a,4c,11,23,11,07,18,5h,13,71s,1f,38,67,11e,7j,41,7e,1b,4a,12,24,07,18,5h,13,71s,1g,33,12,69,11g,71,11,7c,46,7b,1c,4a,11,25,11,06,1a,5f,13,71s,1k,69,11j,7a,49,78,1f,48,12,26,07,1a,5d,14,71s,1g,6c,11l,78,4a,77,1h,46,13,26,11,06,1d,59,15,7o,12,712,1d,6d,11u,4b,76,1j,43,14,28,07,1f,54,18,7j,14,713,1a,6f,11v,4c,74,1s,28,11,06,1r,7i,14,713,18,6g,11w,4c,73,1u,28,11,07,1r,7j,12,713,11,62,12,6h,11y,4b,1y,29,07,1s,7k,11,710,62,13,6g,120,4c,1y,29,08,1s,71h,15,6g,123,4c,18,44,1l,2a,11,08,1r,71f,63,11,6g,126,4c,17,46,1k,2a,11,09,1r,7m,11,7p,6h,12b,4c,16,47,1k,2a,11,0a,1s,719,6e,11h,73,1v,4d,14,49,1i,2b,11,0b,1y,710,6c,11h,78,1v,4p,1i,2b,11,0c,112,7u,6b,11g,7a,1w,4p,1i,2b,11,0c,114,7r,69,11g,7a,11,74,1v,4o,1h,2c,11,0d,114,7p,69,11f,74,14,78,1x,4n,1h,2c,11,0e,115,7m,69,11e,74,11,73,11,78,1y,4n,1g,2d,0g,115,7l,62,11,65,11d,74,11,74,11,77,111,4m,1g,2d,0h,1l,78,1c,7j,62,11,64,11b,71,12,73,11,75,11,74,115,4m,1f,2e,0j,1i,7b,1c,7g,62,11,64,114,79,14,77,11,71,119,4k,1f,2e,11,0k,1g,7f,1b,7d,62,11,64,110,7d,11,7a,11d,4i,1f,2f,11,0m,1e,7g,1c,7b,12,65,1x,7f,11,79,18,7a,1y,4g,1g,2f,0q,1e,7f,1c,78,12,65,1u,7r,17,7e,1y,4d,1h,2f,11,0u,17,7k,1j,65,1s,7s,16,7i,1z,47,1k,2g,11,0x,15,7q,1c,64,1r,7q,15,74,11,7j,11n,2i,11,010,13,7o,117,7a,11,79,11,74,14,7r,11m,2i,11,013,12,7s,1z,73,11,76,12,76,1c,7t,11j,2l,11,015,12,7q,1x,75,16,75,1d,7a,12,7k,11g,2o,11,017,12,7n,1w,72,13,79,1d,710,11e,2q,11,01a,11,7k,1u,73,12,79,1d,713,11c,2s,11,01c,12,7g,1s,75,11,79,1b,718,119,2u,11,01e,12,7e,1q,76,11,78,1a,71b,118,2v,01h,12,7b,1q,76,11,78,18,71e,118,2v,01j,13,76,1q,77,11,76,18,71g,118,2w,01m,1v,77,11,75,17,71j,117,2x,01p,1r,76,11,74,18,71h,11b,2w,11,01r,1o,74,11,75,18,71k,119,2x,11,01r,1o,72,11,75,18,71j,11b,2y,01r,1r,74,18,71i,11d,2y,11,01r,1q,74,17,71i,11f,2y,01s,1z,71i,11h,2x,11,01r,1y,71i,11k,2w,01s,1x,71h,11o,2t,11,01s,1w,71h,11s,2p,11,01t,1w,71e,11z,2k,11,01u,1w,7n,12,7m,125,2f,12,01v,1w,7m,16,7a,12i,29,12,01x,1w,7j,12z,06,13,021,1w,7h,131,02b,1v,7f,133,02b,1w,7b,137,02a,1y,75,13b,02b,14d,02c,14c,02c,14c,02d,14b,02e,149,02g,148,02h,146,02k,144,02m,141,02q,13x,02u,13t,02y,13p,032,13l,036,13h,03a,13d,03e,1j,03,12n,03k,15,0d,12l,043,12k,045,12i,046,12h,048,12g,048,12f,04a,12d,04c,12b,04f,128,04h,127,04h,126,04j,123,04l,122,04l,121,04n,1z,03,1y,04o,1z,04,1v,04q,1z,06,1r,04s,1y,0a,1m,04u,1y,0e,1f,04x,1y,05q,1x,05r,1x,05r,1x,02g';
 const COL = { 1: '#7d7466', 2: '#ee6b6f', 3: '#f9d780', 4: '#e58e76', 5: '#f69959', 6: '#a9b26f', 7: '#bb6fb2' };
 const OSN = ['#8fa274', '#5f9a96', '#6585b0', '#8577b3'];
 const hex = (h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
@@ -154,8 +159,10 @@ const kLepki = kropka.querySelector('.roj-lepki') as HTMLElement;
 const kDot = kropka.querySelector('.roj-kropka') as HTMLElement;
 
 function size() {
-  D = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; MOB = W < 760;
-  cv.width = W * D; cv.height = H * D;
+  // wymiary z samego canvasu (100vw × 100vh): pasek adresu Safari nie zmienia ich, więc płótno nie skacze przy przewijaniu
+  MOB = innerWidth < 760; D = Math.min(devicePixelRatio || 1, MOB ? 1.5 : 2);
+  const w = cv.clientWidth, h = cv.clientHeight;
+  if (w !== W || h !== H || cv.width !== Math.round(w * D)) { W = w; H = h; cv.width = Math.round(W * D); cv.height = Math.round(H * D); }
   // c0..c1: odcinek, na którym ekran trwa w swoim stanie; przejścia między c1 jednego a c0 następnego.
   SEC = [...document.querySelectorAll('.roj-st')].map((s: any) => {
     const lep = s.classList.contains('poziom') || s.classList.contains('kropka'), h = lep ? H : s.offsetHeight;
@@ -199,15 +206,59 @@ function st(k: string, p: any, lp: number) {
   }
   return [x, y, a, c, s];
 }
+// Bicie kropki jak serce Spark Actor: podwójne uderzenie co 2 s (soulBeat, corePulse), oddech poświaty co 3 s (soulRing), iskry.
+const KF = (kf: any[], t: number): any => {
+  for (let i = 1; i < kf.length; i++) if (t <= kf[i][0]) {
+    const a = kf[i - 1], b = kf[i], u = (t - a[0]) / (b[0] - a[0] || 1), e = u * u * (3 - 2 * u);
+    return Array.isArray(a[1]) ? a[1].map((v: number, k: number) => v + (b[1][k] - v) * e) : a[1] + (b[1] - a[1]) * e;
+  }
+  return kf[kf.length - 1][1];
+};
+const md1 = (x: number) => ((x % 1) + 1) % 1;
+const BEAT = [[0, 1], [.15, 1.08], [.3, .97], [.45, 1.03], [.6, 1], [1, 1]];
+const CORE = [[0, [1, .9]], [.15, [1.2, 1]], [.3, [.9, .8]], [.45, [1.05, .95]], [1, [1, .9]]];
+const HALO = [[0, [1, .6]], [.5, [1.15, .3]], [1, [1, .6]]];
+const ISKRY = [
+  [[0, [0, 0, 0, 0]], [.2, [-28, -32, 1, 1]], [.6, [-35, -50, .5, .4]], [.8, [-38, -58, 0, 0]], [1, [0, 0, 0, 0]]],
+  [[0, [0, 0, 0, 0]], [.2, [30, -25, 1, 1]], [.6, [42, -44, .5, .3]], [.8, [48, -52, 0, 0]], [1, [0, 0, 0, 0]]],
+  [[0, [0, 0, 0, 0]], [.25, [-18, -38, 1, .9]], [.65, [-22, -56, .4, .3]], [.85, [-24, -62, 0, 0]], [1, [0, 0, 0, 0]]],
+  [[0, [0, 0, 0, 0]], [.15, [22, -30, 1, .8]], [.55, [32, -52, .6, .3]], [.75, [36, -60, 0, 0]], [1, [0, 0, 0, 0]]],
+];
+let SEK = 0, FAZA = 0;
 function knot(w: number) {
-  // kropka z logo, wyraźna, gdy rój już się zebrał; pulsuje
-  const cx = W / 2, cy = KY, pl = 1 + PL, rc = (MOB ? 11 : 14) * pl, rr = (MOB ? 24 : 30) * pl;
-  g.globalCompositeOperation = 'source-over';
-  const gl = g.createRadialGradient(cx, cy, rc, cx, cy, rr * 3.2);
-  gl.addColorStop(0, 'rgba(240,192,96,' + (.22 + PL) * w + ')'); gl.addColorStop(1, 'rgba(240,192,96,0)');
-  g.globalAlpha = 1; g.fillStyle = gl; g.beginPath(); g.arc(cx, cy, rr * 3.2, 0, 6.283); g.fill();
-  g.globalAlpha = w; g.fillStyle = '#f0c060'; g.beginPath(); g.arc(cx, cy, rc * .9, 0, 6.283); g.fill();
-  g.globalAlpha = .85 * w; g.strokeStyle = '#f0c060'; g.lineWidth = MOB ? 2.5 : 3; g.beginPath(); g.arc(cx, cy, rr, 0, 6.283); g.stroke();
+  // kropka z logo: rdzeń i pierścień, bije jak serce, gdy rój już się zebrał
+  const cx = W / 2, cy = KY, sb = 1 + PL, rb = (MOB ? 24 : 30) * sb, rc = MOB ? 11 : 14, k = rb / 40;
+  const [cs, co] = CICHO ? [1, .9] : KF(CORE, FAZA);
+  g.globalCompositeOperation = 'source-over'; g.globalAlpha = 1;
+  const kolo = (r: number, st: [number, string][]) => {
+    const gr = g.createRadialGradient(cx, cy, 0, cx, cy, r); st.forEach(([o, c]) => gr.addColorStop(o, c));
+    g.fillStyle = gr; g.beginPath(); g.arc(cx, cy, r, 0, 6.283); g.fill();
+  };
+  // dwie poświaty oddychające co 3 s, druga przesunięta o 0,5 s
+  for (const [m, a, off] of [[2.4, .16, 0], [1.6, .12, .5]]) {
+    const [hs, ho] = CICHO ? [1, .6] : KF(HALO, md1((SEK - off) / 3));
+    kolo(rb * m * hs, [[0, 'rgba(240,192,96,' + a * ho / .6 * w + ')'], [.7, 'rgba(240,192,96,0)'], [1, 'rgba(240,192,96,0)']]);
+  }
+  // blask skorupy i jej miękkie wnętrze
+  kolo(rb * 4, [[.2, 'rgba(240,192,96,' + .22 * w + ')'], [.45, 'rgba(240,192,96,' + .07 * w + ')'], [1, 'rgba(240,192,96,0)']]);
+  kolo(rb, [[0, 'rgba(240,192,96,' + .1 * w + ')'], [.6, 'rgba(240,192,96,' + .02 * w + ')'], [1, 'rgba(240,192,96,' + .06 * w + ')']]);
+  // pierścień
+  g.globalAlpha = .85 * w; g.strokeStyle = '#f0c060'; g.lineWidth = MOB ? 2.5 : 3; g.beginPath(); g.arc(cx, cy, rb, 0, 6.283); g.stroke();
+  // rdzeń: jasny środek i żar wokół
+  g.globalAlpha = co * w;
+  kolo(rc * 1.7 * cs, [[0, 'rgba(255,215,140,1)'], [.4, 'rgba(240,192,96,.8)'], [.7, 'rgba(240,192,96,.2)'], [1, 'rgba(240,192,96,0)']]);
+  g.fillStyle = '#f0c060'; g.beginPath(); g.arc(cx, cy, rc * .8 * cs, 0, 6.283); g.fill();
+  // iskry unoszą się z kropki
+  if (!CICHO) {
+    g.shadowColor = 'rgba(240,192,96,.6)'; g.shadowBlur = 6;
+    for (let i = 0; i < 8; i++) {
+      const [dx, dy, sc, op] = KF(ISKRY[i % 4], md1((SEK - i * .35) / (2.5 + (i % 3) * .7)));
+      if (op < .02 || sc < .02) continue;
+      g.globalAlpha = op * w; g.fillStyle = i % 3 === 0 ? 'rgba(255,220,150,.9)' : 'rgba(240,192,96,.75)';
+      g.beginPath(); g.arc(cx + dx * k * 1.4, cy + dy * k * 1.4, (i % 2 === 0 ? 1.8 : 1.3) * sc * (MOB ? 1 : 1.2), 0, 6.283); g.fill();
+    }
+    g.shadowBlur = 0;
+  }
 }
 function frame() {
   if (!P.length) return;
@@ -219,7 +270,7 @@ function frame() {
   const kr = kLepki.getBoundingClientRect(); KY = kr.top + kr.height / 2;
   K = cl((scrollY - kropka.offsetTop) / (kropka.offsetHeight - H));
   const now = performance.now();
-  PL = CICHO ? 0 : (HOV ? .12 * Math.sin(now / 1100 * 6.283) : .06 * Math.sin(now / 2600 * 6.283));
+  SEK = now / 1000; FAZA = md1(SEK / (HOV ? 1.2 : 2)); PL = CICHO ? 0 : KF(BEAT, FAZA) - 1;
   const lpA = cl((sc - A.top) / A.h), lpB = cl((sc - B.top) / B.h);
   g.setTransform(D, 0, 0, D, 0, 0); g.clearRect(0, 0, W, H); g.globalCompositeOperation = 'lighter'; g.lineWidth = 1;
   for (const p of P) {
@@ -239,13 +290,15 @@ function frame() {
   // puls: pętla klatek tylko wtedy, gdy kropka jest na ekranie
   if (kw > .01 && !CICHO && !PETLA && kr.bottom > 0) { PETLA = true; requestAnimationFrame(() => { PETLA = false; frame(); }); }
 }
-const img = new Image();
-img.onload = () => {
-  const o = document.createElement('canvas'); o.width = 240; o.height = 180; const c = o.getContext('2d')!; c.drawImage(img, 0, 0);
-  const d = c.getImageData(0, 0, 240, 180).data, cells: number[][] = [];
-  for (let i = 0; i < 43200; i++) { const v = d[i * 4]; if (v > 0) cells.push([i % 240, (i / 240) | 0, v]); }
+{
+  const cells: number[][] = []; let ix = 0;
+  for (const tk of MAPA.split(',')) {
+    const v = +tk[0], n = parseInt(tk.slice(1), 36);
+    if (v > 0) for (let q = ix; q < ix + n; q++) cells.push([q % 240, (q / 240) | 0, v]);
+    ix += n;
+  }
   const r = rnd(7);
-  for (let k = 0; k < 6200; k++) {
+  for (let k = 0, NP = innerWidth < 760 ? 3600 : 6200; k < NP; k++) {
     let cc; do { cc = cells[(r() * cells.length) | 0]; } while (cc[2] === 1 && r() > .4);
     const u = cc[0] + r(), v = cc[1] + r(), net = cc[2];
     P.push({ u, v, net, col: hex(COL[net]), a: r() * 6.28, s: .8 + r() * 1.2, sx: r(), sy: r(), d: r(), cr: Math.sqrt(r()), ln: (r() * 4) | 0, lx: r(),
@@ -255,8 +308,7 @@ img.onload = () => {
   for (const p of P) if (p.net > 1) { cs[p.net] = cs[p.net] || [0, 0, 0]; cs[p.net][0] += p.u; cs[p.net][1] += p.v; cs[p.net][2]++; }
   for (const k in cs) CENT[k] = [cs[k][0] / cs[k][2], cs[k][1] / cs[k][2]];
   size(); frame();
-};
-img.src = MAPA;
+}
 let tk = false;
 addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(() => { frame(); tk = false; }); } }, { passive: true });
 addEventListener('resize', () => { size(); frame(); });
