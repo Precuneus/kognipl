@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+// KiK UwB: rozdroże do Roczników i do informacji dla studentów.
+const DROGI = [
+  ['/2025/', 'Rocznik 2025', 'Zajęcia 2025/26'],
+  ['/2026/', 'Rocznik 2026', 'Zajęcia 2026/27'],
+  ['/kik', 'KiK UwB', 'Informacje ogólne dla studentów kognitywistyki'],
+];
+---
+<Base title="KiK UwB · kogni.pl" activePage="uwb" description="Kognitywistyka i Komunikacja, Uniwersytet w Białymstoku: Rocznik 2025, Rocznik 2026, informacje dla studentów.">
+<main class="uwb">
+  <h1>Kognitywistyka i Komunikacja</h1>
+  <p class="uwb-miejsce">Uniwersytet w Białymstoku</p>
+  <ul>
+    {DROGI.map(([href, nazwa, opis]) => (
+      <li><a href={href}><span class="uwb-nazwa">{nazwa}</span><span class="uwb-opis">{opis}</span></a></li>
+    ))}
+  </ul>
+</main>
+<style is:global>
+.uwb{max-width:720px;margin:0 auto;padding:72px 24px 96px;text-align:center}
+.uwb h1{font-family:var(--font-display);font-size:clamp(30px,4vw,44px);font-weight:400;letter-spacing:1px;color:#e2ddd4;margin:0}
+.uwb-miejsce{font-family:var(--font-body);font-size:13px;font-weight:300;letter-spacing:1.5px;color:#8f877a;margin:10px 0 56px}
+.uwb ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.uwb a{display:block;padding:26px 24px;border:1px solid rgba(240,192,96,.14);text-decoration:none;transition:border-color .2s ease,background .2s ease}
+.uwb a:hover{border-color:rgba(240,192,96,.5);background:rgba(240,192,96,.04)}
+.uwb a:focus-visible{outline:2px solid #f0c060;outline-offset:3px}
+.uwb-nazwa{display:block;font-family:var(--font-display);font-size:30px;font-weight:400;color:#e2ddd4;transition:color .2s ease}
+.uwb a:hover .uwb-nazwa{color:#f0c060}
+.uwb-opis{display:block;margin-top:6px;font-family:var(--font-body);font-size:14px;font-weight:300;color:#a09888}
+</style>
+</Base>
