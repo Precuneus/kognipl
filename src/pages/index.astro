@@ -376,25 +376,54 @@ function dip(el: HTMLElement | undefined, v: number) {
   const d = DIP.get(el) || [0, 0]; d[1] += Math.min(240, v * .1); DIP.set(el, d);
 }
 // Łyżwy: na osnowach iskra jeździ jak na łyżwach: odpycha się i sunie wokół punktu, który biegnie przed nazwami osnów,
-// podskakuje z radości, czasem z obrotem; przewijanie w górę: jedzie tyłem, wciąż przodem do czytelnika.
-const SK = { bx: 0, vb: 0, faza: 0, krok: 0, hop: 0, air: false, spin: 0, t0: 0, T: .3 };
+// podskakuje z radości i robi triki: przeskok na sąsiednią osnowę, podwójny skok, salto w przód i w tył, piruet, ślizg w przysiadzie; przewijanie w górę: jedzie tyłem, wciąż przodem do czytelnika.
+const SK = { bx: 0, vb: 0, faza: 0, krok: 0, hop: 0, air: false, spin: 0, t0: 0, T: .3, on: false, nic: 2, cel: 2, dbl: 0, kreci: 0, nisko: 0 };
 function lyzwy(dt: number, c: any, now: number) {
-  const S = SK, amp = Math.min(150, W * .09);
+  const S = SK, amp = Math.min(150, W * .09); S.on = true;
   S.vb += ((dt > 0 ? (c.x - S.bx) / dt : 0) - S.vb) * Math.min(1, dt * 6); S.bx = c.x;
   S.faza += dt * (1.5 + Math.min(2.5, Math.abs(S.vb) / 300));
   const xt = Math.max(c.xs, Math.min(c.xe, c.x + amp * (c.czeka ? .9 * Math.sin(S.faza) - .5 : .5 + Math.sin(S.faza))));
+  const gy = (n: number) => c.y + LN.y[n] - LN.y[2];
   const kraw = () => { if (IS.x < c.xs - 20) { IS.x = c.xs - 20; IS.vx = Math.abs(IS.vx) * .5; } if (IS.x > c.xe) { IS.x = c.xe; IS.vx = -Math.abs(IS.vx) * .4; } };
+  const wybij = (h: number, spin: number) => {
+    IS.vy = -Math.sqrt(2 * G * h); IS.kontakt = false; S.air = true; IS.sq = -.2; S.spin = spin; S.t0 = now;
+    S.T = Math.sqrt(2 * h / G) + Math.sqrt(2 * Math.max(1, gy(S.cel) - (IS.y - h)) / G);
+  };
   if (!S.air) {
-    IS.y = c.y; IS.kontakt = true;
-    if (now > S.krok) { IS.vx += ((xt - IS.x) * 2.4 + S.vb * 1.15 - IS.vx) * .7; IS.sq = Math.max(IS.sq, .13); S.krok = now + 380 + Math.random() * 260; }
-    IS.vx *= Math.exp(-dt * .5); IS.vx += (xt - IS.x) * 1.2 * dt; IS.x += IS.vx * dt; kraw();
-    if (now > S.hop) {
-      const h = 22 + Math.random() * 36; IS.vy = -Math.sqrt(2 * G * h); IS.kontakt = false; S.air = true; IS.sq = -.2;
-      S.spin = Math.random() < .35 ? (IS.vx >= 0 ? 1 : -1) : 0; S.t0 = now; S.T = 2 * Math.sqrt(2 * h / G); S.hop = now + 1400 + Math.random() * 1800;
+    IS.y = gy(S.nic); IS.kontakt = true;
+    if (S.kreci && now > S.kreci) { S.kreci = 0; S.spin = 0; }
+    if (S.kreci) IS.vx *= Math.exp(-dt * 4);
+    else {
+      if (now > S.krok) { IS.vx += ((xt - IS.x) * 2.4 + S.vb * 1.15 - IS.vx) * .7; IS.sq = Math.max(IS.sq, .13); S.krok = now + 380 + Math.random() * 260; }
+      IS.vx *= Math.exp(-dt * (now < S.nisko ? .1 : .5)); IS.vx += (xt - IS.x) * 1.2 * dt;
+    }
+    if (now < S.nisko) IS.sq = Math.max(IS.sq, .3);
+    IS.x += IS.vx * dt; kraw();
+    if (now > S.hop && !S.kreci) {
+      S.hop = now + 1300 + Math.random() * 1700;
+      const los = Math.random(), kier = IS.vx >= 0 ? 1 : -1;
+      S.cel = S.nic; S.dbl = 0;
+      if (los < .3) {
+        // skok na sąsiednią osnowę
+        S.cel = S.nic === 0 ? 1 : S.nic === 3 ? 2 : S.nic + (Math.random() < .5 ? -1 : 1);
+        wybij(Math.max(30, gy(S.nic) - gy(S.cel) + 34), Math.random() < .3 ? kier : 0);
+      } else if (los < .5) { S.dbl = 1; wybij(26 + Math.random() * 14, 0); }  // podwójny
+      else if (los < .62) wybij(48 + Math.random() * 20, kier);                // salto w przód
+      else if (los < .72) wybij(48 + Math.random() * 20, -kier);               // salto w tył
+      else if (los < .82) { S.kreci = now + 650; S.spin = (Math.random() < .5 ? 1 : -1) * 2; S.t0 = now; S.T = .65; } // piruet
+      else if (los < .9) { S.nisko = now + 750; IS.vx += kier * 280; }         // nisko, z rozpędem
+      else wybij(20 + Math.random() * 30, 0);
     }
   } else {
     IS.vy += G * dt; IS.y += IS.vy * dt; IS.x += IS.vx * dt; kraw();
-    if (IS.vy > 0 && IS.y >= c.y) { IS.y = c.y; IS.sq = Math.min(.35, IS.vy / 1500); IS.sqv = 0; IS.vy = 0; IS.kontakt = true; S.air = false; S.spin = 0; }
+    if (S.dbl === 1 && IS.vy > -40) {
+      // drugie odbicie w powietrzu, częściej z obrotem
+      S.dbl = 2; const h = 40 + Math.random() * 22; IS.vy = -Math.sqrt(2 * G * h); IS.sq = -.25; IS.zdz = .5;
+      S.spin = Math.random() < .6 ? (IS.vx >= 0 ? 1 : -1) : 0; S.t0 = now;
+      S.T = Math.sqrt(2 * h / G) + Math.sqrt(2 * Math.max(1, gy(S.cel) - (IS.y - h)) / G);
+    }
+    const g0 = gy(S.cel);
+    if (IS.vy > 0 && IS.y >= g0) { IS.y = g0; IS.sq = Math.min(.35, IS.vy / 1500); IS.sqv = 0; IS.vy = 0; IS.kontakt = true; S.air = false; S.spin = 0; S.nic = S.cel; S.dbl = 0; }
   }
   IS.rot = S.spin ? S.spin * 6.2832 * sm(cl((now - S.t0) / (S.T * 1000))) : 0;
   c.ang = IS.vx < -60 && WSTECZ < .05 ? Math.PI : 0;
@@ -402,9 +431,9 @@ function lyzwy(dt: number, c: any, now: number) {
 function krok(dt: number, c: any, now: number) {
   const zmiana = c.id !== IS.id; IS.id = c.id;
   if (!IS.start || CICHO) { IS.x = c.x; IS.y = c.y; IS.vx = IS.vy = 0; IS.kontakt = c.tryb === 'stoj'; IS.start = true; IS.dom = c.id === 'dom'; return; }
-  if (!c.slizg) { SK.air = false; IS.rot = 0; }
-  else if (zmiana) { SK.bx = c.x; SK.vb = 0; SK.hop = now + 700; SK.krok = 0; }
-  if (c.slizg && (SK.air || (IS.kontakt && IS.kuc <= 0 && Math.abs(c.y - IS.y) < 4))) lyzwy(dt, c, now);
+  if (!c.slizg) { SK.air = false; SK.on = false; SK.nic = SK.cel = 2; SK.kreci = 0; SK.spin = 0; IS.rot = 0; }
+  else if (zmiana) { SK.bx = c.x; SK.vb = 0; SK.hop = now + 700; SK.krok = 0; SK.on = false; SK.nic = SK.cel = 2; }
+  if (c.slizg && (SK.on || (IS.kontakt && IS.kuc <= 0 && Math.abs(c.y - IS.y) < 4))) lyzwy(dt, c, now);
   else if (c.tryb === 'lot') {
     IS.kontakt = false; IS.lot = false; IS.kuc = 0;
     const k = c.id === 'dom' ? 110 : 60, d = 2 * Math.sqrt(k) * .8;
