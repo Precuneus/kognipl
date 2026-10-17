@@ -1,6 +1,26 @@
 ---
 import Base from '../layouts/Base.astro';
-import { latest } from '../rocznik/data.js';
+import { latest, cardByName, slugify } from '../rocznik/data.js';
+
+// Wstęp: [[Tytuł karty|słowa]] links a term to its karta, **…** marks the thesis.
+// A term links once its karta has a page: a class karta of Rocznik 2026 now, a Biblioteka karta
+// as soon as src/pages/biblioteka/ exists; until then it reads as plain text.
+const BIBLIOTEKA = Object.keys(import.meta.glob('./biblioteka/**/*.astro')).length > 0;
+const kartaUrl = (t) => cardByName(t)?.url || (BIBLIOTEKA ? '/biblioteka/' + slugify(t) + '/' : '');
+const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const md = (t) => esc(t)
+  .replace(/\*\*(.+?)\*\*/g, '<strong class="wstep-teza">$1</strong>')
+  .replace(/\[\[([^|\]]+)(?:\|([^\]]+))?\]\]/g, (_, k, w) => {
+    const u = kartaUrl(k);
+    return u ? '<a href="' + u + '">' + (w || k) + '</a>' : (w || k);
+  });
+const WSTEP = [
+  'Kognitywistyka bada poznanie: jak organizmy i sztuczne systemy odbierają świat, uczą się i działają. Pod tą nazwą mieszczą się różne programy badawcze. [[Podejście obliczeniowe]] opisuje umysł jako przetwarzanie informacji, tym samym językiem w mózgu i w komputerze. [[Poznanie ucieleśnione|Podejście ucieleśnione]] rozciąga poznanie na ciało, otoczenie i działanie organizmu. [[Neuronauka poznawcza]] szuka w aktywności mózgu mechanizmów myślenia i zachowania. Niestety, te programy rzadko prowadzą ze sobą dialog, każdy opiera się na własnych, często różnie rozumianych definicjach, a dziedzina od dekad trwa w [[Kryzys kognitywistyki|kryzysie]].',
+  'Na tej stronie przyjmuję jedno z możliwych rozumień. Szukam w nim spójnego szkieletu, który mógłby opisać poznanie. Doświadczasz znaczenia czytanych słów, a Twoje doświadczenie może być zmierzone jako aktywność Twojego mózgu. **Doświadczenie to aktywność biologiczna organizmu.** Na przykład rozpoznawanie twarzy bliskiej osoby to aktywność sieci skupionej wokół prawego zakrętu wrzecionowatego. Po uszkodzeniu tej sieci twarz zostaje w strumieniu Twojego doświadczenia jako twarz, ale już niczyja: to [[Prozopagnozja|prozopagnozja]].',
+  'Moim punktem startowym jest doświadczenie. Tekst, znaczenie, emocja, spojrzenie w oczy, smak dojrzałego mango, głos bliskiej osoby. Doświadczenie... jest. A jednocześnie ciągle się zmienia, to proces, przepływ bioinformacji między miliardami rezonujących ze sobą komórek, które identyfikuję ze swoim ciałem i ze sobą. Startując od doświadczenia z jednej strony i od biologii z drugiej, szukam mechanizmów opisujących, w jaki dokładnie sposób doświadczenie to aktywność biologiczna.',
+  'Ten przepływ zaczyna się w [[Odległość od receptorów|receptorach]], przetwarzających energię fizyczną w [[Bioinformacja|bioinformację]]. Bioinformacja płynie od nich przez sieci mózgu w postaci [[Potencjał czynnościowy|potencjałów czynnościowych]], a sieci wychodzą jej naprzeciw z [[Kodowanie predykcyjne|predykcjami]]. Gdzie predykcja obejmuje sygnał, przepływ toczy się gładko; gdzie sygnał wykracza poza predykcję, pojawia się [[Wzmocnienie zaskoczenia|zaskoczenie]] i modele się zmieniają. Każde pojęcie kognitywistyki staje się więc pytaniem o ten przepływ: co ono znaczy dla Ciebie konkretnie, jaka bioinformacja wtedy przebiega, jak gęsto i z jaką częstotliwością.',
+  'Ta perspektywa prowadzi do fundamentalnych pytań o naturę umysłu i rzeczywistości. Czym jest życie, skoro doświadczenie to aktywność żywego organizmu? Czym jest rzeczywistość, skoro każdy organizm zna ją jako własny przepływ, dostępny tylko jemu? Czym jest świadomość, skoro przychodzi w stopniach, od prostego odczucia po myśl o sobie? Sytuacja jest absurdalna. Pytamy o świat doświadczając wnętrza swoich własnych Modeli Mentalnych świata. Każdy jest fundamentalnie sam w swojej głowie, ale mimo wszystko znajdujemy sposoby na synchronizowanie naszej biologicznej aktywności i eksplorację w kierunku głębszego znaczenia.',
+].map(md);
 const KURS = { Intro: 'Wstęp do kognitywistyki I', Neurokogni: 'Neurokognitywistyka' };
 // The brain of the karta page (views/karta.js), each network in its own colour.
 // Order: from the receptors to the default network (connectivity gradient, Margulies et al. 2016).
@@ -53,11 +73,16 @@ const R2025 = [['/2025/', 'Strona startowa'], ['/2025/wstep-2/', 'Wstęp do kogn
 const R2026 = [['/2026/', 'Płótno'], ['/2026/osnowy/', 'Osnowy'], ['/2026/watki/', 'Wątki'], ['/2026/wstep-1/', 'Wstęp do kognitywistyki I'], ['/2026/neurocogni/', 'Neurokognitywistyka']];
 ---
 <Base title="kogni.pl" activePage="" description="kogni.pl: kognitywistyka na Uniwersytecie w Białymstoku. Sieci mózgu, Rocznik 2025 i Rocznik 2026.">
-<h1 class="sr-only">kogni.pl</h1>
+<section class="wstep" aria-labelledby="wstep-h">
+  <h1 class="wstep-h" id="wstep-h">Kognitywistyka</h1>
+  <span class="wstep-wezel" aria-hidden="true"></span>
+  {WSTEP.map((p) => <p set:html={p} />)}
+</section>
+
+<div class="divider wstep-divider" aria-hidden="true"><span class="divider-icon">◦</span></div>
 
 <section class="sieci" aria-labelledby="sieci-h">
-  <p class="sieci-lead">Doświadczenie jest aktywnością sieci Twojego mózgu: od środka czytasz te słowa, a z boku przyrządy mierzą rzut tej samej aktywności.</p>
-  <h2 class="sr-only" id="sieci-h">Sieci mózgu</h2>
+  <h2 class="section-label sieci-h" id="sieci-h">Sieci mózgu</h2>
   <figure class="sieci-fig">
     <svg class="sieci-svg" data-sieci viewBox="16 6 466 170" role="img" aria-label="Sieci mózgu na półkuli z boku i od środka: wzrokowa, czuciowo-ruchowa, grzbietowa uwagi, brzuszna uwagi, istotności, kontroli i domyślna.">
       {VIEWS.map((v) => (
