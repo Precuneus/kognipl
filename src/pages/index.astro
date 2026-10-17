@@ -1,161 +1,214 @@
 ---
 import Base from '../layouts/Base.astro';
-import { latest, cardByName, slugify } from '../rocznik/data.js';
+import { cardByName, slugify } from '../rocznik/data.js';
 
-// Wstęp: [[Tytuł karty|słowa]] links a term to its karta, **…** marks the thesis.
-// A term links once its karta has a page: a class karta of Rocznik 2026 now, a Biblioteka karta
-// as soon as src/pages/biblioteka/ exists; until then it reads as plain text.
+// Strona startowa: sześć ekranów. Na każdym jedno zdanie akapitu jest duże, reszta mała.
+// [[Tytuł karty|słowa]] linkuje do karty; link działa, gdy karta ma stronę (karta Rocznika 2026,
+// karta Biblioteki, gdy istnieje src/pages/biblioteka/), inaczej słowo zostaje zwykłym tekstem.
 const BIBLIOTEKA = Object.keys(import.meta.glob('./biblioteka/**/*.astro')).length > 0;
 const kartaUrl = (t) => cardByName(t)?.url || (BIBLIOTEKA ? '/biblioteka/' + slugify(t) + '/' : '');
-const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const md = (t) => esc(t)
-  .replace(/\*\*(.+?)\*\*/g, '<strong class="wstep-teza">$1</strong>')
-  .replace(/\[\[([^|\]]+)(?:\|([^\]]+))?\]\]/g, (_, k, w) => {
-    const u = kartaUrl(k);
-    return u ? '<a href="' + u + '">' + (w || k) + '</a>' : (w || k);
-  });
-const WSTEP = [
-  'Kognitywistyka bada poznanie: jak organizmy i sztuczne systemy odbierają świat, uczą się i działają. Pod tą nazwą mieszczą się różne programy badawcze. [[Podejście obliczeniowe]] opisuje umysł jako przetwarzanie informacji, tym samym językiem w mózgu i w komputerze. [[Poznanie ucieleśnione|Podejście ucieleśnione]] rozciąga poznanie na ciało, otoczenie i działanie organizmu. [[Neuronauka poznawcza]] szuka w aktywności mózgu mechanizmów myślenia i zachowania. Niestety, te programy rzadko prowadzą ze sobą dialog, każdy opiera się na własnych, często różnie rozumianych definicjach, a dziedzina od dekad trwa w [[Kryzys kognitywistyki|kryzysie]].',
-  'Na tej stronie przyjmuję jedno z możliwych rozumień. Szukam w nim spójnego szkieletu, który mógłby opisać poznanie. Doświadczasz znaczenia czytanych słów, a Twoje doświadczenie może być zmierzone jako aktywność Twojego mózgu. **Doświadczenie to aktywność biologiczna organizmu.** Na przykład rozpoznawanie twarzy bliskiej osoby to aktywność sieci skupionej wokół prawego zakrętu wrzecionowatego. Po uszkodzeniu tej sieci twarz zostaje w strumieniu Twojego doświadczenia jako twarz, ale już niczyja: to [[Prozopagnozja|prozopagnozja]].',
-  'Moim punktem startowym jest doświadczenie. Tekst, znaczenie, emocja, spojrzenie w oczy, smak dojrzałego mango, głos bliskiej osoby. Doświadczenie... jest. A jednocześnie ciągle się zmienia, to proces, przepływ bioinformacji między miliardami rezonujących ze sobą komórek, które identyfikuję ze swoim ciałem i ze sobą. Startując od doświadczenia z jednej strony i od biologii z drugiej, szukam mechanizmów opisujących, w jaki dokładnie sposób doświadczenie to aktywność biologiczna.',
-  'Ten przepływ zaczyna się w [[Odległość od receptorów|receptorach]], przetwarzających energię fizyczną w [[Bioinformacja|bioinformację]]. Bioinformacja płynie od nich przez sieci mózgu w postaci [[Potencjał czynnościowy|potencjałów czynnościowych]], a sieci wychodzą jej naprzeciw z [[Kodowanie predykcyjne|predykcjami]]. Gdzie predykcja obejmuje sygnał, przepływ toczy się gładko; gdzie sygnał wykracza poza predykcję, pojawia się [[Wzmocnienie zaskoczenia|zaskoczenie]] i modele się zmieniają. Każde pojęcie kognitywistyki staje się więc pytaniem o ten przepływ: co ono znaczy dla Ciebie konkretnie, jaka bioinformacja wtedy przebiega, jak gęsto i z jaką częstotliwością.',
-  'Ta perspektywa prowadzi do fundamentalnych pytań o naturę umysłu i rzeczywistości. Czym jest życie, skoro doświadczenie to aktywność żywego organizmu? Czym jest rzeczywistość, skoro każdy organizm zna ją jako własny przepływ, dostępny tylko jemu? Czym jest świadomość, skoro przychodzi w stopniach, od prostego odczucia po myśl o sobie? Sytuacja jest absurdalna. Pytamy o świat doświadczając wnętrza swoich własnych Modeli Mentalnych świata. Każdy jest fundamentalnie sam w swojej głowie, ale mimo wszystko znajdujemy sposoby na synchronizowanie naszej biologicznej aktywności i eksplorację w kierunku głębszego znaczenia.',
-].map(md);
-const KURS = { Intro: 'Wstęp do kognitywistyki I', Neurokogni: 'Neurokognitywistyka' };
-// The brain of the karta page (views/karta.js), each network in its own colour.
-// Order: from the receptors to the default network (connectivity gradient, Margulies et al. 2016).
-const SIECI = [
-  { k: 'vis', kod: 'VIS', kolor: '#ee6b6f', nazwa: 'sieć wzrokowa', obszary: 'biegun potyliczny, bruzda ostrogowa', rola: '„Widzę.”' },
-  { k: 'smn', kod: 'SMN', kolor: '#f9d780', nazwa: 'sieć czuciowo-ruchowa', obszary: 'kora ruchowa i czuciowa, kora słuchowa', rola: '„Czuję ciało i się ruszam.”' },
-  { k: 'dan', kod: 'DAN', kolor: '#e58e76', nazwa: 'sieć grzbietowa uwagi', obszary: 'FEF, SPL, IPS, V5', rola: '„Koordynuję oko i rękę.”' },
-  { k: 'van', kod: 'VAN', kolor: '#6fb3a8', nazwa: 'sieć brzuszna uwagi', obszary: 'TPJ, IFG', rola: '„Coś przerywa plan.”' },
-  { k: 'sn', kod: 'SN', kolor: '#a9b26f', nazwa: 'sieć istotności', obszary: 'aINS, dACC', rola: '„Coś zagraża schematowi ciała.”' },
-  { k: 'cn', kod: 'CN', kolor: '#f69959', nazwa: 'sieć kontroli', obszary: 'dlPFC, aIPL', rola: '„Trzymam zadanie.”' },
-  { k: 'dmn', kod: 'DMN', kolor: '#bb6fb2', nazwa: 'sieć domyślna', obszary: 'mPFC, PCC, AG, MTG, MTL', rola: '„Ja, przeszłość i przyszłość, inni ludzie.”' },
+const md = (t) => t.replace(/\[\[([^|\]]+)(?:\|([^\]]+))?\]\]/g, (_, k, w) => {
+  const u = kartaUrl(k);
+  return u ? '<a href="' + u + '">' + (w || k) + '</a>' : (w || k);
+});
+// Ekrany: k = stan roju; tekst: lista [duże?, treść].
+const EKRANY = [
+  { k: 'mozg', uklad: 'lewo', tekst: [
+    [true, 'Kognitywistyka bada poznanie: jak organizmy i sztuczne systemy odbierają świat, uczą się i działają.'],
+    [false, 'Pod tą nazwą mieszczą się różne programy badawcze. [[Podejście obliczeniowe]] opisuje umysł jako przetwarzanie informacji, tym samym językiem w mózgu i w komputerze. [[Poznanie ucieleśnione|Podejście ucieleśnione]] rozciąga poznanie na ciało, otoczenie i działanie organizmu. [[Neuronauka poznawcza]] szuka w aktywności mózgu mechanizmów myślenia i zachowania.'],
+  ] },
+  { k: 'wyspy', uklad: 'lewo', tekst: [
+    [true, 'Niestety, te programy rzadko prowadzą ze sobą dialog, każdy opiera się na własnych, często różnie rozumianych definicjach, a dziedzina od dekad trwa w [[Kryzys kognitywistyki|kryzysie]].'],
+  ] },
+  { k: 'twarz', uklad: 'lewo dlugi', tekst: [
+    [false, 'Na tej stronie przyjmuję jedno z możliwych rozumień. Szukam w nim spójnego szkieletu, który mógłby opisać poznanie. Doświadczasz znaczenia czytanych słów, a Twoje doświadczenie może być zmierzone jako aktywność Twojego mózgu.'],
+    [true, 'Doświadczenie to aktywność biologiczna organizmu.', 'zl'],
+    [false, 'Na przykład rozpoznawanie twarzy bliskiej osoby to aktywność sieci skupionej wokół prawego zakrętu wrzecionowatego. Po uszkodzeniu tej sieci twarz zostaje w strumieniu Twojego doświadczenia jako twarz, ale już niczyja: to [[Prozopagnozja|prozopagnozja]].'],
+  ] },
+  { k: 'jest', uklad: 'srodek', tekst: [
+    [false, 'Moim punktem startowym jest doświadczenie. Tekst, znaczenie, emocja, spojrzenie w oczy, smak dojrzałego mango, głos bliskiej osoby. Doświadczenie... jest. A jednocześnie ciągle się zmienia, to proces, przepływ [[Bioinformacja|bioinformacji]] między miliardami rezonujących ze sobą komórek, które identyfikuję ze swoim ciałem i ze sobą.'],
+    [true, 'Startując od doświadczenia z jednej strony i od biologii z drugiej, szukam mechanizmów opisujących, w jaki dokładnie sposób doświadczenie to aktywność biologiczna.'],
+  ] },
 ];
-const COL = Object.fromEntries(SIECI.map((s) => [s.k, s.kolor]));
-const OUTLINE = [
-  ['M 34 104 C 20 80, 26 46, 58 30 C 88 14, 132 10, 168 18 C 200 26, 226 48, 232 78 C 236 98, 226 114, 212 118 C 196 122, 180 120, 168 124 C 152 136, 130 146, 108 144 C 88 142, 74 132, 70 120 C 62 122, 52 120, 46 116 C 40 113, 36 109, 34 104 Z', 'rgba(226,221,212,0.04)', 'rgba(226,221,212,0.45)', 1.2],
-  ['M 170 124 C 186 118, 214 120, 220 134 C 224 148, 204 156, 186 152 C 172 149, 162 138, 170 124 Z', 'rgba(226,221,212,0.03)', 'rgba(226,221,212,0.3)', 1],
-  ['M 150 134 C 152 148, 154 160, 156 170 L 168 170 C 166 158, 165 146, 167 130', 'none', 'rgba(226,221,212,0.3)', 1],
+const OSNOWY = [['socjologia', '#8fa274'], ['psychologia', '#5f9a96'], ['biologia', '#6585b0'], ['fizyka', '#8577b3']];
+const PANELE = [
+  { duze: 'Socjologia, psychologia, biologia i fizyka to soczewki, przez które od narodzin kształtują się moje Modele Mentalne.', nici: [
+    'Wchłaniam wzorce kulturowe: język, zwyczaje i wartości mojej wspólnoty.',
+    'Uczę się rozumieć siebie i innych.',
+    'Moje ciało rośnie, a sieci mózgu dojrzewają w kontakcie ze światem.',
+    'Uczę się nawigować swoim biologicznym ciałem w fizycznej przestrzeni.',
+  ] },
+  { duze: 'Te soczewki opisują to samo doświadczenie, więc kognitywistyka może je połączyć.', nici: [
+    'Rozmowa z bliską osobą toczy się w języku, którego nauczyła mnie wspólnota.',
+    'Słuchając, buduję predykcje o jej myślach i uczuciach.',
+    'Ta rozmowa to aktywność moich sieci mózgu, od kory słuchowej po sieć domyślną.',
+    'Jej głos to fala ciśnienia powietrza, którą receptory w uchu przetwarzają w bioinformację.',
+  ] },
 ];
-const VIEWS = [
-  {
-    dx: 0, cap: 'z boku',
-    lines: [
-      ['M 74 116 C 96 102, 126 96, 160 100', 'none'],
-      ['M 130 16 C 126 38, 118 62, 112 96', 'none'],
-    ],
-    blobs: [
-      ['vis', 224, 100, 10, 15], ['smn', 120, 56, 10, 36, 14], ['smn', 124, 106, 11, 5],
-      ['dan', 100, 36, 8, 8], ['dan', 156, 36, 16, 10], ['dan', 204, 110, 7, 6],
-      ['van', 168, 96, 10, 8], ['van', 66, 82, 7, 6], ['sn', 96, 108, 10, 5],
-      ['cn', 62, 56, 14, 11], ['cn', 176, 64, 11, 8], ['dmn', 198, 82, 9, 9], ['dmn', 124, 128, 18, 6],
-    ],
-    labels: [['vis', 224, 103], ['smn', 119, 62], ['dan', 156, 39], ['van', 168, 99], ['sn', 96, 111], ['cn', 62, 59], ['dmn', 124, 131]],
-  },
-  {
-    dx: 244, cap: 'od środka',
-    lines: [
-      ['M 92 88 C 112 70, 170 68, 194 84 C 198 92, 190 96, 184 92 C 166 80, 118 82, 100 96 C 94 98, 88 94, 92 88 Z', 'rgba(226,221,212,0.08)'],
-      ['M 60 70 C 80 50, 150 44, 186 64', 'none'],
-      ['M 200 104 C 210 102, 222 100, 232 96', 'none'],
-    ],
-    blobs: [
-      ['vis', 214, 104, 15, 9], ['smn', 126, 22, 16, 8], ['sn', 104, 70, 13, 7], ['sn', 100, 30, 9, 6],
-      ['dmn', 50, 76, 12, 16], ['dmn', 180, 64, 13, 12], ['dmn', 136, 124, 18, 6],
-    ],
-    labels: [['vis', 214, 107], ['smn', 126, 25], ['sn', 104, 73], ['dmn', 50, 79]],
-  },
-];
-const KOD = Object.fromEntries(SIECI.map((s) => [s.k, s.kod]));
-const R2025 = [['/2025/', 'Strona startowa'], ['/2025/wstep-2/', 'Wstęp do kognitywistyki II'], ['/2025/mip/', 'Mózg i poznanie'], ['/2025/design/', 'Warsztaty Design Thinking'], ['/2025/drugi-mozg/', 'Drugi mózg z AI']];
-const R2026 = [['/2026/', 'Płótno'], ['/2026/osnowy/', 'Osnowy'], ['/2026/watki/', 'Wątki'], ['/2026/wstep-1/', 'Wstęp do kognitywistyki I'], ['/2026/neurocogni/', 'Neurokognitywistyka']];
 ---
-<Base title="kogni.pl" activePage="" description="kogni.pl: kognitywistyka na Uniwersytecie w Białymstoku. Sieci mózgu, Rocznik 2025 i Rocznik 2026.">
-<section class="wstep" aria-labelledby="wstep-h">
-  <h1 class="wstep-h" id="wstep-h">Kognitywistyka</h1>
-  <span class="wstep-wezel" aria-hidden="true"></span>
-  {WSTEP.map((p) => <p set:html={p} />)}
-</section>
-
-<div class="divider wstep-divider" aria-hidden="true"><span class="divider-icon">◦</span></div>
-
-<section class="sieci" aria-labelledby="sieci-h">
-  <h2 class="section-label sieci-h" id="sieci-h">Sieci mózgu</h2>
-  <figure class="sieci-fig">
-    <svg class="sieci-svg" data-sieci viewBox="16 6 466 170" role="img" aria-label="Sieci mózgu na półkuli z boku i od środka: wzrokowa, czuciowo-ruchowa, grzbietowa uwagi, brzuszna uwagi, istotności, kontroli i domyślna.">
-      {VIEWS.map((v) => (
-        <g transform={'translate(' + v.dx + ' 0)'}>
-          {OUTLINE.map(([d, fill, stroke, w]) => <path d={d} fill={fill} stroke={stroke} stroke-width={w} />)}
-          {v.lines.map(([d, fill]) => <path d={d} fill={fill} stroke="rgba(226,221,212,0.28)" stroke-width="1" />)}
-          {v.blobs.map(([k, cx, cy, rx, ry, rot]) => <ellipse class="nb" data-k={k} cx={cx} cy={cy} rx={rx} ry={ry} fill={COL[k]} transform={rot ? 'rotate(' + rot + ' ' + cx + ' ' + cy + ')' : undefined} />)}
-          {v.labels.map(([k, x, y]) => <text class="nl" data-k={k} x={x} y={y} text-anchor="middle">{KOD[k]}</text>)}
-          <text class="ncap" x="130" y="168" text-anchor="middle">{v.cap}</text>
-        </g>
+<Base title="kogni.pl" activePage="" description="kogni.pl: kognitywistyka na Uniwersytecie w Białymstoku. Doświadczenie to aktywność biologiczna organizmu.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400&family=Literata:opsz,wght@7..72,300;7..72,400&display=swap">
+<canvas class="roj-plotno" aria-hidden="true"></canvas>
+<main class="roj">
+  {EKRANY.map((e, i) => (
+    <section class={'roj-st ' + e.uklad + (i === 0 ? ' pierwszy' : '')} data-k={e.k}>
+      <div class="roj-t">
+        {e.tekst.map(([duze, t, kl]) => duze
+          ? (i === 0 ? <h1 class="roj-duze" set:html={md(t)} /> : <p class={'roj-duze' + (kl ? ' ' + kl : '')} set:html={md(t)} />)
+          : <p set:html={md(t)} />)}
+      </div>
+    </section>
+  ))}
+  <section class="roj-st poziom" data-k="osnowy" aria-label="Osnowy: socjologia, psychologia, biologia, fizyka">
+    <div class="roj-lepki"><div class="roj-tor">
+      {PANELE.map((p) => (
+        <div class="roj-panel">
+          <p class="roj-duze">{p.duze}</p>
+          {p.nici.map((t, i) => <p class={'roj-nic n' + i}><span style={'color:' + OSNOWY[i][1]}>{OSNOWY[i][0]}</span>{t}</p>)}
+        </div>
       ))}
-    </svg>
-  </figure>
-  <ul class="sieci-legend" aria-label="Sieci mózgu i ich role">
-    {SIECI.map((s) => (
-      <li>
-        <button type="button" data-k={s.k} aria-pressed="false" style={'--c:' + s.kolor}>
-          <span class="sieci-sw" aria-hidden="true"></span>
-          <span class="sieci-txt">
-            <span class="sieci-kod">{s.kod}</span> <span class="sieci-nazwa">{s.nazwa}</span>
-            <span class="sieci-rola">{s.rola}</span>
-            <span class="sieci-obszary">{s.obszary}</span>
-          </span>
-        </button>
-      </li>
-    ))}
-  </ul>
-  <p class="sieci-note">Od receptorów do sieci domyślnej, według gradientu łączności (Margulies i in. 2016). <a href="/2026/karty/sieci-wielkoskalowe/">Karta: Sieci wielkoskalowe →</a></p>
-</section>
+    </div></div>
+  </section>
+  <p class="roj-zrodlo">Kontur mózgu: Patrick J. Lynch i C. Carl Jaffe, CC BY 2.5. Sieci mózgu: projekt własny.</p>
+</main>
 
-<section class="drzwi" aria-label="Roczniki">
-  <div class="drzwi-card">
-    <p class="drzwi-k">2025/26</p>
-    <h2><a href="/2025/">Rocznik 2025</a></h2>
-    <p class="drzwi-opis">Strona z roku akademickiego 2025/26, tak jak była: pytania kognitywistyki i kursy semestru letniego.</p>
-    <ul>{R2025.map(([href, label]) => <li><a href={href}>{label}</a></li>)}</ul>
-  </div>
-  <div class="drzwi-card drzwi-now">
-    <p class="drzwi-k">2026/27</p>
-    <h2><a href="/2026/">Rocznik 2026</a></h2>
-    <p class="drzwi-opis">Rocznik 2026 prowadzi tę myśl przez zajęcia tego roku: każde zajęcia to wątek, który przechodzi przez osnowy od społeczeństwa po fizykę, a każde miejsce, w którym je splata, to karta.</p>
-    <a class="drzwi-latest" href={latest.url}><span>Ostatnie zajęcia · {KURS[latest.course] || latest.course} · {latest.date}</span>{latest.title}</a>
-    <ul>{R2026.map(([href, label]) => <li><a href={href}>{label}</a></li>)}</ul>
-  </div>
-</section>
+<style is:global>
+body:has(.roj){background:#000}
+body:has(.roj) .rocznik-head,body:has(.roj) .site-footer{position:relative;z-index:1}
+body:has(.roj) .site-footer::before{display:none}
+.roj-plotno{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
+.roj{position:relative;z-index:1;--kosc:#f2efe9;--mgla:#c8c2b6;--zloto:#f0c060}
+.roj-st{min-height:100vh;display:flex;align-items:center;padding:12vh 56px 12vh 8vw}
+.roj-st.lewo .roj-t{max-width:min(40vw,560px)}
+.roj-st.srodek{justify-content:center;padding-left:56px}
+.roj-st.srodek .roj-t{max-width:680px}
+.roj-st.pierwszy{min-height:calc(100vh - 120px);padding-top:0;padding-bottom:4vh}
+.roj-st.dlugi{min-height:150vh}
+.roj-t{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease}
+.roj-st.in .roj-t{opacity:1;transform:none}
+.roj p,.roj h1{margin:0}
+.roj-t p{font-family:'Literata',serif;font-size:18px;line-height:1.72;color:var(--mgla);font-weight:300}
+.roj-t > * + *{margin-top:1em}
+.roj .roj-duze{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:clamp(28px,3.3vw,48px);line-height:1.1;letter-spacing:-.03em;color:var(--kosc)}
+.roj .roj-duze.zl{color:var(--zloto)}
+.roj-t > .roj-duze{margin:.45em 0 .55em}
+.roj-t > .roj-duze:first-child{margin-top:0}
+.roj a{color:var(--kosc);text-decoration:none;border-bottom:1px solid rgba(240,192,96,.55)}
+.roj a:hover{color:var(--zloto)}
+.roj a:focus-visible{outline:2px solid var(--zloto);outline-offset:3px}
+.roj-st.poziom{display:block;height:320vh;padding:0}
+.roj-lepki{position:sticky;top:0;height:100vh;overflow:hidden}
+.roj-tor{position:absolute;top:0;left:0;height:100%;width:200vw;display:flex;will-change:transform}
+.roj-panel{position:relative;width:100vw;height:100%;overflow:hidden}
+.roj-panel p{position:absolute;left:clamp(30px,9vw,140px);max-width:min(760px,80vw)}
+.roj-panel .roj-duze{top:6vh;font-size:clamp(26px,3.2vw,46px)}
+.roj-nic{font-family:'Literata',serif;font-size:clamp(16px,1.35vw,20px);line-height:1.6;color:var(--mgla);font-weight:300;max-width:min(980px,84vw)!important}
+.roj-nic span{display:block;font:400 13px 'Inter Tight',sans-serif;letter-spacing:.02em;margin-bottom:4px}
+.roj-nic.n0{bottom:calc(60vh + 12px)}.roj-nic.n1{bottom:calc(42vh + 12px)}.roj-nic.n2{bottom:calc(24vh + 12px)}.roj-nic.n3{bottom:calc(6vh + 12px)}
+.roj-zrodlo{padding:48px 8vw 0;font:400 12px 'Inter Tight',sans-serif;color:#5e5a53}
+@media (max-width:760px){
+  .roj-st{padding:52vh 20px 8vh 20px!important;align-items:flex-start;justify-content:flex-start!important}
+  .roj-st.lewo .roj-t{max-width:none}
+  .roj-st.pierwszy{padding-top:calc(34vh + 33vw + 16px)!important}
+  .roj-st.poziom{padding:0!important}
+  .roj-st.srodek{padding-top:18vh!important}
+  .roj-t p{font-size:16.5px}
+  .roj-panel .roj-duze{top:4vh;font-size:24px}
+  .roj-nic{font-size:15px;line-height:1.5}
+}
+@media (prefers-reduced-motion:reduce){.roj-t{opacity:1;transform:none;transition:none}}
+</style>
 
 <script>
-  const svg = document.querySelector('[data-sieci]');
-  const parts = [...svg.querySelectorAll('[data-k]')];
-  const buttons = [...document.querySelectorAll('.sieci-legend button')];
-  const fine = matchMedia('(hover: hover)').matches;
-  let pinned = '';
-  const show = (k) => {
-    svg.classList.toggle('has-on', !!k);
-    parts.forEach((p) => p.classList.toggle('on', p.dataset.k === k));
-    buttons.forEach((b) => b.classList.toggle('on', b.dataset.k === k));
-  };
-  const pin = (k) => {
-    pinned = pinned === k ? '' : k;
-    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.k === pinned)));
-    show(pinned || (fine ? k : ''));
-  };
-  buttons.forEach((b) => {
-    b.addEventListener('pointerenter', () => { if (fine) show(b.dataset.k); });
-    b.addEventListener('pointerleave', () => { if (fine) show(pinned); });
-    b.addEventListener('focus', () => show(b.dataset.k));
-    b.addEventListener('blur', () => show(pinned));
-    b.addEventListener('click', () => pin(b.dataset.k));
-  });
-  svg.querySelectorAll('.nb').forEach((e) => {
-    e.addEventListener('pointerenter', () => { if (fine) show(e.dataset.k); });
-    e.addEventListener('pointerleave', () => { if (fine) show(pinned); });
-    e.addEventListener('click', () => pin(e.dataset.k));
-  });
+// Rój: cząstki próbkowane z masek sieci (BraiNets_MASKS) w kolorach sieci kogni.pl.
+// Ruch wyłącznie przy przewijaniu: każdy ekran ma swój stan, przejścia przewijają się w obie strony.
+const MAPA = 'data:image/png;base64,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';
+const COL = { 1: '#7d7466', 2: '#ee6b6f', 3: '#f9d780', 4: '#e58e76', 5: '#f69959', 6: '#a9b26f', 7: '#bb6fb2' };
+const OSN = ['#8fa274', '#5f9a96', '#6585b0', '#8577b3'];
+const hex = (h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+const GREY = hex('#5f5a54');
+const cv = document.querySelector('.roj-plotno') as HTMLCanvasElement;
+const g = cv.getContext('2d')!;
+let W = 0, H = 0, D = 1, MOB = false, SEC: any[] = [];
+const P: any[] = [], CENT: Record<number, number[]> = {};
+const rnd = (s: number) => () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
+const cl = (t: number) => Math.max(0, Math.min(1, t));
+const sm = (t: number) => t * t * (3 - 2 * t);
+const tor = document.querySelector('.roj-tor') as HTMLElement;
+const poziom = document.querySelector('.roj-st.poziom') as HTMLElement;
+
+function size() {
+  D = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; MOB = W < 760;
+  cv.width = W * D; cv.height = H * D;
+  SEC = [...document.querySelectorAll('.roj-st')].map((s: any) => ({ k: s.dataset.k, top: s.offsetTop, h: s.classList.contains('poziom') ? H : s.offsetHeight }));
+}
+function brain(p: any, sc = 1) {
+  const bw = (MOB ? W * .88 : Math.min(W * .46, 760)) * sc, cx = MOB ? W / 2 : W * .72, cy = MOB ? H * .34 : H * .52;
+  return [cx + (p.u / 240 - .5) * bw, cy + (p.v / 180 - .5) * bw * .75, bw];
+}
+function lines() {
+  const r = poziom.getBoundingClientRect(), pr = cl(-r.top / (r.height - H)), off = -pr * W;
+  const top = r.top > 0 ? r.top : (r.bottom < H ? r.bottom - H : 0);
+  return { x0: off, x1: off + W * 2, y: [.40, .58, .76, .94].map((f) => top + f * H), off };
+}
+function st(k: string, p: any, lp: number) {
+  const net = p.net > 1; let x = 0, y = 0, a = 0, c = p.col, s = 1;
+  if (k === 'mozg') { [x, y] = brain(p); a = net ? .95 : .42; }
+  else if (k === 'wyspy') {
+    const [bx, by, bw] = brain(p);
+    if (net) { const C = CENT[p.net], dx = C[0] / 240 - .5, dy = C[1] / 180 - .5, L = Math.hypot(dx, dy) || 1; x = bx + dx * bw * .2 + dx / L * bw * .11; y = by + dy * bw * .16 + dy / L * bw * .07; a = .9; }
+    else { x = bx + (p.sx - .5) * 120; y = by + (p.sy - .5) * 120; a = .12; }
+  }
+  else if (k === 'twarz') {
+    [x, y] = brain(p); const fq = cl((lp - .38) / .12), gq = cl((lp - .62) / .12);
+    if (p.face) { a = .95; s = 1 + .25 * fq; c = [0, 1, 2].map((i) => Math.round(p.col[i] + (GREY[i] - p.col[i]) * gq)); }
+    else a = (net ? .95 : .42) * (1 - fq) + (net ? .14 : .08) * fq;
+  }
+  else if (k === 'jest') { x = p.sx * W; y = p.sy * H; a = .22; }
+  else if (k === 'osnowy') { const L = lines(); x = L.x0 + p.lx * (L.x1 - L.x0); y = L.y[p.ln] + (p.cr - .5) * 5; a = .6; c = hex(OSN[p.ln]); s = .85; }
+  return [x, y, a, c, s];
+}
+function frame() {
+  if (!P.length) return;
+  const sc = scrollY + H / 2; let i = 0;
+  for (let j = 0; j < SEC.length; j++) if (SEC[j].top + SEC[j].h / 2 <= sc) i = j;
+  const A = SEC[i], B = SEC[Math.min(i + 1, SEC.length - 1)], ca = A.top + A.h / 2, cb = B.top + B.h / 2;
+  let t = cb > ca ? cl((sc - ca) / (cb - ca)) : 0; if (sc < ca) t = 0; t = sm(cl((t - .2) / .6));
+  const lpA = cl((sc - A.top) / A.h), lpB = cl((sc - B.top) / B.h);
+  g.setTransform(D, 0, 0, D, 0, 0); g.clearRect(0, 0, W, H); g.globalCompositeOperation = 'lighter'; g.lineWidth = 1;
+  for (const p of P) {
+    const s1 = st(A.k, p, lpA), s2 = t > 0 ? st(B.k, p, lpB) : s1, q = cl(t * 1.35 - p.d * .35);
+    const x = s1[0] + (s2[0] - s1[0]) * q, y = s1[1] + (s2[1] - s1[1]) * q, al = s1[2] + (s2[2] - s1[2]) * q, sz = s1[4] + (s2[4] - s1[4]) * q;
+    if (al < .02) continue;
+    const c1 = s1[3], c2 = s2[3], r = p.s * (p.net > 1 ? 2.1 : 1.6) * sz, ang = p.a + q * 1.5;
+    g.globalAlpha = al; g.strokeStyle = 'rgb(' + [0, 1, 2].map((k) => Math.round(c1[k] + (c2[k] - c1[k]) * q)).join(',') + ')';
+    g.beginPath(); g.moveTo(x + r * Math.cos(ang), y + r * Math.sin(ang)); g.lineTo(x + r * Math.cos(ang + 2.09), y + r * Math.sin(ang + 2.09)); g.lineTo(x + r * Math.cos(ang + 4.19), y + r * Math.sin(ang + 4.19)); g.closePath(); g.stroke();
+  }
+  const wA = (A.k === 'osnowy' ? 1 - t : 0) + (B.k === 'osnowy' ? t : 0);
+  tor.style.transform = 'translateX(' + (wA > .02 ? lines().off : 0) + 'px)';
+}
+const img = new Image();
+img.onload = () => {
+  const o = document.createElement('canvas'); o.width = 240; o.height = 180; const c = o.getContext('2d')!; c.drawImage(img, 0, 0);
+  const d = c.getImageData(0, 0, 240, 180).data, cells: number[][] = [];
+  for (let i = 0; i < 43200; i++) { const v = d[i * 4]; if (v > 0) cells.push([i % 240, (i / 240) | 0, v]); }
+  const r = rnd(7);
+  for (let k = 0; k < 6200; k++) {
+    let cc; do { cc = cells[(r() * cells.length) | 0]; } while (cc[2] === 1 && r() > .4);
+    const u = cc[0] + r(), v = cc[1] + r(), net = cc[2];
+    P.push({ u, v, net, col: hex(COL[net]), a: r() * 6.28, s: .8 + r() * 1.2, sx: r(), sy: r(), d: r(), cr: Math.sqrt(r()), ln: (r() * 4) | 0, lx: r(),
+      face: net > 1 && u > 120 && u < 215 && v > 92 && v < 150 });
+  }
+  const cs: Record<number, number[]> = {};
+  for (const p of P) if (p.net > 1) { cs[p.net] = cs[p.net] || [0, 0, 0]; cs[p.net][0] += p.u; cs[p.net][1] += p.v; cs[p.net][2]++; }
+  for (const k in cs) CENT[k] = [cs[k][0] / cs[k][2], cs[k][1] / cs[k][2]];
+  size(); frame();
+};
+img.src = MAPA;
+let tk = false;
+addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(() => { frame(); tk = false; }); } }, { passive: true });
+addEventListener('resize', () => { size(); frame(); });
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) e.target.classList.add('in'); }), { threshold: .35 });
+document.querySelectorAll('.roj-st').forEach((s) => io.observe(s));
 </script>
 </Base>
