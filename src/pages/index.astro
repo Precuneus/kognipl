@@ -7,27 +7,28 @@ import { cardByName, slugify } from '../rocznik/data.js';
 // karta kogniwiki, gdy istnieje src/pages/wiki/), inaczej słowo zostaje zwykłym tekstem. Kropka linkuje pod tym samym warunkiem.
 const WIKI = Object.keys(import.meta.glob('./wiki/**/*.astro')).length > 0 ? '/wiki/' : '';
 const kartaUrl = (t) => cardByName(t)?.url || (WIKI ? WIKI + slugify(t) + '/' : '');
-const md = (t) => t.replace(/\[\[([^|\]]+)(?:\|([^\]]+))?\]\]/g, (_, k, w) => {
+// {{słowo}} to miejsce, na którym staje iskra (kropka z logo, która wędruje z czytelnikiem).
+const md = (t) => t.replace(/\{\{([^}]+)\}\}/g, '<span class="iskra-cel">$1</span>').replace(/\[\[([^|\]]+)(?:\|([^\]]+))?\]\]/g, (_, k, w) => {
   const u = kartaUrl(k);
   return u ? '<a href="' + u + '">' + (w || k) + '</a>' : (w || k);
 });
 // Ekrany: k = stan roju; tekst: lista [duże?, treść].
 const EKRANY = [
   { k: 'mozg', uklad: 'lewo', tekst: [
-    [true, 'Kognitywistyka bada poznanie: jak organizmy i sztuczne systemy odbierają świat, uczą się i działają.'],
+    [true, 'Kognitywistyka bada {{poznanie}}: jak organizmy i sztuczne systemy odbierają świat, uczą się i działają.'],
     [false, 'Pod tą nazwą mieszczą się różne programy badawcze. [[Podejście obliczeniowe]] opisuje umysł jako przetwarzanie informacji, tym samym językiem w mózgu i w komputerze. [[Poznanie ucieleśnione|Podejście ucieleśnione]] rozciąga poznanie na ciało, otoczenie i działanie organizmu. [[Neuronauka poznawcza]] szuka w aktywności mózgu mechanizmów myślenia i zachowania.'],
   ] },
   { k: 'wyspy', uklad: 'lewo', tekst: [
-    [true, 'Niestety, te programy rzadko prowadzą ze sobą dialog, każdy opiera się na własnych, często różnie rozumianych definicjach, a dziedzina od dekad trwa w [[Kryzys kognitywistyki|kryzysie]].'],
+    [true, 'Niestety, te programy rzadko prowadzą ze sobą {{dialog}}, każdy opiera się na własnych, często różnie rozumianych definicjach, a dziedzina od dekad trwa w [[Kryzys kognitywistyki|kryzysie]].'],
   ] },
   { k: 'twarz', uklad: 'lewo dlugi', tekst: [
     [false, 'Na tej stronie przyjmuję jedno z możliwych rozumień. Szukam w nim spójnego szkieletu, który mógłby opisać poznanie. Doświadczasz znaczenia czytanych słów, a Twoje doświadczenie może być zmierzone jako aktywność Twojego mózgu.'],
-    [true, 'Doświadczenie to aktywność biologiczna organizmu.', 'zl'],
+    [true, '{{Doświadczenie}} to aktywność biologiczna organizmu.', 'zl'],
     [false, 'Na przykład rozpoznawanie twarzy bliskiej osoby to aktywność sieci skupionej wokół prawego zakrętu wrzecionowatego. Po uszkodzeniu tej sieci twarz zostaje w strumieniu Twojego doświadczenia jako twarz, ale już niczyja: to [[Prozopagnozja|prozopagnozja]].'],
   ] },
   { k: 'jest', uklad: 'srodek', tekst: [
     [false, 'Moim punktem startowym jest doświadczenie. Tekst, znaczenie, emocja, spojrzenie w oczy, smak dojrzałego mango, głos bliskiej osoby. Doświadczenie... jest. A jednocześnie ciągle się zmienia, to proces, przepływ [[Bioinformacja|bioinformacji]] między miliardami rezonujących ze sobą komórek, które identyfikuję ze swoim ciałem i ze sobą.'],
-    [true, 'Startując od doświadczenia z jednej strony i od biologii z drugiej, szukam mechanizmów opisujących, w jaki dokładnie sposób doświadczenie to aktywność biologiczna.'],
+    [true, 'Startując od {{doświadczenia}} z jednej strony i od biologii z drugiej, szukam mechanizmów opisujących, w jaki dokładnie sposób doświadczenie to aktywność biologiczna.'],
   ] },
 ];
 const OSNOWY = [['socjologia', '#8fa274'], ['psychologia', '#5f9a96'], ['biologia', '#6585b0'], ['fizyka', '#8577b3']];
@@ -99,6 +100,8 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-t > * + *{margin-top:1em}
 .roj .roj-duze{font-family:var(--font-display);font-weight:400;font-size:clamp(28px,2.7vw,40px);line-height:1.2;letter-spacing:.005em;color:var(--zloto)}
 .roj-t > .roj-duze{margin:.45em 0 .55em}
+.roj .roj-duze.zl{text-shadow:0 0 calc(var(--s,0) * 26px) rgba(240,192,96,calc(var(--s,0) * .75))}
+.roj-t > p,.roj-t > h1{will-change:transform}
 .roj-t > .roj-duze:first-child{margin-top:0}
 .roj a{color:var(--kosc);text-decoration:none;border-bottom:1px solid rgba(240,192,96,.55)}
 .roj a:hover{color:var(--zloto)}
@@ -173,6 +176,7 @@ function size() {
   // wymiary z samego canvasu (100vw × 100vh): pasek adresu Safari nie zmienia ich, więc płótno nie skacze przy przewijaniu
   MOB = innerWidth < 760; D = Math.min(devicePixelRatio || 1, MOB ? 1.5 : 2);
   const w = cv.clientWidth, h = cv.clientHeight;
+  if (knotLogo) IS.r = Math.max(3, knotLogo.getBoundingClientRect().width / 2);
   if (w !== W || h !== H || cv.width !== Math.round(w * D)) { W = w; H = h; cv.width = Math.round(W * D); cv.height = Math.round(H * D); }
   // c0..c1: odcinek, na którym ekran trwa w swoim stanie; przejścia między c1 jednego a c0 następnego.
   SEC = [...document.querySelectorAll('.roj-st')].map((s: any) => {
@@ -274,6 +278,154 @@ function knot(w: number) {
     g.shadowBlur = 0;
   }
 }
+// Iskra: kropka z „i” w logo. Przy przewijaniu spada, odbija się, staje na słowach i świeci snopem światła
+// tam, gdzie patrzy. Świeci raz na tezę, gaśnie przy prozopagnozji i na końcu staje się kropką do kogniwiki.
+// Ruch: każdy ekran wyznacza cel (słowo, punkt mózgu, nić); iskra goni go jak ciężarek na sprężynie,
+// a na powierzchni działa grawitacja, odbicia i podskoki, więc zawsze trafia na miejsce, także wstecz.
+const knotLogo = document.querySelector('.rocznik-knot') as HTMLElement | null;
+const SEKCJE: Record<string, HTMLElement> = {};
+document.querySelectorAll('.roj-st').forEach((s: any) => { SEKCJE[s.dataset.k] = s; });
+const CEL: Record<string, HTMLElement | null> = {};
+for (const k of ['mozg', 'wyspy', 'twarz', 'jest']) CEL[k] = SEKCJE[k] ? SEKCJE[k].querySelector('.iskra-cel') : null;
+const teza = document.querySelector('.roj-duze.zl') as HTMLElement | null;
+const twarzP = SEKCJE.twarz ? SEKCJE.twarz.querySelector('.roj-t > p:last-child') as HTMLElement : null;
+const IS: any = { x: 0, y: 0, vx: 0, vy: 0, kontakt: false, lot: false, kuc: 0, sq: 0, sqv: 0, id: '', dom: true, start: false,
+  bi: 0, bang: 0, blen: 0, bhalf: .28, look: -1, last: 0, r: 4.4, grow: 0, py: 0 };
+const DIP = new Map<HTMLElement, number[]>();
+const G = 2600;
+const knotXY = () => { const r = knotLogo!.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number): any {
+  const r = IS.r * 1.95;
+  if (scrollY < 4 && knotLogo) { const [x, y] = knotXY(); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; }
+  const S = t < .5 ? A : B, lp = S === A ? lpA : lpB;
+  let c: any = null;
+  if (S.k === 'mozg' || S.k === 'wyspy' || S.k === 'jest') {
+    const el = CEL[S.k]; if (!el) return null;
+    const rr = el.getBoundingClientRect();
+    c = { id: S.k, tryb: 'stoj', x: rr.left + rr.width * .5, y: rr.top + rr.height * .2 - r, el: el.closest('p,h1'), I: 0, ang: 0, len: 0, half: .28 };
+    if (S.k === 'mozg') {
+      // rozgląda się: snop omiata mózg, sieci rozbłyskują po kolei
+      const [bx, by, bw] = brain({ u: 120, v: 86 });
+      const look = IS.look > 0 ? .55 * Math.sin((now - IS.look) / 1000 * 3.2) * Math.max(0, 1 - (now - IS.look) / 2600) : 0;
+      c.I = IS.kontakt ? .8 : 0; c.half = .3;
+      c.ang = Math.atan2(by - c.y, bx - c.x) + (cl(scrollY / SEKCJE.mozg.offsetHeight) - .25) * .9 + look;
+      c.len = Math.hypot(bx - c.x, by - c.y) + bw * .55; c.look = 1;
+    }
+  } else if (S.k === 'twarz') {
+    if (lp < .58 && teza) {
+      // jedyny raz świeci w pełni: na tezę
+      const el = teza.querySelector('.iskra-cel') as HTMLElement, rr = el.getBoundingClientRect(), tr = teza.getBoundingClientRect();
+      const s = sm(cl(1 - Math.abs(lp - .47) / .12));
+      c = { id: 'teza', tryb: 'stoj', x: rr.left + rr.width * .45, y: rr.top + rr.height * .2 - r, el: teza, I: s, ang: .2, len: tr.width + 20, half: .24, shine: s };
+    } else if (lp < .88) {
+      // prozopagnozja: świeci na twarz, sieć szarzeje mimo światła, snop migocze
+      const [fx, fy, bw] = brain({ u: 167, v: 121 });
+      c = { id: 'twarz', tryb: 'lot', x: fx - bw * .17, y: fy - bw * .18, I: .9, ang: Math.atan2(bw * .18, bw * .17), len: bw * .4, half: .32, flicker: cl((lp - .62) / .12) };
+    } else if (twarzP) {
+      const rr = twarzP.getBoundingClientRect();
+      c = { id: 'twarzP', tryb: 'stoj', x: rr.left + rr.width * .6, y: rr.top + 1 - r, el: twarzP, I: 0 };
+    }
+  } else if (S.k === 'osnowy') {
+    const rr = nitki[2].getBoundingClientRect();
+    c = { id: 'osnowy', tryb: 'stoj', x: rr.right - 10, y: rr.top - r + 1, I: .35, ang: 0, len: W * .28, half: .14 };
+  } else if (S.k === 'kropka') {
+    c = { id: 'kropka', tryb: 'lot', x: W / 2, y: KY, I: 0, grow: sm(cl((K - .15) / .4)) };
+  }
+  if (c && c.tryb === 'stoj' && (c.y < H * .06 || c.y > H * .94)) { c.tryb = 'lot'; c.y = Math.max(H * .06, Math.min(H * .94, c.y)); }
+  if (c) c.x = Math.max(14, Math.min(W - 14, c.x));
+  return c;
+}
+function skok(c: any) {
+  const h = Math.max(26, IS.y - c.y + 46), apex = IS.y - h;
+  IS.vy = -Math.sqrt(2 * G * h);
+  const T = Math.sqrt(2 * h / G) + Math.sqrt(2 * Math.max(1, c.y - apex) / G);
+  IS.vx = (c.x - IS.x) / T; IS.lot = true; IS.kontakt = false; IS.sq = -.22;
+}
+function dip(el: HTMLElement | undefined, v: number) {
+  if (!el || CICHO) return;
+  const d = DIP.get(el) || [0, 0]; d[1] += Math.min(240, v * .1); DIP.set(el, d);
+}
+function krok(dt: number, c: any, now: number) {
+  const zmiana = c.id !== IS.id; IS.id = c.id;
+  if (!IS.start || CICHO) { IS.x = c.x; IS.y = c.y; IS.vx = IS.vy = 0; IS.kontakt = c.tryb === 'stoj'; IS.start = true; IS.dom = c.id === 'dom'; return; }
+  if (c.tryb === 'lot') {
+    IS.kontakt = false; IS.lot = false; IS.kuc = 0;
+    const k = c.id === 'dom' ? 110 : 60, d = 2 * Math.sqrt(k) * .8;
+    IS.vx += ((c.x - IS.x) * k - IS.vx * d) * dt; IS.vy += ((c.y - IS.y) * k - IS.vy * d) * dt;
+    IS.x += IS.vx * dt; IS.y += IS.vy * dt;
+  } else if (IS.kuc > 0) {
+    // przysiad przed skokiem
+    IS.kuc -= dt; IS.sq += (.32 - IS.sq) * Math.min(1, dt * 18); IS.sqv = 0;
+    if (IS.kontakt) IS.y = c.y;
+    if (IS.kuc <= 0) skok(c);
+  } else if (IS.kontakt) {
+    if (zmiana && c.y < IS.y - 6) IS.kuc = .13;
+    else if (c.y > IS.y + 1.5) { IS.kontakt = false; IS.vy = 0; }
+    else {
+      IS.y = c.y;
+      if (Math.abs(c.x - IS.x) > 150) IS.kuc = .11;
+      else { const k = 30, d = 2 * Math.sqrt(k); IS.vx += ((c.x - IS.x) * k - IS.vx * d) * dt; IS.x += IS.vx * dt; }
+    }
+  } else {
+    const py = IS.y;
+    IS.vy += G * dt; IS.y += IS.vy * dt;
+    if (IS.lot) IS.x += IS.vx * dt;
+    else { const k = 14, d = 2 * Math.sqrt(k) * .7; IS.vx += ((c.x - IS.x) * k - IS.vx * d) * dt; IS.x += IS.vx * dt; }
+    if (IS.vy > 0 && IS.y >= c.y && py <= c.y + 8) {
+      IS.y = c.y; const v = IS.vy;
+      IS.sq = Math.min(.45, v / 1500); IS.sqv = 0; dip(c.el, v);
+      if (v > 170) { IS.vy = -v * .42; IS.lot = false; }
+      else { IS.vy = 0; IS.kontakt = true; IS.lot = false; IS.vx *= .3; if (c.look && IS.look < 0) IS.look = now; }
+    } else if (IS.y > c.y + 8 && IS.vy >= 0) skok(c);
+  }
+  IS.sqv += (-IS.sq * 300 - IS.sqv * 15) * dt; IS.sq += IS.sqv * dt;
+  const dist = Math.hypot(c.x - IS.x, c.y - IS.y), v = Math.hypot(IS.vx, IS.vy);
+  IS.dom = c.id === 'dom' && dist < 1.2 && v < 30;
+  if (IS.dom) { IS.x = c.x; IS.y = c.y; IS.vx = IS.vy = 0; }
+}
+function wiazka(dt: number, c: any, now: number) {
+  let I = c.I || 0;
+  if (c.flicker > 0) I *= 1 - c.flicker * (.55 + .45 * Math.sin(now / 43) * Math.sin(now / 71));
+  const e = Math.min(1, dt * 6);
+  IS.bi += (I - IS.bi) * (CICHO ? 1 : e);
+  if (c.len) {
+    let da = c.ang - IS.bang; da = Math.atan2(Math.sin(da), Math.cos(da));
+    IS.bang += da * (CICHO ? 1 : Math.min(1, dt * 7)); IS.blen += (c.len - IS.blen) * (CICHO ? 1 : e); IS.bhalf += (c.half - IS.bhalf) * e;
+  }
+  IS.grow += ((c.grow || 0) - IS.grow) * (CICHO ? 1 : Math.min(1, dt * 5));
+  if (teza) teza.style.setProperty('--s', String(c.id === 'teza' ? +(IS.bi.toFixed(3)) : 0));
+}
+function dipy(dt: number) {
+  let ruch = false;
+  DIP.forEach((d, el) => {
+    d[1] += (-d[0] * 260 - d[1] * 17) * dt; d[0] += d[1] * dt;
+    if (Math.abs(d[0]) < .04 && Math.abs(d[1]) < .5) { el.style.transform = ''; DIP.delete(el); }
+    else { el.style.transform = 'translateY(' + d[0].toFixed(2) + 'px)'; ruch = true; }
+  });
+  return ruch;
+}
+function rysujIskre(kw: number) {
+  const r = IS.r, A = 1 - cl(kw * 1.6);
+  if (A < .02) return;
+  const big = 1 + IS.grow * ((MOB ? 24 : 30) / (r * 1.75) - 1);
+  // snop światła
+  if (IS.bi > .02 && IS.blen > 4) {
+    g.globalCompositeOperation = 'lighter'; g.globalAlpha = 1;
+    const gr = g.createRadialGradient(IS.x, IS.y, r, IS.x, IS.y, IS.blen);
+    gr.addColorStop(0, 'rgba(255,214,140,' + .26 * IS.bi + ')'); gr.addColorStop(.55, 'rgba(240,192,96,' + .07 * IS.bi + ')'); gr.addColorStop(1, 'rgba(240,192,96,0)');
+    g.fillStyle = gr; g.beginPath(); g.moveTo(IS.x, IS.y); g.arc(IS.x, IS.y, IS.blen, IS.bang - IS.bhalf, IS.bang + IS.bhalf); g.closePath(); g.fill();
+  }
+  // kropka: żar, pierścień, rdzeń; zgniata się przy lądowaniu, wydłuża w locie
+  const st = IS.kontakt ? 0 : Math.min(.22, Math.abs(IS.vy) / 3000), sx = (1 + IS.sq * .9) * (1 - st * .5), sy = (1 - IS.sq * .7) * (1 + st);
+  g.save(); g.globalCompositeOperation = 'source-over';
+  g.translate(IS.x, IS.y + r * 1.95); g.scale(big * sx, big * sy); g.translate(0, -r * 1.95);
+  const gl = g.createRadialGradient(0, 0, r * .5, 0, 0, r * 5.5);
+  gl.addColorStop(0, 'rgba(240,192,96,' + .4 * A + ')'); gl.addColorStop(1, 'rgba(240,192,96,0)');
+  g.globalAlpha = 1; g.fillStyle = gl; g.beginPath(); g.arc(0, 0, r * 5.5, 0, 6.283); g.fill();
+  g.globalAlpha = .92 * A; g.strokeStyle = '#f0c060'; g.lineWidth = r * .36; g.beginPath(); g.arc(0, 0, r * 1.75, 0, 6.283); g.stroke();
+  g.globalAlpha = A; g.fillStyle = '#f0c060'; g.beginPath(); g.arc(0, 0, r, 0, 6.283); g.fill();
+  g.restore();
+}
 function frame() {
   if (!P.length) return;
   const sc = scrollY + H / 2; let i = 0;
@@ -286,11 +438,26 @@ function frame() {
   const now = performance.now();
   SEK = now / 1000; FAZA = md1(SEK / (HOV ? 1.2 : 2)); PL = CICHO ? 0 : KF(BEAT, FAZA) - 1;
   const lpA = cl((sc - A.top) / A.h), lpB = cl((sc - B.top) / B.h);
+  const dt = Math.min(.033, Math.max(0, (now - (IS.last || now)) / 1000)); IS.last = now;
+  const c = cel(A, B, t, lpA, lpB, now);
+  if (c) { krok(dt, c, now); wiazka(dt, c, now); }
+  const wid = !!c && !IS.dom, SZARY = !!c && c.flicker > .05;
+  const PCH = wid && c.id !== 'kropka' && c.id !== 'dom' ? (MOB ? 22 : 30) : 0;
+  if (knotLogo) knotLogo.style.opacity = wid ? '0' : '';
   g.setTransform(D, 0, 0, D, 0, 0); g.clearRect(0, 0, W, H); g.globalCompositeOperation = 'lighter'; g.lineWidth = 1;
   for (const p of P) {
     const s1 = st(A.k, p, lpA), s2 = t > 0 ? st(B.k, p, lpB) : s1, q = cl(t * 1.35 - p.d * .35);
-    const x = s1[0] + (s2[0] - s1[0]) * q, y = s1[1] + (s2[1] - s1[1]) * q, al = s1[2] + (s2[2] - s1[2]) * q, sz = s1[4] + (s2[4] - s1[4]) * q;
+    let x = s1[0] + (s2[0] - s1[0]) * q, y = s1[1] + (s2[1] - s1[1]) * q, al = s1[2] + (s2[2] - s1[2]) * q, sz = s1[4] + (s2[4] - s1[4]) * q;
     if (al < .02) continue;
+    if (wid) {
+      // mózg reaguje na iskrę: punkty w snopie jaśnieją, bliskie się rozstępują
+      const dx = x - IS.x, dy = y - IS.y, d = Math.hypot(dx, dy);
+      if (d < PCH && d > .01) { const f = (PCH - d) / PCH * PCH * .7; x += dx / d * f; y += dy / d * f; }
+      if (IS.bi > .02 && d < IS.blen && !(SZARY && p.face)) {
+        let da = Math.atan2(dy, dx) - IS.bang; da = Math.abs(Math.atan2(Math.sin(da), Math.cos(da)));
+        if (da < IS.bhalf) { const L = IS.bi * Math.sqrt(1 - d / IS.blen) * (1 - da / IS.bhalf); al = Math.min(1, al + L * .85); sz *= 1 + L * .7; }
+      }
+    }
     const c1 = s1[3], c2 = s2[3], r = p.s * (p.net > 1 ? 2.1 : 1.6) * sz, ang = p.a + q * 1.5;
     g.globalAlpha = al; g.strokeStyle = 'rgb(' + [0, 1, 2].map((k) => Math.round(c1[k] + (c2[k] - c1[k]) * q)).join(',') + ')';
     g.beginPath(); g.moveTo(x + r * Math.cos(ang), y + r * Math.sin(ang)); g.lineTo(x + r * Math.cos(ang + 2.09), y + r * Math.sin(ang + 2.09)); g.lineTo(x + r * Math.cos(ang + 4.19), y + r * Math.sin(ang + 4.19)); g.closePath(); g.stroke();
@@ -306,8 +473,12 @@ function frame() {
   const kw = wK * sm(cl((K - .6) / .18));
   if (kw > .01) knot(kw);
   kDot.classList.toggle('widac', kw > .6);
-  // puls: pętla klatek tylko wtedy, gdy kropka jest na ekranie
-  if (kw > .01 && !CICHO && !PETLA && kr.bottom > 0) { PETLA = true; requestAnimationFrame(() => { PETLA = false; frame(); }); }
+  const dipRuch = dipy(dt);
+  if (wid) rysujIskre(kw);
+  // pętla klatek tylko wtedy, gdy coś się rusza: puls kropki na ekranie albo iskra w ruchu
+  const iskraRuch = !!c && !CICHO && (!IS.dom && (Math.hypot(IS.vx, IS.vy) > 6 || Math.hypot(c.x - IS.x, c.y - IS.y) > .8 || (c.tryb === 'stoj' && !IS.kontakt))
+    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || (IS.look > 0 && now - IS.look < 2700) || (c.flicker > 0 && IS.bi > .03) || Math.abs((c.I || 0) - IS.bi) > .01);
+  if (((kw > .01 && !CICHO && kr.bottom > 0) || iskraRuch) && !PETLA) { PETLA = true; requestAnimationFrame(() => { PETLA = false; frame(); }); }
 }
 {
   const cells: number[][] = []; let ix = 0;
