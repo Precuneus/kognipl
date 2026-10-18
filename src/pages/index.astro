@@ -30,6 +30,8 @@ const SIECI = [
   [5, 'Sieć kontroli', 'Trzymasz zadanie.'],
   [7, 'Sieć domyślna', 'Ty, Twoja przeszłość i przyszłość, inni ludzie.'],
 ];
+// odstępy między sieciami: nieregularny rytm, jak w ciągłym tekście
+const ODSTEP = ['0', '6vh', '11vh', '4vh', '14vh', '8vh'];
 const KOLOR = { 2: '#ee6b6f', 3: '#f9d780', 4: '#e58e76', 5: '#f69959', 6: '#a9b26f', 7: '#bb6fb2' };
 const OSNOWY = [['socjologia', '#8fa274'], ['psychologia', '#5f9a96'], ['biologia', '#6585b0'], ['fizyka', '#8577b3']];
 const KOL_OSN = Object.fromEntries(OSNOWY);
@@ -65,15 +67,15 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   <section class="roj-st lewo pierwszy" data-k="czesc">
     <div class="roj-t"><h1 class="roj-czesc">Cześć</h1></div>
   </section>
-  <section class="roj-st lewo" data-k="pytanie">
+  <section class="roj-st lewo ciag" data-k="pytanie">
     <div class="roj-t">
       <p class="roj-duze" set:html={md(T.pytanie)} />
       <ul class="roj-lista">{T.punkty.map((t) => <li>{t}</li>)}</ul>
     </div>
   </section>
-  <section class="roj-st lewo" data-k="sieci">
+  <section class="roj-st lewo ciag" data-k="sieci">
     <div class="roj-t">
-      <ul class="roj-sieci">{SIECI.map(([n, nazwa, zd]) => <li class="roj-siec" data-n={n}><span style={'color:' + KOLOR[n]}>{nazwa}.</span> {zd}</li>)}</ul>
+      <ul class="roj-sieci">{SIECI.map(([n, nazwa, zd], i) => <li class="roj-siec" data-n={n} style={'margin-top:' + ODSTEP[i]}><span style={'color:' + KOLOR[n]}>{nazwa}.</span> {zd}</li>)}</ul>
     </div>
   </section>
   <section class="roj-st lewo" data-k="zmiany">
@@ -153,7 +155,11 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-st.lewo .roj-t{max-width:min(40vw,560px)}
 .roj-st.srodek{justify-content:center;padding-left:56px}
 .roj-st.srodek .roj-t{max-width:680px}
-.roj-st.pierwszy{min-height:calc(100vh - 120px);padding-top:0;padding-bottom:4vh}
+.roj-st.pierwszy{min-height:calc(100vh - 120px);align-items:flex-end;padding-top:0;padding-bottom:14vh}
+/* Cześć, pytanie i sieci płyną jak jeden tekst */
+.roj-st.ciag{min-height:0;padding-bottom:0}
+.roj-st.ciag[data-k=pytanie]{padding-top:10vh}
+.roj-st.ciag[data-k=sieci]{padding-top:9vh;padding-bottom:24vh}
 .roj-t{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease}
 .roj-st.in .roj-t{opacity:1;transform:none}
 .roj p,.roj h1,.roj ul{margin:0}
@@ -174,7 +180,6 @@ body:has(.roj) .site-footer::before{display:none}
 /* sieci pojawiają się po kolei, gdy iskra je ogląda */
 .roj-sieci{list-style:none;padding:0}
 .roj-siec{font:300 18px/1.6 var(--font-body);color:var(--kosc);opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
-.roj-siec + .roj-siec{margin-top:.7em}
 .roj-siec.in{opacity:1;transform:none}
 .roj-siec span{font-weight:400}
 /* zombie i solipsysta: ekran lepki, postać odsłania iskra */
@@ -245,7 +250,9 @@ body:has(.roj) .site-footer::before{display:none}
 @media (max-width:760px){
   .roj-st{padding:52vh 20px 8vh 20px!important;align-items:flex-start;justify-content:flex-start!important}
   .roj-st.lewo .roj-t,.roj-st.kogni .roj-t,.roj-st.lepkie .roj-t{max-width:none}
-  .roj-st.pierwszy{padding-top:calc(34vh + 33vw + 16px)!important}
+  .roj-st.pierwszy{padding-top:calc(34vh + 33vw + 16px)!important;padding-bottom:0!important;align-items:flex-start}
+  .roj-st.ciag[data-k=pytanie]{padding-top:14vh!important;padding-bottom:0!important}
+  .roj-st.ciag[data-k=sieci]{padding-top:7vh!important;padding-bottom:20vh!important}
   .roj-st.poziom,.roj-st.lepkie{padding:0!important}
   .roj-st.lepkie .roj-lepki{padding:52vh 20px 0!important;align-items:flex-start}
   .roj-sol{left:50%;right:auto;top:6vh;transform:translateX(-50%);width:88vw;height:40vh}
@@ -423,11 +430,11 @@ function knot(w: number, cx: number, cy: number, rb0: number, rc: number) {
     g2.shadowBlur = 0;
   }
 }
-// Iskra: kropka z „i” w logo. Po wejściu na stronę wyskakuje z logo i rozświetla „Cześć”, potem wędruje z czytelnikiem:
+// Iskra: kropka z „i” w logo. Przy pierwszym przewinięciu wyskakuje z logo i rozświetla „Cześć”; na górze strony wraca do logo.
+// Potem wędruje z czytelnikiem:
 // stoi na słowach, ogląda sieci po kolei, odsłania solipsystę, jeździ na łyżwach po osnowach, macha postaciom,
 // skacze z radości przy „wytłumaczyć” i na końcu staje się kropką w kogni.pl/wiki.
 // Ruch: każdy ekran wyznacza cel; iskra goni go jak ciężarek na sprężynie, na powierzchni działa grawitacja.
-const T0 = performance.now();
 const IS: any = { x: 0, y: 0, vx: 0, vy: 0, kontakt: false, lot: false, kuc: 0, sq: 0, sqv: 0, id: '', dom: true, start: false,
   bi: 0, bang: 0, blen: 0, bhalf: .28, look: -1, last: 0, r: 4.4, py: 0,
   gx: 0, gy: 0, pd: 1, lid: 1, zdz: 0, joy: 0, lean: 0, rot: 0, mrug: -1e9, nast: 0, mach: 0, hura: 0, osiadla: 0 };
@@ -461,7 +468,7 @@ function solCel(now: number) {
 }
 function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, lz: number): any {
   const r = IS.r * 1.95;
-  if (now - T0 < 1100 && scrollY < 4 && knotLogo) { const [x, y] = knotXY(); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; }
+  if (scrollY < 4 && knotLogo) { const [x, y] = knotXY(); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; }
   const S = t < .5 ? A : B;
   const stoj = (el: HTMLElement | null, id: string): any => {
     if (!el) return null; const rr = el.getBoundingClientRect();
@@ -675,7 +682,7 @@ function wiazka(dt: number, c: any, now: number) {
   }
   const s = c.id === 'czesc' ? +(IS.bi.toFixed(3)) : 0;
   czesc.style.setProperty('--s', String(s));
-  if (s > .7) czesc.classList.add('lit');
+  if (scrollY < 4) czesc.classList.remove('lit'); else if (s > .7) czesc.classList.add('lit');
 }
 function dipy(dt: number) {
   let ruch = false;
@@ -741,12 +748,20 @@ function rysujIskre(A0: number) {
   g2.globalAlpha = A; g2.fillStyle = '#f0c060'; g2.beginPath(); g2.arc(IS.gx * maxo, IS.gy * maxo, pr, 0, 6.283); g2.fill();
   g2.restore();
 }
-// Sieci i nauki pojawiają się w krótkich odstępach czasu, raz.
-let SIECI_N = 0, SIECI_S = false, NAUKI_S = false;
-function startSieci() {
-  if (SIECI_S) return; SIECI_S = true;
-  sieciEl.forEach((e, i) => setTimeout(() => { e.classList.add('in'); SIECI_N = i + 1; kick(); }, CICHO ? 0 : 500 + i * 1100));
+// Sieć pojawia się, gdy wchodzi na ekran, nie wcześniej niż 1,1 s po poprzedniej; iskra ogląda ostatnią. Nauki pojawiają się co 0,9 s, raz.
+let SIECI_N = 0, SIECI_T = 0, NAUKI_S = false;
+const SIECI_Q: HTMLElement[] = [];
+function pokazSiec() {
+  const e = SIECI_Q.shift(); if (!e) return;
+  e.classList.add('in'); SIECI_N = sieciEl.indexOf(e) + 1; SIECI_T = performance.now(); kick();
+  if (SIECI_Q.length) setTimeout(pokazSiec, CICHO ? 0 : 1100);
 }
+const ioS = new IntersectionObserver((es) => es.forEach((e) => {
+  if (!e.isIntersecting) return;
+  ioS.unobserve(e.target); SIECI_Q.push(e.target as HTMLElement); SIECI_Q.sort((a, b) => sieciEl.indexOf(a) - sieciEl.indexOf(b));
+  if (SIECI_Q.length === 1) setTimeout(pokazSiec, CICHO ? 0 : Math.max(0, SIECI_T + 1100 - performance.now()));
+}), { rootMargin: '0px 0px -12% 0px', threshold: 1 });
+sieciEl.forEach((e) => ioS.observe(e));
 function startNauki() {
   if (NAUKI_S) return; NAUKI_S = true;
   naukiEl.forEach((e, i) => setTimeout(() => e.classList.add('in'), CICHO ? 0 : 400 + i * 900));
@@ -824,7 +839,7 @@ function frame() {
     || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || (c.id === 'sieci' || c.id.startsWith('siec'))
     || (!IS.dom && (now - IS.mrug < 170 || IS.zdz > .02 || Math.abs(IS.pd - ((c.mood && c.mood.pd) || 1)) > .01 || Math.abs(IS.lid - ((c.mood && c.mood.lid) || 1)) > .01
       || Math.abs(IS.joy - ((c.mood && c.mood.joy) || 0) * (1 - .35 * WSTECZ)) > .01 || Math.abs(IS.lean) > .005 || WSTECZ > .01))
-    || (now - T0 < 1300));
+    );
   if (iskraRuch) kick();
 }
 {
@@ -853,9 +868,7 @@ addEventListener('resize', () => { size(); frame(); });
 kuPlotnu.addEventListener('pointerenter', () => { HOVP = true; kick(); });
 kuPlotnu.addEventListener('pointerleave', () => { HOVP = false; kick(); });
 const io = new IntersectionObserver((es) => es.forEach((e) => {
-  if (!e.isIntersecting) return;
-  e.target.classList.add('in');
-  if ((e.target as HTMLElement).dataset.k === 'sieci') startSieci();
+  if (e.isIntersecting) e.target.classList.add('in');
 }), { threshold: .35 });
 document.querySelectorAll('.roj-st').forEach((s) => io.observe(s));
 </script>
