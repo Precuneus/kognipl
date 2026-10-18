@@ -67,7 +67,6 @@ export const CN = R['połączenia'].map((c) => ({
 // Each view reads OS in the shape its board was designed with.
 export function viewData(kind) {
   const OS = kind === 'plotno' ? OSFULL.map((o) => o.nazwa)
-    : kind === 'osnowy' ? OSFULL.map((o) => [o.nazwa, o.opis, o.rodziny])
     : OSFULL.map((o) => [o.nazwa, o.rodziny.join(' · ')]);
   const OP = kind === 'plotno' ? OSFULL.map((o) => [o.opis, o.rodziny]) : undefined;
   return { OS, OP, BAND, GN, LV, CL, SP, CN };

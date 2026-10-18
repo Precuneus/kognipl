@@ -1,7 +1,15 @@
 ---
-import Base from '../../layouts/Base.astro';
-import Board from '../../components/Board.astro';
+const to = '/2026/';
 ---
-<Base title="Rocznik 2026 · Osnowy · kogni.pl" activePage="osnowy" rocznik="2026">
-  <Board view="osnowy" />
-</Base>
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>kogni.pl</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href={'https://kogni.pl' + to}>
+<meta http-equiv="refresh" content={'0; url=' + to}>
+<script is:inline define:vars={{ to }}>location.replace(to + location.search + location.hash);</script>
+</head>
+<body><p><a href={to}>{'kogni.pl' + to}</a></p></body>
+</html>

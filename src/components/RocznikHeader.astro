@@ -2,7 +2,7 @@
 interface Props { rocznik?: string; current?: string }
 const { rocznik = '', current = '' } = Astro.props;
 const NAV: Record<string, string[][]> = {
-  '2026': [['plotno', 'Płótno', '/2026/'], ['osnowy', 'Osnowy', '/2026/osnowy/'], ['watki', 'Wątki', '/2026/watki/'], ['kursy', 'Kursy', '/2026/kursy/']],
+  '2026': [['plotno', 'Płótno', '/2026/'], ['watki', 'Wątki', '/2026/watki/'], ['kursy', 'Kursy', '/2026/kursy/']],
   '2025': [['start', 'Start', '/2025/'], ['wstep-2', 'Wstęp II', '/2025/wstep-2/'], ['mip', 'Mózg i poznanie', '/2025/mip/'], ['design', 'Design Thinking', '/2025/design/'], ['drugi-mozg', 'Drugi mózg', '/2025/drugi-mozg/']],
 };
 // Menu obok logo: wiki, KiK UwB (strona z Rocznikami i informacjami KiK), Kontakt.

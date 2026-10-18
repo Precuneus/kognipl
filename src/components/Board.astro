@@ -2,14 +2,13 @@
 import '../rocznik/rocznik.css';
 import { toHTML } from '../rocznik/engine.js';
 import * as plotno from '../rocznik/views/plotno.js';
-import * as osnowy from '../rocznik/views/osnowy.js';
 import * as watki from '../rocznik/views/watki.js';
 import * as karta from '../rocznik/views/karta.js';
 import { viewData } from '../rocznik/data.js';
 
-interface Props { view: 'plotno' | 'osnowy' | 'watki' | 'karta'; state?: Record<string, unknown> }
+interface Props { view: 'plotno' | 'watki' | 'karta'; state?: Record<string, unknown> }
 const { view, state = {} } = Astro.props;
-const views = { plotno, osnowy, watki, karta };
+const views = { plotno, watki, karta };
 const props = { data: viewData(view), ...state };
 const html = toHTML(views[view], props);
 const json = JSON.stringify(props).replace(/</g, '\\u003c');
@@ -20,19 +19,18 @@ const json = JSON.stringify(props).replace(/</g, '\\u003c');
 <script>
   import { mount } from '../rocznik/engine.js';
   import * as plotno from '../rocznik/views/plotno.js';
-  import * as osnowy from '../rocznik/views/osnowy.js';
   import * as watki from '../rocznik/views/watki.js';
   import * as karta from '../rocznik/views/karta.js';
-  const views = { plotno, osnowy, watki, karta };
+  const views = { plotno, watki, karta };
   document.querySelectorAll('[data-board]').forEach((el) => {
     const kind = el.getAttribute('data-board');
     const props = JSON.parse(el.nextElementSibling.textContent);
-    if (kind === 'osnowy' || kind === 'plotno') {
+    if (kind === 'plotno') {
       const o = new URLSearchParams(location.search).get('o');
       if (o) props.on = [o];
     }
     const c = mount(el, views[kind], props);
-    if ((kind === 'osnowy' || kind === 'plotno') && props.on && props.on.length) {
+    if (kind === 'plotno' && props.on && props.on.length) {
       const row = Array.from(el.querySelectorAll('.osn-name')).find((b) => b.textContent === props.on[0]);
       if (row) window.scrollTo({ top: row.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2 });
     }

@@ -36,6 +36,7 @@
 .rocznik .knot span{transition:transform .18s ease}
 .rocznik .knot:hover span{transform:scale(1.2)}
 .rocznik .osn-name:hover{color:#f0e6d2 !important}
+@media (min-width:721px){.rocznik .pl-side{position:sticky;left:0;z-index:8;background:#0e0d0b}}
 .rocznik .w-axis{--tx:310px}
 .rocznik .wp-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start}
 @media (max-width:960px){.rocznik .wp-grid{grid-template-columns:minmax(0,1fr)}}
