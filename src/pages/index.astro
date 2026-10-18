@@ -9,7 +9,7 @@ const md = (t) => t.replace(/\{\{([^}|]+)(?:\|([^}]+))?\}\}/g, (_, w, k) => '<sp
 const T = {
   pytanie: 'Czym jest to, czego {{doświadczasz}}?',
   zmiany: 'Zmiany struktury mózgu (np. degeneracje, lezje, uszkodzenia) i zmiany funkcjonowania struktur między sobą (np. substancje psychoaktywne, uzależnienia, nauka, rozwój) zmieniają czego doświadczam.',
-  zombie: ['Jesteś człowiekiem, prawda? Czy {{zombie}}?', 'Założę, że człowiekiem i też doświadczasz, jak ja. Ale nie mogę tego {{wiedzieć|dalej}}.'],
+  zombie: ['Jesteś człowiekiem, prawda? Czy {{zombie}}?', 'Założę, że człowiekiem i też doświadczasz, jak ja. Ale nie mogę tego wiedzieć.'],
   wiem: ['Wiem tylko tyle, ile się nauczyłem od {{środowiska}}, w którym się urodziłem.', 'Doświadczam Modeli Mentalnych, które jednocześnie są moją aktywnością biologiczną.'],
   ja: ['Ale... "{{ja}}" to też Model Mentalny', 'Model "ja" zmienia się w czasie,  Zmienia się płynnie (nauka, dryfowanie) i gwałtownie (szok, przeskok). "Ja" to Statek Tezeusza strukturalnie i funkcjonalnie połączonych komórek.'],
   dosw: ['{{Doświadcza}} się.', 'Skoro podmiot i treść doświadczenia się zmieniają to zostaje samo doświadczenie. Doświadcza się. Swiat się doświadcza, ciało się doświadcza, ja się doświadczam.'],
@@ -247,6 +247,8 @@ const COL: Record<number, string> = { 1: '#7d7466', 2: '#ee6b6f', 3: '#f9d780', 
 // sieć brzuszna uwagi (VAN), dorysowana do maski: TPJ na styku płata ciemieniowego i skroniowego (z szarego tła)
 // i kora brzuszno-czołowa nad bruzdą boczną (z szarego tła i brzegu sieci domyślnej); [u, v, promień u, promień v, etykiety do zamiany]
 const VAN = [[166, 91, 13, 8, [1]], [79, 79, 10, 7, [1, 7]]];
+// miejsca nazw sieci na mózgu [u, v]: wewnątrz największej części każdej sieci, z dala od sąsiednich nazw
+const KOTWICA: Record<number, number[]> = { 2: [221, 112], 3: [118, 42], 4: [166, 22], 8: [79, 80], 6: [155, 71], 5: [42, 48], 7: [110, 128] };
 const OSN = ['#8fa274', '#5f9a96', '#6585b0', '#8577b3'];
 const YN = [.30, .48, .66, .84];
 const hex = (h: string) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
@@ -277,8 +279,8 @@ let MN_Y = 0, MN_KROK = 0, PUSZCZ = 0, SZER_MAX = 0;
 const wikiK = $('.roj-wiki-kropka');
 const knotLogo = document.querySelector('.rocznik-knot') as HTMLElement | null;
 const CEL: Record<string, HTMLElement | null> = {};
-for (const k in SEKCJE) CEL[k] = SEKCJE[k].querySelector('.iskra-cel:not(.dalej):not(.hura)');
-const dalej = $('.iskra-cel.dalej'), hura = $('.iskra-cel.hura');
+for (const k in SEKCJE) CEL[k] = SEKCJE[k].querySelector('.iskra-cel:not(.hura)');
+const hura = $('.iskra-cel.hura');
 
 function size() {
   // wymiary z samego canvasu (100vw × 100vh): pasek adresu Safari nie zmienia ich, więc płótno nie skacze przy przewijaniu
@@ -389,30 +391,18 @@ let KIER = 1, KIER_T = -1e9, OSTATNI_Y = scrollY, WSTECZ = 0;
 const DIP = new Map<HTMLElement, number[]>();
 const G = 2600;
 const knotXY = () => { const r = knotLogo!.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
-// Solipsysta: iskra wraca, omiata ciemność snopem, odsłania słowa i postać, zapala świecę, zagląda pod kaptur, wraca.
+// Solipsysta: iskra stoi na „zombie” i świeci na niego; postać wyłania się z ciemności, sama zapala świecę,
+// a snop jej świecy odsłania i oświetla słowa wokół; potem postać obraca się z płonącą świecą.
 const SOL: any = { t0: 0, done: false };
-const SOL_F = [900, 2500, 3100, 3700, 5600];
+const SOL_F = [500, 1700, 1900, 2600];  // postać widać, świeca płonie, obrót rusza, koniec
 function solKlasy(now: number) {
-  const t = SOL.done ? 1e9 : SOL.t0 ? now - SOL.t0 : -1;
-  if (t < 0) return;
-  solSlowa.forEach((s, i) => s.classList.toggle('widac', t > SOL_F[0] + 250 + i * 330));
-  sol.classList.toggle('widac', t > SOL_F[0] + 500);
+  if (!SOL.t0) return;
+  const t = now - SOL.t0;
+  sol.classList.toggle('widac', t > SOL_F[0]);
   solObrot.classList.toggle('plonie', t > SOL_F[1]);
+  if (t > SOL_F[3]) SOL.done = true;
 }
-function zakonczSol() { SOL.done = true; SOL.koniec = performance.now(); if (!SOL.t0) SOL.t0 = 1; solKlasy(0); }
-function solCel(now: number) {
-  const t = now - SOL.t0, b = solP.getBoundingClientRect();
-  const fx = b.left + b.width * .5, fy = b.top + b.height * .38, hx = b.left + b.width * .39, hy = b.top + b.height * 36 / 222;
-  const px = b.left - b.width * (MOB ? .2 : .55), py = b.top - b.height * .02;
-  const ku = (x: number, y: number) => Math.atan2(y - py, x - px);
-  if (t < SOL_F[1]) {
-    const s = t < SOL_F[0] ? sm(t / SOL_F[0]) : 1, sw = t < SOL_F[0] ? 0 : Math.sin((t - SOL_F[0]) / (SOL_F[1] - SOL_F[0]) * Math.PI * 2) * .55;
-    return { id: 'sol0', tryb: 'lot', x: px, y: py, I: .95 * s, ang: ku(fx, fy) + sw, len: Math.hypot(fx - px, fy - py) + b.height * .7, half: .5, skala: .6 };
-  }
-  if (t < SOL_F[2]) return { id: 'sol1', tryb: 'lot', x: px, y: py, I: .35, ang: ku(fx, b.top + b.height * .4), len: b.height, half: .4, skala: .6 };
-  if (t < SOL_F[3]) return { id: 'sol2', tryb: 'lot', x: hx, y: hy, I: 0, skala: .6 };
-  return { id: 'sol3', tryb: 'lot', x: hx, y: hy, I: 0, gaze: (t - SOL_F[3]) / 1900 * Math.PI * 2.6, skala: .6 };
-}
+function zakonczSol() { SOL.t0 = performance.now() - 10000; solKlasy(performance.now()); }
 function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, lz: number): any {
   const r = IS.r * 1.95;
   if (scrollY < 4 && knotLogo) { const [x, y] = knotXY(); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; }
@@ -422,10 +412,6 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
     return { id, tryb: 'stoj', x: rr.left + rr.width * .5, y: rr.top + rr.height * .2 - r, el: el.closest('p,h1,li') as HTMLElement, I: 0 };
   };
   let c: any = null;
-  if (SOL.t0 && !SOL.done) {
-    const sb = sol.getBoundingClientRect();
-    if (sb.bottom < 0 || sb.top > H || now - SOL.t0 > SOL_F[4]) zakonczSol(); else c = solCel(now);
-  }
   if (!c) {
     if (S.k === 'czesc') {
       // unosi się nad słowem i świeci na nie z góry
@@ -443,11 +429,17 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       } else {
         const [bx, by, bw] = brain({ u: CENT[n][0], v: CENT[n][1] });
         const [cx0, cy0] = brain({ u: 120, v: 90 }), [ix, iy] = wyspa(n, bx, by, bw, wy);
-        const x = SIECI_N ? ix : cx0, y = SIECI_N ? iy : cy0, h = bw * .07 + 12;
+        const x = s ? s.lx : SIECI_N ? ix : cx0, y = s ? s.ly : SIECI_N ? iy : cy0, h = bw * .07 + 12;
         c = { id: 'siec' + (SIECI_N ? n : 0), tryb: 'lot', x, y: y - h, I: SIECI_N ? .85 : .3, ang: Math.PI / 2, len: h + bw * .12, half: .55 };
       }
     } else if (S.k === 'zombie') {
-      c = lz < .12 ? stoj(CEL.zombie, 'zombie') : stoj(dalej, 'dalej');
+      // stoi na „zombie” i świeci na solipsystę, aż ten sam zapali świecę
+      c = stoj(CEL.zombie, 'zombie');
+      if (c && SOL.t0) {
+        const tt = now - SOL.t0, b = solP.getBoundingClientRect(), fx = b.left + b.width * .5, fy = b.top + b.height * .5, d = Math.hypot(fx - c.x, fy - c.y);
+        c.I = .95 * (tt < 400 ? sm(tt / 400) : 1 - sm(cl((tt - SOL_F[1] - 200) / 600)));
+        c.ang = Math.atan2(fy - c.y, fx - c.x); c.len = d + b.height * .5; c.half = Math.max(.1, Math.min(.5, Math.atan2(b.height * .6, d))); c.gaze = c.ang;
+      }
     } else if (S.k === 'osnowy') {
       // łyżwy na nici biologii; na końcu toru czeka przy Płótnie i macha postaciom
       const n = nitki[2], xs = n.offsetLeft + n.offsetWidth + 26, xe = W - kuPlotnu.offsetWidth - 22;
@@ -467,8 +459,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
     c.mood = c.id === 'czesc' ? { pd: 1.15, lid: 1 }
       : c.id === 'osnowy' ? { pd: 1.08 + .14 * (c.czeka || 0), lid: 1, joy: c.czeka ? .8 : 1 }
       : c.id === 'hura' ? { pd: 1.2, lid: 1, joy: 1 }
-      : c.id === 'sol0' ? { pd: 1.2, lid: 1 }
-      : c.id === 'sol3' ? { pd: 1.32, lid: 1 }
+      : c.id === 'zombie' && c.I > .1 ? { pd: 1.2, lid: 1 }
       : c.id.startsWith('siec') || c.id.startsWith('slowo') ? { pd: 1.12, lid: 1 }
       : { pd: 1, lid: 1 };
   }
@@ -652,8 +643,8 @@ function oko(dt: number, c: any, now: number) {
   const v = Math.hypot(IS.vx, IS.vy);
   if (IS.bi > .1) { ang = IS.bang; amt = 1; }
   else if (v > 60) { ang = Math.atan2(IS.vy, IS.vx); amt = Math.min(1, v / 420); }
-  else if (c.gaze !== undefined) { ang = c.gaze; amt = c.id === 'sol3' ? .95 : .8; }
-  if (WSTECZ > .05 && IS.bi < .3 && c.id !== 'sol3') { ang = c.id === 'osnowy' ? 0 : -Math.PI / 2; amt = Math.max(amt, .9 * WSTECZ); }
+  else if (c.gaze !== undefined) { ang = c.gaze; amt = .8; }
+  if (WSTECZ > .05 && IS.bi < .3) { ang = c.id === 'osnowy' ? 0 : -Math.PI / 2; amt = Math.max(amt, .9 * WSTECZ); }
   const m = c.mood || { pd: 1, lid: 1 };
   if (c.id === 'dom' || c.id === 'wiki') amt = 0;
   const e = CICHO ? 1 : Math.min(1, dt * 11);
@@ -753,8 +744,8 @@ function przygotujSlowa() {
 function slowoStan(n: number, now: number, wy: number, textR: number) {
   if (!START[n] || !CENT[n]) return null;
   const t = now - START[n], w = SLOWO[n] ? SLOWO[n].w : NAZWY[n].length * 10;
-  const [bx, by, bw] = brain({ u: CENT[n][0], v: CENT[n][1] }), [ix, iy] = wyspa(n, bx, by, bw, wy);
-  // słowo rodzi się nad swoją siecią, poza kolumną tekstu, a kończy na sieci
+  const K = KOTWICA[n] || CENT[n], [kx, ky, bw] = brain({ u: K[0], v: K[1] }), [ox, oy] = wyspa(n, 0, 0, bw, wy), ix = kx + ox, iy = ky + oy;
+  // słowo rodzi się nad swoją siecią, poza kolumną tekstu, a kończy na swoim miejscu w sieci
   const lewo = MOB ? 8 : textR + 16;
   const fx = Math.max(lewo + w / 2, Math.min(W - w / 2 - 8, ix)), fy = Math.max(H * .1, iy - bw * .2);
   const lx = Math.max(w / 2 + 6, Math.min(W - w / 2 - 6, ix)), ly = iy;
@@ -762,7 +753,7 @@ function slowoStan(n: number, now: number, wy: number, textR: number) {
   return { t, w, fx, fy, lx, ly, ciag, iskraC, ax: fx + (lx - fx) * ciag, ay: fy + (ly - fy) * ciag,
     forma: t < 500 ? sm(t / 500) : 1 - sm(cl((t - 1250) / 450)), etykieta: sm(cl((t - 1150) / 400)) };
 }
-// nazwy na mózgu nie nachodzą na siebie: każda kolejna zsuwa się w dół, aż znajdzie wolne miejsce
+// nazwy na mózgu nie nachodzą na siebie: nachodzące rozsuwają się w pionie, w kilku przejściach
 function rozsun() {
   const k = (MOB ? 11 : 13) / (MOB ? 16 : 24), L = SIECI_L.map((n) => WS[n]).filter(Boolean), H0 = MOB ? 14 : 17;
   for (const s of L) s.sz = s.w * k;
@@ -788,7 +779,7 @@ function frame() {
   WSTECZ = KIER < 0 ? cl(1 - (now - KIER_T - 500) / 900) : 0;
   // wyzwalacz: solipsysta, gdy czytelnik przewinie za akapit
   const lz = cl((scrollY - zombie.offsetTop) / Math.max(1, zombie.offsetHeight - H));
-  if (lz > .3 && !SOL.t0) { if (CICHO) zakonczSol(); else SOL.t0 = now; }
+  if (lz > .15 && !SOL.t0) { if (CICHO) zakonczSol(); else SOL.t0 = now; }
   solKlasy(now);
   AKT = 0;
   const wI = (A.k === 'sieci' ? 1 - t : 0) + (B.k === 'sieci' ? t : 0), textR = kolT.getBoundingClientRect().right;
@@ -886,7 +877,7 @@ function frame() {
   let solRuch = false;
   const sb = solP.getBoundingClientRect();
   if (sb.bottom > 0 && sb.top < H && solObrot.classList.contains('plonie')) {
-    const f = SOL.done ? Math.cos((now - SOL.koniec) / 9000 * 6.2832) : 1, sx = Math.sign(f || 1) * Math.max(.14, Math.abs(f));
+    const tr = now - SOL.t0 - SOL_F[2], f = tr > 0 ? Math.cos(tr / 9000 * 6.2832) : 1, sx = Math.sign(f || 1) * Math.max(.14, Math.abs(f));
     solObrot.style.transform = 'scaleX(' + sx.toFixed(3) + ')';
     const cx = sb.left + sb.width / 2 - .1575 * sb.width * sx, cy = sb.top + sb.height * 86 / 222;
     const a = Math.PI / 2 + f * (Math.PI / 2 + .3), len = (MOB ? 200 : 260) * (.3 + .7 * Math.abs(f)), half = .42;
@@ -896,9 +887,10 @@ function frame() {
     for (const w of solSlowa) {
       const r = w.getBoundingClientRect(), wx = r.left + r.width / 2, wy = r.top + r.height / 2, d = Math.hypot(wx - cx, wy - cy);
       let da = Math.atan2(wy - cy, wx - cx) - a; da = Math.atan2(Math.sin(da), Math.cos(da));
-      w.classList.toggle('lit', d < len + r.width * .4 && Math.abs(da) < half);
+      const lit = d < len + r.width * .4 && Math.abs(da) < half;
+      w.classList.toggle('lit', lit); if (lit) w.classList.add('widac');
     }
-    solRuch = SOL.done;
+    solRuch = true;
   }
   rysujLod(dt);
   const dipRuch = dipy(dt);
