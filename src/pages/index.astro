@@ -13,7 +13,6 @@ const T = {
   wiem: ['Wiem tylko tyle, ile się nauczyłem od {{środowiska}}, w którym się urodziłem.', 'Doświadczam Modeli Mentalnych, które jednocześnie są moją aktywnością biologiczną.'],
   ja: ['Ale... "{{ja}}" to też Model Mentalny', 'Model "ja" zmienia się w czasie,  Zmienia się płynnie (nauka, dryfowanie) i gwałtownie (szok, przeskok). "Ja" to Statek Tezeusza strukturalnie i funkcjonalnie połączonych komórek.'],
   dosw: ['{{Doświadcza}} się.', 'Skoro podmiot i treść doświadczenia się zmieniają to zostaje samo doświadczenie. Doświadcza się. Swiat się doświadcza, ciało się doświadcza, ja się doświadczam.'],
-  badane: 'Doświadczanie się badane przez...',
   kogni: [
     'W zamyśle inicjatorów, powinna być to interdyscyplinarna nauka o umyśle, adresująca najgłębsze zagadki doświadczanej rzeczywistości. Doświadcza się Model Mentalny obiektywnego świata z jego mechanikami. Mechaniki doświadczają się, a potem doświadcza się ich wytłumaczenie. W zależności od czasów, biologia żeglarza i fizyka wzburzonego morza wytłumaczy się gniewem Posejdona, albo meteorologią. Czasem wytłumaczenie się interakcji biologii z fizyką i chemią jest tak trafne, że doświadcza się na przykład wyzdrowienia.',
     'Tylko wciąż... Wytłumacza się kawałek skały krążący wokół reaktora fuzyjnego we wszechświecie, który powstał z niczego 13,8 mld lat temu. Doświadcza się głęboka subiektywność, czasem dzielona z kimś tak bardzo, że wydaje się jakby mogła być intersubiektywna. Tyle rzeczy, które się doświadczają... nie wytłumacza się.',
@@ -35,16 +34,11 @@ const ODSTEP = ['0', '6vh', '11vh', '4vh', '9vh', '14vh', '8vh'];
 const KOLOR = { 2: '#ee6b6f', 3: '#f9d780', 4: '#e58e76', 5: '#f69959', 6: '#a9b26f', 7: '#bb6fb2', 8: '#6fb3a8' };
 const OSNOWY = [['socjologia', '#8fa274'], ['psychologia', '#5f9a96'], ['biologia', '#6585b0'], ['fizyka', '#8577b3']];
 const KOL_OSN = Object.fromEntries(OSNOWY);
-const NAUKI = [
-  ['Socjologię', 'socjologia', 'Doświadcza się wspólnota, której język i zwyczaje przejmujesz od urodzenia.'],
-  ['Psychologię', 'psychologia', 'Doświadczają się Twoje modele siebie, innych i świata.'],
-  ['Biologię', 'biologia', 'Doświadcza się organizm, od komórki po sieci Twojego mózgu.'],
-  ['Fizykę', 'fizyka', 'Doświadcza się energia, którą Twoje receptory przetwarzają w bioinformację.'],
-];
 // Słowa, które oświetlają postacie: osnowy Płótna, każda grupa w swoim kolorze.
 const GRUPY = R.grupy.map((g) => ({ nazwa: g.nazwa, kolor: KOL_OSN[g.nazwa], slowa: g.osnowy.map((o) => o.nazwa) }));
-const CHMURA = ['solipsyści', 'mózg w naczyniu', 'symulacja', 'matrix'];
-const slowoPoz = (j, n) => 'top:' + (n === 1 ? 50 : 3 + j * 90 / (n - 1)).toFixed(1) + '%;left:' + (50 + (j % 2 ? 1 : -1) * (12 + (j * 7) % 14)).toFixed(1) + '%';
+const CHMURA = ['mózg w naczyniu', 'symulacja', 'matrix', 'zły demon Kartezjusza', 'sen Zhuangzi', 'problem innych umysłów', 'filozoficzne zombie', 'esse est percipi'];
+// osnowy: wysokość każdej nici (vh) i miejsce jej mnicha (vw)
+const YN_VH = [30, 48, 66, 84], MNICH_X = [17, 23, 11, 20];
 // Postać w habicie z kapturem, bez twarzy, ze świecą: sam kontur, obrócona o mniej więcej 50 stopni w lewo.
 // Płomień i światło w kolorze --swiatlo.
 const SYLWETKA = 'M50 6 C62 5 73 12 76 26 C78 38 77 48 80 58 C86 80 88 120 90 160 C91 185 92 205 93 216 C75 221 45 222 21 217 C22 180 25 140 26 110 C26 90 28 70 33 56 C29 48 28 38 30 28 C32 16 40 8 50 6 Z';
@@ -86,7 +80,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
         <p set:html={md(T.zombie[1])} />
         <div class="roj-sol">
           <div class="roj-chmura">{CHMURA.map((w, i) => <span class={'c' + i}>{w}</span>)}</div>
-          <div class="roj-sol-p" set:html={postac('sol')} />
+          <div class="roj-sol-p"><div class="roj-sol-obrot" set:html={postac('sol')} /><span class="roj-sol-nazwa">solipsysta</span></div>
         </div>
       </div>
     </div>
@@ -102,25 +96,9 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   </section>
   <section class="roj-st poziom" data-k="osnowy" aria-label="Osnowy: socjologia, psychologia, biologia, fizyka">
     <div class="roj-lepki"><div class="roj-tor">
-      <div class="roj-panel a">
-        <div class="roj-gora">
-          <p class="roj-duze">{T.badane}</p>
-          {NAUKI.map(([n, o, z]) => <p class="roj-nauka"><span style={'color:' + KOL_OSN[o]}>{n}</span> {z}</p>)}
-        </div>
-      </div>
-      <div class="roj-panel b">
-        {GRUPY.map((g, i) => (
-          <div class={'roj-grupa g' + i} style={'--k:' + g.kolor}>
-            <div class="roj-slowa">{g.slowa.map((s, j) => <span style={slowoPoz(j, g.slowa.length)}>{s}</span>)}</div>
-            <div class="roj-gp plonie" set:html={postac('b' + i, g.kolor)} />
-          </div>
-        ))}
-      </div>
-      <div class="roj-panel c">
-        {GRUPY.map((g, i) => <div class={'roj-grupa koniec g' + i} style={'--k:' + g.kolor}><div class="roj-gp plonie" set:html={postac('c' + i, g.kolor)} /></div>)}
-        <div class="roj-pchane">{GRUPY.map((g) => g.slowa.map((s) => <span style={'color:' + g.kolor}>{s}</span>))}</div>
-      </div>
+      {GRUPY.map((g, k) => g.slowa.map((w, j) => <span class="roj-slowo-osn" data-k={k} style={'--k:' + g.kolor + ';left:' + (35 + 240 * (j + .5) / g.slowa.length).toFixed(1) + 'vw;top:calc(' + YN_VH[k] + 'vh - ' + (j % 2 ? 46 : 30) + 'px)'}>{w}</span>))}
     </div>
+    {GRUPY.map((g, k) => <div class="roj-mnich" data-k={k} style={'left:' + MNICH_X[k] + 'vw;top:calc(' + YN_VH[k] + 'vh - var(--mh))'}><div class="roj-mnich-c plonie" set:html={postac('m' + k, g.kolor)} /></div>)}
     {OSNOWY.map(([n, c], i) => <span class={'roj-nitka n' + i} style={'color:' + c} aria-hidden="true">{n}</span>)}
     <a class="roj-ku-plotnu" href="/2026/" aria-label="Rocznik 2026: Płótno"></a>
     </div>
@@ -183,12 +161,15 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-st.lepkie .roj-lepki{display:flex;align-items:center;padding:0 56px 0 8vw}
 .roj-st.lepkie .roj-t{max-width:min(40vw,560px)}
 .roj-st.lepkie .roj-t{position:relative}
-.roj-sol{position:absolute;left:calc(100% + 36px);top:50%;transform:translateY(-50%);width:230px;height:24vh;margin:0}
-.roj-sol-p{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:15vh;aspect-ratio:100/222;opacity:0;transition:opacity 1.6s ease}
+.roj-sol{position:absolute;left:calc(100% + 20px);top:50%;transform:translateY(-50%);width:400px;height:34vh;margin:0}
+.roj-sol-p{position:absolute;left:50%;bottom:4vh;transform:translateX(-50%);height:15vh;aspect-ratio:100/222;opacity:0;transition:opacity 1.6s ease}
+.roj-sol-obrot{height:100%;will-change:transform}
 .roj-sol.widac .roj-sol-p{opacity:1}
-.roj-chmura span{position:absolute;font:italic 400 15px var(--font-display);color:#d6cdbd;opacity:0;white-space:nowrap;transition:opacity 1.2s ease,text-shadow 1.2s ease}
-.roj-chmura span.widac{opacity:.6;text-shadow:0 0 10px rgba(255,201,120,.25)}
-.roj-chmura .c0{left:2%;top:0}.roj-chmura .c1{right:0;top:14%}.roj-chmura .c2{left:0;top:40%}.roj-chmura .c3{right:8%;top:52%}
+.roj-sol-nazwa{position:absolute;left:50%;top:calc(100% + 6px);transform:translateX(-50%);font:400 17px var(--font-display);letter-spacing:.04em;color:var(--zloto);white-space:nowrap}
+.roj-chmura span{position:absolute;font:italic 400 15px var(--font-display);color:#d6cdbd;opacity:0;white-space:nowrap;transition:opacity .5s ease,color .5s ease,text-shadow .5s ease}
+.roj-chmura span.widac{opacity:.45}
+.roj-chmura span.widac.lit{opacity:.95;color:#ffe2a8;text-shadow:0 0 10px rgba(255,201,120,.55)}
+.roj-chmura .c0{left:0;top:0}.roj-chmura .c1{right:0;top:6%}.roj-chmura .c2{left:3%;top:22%}.roj-chmura .c3{right:2%;top:28%}.roj-chmura .c4{left:0;top:46%}.roj-chmura .c5{right:0;top:52%}.roj-chmura .c6{left:6%;top:70%}.roj-chmura .c7{right:5%;top:76%}
 /* postać: kontur */
 .postac{display:block;height:100%;width:auto;overflow:visible;--kontur:rgba(236,230,218,.5)}
 .postac .szata{fill:#000;stroke:var(--kontur);stroke-width:1.1;vector-effect:non-scaling-stroke}
@@ -207,26 +188,13 @@ body:has(.roj) .site-footer::before{display:none}
 /* osnowy: u góry tekst i postacie, na dole nici */
 .roj-st.poziom{display:block;height:440vh;padding:0}
 .roj-tor{position:absolute;top:0;left:0;height:100%;width:300vw;display:flex;will-change:transform}
-.roj-panel{position:relative;width:100vw;height:100%;overflow:hidden}
-.roj-gora{position:absolute;left:clamp(30px,9vw,140px);top:7vh;max-width:min(880px,82vw)}
-.roj-gora .roj-duze{font-size:clamp(28px,2.8vw,40px);margin-bottom:.45em}
-.roj-nauka{font:italic 400 clamp(18px,1.5vw,23px)/1.45 var(--font-display);color:var(--kosc);opacity:0;transform:translateY(8px);transition:opacity .7s ease,transform .7s ease}
-.roj-nauka + .roj-nauka{margin-top:.3em}
-.roj-nauka.in{opacity:1;transform:none}
-.roj-nauka span{font-weight:500}
-.roj-grupa{position:absolute;top:4vh;height:46vh;width:20vw}
-.roj-panel.b .g0{left:4vw}.roj-panel.b .g1{left:28vw}.roj-panel.b .g2{left:52vw}.roj-panel.b .g3{left:76vw}
-.roj-gp{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:24vh;aspect-ratio:100/222}
-.roj-slowa{position:absolute;left:0;right:0;top:0;height:21vh}
-.roj-slowa span{position:absolute;transform:translate(-50%,-50%);font:300 clamp(12px,.95vw,15px) var(--font-body);letter-spacing:.02em;color:#cfc6b6;opacity:.2;white-space:nowrap;transition:opacity .5s ease,color .5s ease,text-shadow .5s ease}
-.roj-slowa span.lit{opacity:1;color:var(--k);text-shadow:0 0 10px var(--k),0 0 22px var(--k)}
-.roj-grupa.koniec{top:24vh;height:22vh;width:7vw}
-.roj-panel.c .g0{left:34vw}.roj-panel.c .g1{left:41.5vw}.roj-panel.c .g2{left:49vw}.roj-panel.c .g3{left:56.5vw}
-.roj-grupa.koniec .roj-gp{height:20vh;transform:translateX(calc(-50% + var(--px,0px))) rotate(var(--rot,0deg));transform-origin:50% 100%}
-.roj-pchane{position:absolute;left:61.5vw;top:9vh;display:flex;flex-direction:column;gap:2px;will-change:transform}
-.roj-pchane span{font:300 13px/1.32 var(--font-body);letter-spacing:.02em;white-space:nowrap;text-shadow:0 0 8px currentColor}
+.roj-slowo-osn{position:absolute;transform:translateX(-50%);font:300 14px var(--font-body);letter-spacing:.02em;color:#cfc6b6;white-space:nowrap;opacity:0;transition:color .4s ease,text-shadow .4s ease;will-change:transform,opacity}
+.roj-slowo-osn.lit{color:var(--k);text-shadow:0 0 10px var(--k),0 0 20px var(--k)}
+.roj-st.poziom{--mh:15vh}
+.roj-mnich{position:absolute;height:var(--mh);aspect-ratio:100/222;transform-origin:50% 100%;will-change:transform,opacity}
+.roj-mnich-c{height:100%;transform:scaleX(-1)}
 .roj-nitka{position:absolute;left:clamp(30px,9vw,140px);top:0;padding:3px 10px;background:#000;font:400 12px var(--font-body);letter-spacing:.08em;white-space:nowrap;transform:translateY(-50%);opacity:0;pointer-events:none;will-change:transform}
-.roj-nitka.n0{top:56vh}.roj-nitka.n1{top:69vh}.roj-nitka.n2{top:82vh}.roj-nitka.n3{top:95vh}
+.roj-nitka.n0{top:30vh}.roj-nitka.n1{top:48vh}.roj-nitka.n2{top:66vh}.roj-nitka.n3{top:84vh}
 .roj .roj-ku-plotnu{position:absolute;top:0;right:0;bottom:0;width:26vw;border:0;background:linear-gradient(90deg,rgba(240,192,96,0),rgba(240,192,96,0));transition:background .3s ease}
 .roj .roj-ku-plotnu::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(240,192,96,0),rgba(240,192,96,.08));opacity:0;pointer-events:none}
 .roj .roj-ku-plotnu.puls::after{animation:puls 2.6s ease-in-out infinite}
@@ -252,32 +220,22 @@ body:has(.roj) .site-footer::before{display:none}
   .roj-st.ciag[data-k=sieci]{padding-top:7vh!important;padding-bottom:20vh!important}
   .roj-st.poziom,.roj-st.lepkie{padding:0!important}
   .roj-st.lepkie .roj-lepki{padding:30vh 20px 0!important;align-items:flex-start}
-  .roj-sol{position:relative;left:auto;top:auto;transform:none;width:240px;height:22vh;margin:3vh auto 0!important}
-  .roj-sol-p{height:14vh}
-  .roj-chmura span{font-size:14px}
+  .roj-sol{position:relative;left:auto;top:auto;transform:none;width:92vw;height:30vh;margin:3vh auto 0!important}
+  .roj-sol-p{height:13vh}
+  .roj-chmura span{font-size:13px}
   .roj-st.poziom{height:380vh}
   .roj-st.srodek{padding-top:18vh!important}
   .roj-st.wiki{min-height:60vh;padding-top:24vh!important;justify-content:center!important}
   .roj-t p,.roj-lista li{font-size:15px}
   .roj-siec{font-size:15px}
   .roj-t p,.roj-siec{text-shadow:0 0 4px #000,0 0 10px #000,0 0 18px #000}
-  .roj-gora{top:5vh}
-  .roj-gora .roj-duze{font-size:24px}
-  .roj-nauka{font-size:16px;line-height:1.35}
-  .roj-grupa{width:24vw;top:4vh}
-  .roj-panel.b .g0{left:0}.roj-panel.b .g1{left:25vw}.roj-panel.b .g2{left:50vw}.roj-panel.b .g3{left:75vw}
-  .roj-gp{height:17vh}
-  .roj-slowa{height:24vh}
-  .roj-slowa span{font-size:10px}
-  .roj-panel.c .g0{left:6vw}.roj-panel.c .g1{left:17vw}.roj-panel.c .g2{left:28vw}.roj-panel.c .g3{left:39vw}
-  .roj-grupa.koniec .roj-gp{height:15vh}
-  .roj-pchane{left:52vw;top:6vh}
-  .roj-pchane span{font-size:10px;line-height:1.25}
+  .roj-slowo-osn{font-size:11px}
+  .roj-st.poziom{--mh:11vh}
   .roj .roj-ku-plotnu{width:18vw}
   .roj-cien{right:-4px;top:-70px;height:90px}
   .roj-st.in .roj-cien{opacity:.25}
 }
-@media (prefers-reduced-motion:reduce){.roj-t,.roj-siec,.roj-nauka{opacity:1;transform:none;transition:none}}
+@media (prefers-reduced-motion:reduce){.roj-t,.roj-siec{opacity:1;transform:none;transition:none}}
 </style>
 
 <script>
@@ -291,7 +249,7 @@ const COL: Record<number, string> = { 1: '#7d7466', 2: '#ee6b6f', 3: '#f9d780', 
 // i kora brzuszno-czołowa nad bruzdą boczną (z szarego tła i brzegu sieci domyślnej); [u, v, promień u, promień v, etykiety do zamiany]
 const VAN = [[166, 91, 13, 8, [1]], [79, 79, 10, 7, [1, 7]]];
 const OSN = ['#8fa274', '#5f9a96', '#6585b0', '#8577b3'];
-const YN = [.56, .69, .82, .95];
+const YN = [.30, .48, .66, .84];
 const hex = (h: string) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
 const mix = (a: number[], b: number[], q: number) => [0, 1, 2].map((i) => Math.round(a[i] + (b[i] - a[i]) * q));
 const GREY = hex('#5f5a54');
@@ -312,11 +270,11 @@ $$('.roj-st').forEach((s) => { SEKCJE[s.dataset.k!] = s; });
 const poziom = SEKCJE.osnowy, zombie = SEKCJE.zombie;
 const tor = $('.roj-tor'), nitki = $$('.roj-nitka'), kuPlotnu = $('.roj-ku-plotnu');
 const czesc = $('.roj-czesc');
-const sieciEl = $$('.roj-siec'), naukiEl = $$('.roj-nauka');
+const sieciEl = $$('.roj-siec');
 const SIECI_L = sieciEl.map((e) => +e.dataset.n!);
-const sol = $('.roj-sol'), solP = $('.roj-sol-p'), solSlowa = $$('.roj-chmura span');
-const slowaB = $$('.roj-panel.b .roj-grupa').map((e) => [...e.querySelectorAll('.roj-slowa span')] as HTMLElement[]);
-const postacieC = $$('.roj-panel.c .roj-gp'), bank = $('.roj-pchane'), pchane = $$('.roj-pchane span');
+const sol = $('.roj-sol'), solP = $('.roj-sol-p'), solObrot = $('.roj-sol-obrot'), solSlowa = $$('.roj-chmura span');
+const slowaO = $$('.roj-slowo-osn'), mnisi = $$('.roj-mnich');
+let MN_Y = 0, MN_KROK = 0;
 const wikiK = $('.roj-wiki-kropka');
 const knotLogo = document.querySelector('.rocznik-knot') as HTMLElement | null;
 const CEL: Record<string, HTMLElement | null> = {};
@@ -343,7 +301,7 @@ function lines() {
   // tor jedzie w bok do 78% przewinięcia; resztę ekran stoi, a postacie pchają słowa do Płótna
   const r = poziom.getBoundingClientRect(), pr = cl(-r.top / (r.height - H)), pt = cl(pr / .78), off = -pt * W * 2;
   const top = r.top > 0 ? r.top : (r.bottom < H ? r.bottom - H : 0);
-  return { x0: off, x1: off + W * 3, y: YN.map((f) => top + f * H), off, pr, pt, rtop: r.top, rbot: r.bottom };
+  return { x0: off, x1: off + W * 3, y: YN.map((f) => top + f * H), off, pr, pt, top, rtop: r.top, rbot: r.bottom };
 }
 function wyspa(n: number, bx: number, by: number, bw: number, wy: number) {
   const C = CENT[n], dx = C[0] / 240 - .5, dy = C[1] / 180 - .5, L = Math.hypot(dx, dy) || 1;
@@ -440,9 +398,9 @@ function solKlasy(now: number) {
   if (t < 0) return;
   solSlowa.forEach((s, i) => s.classList.toggle('widac', t > SOL_F[0] + 250 + i * 330));
   sol.classList.toggle('widac', t > SOL_F[0] + 500);
-  solP.classList.toggle('plonie', t > SOL_F[1]);
+  solObrot.classList.toggle('plonie', t > SOL_F[1]);
 }
-function zakonczSol() { SOL.done = true; if (!SOL.t0) SOL.t0 = 1; solKlasy(0); }
+function zakonczSol() { SOL.done = true; SOL.koniec = performance.now(); if (!SOL.t0) SOL.t0 = 1; solKlasy(0); }
 function solCel(now: number) {
   const t = now - SOL.t0, b = solP.getBoundingClientRect();
   const fx = b.left + b.width * .5, fy = b.top + b.height * .38, hx = b.left + b.width * .39, hy = b.top + b.height * 36 / 222;
@@ -745,8 +703,8 @@ function rysujIskre(A0: number) {
   g2.restore();
 }
 // Opis sieci pojawia się, gdy wchodzi na ekran, nie wcześniej niż 1,5 s po poprzednim; w tej samej chwili jej nazwa
-// formuje się z roju na mózgu. Nauki pojawiają się co 0,9 s, raz.
-let SIECI_N = 0, SIECI_T = 0, NAUKI_S = false;
+// formuje się z roju na mózgu.
+let SIECI_N = 0, SIECI_T = 0;
 const SIECI_Q: HTMLElement[] = [];
 function pokazSiec() {
   const e = SIECI_Q.shift(); if (!e) return;
@@ -760,10 +718,6 @@ const ioS = new IntersectionObserver((es) => es.forEach((e) => {
   if (SIECI_Q.length === 1) setTimeout(pokazSiec, CICHO ? 0 : Math.max(0, SIECI_T + 1500 - performance.now()));
 }), { rootMargin: '0px 0px -12% 0px', threshold: 1 });
 sieciEl.forEach((e) => ioS.observe(e));
-function startNauki() {
-  if (NAUKI_S) return; NAUKI_S = true;
-  naukiEl.forEach((e, i) => setTimeout(() => e.classList.add('in'), CICHO ? 0 : 400 + i * 900));
-}
 // Nazwy sieci z roju: szare punkty układają się w litery nazwy obok sieci, iskra przeciąga słowo na sieć,
 // punkty wracają do roju, a nazwa zostaje na mózgu.
 const NAZWY: Record<number, string> = {}; sieciEl.forEach((e) => { NAZWY[+e.dataset.n!] = e.dataset.nazwa!; });
@@ -825,11 +779,10 @@ function frame() {
   const dt = Math.min(.033, Math.max(0, (now - (IS.last || now)) / 1000)); IS.last = now;
   if (scrollY !== OSTATNI_Y) { KIER = scrollY > OSTATNI_Y ? 1 : -1; KIER_T = now; OSTATNI_Y = scrollY; }
   WSTECZ = KIER < 0 ? cl(1 - (now - KIER_T - 500) / 900) : 0;
-  // wyzwalacze: solipsysta, gdy czytelnik przewinie za akapit; nauki, gdy osnowy zajmą ekran
+  // wyzwalacz: solipsysta, gdy czytelnik przewinie za akapit
   const lz = cl((scrollY - zombie.offsetTop) / Math.max(1, zombie.offsetHeight - H));
   if (lz > .3 && !SOL.t0) { if (CICHO) zakonczSol(); else SOL.t0 = now; }
   solKlasy(now);
-  if (LN.rtop < H * .25) startNauki();
   AKT = 0;
   const wI = (A.k === 'sieci' ? 1 - t : 0) + (B.k === 'sieci' ? t : 0), textR = kolT.getBoundingClientRect().right;
   const wS = cl(wI + (A.k === 'pytanie' ? 1 - t : 0) + (B.k === 'pytanie' ? t : 0));
@@ -884,15 +837,51 @@ function frame() {
     n.style.transform = 'translate(' + dx + 'px,-50%)'; n.style.opacity = String(cl(wO));
   }
   if (LN.rtop < H && LN.rbot > 0) {
-    // każda postać oświetla jedno słowo swojej dyscypliny naraz
-    const pB = cl((LN.pt - .25) / .5);
-    slowaB.forEach((sp, k) => { const j = Math.min(sp.length - 1, Math.floor(md1(pB * .999 + k * .13) * sp.length)); sp.forEach((s, m) => s.classList.toggle('lit', m === j)); });
-    // na końcu postacie pchają słowa w prawo, do Płótna; słowa znikają, strefa pulsuje
-    const pC = cl((LN.pr - .8) / .16);
-    bank.style.transform = 'translateX(' + (pC * W * .36).toFixed(1) + 'px)';
-    postacieC.forEach((e) => { e.style.setProperty('--px', (pC * W * .05).toFixed(1) + 'px'); e.style.setProperty('--rot', (pC > .02 && pC < .98 ? 7 : 0) + 'deg'); });
-    if (LN.pt > .6) for (const s of pchane) { const rr = s.getBoundingClientRect(); s.style.opacity = String(1 - cl((rr.left + rr.width * .5 - (W - zw)) / (zw * .7))); }
+    // mnisi idą po swoich osnowach, świeca każdego świeci przed nim i oświetla słowa, które wjeżdżają na ekran;
+    // na końcu mnisi biegną do Płótna, a słowa zbierają się i płyną za nimi
+    const pC = cl((LN.pr - .8) / .16), idzie = Math.abs(scrollY - MN_Y) > .5, zr = W - zw, wiazki: any[] = [];
+    MN_Y = scrollY; if (idzie) MN_KROK += dt * 9;
+    mnisi.forEach((m, k) => {
+      const bieg = sm(cl(pC * 1.25 - k * .08)), x0 = m.offsetLeft, hg = m.offsetHeight, wd = hg * 100 / 222;
+      const dx = bieg * (zr - x0 + wd), bob = Math.abs(Math.sin(MN_KROK + k * 1.3)) * (bieg > 0 && bieg < 1 ? 6 : idzie ? 2.5 : 0);
+      if (bieg > 0 && bieg < 1) MN_KROK += dt * 2;
+      m.style.transform = 'translate(' + dx.toFixed(1) + 'px,' + (-bob).toFixed(1) + 'px) rotate(' + (bieg > 0 && bieg < 1 ? 8 : 0) + 'deg)';
+      const o = 1 - cl((x0 + dx - zr) / (zw * .45)); m.style.opacity = o.toFixed(3);
+      wiazki.push({ x: x0 + dx + wd * .66, y: LN.top + m.offsetTop - bob + hg * 86 / 222, k, a: -.12 + Math.sin(SEK * .7 + k) * .08, len: W * .26, half: .3, o: o * (1 - bieg * .6) });
+    });
+    g2.globalCompositeOperation = 'lighter'; g2.globalAlpha = 1;
+    for (const b of wiazki) {
+      if (b.o < .02) continue; const c = hex(OSN[b.k]), gr = g2.createRadialGradient(b.x, b.y, 2, b.x, b.y, b.len);
+      gr.addColorStop(0, 'rgba(' + c + ',' + .2 * b.o + ')'); gr.addColorStop(1, 'rgba(' + c + ',0)');
+      g2.fillStyle = gr; g2.beginPath(); g2.moveTo(b.x, b.y); g2.arc(b.x, b.y, b.len, b.a - b.half, b.a + b.half); g2.closePath(); g2.fill();
+    }
+    slowaO.forEach((w, i) => {
+      const x0 = w.offsetLeft + LN.off, y0 = LN.top + w.offsetTop + 8;
+      const e = sm(cl(pC * 1.3 - (i % 7) * .045)), gx = (zr + zw * .3 - x0) * e, gy = (LN.top + H * .57 + ((i % 9) - 4) * 14 - y0) * e;
+      const o = cl((W * .96 - x0 - gx) / (W * .14)) * (1 - cl((e - .75) / .25));
+      w.style.transform = 'translate(calc(-50% + ' + gx.toFixed(1) + 'px),' + gy.toFixed(1) + 'px)'; w.style.opacity = o.toFixed(3);
+      const wx = x0 + gx, wy = y0 + gy;
+      w.classList.toggle('lit', e < .1 && wiazki.some((b) => { const d = Math.hypot(wx - b.x, wy - b.y); let da = Math.atan2(wy - b.y, wx - b.x) - b.a; da = Math.atan2(Math.sin(da), Math.cos(da)); return d < b.len && Math.abs(da) < b.half; }));
+    });
     kuPlotnu.classList.toggle('puls', LN.pr > .86);
+  }
+  // solipsysta: po zapaleniu świecy obraca się, a snop jego świecy oświetla kolejne słowa wokół
+  let solRuch = false;
+  const sb = solP.getBoundingClientRect();
+  if (sb.bottom > 0 && sb.top < H && solObrot.classList.contains('plonie')) {
+    const f = SOL.done ? Math.cos((now - SOL.koniec) / 9000 * 6.2832) : 1, sx = Math.sign(f || 1) * Math.max(.14, Math.abs(f));
+    solObrot.style.transform = 'scaleX(' + sx.toFixed(3) + ')';
+    const cx = sb.left + sb.width / 2 - .1575 * sb.width * sx, cy = sb.top + sb.height * 86 / 222;
+    const a = Math.PI / 2 + f * (Math.PI / 2 + .3), len = (MOB ? 200 : 260) * (.3 + .7 * Math.abs(f)), half = .42;
+    const gr = g2.createRadialGradient(cx, cy, 2, cx, cy, len);
+    gr.addColorStop(0, 'rgba(255,201,120,.22)'); gr.addColorStop(1, 'rgba(255,201,120,0)');
+    g2.globalCompositeOperation = 'lighter'; g2.globalAlpha = 1; g2.fillStyle = gr; g2.beginPath(); g2.moveTo(cx, cy); g2.arc(cx, cy, len, a - half, a + half); g2.closePath(); g2.fill();
+    for (const w of solSlowa) {
+      const r = w.getBoundingClientRect(), wx = r.left + r.width / 2, wy = r.top + r.height / 2, d = Math.hypot(wx - cx, wy - cy);
+      let da = Math.atan2(wy - cy, wx - cx) - a; da = Math.atan2(Math.sin(da), Math.cos(da));
+      w.classList.toggle('lit', d < len + r.width * .4 && Math.abs(da) < half);
+    }
+    solRuch = SOL.done;
   }
   rysujLod(dt);
   const dipRuch = dipy(dt);
@@ -900,7 +889,7 @@ function frame() {
   if (wid) rysujIskre(1 - IS.osiadla);
   // pętla klatek tylko wtedy, gdy coś się rusza
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
-  const iskraRuch = !!c && !CICHO && (!!c.slizg || !!c.hura || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
+  const iskraRuch = !!c && !CICHO && (solRuch || !!c.slizg || !!c.hura || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
     || !IS.dom && (Math.hypot(IS.vx, IS.vy) > 6 || Math.hypot(c.x - IS.x, c.y - IS.y) > .8 || (c.tryb === 'stoj' && !IS.kontakt))
     || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || c.id.startsWith('siec') || slowaRuch
     || (!IS.dom && (now - IS.mrug < 170 || IS.zdz > .02 || Math.abs(IS.pd - ((c.mood && c.mood.pd) || 1)) > .01 || Math.abs(IS.lid - ((c.mood && c.mood.lid) || 1)) > .01
