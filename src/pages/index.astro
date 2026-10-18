@@ -45,19 +45,20 @@ const NAUKI = [
 const GRUPY = R.grupy.map((g) => ({ nazwa: g.nazwa, kolor: KOL_OSN[g.nazwa], slowa: g.osnowy.map((o) => o.nazwa) }));
 const CHMURA = ['solipsyści', 'mózg w naczyniu', 'symulacja', 'matrix'];
 const slowoPoz = (j, n) => 'top:' + (n === 1 ? 50 : 3 + j * 90 / (n - 1)).toFixed(1) + '%;left:' + (50 + (j % 2 ? 1 : -1) * (12 + (j * 7) % 14)).toFixed(1) + '%';
-// Postać w habicie z kapturem, bez twarzy, ze świecą; płomień i światło w kolorze --swiatlo.
-const SZATA = 'M50 5 C34 5 25 20 24 38 C23 50 21 57 17 65 C11 79 9 118 8 158 L5 218 L95 218 L92 158 C91 118 89 79 83 65 C79 57 77 50 76 38 C75 20 66 5 50 5 Z';
-const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 100 220" style="--swiatlo:${swiatlo}" aria-hidden="true"><defs>`
-  + `<radialGradient id="ps${id}" cx="50" cy="92" r="110" gradientUnits="userSpaceOnUse"><stop offset="0" class="s1"/><stop offset=".32" class="s2"/><stop offset="1" class="s3"/></radialGradient>`
-  + `<radialGradient id="pg${id}" cx="50" cy="84" r="34" gradientUnits="userSpaceOnUse"><stop offset="0" class="g1"/><stop offset="1" class="g3"/></radialGradient></defs>`
-  + `<path class="szata" d="${SZATA}"/>`
-  + `<path class="faldy" d="M38 118 C36 150 33 185 30 216 M50 114 L50 216 M62 118 C64 150 67 185 70 216 M27 72 C23 102 19 142 17 200 M73 72 C77 102 81 142 83 200"/>`
-  + `<path class="rekawy" d="M18 76 C22 96 34 112 47 113 L53 113 C66 112 78 96 82 76 C76 92 64 101 50 101 C36 101 24 92 18 76 Z"/>`
-  + `<path class="swiatlo" fill="url(#ps${id})" d="${SZATA}"/>`
-  + `<ellipse class="kaptur-brzeg" cx="50" cy="41" rx="15.5" ry="19.5"/><ellipse class="kaptur" cx="50" cy="42" rx="12" ry="16"/>`
-  + `<circle class="poswiata" cx="50" cy="84" r="34" fill="url(#pg${id})"/>`
-  + `<rect class="swieca" x="46.9" y="89" width="6.2" height="15" rx="1"/>`
-  + `<g class="plomien"><path d="M50 74 C53 79 54 83 52.5 86.5 C51.5 88.5 48.5 88.5 47.5 86.5 C46 83 47 79 50 74 Z"/><ellipse class="rdzen" cx="50" cy="85" rx="1.2" ry="2.4"/></g>`
+// Postać w habicie z kapturem, bez twarzy, ze świecą: sam kontur, obrócona o mniej więcej 50 stopni w lewo.
+// Płomień i światło w kolorze --swiatlo.
+const SYLWETKA = 'M50 6 C62 5 73 12 76 26 C78 38 77 48 80 58 C86 80 88 120 90 160 C91 185 92 205 93 216 C75 221 45 222 21 217 C22 180 25 140 26 110 C26 90 28 70 33 56 C29 48 28 38 30 28 C32 16 40 8 50 6 Z';
+const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 100 222" style="--swiatlo:${swiatlo}" aria-hidden="true"><defs>`
+  + `<radialGradient id="ps${id}" cx="34" cy="90" r="110" gradientUnits="userSpaceOnUse"><stop offset="0" class="s1"/><stop offset=".32" class="s2"/><stop offset="1" class="s3"/></radialGradient>`
+  + `<radialGradient id="pg${id}" cx="34" cy="86" r="30" gradientUnits="userSpaceOnUse"><stop offset="0" class="g1"/><stop offset="1" class="g3"/></radialGradient></defs>`
+  + `<path class="szata" d="${SYLWETKA}"/>`
+  + `<path class="swiatlo" fill="url(#ps${id})" d="${SYLWETKA}"/>`
+  + `<path class="linie" d="M52 8 C56 20 58 34 62 50 M33 56 C45 62 66 62 80 58 M77 62 C73 84 61 99 45 104 M81 80 C77 98 65 110 47 112 M60 122 C62 152 64 186 66 218 M45 120 C43 152 41 186 39 219"/>`
+  + `<ellipse class="twarz" cx="39" cy="36" rx="7.5" ry="12" transform="rotate(-12 39 36)"/>`
+  + `<ellipse class="linie" cx="42" cy="108" rx="5" ry="6.5" transform="rotate(-25 42 108)"/>`
+  + `<circle class="poswiata" cx="34" cy="86" r="30" fill="url(#pg${id})"/>`
+  + `<rect class="swieca" x="31.5" y="88" width="5.5" height="15" rx="1"/>`
+  + `<g class="plomien"><path d="M34.25 76 C37.25 81 38.25 85 36.75 88.5 C35.75 90.5 32.75 90.5 31.75 88.5 C30.25 85 31.25 81 34.25 76 Z"/><ellipse class="rdzen" cx="34.25" cy="87" rx="1.2" ry="2.4"/></g>`
   + `</svg>`;
 ---
 <Base title="kogni.pl" activePage="" description="kogni.pl: kognitywistyka na Uniwersytecie w Białymstoku. Czym jest to, czego doświadczasz?">
@@ -86,10 +87,10 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
       <div class="roj-t">
         <p class="roj-duze" set:html={md(T.zombie[0])} />
         <p set:html={md(T.zombie[1])} />
-      </div>
-      <div class="roj-sol">
-        <div class="roj-chmura">{CHMURA.map((w, i) => <span class={'c' + i}>{w}</span>)}</div>
-        <div class="roj-sol-p" set:html={postac('sol')} />
+        <div class="roj-sol">
+          <div class="roj-chmura">{CHMURA.map((w, i) => <span class={'c' + i}>{w}</span>)}</div>
+          <div class="roj-sol-p" set:html={postac('sol')} />
+        </div>
       </div>
     </div>
   </section>
@@ -138,8 +139,8 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   <section class="roj-st wiki" data-k="wiki" aria-label="kogniwiki">
     <div class="roj-t">
       {WIKI
-        ? <a class="roj-wiki" href={WIKI}>kogni<span class="roj-wiki-kropka">.</span>pl/wiki</a>
-        : <span class="roj-wiki">kogni<span class="roj-wiki-kropka">.</span>pl/wiki</span>}
+        ? <a class="roj-wiki" href={WIKI}>kogn<span class="roj-wiki-i">ı<span class="roj-wiki-kropka"></span></span>.pl/wiki</a>
+        : <span class="roj-wiki">kogn<span class="roj-wiki-i">ı<span class="roj-wiki-kropka"></span></span>.pl/wiki</span>}
     </div>
   </section>
 </main>
@@ -187,27 +188,26 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-lepki{position:sticky;top:0;height:100vh;overflow:hidden}
 .roj-st.lepkie .roj-lepki{display:flex;align-items:center;padding:0 56px 0 8vw}
 .roj-st.lepkie .roj-t{max-width:min(40vw,560px)}
-.roj-sol{position:absolute;right:8vw;top:50%;transform:translateY(-46%);width:min(32vw,460px);height:66vh}
-.roj-sol-p{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:54vh;aspect-ratio:100/220;opacity:0;transition:opacity 1.6s ease}
+.roj-st.lepkie .roj-t{position:relative}
+.roj-sol{position:absolute;left:calc(100% + 36px);top:50%;transform:translateY(-50%);width:230px;height:24vh;margin:0}
+.roj-sol-p{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:15vh;aspect-ratio:100/222;opacity:0;transition:opacity 1.6s ease}
 .roj-sol.widac .roj-sol-p{opacity:1}
-.roj-chmura span{position:absolute;font:italic 400 clamp(17px,1.5vw,23px) var(--font-display);color:#d6cdbd;opacity:0;white-space:nowrap;transition:opacity 1.2s ease,text-shadow 1.2s ease}
-.roj-chmura span.widac{opacity:.82;text-shadow:0 0 14px rgba(255,201,120,.3)}
-.roj-chmura .c0{left:0;top:4%}.roj-chmura .c1{right:0;top:12%}.roj-chmura .c2{left:2%;top:34%}.roj-chmura .c3{right:6%;top:42%}
-/* postać */
-.postac{display:block;height:100%;width:auto;overflow:visible}
-.postac .szata{fill:#151311;stroke:rgba(236,230,218,.09);stroke-width:.6}
-.postac .faldy{fill:none;stroke:rgba(0,0,0,.6);stroke-width:1.3}
-.postac .rekawy{fill:#0f0d0c;stroke:rgba(236,230,218,.06);stroke-width:.5}
+.roj-chmura span{position:absolute;font:italic 400 15px var(--font-display);color:#d6cdbd;opacity:0;white-space:nowrap;transition:opacity 1.2s ease,text-shadow 1.2s ease}
+.roj-chmura span.widac{opacity:.6;text-shadow:0 0 10px rgba(255,201,120,.25)}
+.roj-chmura .c0{left:2%;top:0}.roj-chmura .c1{right:0;top:14%}.roj-chmura .c2{left:0;top:40%}.roj-chmura .c3{right:8%;top:52%}
+/* postać: kontur */
+.postac{display:block;height:100%;width:auto;overflow:visible;--kontur:rgba(236,230,218,.5)}
+.postac .szata{fill:#000;stroke:var(--kontur);stroke-width:1.1;vector-effect:non-scaling-stroke}
+.postac .linie{fill:none;stroke:var(--kontur);stroke-width:.9;vector-effect:non-scaling-stroke;opacity:.65}
+.postac .twarz{fill:#000;stroke:var(--kontur);stroke-width:.9;vector-effect:non-scaling-stroke}
 .postac .swiatlo,.postac .poswiata{opacity:0;transition:opacity 1.2s ease}
-.postac .kaptur-brzeg{fill:#0b0a09}
-.postac .kaptur{fill:#000}
 .postac .s1{stop-color:var(--swiatlo);stop-opacity:.5}.postac .s2{stop-color:var(--swiatlo);stop-opacity:.18}.postac .s3{stop-color:var(--swiatlo);stop-opacity:0}
 .postac .g1{stop-color:var(--swiatlo);stop-opacity:.4}.postac .g3{stop-color:var(--swiatlo);stop-opacity:0}
 .postac .swieca{fill:#d8cebb}
-.postac .plomien{opacity:0;transform-box:view-box;transform-origin:50px 88px;transition:opacity .5s ease}
+.postac .plomien{opacity:0;transform-box:view-box;transform-origin:34.25px 90px;transition:opacity .5s ease}
 .postac .plomien path{fill:var(--swiatlo)}
 .postac .rdzen{fill:#fff6e2}
-.plonie .postac .swiatlo,.plonie .postac .poswiata{opacity:1}
+.plonie .postac .swiatlo{opacity:.6}.plonie .postac .poswiata{opacity:1}
 .plonie .postac .plomien{opacity:1;animation:plomien 1.7s ease-in-out infinite}
 @keyframes plomien{0%,100%{transform:scale(1,1) rotate(0)}25%{transform:scale(.93,1.09) rotate(-3deg)}50%{transform:scale(1.05,.94) rotate(2deg)}75%{transform:scale(.97,1.05) rotate(-1deg)}}
 /* osnowy: u góry tekst i postacie, na dole nici */
@@ -222,7 +222,7 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-nauka span{font-weight:500}
 .roj-grupa{position:absolute;top:4vh;height:46vh;width:20vw}
 .roj-panel.b .g0{left:4vw}.roj-panel.b .g1{left:28vw}.roj-panel.b .g2{left:52vw}.roj-panel.b .g3{left:76vw}
-.roj-gp{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:24vh;aspect-ratio:100/220}
+.roj-gp{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:24vh;aspect-ratio:100/222}
 .roj-slowa{position:absolute;left:0;right:0;top:0;height:21vh}
 .roj-slowa span{position:absolute;transform:translate(-50%,-50%);font:300 clamp(12px,.95vw,15px) var(--font-body);letter-spacing:.02em;color:#cfc6b6;opacity:.2;white-space:nowrap;transition:opacity .5s ease,color .5s ease,text-shadow .5s ease}
 .roj-slowa span.lit{opacity:1;color:var(--k);text-shadow:0 0 10px var(--k),0 0 22px var(--k)}
@@ -241,12 +241,15 @@ body:has(.roj) .site-footer::before{display:none}
 /* kognitywistyka i solipsysta w cieniu */
 .roj-st.kogni .roj-t{max-width:min(46vw,640px)}
 .roj-cien-w{position:relative}
-.roj-cien{position:absolute;right:-190px;top:-30px;height:200px;opacity:0;transition:opacity 2.6s ease 1s}
-.roj-st.in .roj-cien{opacity:.13}
+.roj-cien{position:absolute;right:-150px;top:-10px;height:15vh;opacity:0;transition:opacity 2.6s ease 1s}
+.roj-st.in .roj-cien{opacity:.3}
 /* kogni.pl/wiki: kropką staje się iskra */
 .roj-st.wiki{min-height:80vh;justify-content:center;padding-left:56px}
-.roj .roj-wiki{font-family:var(--font-display);font-weight:400;font-size:clamp(44px,5vw,76px);letter-spacing:.01em;color:var(--kosc);border:0}
-.roj-js .roj-wiki-kropka{display:inline-block;width:.26em;height:.2em;vertical-align:baseline;color:transparent;overflow:hidden}
+.roj .roj-wiki{font-family:var(--font-display);font-weight:500;font-size:clamp(44px,5vw,76px);letter-spacing:.06em;line-height:1;color:#e2ddd4;border:0}
+/* kropka nad ı jak w logo; z JS rysuje ją iskra */
+.roj-wiki-i{position:relative;display:inline-block}
+.roj-wiki-kropka{position:absolute;left:calc(50% - .19em);top:-.07em;width:.26em;height:.26em;border-radius:50%;background:#f0c060;box-shadow:0 0 0 .075em #0e0d0b,0 0 0 .12em rgba(240,192,96,.9),0 0 .45em .14em rgba(240,192,96,.45)}
+.roj-js .roj-wiki-kropka{opacity:0}
 @media (max-width:760px){
   .roj-st{padding:52vh 20px 8vh 20px!important;align-items:flex-start;justify-content:flex-start!important}
   .roj-st.lewo .roj-t,.roj-st.kogni .roj-t,.roj-st.lepkie .roj-t{max-width:none}
@@ -254,10 +257,10 @@ body:has(.roj) .site-footer::before{display:none}
   .roj-st.ciag[data-k=pytanie]{padding-top:14vh!important;padding-bottom:0!important}
   .roj-st.ciag[data-k=sieci]{padding-top:7vh!important;padding-bottom:20vh!important}
   .roj-st.poziom,.roj-st.lepkie{padding:0!important}
-  .roj-st.lepkie .roj-lepki{padding:52vh 20px 0!important;align-items:flex-start}
-  .roj-sol{left:50%;right:auto;top:6vh;transform:translateX(-50%);width:88vw;height:40vh}
-  .roj-sol-p{height:34vh}
-  .roj-chmura span{font-size:16px}
+  .roj-st.lepkie .roj-lepki{padding:30vh 20px 0!important;align-items:flex-start}
+  .roj-sol{position:relative;left:auto;top:auto;transform:none;width:240px;height:22vh;margin:3vh auto 0!important}
+  .roj-sol-p{height:14vh}
+  .roj-chmura span{font-size:14px}
   .roj-st.poziom{height:380vh}
   .roj-st.srodek{padding-top:18vh!important}
   .roj-st.wiki{min-height:60vh;padding-top:24vh!important;justify-content:center!important}
@@ -276,8 +279,8 @@ body:has(.roj) .site-footer::before{display:none}
   .roj-pchane{left:52vw;top:6vh}
   .roj-pchane span{font-size:10px;line-height:1.25}
   .roj .roj-ku-plotnu{width:18vw}
-  .roj-cien{right:-4px;top:-70px;height:110px}
-  .roj-st.in .roj-cien{opacity:.1}
+  .roj-cien{right:-4px;top:-70px;height:90px}
+  .roj-st.in .roj-cien{opacity:.25}
 }
 @media (prefers-reduced-motion:reduce){.roj-t,.roj-siec,.roj-nauka{opacity:1;transform:none;transition:none}}
 </style>
@@ -437,7 +440,7 @@ function knot(w: number, cx: number, cy: number, rb0: number, rc: number) {
 // Ruch: każdy ekran wyznacza cel; iskra goni go jak ciężarek na sprężynie, na powierzchni działa grawitacja.
 const IS: any = { x: 0, y: 0, vx: 0, vy: 0, kontakt: false, lot: false, kuc: 0, sq: 0, sqv: 0, id: '', dom: true, start: false,
   bi: 0, bang: 0, blen: 0, bhalf: .28, look: -1, last: 0, r: 4.4, py: 0,
-  gx: 0, gy: 0, pd: 1, lid: 1, zdz: 0, joy: 0, lean: 0, rot: 0, mrug: -1e9, nast: 0, mach: 0, hura: 0, osiadla: 0 };
+  gx: 0, gy: 0, pd: 1, lid: 1, zdz: 0, joy: 0, lean: 0, rot: 0, mrug: -1e9, nast: 0, mach: 0, hura: 0, osiadla: 0, skala: 1 };
 let KIER = 1, KIER_T = -1e9, OSTATNI_Y = scrollY, WSTECZ = 0;
 const DIP = new Map<HTMLElement, number[]>();
 const G = 2600;
@@ -455,16 +458,16 @@ function solKlasy(now: number) {
 function zakonczSol() { SOL.done = true; if (!SOL.t0) SOL.t0 = 1; solKlasy(0); }
 function solCel(now: number) {
   const t = now - SOL.t0, b = solP.getBoundingClientRect();
-  const fx = b.left + b.width * .5, fy = b.top + b.height * .38, hx = b.left + b.width * .5, hy = b.top + b.height * 42 / 220;
+  const fx = b.left + b.width * .5, fy = b.top + b.height * .38, hx = b.left + b.width * .39, hy = b.top + b.height * 36 / 222;
   const px = b.left - b.width * (MOB ? .2 : .55), py = b.top - b.height * .02;
   const ku = (x: number, y: number) => Math.atan2(y - py, x - px);
   if (t < SOL_F[1]) {
     const s = t < SOL_F[0] ? sm(t / SOL_F[0]) : 1, sw = t < SOL_F[0] ? 0 : Math.sin((t - SOL_F[0]) / (SOL_F[1] - SOL_F[0]) * Math.PI * 2) * .55;
-    return { id: 'sol0', tryb: 'lot', x: px, y: py, I: .95 * s, ang: ku(fx, fy) + sw, len: Math.hypot(fx - px, fy - py) + b.height * .7, half: .5 };
+    return { id: 'sol0', tryb: 'lot', x: px, y: py, I: .95 * s, ang: ku(fx, fy) + sw, len: Math.hypot(fx - px, fy - py) + b.height * .7, half: .5, skala: .6 };
   }
-  if (t < SOL_F[2]) return { id: 'sol1', tryb: 'lot', x: px, y: py, I: .35, ang: ku(fx, b.top + b.height * .4), len: b.height, half: .4 };
-  if (t < SOL_F[3]) return { id: 'sol2', tryb: 'lot', x: hx, y: hy, I: 0 };
-  return { id: 'sol3', tryb: 'lot', x: hx, y: hy, I: 0, gaze: (t - SOL_F[3]) / 1900 * Math.PI * 2.6 };
+  if (t < SOL_F[2]) return { id: 'sol1', tryb: 'lot', x: px, y: py, I: .35, ang: ku(fx, b.top + b.height * .4), len: b.height, half: .4, skala: .6 };
+  if (t < SOL_F[3]) return { id: 'sol2', tryb: 'lot', x: hx, y: hy, I: 0, skala: .6 };
+  return { id: 'sol3', tryb: 'lot', x: hx, y: hy, I: 0, gaze: (t - SOL_F[3]) / 1900 * Math.PI * 2.6, skala: .6 };
 }
 function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, lz: number): any {
   const r = IS.r * 1.95;
@@ -506,7 +509,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
     } else if (S.k === 'kogni' || S.k === 'wiki') {
       // nagłówek, potem radość przy „wytłumaczyć”, potem kropka w kogni.pl/wiki, gdy ta jest już na ekranie
       const hr = hura.getBoundingClientRect(), rr = wikiK.getBoundingClientRect();
-      if (rr.top < H * .8) c = { id: 'wiki', tryb: 'lot', x: rr.left + rr.width * .5, y: rr.bottom - rr.height * .45, I: 0 };
+      if (rr.top < H * .8) c = { id: 'wiki', tryb: 'lot', x: rr.left + rr.width * .5, y: rr.top + rr.height * .5, I: 0, skala: rr.height / .26 * .25 / (IS.r * 1.75) };
       else if (hr.top < H * .72) { c = stoj(hura, 'hura'); if (c) c.hura = 1; }
       else c = stoj(CEL.kogni, 'kogni');
     } else c = stoj(CEL[S.k], S.k);
@@ -599,9 +602,9 @@ function lyzwy(dt: number, c: any, now: number) {
       } else if (los < .4) { S.dbl = 1; wybij(26 + Math.random() * 14, 0); }  // podwójny
       else if (los < .52) wybij(48 + Math.random() * 20, kier);                // salto w przód
       else if (los < .62) wybij(48 + Math.random() * 20, -kier);               // salto w tył
-      else if (los < .74) { S.kreci = now + 700; S.spin = (Math.random() < .5 ? 1 : -1) * 2; S.t0 = now; S.T = .7; } // piruet
-      else if (los < .82) { S.nisko = now + 750; IS.vx += kier * 280; }         // nisko, z rozpędem
-      else if (los < .94) {                                                      // rozpęd i hokejowe hamowanie
+      else if (los < .8) { S.kreci = now + 1300; S.spin = (Math.random() < .5 ? 1 : -1) * 4; S.t0 = now; S.T = 1.3; } // piruet jak w łyżwiarstwie figurowym, snop krąży z nią
+      else if (los < .86) { S.nisko = now + 750; IS.vx += kier * 280; }         // nisko, z rozpędem
+      else if (los < .95) {                                                      // rozpęd i hokejowe hamowanie
         const d = IS.x > (c.xs + c.xe) / 2 ? -1 : 1; IS.vx = d * (520 + Math.random() * 160); S.hamuj = now + 300 + Math.random() * 160;
       }
       else wybij(20 + Math.random() * 30, 0);
@@ -620,6 +623,7 @@ function lyzwy(dt: number, c: any, now: number) {
   S.przech *= Math.exp(-dt * 3.5);
   IS.rot = S.spin ? S.spin * 6.2832 * sm(cl((now - S.t0) / (S.T * 1000))) : 0;
   c.ang = IS.vx < -60 && WSTECZ < .05 ? Math.PI : 0;
+  if (S.kreci) { c.ang += IS.rot; c.I = .85; c.wir = 1; }
 }
 function krok(dt: number, c: any, now: number) {
   const zmiana = c.id !== IS.id; IS.id = c.id;
@@ -679,6 +683,7 @@ function wiazka(dt: number, c: any, now: number) {
   if (c.len) {
     let da = c.ang - IS.bang; da = Math.atan2(Math.sin(da), Math.cos(da));
     IS.bang += da * (CICHO ? 1 : Math.min(1, dt * 7)); IS.blen += (c.len - IS.blen) * (CICHO ? 1 : e); IS.bhalf += (c.half - IS.bhalf) * e;
+    if (c.wir) IS.bang = c.ang;
   }
   const s = c.id === 'czesc' ? +(IS.bi.toFixed(3)) : 0;
   czesc.style.setProperty('--s', String(s));
@@ -713,9 +718,10 @@ function oko(dt: number, c: any, now: number) {
   IS.joy += ((m.joy || 0) * (1 - .35 * WSTECZ) * (SK.air && c.slizg ? .15 : 1) * (c.hura && !IS.kontakt ? .3 : 1) - IS.joy) * Math.min(1, dt * 9);
   IS.lean += ((c.slizg && IS.kontakt ? Math.max(-.35, Math.min(.35, IS.vx / 700)) + SK.przech : 0) - IS.lean) * Math.min(1, dt * 8);
   IS.mach += ((c.macha && IS.kontakt ? 1 : 0) - IS.mach) * Math.min(1, dt * 6);
+  IS.skala += ((c.skala || 1) - IS.skala) * Math.min(1, dt * 5);
 }
 function rysujIskre(A0: number) {
-  const r = IS.r, A = A0;
+  const r = IS.r * IS.skala, A = A0;
   if (A < .02) return;
   // snop światła
   if (IS.bi > .02 && IS.blen > 4) {
@@ -830,7 +836,7 @@ function frame() {
   }
   rysujLod(dt);
   const dipRuch = dipy(dt);
-  if (IS.osiadla > .01 && c) { const rb = Math.max(6, wikiK.getBoundingClientRect().height * .55); knot(IS.osiadla, IS.x, IS.y, rb, rb * .45); }
+  if (IS.osiadla > .01 && c) { const em = wikiK.getBoundingClientRect().height / .26; knot(IS.osiadla, IS.x, IS.y, Math.max(6, em * .25), em * .1625); }
   if (wid) rysujIskre(1 - IS.osiadla);
   // pętla klatek tylko wtedy, gdy coś się rusza
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
