@@ -21,13 +21,13 @@ const T = {
 };
 // Sieci w kolejności od receptorów; numer to etykieta w masce BraiNets_MASKS.
 const SIECI = [
-  [2, 'Sieć wzrokowa', 'Widzisz.'],
-  [3, 'Sieć czuciowo-ruchowa', 'Czujesz ciało i się ruszasz.'],
-  [4, 'Sieć grzbietowa uwagi', 'Koordynujesz oko i rękę.'],
-  [8, 'Sieć brzuszna uwagi', 'Coś przerywa plan.'],
-  [6, 'Sieć istotności', 'Coś zagraża schematowi ciała.'],
-  [5, 'Sieć kontroli', 'Trzymasz zadanie.'],
-  [7, 'Sieć domyślna', 'Ty, Twoja przeszłość i przyszłość, inni ludzie.'],
+  [2, 'Sieć wzrokowa'],
+  [3, 'Sieć czuciowo-ruchowa'],
+  [4, 'Sieć grzbietowa uwagi'],
+  [8, 'Sieć brzuszna uwagi'],
+  [6, 'Sieć istotności'],
+  [5, 'Sieć kontroli'],
+  [7, 'Sieć domyślna'],
 ];
 // odstępy między sieciami: nieregularny rytm, jak w ciągłym tekście
 const ODSTEP = ['0', '6vh', '11vh', '4vh', '9vh', '14vh', '8vh'];
@@ -70,7 +70,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   </section>
   <section class="roj-st lewo ciag" data-k="sieci">
     <div class="roj-t">
-      <ul class="roj-sieci">{SIECI.map(([n, nazwa, zd], i) => <li class="roj-siec" data-n={n} data-nazwa={nazwa} style={'margin-top:' + ODSTEP[i]}><span class="roj-ukryte">{nazwa}. </span>{zd}</li>)}</ul>
+      <ul class="roj-sieci">{SIECI.map(([n, nazwa], i) => <li class="roj-siec" data-n={n} data-nazwa={nazwa.replace(/^Sieć\s+/, '')} style={'margin-top:' + ODSTEP[i]}><span class="roj-ukryte">{nazwa}</span></li>)}</ul>
     </div>
   </section>
   <section class="roj-st lepkie" data-k="zombie">
@@ -152,8 +152,7 @@ body:has(.roj) .site-footer::before{display:none}
 .roj .roj-czesc.lit{--min:.92}
 /* sieci pojawiają się po kolei, gdy iskra je ogląda */
 .roj-sieci{list-style:none;padding:0}
-.roj-siec{font:300 18px/1.6 var(--font-body);color:var(--kosc);opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
-.roj-siec.in{opacity:1;transform:none}
+.roj-siec{height:1px}
 .roj-ukryte{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* zombie i solipsysta: ekran lepki, postać odsłania iskra */
 .roj-st.lepkie{display:block;height:210vh;padding:0}
@@ -190,6 +189,7 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-tor{position:absolute;top:0;left:0;height:100%;width:300vw;display:flex;will-change:transform}
 .roj-slowo-osn{position:absolute;transform:translateX(-50%);font:300 14px var(--font-body);letter-spacing:.02em;color:#cfc6b6;white-space:nowrap;opacity:0;transition:color .4s ease,text-shadow .4s ease;will-change:transform,opacity}
 .roj-slowo-osn.lit{color:var(--k);text-shadow:0 0 10px var(--k),0 0 20px var(--k)}
+.roj-slowo-osn.u-plotna{cursor:pointer}
 .roj-st.poziom{--mh:15vh}
 .roj-mnich{position:absolute;height:var(--mh);aspect-ratio:100/222;transform-origin:50% 100%;will-change:transform,opacity}
 .roj-mnich-c{height:100%;transform:scaleX(-1)}
@@ -227,15 +227,14 @@ body:has(.roj) .site-footer::before{display:none}
   .roj-st.srodek{padding-top:18vh!important}
   .roj-st.wiki{min-height:60vh;padding-top:24vh!important;justify-content:center!important}
   .roj-t p,.roj-lista li{font-size:15px}
-  .roj-siec{font-size:15px}
-  .roj-t p,.roj-siec{text-shadow:0 0 4px #000,0 0 10px #000,0 0 18px #000}
+  .roj-t p{text-shadow:0 0 4px #000,0 0 10px #000,0 0 18px #000}
   .roj-slowo-osn{font-size:11px}
   .roj-st.poziom{--mh:11vh}
   .roj .roj-ku-plotnu{width:18vw}
   .roj-cien{right:-4px;top:-70px;height:90px}
   .roj-st.in .roj-cien{opacity:.25}
 }
-@media (prefers-reduced-motion:reduce){.roj-t,.roj-siec{opacity:1;transform:none;transition:none}}
+@media (prefers-reduced-motion:reduce){.roj-t{opacity:1;transform:none;transition:none}}
 </style>
 
 <script>
@@ -274,7 +273,7 @@ const sieciEl = $$('.roj-siec');
 const SIECI_L = sieciEl.map((e) => +e.dataset.n!);
 const sol = $('.roj-sol'), solP = $('.roj-sol-p'), solObrot = $('.roj-sol-obrot'), solSlowa = $$('.roj-chmura span');
 const slowaO = $$('.roj-slowo-osn'), mnisi = $$('.roj-mnich');
-let MN_Y = 0, MN_KROK = 0;
+let MN_Y = 0, MN_KROK = 0, PUSZCZ = 0, SZER_MAX = 0;
 const wikiK = $('.roj-wiki-kropka');
 const knotLogo = document.querySelector('.rocznik-knot') as HTMLElement | null;
 const CEL: Record<string, HTMLElement | null> = {};
@@ -445,7 +444,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
         const [bx, by, bw] = brain({ u: CENT[n][0], v: CENT[n][1] });
         const [cx0, cy0] = brain({ u: 120, v: 90 }), [ix, iy] = wyspa(n, bx, by, bw, wy);
         const x = SIECI_N ? ix : cx0, y = SIECI_N ? iy : cy0, h = bw * .07 + 12;
-        c = { id: 'siec' + (SIECI_N ? n : 0), tryb: 'lot', x, y: y - h, I: SIECI_N ? .85 : .3, ang: Math.PI / 2 + Math.sin(now / 700) * .25, len: h + bw * .12, half: .55 };
+        c = { id: 'siec' + (SIECI_N ? n : 0), tryb: 'lot', x, y: y - h, I: SIECI_N ? .85 : .3, ang: Math.PI / 2, len: h + bw * .12, half: .55 };
       }
     } else if (S.k === 'zombie') {
       c = lz < .12 ? stoj(CEL.zombie, 'zombie') : stoj(dalej, 'dalej');
@@ -722,7 +721,15 @@ sieciEl.forEach((e) => ioS.observe(e));
 // punkty wracają do roju, a nazwa zostaje na mózgu.
 const NAZWY: Record<number, string> = {}; sieciEl.forEach((e) => { NAZWY[+e.dataset.n!] = e.dataset.nazwa!; });
 const SLOWO: Record<number, any> = {}, START: Record<number, number> = {}, WS: Record<number, any> = {};
-const JASNY = hex('#ece6da'), kolT = $('.roj-sieci');
+const JASNY = hex('#ece6da'), kolT = $('.roj-sieci'), KOLH: Record<number, number[]> = {};
+for (const k in COL) KOLH[+k] = hex(COL[+k]);
+const RGB = new Map<number, string>();
+const rgb = (r: number, g0: number, b: number) => {
+  const k = (Math.round(r) << 16) | (Math.round(g0) << 8) | Math.round(b); let v = RGB.get(k);
+  if (!v) { if (RGB.size > 30000) RGB.clear(); v = 'rgb(' + Math.round(r) + ',' + Math.round(g0) + ',' + Math.round(b) + ')'; RGB.set(k, v); }
+  return v;
+};
+let SLOWA_FORMA = false;
 function litery(t: string, fs: number) {
   const cn = document.createElement('canvas'), x = cn.getContext('2d')!, font = '700 ' + fs + 'px Inter, sans-serif';
   x.font = font; const w = Math.ceil(x.measureText(t).width) + 4, h = Math.ceil(fs * 1.3);
@@ -757,13 +764,13 @@ function slowoStan(n: number, now: number, wy: number, textR: number) {
 }
 // nazwy na mózgu nie nachodzą na siebie: każda kolejna zsuwa się w dół, aż znajdzie wolne miejsce
 function rozsun() {
-  const k = (MOB ? 11 : 13) / (MOB ? 16 : 24), stoja: any[] = [];
-  for (const n of SIECI_L) {
-    const s = WS[n]; if (!s) continue;
-    const sz = s.w * k;
-    for (let i = 0; i < 12 && stoja.some((o) => Math.abs(o.lx - s.lx) < (o.sz + sz) / 2 + 4 && Math.abs(o.ly - s.ly) < 15); i++) s.ly += 16;
-    s.ax = s.fx + (s.lx - s.fx) * s.ciag; s.ay = s.fy + (s.ly - s.fy) * s.ciag; s.sz = sz; stoja.push(s);
+  const k = (MOB ? 11 : 13) / (MOB ? 16 : 24), L = SIECI_L.map((n) => WS[n]).filter(Boolean), H0 = MOB ? 14 : 17;
+  for (const s of L) s.sz = s.w * k;
+  for (let it = 0; it < 8; it++) for (let i = 0; i < L.length; i++) for (let j = i + 1; j < L.length; j++) {
+    const a = L[i], b = L[j], ox = (a.sz + b.sz) / 2 + 6 - Math.abs(a.lx - b.lx), oy = H0 - Math.abs(a.ly - b.ly);
+    if (ox > 0 && oy > 0) { const d = (oy / 2 + .5) * (a.ly <= b.ly ? 1 : -1); a.ly -= d; b.ly += d; }
   }
+  for (const s of L) { s.ax = s.fx + (s.lx - s.fx) * s.ciag; s.ay = s.fy + (s.ly - s.fy) * s.ciag; }
 }
 function kick() { if (!PETLA) { PETLA = true; requestAnimationFrame(() => { PETLA = false; frame(); }); } }
 function frame() {
@@ -787,7 +794,8 @@ function frame() {
   const wI = (A.k === 'sieci' ? 1 - t : 0) + (B.k === 'sieci' ? t : 0), textR = kolT.getBoundingClientRect().right;
   const wS = cl(wI + (A.k === 'pytanie' ? 1 - t : 0) + (B.k === 'pytanie' ? t : 0));
   let slowaRuch = false;
-  for (const n of SIECI_L) { WS[n] = slowoStan(n, now, wI, textR); if (WS[n] && WS[n].t < 1800) slowaRuch = true; }
+  SLOWA_FORMA = false;
+  for (const n of SIECI_L) { WS[n] = slowoStan(n, now, wI, textR); if (WS[n] && WS[n].t < 1800) slowaRuch = true; if (WS[n] && WS[n].forma > 0) SLOWA_FORMA = wS > .02; }
   rozsun();
   const c = cel(A, B, t, lpA, lpB, now, lz);
   if (c) { krok(dt, c, now); wiazka(dt, c, now); oko(dt, c, now); }
@@ -798,14 +806,15 @@ function frame() {
   for (const p of P) {
     const s1 = st(A.k, p, lpA), s2 = t > 0 ? st(B.k, p, lpB) : s1, q = cl(t * 1.35 - p.d * .35);
     let x = s1[0] + (s2[0] - s1[0]) * q, y = s1[1] + (s2[1] - s1[1]) * q, al = s1[2] + (s2[2] - s1[2]) * q, sz = s1[4] + (s2[4] - s1[4]) * q;
-    let kol = [0, 1, 2].map((k) => s1[3][k] + (s2[3][k] - s1[3][k]) * q);
-    let lit = 0;
-    if (p.sl && wS > .02) for (const [n, gi] of p.sl) {
+    const c1 = s1[3], c2 = s2[3];
+    let cr = c1[0] + (c2[0] - c1[0]) * q, cg = c1[1] + (c2[1] - c1[1]) * q, cb = c1[2] + (c2[2] - c1[2]) * q, lit = 0;
+    if (SLOWA_FORMA && p.sl) for (const [n, gi] of p.sl) {
       const sw = WS[n]; if (!sw || sw.forma <= 0) continue;
       // punkt w literze nazwy sieci: jasny przy formowaniu, w kolorze sieci, gdy iskra ciągnie słowo
-      const f = sw.forma * wS, gp = SLOWO[n].pts[gi];
+      const f = sw.forma * wS, gp = SLOWO[n].pts[gi], kh = KOLH[n], m = sw.ciag;
       x += (sw.ax + gp[0] - x) * f; y += (sw.ay + gp[1] - y) * f; al += (.95 - al) * f;
-      kol = mix(kol, mix(JASNY, hex(COL[n]), sw.ciag), f); lit = f; break;
+      cr += (JASNY[0] + (kh[0] - JASNY[0]) * m - cr) * f; cg += (JASNY[1] + (kh[1] - JASNY[1]) * m - cg) * f; cb += (JASNY[2] + (kh[2] - JASNY[2]) * m - cb) * f;
+      lit = f; break;
     }
     if (al < .02 || y < -20 || y > H + 20) continue;
     if (wid) {
@@ -818,8 +827,8 @@ function frame() {
       }
     }
     const r = p.s * (p.net > 1 ? 2.1 : 1.6) * sz, ang = p.a + q * 1.5;
-    if (lit > .4) { g.globalAlpha = al; g.fillStyle = 'rgb(' + kol.map(Math.round).join(',') + ')'; g.fillRect(x - .9, y - .9, 1.8, 1.8); continue; }
-    g.globalAlpha = al; g.strokeStyle = 'rgb(' + kol.map(Math.round).join(',') + ')';
+    if (lit > .4) { g.globalAlpha = al; g.fillStyle = rgb(cr, cg, cb); g.fillRect(x - .9, y - .9, 1.8, 1.8); continue; }
+    g.globalAlpha = al; g.strokeStyle = rgb(cr, cg, cb);
     g.beginPath(); g.moveTo(x + r * Math.cos(ang), y + r * Math.sin(ang)); g.lineTo(x + r * Math.cos(ang + 2.09), y + r * Math.sin(ang + 2.09)); g.lineTo(x + r * Math.cos(ang + 4.19), y + r * Math.sin(ang + 4.19)); g.closePath(); g.stroke();
   }
   // nazwy sieci na mózgu, gdy słowo dotrze na swoją sieć
@@ -838,16 +847,19 @@ function frame() {
   }
   if (LN.rtop < H && LN.rbot > 0) {
     // mnisi idą po swoich osnowach, świeca każdego świeci przed nim i oświetla słowa, które wjeżdżają na ekran;
-    // na końcu mnisi biegną do Płótna, a słowa zbierają się i płyną za nimi
+    // na końcu mnisi podbiegają do Płótna, a słowa tłoczą się przy jego krawędzi: chcą wejść i czekają na kliknięcie
     const pC = cl((LN.pr - .8) / .16), idzie = Math.abs(scrollY - MN_Y) > .5, zr = W - zw, wiazki: any[] = [];
+    const pu = PUSZCZ ? sm(cl((now - PUSZCZ) / 550)) : 0;
+    if (!SZER_MAX) SZER_MAX = Math.max(...slowaO.map((w) => w.offsetWidth));
     MN_Y = scrollY; if (idzie) MN_KROK += dt * 9;
     mnisi.forEach((m, k) => {
       const bieg = sm(cl(pC * 1.25 - k * .08)), x0 = m.offsetLeft, hg = m.offsetHeight, wd = hg * 100 / 222;
-      const dx = bieg * (zr - x0 + wd), bob = Math.abs(Math.sin(MN_KROK + k * 1.3)) * (bieg > 0 && bieg < 1 ? 6 : idzie ? 2.5 : 0);
-      if (bieg > 0 && bieg < 1) MN_KROK += dt * 2;
-      m.style.transform = 'translate(' + dx.toFixed(1) + 'px,' + (-bob).toFixed(1) + 'px) rotate(' + (bieg > 0 && bieg < 1 ? 8 : 0) + 'deg)';
+      const cel = zr - SZER_MAX - 30 - wd - k * 8, dx = bieg * (cel - x0) + pu * (W + 40 - cel);
+      const bob = Math.abs(Math.sin(MN_KROK + k * 1.3)) * ((bieg > 0 && bieg < 1) || pu > 0 ? 6 : idzie ? 2.5 : 0);
+      if ((bieg > 0 && bieg < 1) || pu > 0) MN_KROK += dt * 2;
+      m.style.transform = 'translate(' + dx.toFixed(1) + 'px,' + (-bob).toFixed(1) + 'px) rotate(' + ((bieg > 0 && bieg < 1) || pu > 0 ? 8 : 0) + 'deg)';
       const o = 1 - cl((x0 + dx - zr) / (zw * .45)); m.style.opacity = o.toFixed(3);
-      wiazki.push({ x: x0 + dx + wd * .66, y: LN.top + m.offsetTop - bob + hg * 86 / 222, k, a: -.12 + Math.sin(SEK * .7 + k) * .08, len: W * .26, half: .3, o: o * (1 - bieg * .6) });
+      wiazki.push({ x: x0 + dx + wd * .66, y: LN.top + m.offsetTop - bob + hg * 86 / 222, k, a: -.12 + Math.sin(SEK * .7 + k) * .08, len: W * .26, half: .3, o });
     });
     g2.globalCompositeOperation = 'lighter'; g2.globalAlpha = 1;
     for (const b of wiazki) {
@@ -856,12 +868,17 @@ function frame() {
       g2.fillStyle = gr; g2.beginPath(); g2.moveTo(b.x, b.y); g2.arc(b.x, b.y, b.len, b.a - b.half, b.a + b.half); g2.closePath(); g2.fill();
     }
     slowaO.forEach((w, i) => {
-      const x0 = w.offsetLeft + LN.off, y0 = LN.top + w.offsetTop + 8;
-      const e = sm(cl(pC * 1.3 - (i % 7) * .045)), gx = (zr + zw * .3 - x0) * e, gy = (LN.top + H * .57 + ((i % 9) - 4) * 14 - y0) * e;
-      const o = cl((W * .96 - x0 - gx) / (W * .14)) * (1 - cl((e - .75) / .25));
+      const x0 = w.offsetLeft + LN.off, y0 = LN.top + w.offsetTop + 8, ww = w.offsetWidth;
+      const e = sm(cl(pC * 1.3 - (i % 7) * .045)), u = e > .97;
+      // miejsce w grupie przy krawędzi Płótna; kto stoi przy krawędzi, napiera na nią
+      const tx = zr - 10 - ww / 2 - (i * 37 % 50), ty = LN.top + H * .14 + i * (H * .74 / slowaO.length);
+      const pcha = u && !pu ? Math.max(0, Math.sin(SEK * 2.6 + i * .9)) * 6 : 0;
+      const gx = (tx - x0) * e + pcha + pu * (W + 80 - tx), gy = (ty - y0) * e;
+      const o = cl((W * .96 - x0 - (tx - x0) * e) / (W * .14)) * (1 - cl((pu - .5) / .5));
       w.style.transform = 'translate(calc(-50% + ' + gx.toFixed(1) + 'px),' + gy.toFixed(1) + 'px)'; w.style.opacity = o.toFixed(3);
+      w.classList.toggle('u-plotna', u);
       const wx = x0 + gx, wy = y0 + gy;
-      w.classList.toggle('lit', e < .1 && wiazki.some((b) => { const d = Math.hypot(wx - b.x, wy - b.y); let da = Math.atan2(wy - b.y, wx - b.x) - b.a; da = Math.atan2(Math.sin(da), Math.cos(da)); return d < b.len && Math.abs(da) < b.half; }));
+      w.classList.toggle('lit', u || (e < .1 && wiazki.some((b) => { const d = Math.hypot(wx - b.x, wy - b.y); let da = Math.atan2(wy - b.y, wx - b.x) - b.a; da = Math.atan2(Math.sin(da), Math.cos(da)); return d < b.len && Math.abs(da) < b.half; })));
     });
     kuPlotnu.classList.toggle('puls', LN.pr > .86);
   }
@@ -891,7 +908,7 @@ function frame() {
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
   const iskraRuch = !!c && !CICHO && (solRuch || !!c.slizg || !!c.hura || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
     || !IS.dom && (Math.hypot(IS.vx, IS.vy) > 6 || Math.hypot(c.x - IS.x, c.y - IS.y) > .8 || (c.tryb === 'stoj' && !IS.kontakt))
-    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || c.id.startsWith('siec') || slowaRuch
+    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || slowaRuch || !!PUSZCZ
     || (!IS.dom && (now - IS.mrug < 170 || IS.zdz > .02 || Math.abs(IS.pd - ((c.mood && c.mood.pd) || 1)) > .01 || Math.abs(IS.lid - ((c.mood && c.mood.lid) || 1)) > .01
       || Math.abs(IS.joy - ((c.mood && c.mood.joy) || 0) * (1 - .35 * WSTECZ)) > .01 || Math.abs(IS.lean) > .005 || WSTECZ > .01))
     );
@@ -920,7 +937,15 @@ function frame() {
 }
 let tk = false;
 addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(() => { frame(); tk = false; }); } }, { passive: true });
-addEventListener('resize', () => { size(); frame(); });
+addEventListener('resize', () => { SZER_MAX = 0; size(); frame(); });
+const puszczaj = (ev: MouseEvent) => {
+  if (PUSZCZ || CICHO || ev.button !== 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+  ev.preventDefault(); PUSZCZ = performance.now(); kick();
+  setTimeout(() => { location.href = kuPlotnu.getAttribute('href')!; }, 650);
+};
+kuPlotnu.addEventListener('click', puszczaj);
+slowaO.forEach((w) => w.addEventListener('click', (ev) => { if (w.classList.contains('u-plotna')) puszczaj(ev); }));
+addEventListener('pageshow', () => { PUSZCZ = 0; kick(); });
 kuPlotnu.addEventListener('pointerenter', () => { HOVP = true; kick(); });
 kuPlotnu.addEventListener('pointerleave', () => { HOVP = false; kick(); });
 const io = new IntersectionObserver((es) => es.forEach((e) => {
