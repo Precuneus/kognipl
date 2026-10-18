@@ -8,8 +8,7 @@ const WIKI = Object.keys(import.meta.glob('./wiki/**/*.astro')).length > 0 ? '/w
 const md = (t) => t.replace(/\{\{([^}|]+)(?:\|([^}]+))?\}\}/g, (_, w, k) => '<span class="iskra-cel' + (k ? ' ' + k : '') + '">' + w + '</span>');
 const T = {
   pytanie: 'Czym jest to, czego {{doświadczasz}}?',
-  punkty: ['rozumienie tekstu, dotyk, swój oddech, spojrzenie w oczy...', 'To aktywność sieci mózgowych.'],
-  zmiany: 'Zmiany struktury mózgu (np. degeneracje, lezje, uszkodzenia) i zmiany funkcjonowania struktur między sobą (np. substancje psychoaktywne, uzależnienia, nauka, rozwój) {{zmieniają}} czego doświadczam.',
+  zmiany: 'Zmiany struktury mózgu (np. degeneracje, lezje, uszkodzenia) i zmiany funkcjonowania struktur między sobą (np. substancje psychoaktywne, uzależnienia, nauka, rozwój) zmieniają czego doświadczam.',
   zombie: ['Jesteś człowiekiem, prawda? Czy {{zombie}}?', 'Założę, że człowiekiem i też doświadczasz, jak ja. Ale nie mogę tego {{wiedzieć|dalej}}.'],
   wiem: ['Wiem tylko tyle, ile się nauczyłem od {{środowiska}}, w którym się urodziłem.', 'Doświadczam Modeli Mentalnych, które jednocześnie są moją aktywnością biologiczną.'],
   ja: ['Ale... "{{ja}}" to też Model Mentalny', 'Model "ja" zmienia się w czasie,  Zmienia się płynnie (nauka, dryfowanie) i gwałtownie (szok, przeskok). "Ja" to Statek Tezeusza strukturalnie i funkcjonalnie połączonych komórek.'],
@@ -26,13 +25,14 @@ const SIECI = [
   [2, 'Sieć wzrokowa', 'Widzisz.'],
   [3, 'Sieć czuciowo-ruchowa', 'Czujesz ciało i się ruszasz.'],
   [4, 'Sieć grzbietowa uwagi', 'Koordynujesz oko i rękę.'],
+  [8, 'Sieć brzuszna uwagi', 'Coś przerywa plan.'],
   [6, 'Sieć istotności', 'Coś zagraża schematowi ciała.'],
   [5, 'Sieć kontroli', 'Trzymasz zadanie.'],
   [7, 'Sieć domyślna', 'Ty, Twoja przeszłość i przyszłość, inni ludzie.'],
 ];
 // odstępy między sieciami: nieregularny rytm, jak w ciągłym tekście
-const ODSTEP = ['0', '6vh', '11vh', '4vh', '14vh', '8vh'];
-const KOLOR = { 2: '#ee6b6f', 3: '#f9d780', 4: '#e58e76', 5: '#f69959', 6: '#a9b26f', 7: '#bb6fb2' };
+const ODSTEP = ['0', '6vh', '11vh', '4vh', '9vh', '14vh', '8vh'];
+const KOLOR = { 2: '#ee6b6f', 3: '#f9d780', 4: '#e58e76', 5: '#f69959', 6: '#a9b26f', 7: '#bb6fb2', 8: '#6fb3a8' };
 const OSNOWY = [['socjologia', '#8fa274'], ['psychologia', '#5f9a96'], ['biologia', '#6585b0'], ['fizyka', '#8577b3']];
 const KOL_OSN = Object.fromEntries(OSNOWY);
 const NAUKI = [
@@ -71,16 +71,13 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   <section class="roj-st lewo ciag" data-k="pytanie">
     <div class="roj-t">
       <p class="roj-duze" set:html={md(T.pytanie)} />
-      <ul class="roj-lista">{T.punkty.map((t) => <li>{t}</li>)}</ul>
+      <p>{T.zmiany}</p>
     </div>
   </section>
   <section class="roj-st lewo ciag" data-k="sieci">
     <div class="roj-t">
-      <ul class="roj-sieci">{SIECI.map(([n, nazwa, zd], i) => <li class="roj-siec" data-n={n} style={'margin-top:' + ODSTEP[i]}><span style={'color:' + KOLOR[n]}>{nazwa}.</span> {zd}</li>)}</ul>
+      <ul class="roj-sieci">{SIECI.map(([n, nazwa, zd], i) => <li class="roj-siec" data-n={n} data-nazwa={nazwa} style={'margin-top:' + ODSTEP[i]}><span class="roj-ukryte">{nazwa}. </span>{zd}</li>)}</ul>
     </div>
-  </section>
-  <section class="roj-st lewo" data-k="zmiany">
-    <div class="roj-t"><p class="roj-duze" set:html={md(T.zmiany)} /></div>
   </section>
   <section class="roj-st lepkie" data-k="zombie">
     <div class="roj-lepki">
@@ -175,14 +172,11 @@ body:has(.roj) .site-footer::before{display:none}
 /* Cześć: przygaszone, dopóki iskra go nie oświetli */
 .roj .roj-czesc{font-family:var(--font-display);font-weight:400;font-size:clamp(56px,6vw,96px);line-height:1;letter-spacing:.01em;color:var(--zloto);opacity:max(var(--min,.16),calc(.16 + var(--s,0) * .84));text-shadow:0 0 calc(var(--s,0) * 34px) rgba(240,192,96,calc(var(--s,0) * .7));transition:opacity .4s ease}
 .roj .roj-czesc.lit{--min:.92}
-.roj-lista{list-style:none;padding:0}
-.roj-lista li{position:relative;padding-left:1.2em}
-.roj-lista li::before{content:'';position:absolute;left:0;top:.86em;width:5px;height:5px;border-radius:50%;background:var(--zloto);opacity:.75}
 /* sieci pojawiają się po kolei, gdy iskra je ogląda */
 .roj-sieci{list-style:none;padding:0}
 .roj-siec{font:300 18px/1.6 var(--font-body);color:var(--kosc);opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
 .roj-siec.in{opacity:1;transform:none}
-.roj-siec span{font-weight:400}
+.roj-ukryte{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* zombie i solipsysta: ekran lepki, postać odsłania iskra */
 .roj-st.lepkie{display:block;height:210vh;padding:0}
 .roj-lepki{position:sticky;top:0;height:100vh;overflow:hidden}
@@ -266,6 +260,7 @@ body:has(.roj) .site-footer::before{display:none}
   .roj-st.wiki{min-height:60vh;padding-top:24vh!important;justify-content:center!important}
   .roj-t p,.roj-lista li{font-size:15px}
   .roj-siec{font-size:15px}
+  .roj-t p,.roj-siec{text-shadow:0 0 4px #000,0 0 10px #000,0 0 18px #000}
   .roj-gora{top:5vh}
   .roj-gora .roj-duze{font-size:24px}
   .roj-nauka{font-size:16px;line-height:1.35}
@@ -291,7 +286,10 @@ body:has(.roj) .site-footer::before{display:none}
 // bo Safari zaszumia getImageData (ochrona przed fingerprintingiem) i psuje etykiety.
 // Ruch przy przewijaniu: każdy ekran ma swój stan, przejścia przewijają się w obie strony.
 const MAPA = '02h,1c,068,16,46,1k,05h,1c,4d,1m,04,15,04w,1f,4j,1y,03,1a,04b,19,4t,1h,3f,1h,046,1b,4v,1d,3l,13,38,15,042,1c,4w,1c,3n,11,3a,15,03z,1e,4x,1b,3y,17,03w,1f,4x,1a,3z,1a,03r,1h,4y,19,3z,11,48,18,03j,1j,4y,17,310,4e,16,03e,1n,4w,17,310,4h,15,03a,1v,4r,15,311,4k,14,036,1w,4s,15,310,4n,13,033,1z,4s,14,310,4p,13,02z,114,4p,14,310,4r,13,02v,118,4n,14,3z,4u,12,02t,1x,55,1a,4l,12,310,4w,12,02p,1v,5c,19,4j,12,310,4y,12,02l,1t,5j,18,4h,12,310,4z,13,02i,1r,5n,17,4h,12,310,410,16,02c,1q,5q,18,4g,12,310,4e,11,4n,17,027,1p,5u,17,4f,13,310,49,18,4m,18,024,1o,5v,19,4e,13,3z,48,1b,4m,19,021,1n,5x,19,4e,13,3z,48,12,48,12,4m,19,01y,1o,5z,18,4e,13,3z,11,4j,11,4l,1b,01v,1n,512,17,4d,13,310,11,416,1b,01t,1n,515,15,4d,13,3z,11,418,1b,01r,1m,519,14,4c,12,310,41a,1b,01p,1m,51c,12,4b,13,310,4p,11,4k,1c,01n,1l,51g,4b,12,310,11,41a,1d,01l,1l,51h,4a,12,311,12,4a,13,4w,1d,01k,1k,51j,49,13,311,14,42,1i,4n,1e,01i,1k,51k,49,12,311,1p,52,4k,1f,01i,1i,51m,48,12,312,1n,56,4h,1h,01g,1i,51o,46,12,313,1l,5a,4c,52,1i,01f,1i,51q,44,13,312,1l,5c,4b,53,1i,01d,1i,51s,15,313,1j,5f,4a,54,1h,01d,1h,51t,15,313,1i,5i,46,51,41,54,1i,01b,1h,51t,16,3m,11,3g,1h,5k,46,56,1j,019,1h,51t,15,3n,11,3g,1f,5o,44,57,1j,017,1h,51u,15,3m,11,3g,1f,510,1k,016,1g,51u,16,313,1d,512,1l,014,1g,51v,16,3n,11,34,12,39,1c,511,1o,012,1h,51u,16,313,1b,513,1p,010,1h,51u,17,3p,11,3d,1a,511,1t,0y,1h,51v,17,3q,11,3b,1a,511,72,1t,0x,1h,51v,16,3q,11,3c,19,511,75,1r,0w,1h,51w,16,312,19,512,78,1p,0u,1h,51x,16,311,19,511,7b,1p,0t,1e,520,15,312,19,510,7d,1p,0r,1f,520,15,311,19,510,7f,1o,0r,1e,520,15,312,19,5z,7h,1o,0p,1f,520,15,311,1a,5y,7j,1n,0p,1f,51z,15,312,1a,5w,11,7l,1n,0o,1e,520,15,312,1b,5u,7o,1m,0o,1e,51z,16,312,1b,5t,12,7n,1n,0m,1e,51z,16,313,1c,5s,12,7o,1m,0m,1e,51y,17,313,1e,5p,12,71,11,7o,1m,0l,1d,51y,17,314,1h,5k,14,7q,1m,0l,1d,51x,18,314,1l,5e,16,7r,1l,0l,1c,51w,1a,313,116,7s,1k,0k,1d,518,46,5e,12,47,14,315,1k,67,1e,7t,1j,0k,1c,519,4a,16,4f,12,315,1h,6c,1b,7v,1j,0j,1c,518,4w,12,315,1f,6f,1a,7w,1i,0i,1c,518,11,4w,12,315,1e,6h,19,7x,1i,0h,1b,519,11,4v,12,316,1e,6i,18,7x,1j,0g,1b,519,12,4u,12,316,1d,6k,17,7y,1j,0f,1b,51a,13,4r,13,3p,11,3g,1c,6m,16,7y,1g,42,13,0c,1b,51b,16,4l,72,14,315,1d,6c,11,69,16,7y,1f,45,12,0b,1b,51c,1g,7e,12,3o,11,3g,1d,6c,13,68,15,7y,1d,48,12,0a,1b,51b,1f,7g,12,3o,11,3f,1d,6o,15,7y,1d,49,12,09,1b,51b,1f,7h,12,312,1e,6o,15,7y,1c,4a,12,09,1b,51a,15,7b,11,7h,11,312,1e,6o,14,710,1b,4b,12,08,1a,519,16,7u,11,312,1e,6n,15,73,11,710,17,4b,12,08,19,517,18,7w,312,1d,6o,15,715,16,4c,12,07,18,516,12,75,14,7v,312,1d,6n,16,715,16,4c,12,07,18,514,13,79,11,7v,11,312,1b,6m,18,75,11,7h,11,7h,16,4c,12,07,18,513,13,7b,11,7v,313,1a,6k,1b,7m,11,7h,16,4d,11,08,17,511,15,7c,11,7u,11,312,1a,6j,1c,714,16,4d,11,08,78,5x,17,718,11,312,1b,6g,1d,715,16,4d,11,08,78,5s,1c,7e,11,7u,11,311,1c,6c,1f,715,17,4d,11,08,79,5o,72,15,71h,11,3z,115,715,17,4d,11,09,78,5n,73,12,71k,12,3w,117,715,17,4d,12,08,78,5l,71s,11,3t,11a,714,18,4d,12,08,78,5k,71t,11,3o,11,31,11e,713,18,4c,12,21,08,78,5j,71u,11,3o,11,61,11f,711,19,4c,11,22,11,07,78,5j,71u,11,3n,63,11g,7z,1a,4c,11,23,11,07,78,5h,71v,11,3m,67,11e,7j,41,7e,1b,4a,12,24,07,78,5h,71v,12,3h,12,69,11g,71,11,7c,46,7b,1c,4a,11,25,11,06,7a,5f,71v,1k,69,11j,7a,49,78,1f,48,12,26,07,7a,5d,71w,1g,6c,11l,78,4a,77,1h,46,13,26,11,06,7d,59,7t,12,712,1d,6d,11u,4b,76,1j,43,14,28,07,7f,54,7r,14,713,1a,6f,11v,4c,74,1s,28,11,06,719,14,713,18,6g,11w,4c,73,1u,28,11,07,71a,12,713,11,62,12,6h,11y,4b,1y,29,07,71c,11,710,62,13,6g,120,4c,1y,29,08,729,15,6g,123,4c,18,44,1l,2a,11,08,726,63,11,6g,126,4c,17,46,1k,2a,11,09,71d,11,7p,6h,12b,4c,16,47,1k,2a,11,0a,7q,12,719,6e,11h,73,1v,4d,14,49,1i,2b,11,0b,7p,19,710,6c,11h,78,1v,4p,1i,2b,11,0c,7o,1e,7u,6b,11g,7a,1w,4p,1i,2b,11,0c,7o,1g,7r,69,11g,7a,11,74,1v,4o,1h,2c,11,0d,7n,1h,7p,69,11f,74,14,78,1x,4n,1h,2c,11,0e,7m,1j,7m,69,11e,74,11,73,11,78,1y,4n,1g,2d,0g,7l,1k,7l,62,11,65,11d,74,11,74,11,77,111,4m,1g,2d,0h,7k,11,78,1c,7j,62,11,64,11b,71,12,73,11,75,11,74,115,4m,1f,2e,0j,7t,1c,7g,62,11,64,114,79,14,77,11,71,119,4k,1f,2e,11,0k,7v,1b,7d,62,11,64,110,7d,11,7a,11d,4i,1f,2f,11,0m,7u,1c,7b,12,65,1x,7f,11,79,18,7a,1y,4g,1g,2f,0q,7c,12,7f,1c,78,12,65,1u,7r,17,7e,1y,4d,1h,2f,11,0u,7r,1d,71,15,65,1s,7s,16,7i,1z,47,1k,2g,11,0x,717,64,1r,7q,15,74,11,7j,11n,2i,11,010,72,11,715,1q,7a,11,79,11,74,14,7r,11m,2i,11,013,12,716,1l,73,11,76,12,76,1c,7t,11j,2l,11,015,12,716,1h,75,16,75,1d,7a,12,7k,11g,2o,11,017,12,715,1e,72,13,79,1d,710,11e,2q,11,01a,11,714,1a,73,12,79,1d,713,11c,2s,11,01c,12,712,16,75,11,79,1b,718,119,2u,11,01e,12,711,13,76,11,78,1a,71b,118,2v,01h,12,7z,12,76,11,78,18,71e,118,2v,01j,716,11,76,18,71g,118,2w,01m,712,11,75,17,71j,117,2x,01p,7x,11,74,18,71h,11b,2w,11,01r,7y,18,71k,119,2x,11,01r,7w,18,71j,11b,2y,01r,7v,18,71i,11d,2y,11,01r,7v,16,71i,11f,2y,01s,7u,15,71i,11h,2x,11,01r,7v,13,71i,11k,2w,01s,7v,12,71h,11o,2t,11,01s,7v,11,71h,11s,2p,11,01t,7u,12,71e,11z,2k,11,01u,7u,12,7n,12,7m,125,2f,12,01v,7t,13,7m,16,7a,12i,29,12,01x,7t,13,7j,12z,06,13,021,7s,14,7h,131,02b,7q,15,7f,133,02b,7p,17,7b,137,02a,7o,1a,75,13b,02b,7l,13s,02c,7i,13u,02c,12,7d,13x,02d,17,71,143,02e,149,02g,148,02h,146,02k,144,02m,141,02q,13x,02u,13t,02y,13p,032,13l,036,13h,03a,13d,03e,1j,03,12n,03k,15,0d,12l,043,12k,045,12i,046,12h,048,12g,048,12f,04a,12d,04c,12b,04f,128,04h,127,04h,126,04j,123,04l,122,04l,121,04n,1z,03,1y,04o,1z,04,1v,04q,1z,06,1r,04s,1y,0a,1m,04u,1y,0e,1f,04x,1y,05q,1x,05r,1x,05r,1x,02g';
-const COL: Record<number, string> = { 1: '#7d7466', 2: '#ee6b6f', 3: '#f9d780', 4: '#e58e76', 5: '#f69959', 6: '#a9b26f', 7: '#bb6fb2' };
+const COL: Record<number, string> = { 1: '#7d7466', 2: '#ee6b6f', 3: '#f9d780', 4: '#e58e76', 5: '#f69959', 6: '#a9b26f', 7: '#bb6fb2', 8: '#6fb3a8' };
+// sieć brzuszna uwagi (VAN), dorysowana do maski: TPJ na styku płata ciemieniowego i skroniowego (z szarego tła)
+// i kora brzuszno-czołowa nad bruzdą boczną (z szarego tła i brzegu sieci domyślnej); [u, v, promień u, promień v, etykiety do zamiany]
+const VAN = [[166, 91, 13, 8, [1]], [79, 79, 10, 7, [1, 7]]];
 const OSN = ['#8fa274', '#5f9a96', '#6585b0', '#8577b3'];
 const YN = [.56, .69, .82, .95];
 const hex = (h: string) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
@@ -303,7 +301,6 @@ const g = cv.getContext('2d')!, g2 = cv2.getContext('2d')!;
 let W = 0, H = 0, D = 1, MOB = false, SEC: any[] = [], LN: any = null, PETLA = false, HOVP = false, AKT = 0;
 const CICHO = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const P: any[] = [], CENT: Record<number, number[]> = {};
-let LEZJA = [150, 50];
 const rnd = (s: number) => () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
 const cl = (t: number) => Math.max(0, Math.min(1, t));
 const sm = (t: number) => t * t * (3 - 2 * t);
@@ -359,16 +356,6 @@ function st(k: string, p: any, lp: number) {
     const [bx, by, bw] = brain(p);
     if (net) { const [ix, iy] = wyspa(p.net, 0, 0, bw, 1); x = bx + ix; y = by + iy; a = AKT ? (p.net === AKT ? 1 : .38) : .9; s = AKT && p.net === AKT ? 1.25 : 1; }
     else { x = bx + (p.sx - .5) * 120; y = by + (p.sy - .5) * 120; a = .12; }
-  }
-  else if (k === 'zmiany') {
-    // uszkodzenie: punkty wokół ogniska szarzeją i rozstępują się, w miarę przewijania
-    [x, y] = brain(p); a = net ? .95 : .42;
-    const e = sm(cl((lp - .2) / .4)), du = p.u - LEZJA[0], dv = p.v - LEZJA[1], d = Math.hypot(du, dv), R0 = 30;
-    if (d < R0 && e > 0) {
-      const f = 1 - d / R0, bw = brain(p)[2];
-      x += du / (d || 1) * f * e * bw * .07; y += dv / (d || 1) * f * e * bw * .07;
-      a *= 1 - .7 * e * f; c = mix(p.col, GREY, e * Math.min(1, f * 1.8));
-    }
   }
   else if (k === 'zombie' || k === 'doswiadcza') { x = p.sx * W; y = p.sy * H; a = k === 'zombie' ? .14 : .22; }
   else if (k === 'ja') {
@@ -488,17 +475,20 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       const rr = czesc.getBoundingClientRect(), wx = rr.left + rr.width * .5, wy = rr.top + rr.height * .55;
       const x = rr.left + rr.width * .12, y = rr.top - rr.height * .55, d = Math.hypot(wx - x, wy - y);
       c = { id: 'czesc', tryb: 'lot', x, y, I: 1, ang: Math.atan2(wy - y, wx - x), len: d + rr.width * .6, half: Math.max(.2, Math.min(.75, Math.atan2(rr.width * .62, d))) };
-    } else if (S.k === 'sieci') {
-      // ogląda sieci po kolei, w rytmie, w jakim pojawiają się ich nazwy
+    } else if (S.k === 'sieci' || (S.k === 'pytanie' && SIECI_N)) {
+      // nazwa sieci formuje się z roju; iskra świeci na nią, przeciąga ją na sieć i ogląda sieć
       const wy = (A.k === 'sieci' ? 1 - t : 0) + (B.k === 'sieci' ? t : 0);
       const n = SIECI_L[Math.max(0, SIECI_N - 1)]; AKT = SIECI_N ? n : 0;
-      const [bx, by, bw] = brain({ u: CENT[n][0], v: CENT[n][1] });
-      const [cx0, cy0] = brain({ u: 120, v: 90 }), [ix, iy] = wyspa(n, bx, by, bw, wy);
-      const x = SIECI_N ? ix : cx0, y = SIECI_N ? iy : cy0, h = bw * .07 + 12;
-      c = { id: 'siec' + (SIECI_N ? n : 0), tryb: 'lot', x, y: y - h, I: SIECI_N ? .85 : .3, ang: Math.PI / 2 + Math.sin(now / 700) * .25, len: h + bw * .12, half: .55 };
-    } else if (S.k === 'zmiany') {
-      c = stoj(CEL.zmiany, 'zmiany');
-      if (c) { const [lx, ly, bw] = brain({ u: LEZJA[0], v: LEZJA[1] }); c.I = IS.kontakt ? .55 : 0; c.ang = Math.atan2(ly - c.y, lx - c.x); c.len = Math.hypot(lx - c.x, ly - c.y) + bw * .08; c.half = .13; }
+      const s = SIECI_N ? WS[n] : null;
+      if (s && s.t < 1250) {
+        const lead = s.iskraC, kx = s.fx + (s.lx - s.fx) * lead - s.w / 2 - 20, ky = s.fy + (s.ly - s.fy) * lead;
+        c = { id: 'slowo' + n, tryb: 'lot', x: kx, y: ky, I: s.t < 500 ? .9 : .5, ang: 0, len: s.w + 34, half: .32 };
+      } else {
+        const [bx, by, bw] = brain({ u: CENT[n][0], v: CENT[n][1] });
+        const [cx0, cy0] = brain({ u: 120, v: 90 }), [ix, iy] = wyspa(n, bx, by, bw, wy);
+        const x = SIECI_N ? ix : cx0, y = SIECI_N ? iy : cy0, h = bw * .07 + 12;
+        c = { id: 'siec' + (SIECI_N ? n : 0), tryb: 'lot', x, y: y - h, I: SIECI_N ? .85 : .3, ang: Math.PI / 2 + Math.sin(now / 700) * .25, len: h + bw * .12, half: .55 };
+      }
     } else if (S.k === 'zombie') {
       c = lz < .12 ? stoj(CEL.zombie, 'zombie') : stoj(dalej, 'dalej');
     } else if (S.k === 'osnowy') {
@@ -522,7 +512,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       : c.id === 'hura' ? { pd: 1.2, lid: 1, joy: 1 }
       : c.id === 'sol0' ? { pd: 1.2, lid: 1 }
       : c.id === 'sol3' ? { pd: 1.32, lid: 1 }
-      : c.id.startsWith('siec') ? { pd: 1.12, lid: 1 }
+      : c.id.startsWith('siec') || c.id.startsWith('slowo') ? { pd: 1.12, lid: 1 }
       : { pd: 1, lid: 1 };
   }
   return c;
@@ -754,23 +744,72 @@ function rysujIskre(A0: number) {
   g2.globalAlpha = A; g2.fillStyle = '#f0c060'; g2.beginPath(); g2.arc(IS.gx * maxo, IS.gy * maxo, pr, 0, 6.283); g2.fill();
   g2.restore();
 }
-// Sieć pojawia się, gdy wchodzi na ekran, nie wcześniej niż 1,1 s po poprzedniej; iskra ogląda ostatnią. Nauki pojawiają się co 0,9 s, raz.
+// Opis sieci pojawia się, gdy wchodzi na ekran, nie wcześniej niż 1,5 s po poprzednim; w tej samej chwili jej nazwa
+// formuje się z roju na mózgu. Nauki pojawiają się co 0,9 s, raz.
 let SIECI_N = 0, SIECI_T = 0, NAUKI_S = false;
 const SIECI_Q: HTMLElement[] = [];
 function pokazSiec() {
   const e = SIECI_Q.shift(); if (!e) return;
-  e.classList.add('in'); SIECI_N = sieciEl.indexOf(e) + 1; SIECI_T = performance.now(); kick();
-  if (SIECI_Q.length) setTimeout(pokazSiec, CICHO ? 0 : 1100);
+  e.classList.add('in'); SIECI_N = sieciEl.indexOf(e) + 1; SIECI_T = performance.now();
+  START[+e.dataset.n!] = CICHO ? SIECI_T - 5000 : SIECI_T; kick();
+  if (SIECI_Q.length) setTimeout(pokazSiec, CICHO ? 0 : 1500);
 }
 const ioS = new IntersectionObserver((es) => es.forEach((e) => {
   if (!e.isIntersecting) return;
   ioS.unobserve(e.target); SIECI_Q.push(e.target as HTMLElement); SIECI_Q.sort((a, b) => sieciEl.indexOf(a) - sieciEl.indexOf(b));
-  if (SIECI_Q.length === 1) setTimeout(pokazSiec, CICHO ? 0 : Math.max(0, SIECI_T + 1100 - performance.now()));
+  if (SIECI_Q.length === 1) setTimeout(pokazSiec, CICHO ? 0 : Math.max(0, SIECI_T + 1500 - performance.now()));
 }), { rootMargin: '0px 0px -12% 0px', threshold: 1 });
 sieciEl.forEach((e) => ioS.observe(e));
 function startNauki() {
   if (NAUKI_S) return; NAUKI_S = true;
   naukiEl.forEach((e, i) => setTimeout(() => e.classList.add('in'), CICHO ? 0 : 400 + i * 900));
+}
+// Nazwy sieci z roju: szare punkty układają się w litery nazwy obok sieci, iskra przeciąga słowo na sieć,
+// punkty wracają do roju, a nazwa zostaje na mózgu.
+const NAZWY: Record<number, string> = {}; sieciEl.forEach((e) => { NAZWY[+e.dataset.n!] = e.dataset.nazwa!; });
+const SLOWO: Record<number, any> = {}, START: Record<number, number> = {}, WS: Record<number, any> = {};
+const JASNY = hex('#ece6da'), kolT = $('.roj-sieci');
+function litery(t: string, fs: number) {
+  const cn = document.createElement('canvas'), x = cn.getContext('2d')!, font = '700 ' + fs + 'px Inter, sans-serif';
+  x.font = font; const w = Math.ceil(x.measureText(t).width) + 4, h = Math.ceil(fs * 1.3);
+  cn.width = w; cn.height = h; x.font = font; x.fillStyle = '#fff'; x.textBaseline = 'middle'; x.fillText(t, 2, h / 2);
+  // próg przezroczystości: szum, który Safari dodaje do odczytu płótna, go nie przekracza
+  const d = x.getImageData(0, 0, w, h).data, pts: number[][] = [];
+  for (let yy = 0; yy < h; yy += 2) for (let xx = 0; xx < w; xx += 2) if (d[(yy * w + xx) * 4 + 3] > 140) pts.push([xx - w / 2, yy - h / 2]);
+  return { pts, w, h };
+}
+function przygotujSlowa() {
+  if (SLOWO[SIECI_L[0]]) return;
+  // słowa formują się po kolei, więc kolejne biorą punkty na zmianę z dwóch połówek szarego tła
+  const szare = P.filter((p) => p.net === 1), pule = [szare.filter((_, i) => i % 2 === 0), szare.filter((_, i) => i % 2 === 1)];
+  SIECI_L.forEach((n, j) => {
+    const pula = pule[j % 2], L = litery(NAZWY[n], MOB ? 16 : 24); let pts = L.pts;
+    if (pts.length > pula.length) { const co = pts.length / pula.length; pts = Array.from({ length: pula.length }, (_, i) => L.pts[Math.floor(i * co)]); }
+    SLOWO[n] = { pts, w: L.w, h: L.h };
+    pts.forEach((_, i) => { const p = pula[i]; (p.sl = p.sl || []).push([n, i]); });
+  });
+}
+function slowoStan(n: number, now: number, wy: number, textR: number) {
+  if (!START[n] || !CENT[n]) return null;
+  const t = now - START[n], w = SLOWO[n] ? SLOWO[n].w : NAZWY[n].length * 10;
+  const [bx, by, bw] = brain({ u: CENT[n][0], v: CENT[n][1] }), [ix, iy] = wyspa(n, bx, by, bw, wy);
+  // słowo rodzi się nad swoją siecią, poza kolumną tekstu, a kończy na sieci
+  const lewo = MOB ? 8 : textR + 16;
+  const fx = Math.max(lewo + w / 2, Math.min(W - w / 2 - 8, ix)), fy = Math.max(H * .1, iy - bw * .2);
+  const lx = Math.max(w / 2 + 6, Math.min(W - w / 2 - 6, ix)), ly = iy;
+  const ciag = sm(cl((t - 550) / 700)), iskraC = sm(cl((t - 450) / 650));
+  return { t, w, fx, fy, lx, ly, ciag, iskraC, ax: fx + (lx - fx) * ciag, ay: fy + (ly - fy) * ciag,
+    forma: t < 500 ? sm(t / 500) : 1 - sm(cl((t - 1250) / 450)), etykieta: sm(cl((t - 1150) / 400)) };
+}
+// nazwy na mózgu nie nachodzą na siebie: każda kolejna zsuwa się w dół, aż znajdzie wolne miejsce
+function rozsun() {
+  const k = (MOB ? 11 : 13) / (MOB ? 16 : 24), stoja: any[] = [];
+  for (const n of SIECI_L) {
+    const s = WS[n]; if (!s) continue;
+    const sz = s.w * k;
+    for (let i = 0; i < 12 && stoja.some((o) => Math.abs(o.lx - s.lx) < (o.sz + sz) / 2 + 4 && Math.abs(o.ly - s.ly) < 15); i++) s.ly += 16;
+    s.ax = s.fx + (s.lx - s.fx) * s.ciag; s.ay = s.fy + (s.ly - s.fy) * s.ciag; s.sz = sz; stoja.push(s);
+  }
 }
 function kick() { if (!PETLA) { PETLA = true; requestAnimationFrame(() => { PETLA = false; frame(); }); } }
 function frame() {
@@ -792,6 +831,11 @@ function frame() {
   solKlasy(now);
   if (LN.rtop < H * .25) startNauki();
   AKT = 0;
+  const wI = (A.k === 'sieci' ? 1 - t : 0) + (B.k === 'sieci' ? t : 0), textR = kolT.getBoundingClientRect().right;
+  const wS = cl(wI + (A.k === 'pytanie' ? 1 - t : 0) + (B.k === 'pytanie' ? t : 0));
+  let slowaRuch = false;
+  for (const n of SIECI_L) { WS[n] = slowoStan(n, now, wI, textR); if (WS[n] && WS[n].t < 1800) slowaRuch = true; }
+  rozsun();
   const c = cel(A, B, t, lpA, lpB, now, lz);
   if (c) { krok(dt, c, now); wiazka(dt, c, now); oko(dt, c, now); }
   const wid = !!c && !IS.dom;
@@ -801,6 +845,15 @@ function frame() {
   for (const p of P) {
     const s1 = st(A.k, p, lpA), s2 = t > 0 ? st(B.k, p, lpB) : s1, q = cl(t * 1.35 - p.d * .35);
     let x = s1[0] + (s2[0] - s1[0]) * q, y = s1[1] + (s2[1] - s1[1]) * q, al = s1[2] + (s2[2] - s1[2]) * q, sz = s1[4] + (s2[4] - s1[4]) * q;
+    let kol = [0, 1, 2].map((k) => s1[3][k] + (s2[3][k] - s1[3][k]) * q);
+    let lit = 0;
+    if (p.sl && wS > .02) for (const [n, gi] of p.sl) {
+      const sw = WS[n]; if (!sw || sw.forma <= 0) continue;
+      // punkt w literze nazwy sieci: jasny przy formowaniu, w kolorze sieci, gdy iskra ciągnie słowo
+      const f = sw.forma * wS, gp = SLOWO[n].pts[gi];
+      x += (sw.ax + gp[0] - x) * f; y += (sw.ay + gp[1] - y) * f; al += (.95 - al) * f;
+      kol = mix(kol, mix(JASNY, hex(COL[n]), sw.ciag), f); lit = f; break;
+    }
     if (al < .02 || y < -20 || y > H + 20) continue;
     if (wid) {
       // rój reaguje na iskrę: punkty w snopie jaśnieją, bliskie się rozstępują
@@ -811,9 +864,16 @@ function frame() {
         if (da < IS.bhalf) { const L = IS.bi * Math.sqrt(1 - d / IS.blen) * (1 - da / IS.bhalf); al = Math.min(1, al + L * .85); sz *= 1 + L * .7; }
       }
     }
-    const c1 = s1[3], c2 = s2[3], r = p.s * (p.net > 1 ? 2.1 : 1.6) * sz, ang = p.a + q * 1.5;
-    g.globalAlpha = al; g.strokeStyle = 'rgb(' + [0, 1, 2].map((k) => Math.round(c1[k] + (c2[k] - c1[k]) * q)).join(',') + ')';
+    const r = p.s * (p.net > 1 ? 2.1 : 1.6) * sz, ang = p.a + q * 1.5;
+    if (lit > .4) { g.globalAlpha = al; g.fillStyle = 'rgb(' + kol.map(Math.round).join(',') + ')'; g.fillRect(x - .9, y - .9, 1.8, 1.8); continue; }
+    g.globalAlpha = al; g.strokeStyle = 'rgb(' + kol.map(Math.round).join(',') + ')';
     g.beginPath(); g.moveTo(x + r * Math.cos(ang), y + r * Math.sin(ang)); g.lineTo(x + r * Math.cos(ang + 2.09), y + r * Math.sin(ang + 2.09)); g.lineTo(x + r * Math.cos(ang + 4.19), y + r * Math.sin(ang + 4.19)); g.closePath(); g.stroke();
+  }
+  // nazwy sieci na mózgu, gdy słowo dotrze na swoją sieć
+  if (wS > .02) {
+    g.globalCompositeOperation = 'source-over'; g.font = '500 ' + (MOB ? 11 : 13) + 'px Inter, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+    for (const n of SIECI_L) { const s = WS[n]; if (!s || s.etykieta <= 0) continue;
+      g.globalAlpha = s.etykieta * wS; g.lineWidth = 4; g.strokeStyle = 'rgba(0,0,0,.85)'; g.strokeText(NAZWY[n], s.lx, s.ly); g.fillStyle = COL[n]; g.fillText(NAZWY[n], s.lx, s.ly); }
   }
   // osnowy: tor jedzie w bok, nazwy osnów jadą po niciach do strefy Płótna; po osnowach nici zostają, jak są
   tor.style.transform = 'translateX(' + LN.off + 'px)';
@@ -842,7 +902,7 @@ function frame() {
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
   const iskraRuch = !!c && !CICHO && (!!c.slizg || !!c.hura || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
     || !IS.dom && (Math.hypot(IS.vx, IS.vy) > 6 || Math.hypot(c.x - IS.x, c.y - IS.y) > .8 || (c.tryb === 'stoj' && !IS.kontakt))
-    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || (c.id === 'sieci' || c.id.startsWith('siec'))
+    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || c.id.startsWith('siec') || slowaRuch
     || (!IS.dom && (now - IS.mrug < 170 || IS.zdz > .02 || Math.abs(IS.pd - ((c.mood && c.mood.pd) || 1)) > .01 || Math.abs(IS.lid - ((c.mood && c.mood.lid) || 1)) > .01
       || Math.abs(IS.joy - ((c.mood && c.mood.joy) || 0) * (1 - .35 * WSTECZ)) > .01 || Math.abs(IS.lean) > .005 || WSTECZ > .01))
     );
@@ -855,6 +915,7 @@ function frame() {
     if (v > 0) for (let q = ix; q < ix + n; q++) cells.push([q % 240, (q / 240) | 0, v]);
     ix += n;
   }
+  for (const cc of cells) for (const [u0, v0, ru, rv, z] of VAN as any[]) if (z.includes(cc[2]) && ((cc[0] - u0) / ru) ** 2 + ((cc[1] - v0) / rv) ** 2 <= 1) cc[2] = 8;
   const r = rnd(7);
   for (let k = 0, NP = innerWidth < 760 ? 3600 : 6200; k < NP; k++) {
     let cc; do { cc = cells[(r() * cells.length) | 0]; } while (cc[2] === 1 && r() > .4);
@@ -865,8 +926,8 @@ function frame() {
   const cs: Record<number, number[]> = {};
   for (const p of P) if (p.net > 1) { cs[p.net] = cs[p.net] || [0, 0, 0]; cs[p.net][0] += p.u; cs[p.net][1] += p.v; cs[p.net][2]++; }
   for (const k in cs) CENT[k] = [cs[k][0] / cs[k][2], cs[k][1] / cs[k][2]];
-  if (CENT[4]) LEZJA = CENT[4];
   size(); frame();
+  document.fonts.ready.then(() => { przygotujSlowa(); kick(); });
 }
 let tk = false;
 addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(() => { frame(); tk = false; }); } }, { passive: true });
