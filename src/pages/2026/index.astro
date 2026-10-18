@@ -14,6 +14,11 @@ const clsOf = (s) => s.cls.endsWith('intro') ? 'i' : 'n';
 <Base title="Rocznik 2026 · kogni.pl" activePage="plotno" rocznik="2026" description="Rocznik 2026: zajęcia z kognitywistyki na Uniwersytecie w Białymstoku w roku 2026/27, wątek po wątku, karta po karcie.">
 <h1 class="sr-only">Rocznik 2026</h1>
 
+<section aria-labelledby="plotno">
+  <h2 class="sr-only" id="plotno">Płótno: cały rok, zajęcia na osnowach</h2>
+  <div class="start-plotno"><Board view="plotno" /></div>
+</section>
+
 <section class="start-latest" aria-labelledby="ostatnie">
   <div class="start-latest-head">
     <div>
@@ -32,13 +37,5 @@ const clsOf = (s) => s.cls.endsWith('intro') ? 'i' : 'n';
       </a>
     ))}
   </div>
-</section>
-
-<section aria-labelledby="plotno">
-  <div class="start-plotno-head">
-    <p class="section-label">Płótno</p>
-    <h2 class="section-title" id="plotno">Cały rok: zajęcia na osnowach</h2>
-  </div>
-  <div class="start-plotno"><Board view="plotno" /></div>
 </section>
 </Base>
