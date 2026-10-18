@@ -838,19 +838,27 @@ function frame() {
   }
   if (LN.rtop < H && LN.rbot > 0) {
     // mnisi idą po swoich osnowach, świeca każdego świeci przed nim i oświetla słowa, które wjeżdżają na ekran;
-    // na końcu mnisi podbiegają do Płótna, a słowa tłoczą się przy jego krawędzi: chcą wejść i czekają na kliknięcie
-    const pC = cl((LN.pr - .8) / .16), idzie = Math.abs(scrollY - MN_Y) > .5, zr = W - zw, wiazki: any[] = [];
+    // na końcu słowa tłoczą się przy prawej krawędzi ekranu, częściowo już za nią: chcą przejść i czekają na kliknięcie;
+    // mnisi stoją tuż za nimi
+    const pC = cl((LN.pr - .8) / .16), idzie = Math.abs(scrollY - MN_Y) > .5, wiazki: any[] = [];
     const pu = PUSZCZ ? sm(cl((now - PUSZCZ) / 550)) : 0;
     if (!SZER_MAX) SZER_MAX = Math.max(...slowaO.map((w) => w.offsetWidth));
     MN_Y = scrollY; if (idzie) MN_KROK += dt * 9;
+    // miejsca słów w grupie: prawy brzeg za krawędzią ekranu o 15 do 40% długości słowa
+    const cele = slowaO.map((w, i) => {
+      const ww = w.offsetWidth, za = .15 + (i * 37 % 26) / 100;
+      return { ww, tx: W + za * ww - ww / 2, ty: LN.top + H * .14 + i * (H * .74 / slowaO.length), lewo: W + za * ww - ww };
+    });
     mnisi.forEach((m, k) => {
-      const bieg = sm(cl(pC * 1.25 - k * .08)), x0 = m.offsetLeft, hg = m.offsetHeight, wd = hg * 100 / 222;
-      const cel = zr - SZER_MAX - 30 - wd - k * 8, dx = bieg * (cel - x0) + pu * (W + 40 - cel);
+      const bieg = sm(cl(pC * 1.25 - k * .08)), x0 = m.offsetLeft, hg = m.offsetHeight, wd = hg * 100 / 222, yn = LN.y[k];
+      let L = W - SZER_MAX * .75;
+      for (const c of cele) if (c.ty > yn - hg - 8 && c.ty < yn + 8) L = Math.min(L, c.lewo);
+      const cel = L - 6 - wd, dx = bieg * (cel - x0) + pu * (W + 40 - cel);
       const bob = Math.abs(Math.sin(MN_KROK + k * 1.3)) * ((bieg > 0 && bieg < 1) || pu > 0 ? 6 : idzie ? 2.5 : 0);
       if ((bieg > 0 && bieg < 1) || pu > 0) MN_KROK += dt * 2;
       m.style.transform = 'translate(' + dx.toFixed(1) + 'px,' + (-bob).toFixed(1) + 'px) rotate(' + ((bieg > 0 && bieg < 1) || pu > 0 ? 8 : 0) + 'deg)';
-      const o = 1 - cl((x0 + dx - zr) / (zw * .45)); m.style.opacity = o.toFixed(3);
-      wiazki.push({ x: x0 + dx + wd * .66, y: LN.top + m.offsetTop - bob + hg * 86 / 222, k, a: -.12 + Math.sin(SEK * .7 + k) * .08, len: W * .26, half: .3, o });
+      const o = 1 - cl((x0 + dx - W) / wd); m.style.opacity = o.toFixed(3);
+      wiazki.push({ x: x0 + dx + wd * .66, y: LN.top + m.offsetTop - bob + hg * 86 / 222, k, a: -.12 + Math.sin(SEK * .7 + k) * .08, len: W * .26, half: .3, o: o * (1 - bieg * .5) });
     });
     g2.globalCompositeOperation = 'lighter'; g2.globalAlpha = 1;
     for (const b of wiazki) {
@@ -859,13 +867,12 @@ function frame() {
       g2.fillStyle = gr; g2.beginPath(); g2.moveTo(b.x, b.y); g2.arc(b.x, b.y, b.len, b.a - b.half, b.a + b.half); g2.closePath(); g2.fill();
     }
     slowaO.forEach((w, i) => {
-      const x0 = w.offsetLeft + LN.off, y0 = LN.top + w.offsetTop + 8, ww = w.offsetWidth;
+      const x0 = w.offsetLeft + LN.off, y0 = LN.top + w.offsetTop + 8, { tx, ty } = cele[i];
       const e = sm(cl(pC * 1.3 - (i % 7) * .045)), u = e > .97;
-      // miejsce w grupie przy krawędzi Płótna; kto stoi przy krawędzi, napiera na nią
-      const tx = zr - 10 - ww / 2 - (i * 37 % 50), ty = LN.top + H * .14 + i * (H * .74 / slowaO.length);
+      // kto stoi przy krawędzi, napiera na nią
       const pcha = u && !pu ? Math.max(0, Math.sin(SEK * 2.6 + i * .9)) * 6 : 0;
       const gx = (tx - x0) * e + pcha + pu * (W + 80 - tx), gy = (ty - y0) * e;
-      const o = cl((W * .96 - x0 - (tx - x0) * e) / (W * .14)) * (1 - cl((pu - .5) / .5));
+      const o = Math.max(e, cl((W * .96 - x0) / (W * .14))) * (1 - cl((pu - .5) / .5));
       w.style.transform = 'translate(calc(-50% + ' + gx.toFixed(1) + 'px),' + gy.toFixed(1) + 'px)'; w.style.opacity = o.toFixed(3);
       w.classList.toggle('u-plotna', u);
       const wx = x0 + gx, wy = y0 + gy;
