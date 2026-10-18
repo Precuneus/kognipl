@@ -8,7 +8,7 @@ const WIKI = Object.keys(import.meta.glob('./wiki/**/*.astro')).length > 0 ? '/w
 const md = (t) => t.replace(/\{\{([^}|]+)(?:\|([^}]+))?\}\}/g, (_, w, k) => '<span class="iskra-cel' + (k ? ' ' + k : '') + '">' + w + '</span>');
 const T = {
   pytanie: 'Czym jest to, czego {{doświadczasz}}?',
-  zmiany: 'Zmiany struktury mózgu (np. degeneracje, lezje, uszkodzenia) i zmiany funkcjonowania struktur między sobą (np. substancje psychoaktywne, uzależnienia, nauka, rozwój) zmieniają czego doświadczam.',
+  zmiany: 'Zmiany struktury mózgu (np. degeneracje, lezje, uszkodzenia) i zmiany funkcjonowania struktur między sobą (np. substancje psychoaktywne, uzależnienia, nauka, rozwój) zmieniają, czego doświadczasz.',
   zombie: ['Jesteś człowiekiem, prawda? Czy {{zombie}}?', 'Założę, że człowiekiem i też doświadczasz, jak ja. Ale nie mogę tego wiedzieć.'],
   wiem: ['Wiem tylko tyle, ile się nauczyłem od {{środowiska}}, w którym się urodziłem.', 'Doświadczam Modeli Mentalnych, które jednocześnie są moją aktywnością biologiczną.'],
   ja: ['Ale... "{{ja}}" to też Model Mentalny', 'Model "ja" zmienia się w czasie,  Zmienia się płynnie (nauka, dryfowanie) i gwałtownie (szok, przeskok). "Ja" to Statek Tezeusza strukturalnie i funkcjonalnie połączonych komórek.'],

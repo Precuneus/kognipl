@@ -1,17 +1,28 @@
 import { DCLogic } from '../engine.js';
 
-export const template = "<div style=\"max-width: 1360px; margin: 0 auto; padding: 40px 40px 72px\">\n    <div style=\"min-width: 0\">\n      <div style=\"overflow-x: auto; padding-bottom: 8px\">\n        <div style=\"{{gridStyle}}\">\n          <sc-for list=\"{{cols}}\" as=\"c\" hint-placeholder-count=\"5\">\n            <div style=\"{{c.headStyle}}\">\n              <div style=\"{{c.courseStyle}}\">{{c.course}}</div>\n              <div style=\"{{c.dateStyle}}\">{{c.short}}</div>\n            </div>\n            <sc-if value=\"{{c.future}}\" hint-placeholder-val=\"{{false}}\">\n              <div style=\"{{c.boxStyle}}\"></div>\n            </sc-if>\n          </sc-for>\n          <sc-for list=\"{{bands}}\" as=\"b\" hint-placeholder-count=\"5\">\n            <div style=\"{{b.nameStyle}}\">{{b.label}}</div>\n            <span aria-hidden=\"true\" style=\"{{b.railStyle}}\"></span>\n          </sc-for>\n          <sc-for list=\"{{rows}}\" as=\"r\" hint-placeholder-count=\"19\">\n            <div style=\"{{r.style}}\">\n              <span style=\"{{r.labelStyle}}\">{{r.name}}</span>\n            </div>\n            <span aria-hidden=\"true\" style=\"{{r.warpStyle}}\"></span>\n          </sc-for>\n          <sc-for list=\"{{halos}}\" as=\"hl\" hint-placeholder-count=\"20\">\n            <span aria-hidden=\"true\" style=\"{{hl.style}}\"></span>\n          </sc-for>\n          <sc-for list=\"{{threads}}\" as=\"t\" hint-placeholder-count=\"2\">\n            <span aria-hidden=\"true\" style=\"{{t.style}}\"></span>\n          </sc-for>\n          <sc-for list=\"{{unders}}\" as=\"u\" hint-placeholder-count=\"16\">\n            <span aria-hidden=\"true\" style=\"{{u.shadowStyle}}\"></span>\n            <span aria-hidden=\"true\" style=\"{{u.patchStyle}}\"></span>\n          </sc-for>\n          <sc-if value=\"{{pop.open}}\" hint-placeholder-val=\"{{true}}\">\n            <button type=\"button\" aria-label=\"Zamknij\" onClick=\"{{pop.close}}\" style=\"position: fixed; inset: 0; z-index: 5; margin: 0; padding: 0; border: 0; background: transparent; cursor: default\"></button>\n          </sc-if>\n          <sc-for list=\"{{knots}}\" as=\"k\" hint-placeholder-count=\"20\">\n            <button type=\"button\" class=\"knot\" aria-label=\"{{k.label}}\" aria-expanded=\"{{k.pressed}}\" onClick=\"{{k.pick}}\" style=\"{{k.style}}\"><span style=\"{{k.dot}}\"></span></button>\n          </sc-for>\n          <sc-if value=\"{{pop.open}}\" hint-placeholder-val=\"{{true}}\">\n            <span aria-hidden=\"true\" style=\"{{pop.b1}}\"></span>\n            <span aria-hidden=\"true\" style=\"{{pop.b2}}\"></span>\n            <div role=\"dialog\" aria-label=\"{{pop.title}}\" style=\"{{pop.style}}\">\n              <h2 style=\"margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 25px; line-height: 1.15; color: #e2ddd4\">{{pop.title}}</h2>\n              <p style=\"margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: #e2ddd4\">{{pop.desc}}</p>\n              <div style=\"display: flex; justify-content: flex-end; margin-top: 6px\">\n                <a class=\"enter\" href=\"{{pop.url}}\" aria-label=\"Cała karta\" title=\"Cała karta\" style=\"display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(232,168,76,0.45); color: #e8a84c; text-decoration: none\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"6\" cy=\"4\" r=\"2\" fill=\"currentColor\" stroke=\"none\"></circle><path d=\"M6 7 V12 Q6 16 10 16 H18\"></path><path d=\"M14.5 12.5 L18 16 L14.5 19.5\"></path></svg></a>\n              </div>\n            </div>\n          </sc-if>\n        </div>\n      </div>\n    </div>\n  </div>";
+export const template = "<div style=\"max-width: 1360px; margin: 0 auto; padding: 40px 40px 72px\">\n    <div style=\"min-width: 0\">\n      <div style=\"overflow-x: auto; padding-bottom: 8px\">\n        <div style=\"{{gridStyle}}\">\n          <sc-for list=\"{{cols}}\" as=\"c\" hint-placeholder-count=\"5\">\n            <div style=\"{{c.headStyle}}\">\n              <div style=\"{{c.courseStyle}}\">{{c.course}}</div>\n              <div style=\"{{c.dateStyle}}\">{{c.short}}</div>\n            </div>\n            <sc-if value=\"{{c.future}}\" hint-placeholder-val=\"{{false}}\">\n              <div style=\"{{c.boxStyle}}\"></div>\n            </sc-if>\n          </sc-for>\n          <sc-for list=\"{{bands}}\" as=\"b\" hint-placeholder-count=\"5\">\n            <div style=\"{{b.nameStyle}}\">{{b.label}}</div>\n            <span aria-hidden=\"true\" style=\"{{b.railStyle}}\"></span>\n          </sc-for>\n          <sc-for list=\"{{rows}}\" as=\"r\" hint-placeholder-count=\"19\">\n            <div style=\"{{r.style}}\">\n              <button type=\"button\" class=\"osn-name\" aria-expanded=\"{{r.on}}\" onClick=\"{{r.toggle}}\" style=\"{{r.labelStyle}}\">{{r.name}}</button>\n            </div>\n            <span aria-hidden=\"true\" style=\"{{r.warpStyle}}\"></span>\n            <sc-if value=\"{{r.on}}\" hint-placeholder-val=\"{{false}}\">\n              <span aria-hidden=\"true\" style=\"{{r.bandStyle}}\"></span>\n              <div data-band=\"{{r.idx}}\" style=\"{{r.descStyle}}\">\n                <p style=\"margin: 0; font-size: 13.5px; line-height: 1.55; color: #a09888\">{{r.def}}</p>\n                <div style=\"display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px\">\n                  <sc-for list=\"{{r.r2}}\" as=\"t\" hint-placeholder-count=\"3\">\n                    <span style=\"{{t.style}}\">{{t.name}}</span>\n                  </sc-for>\n                </div>\n              </div>\n              <div data-band=\"{{r.idx}}\" style=\"{{r.cardsStyle}}\">\n                <sc-for list=\"{{r.cards}}\" as=\"k\" hint-placeholder-count=\"2\">\n                  <article style=\"{{k.style}}\">\n                    <p style=\"{{k.kickStyle}}\">{{k.kicker}}</p>\n                    <h3 style=\"margin: 4px 0 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 21px; line-height: 1.15; color: #e2ddd4\">{{k.h}}</h3>\n                    <p style=\"margin: 7px 0 0; font-size: 13.5px; line-height: 1.55; color: #e2ddd4\">{{k.d}}</p>\n                    <div style=\"display: flex; justify-content: flex-end; margin-top: 6px\">\n                      <a class=\"enter\" href=\"{{k.url}}\" aria-label=\"Cała karta\" title=\"Cała karta\" style=\"display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(232,168,76,0.45); color: #e8a84c; text-decoration: none\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"6\" cy=\"4\" r=\"2\" fill=\"currentColor\" stroke=\"none\"></circle><path d=\"M6 7 V12 Q6 16 10 16 H18\"></path><path d=\"M14.5 12.5 L18 16 L14.5 19.5\"></path></svg></a>\n                    </div>\n                  </article>\n                </sc-for>\n              </div>\n            </sc-if>\n          </sc-for>\n          <sc-for list=\"{{halos}}\" as=\"hl\" hint-placeholder-count=\"20\">\n            <span aria-hidden=\"true\" style=\"{{hl.style}}\"></span>\n          </sc-for>\n          <sc-for list=\"{{threads}}\" as=\"t\" hint-placeholder-count=\"2\">\n            <span aria-hidden=\"true\" style=\"{{t.style}}\"></span>\n          </sc-for>\n          <sc-for list=\"{{unders}}\" as=\"u\" hint-placeholder-count=\"16\">\n            <span aria-hidden=\"true\" style=\"{{u.shadowStyle}}\"></span>\n            <span aria-hidden=\"true\" style=\"{{u.patchStyle}}\"></span>\n          </sc-for>\n          <sc-if value=\"{{pop.open}}\" hint-placeholder-val=\"{{true}}\">\n            <button type=\"button\" aria-label=\"Zamknij\" onClick=\"{{pop.close}}\" style=\"position: fixed; inset: 0; z-index: 5; margin: 0; padding: 0; border: 0; background: transparent; cursor: default\"></button>\n          </sc-if>\n          <sc-for list=\"{{knots}}\" as=\"k\" hint-placeholder-count=\"20\">\n            <button type=\"button\" class=\"knot\" aria-label=\"{{k.label}}\" aria-expanded=\"{{k.pressed}}\" onClick=\"{{k.pick}}\" style=\"{{k.style}}\"><span style=\"{{k.dot}}\"></span></button>\n          </sc-for>\n          <sc-if value=\"{{pop.open}}\" hint-placeholder-val=\"{{true}}\">\n            <span aria-hidden=\"true\" style=\"{{pop.b1}}\"></span>\n            <span aria-hidden=\"true\" style=\"{{pop.b2}}\"></span>\n            <div role=\"dialog\" aria-label=\"{{pop.title}}\" style=\"{{pop.style}}\">\n              <h2 style=\"margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 25px; line-height: 1.15; color: #e2ddd4\">{{pop.title}}</h2>\n              <p style=\"margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: #e2ddd4\">{{pop.desc}}</p>\n              <div style=\"display: flex; justify-content: flex-end; margin-top: 6px\">\n                <a class=\"enter\" href=\"{{pop.url}}\" aria-label=\"Cała karta\" title=\"Cała karta\" style=\"display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(232,168,76,0.45); color: #e8a84c; text-decoration: none\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"6\" cy=\"4\" r=\"2\" fill=\"currentColor\" stroke=\"none\"></circle><path d=\"M6 7 V12 Q6 16 10 16 H18\"></path><path d=\"M14.5 12.5 L18 16 L14.5 19.5\"></path></svg></a>\n              </div>\n            </div>\n          </sc-if>\n        </div>\n      </div>\n    </div>\n  </div>";
 
 export class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { f: "all", sel: null };
+    this.state = { f: "all", sel: null, on: props.on || [] };
+    this.hb = {};
+    if (typeof document !== "undefined" && document.fonts) document.fonts.ready.then(() => { if (this._redraw) this._redraw(); });
   }
   D() {
     return this.props.data;
   }
+  afterDraw() {
+    if (!this.el) return;
+    const hb = {};
+    this.el.querySelectorAll("[data-band]").forEach((b) => { const i = b.getAttribute("data-band"); hb[i] = Math.max(hb[i] || 0, Math.ceil(b.offsetHeight) + 22); });
+    let moved = false;
+    for (const i in hb) if (this.hb[i] !== hb[i]) { this.hb[i] = hb[i]; moved = true; }
+    if (moved) this._redraw();
+  }
   renderVals() {
-    const { OS, BAND, GN, LV, CL, SP, CN } = this.D();
+    const { OS, OP, BAND, GN, LV, CL, SP, CN } = this.D();
+    const on = new Set(this.state.on);
     const f = this.state.f;
     const sel = this.state.sel;
     const COL = { i: "#f0c060", n: "#edbbc5" };
@@ -26,18 +37,23 @@ export class Component extends DCLogic {
       { ink: "#b4aada", on: { hi: "#d6cfec", base: "#8577b3", dark: "#251f35" }, off: { hi: "#8f88aa", base: "#584f77", dark: "#1a1626" } }
     ];
     const GL = ["213,224,194", "194,226,222", "200,214,236", "214,207,236"];
-    const X0 = 382, CW = 96, Y0 = 64, RH = 40, W = 862, LX = 122;
+    const X0 = 382, CW = 96, Y0 = 64, RH = 40, W = X0 + CL.length * CW, LX = 122, KW = 227;
     const BG = 10;
     const rowY = [], rowG = [], bands = [];
     let yc = Y0;
+    const bandH = [];
     BAND.forEach((cnt, b) => {
       const g = GR[b];
+      const top = yc;
+      for (let k = 0; k < cnt; k++) {
+        const i = rowY.length, h = on.has(OS[i]) ? (this.hb[i] || 160) : 0;
+        rowY.push(yc); rowG.push(b); bandH.push(h); yc += RH + h;
+      }
       bands.push({
         label: GN[b],
-        nameStyle: "position:absolute;left:0;top:" + (yc + 6) + "px;width:104px;padding-right:12px;box-sizing:border-box;text-align:right;font-size:11px;line-height:14px;letter-spacing:0.06em;text-transform:uppercase;color:" + g.ink,
-        railStyle: "position:absolute;left:108px;top:" + (yc + 6) + "px;width:6px;height:" + (cnt * RH - 12) + "px;border-radius:3px;background:linear-gradient(to right," + g.on.base + " 0%," + g.on.hi + " 30%," + g.on.base + " 60%," + g.on.dark + " 100%);box-shadow:1px 1px 3px rgba(0,0,0,0.6)"
+        nameStyle: "position:absolute;left:0;top:" + (top + 6) + "px;width:104px;padding-right:12px;box-sizing:border-box;text-align:right;font-size:11px;line-height:14px;letter-spacing:0.06em;text-transform:uppercase;color:" + g.ink,
+        railStyle: "position:absolute;left:108px;top:" + (top + 6) + "px;width:6px;height:" + (yc - top - 12) + "px;border-radius:3px;background:linear-gradient(to right," + g.on.base + " 0%," + g.on.hi + " 30%," + g.on.base + " 60%," + g.on.dark + " 100%);box-shadow:1px 1px 3px rgba(0,0,0,0.6)"
       });
-      for (let k = 0; k < cnt; k++) { rowY.push(yc); rowG.push(b); yc += RH; }
       yc += BG;
     });
     const YA = 46, YB = yc - BG;
@@ -84,10 +100,22 @@ export class Component extends DCLogic {
       });
       shade.push("rgba(0,0,0,0.14) 100%");
       const mask = "linear-gradient(to right,transparent 0px,#000 14px,#000 calc(100% - 14px),transparent 100%)";
+      const isOn = on.has(n), bt = rowY[i] + RH, ink = GR[rowG[i]].ink;
       return {
-        name: n,
+        name: n, idx: i, on: isOn,
+        toggle: () => { const nn = new Set(this.state.on); if (nn.has(n)) nn.delete(n); else nn.add(n); this.setState({ on: OS.filter((x) => nn.has(x)) }); },
+        def: "Co mierzy: " + OP[i][0].charAt(0).toLowerCase() + OP[i][0].slice(1),
+        r2: OP[i][1].map((t) => ({ name: t, style: "font-size:12.5px;line-height:1.5;padding:2px 10px;border-radius:999px;border:1px solid " + ink + "66;color:#cfc8bb" })),
+        cards: SP.filter((s) => s.o === n && vis(clsOf(s.cls).c)).map((s) => { const c = clsOf(s.cls); return {
+          h: s.h, d: s.d, url: s.url, kicker: c.course + " · " + c.short,
+          kickStyle: "margin:0;font-size:11px;line-height:1.4;letter-spacing:0.12em;text-transform:uppercase;color:" + COL[c.c],
+          style: "box-sizing:border-box;flex:0 0 " + KW + "px;width:" + KW + "px;background:#16140f;border:1px solid " + rgba(c.c, 0.35) + ";border-radius:14px;padding:12px 14px 8px;box-shadow:0 10px 28px rgba(0,0,0,0.5)"
+        }; }),
+        bandStyle: "position:absolute;left:" + (LX - 10) + "px;top:" + (bt - 2) + "px;width:" + (W - LX + 10) + "px;height:" + (bandH[i] - 6) + "px;border-radius:12px;background:rgba(180,155,100,0.035);pointer-events:none",
+        descStyle: "position:absolute;left:" + LX + "px;top:" + (bt + 4) + "px;width:" + (X0 - LX - 22) + "px",
+        cardsStyle: "position:absolute;left:" + (X0 + 14) + "px;top:" + (bt + 4) + "px;width:" + (W - X0 - 14) + "px;display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px;z-index:5",
         style: "position:absolute;left:" + LX + "px;top:" + rowY[i] + "px;width:" + (X0 - LX) + "px;height:" + RH + "px;display:flex;align-items:center",
-        labelStyle: "font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.1;padding-right:12px;color:" + (hitRows.has(n) ? "#e2ddd4" : "#8f877a"),
+        labelStyle: "display:block;width:100%;height:100%;margin:0;padding:0 12px 0 0;border:0;background:transparent;cursor:pointer;text-align:left;font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.1;font-weight:" + (isOn ? 500 : 400) + ";color:" + (isOn ? "#f0e6d2" : (hitRows.has(n) ? "#e2ddd4" : "#8f877a")),
         warpStyle: "position:absolute;left:" + X0 + "px;top:" + (cy(i) - WH / 2) + "px;width:" + (W - X0) + "px;height:" + WH + "px;border-radius:3px;background-image:linear-gradient(to right," + crowns.join(",") + "),linear-gradient(to right," + shade.join(",") + "),linear-gradient(to right," + lights.join(",") + ")," + twistH + "," + tubeH(t) + ";background-size:100% 100%," + sizes + ";-webkit-mask-image:" + mask + ";mask-image:" + mask
       };
     });

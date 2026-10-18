@@ -151,6 +151,7 @@ export function toHTML(view, props) {
 export function mount(el, view, props) {
   const tree = parse(view.template);
   const c = new view.Component(props);
+  c.el = el;
   let handlers = [];
   const draw = () => {
     const r = render(tree, c.renderVals());

@@ -69,7 +69,8 @@ export function viewData(kind) {
   const OS = kind === 'plotno' ? OSFULL.map((o) => o.nazwa)
     : kind === 'osnowy' ? OSFULL.map((o) => [o.nazwa, o.opis, o.rodziny])
     : OSFULL.map((o) => [o.nazwa, o.rodziny.join(' · ')]);
-  return { OS, BAND, GN, LV, CL, SP, CN };
+  const OP = kind === 'plotno' ? OSFULL.map((o) => [o.opis, o.rodziny]) : undefined;
+  return { OS, OP, BAND, GN, LV, CL, SP, CN };
 }
 
 export const held = CL.filter((c) => c.held);
