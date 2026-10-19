@@ -131,7 +131,6 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
         : <span class="roj-wiki">kogn<span class="roj-wiki-i">ı<span class="roj-wiki-kropka"></span></span>.pl/wiki</span>}
     </div>
   </section>
-  <p class="roj-lot-n" aria-hidden="true">{T.akt.replace(/\{\{|\}\}/g, '')}</p>
   <div class="roj-loty" aria-hidden="true">{OSNOWY.map(([n, c]) => <span class="roj-lot" style={'color:' + c}></span>)}</div>
 </main>
 
@@ -152,8 +151,7 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-st.ciag[data-k=pytanie]{padding-top:10vh}
 .roj-st.ciag[data-k=naglowek]{padding-top:9vh}
 .roj-st.ciag[data-k=sieci]{padding-top:9vh;padding-bottom:24vh}
-/* zdanie z akapitu: iskra je złoci, odrywa i ciągnie do nagłówka, gdzie przechodzi w nagłówek */
-.roj .roj-lot-n{position:fixed;left:0;top:0;z-index:2;margin:0;font-family:var(--font-body);font-weight:300;font-size:17px;line-height:1.9;color:var(--zloto);white-space:normal;text-shadow:0 0 12px rgba(240,192,96,.45);opacity:0;pointer-events:none;transform-origin:0 0;will-change:transform,opacity}
+/* zdanie z akapitu: iskra je złoci, ono rozpada się na punkty roju, które układają się w nagłówek */
 .roj .roj-naglowek{opacity:0}
 .roj .roj-zrodlo{transition:color .8s ease,text-shadow .8s ease}
 .roj .roj-zrodlo.zloty{color:var(--zloto);text-shadow:0 0 12px rgba(240,192,96,.45)}
@@ -312,7 +310,7 @@ const poziom = SEKCJE.osnowy, zombie = SEKCJE.zombie;
 const tor = $('.roj-tor'), kuPlotnu = $('.roj-ku-plotnu');
 const dyscS = $$('.roj-dysc'), loty = $$('.roj-lot'), nazwyM = $$('.roj-mnich-nazwa');
 loty.forEach((l, k) => { l.textContent = dyscS[k].textContent; });
-const czesc = $('.roj-czesc'), zrodlo = $('.roj-zrodlo'), nagl = $('.roj-naglowek'), lotN = $('.roj-lot-n');
+const czesc = $('.roj-czesc'), zrodlo = $('.roj-zrodlo'), nagl = $('.roj-naglowek');
 let FS_Z = 17, FS_N = 40, NAGL = false;
 const sieciEl = $$('.roj-siec');
 const SIECI_L = sieciEl.map((e) => +e.dataset.n!);
@@ -497,30 +495,81 @@ function wedruj(now: number, wy: number): any {
   if (now > WED.gzt) { WED.gz = Math.random() * 6.283; const d = 400 + Math.random() * 900; WED.gzt = now + d; setTimeout(kick, d + 20); }
   return { id: 'krazy', tryb: 'lot', x: Math.max(lewo, cx + (WED.ux - .5) * cw), y: Math.max(H * .08, cy + (WED.uy - .5) * cw * .75), I: .55, ang: WED.gz, len: cw * .32, half: .42 };
 }
-// Zdanie z akapitu: gdy akapit dojdzie do górnej części ekranu, iskra świeci na zdanie i ono złocieje,
-// potem odrywa się od akapitu i iskra ciągnie je, lecąc przed nim, do miejsca nagłówka, gdzie zdanie przechodzi
-// w nagłówek. Dopiero wtedy sieci się rozchodzą, a iskra leci do mózgu. Przebieg w czasie, nie w przewijaniu.
-const NAG: any = { t0: 0 };
-const NAG_F = [350, 1000, 2600, 3100];  // złoci się, odrywa, dociera, nagłówek gotowy
-function nagGeo(now: number) {
-  const a = zrodlo.getBoundingClientRect(), b = nagl.getBoundingClientRect(), t = NAG.t0 ? now - NAG.t0 : -1;
-  const S = Math.max(1, Math.min(1.6, b.width / Math.max(1, a.width)));
-  const ruch = (tt: number) => {
-    const u = sm(cl((tt - NAG_F[1]) / (NAG_F[2] - NAG_F[1]))), sk = 1 + (S - 1) * u, ex = b.left, ey = b.top + b.height / 2 - a.height * S / 2;
-    return { u, s: sk, x: a.left + (ex - a.left) * u, y: a.top + (ey - a.top) * u - Math.sin(u * Math.PI) * H * .05 };
-  };
-  return { a, b, t, p: ruch(t), q: ruch(t + 200) };
+// Zdanie z akapitu z roju. Gdy akapit dojdzie do górnej części ekranu, iskra świeci na zdanie i ono złocieje;
+// potem rozpada się na złote punkty roju stojące w miejscu jego liter, iskra ciągnie je strumieniem do miejsca
+// nagłówka, punkty układają się w litery nagłówka, nagłówek wyłania się na nich, a punkty wracają do roju.
+// Dopiero wtedy sieci się rozchodzą, a iskra leci do mózgu. Przewinięcie z powrotem w górę puszcza to samo wstecz:
+// nagłówek rozpada się, punkty wracają do akapitu, zdanie bieleje. Przebieg w czasie, kierunek z przewijania.
+const ZD: any = { te: 0, dir: 0, ok: false, biegnie: false, N: 0, S: [], T: [], sx: 0, sy: 0, tx: 0, ty: 0 };
+const ZD_F = [350, 1000, 1150, 2800, 3200, 4100];  // złoci się, rozpada, punkty widać, nagłówek się wyłania, gotowy, punkty w roju
+const ZD_LOT = 1350, ZD_FALA = 450, ZLOTO = hex('#f0c060');
+let ZD_P = 0, ZD_W = 0;
+function ksztalt(txt: string, font: string, lh: number, w: number, krok: number) {
+  // punkty liter zdania złamanego na szerokość w, wiersz po wierszu, od lewej do prawej
+  const cn = document.createElement('canvas'), x = cn.getContext('2d')!;
+  x.font = font; const linie: string[] = []; let l = '';
+  for (const sl of txt.split(' ')) { const pr = l ? l + ' ' + sl : sl; if (l && x.measureText(pr).width > w) { linie.push(l); l = sl; } else l = pr; }
+  if (l) linie.push(l);
+  cn.width = Math.ceil(w) + 4; cn.height = Math.ceil(lh * linie.length) + 2;
+  x.font = font; x.fillStyle = '#fff'; x.textBaseline = 'middle';
+  linie.forEach((li, i) => x.fillText(li, 0, lh * i + lh / 2));
+  const d = x.getImageData(0, 0, cn.width, cn.height).data, pts: number[][] = [];
+  for (let yy = 0; yy < cn.height; yy += krok) for (let xx = 0; xx < cn.width; xx += krok) if (d[(Math.floor(yy) * cn.width + Math.floor(xx)) * 4 + 3] > 110) pts.push([xx, yy, Math.floor(yy / lh)]);
+  pts.sort((a, b) => a[2] - b[2] || a[0] - b[0]);
+  return pts;
 }
-function nagIskra(now: number): any {
-  const G0 = nagGeo(now), a = G0.a;
-  if (G0.t < NAG_F[1]) {
+function zdBuduj() {
+  if (!P.length) return;
+  const txt = (zrodlo.textContent || '').trim(), par = zrodlo.parentElement as HTMLElement, cz = getComputedStyle(zrodlo), cn = getComputedStyle(nagl);
+  const S = ksztalt(txt, '400 ' + FS_Z + 'px ' + cz.fontFamily, parseFloat(getComputedStyle(par).lineHeight) || FS_Z * 1.9, par.clientWidth, 1);
+  const T = ksztalt(txt, cn.fontWeight + ' ' + FS_N + 'px ' + cn.fontFamily, parseFloat(cn.lineHeight) || FS_N * 1.2, nagl.clientWidth, 1.5);
+  const szare = P.filter((p) => p.net === 1), N = Math.min(MOB ? 900 : 1500, szare.length, Math.max(S.length, T.length));
+  ZD.N = N; ZD.S = []; ZD.T = [];
+  for (const p of P) p.zj = -1;
+  for (let j = 0; j < N; j++) {
+    szare[Math.floor(j * szare.length / N)].zj = j;
+    ZD.S.push(S[Math.floor(j * S.length / N)] || [0, 0]); ZD.T.push(T[Math.floor(j * T.length / N)] || [0, 0]);
+  }
+  ZD.ok = N > 0;
+}
+// punkt j strumienia w chwili te: ostatnie litery prowadzą, pierwsze idą najpóźniej; każdy po swoim łuku
+function zdPkt(j: number, te: number) {
+  const s0 = ZD.S[j], t0 = ZD.T[j], u = sm(cl((te - ZD_F[1] - (1 - j / ZD.N) * ZD_FALA) / ZD_LOT));
+  const x0 = ZD.sx + s0[0], y0 = ZD.sy + s0[1], x1 = ZD.tx + t0[0], y1 = ZD.ty + t0[1];
+  return [x0 + (x1 - x0) * u, y0 + (y1 - y0) * u - Math.sin(u * Math.PI) * H * .05 * (.6 + .4 * ((j * 7) % 10) / 10)];
+}
+function zdKrok(now: number, dt: number) {
+  const a = (zrodlo.parentElement as HTMLElement).getBoundingClientRect(), b = nagl.getBoundingClientRect(), TE = ZD_F[5];
+  if (SEKCJE.pytanie.classList.contains('in') && a.top < H * .45 && a.bottom > 0) ZD.dir = 1;
+  else if (a.top > H * .62) ZD.dir = -1;
+  if (ZD.dir > 0 && !ZD.ok) zdBuduj();
+  if (!ZD.ok) { ZD_P = ZD_W = 0; ZD.biegnie = false; return; }
+  ZD.te = CICHO ? (ZD.dir > 0 ? TE : 0) : Math.max(0, Math.min(TE, ZD.te + ZD.dir * dt * 1000));
+  ZD.sx = a.left; ZD.sy = a.top; ZD.tx = b.left; ZD.ty = b.top;
+  const te = ZD.te, F = ZD_F;
+  zrodlo.classList.toggle('zloty', te > F[0]);
+  zrodlo.style.opacity = te > F[1] ? (1 - sm(cl((te - F[1]) / 200))).toFixed(3) : '';
+  nagl.style.opacity = te > F[3] ? sm(cl((te - F[3]) / (F[4] - F[3]))).toFixed(3) : '';
+  ZD_P = te >= F[1] && te <= F[4] ? 1 : te > F[4] ? 1 - sm(cl((te - F[4]) / (F[5] - F[4]))) : 0;
+  ZD_W = te < F[1] ? 0 : te < F[2] ? sm((te - F[1]) / (F[2] - F[1])) : ZD_P;
+  if (te >= F[4] && !NAGL) { NAGL = true; startSieci(now); }
+  ZD.biegnie = !CICHO && ((ZD.dir > 0 && te < TE) || (ZD.dir < 0 && te > 0));
+}
+function zdIskra(): any {
+  const te = ZD.te;
+  if (te < ZD_F[1]) {
     // świeci na zdanie z góry, aż ono złocieje
-    const x = a.left + a.width * .12, y = a.top - 30, wx = a.left + a.width * .5, wy = a.top + a.height * .5, d = Math.hypot(wx - x, wy - y);
+    const a = zrodlo.getBoundingClientRect(), x = a.left + a.width * .12, y = a.top - 30, wx = a.left + a.width * .5, wy = a.top + a.height * .5, d = Math.hypot(wx - x, wy - y);
     return { id: 'zdanie', tryb: 'lot', x, y, I: 1, ang: Math.atan2(wy - y, wx - x), len: d + a.width * .55, half: Math.max(.2, Math.min(.8, Math.atan2(a.width * .55, d))) };
   }
-  // ciągnie: leci tuż przed zdaniem (cel o 0,2 s do przodu, żeby sprężyna nie zostawała w tyle), snop wstecz na zdanie
-  const q = G0.q, w = a.width * q.s;
-  return { id: 'ciagnie', tryb: 'lot', x: q.x + w + 14, y: q.y + a.height * q.s * .5 - 4, I: .6, ang: Math.PI, len: w * .9, half: .22 };
+  if (te < ZD_F[3]) {
+    // ciągnie strumień: leci przed jego czołem (cel o 0,2 s do przodu), snop wstecz na strumień
+    const N = ZD.N, [lx, ly] = zdPkt(N - 1, te + 200 * (ZD.dir || 1)), [mx, my] = zdPkt(Math.floor(N * .5), te), x = lx + 16, y = ly - 12, d = Math.hypot(mx - x, my - y);
+    return { id: 'ciagnie', tryb: 'lot', x, y, I: .6, ang: Math.atan2(my - y, mx - x), len: d + 30, half: .3 };
+  }
+  // nad nagłówkiem, świeci na niego, gdy się wyłania
+  const b = nagl.getBoundingClientRect(), x = b.left + b.width * .12, y = b.top - 26, wx = b.left + b.width * .5, wy = b.top + b.height * .5, d = Math.hypot(wx - x, wy - y);
+  return { id: 'zdanie', tryb: 'lot', x, y, I: .9, ang: Math.atan2(wy - y, wx - x), len: d + b.width * .55, half: Math.max(.2, Math.min(.8, Math.atan2(b.width * .55, d))) };
 }
 function startSieci(now: number) {
   if (SIECI_N) return;
@@ -537,14 +586,14 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
     return { id, tryb: 'stoj', x: rr.left + rr.width * .5, y: rr.top + rr.height * .2 - r, el: el.closest('p,h1,li') as HTMLElement, I: 0 };
   };
   let c: any = null;
-  if (NAG.t0 && !NAGL && scrollY >= 4) c = nagIskra(now);
+  if (ZD.biegnie && scrollY >= 4) c = zdIskra();
   if (!c) {
     if (S.k === 'czesc') {
       // unosi się nad słowem i świeci na nie z góry
       const rr = czesc.getBoundingClientRect(), wx = rr.left + rr.width * .5, wy = rr.top + rr.height * .55;
       const x = rr.left + rr.width * .12, y = rr.top - rr.height * .55, d = Math.hypot(wx - x, wy - y);
       c = { id: 'czesc', tryb: 'lot', x, y, I: 1, ang: Math.atan2(wy - y, wx - x), len: d + rr.width * .6, half: Math.max(.2, Math.min(.75, Math.atan2(rr.width * .62, d))) };
-    } else if (S.k === 'sieci' || ((S.k === 'pytanie' || S.k === 'naglowek') && SIECI_N)) {
+    } else if (S.k === 'sieci' || ((S.k === 'pytanie' || S.k === 'naglowek') && SIECI_N && ZD.te >= ZD_F[4])) {
       // przy mózgu iskra robi, co chce: ogląda sieci, siada na ich nazwach, krąży i rozgląda się; wybory losowe
       const wy = (A.k === 'sieci' ? 1 - t : 0) + (B.k === 'sieci' ? t : 0);
       if (SIECI_N) c = wedruj(now, wy);
@@ -568,7 +617,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       if (rr.top < H * .8) c = { id: 'wiki', tryb: 'lot', x: rr.left + rr.width * .5, y: rr.top + rr.height * .5, I: 0, skala: rr.height / .26 * .25 / (IS.r * 1.75) };
       else if (hr.top < H * .72) { c = stoj(hura, 'hura'); if (c) c.hura = 1; }
       else c = stoj(CEL.kogni, 'kogni');
-    } else if (S.k === 'naglowek') c = NAGL ? stoj(CEL.naglowek, 'naglowek') : stoj(CEL.pytanie, 'pytanie');
+    } else if (S.k === 'naglowek') c = ZD.te >= ZD_F[4] ? stoj(CEL.naglowek, 'naglowek') : stoj(CEL.pytanie, 'pytanie');
     else c = stoj(CEL[S.k], S.k);
   }
   if (c && c.tryb === 'stoj' && (c.y < H * .06 || c.y > H * .94)) { c.tryb = 'lot'; c.y = Math.max(H * .06, Math.min(H * .94, c.y)); }
@@ -658,7 +707,7 @@ function lyzwy(dt: number, c: any, now: number) {
   const kand = (ex: number) => slowaO.map((_, i) => i).filter((i) => {
     if (i === ex || (E_SL[i] || 0) > .01 || (O_SL[i] || 0) < .7) return false;
     const q = slTop(i), dx = Math.abs(q.x - IS.x);
-    return dx > 24 && dx < 320 && q.x > c.xs && q.x < c.xe && q.y > H * .06 && Math.abs(q.y - IS.y) < 200;
+    return dx > 24 && dx < 380 && q.x > c.xs && q.x < c.xe && q.y > H * .06 && Math.abs(q.y - IS.y) < 230;
   });
   const skokDo = (tx: number, ty: number, h: number, cs: number, cel: number) => {
     const apex = Math.min(IS.y, ty) - h, T = Math.sqrt(2 * (IS.y - apex) / G) + Math.sqrt(2 * Math.max(1, ty - apex) / G);
@@ -677,7 +726,7 @@ function lyzwy(dt: number, c: any, now: number) {
     if (now > S.zejdz || (E_SL[i] || 0) > .02 || IS.x < c.xs - 20 || IS.x > W - 12 || q.y < H * .04) {
       const k = +slowaO[i].dataset.k!, ks = (E_SL[i] || 0) > .02 ? [] : kand(i);
       ZG[i].v -= 50;
-      if (ks.length && Math.random() < .45) skokNa(ks[Math.floor(Math.random() * ks.length)]);
+      if (ks.length && Math.random() < .7) skokNa(ks[Math.floor(Math.random() * ks.length)]);
       else skokDo(IS.x + (Math.random() - .5) * 120, gy(k), 26 + Math.random() * 22, -1, k);
     }
   } else if (!S.air) {
@@ -692,11 +741,11 @@ function lyzwy(dt: number, c: any, now: number) {
     if (now < S.nisko || S.hamuj) IS.sq = Math.max(IS.sq, .28);
     IS.x += IS.vx * dt; kraw();
     if (now > S.hop && !S.kreci && !S.hamuj) {
-      S.hop = now + 1100 + Math.random() * 1500;
+      S.hop = now + 700 + Math.random() * 1100;
       const los = Math.random(), kier = IS.vx >= 0 ? 1 : -1;
       S.cel = S.nic; S.dbl = 0;
       const ks = kand(-1);
-      if (ks.length && Math.random() < .38) skokNa(ks[Math.floor(Math.random() * ks.length)]);  // skok na słowo osnowy
+      if (ks.length && Math.random() < .7) skokNa(ks[Math.floor(Math.random() * ks.length)]);  // skok na słowo osnowy
       else if (los < .24) {
         // skok na sąsiednią osnowę
         S.cel = S.nic === 0 ? 1 : S.nic === 3 ? 2 : S.nic + (Math.random() < .5 ? -1 : 1);
@@ -724,7 +773,7 @@ function lyzwy(dt: number, c: any, now: number) {
       const q = slTop(S.cs);
       if (IS.vy > 0 && IS.y >= q.y && IS.y < q.y + 16 && Math.abs(IS.x - q.x) < q.w / 2 + 4) {
         const v = IS.vy; IS.y = q.y; IS.vy = 0; IS.vx = 0; IS.kontakt = true; S.air = false; S.spin = 0;
-        S.na = S.cs; S.cs = -1; S.dx = IS.x - q.x; S.zejdz = now + 700 + Math.random() * 1500;
+        S.na = S.cs; S.cs = -1; S.dx = IS.x - q.x; S.zejdz = now + 500 + Math.random() * 1100;
         IS.sq = Math.min(.35, v / 1500); IS.sqv = 0; ZG[S.na].v += Math.min(320, v * .4); ZG[S.na].xl = IS.x - q.l;
       } else if (IS.y > q.y + 16) S.cs = -1;
     }
@@ -964,6 +1013,7 @@ function frame() {
   for (const n of SIECI_L) ROZ[n] = START[n] ? (CICHO ? 1 : sm(cl((now - START[n] - 100) / 1100))) : 0;
   for (const n of SIECI_L) { WS[n] = slowoStan(n, now, wI, textR); if (WS[n] && WS[n].t < 1800) slowaRuch = true; if (WS[n] && WS[n].forma > 0) SLOWA_FORMA = wS > .02; }
   rozsun();
+  zdKrok(now, dt);
   const c = cel(A, B, t, lpA, lpB, now, lz);
   if (c) { krok(dt, c, now); wiazka(dt, c, now); oko(dt, c, now); }
   const wid = !!c && !IS.dom;
@@ -983,6 +1033,12 @@ function frame() {
       x += (sw.ax + gp[0] - x) * f; y += (sw.ay + gp[1] - y) * f; al += (.95 - al) * f;
       cr += (JASNY[0] + (kh[0] - JASNY[0]) * m - cr) * f; cg += (JASNY[1] + (kh[1] - JASNY[1]) * m - cg) * f; cb += (JASNY[2] + (kh[2] - JASNY[2]) * m - cb) * f;
       lit = f; break;
+    }
+    if (ZD_W > 0 && p.zj >= 0) {
+      // punkt zdania: stoi w literze, płynie strumieniem za iskrą, układa się w nagłówek, wraca do roju
+      const [zx, zy] = zdPkt(p.zj, ZD.te);
+      x += (zx - x) * ZD_P; y += (zy - y) * ZD_P; al += (.95 - al) * ZD_W;
+      cr += (ZLOTO[0] - cr) * ZD_W; cg += (ZLOTO[1] - cg) * ZD_W; cb += (ZLOTO[2] - cb) * ZD_W; lit = Math.max(lit, ZD_W);
     }
     if (al < .02 || y < -20 || y > H + 20) continue;
     let sw = 0;
@@ -1010,20 +1066,6 @@ function frame() {
   }
   // osnowy: tor jedzie w bok; po osnowach nici zostają, jak są
   tor.style.transform = 'translateX(' + LN.off + 'px)';
-  // zdanie z akapitu: złocenie, oderwanie, lot za iskrą, przejście w nagłówek
-  {
-    if (!NAG.t0 && SEKCJE.pytanie.classList.contains('in')) { const r0 = zrodlo.getBoundingClientRect(); if (r0.top < H * .6 && r0.bottom > 0) NAG.t0 = CICHO ? now - 1e4 : now; }
-    const G0 = nagGeo(now), tn = G0.t, x = cl((tn - NAG_F[2]) / (NAG_F[3] - NAG_F[2]));
-    zrodlo.classList.toggle('zloty', tn > NAG_F[0]);
-    zrodlo.style.visibility = tn > NAG_F[1] ? 'hidden' : '';
-    nagl.style.opacity = tn > NAG_F[2] ? x.toFixed(3) : '';
-    if (tn > NAG_F[1] && tn < NAG_F[3]) {
-      // szerokość akapitu: zdanie łamie się tak jak w akapicie, także na telefonie
-      const p = G0.p; lotN.style.fontSize = FS_Z + 'px'; lotN.style.width = (zrodlo.parentElement as HTMLElement).clientWidth + 'px';
-      lotN.style.transform = 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px) scale(' + p.s.toFixed(3) + ')'; lotN.style.opacity = (1 - x).toFixed(3);
-    } else lotN.style.opacity = '0';
-    if (tn >= NAG_F[3] && !NAGL) { NAGL = true; startSieci(now); }
-  }
   // nazwy dyscyplin wylatują z tekstu, gdy wjeżdżają osnowy, i lądują pod swoimi mnichami
   const gD = cl((H * .75 - LN.rtop) / (H * .75));
   dyscS.forEach((sp, k) => {
@@ -1094,7 +1136,7 @@ function frame() {
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
   const iskraRuch = !!c && !CICHO && (solRuch || !!c.slizg || !!c.hura || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
     || !IS.dom && (Math.hypot(IS.vx, IS.vy) > 6 || Math.hypot(c.x - IS.x, c.y - IS.y) > .8 || (c.tryb === 'stoj' && !IS.kontakt))
-    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || slowaRuch || zgRuch || !!PUSZCZ || (!!NAG.t0 && !NAGL)
+    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || slowaRuch || zgRuch || !!PUSZCZ || !!ZD.biegnie
     || (!IS.dom && (now - IS.mrug < 170 || IS.zdz > .02 || Math.abs(IS.pd - ((c.mood && c.mood.pd) || 1)) > .01 || Math.abs(IS.lid - ((c.mood && c.mood.lid) || 1)) > .01
       || Math.abs(IS.joy - ((c.mood && c.mood.joy) || 0) * (1 - .35 * WSTECZ)) > .01 || Math.abs(IS.lean) > .005 || WSTECZ > .01))
     );
@@ -1122,7 +1164,7 @@ function frame() {
 }
 let tk = false;
 addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(() => { frame(); tk = false; }); } }, { passive: true });
-addEventListener('resize', () => { SZER_MAX = 0; ZN_X.length = 0; SNOP_K.length = 0; size(); frame(); });
+addEventListener('resize', () => { ZD.ok = false; SZER_MAX = 0; ZN_X.length = 0; SNOP_K.length = 0; size(); frame(); });
 const puszczaj = (ev: MouseEvent) => {
   if (PUSZCZ || CICHO || ev.button !== 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
   ev.preventDefault(); PUSZCZ = performance.now(); kick();
