@@ -35,6 +35,8 @@ const ODSTEP = ['0', '6vh', '11vh', '4vh', '9vh', '14vh', '8vh'];
 const KOLOR = { 2: '#ee6b6f', 3: '#f9d780', 4: '#e58e76', 5: '#f69959', 6: '#a9b26f', 7: '#bb6fb2', 8: '#6fb3a8' };
 const OSNOWY = [['socjologia', '#8fa274'], ['psychologia', '#5f9a96'], ['biologia', '#6585b0'], ['fizyka', '#8577b3']];
 const KOL_OSN = Object.fromEntries(OSNOWY);
+// mnich to badacz swojej dyscypliny
+const BADACZ = { socjologia: 'socjolog', psychologia: 'psycholog', biologia: 'biolog', fizyka: 'fizyk' };
 // nazwy dyscyplin w tekście: każda w kolorze swoich osnów; przy przewijaniu lecą pod swoich mnichów
 const dysc = (t: string) => { let k = 0; return t.replace(/\[\[([^\]]+)\]\]/g, (_, w) => { const i = k++; return '<span class="roj-dysc" data-k="' + i + '" style="color:' + OSNOWY[i][1] + '">' + w + '</span>'; }); };
 // Słowa, które oświetlają postacie: osnowy Płótna, każda grupa w swoim kolorze.
@@ -84,8 +86,8 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
         <p class="roj-duze" set:html={md(T.zombie[0])} />
         <p set:html={md(T.zombie[1])} />
         <div class="roj-sol">
-          <div class="roj-chmura">{CHMURA.map((w, i) => <span class={'c' + i}>{w}</span>)}</div>
-          <div class="roj-sol-p"><div class="roj-sol-obrot" set:html={postac('sol')} /><span class="roj-sol-nazwa">solipsysta</span></div>
+          <div class="roj-chmura">{CHMURA.map((w, i) => <span class={'c' + i} style={'--i:' + i}>{w}</span>)}</div>
+          <div class="roj-sol-p"><div class="roj-sol-snop"></div><div class="roj-sol-obrot" set:html={postac('sol')} /><span class="roj-sol-nazwa">solipsysta</span></div>
         </div>
       </div>
     </div>
@@ -106,7 +108,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
     <div class="roj-lepki"><div class="roj-tor">
       {GRUPY.map((g, k) => g.slowa.map((w, j) => <span class="roj-slowo-osn" data-k={k} style={'--k:' + g.kolor + ';left:' + (35 + 240 * (j + .5) / g.slowa.length).toFixed(1) + 'vw;top:calc(' + YN_VH[k] + 'vh - 24px - ' + WYS(k, j) + 'vh)'}>{[...w].map((z) => z === ' ' ? ' ' : <span class="zn">{z}</span>)}</span>))}
     </div>
-    {GRUPY.map((g, k) => <div class="roj-mnich" data-k={k} style={'left:' + MNICH_X[k] + 'vw;top:calc(' + YN_VH[k] + 'vh - var(--mh))'}><div class="roj-mnich-c plonie" set:html={postac('m' + k, g.kolor)} /><span class="roj-mnich-nazwa" style={'color:' + g.kolor}>{g.nazwa}</span></div>)}
+    {GRUPY.map((g, k) => <div class="roj-mnich" data-k={k} style={'left:' + MNICH_X[k] + 'vw;top:calc(' + YN_VH[k] + 'vh - var(--mh))'}><div class="roj-mnich-c plonie" set:html={postac('m' + k, g.kolor)} /><span class="roj-mnich-nazwa" style={'color:' + g.kolor}>{BADACZ[g.nazwa] || g.nazwa}</span></div>)}
     <a class="roj-ku-plotnu" href="/2026/" aria-label="Rocznik 2026: Płótno"></a>
     </div>
   </section>
@@ -175,14 +177,17 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-st.lepkie .roj-t{max-width:min(40vw,560px)}
 .roj-st.lepkie .roj-t{position:relative}
 .roj-sol{position:absolute;left:calc(100% + 20px);top:50%;transform:translateY(-50%);width:400px;height:34vh;margin:0}
-.roj-sol-p{position:absolute;left:50%;bottom:4vh;transform:translateX(-50%);height:15vh;aspect-ratio:100/222;opacity:0;transition:opacity 1.6s ease}
-.roj-sol-obrot{height:100%;will-change:transform}
+.roj-sol-p{position:absolute;left:2%;bottom:4vh;height:15vh;aspect-ratio:100/222;opacity:0;transition:opacity 1.6s ease}
+.roj-sol-obrot{height:100%;transform:scaleX(-1)}
+/* snop świecy w prawo, od płomienia (66% szerokości po odbiciu, 39% wysokości) */
+.roj-sol-snop{position:absolute;left:66%;top:39%;width:min(340px,80vw);height:34vh;transform:translateY(-50%);clip-path:polygon(0 50%,100% 0,100% 100%);background:radial-gradient(ellipse 100% 70% at 0 50%,rgba(255,201,120,.24),rgba(255,201,120,0) 75%);opacity:0;transition:opacity 1.2s ease;pointer-events:none}
+.roj-sol.plonie .roj-sol-snop{opacity:1}
 .roj-sol.widac .roj-sol-p{opacity:1}
 .roj-sol-nazwa{position:absolute;left:50%;top:calc(100% + 6px);transform:translateX(-50%);font:400 17px var(--font-display);letter-spacing:.04em;color:var(--zloto);white-space:nowrap}
-.roj-chmura span{position:absolute;font:italic 400 15px var(--font-display);color:#d6cdbd;opacity:0;white-space:nowrap;transition:opacity .5s ease,color .5s ease,text-shadow .5s ease}
-.roj-chmura span.widac{opacity:.45}
-.roj-chmura span.widac.lit{opacity:.95;color:#ffe2a8;text-shadow:0 0 10px rgba(255,201,120,.55)}
-.roj-chmura .c0{left:0;top:0}.roj-chmura .c1{right:0;top:6%}.roj-chmura .c2{left:3%;top:22%}.roj-chmura .c3{right:2%;top:28%}.roj-chmura .c4{left:0;top:46%}.roj-chmura .c5{right:0;top:52%}.roj-chmura .c6{left:6%;top:70%}.roj-chmura .c7{right:5%;top:76%}.roj-chmura .c8{left:10%;top:90%}
+.roj-chmura span{position:absolute;font:italic 400 15px var(--font-display);color:#d6cdbd;opacity:0;white-space:nowrap;transition:opacity .6s ease,color .6s ease,text-shadow .6s ease}
+.roj-sol.plonie .roj-chmura span{opacity:.95;color:#ffe2a8;text-shadow:0 0 10px rgba(255,201,120,.55);transition-delay:calc(.3s + var(--i) * .16s)}
+/* słowa po prawej solipsysty, w wachlarzu jego snopu */
+.roj-chmura .c0{left:34%;top:4%}.roj-chmura .c1{left:46%;top:14%}.roj-chmura .c2{left:28%;top:25%}.roj-chmura .c3{left:42%;top:36%}.roj-chmura .c4{left:26%;top:47%}.roj-chmura .c5{left:40%;top:58%}.roj-chmura .c6{left:30%;top:69%}.roj-chmura .c7{left:48%;top:80%}.roj-chmura .c8{left:36%;top:91%}
 /* postać: kontur */
 .postac{display:block;height:100%;width:auto;overflow:visible;--kontur:rgba(236,230,218,.5)}
 .postac .szata{fill:#000;stroke:var(--kontur);stroke-width:1.1;vector-effect:non-scaling-stroke}
@@ -309,7 +314,7 @@ const hura = $('.iskra-cel.hura');
 
 function size() {
   // wymiary z samego canvasu (100vw × 100vh): pasek adresu Safari nie zmienia ich, więc płótno nie skacze przy przewijaniu
-  MOB = innerWidth < 760; LAB = MOB ? 15 : 20; D = Math.min(devicePixelRatio || 1, MOB ? 1.5 : 2);
+  MOB = innerWidth < 760; LAB = MOB ? 15 : 20; D = Math.min(devicePixelRatio || 1, MOB ? 1.25 : 1.5);
   const w = cv.clientWidth, h = cv.clientHeight;
   if (knotLogo) IS.r = Math.max(3, knotLogo.getBoundingClientRect().width / 2);
   if (w !== W || h !== H || cv.width !== Math.round(w * D)) { W = w; H = h; cv.width = cv2.width = Math.round(W * D); cv.height = cv2.height = Math.round(H * D); }
@@ -336,10 +341,10 @@ function wyspa(n: number, bx: number, by: number, bw: number, wy: number) {
 }
 function st(k: string, p: any, lp: number) {
   const net = p.net > 1; let x = 0, y = 0, a = 0, c = p.col, s = 1;
-  if (k === 'czesc' || k === 'pytanie') { [x, y] = brain(p); a = net ? .95 : .42; }
+  if (k === 'czesc' || k === 'pytanie') { [x, y] = brain(p); a = net ? .3 : .16; }
   else if (k === 'sieci') {
     const [bx, by, bw] = brain(p, 1, ROZ[SIECI_L[0]] || 0);
-    if (net) { const [ix, iy] = wyspa(p.net, 0, 0, bw, ROZ[p.net] || 0); x = bx + ix; y = by + iy; a = AKT ? (p.net === AKT ? 1 : .8) : .9; s = AKT && p.net === AKT ? 1.2 : 1; }
+    if (net) { const [ix, iy] = wyspa(p.net, 0, 0, bw, ROZ[p.net] || 0); x = bx + ix; y = by + iy; a = .3; }
     else { x = bx + (p.sx - .5) * 120; y = by + (p.sy - .5) * 120; a = .12; }
   }
   // od solipsysty do osnów rój stoi rozproszony i się nie przestawia; ruch należy do tekstu i iskry
@@ -419,12 +424,12 @@ function solKlasy(now: number) {
   if (!SOL.t0) return;
   const t = now - SOL.t0;
   sol.classList.toggle('widac', t > SOL_F[0]);
-  solObrot.classList.toggle('plonie', t > SOL_F[1]);
+  solObrot.classList.toggle('plonie', t > SOL_F[1]); sol.classList.toggle('plonie', t > SOL_F[1]);
   if (t > SOL_F[3]) SOL.done = true;
 }
 function zakonczSol() { SOL.t0 = performance.now() - 10000; solKlasy(performance.now()); }
 // Wędrówka iskry przy mózgu: co chwilę losuje, co robi dalej. Ogląda wybraną sieć snopem z bliska,
-// siada na nazwie sieci i patrzy na nią albo krąży nad mózgiem i rozgląda się na boki.
+// siada na nazwie sieci i świeci na nią albo krąży nad mózgiem i świeci na boki. Mózg świeci tylko w jej snopie.
 const WED: any = { typ: '', n: 0, t: 0, T: 0, ux: 0, uy: 0, gz: 0, gzt: 0 };
 function wedruj(now: number, wy: number): any {
   if (now > WED.t + WED.T) {
@@ -444,11 +449,12 @@ function wedruj(now: number, wy: number): any {
   }
   if (WED.typ === 'siad' && WS[n]) {
     const s = WS[n];
-    return { id: 'siad' + n, tryb: 'stoj', x: s.lx + WED.ux * s.w, y: s.ly - LAB * .45 - IS.r * 1.95, I: 0, gaze: Math.atan2(iy - s.ly, ix - s.lx), hop: 1e9 };
+    const x = s.lx + WED.ux * s.w, y = s.ly - LAB * .45 - IS.r * 1.95;
+    return { id: 'siad' + n, tryb: 'stoj', x, y, I: .55, ang: Math.atan2(iy - y, ix - x), len: Math.hypot(ix - x, iy - y) + bw * .1, half: .45, hop: 1e9 };
   }
   const [cx, cy, cw] = brain({ u: 120, v: 90 }, 1, wy * (ROZ[SIECI_L[0]] || 0));
   if (now > WED.gzt) { WED.gz = Math.random() * 6.283; const d = 400 + Math.random() * 900; WED.gzt = now + d; setTimeout(kick, d + 20); }
-  return { id: 'krazy', tryb: 'lot', x: Math.max(lewo, cx + (WED.ux - .5) * cw), y: Math.max(H * .08, cy + (WED.uy - .5) * cw * .75), I: 0, gaze: WED.gz };
+  return { id: 'krazy', tryb: 'lot', x: Math.max(lewo, cx + (WED.ux - .5) * cw), y: Math.max(H * .08, cy + (WED.uy - .5) * cw * .75), I: .55, ang: WED.gz, len: cw * .32, half: .42 };
 }
 function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, lz: number): any {
   const r = IS.r * 1.95;
@@ -886,6 +892,7 @@ function frame() {
   const PCH = wid && c.id !== 'dom' && c.id !== 'wiki' ? (MOB ? 22 : 30) : 0;
   if (knotLogo) knotLogo.style.opacity = wid ? '0' : '';
   g.setTransform(D, 0, 0, D, 0, 0); g.clearRect(0, 0, W, H); g2.setTransform(D, 0, 0, D, 0, 0); g2.clearRect(0, 0, W, H); g.globalCompositeOperation = 'lighter'; g.lineWidth = 1;
+  const NICI = (k: string) => k === 'osnowy' || k === 'kogni' || k === 'wiki', KROPKI = !NICI(A.k) && !NICI(B.k);
   for (const p of P) {
     const s1 = st(A.k, p, lpA), s2 = t > 0 ? st(B.k, p, lpB) : s1, q = cl(t * 1.35 - p.d * .35);
     let x = s1[0] + (s2[0] - s1[0]) * q, y = s1[1] + (s2[1] - s1[1]) * q, al = s1[2] + (s2[2] - s1[2]) * q, sz = s1[4] + (s2[4] - s1[4]) * q;
@@ -900,17 +907,20 @@ function frame() {
       lit = f; break;
     }
     if (al < .02 || y < -20 || y > H + 20) continue;
+    let sw = 0;
     if (wid) {
       // rój reaguje na iskrę: punkty w snopie jaśnieją, bliskie się rozstępują
       const dx = x - IS.x, dy = y - IS.y, d = Math.hypot(dx, dy);
       if (d < PCH && d > .01) { const f = (PCH - d) / PCH * PCH * .7; x += dx / d * f; y += dy / d * f; }
       if (IS.bi > .02 && d < IS.blen) {
         let da = Math.atan2(dy, dx) - IS.bang; da = Math.abs(Math.atan2(Math.sin(da), Math.cos(da)));
-        if (da < IS.bhalf) { const L = IS.bi * Math.sqrt(1 - d / IS.blen) * (1 - da / IS.bhalf); al = Math.min(1, al + L * .85); sz *= 1 + L * .7; }
+        if (da < IS.bhalf) { sw = IS.bi * Math.sqrt(1 - d / IS.blen) * (1 - da / IS.bhalf); al = Math.min(1, al + sw * .85); sz *= 1 + sw * .7; }
       }
     }
     const r = p.s * (p.net > 1 ? 2.1 : 1.6) * sz, ang = p.a + q * 1.5;
     if (lit > .4) { g.globalAlpha = al; g.fillStyle = rgb(cr, cg, cb); g.fillRect(x - .9, y - .9, 1.8, 1.8); continue; }
+    // poza snopem i poza osnowami punkt jest ciemną kropką: rysuje się szybko i nie świeci
+    if (KROPKI && sw < .06) { g.globalAlpha = al; g.fillStyle = rgb(cr, cg, cb); g.fillRect(x - .8, y - .8, 1.6, 1.6); continue; }
     g.globalAlpha = al; g.strokeStyle = rgb(cr, cg, cb);
     g.beginPath(); g.moveTo(x + r * Math.cos(ang), y + r * Math.sin(ang)); g.lineTo(x + r * Math.cos(ang + 2.09), y + r * Math.sin(ang + 2.09)); g.lineTo(x + r * Math.cos(ang + 4.19), y + r * Math.sin(ang + 4.19)); g.closePath(); g.stroke();
   }
@@ -982,25 +992,8 @@ function frame() {
     zgRuch = zegnij(dt);
     kuPlotnu.classList.toggle('puls', LN.pr > .86);
   }
-  // solipsysta: po zapaleniu świecy obraca się, a snop jego świecy oświetla kolejne słowa wokół
-  let solRuch = false;
-  const sb = solP.getBoundingClientRect();
-  if (sb.bottom > 0 && sb.top < H && solObrot.classList.contains('plonie')) {
-    const tr = now - SOL.t0 - SOL_F[2], f = tr > 0 ? Math.cos(tr / 9000 * 6.2832) : 1, sx = Math.sign(f || 1) * Math.max(.14, Math.abs(f));
-    solObrot.style.transform = 'scaleX(' + sx.toFixed(3) + ')';
-    const cx = sb.left + sb.width / 2 - .1575 * sb.width * sx, cy = sb.top + sb.height * 86 / 222;
-    const a = Math.PI / 2 + f * (Math.PI / 2 + .3), len = (MOB ? 200 : 260) * (.3 + .7 * Math.abs(f)), half = .42;
-    const gr = g2.createRadialGradient(cx, cy, 2, cx, cy, len);
-    gr.addColorStop(0, 'rgba(255,201,120,.22)'); gr.addColorStop(1, 'rgba(255,201,120,0)');
-    g2.globalCompositeOperation = 'lighter'; g2.globalAlpha = 1; g2.fillStyle = gr; g2.beginPath(); g2.moveTo(cx, cy); g2.arc(cx, cy, len, a - half, a + half); g2.closePath(); g2.fill();
-    for (const w of solSlowa) {
-      const r = w.getBoundingClientRect(), wx = r.left + r.width / 2, wy = r.top + r.height / 2, d = Math.hypot(wx - cx, wy - cy);
-      let da = Math.atan2(wy - cy, wx - cx) - a; da = Math.atan2(Math.sin(da), Math.cos(da));
-      const lit = d < len + r.width * .4 && Math.abs(da) < half;
-      w.classList.toggle('lit', lit); if (lit) w.classList.add('widac');
-    }
-    solRuch = true;
-  }
+  // solipsysta stoi zwrócony w prawo; snop i słowa po jego prawej zapala sam CSS, bez pracy w każdej klatce
+  const solRuch = false;
   rysujLod(dt);
   const dipRuch = dipy(dt);
   if (IS.osiadla > .01 && c) { const em = wikiK.getBoundingClientRect().height / .26; knot(IS.osiadla, IS.x, IS.y, Math.max(6, em * .25), em * .1625); }
