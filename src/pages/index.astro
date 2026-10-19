@@ -13,8 +13,7 @@ const T = {
   zombie: ['Jesteś człowiekiem, prawda? Czy {{zombie}}?', 'Założę, że człowiekiem i też doświadczasz, jak ja. Ale nie mogę tego wiedzieć.'],
   wiem: ['Wiem tylko tyle, ile się nauczyłem od {{środowiska}}, w którym się urodziłem.', 'Doświadczam Modeli Mentalnych, które jednocześnie są moją aktywnością biologiczną.'],
   ja: ['Ale... "{{ja}}" to też Model Mentalny', 'Model "ja" zmienia się w czasie,  Zmienia się płynnie (nauka, dryfowanie) i gwałtownie (szok, przeskok). "Ja" to Statek Tezeusza strukturalnie i funkcjonalnie połączonych komórek.'],
-  dysc: ['Dyscypliny się {{doświadczają}}.', '[[Socjologia]], [[psychologia]], [[biologia]], [[fizyka]]... Często ignorują się wzajemnie. Jakby nie istniały.',
-    '[[Socjologowie]], [[psychologowie]], [[biolodzy]], [[fizycy]]... muszą muszą zacząć rozmawiać aby doświadczenie było pełniejsze.'],
+  dysc: ['Dyscypliny się {{doświadczają}}.', '[[Socjologowie]], [[psychologowie]], [[biolodzy]], [[fizycy]]... muszą muszą zacząć rozmawiać aby doświadczenie było pełniejsze.'],
   dosw: ['{{Doświadcza}} się.', 'Skoro podmiot i treść doświadczenia się zmieniają to zostaje samo doświadczenie. Doświadcza się. Swiat się doświadcza, ciało się doświadcza, ja się doświadcza.'],
   kogni: [
     'W zamyśle inicjatorów, powinna być to interdyscyplinarna nauka o umyśle, adresująca najgłębsze zagadki doświadczanej rzeczywistości. Doświadcza się Model Mentalny obiektywnego świata z jego mechanikami. Mechaniki doświadczają się, a potem doświadcza się ich wytłumaczenie. W zależności od czasów, biologia żeglarza i fizyka wzburzonego morza wytłumaczy się gniewem Posejdona, albo meteorologią. Czasem wytłumaczenie się interakcji biologii z fizyką i chemią jest tak trafne, że doświadcza się na przykład wyzdrowienia.',
@@ -108,7 +107,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
     <div class="roj-t"><p class="roj-duze" set:html={md(T.dosw[0])} /><p set:html={md(T.dosw[1])} /></div>
   </section>
   <section class="roj-st srodek ciag" data-k="dyscypliny">
-    <div class="roj-t"><p class="roj-duze" set:html={md(T.dysc[0])} /><p set:html={dysc(T.dysc[1], false)} /><p set:html={dysc(T.dysc[2])} /></div>
+    <div class="roj-t"><p class="roj-duze" set:html={md(T.dysc[0])} /><p set:html={dysc(T.dysc[1])} /></div>
   </section>
   <section class="roj-st poziom" data-k="osnowy" aria-label="Osnowy: socjologia, psychologia, biologia, fizyka">
     <div class="roj-lepki"><div class="roj-tor">
@@ -357,8 +356,9 @@ function wyspa(n: number, bx: number, by: number, bw: number, wy: number) {
 }
 function st(k: string, p: any, lp: number) {
   const net = p.net > 1; let x = 0, y = 0, a = 0, c = p.col, s = 1;
-  if (k === 'czesc' || k === 'pytanie' || k === 'naglowek') { [x, y] = brain(p); a = net ? .3 : .16; }
-  else if (k === 'sieci') {
+  // mózg cały do chwili, gdy nagłówek dojdzie do góry ekranu; od tej chwili rozpada się na sieci na każdym ekranie mózgu, bez czekania na przewinięcie
+  if (k === 'czesc' || ((k === 'pytanie' || k === 'naglowek') && !(ROZ[SIECI_L[0]] > 0))) { [x, y] = brain(p); a = net ? .3 : .16; }
+  else if (k === 'sieci' || k === 'pytanie' || k === 'naglowek') {
     const [bx, by, bw] = brain(p, 1, ROZ[SIECI_L[0]] || 0);
     if (net) { const [ix, iy] = wyspa(p.net, 0, 0, bw, ROZ[p.net] || 0); x = bx + ix; y = by + iy; a = .3; }
     else { x = bx + (p.sx - .5) * 120; y = by + (p.sy - .5) * 120; a = .12; }
@@ -601,7 +601,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       c = { id: 'czesc', tryb: 'lot', x, y, I: 1, ang: Math.atan2(wy - y, wx - x), len: d + rr.width * .6, half: Math.max(.2, Math.min(.75, Math.atan2(rr.width * .62, d))) };
     } else if (S.k === 'sieci' || ((S.k === 'pytanie' || S.k === 'naglowek') && SIECI_N && ZD.te >= ZD_F[4])) {
       // przy mózgu iskra robi, co chce: ogląda sieci, siada na ich nazwach, krąży i rozgląda się; wybory losowe
-      const wy = (A.k === 'sieci' ? 1 - t : 0) + (B.k === 'sieci' ? t : 0);
+      const mz = (k: string) => k === 'sieci' || k === 'pytanie' || k === 'naglowek', wy = (mz(A.k) ? 1 - t : 0) + (mz(B.k) ? t : 0);
       if (SIECI_N) c = wedruj(now, wy);
       else { const [x, y, bw] = brain({ u: 120, v: 90 }); c = { id: 'siec0', tryb: 'lot', x, y: y - bw * .2, I: .3, ang: Math.PI / 2, len: bw * .3, half: .5 }; }
     } else if (S.k === 'zombie') {
@@ -1017,7 +1017,7 @@ function frame() {
   let slowaRuch = false;
   SLOWA_FORMA = false;
   for (const n of SIECI_L) ROZ[n] = START[n] ? (CICHO ? 1 : sm(cl((now - START[n] - 100) / 1100))) : 0;
-  for (const n of SIECI_L) { WS[n] = slowoStan(n, now, wI, textR); if (WS[n] && WS[n].t < 1800) slowaRuch = true; if (WS[n] && WS[n].forma > 0) SLOWA_FORMA = wS > .02; }
+  for (const n of SIECI_L) { WS[n] = slowoStan(n, now, wS, textR); if (WS[n] && WS[n].t < 1800) slowaRuch = true; if (WS[n] && WS[n].forma > 0) SLOWA_FORMA = wS > .02; }
   rozsun();
   zdKrok(now, dt);
   const c = cel(A, B, t, lpA, lpB, now, lz);
