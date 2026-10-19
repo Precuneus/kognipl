@@ -316,8 +316,9 @@ function size() {
     return { k: s.dataset.k, top: s.offsetTop, h: hh, c0: s.offsetTop + hh / 2, c1: lep ? s.offsetTop + s.offsetHeight - H / 2 : s.offsetTop + hh / 2 };
   });
 }
-function brain(p: any, sc = 1) {
-  const bw = (MOB ? W * .88 : Math.min(W * .46, 760)) * sc, cx = MOB ? W / 2 : W * .72, cy = MOB ? H * .34 : H * .52;
+function brain(p: any, sc = 1, r = 0) {
+  // gdy sieci się rozchodzą (r), mózg maleje, a na szerokim ekranie przesuwa się w lewo: rozsunięte sieci mieszczą się na ekranie
+  const bw = (MOB ? W * .88 : Math.min(W * .46, 760)) * sc * (1 - (MOB ? .22 : .16) * r), cx = MOB ? W / 2 : W * (.72 - .06 * r), cy = MOB ? H * .34 : H * .52;
   return [cx + (p.u / 240 - .5) * bw, cy + (p.v / 180 - .5) * bw * .75, bw];
 }
 function lines() {
@@ -334,8 +335,8 @@ function st(k: string, p: any, lp: number) {
   const net = p.net > 1; let x = 0, y = 0, a = 0, c = p.col, s = 1;
   if (k === 'czesc' || k === 'pytanie') { [x, y] = brain(p); a = net ? .95 : .42; }
   else if (k === 'sieci') {
-    const [bx, by, bw] = brain(p);
-    if (net) { const [ix, iy] = wyspa(p.net, 0, 0, bw, ROZ[p.net] || 0); x = bx + ix; y = by + iy; a = AKT ? (p.net === AKT ? 1 : .38) : .9; s = AKT && p.net === AKT ? 1.25 : 1; }
+    const [bx, by, bw] = brain(p, 1, ROZ[SIECI_L[0]] || 0);
+    if (net) { const [ix, iy] = wyspa(p.net, 0, 0, bw, ROZ[p.net] || 0); x = bx + ix; y = by + iy; a = AKT ? (p.net === AKT ? 1 : .8) : .9; s = AKT && p.net === AKT ? 1.2 : 1; }
     else { x = bx + (p.sx - .5) * 120; y = by + (p.sy - .5) * 120; a = .12; }
   }
   // od solipsysty do osnów rój stoi rozproszony i się nie przestawia; ruch należy do tekstu i iskry
@@ -435,10 +436,10 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       const x = rr.left + rr.width * .12, y = rr.top - rr.height * .55, d = Math.hypot(wx - x, wy - y);
       c = { id: 'czesc', tryb: 'lot', x, y, I: 1, ang: Math.atan2(wy - y, wx - x), len: d + rr.width * .6, half: Math.max(.2, Math.min(.75, Math.atan2(rr.width * .62, d))) };
     } else if (S.k === 'sieci' || (S.k === 'pytanie' && SIECI_N)) {
-      // sieć odpływa od mózgu, jej nazwa formuje się z roju na brzegu sieci; iskra unosi się nad siecią i ogląda ją
+      // sieci odpływają od mózgu naraz, z nazwami; iskra unosi się nad kolejnymi sieciami i ogląda każdą
       const wy = (A.k === 'sieci' ? 1 - t : 0) + (B.k === 'sieci' ? t : 0);
       const n = SIECI_L[Math.max(0, SIECI_N - 1)]; AKT = SIECI_N ? n : 0;
-      const [bx, by, bw] = brain({ u: SIECI_N ? CENT[n][0] : 120, v: SIECI_N ? CENT[n][1] : 90 });
+      const [bx, by, bw] = brain({ u: SIECI_N ? CENT[n][0] : 120, v: SIECI_N ? CENT[n][1] : 90 }, 1, SIECI_N ? wy * (ROZ[n] || 0) : 0);
       const [ix, iy] = SIECI_N ? wyspa(n, bx, by, bw, wy * (ROZ[n] || 0)) : [bx, by];
       const s = SIECI_N ? WS[n] : null, lewo = MOB ? 14 : kolT.getBoundingClientRect().right + 24;
       const x = Math.max(lewo, ix - bw * .06), y = Math.max(H * .08, iy - bw * .14 - 12), d = Math.hypot(ix - x, iy - y);
@@ -703,14 +704,16 @@ function rysujIskre(A0: number) {
   g2.globalAlpha = A; g2.fillStyle = '#f0c060'; g2.beginPath(); g2.arc(IS.gx * maxo, IS.gy * maxo, pr, 0, 6.283); g2.fill();
   g2.restore();
 }
-// Opis sieci pojawia się, gdy wchodzi na ekran, nie wcześniej niż 1,5 s po poprzednim; w tej samej chwili jej nazwa
-// formuje się z roju na mózgu.
+// Znacznik sieci wchodzi na ekran nie wcześniej niż 1,5 s po poprzednim; pierwszy rozsuwa wszystkie sieci i formuje ich nazwy,
+// każdy kolejny przenosi iskrę nad następną sieć.
 let SIECI_N = 0, SIECI_T = 0;
 const SIECI_Q: HTMLElement[] = [];
 function pokazSiec() {
   const e = SIECI_Q.shift(); if (!e) return;
   e.classList.add('in'); SIECI_N = sieciEl.indexOf(e) + 1; SIECI_T = performance.now();
-  START[+e.dataset.n!] = CICHO ? SIECI_T - 5000 : SIECI_T; kick();
+  // przy pierwszym znaczniku wszystkie sieci odpływają naraz i dostają nazwy; kolejne znaczniki prowadzą wzrok iskry od sieci do sieci
+  if (!START[SIECI_L[0]]) for (const n of SIECI_L) START[n] = CICHO ? SIECI_T - 5000 : SIECI_T;
+  kick();
   if (SIECI_Q.length) setTimeout(pokazSiec, CICHO ? 0 : 1500);
 }
 const ioS = new IntersectionObserver((es) => es.forEach((e) => {
@@ -719,8 +722,8 @@ const ioS = new IntersectionObserver((es) => es.forEach((e) => {
   if (SIECI_Q.length === 1) setTimeout(pokazSiec, CICHO ? 0 : Math.max(0, SIECI_T + 1500 - performance.now()));
 }), { rootMargin: '0px 0px -12% 0px', threshold: 1 });
 sieciEl.forEach((e) => ioS.observe(e));
-// Nazwy sieci z roju: gdy sieć odpływa od mózgu, szare punkty układają się w litery jej nazwy na jej brzegu
-// i płyną z nią; punkty wracają do roju, a nazwa zostaje przy sieci.
+// Nazwy sieci z roju: gdy sieci odpływają od mózgu, szare punkty układają się w litery ich nazw na ich brzegach
+// i płyną z nimi; punkty wracają do roju, a nazwy zostają przy sieciach.
 const NAZWY: Record<number, string> = {}; sieciEl.forEach((e) => { NAZWY[+e.dataset.n!] = e.dataset.nazwa!; });
 const SLOWO: Record<number, any> = {}, START: Record<number, number> = {}, WS: Record<number, any> = {}, ROZ: Record<number, number> = {};
 const JASNY = hex('#ece6da'), kolT = $('.roj-sieci'), KOLH: Record<number, number[]> = {};
@@ -743,10 +746,10 @@ function litery(t: string, fs: number) {
 }
 function przygotujSlowa() {
   if (SLOWO[SIECI_L[0]]) return;
-  // słowa formują się po kolei, więc kolejne biorą punkty na zmianę z dwóch połówek szarego tła
-  const szare = P.filter((p) => p.net === 1), pule = [szare.filter((_, i) => i % 2 === 0), szare.filter((_, i) => i % 2 === 1)];
+  // słowa formują się naraz, więc każde bierze własną część szarego tła
+  const szare = P.filter((p) => p.net === 1), N = SIECI_L.length, pule = SIECI_L.map((_, j) => szare.filter((_, i) => i % N === j));
   SIECI_L.forEach((n, j) => {
-    const pula = pule[j % 2], L = litery(NAZWY[n], LAB); let pts = L.pts;
+    const pula = pule[j], L = litery(NAZWY[n], LAB); let pts = L.pts;
     if (pts.length > pula.length) { const co = pts.length / pula.length; pts = Array.from({ length: pula.length }, (_, i) => L.pts[Math.floor(i * co)]); }
     SLOWO[n] = { pts, w: L.w, h: L.h };
     pts.forEach((_, i) => { const p = pula[i]; (p.sl = p.sl || []).push([n, i]); });
@@ -755,7 +758,7 @@ function przygotujSlowa() {
 function slowoStan(n: number, now: number, wy: number, textR: number) {
   if (!START[n] || !CENT[n]) return null;
   const t = now - START[n], w = SLOWO[n] ? SLOWO[n].w : NAZWY[n].length * LAB * .6, r = wy * (ROZ[n] || 0);
-  const K = KOTWICA[n] || CENT[n], [kx, ky, bw] = brain({ u: K[0], v: K[1] }), [ox, oy] = wyspa(n, 0, 0, bw, r);
+  const K = KOTWICA[n] || CENT[n], [kx, ky, bw] = brain({ u: K[0], v: K[1] }, 1, r), [ox, oy] = wyspa(n, 0, 0, bw, r);
   // nazwa siedzi na zewnętrznym brzegu swojej sieci, od środka mózgu na zewnątrz, i płynie z siecią
   const dx = K[0] / 240 - .5, dy = K[1] / 180 - .5, L = Math.hypot(dx, dy) || 1, na = bw * .05 * r;
   const ix = kx + ox + dx / L * na, iy = ky + oy + dy / L * na * .75;
