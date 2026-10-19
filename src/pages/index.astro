@@ -188,13 +188,14 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-sol{position:absolute;left:calc(100% + 20px);top:50%;transform:translateY(-50%);width:400px;height:34vh;margin:0}
 .roj-sol-p{position:absolute;left:2%;bottom:4vh;height:15vh;aspect-ratio:100/222;opacity:0;transition:opacity 1.6s ease}
 .roj-sol-obrot{height:100%;transform:scaleX(-1)}
-/* snop świecy w prawo, od płomienia (66% szerokości po odbiciu, 39% wysokości) */
-.roj-sol-snop{position:absolute;left:66%;top:39%;width:min(340px,80vw);height:34vh;transform:translateY(-50%);clip-path:polygon(0 50%,100% 0,100% 100%);background:radial-gradient(ellipse 100% 70% at 0 50%,rgba(255,201,120,.24),rgba(255,201,120,0) 75%);opacity:0;transition:opacity 1.2s ease;pointer-events:none}
+/* snop świecy w prawo, od płomienia (66% szerokości po odbiciu, 39% wysokości); skrypt wodzi nim w górę i w dół */
+.roj-sol-snop{position:absolute;left:66%;top:calc(39% - 80px);width:min(340px,80vw);height:160px;transform-origin:0 50%;will-change:transform;clip-path:polygon(0 50%,100% 0,100% 100%);background:radial-gradient(ellipse 100% 70% at 0 50%,rgba(255,201,120,.24),rgba(255,201,120,0) 75%);opacity:0;transition:opacity 1.2s ease;pointer-events:none}
 .roj-sol.plonie .roj-sol-snop{opacity:1}
 .roj-sol.widac .roj-sol-p{opacity:1}
 .roj-sol-nazwa{position:absolute;left:50%;top:calc(100% + 6px);transform:translateX(-50%);font:400 17px var(--font-display);letter-spacing:.04em;color:var(--zloto);white-space:nowrap}
 .roj-chmura span{position:absolute;font:italic 400 15px var(--font-display);color:#d6cdbd;opacity:0;white-space:nowrap;transition:opacity .6s ease,color .6s ease,text-shadow .6s ease}
-.roj-sol.plonie .roj-chmura span{opacity:.95;color:#ffe2a8;text-shadow:0 0 10px rgba(255,201,120,.55);transition-delay:calc(.3s + var(--i) * .16s)}
+.roj-chmura span.widac{opacity:.45}
+.roj-chmura span.widac.lit{opacity:.95;color:#ffe2a8;text-shadow:0 0 10px rgba(255,201,120,.55)}
 /* słowa po prawej solipsysty, w wachlarzu jego snopu */
 .roj-chmura .c0{left:32%;top:8%}.roj-chmura .c1{left:46%;top:23%}.roj-chmura .c2{left:28%;top:38%}.roj-chmura .c3{left:44%;top:53%}.roj-chmura .c4{left:30%;top:68%}.roj-chmura .c5{left:42%;top:83%}
 /* postać: kontur */
@@ -435,9 +436,36 @@ function solKlasy(now: number) {
   if (!SOL.t0) return;
   const t = now - SOL.t0;
   sol.classList.toggle('widac', t > SOL_F[0]);
-  solObrot.classList.toggle('plonie', t > SOL_F[1]); sol.classList.toggle('plonie', t > SOL_F[1]);
+  solObrot.classList.toggle('plonie', t > SOL_F[1]); sol.classList.toggle('plonie', t > SOL_F[1]); snopStart();
   if (t > SOL_F[3]) SOL.done = true;
 }
+// Snop świecy solipsysty wodzi w górę i w dół po słowach, od najwyższego do najniższego i z powrotem;
+// słowo w snopie rozbłyska, a raz oświetlone zostaje przygaszone widoczne. Osobna, lekka pętla: jeden obrót
+// i klasy słów, tylko gdy solipsysta jest na ekranie, bez rysowania na płótnie.
+const snop = $('.roj-sol-snop'), SNOP_K: number[] = [];
+let SNOP_ON = false, SNOP_T0 = 0, SOL_WID = false;
+function snopKrok(now: number) {
+  if (!SOL_WID) { SNOP_ON = false; return; }
+  if (!SNOP_K.length) {
+    const b = solP.getBoundingClientRect(), ox = b.left + b.width * .66, oy = b.top + b.height * .39;
+    solSlowa.forEach((w) => { const r = w.getBoundingClientRect(); SNOP_K.push(Math.atan2(r.top + r.height / 2 - oy, r.left + r.width * .2 - ox)); });
+  }
+  const lo = Math.min(...SNOP_K) - .1, hi = Math.max(...SNOP_K) + .1;
+  const a = (lo + hi) / 2 + (hi - lo) / 2 * Math.sin((now - SNOP_T0) / 7000 * 6.2832 - Math.PI / 2);
+  snop.style.transform = 'rotate(' + a.toFixed(4) + 'rad)';
+  solSlowa.forEach((w, i) => {
+    const lit = Math.abs(SNOP_K[i] - a) < .2;
+    if (lit !== w.classList.contains('lit')) { w.classList.toggle('lit', lit); if (lit) w.classList.add('widac'); }
+  });
+  requestAnimationFrame(snopKrok);
+}
+function snopStart() {
+  if (!sol.classList.contains('plonie')) return;
+  if (CICHO) { solSlowa.forEach((w) => w.classList.add('widac', 'lit')); return; }
+  if (SNOP_ON || !SOL_WID) return;
+  SNOP_ON = true; if (!SNOP_T0) SNOP_T0 = performance.now(); requestAnimationFrame(snopKrok);
+}
+new IntersectionObserver((es) => { SOL_WID = es[0].isIntersecting; snopStart(); }).observe(sol);
 function zakonczSol() { SOL.t0 = performance.now() - 10000; solKlasy(performance.now()); }
 // Wędrówka iskry przy mózgu: co chwilę losuje, co robi dalej. Ogląda wybraną sieć snopem z bliska,
 // siada na nazwie sieci i świeci na nią albo krąży nad mózgiem i świeci na boki. Mózg świeci tylko w jej snopie.
@@ -1056,7 +1084,7 @@ function frame() {
 }
 let tk = false;
 addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(() => { frame(); tk = false; }); } }, { passive: true });
-addEventListener('resize', () => { SZER_MAX = 0; ZN_X.length = 0; size(); frame(); });
+addEventListener('resize', () => { SZER_MAX = 0; ZN_X.length = 0; SNOP_K.length = 0; size(); frame(); });
 const puszczaj = (ev: MouseEvent) => {
   if (PUSZCZ || CICHO || ev.button !== 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
   ev.preventDefault(); PUSZCZ = performance.now(); kick();
