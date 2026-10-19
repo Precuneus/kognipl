@@ -156,16 +156,18 @@ body:has(.roj) .site-footer::before{display:none}
 .roj .roj-zrodlo{transition:color .8s ease,text-shadow .8s ease}
 .roj .roj-zrodlo.zloty{color:var(--zloto);text-shadow:0 0 12px rgba(240,192,96,.45)}
 /* po solipsyście tekst płynie dalej z krótszymi odstępami */
-.roj-st.ciag[data-k=wiem]{padding-top:0;margin-top:-37vh}
-.roj-st.ciag[data-k=ja]{padding-top:11vh}
-.roj-st.ciag[data-k=doswiadcza]{padding-top:8vh;padding-bottom:0}
-.roj-st.ciag[data-k=dyscypliny]{padding-top:9vh;padding-bottom:22vh}
+.roj-st.ciag[data-k=wiem]{padding-top:0;margin-top:-33vh}
+.roj-st.ciag[data-k=ja]{padding-top:14.3vh}
+.roj-st.ciag[data-k=doswiadcza]{padding-top:10.4vh;padding-bottom:0}
+.roj-st.ciag[data-k=dyscypliny]{padding-top:11.7vh;padding-bottom:22vh}
 .roj .roj-dysc{font-weight:500}
 .roj-t{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease}
 .roj-st.in .roj-t{opacity:1;transform:none}
 .roj p,.roj h1,.roj ul{margin:0}
 .roj-t p,.roj-lista li{font-family:var(--font-body);font-size:17px;line-height:1.9;color:var(--kosc);font-weight:300}
 .roj-t > * + *{margin-top:1em}
+/* od „Jesteś człowiekiem” dalej akapity mają o 30% więcej powietrza (jego słowo, 2026-10-19) */
+.roj-st:is([data-k=zombie],[data-k=wiem],[data-k=ja],[data-k=doswiadcza],[data-k=dyscypliny],[data-k=kogni]) .roj-t > * + *{margin-top:1.3em}
 .roj .roj-duze{font-family:var(--font-display);font-weight:400;font-size:clamp(28px,2.7vw,40px);line-height:1.2;letter-spacing:.005em;color:var(--zloto)}
 .roj-t > .roj-duze{margin:.45em 0 .55em}
 .roj-t > .roj-duze:first-child{margin-top:0}
@@ -248,10 +250,10 @@ body:has(.roj) .site-footer::before{display:none}
   .roj-st.pierwszy{padding-top:calc(34vh + 33vw + 16px)!important;padding-bottom:0!important;align-items:flex-start}
   .roj-st.ciag[data-k=pytanie]{padding-top:14vh!important;padding-bottom:0!important}
   .roj-st.ciag[data-k=sieci]{padding-top:7vh!important;padding-bottom:20vh!important}
-  .roj-st.ciag[data-k=wiem]{padding-top:0!important;padding-bottom:0!important;margin-top:-25vh}
-  .roj-st.ciag[data-k=ja]{padding-top:10vh!important;padding-bottom:0!important}
-  .roj-st.ciag[data-k=doswiadcza]{padding-top:8vh!important;padding-bottom:0!important}
-  .roj-st.ciag[data-k=dyscypliny]{padding-top:8vh!important;padding-bottom:20vh!important}
+  .roj-st.ciag[data-k=wiem]{padding-top:0!important;padding-bottom:0!important;margin-top:-22vh}
+  .roj-st.ciag[data-k=ja]{padding-top:13vh!important;padding-bottom:0!important}
+  .roj-st.ciag[data-k=doswiadcza]{padding-top:10.4vh!important;padding-bottom:0!important}
+  .roj-st.ciag[data-k=dyscypliny]{padding-top:10.4vh!important;padding-bottom:20vh!important}
   .roj-lot{font-size:15px}
   .roj-mnich-nazwa{font-size:11px}
   .roj-st.poziom,.roj-st.lepkie{padding:0!important}
