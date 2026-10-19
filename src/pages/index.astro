@@ -8,6 +8,7 @@ const WIKI = Object.keys(import.meta.glob('./wiki/**/*.astro')).length > 0 ? '/w
 const md = (t) => t.replace(/\{\{([^}|]+)(?:\|([^}]+))?\}\}/g, (_, w, k) => '<span class="iskra-cel' + (k ? ' ' + k : '') + '">' + w + '</span>');
 const T = {
   pytanie: 'Czym jest to, czego {{doświadczasz}}?',
+  akt: 'Doświadczasz {{aktywności}} swoich własnych sieci mózgowych.',
   zmiany: 'Zmiany struktury mózgu (np. degeneracje, lezje, uszkodzenia) i zmiany funkcjonowania struktur między sobą (np. substancje psychoaktywne, uzależnienia, nauka, rozwój) zmieniają, czego doświadczasz.',
   zombie: ['Jesteś człowiekiem, prawda? Czy {{zombie}}?', 'Założę, że człowiekiem i też doświadczasz, jak ja. Ale nie mogę tego wiedzieć.'],
   wiem: ['Wiem tylko tyle, ile się nauczyłem od {{środowiska}}, w którym się urodziłem.', 'Doświadczam Modeli Mentalnych, które jednocześnie są moją aktywnością biologiczną.'],
@@ -41,7 +42,7 @@ const BADACZ = { socjologia: 'socjolog', psychologia: 'psycholog', biologia: 'bi
 const dysc = (t: string) => { let k = 0; return t.replace(/\[\[([^\]]+)\]\]/g, (_, w) => { const i = k++; return '<span class="roj-dysc" data-k="' + i + '" style="color:' + OSNOWY[i][1] + '">' + w + '</span>'; }); };
 // Słowa, które oświetlają postacie: osnowy Płótna, każda grupa w swoim kolorze.
 const GRUPY = R.grupy.map((g) => ({ nazwa: g.nazwa, kolor: KOL_OSN[g.nazwa], slowa: g.osnowy.map((o) => o.nazwa) }));
-const CHMURA = ['mózg w naczyniu', 'symulacja', 'matrix', 'zły demon Kartezjusza', 'sen Zhuangzi', 'problem innych umysłów', 'filozoficzne zombie', 'esse est percipi', 'zombie'];
+const CHMURA = ['mózg w naczyniu', 'matrix', 'zły demon Kartezjusza', 'sen Zhuangzi', 'problem innych umysłów', 'filozoficzne zombie'];
 // osnowy: wysokość każdej nici (vh) i miejsce jej mnicha (vw)
 const YN_VH = [30, 48, 66, 84], MNICH_X = [17, 23, 11, 20];
 // słowa osnów na różnych wysokościach nad swoją osnową: 24 px plus 0 do 10 vh, rozrzucone, a nie po kolei
@@ -67,13 +68,16 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
 <canvas class="roj-plotno roj-iskra" aria-hidden="true"></canvas>
 <main class="roj">
   <section class="roj-st lewo pierwszy" data-k="czesc">
-    <div class="roj-t"><h1 class="roj-czesc">Cześć</h1></div>
+    <div class="roj-t"><h1 class="roj-czesc">Cześć!</h1></div>
   </section>
   <section class="roj-st lewo ciag" data-k="pytanie">
     <div class="roj-t">
       <p class="roj-duze" set:html={md(T.pytanie)} />
-      <p>{T.zmiany}</p>
+      <p><span class="roj-zrodlo">{T.akt.replace(/\{\{|\}\}/g, '')}</span> {T.zmiany}</p>
     </div>
+  </section>
+  <section class="roj-st lewo ciag" data-k="naglowek">
+    <div class="roj-t"><p class="roj-duze roj-naglowek" set:html={md(T.akt)} /></div>
   </section>
   <section class="roj-st lewo ciag" data-k="sieci">
     <div class="roj-t">
@@ -127,6 +131,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
         : <span class="roj-wiki">kogn<span class="roj-wiki-i">ı<span class="roj-wiki-kropka"></span></span>.pl/wiki</span>}
     </div>
   </section>
+  <p class="roj-lot-n" aria-hidden="true">{T.akt.replace(/\{\{|\}\}/g, '')}</p>
   <div class="roj-loty" aria-hidden="true">{OSNOWY.map(([n, c]) => <span class="roj-lot" style={'color:' + c}></span>)}</div>
 </main>
 
@@ -145,7 +150,11 @@ body:has(.roj) .site-footer::before{display:none}
 /* Cześć, pytanie i sieci płyną jak jeden tekst */
 .roj-st.ciag{min-height:0;padding-bottom:0}
 .roj-st.ciag[data-k=pytanie]{padding-top:10vh}
+.roj-st.ciag[data-k=naglowek]{padding-top:9vh}
 .roj-st.ciag[data-k=sieci]{padding-top:9vh;padding-bottom:24vh}
+/* zdanie z białego akapitu w drodze do nagłówka: rośnie i złocieje */
+.roj .roj-lot-n{position:fixed;left:0;top:0;z-index:2;margin:0;font-family:var(--font-display);font-weight:400;font-size:clamp(28px,2.7vw,40px);line-height:1.2;letter-spacing:.005em;opacity:0;pointer-events:none;transform-origin:0 0;will-change:transform,opacity}
+.roj .roj-naglowek{visibility:hidden}
 /* po solipsyście tekst płynie dalej z krótszymi odstępami */
 .roj-st.ciag[data-k=wiem]{padding-top:0;margin-top:-37vh}
 .roj-st.ciag[data-k=ja]{padding-top:11vh}
@@ -187,7 +196,7 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-chmura span{position:absolute;font:italic 400 15px var(--font-display);color:#d6cdbd;opacity:0;white-space:nowrap;transition:opacity .6s ease,color .6s ease,text-shadow .6s ease}
 .roj-sol.plonie .roj-chmura span{opacity:.95;color:#ffe2a8;text-shadow:0 0 10px rgba(255,201,120,.55);transition-delay:calc(.3s + var(--i) * .16s)}
 /* słowa po prawej solipsysty, w wachlarzu jego snopu */
-.roj-chmura .c0{left:34%;top:4%}.roj-chmura .c1{left:46%;top:14%}.roj-chmura .c2{left:28%;top:25%}.roj-chmura .c3{left:42%;top:36%}.roj-chmura .c4{left:26%;top:47%}.roj-chmura .c5{left:40%;top:58%}.roj-chmura .c6{left:30%;top:69%}.roj-chmura .c7{left:48%;top:80%}.roj-chmura .c8{left:36%;top:91%}
+.roj-chmura .c0{left:32%;top:8%}.roj-chmura .c1{left:46%;top:23%}.roj-chmura .c2{left:28%;top:38%}.roj-chmura .c3{left:44%;top:53%}.roj-chmura .c4{left:30%;top:68%}.roj-chmura .c5{left:42%;top:83%}
 /* postać: kontur */
 .postac{display:block;height:100%;width:auto;overflow:visible;--kontur:rgba(236,230,218,.5)}
 .postac .szata{fill:#000;stroke:var(--kontur);stroke-width:1.1;vector-effect:non-scaling-stroke}
@@ -300,7 +309,8 @@ const poziom = SEKCJE.osnowy, zombie = SEKCJE.zombie;
 const tor = $('.roj-tor'), kuPlotnu = $('.roj-ku-plotnu');
 const dyscS = $$('.roj-dysc'), loty = $$('.roj-lot'), nazwyM = $$('.roj-mnich-nazwa');
 loty.forEach((l, k) => { l.textContent = dyscS[k].textContent; });
-const czesc = $('.roj-czesc');
+const czesc = $('.roj-czesc'), zrodlo = $('.roj-zrodlo'), nagl = $('.roj-naglowek'), lotN = $('.roj-lot-n');
+let FS_Z = 17, FS_N = 40, NAGL = false;
 const sieciEl = $$('.roj-siec');
 const SIECI_L = sieciEl.map((e) => +e.dataset.n!);
 const sol = $('.roj-sol'), solP = $('.roj-sol-p'), solObrot = $('.roj-sol-obrot'), solSlowa = $$('.roj-chmura span');
@@ -313,6 +323,7 @@ for (const k in SEKCJE) CEL[k] = SEKCJE[k].querySelector('.iskra-cel:not(.hura)'
 const hura = $('.iskra-cel.hura');
 
 function size() {
+  FS_Z = parseFloat(getComputedStyle(zrodlo).fontSize); FS_N = parseFloat(getComputedStyle(nagl).fontSize);
   // wymiary z samego canvasu (100vw × 100vh): pasek adresu Safari nie zmienia ich, więc płótno nie skacze przy przewijaniu
   MOB = innerWidth < 760; LAB = MOB ? 15 : 20; D = Math.min(devicePixelRatio || 1, MOB ? 1.25 : 1.5);
   const w = cv.clientWidth, h = cv.clientHeight;
@@ -341,7 +352,7 @@ function wyspa(n: number, bx: number, by: number, bw: number, wy: number) {
 }
 function st(k: string, p: any, lp: number) {
   const net = p.net > 1; let x = 0, y = 0, a = 0, c = p.col, s = 1;
-  if (k === 'czesc' || k === 'pytanie') { [x, y] = brain(p); a = net ? .3 : .16; }
+  if (k === 'czesc' || k === 'pytanie' || k === 'naglowek') { [x, y] = brain(p); a = net ? .3 : .16; }
   else if (k === 'sieci') {
     const [bx, by, bw] = brain(p, 1, ROZ[SIECI_L[0]] || 0);
     if (net) { const [ix, iy] = wyspa(p.net, 0, 0, bw, ROZ[p.net] || 0); x = bx + ix; y = by + iy; a = .3; }
@@ -471,7 +482,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       const rr = czesc.getBoundingClientRect(), wx = rr.left + rr.width * .5, wy = rr.top + rr.height * .55;
       const x = rr.left + rr.width * .12, y = rr.top - rr.height * .55, d = Math.hypot(wx - x, wy - y);
       c = { id: 'czesc', tryb: 'lot', x, y, I: 1, ang: Math.atan2(wy - y, wx - x), len: d + rr.width * .6, half: Math.max(.2, Math.min(.75, Math.atan2(rr.width * .62, d))) };
-    } else if (S.k === 'sieci' || (S.k === 'pytanie' && SIECI_N)) {
+    } else if (S.k === 'sieci' || ((S.k === 'pytanie' || S.k === 'naglowek') && SIECI_N)) {
       // przy mózgu iskra robi, co chce: ogląda sieci, siada na ich nazwach, krąży i rozgląda się; wybory losowe
       const wy = (A.k === 'sieci' ? 1 - t : 0) + (B.k === 'sieci' ? t : 0);
       if (SIECI_N) c = wedruj(now, wy);
@@ -495,7 +506,8 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       if (rr.top < H * .8) c = { id: 'wiki', tryb: 'lot', x: rr.left + rr.width * .5, y: rr.top + rr.height * .5, I: 0, skala: rr.height / .26 * .25 / (IS.r * 1.75) };
       else if (hr.top < H * .72) { c = stoj(hura, 'hura'); if (c) c.hura = 1; }
       else c = stoj(CEL.kogni, 'kogni');
-    } else c = stoj(CEL[S.k], S.k);
+    } else if (S.k === 'naglowek') c = NAGL ? stoj(CEL.naglowek, 'naglowek') : stoj(CEL.pytanie, 'pytanie');
+    else c = stoj(CEL[S.k], S.k);
   }
   if (c && c.tryb === 'stoj' && (c.y < H * .06 || c.y > H * .94)) { c.tryb = 'lot'; c.y = Math.max(H * .06, Math.min(H * .94, c.y)); }
   if (c) {
@@ -793,6 +805,8 @@ function rysujIskre(A0: number) {
 let SIECI_N = 0, SIECI_T = 0;
 const SIECI_Q: HTMLElement[] = [];
 function pokazSiec() {
+  // mózg wchodzi w snop iskry dopiero, gdy zdanie stanie się nagłówkiem
+  if (!NAGL) return;
   const e = SIECI_Q.shift(); if (!e) return;
   e.classList.add('in'); SIECI_N = sieciEl.indexOf(e) + 1; SIECI_T = performance.now();
   // przy pierwszym znaczniku wszystkie sieci odpływają naraz i dostają nazwy; kolejne znaczniki niosą tylko rytm przewijania
@@ -880,7 +894,7 @@ function frame() {
   solKlasy(now);
   AKT = 0;
   const wI = (A.k === 'sieci' ? 1 - t : 0) + (B.k === 'sieci' ? t : 0), textR = kolT.getBoundingClientRect().right;
-  const wS = cl(wI + (A.k === 'pytanie' ? 1 - t : 0) + (B.k === 'pytanie' ? t : 0));
+  const wS = cl(wI + (A.k === 'pytanie' || A.k === 'naglowek' ? 1 - t : 0) + (B.k === 'pytanie' || B.k === 'naglowek' ? t : 0));
   let slowaRuch = false;
   SLOWA_FORMA = false;
   for (const n of SIECI_L) ROZ[n] = START[n] ? (CICHO ? 1 : sm(cl((now - START[n] - 100) / 1100))) : 0;
@@ -932,6 +946,18 @@ function frame() {
   }
   // osnowy: tor jedzie w bok; po osnowach nici zostają, jak są
   tor.style.transform = 'translateX(' + LN.off + 'px)';
+  // zdanie z białego akapitu wychodzi z tekstu, rośnie i złocieje w nagłówek; dopiero potem rozchodzą się sieci
+  {
+    const a = zrodlo.getBoundingClientRect(), b = nagl.getBoundingClientRect();
+    const f = CICHO ? (b.top < H * .6 ? 1 : 0) : sm(cl((H * .92 - b.top) / (H * .42)));
+    zrodlo.style.visibility = f > 0 ? 'hidden' : ''; nagl.style.visibility = f >= 1 ? 'visible' : '';
+    if (f > 0 && f < 1) {
+      const s0 = FS_Z / FS_N, sk = s0 + (1 - s0) * f, x = a.left + (b.left - a.left) * f, y = a.top + (b.top - a.top) * f - Math.sin(f * Math.PI) * H * .03;
+      lotN.style.width = b.width + 'px'; lotN.style.color = 'rgb(' + mix(hex('#ece6da'), hex('#f0c060'), f) + ')';
+      lotN.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + sk.toFixed(3) + ')'; lotN.style.opacity = '1';
+    } else lotN.style.opacity = '0';
+    if (f >= 1 && !NAGL) { NAGL = true; if (SIECI_Q.length && !SIECI_N) pokazSiec(); }
+  }
   // nazwy dyscyplin wylatują z tekstu, gdy wjeżdżają osnowy, i lądują pod swoimi mnichami
   const gD = cl((H * .75 - LN.rtop) / (H * .75));
   dyscS.forEach((sp, k) => {
