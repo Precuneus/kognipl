@@ -152,9 +152,11 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-st.ciag[data-k=pytanie]{padding-top:10vh}
 .roj-st.ciag[data-k=naglowek]{padding-top:9vh}
 .roj-st.ciag[data-k=sieci]{padding-top:9vh;padding-bottom:24vh}
-/* zdanie z białego akapitu w drodze do nagłówka: rośnie i złocieje */
-.roj .roj-lot-n{position:fixed;left:0;top:0;z-index:2;margin:0;font-family:var(--font-display);font-weight:400;font-size:clamp(28px,2.7vw,40px);line-height:1.2;letter-spacing:.005em;opacity:0;pointer-events:none;transform-origin:0 0;will-change:transform,opacity}
-.roj .roj-naglowek{visibility:hidden}
+/* zdanie z akapitu: iskra je złoci, odrywa i ciągnie do nagłówka, gdzie przechodzi w nagłówek */
+.roj .roj-lot-n{position:fixed;left:0;top:0;z-index:2;margin:0;font-family:var(--font-body);font-weight:300;font-size:17px;line-height:1.9;color:var(--zloto);white-space:normal;text-shadow:0 0 12px rgba(240,192,96,.45);opacity:0;pointer-events:none;transform-origin:0 0;will-change:transform,opacity}
+.roj .roj-naglowek{opacity:0}
+.roj .roj-zrodlo{transition:color .8s ease,text-shadow .8s ease}
+.roj .roj-zrodlo.zloty{color:var(--zloto);text-shadow:0 0 12px rgba(240,192,96,.45)}
 /* po solipsyście tekst płynie dalej z krótszymi odstępami */
 .roj-st.ciag[data-k=wiem]{padding-top:0;margin-top:-37vh}
 .roj-st.ciag[data-k=ja]{padding-top:11vh}
@@ -495,6 +497,37 @@ function wedruj(now: number, wy: number): any {
   if (now > WED.gzt) { WED.gz = Math.random() * 6.283; const d = 400 + Math.random() * 900; WED.gzt = now + d; setTimeout(kick, d + 20); }
   return { id: 'krazy', tryb: 'lot', x: Math.max(lewo, cx + (WED.ux - .5) * cw), y: Math.max(H * .08, cy + (WED.uy - .5) * cw * .75), I: .55, ang: WED.gz, len: cw * .32, half: .42 };
 }
+// Zdanie z akapitu: gdy akapit dojdzie do górnej części ekranu, iskra świeci na zdanie i ono złocieje,
+// potem odrywa się od akapitu i iskra ciągnie je, lecąc przed nim, do miejsca nagłówka, gdzie zdanie przechodzi
+// w nagłówek. Dopiero wtedy sieci się rozchodzą, a iskra leci do mózgu. Przebieg w czasie, nie w przewijaniu.
+const NAG: any = { t0: 0 };
+const NAG_F = [350, 1000, 2600, 3100];  // złoci się, odrywa, dociera, nagłówek gotowy
+function nagGeo(now: number) {
+  const a = zrodlo.getBoundingClientRect(), b = nagl.getBoundingClientRect(), t = NAG.t0 ? now - NAG.t0 : -1;
+  const S = Math.max(1, Math.min(1.6, b.width / Math.max(1, a.width)));
+  const ruch = (tt: number) => {
+    const u = sm(cl((tt - NAG_F[1]) / (NAG_F[2] - NAG_F[1]))), sk = 1 + (S - 1) * u, ex = b.left, ey = b.top + b.height / 2 - a.height * S / 2;
+    return { u, s: sk, x: a.left + (ex - a.left) * u, y: a.top + (ey - a.top) * u - Math.sin(u * Math.PI) * H * .05 };
+  };
+  return { a, b, t, p: ruch(t), q: ruch(t + 200) };
+}
+function nagIskra(now: number): any {
+  const G0 = nagGeo(now), a = G0.a;
+  if (G0.t < NAG_F[1]) {
+    // świeci na zdanie z góry, aż ono złocieje
+    const x = a.left + a.width * .12, y = a.top - 30, wx = a.left + a.width * .5, wy = a.top + a.height * .5, d = Math.hypot(wx - x, wy - y);
+    return { id: 'zdanie', tryb: 'lot', x, y, I: 1, ang: Math.atan2(wy - y, wx - x), len: d + a.width * .55, half: Math.max(.2, Math.min(.8, Math.atan2(a.width * .55, d))) };
+  }
+  // ciągnie: leci tuż przed zdaniem (cel o 0,2 s do przodu, żeby sprężyna nie zostawała w tyle), snop wstecz na zdanie
+  const q = G0.q, w = a.width * q.s;
+  return { id: 'ciagnie', tryb: 'lot', x: q.x + w + 14, y: q.y + a.height * q.s * .5 - 4, I: .6, ang: Math.PI, len: w * .9, half: .22 };
+}
+function startSieci(now: number) {
+  if (SIECI_N) return;
+  SIECI_N = 1; SIECI_T = now; sieciEl[0].classList.add('in');
+  for (const n of SIECI_L) START[n] = CICHO ? now - 5000 : now;
+  kick(); if (SIECI_Q.length) setTimeout(pokazSiec, CICHO ? 0 : 1500);
+}
 function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, lz: number): any {
   const r = IS.r * 1.95;
   if (scrollY < 4 && knotLogo) { const [x, y] = knotXY(); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; }
@@ -504,6 +537,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
     return { id, tryb: 'stoj', x: rr.left + rr.width * .5, y: rr.top + rr.height * .2 - r, el: el.closest('p,h1,li') as HTMLElement, I: 0 };
   };
   let c: any = null;
+  if (NAG.t0 && !NAGL && scrollY >= 4) c = nagIskra(now);
   if (!c) {
     if (S.k === 'czesc') {
       // unosi się nad słowem i świeci na nie z góry
@@ -546,6 +580,8 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       : c.id === 'zombie' && c.I > .1 ? { pd: 1.2, lid: 1 }
       : c.id.startsWith('siec') || c.id.startsWith('patrz') ? { pd: 1.12, lid: 1 }
       : c.id.startsWith('siad') ? { pd: 1.05, lid: .92, joy: .4 }
+      : c.id === 'zdanie' ? { pd: 1.18, lid: 1 }
+      : c.id === 'ciagnie' ? { pd: 1.1, lid: 1, joy: .6 }
       : c.id === 'krazy' ? { pd: 1.06, lid: 1 }
       : { pd: 1, lid: 1 };
   }
@@ -974,17 +1010,19 @@ function frame() {
   }
   // osnowy: tor jedzie w bok; po osnowach nici zostają, jak są
   tor.style.transform = 'translateX(' + LN.off + 'px)';
-  // zdanie z białego akapitu wychodzi z tekstu, rośnie i złocieje w nagłówek; dopiero potem rozchodzą się sieci
+  // zdanie z akapitu: złocenie, oderwanie, lot za iskrą, przejście w nagłówek
   {
-    const a = zrodlo.getBoundingClientRect(), b = nagl.getBoundingClientRect();
-    const f = CICHO ? (b.top < H * .6 ? 1 : 0) : sm(cl((H * .92 - b.top) / (H * .42)));
-    zrodlo.style.visibility = f > 0 ? 'hidden' : ''; nagl.style.visibility = f >= 1 ? 'visible' : '';
-    if (f > 0 && f < 1) {
-      const s0 = FS_Z / FS_N, sk = s0 + (1 - s0) * f, x = a.left + (b.left - a.left) * f, y = a.top + (b.top - a.top) * f - Math.sin(f * Math.PI) * H * .03;
-      lotN.style.width = b.width + 'px'; lotN.style.color = 'rgb(' + mix(hex('#ece6da'), hex('#f0c060'), f) + ')';
-      lotN.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + sk.toFixed(3) + ')'; lotN.style.opacity = '1';
+    if (!NAG.t0 && SEKCJE.pytanie.classList.contains('in')) { const r0 = zrodlo.getBoundingClientRect(); if (r0.top < H * .6 && r0.bottom > 0) NAG.t0 = CICHO ? now - 1e4 : now; }
+    const G0 = nagGeo(now), tn = G0.t, x = cl((tn - NAG_F[2]) / (NAG_F[3] - NAG_F[2]));
+    zrodlo.classList.toggle('zloty', tn > NAG_F[0]);
+    zrodlo.style.visibility = tn > NAG_F[1] ? 'hidden' : '';
+    nagl.style.opacity = tn > NAG_F[2] ? x.toFixed(3) : '';
+    if (tn > NAG_F[1] && tn < NAG_F[3]) {
+      // szerokość akapitu: zdanie łamie się tak jak w akapicie, także na telefonie
+      const p = G0.p; lotN.style.fontSize = FS_Z + 'px'; lotN.style.width = (zrodlo.parentElement as HTMLElement).clientWidth + 'px';
+      lotN.style.transform = 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px) scale(' + p.s.toFixed(3) + ')'; lotN.style.opacity = (1 - x).toFixed(3);
     } else lotN.style.opacity = '0';
-    if (f >= 1 && !NAGL) { NAGL = true; if (SIECI_Q.length && !SIECI_N) pokazSiec(); }
+    if (tn >= NAG_F[3] && !NAGL) { NAGL = true; startSieci(now); }
   }
   // nazwy dyscyplin wylatują z tekstu, gdy wjeżdżają osnowy, i lądują pod swoimi mnichami
   const gD = cl((H * .75 - LN.rtop) / (H * .75));
@@ -1056,7 +1094,7 @@ function frame() {
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
   const iskraRuch = !!c && !CICHO && (solRuch || !!c.slizg || !!c.hura || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
     || !IS.dom && (Math.hypot(IS.vx, IS.vy) > 6 || Math.hypot(c.x - IS.x, c.y - IS.y) > .8 || (c.tryb === 'stoj' && !IS.kontakt))
-    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || slowaRuch || zgRuch || !!PUSZCZ
+    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || slowaRuch || zgRuch || !!PUSZCZ || (!!NAG.t0 && !NAGL)
     || (!IS.dom && (now - IS.mrug < 170 || IS.zdz > .02 || Math.abs(IS.pd - ((c.mood && c.mood.pd) || 1)) > .01 || Math.abs(IS.lid - ((c.mood && c.mood.lid) || 1)) > .01
       || Math.abs(IS.joy - ((c.mood && c.mood.joy) || 0) * (1 - .35 * WSTECZ)) > .01 || Math.abs(IS.lean) > .005 || WSTECZ > .01))
     );
