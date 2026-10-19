@@ -42,6 +42,8 @@ const GRUPY = R.grupy.map((g) => ({ nazwa: g.nazwa, kolor: KOL_OSN[g.nazwa], slo
 const CHMURA = ['mózg w naczyniu', 'symulacja', 'matrix', 'zły demon Kartezjusza', 'sen Zhuangzi', 'problem innych umysłów', 'filozoficzne zombie', 'esse est percipi', 'zombie'];
 // osnowy: wysokość każdej nici (vh) i miejsce jej mnicha (vw)
 const YN_VH = [30, 48, 66, 84], MNICH_X = [17, 23, 11, 20];
+// słowa osnów na różnych wysokościach nad swoją osnową: 24 px plus 0 do 10 vh, rozrzucone, a nie po kolei
+const WYS = (k, j) => (((j * 37 + k * 23) % 11) / 10 * 10).toFixed(1);
 // Postać w habicie z kapturem, bez twarzy, ze świecą: sam kontur, obrócona o mniej więcej 50 stopni w lewo.
 // Płomień i światło w kolorze --swiatlo.
 const SYLWETKA = 'M50 6 C62 5 73 12 76 26 C78 38 77 48 80 58 C86 80 88 120 90 160 C91 185 92 205 93 216 C75 221 45 222 21 217 C22 180 25 140 26 110 C26 90 28 70 33 56 C29 48 28 38 30 28 C32 16 40 8 50 6 Z';
@@ -102,7 +104,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   </section>
   <section class="roj-st poziom" data-k="osnowy" aria-label="Osnowy: socjologia, psychologia, biologia, fizyka">
     <div class="roj-lepki"><div class="roj-tor">
-      {GRUPY.map((g, k) => g.slowa.map((w, j) => <span class="roj-slowo-osn" data-k={k} style={'--k:' + g.kolor + ';left:' + (35 + 240 * (j + .5) / g.slowa.length).toFixed(1) + 'vw;top:calc(' + YN_VH[k] + 'vh - ' + (j % 2 ? 46 : 30) + 'px)'}>{w}</span>))}
+      {GRUPY.map((g, k) => g.slowa.map((w, j) => <span class="roj-slowo-osn" data-k={k} style={'--k:' + g.kolor + ';left:' + (35 + 240 * (j + .5) / g.slowa.length).toFixed(1) + 'vw;top:calc(' + YN_VH[k] + 'vh - 24px - ' + WYS(k, j) + 'vh)'}>{[...w].map((z) => z === ' ' ? ' ' : <span class="zn">{z}</span>)}</span>))}
     </div>
     {GRUPY.map((g, k) => <div class="roj-mnich" data-k={k} style={'left:' + MNICH_X[k] + 'vw;top:calc(' + YN_VH[k] + 'vh - var(--mh))'}><div class="roj-mnich-c plonie" set:html={postac('m' + k, g.kolor)} /><span class="roj-mnich-nazwa" style={'color:' + g.kolor}>{g.nazwa}</span></div>)}
     <a class="roj-ku-plotnu" href="/2026/" aria-label="Rocznik 2026: Płótno"></a>
@@ -202,6 +204,7 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-slowo-osn{position:absolute;transform:translateX(-50%);font:300 14px var(--font-body);letter-spacing:.02em;color:#cfc6b6;white-space:nowrap;opacity:0;transition:color .4s ease,text-shadow .4s ease;will-change:transform,opacity}
 .roj-slowo-osn.lit{color:var(--k);text-shadow:0 0 10px var(--k),0 0 20px var(--k)}
 .roj-slowo-osn.u-plotna{cursor:pointer}
+.roj-slowo-osn .zn{display:inline-block}
 .roj-st.poziom{--mh:15vh}
 .roj-mnich{position:absolute;height:var(--mh);aspect-ratio:100/222;transform-origin:50% 100%;will-change:transform,opacity}
 .roj-mnich-c{height:100%;transform:scaleX(-1)}
@@ -420,6 +423,33 @@ function solKlasy(now: number) {
   if (t > SOL_F[3]) SOL.done = true;
 }
 function zakonczSol() { SOL.t0 = performance.now() - 10000; solKlasy(performance.now()); }
+// Wędrówka iskry przy mózgu: co chwilę losuje, co robi dalej. Ogląda wybraną sieć snopem z bliska,
+// siada na nazwie sieci i patrzy na nią albo krąży nad mózgiem i rozgląda się na boki.
+const WED: any = { typ: '', n: 0, t: 0, T: 0, ux: 0, uy: 0, gz: 0, gzt: 0 };
+function wedruj(now: number, wy: number): any {
+  if (now > WED.t + WED.T) {
+    const los = Math.random(), L = SIECI_L.filter((n) => WS[n]);
+    WED.t = now; WED.n = L.length ? L[Math.floor(Math.random() * L.length)] : SIECI_L[0];
+    if (los < .42) { WED.typ = 'patrz'; WED.T = 1600 + Math.random() * 2200; WED.ux = (Math.random() - .5) * .16; WED.uy = .08 + Math.random() * .1; }
+    else if (los < .72 && WS[WED.n] && WS[WED.n].etykieta > .9) { WED.typ = 'siad'; WED.T = 1800 + Math.random() * 2600; WED.ux = (Math.random() - .5) * .6; }
+    else { WED.typ = 'krazy'; WED.T = 1200 + Math.random() * 1800; WED.ux = .1 + Math.random() * .8; WED.uy = .1 + Math.random() * .8; WED.gzt = 0; }
+    setTimeout(kick, WED.T + 20);
+  }
+  const n = WED.n, r = wy * (ROZ[n] || 0), [bx, by, bw] = brain({ u: CENT[n][0], v: CENT[n][1] }, 1, r), [ix, iy] = wyspa(n, bx, by, bw, r);
+  const lewo = MOB ? 14 : kolT.getBoundingClientRect().right + 24;
+  if (WED.typ === 'patrz') {
+    AKT = n;
+    const x = Math.max(lewo, ix + WED.ux * bw), y = Math.max(H * .08, iy - WED.uy * bw - 12), d = Math.hypot(ix - x, iy - y);
+    return { id: 'patrz' + n, tryb: 'lot', x, y, I: .75, ang: Math.atan2(iy - y, ix - x), len: d + bw * .1, half: .5 };
+  }
+  if (WED.typ === 'siad' && WS[n]) {
+    const s = WS[n];
+    return { id: 'siad' + n, tryb: 'stoj', x: s.lx + WED.ux * s.w, y: s.ly - LAB * .45 - IS.r * 1.95, I: 0, gaze: Math.atan2(iy - s.ly, ix - s.lx), hop: 1e9 };
+  }
+  const [cx, cy, cw] = brain({ u: 120, v: 90 }, 1, wy * (ROZ[SIECI_L[0]] || 0));
+  if (now > WED.gzt) { WED.gz = Math.random() * 6.283; const d = 400 + Math.random() * 900; WED.gzt = now + d; setTimeout(kick, d + 20); }
+  return { id: 'krazy', tryb: 'lot', x: Math.max(lewo, cx + (WED.ux - .5) * cw), y: Math.max(H * .08, cy + (WED.uy - .5) * cw * .75), I: 0, gaze: WED.gz };
+}
 function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, lz: number): any {
   const r = IS.r * 1.95;
   if (scrollY < 4 && knotLogo) { const [x, y] = knotXY(); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; }
@@ -436,14 +466,10 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       const x = rr.left + rr.width * .12, y = rr.top - rr.height * .55, d = Math.hypot(wx - x, wy - y);
       c = { id: 'czesc', tryb: 'lot', x, y, I: 1, ang: Math.atan2(wy - y, wx - x), len: d + rr.width * .6, half: Math.max(.2, Math.min(.75, Math.atan2(rr.width * .62, d))) };
     } else if (S.k === 'sieci' || (S.k === 'pytanie' && SIECI_N)) {
-      // sieci odpływają od mózgu naraz, z nazwami; iskra unosi się nad kolejnymi sieciami i ogląda każdą
+      // przy mózgu iskra robi, co chce: ogląda sieci, siada na ich nazwach, krąży i rozgląda się; wybory losowe
       const wy = (A.k === 'sieci' ? 1 - t : 0) + (B.k === 'sieci' ? t : 0);
-      const n = SIECI_L[Math.max(0, SIECI_N - 1)]; AKT = SIECI_N ? n : 0;
-      const [bx, by, bw] = brain({ u: SIECI_N ? CENT[n][0] : 120, v: SIECI_N ? CENT[n][1] : 90 }, 1, SIECI_N ? wy * (ROZ[n] || 0) : 0);
-      const [ix, iy] = SIECI_N ? wyspa(n, bx, by, bw, wy * (ROZ[n] || 0)) : [bx, by];
-      const s = SIECI_N ? WS[n] : null, lewo = MOB ? 14 : kolT.getBoundingClientRect().right + 24;
-      const x = Math.max(lewo, ix - bw * .06), y = Math.max(H * .08, iy - bw * .14 - 12), d = Math.hypot(ix - x, iy - y);
-      c = { id: 'siec' + (SIECI_N ? n : 0), tryb: 'lot', x, y, I: !SIECI_N ? .3 : s && s.t < 1800 ? .9 : .6, ang: Math.atan2(iy - y, ix - x), len: d + bw * .1, half: .5 };
+      if (SIECI_N) c = wedruj(now, wy);
+      else { const [x, y, bw] = brain({ u: 120, v: 90 }); c = { id: 'siec0', tryb: 'lot', x, y: y - bw * .2, I: .3, ang: Math.PI / 2, len: bw * .3, half: .5 }; }
     } else if (S.k === 'zombie') {
       // stoi na „zombie” i świeci na solipsystę, aż ten sam zapali świecę
       c = stoj(CEL.zombie, 'zombie');
@@ -472,7 +498,9 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       : c.id === 'osnowy' ? { pd: 1.08 + .14 * (c.czeka || 0), lid: 1, joy: c.czeka ? .8 : 1 }
       : c.id === 'hura' ? { pd: 1.2, lid: 1, joy: 1 }
       : c.id === 'zombie' && c.I > .1 ? { pd: 1.2, lid: 1 }
-      : c.id.startsWith('siec') || c.id.startsWith('slowo') ? { pd: 1.12, lid: 1 }
+      : c.id.startsWith('siec') || c.id.startsWith('patrz') ? { pd: 1.12, lid: 1 }
+      : c.id.startsWith('siad') ? { pd: 1.05, lid: .92, joy: .4 }
+      : c.id === 'krazy' ? { pd: 1.06, lid: 1 }
       : { pd: 1, lid: 1 };
   }
   return c;
@@ -514,7 +542,23 @@ function rysujLod(dt: number) {
 // Łyżwy: na osnowach iskra jeździ jak na łyżwach: odpycha się i sunie wokół punktu, który biegnie przed nazwami osnów,
 // i robi triki: przeskok na sąsiednią osnowę, podwójny skok, salto w przód i w tył, piruet, ślizg w przysiadzie,
 // rozpęd i hokejowe hamowanie z chmurą lodu; przewijanie w górę: jedzie tyłem, wciąż przodem do czytelnika.
-const SK = { bx: 0, vb: 0, faza: 0, krok: 0, hop: 0, air: false, spin: 0, t0: 0, T: .3, on: false, nic: 2, cel: 2, dbl: 0, kreci: 0, nisko: 0, hamuj: 0, przech: 0 };
+// słowa osnów pod iskrą: ugięcie (d), jego prędkość (v) i miejsce nacisku (xl); litery każdego słowa i ich środki
+const ZG = slowaO.map(() => ({ d: 0, v: 0, xl: 0, on: false })), ZN = slowaO.map((w) => [...w.querySelectorAll('.zn')] as HTMLElement[]);
+const ZN_X: number[][] = [], E_SL: number[] = [], O_SL: number[] = [];
+function zegnij(dt: number) {
+  let ruch = false;
+  ZG.forEach((z, i) => {
+    const pod = SK.na === i, sag = pod ? 3 : 0;
+    if (!pod && Math.abs(z.d) < .05 && Math.abs(z.v) < .5) { if (z.on) { ZN[i].forEach((l) => { l.style.transform = ''; }); z.on = false; } return; }
+    z.v += (-(z.d - sag) * 240 - z.v * 13) * dt; z.d += z.v * dt; z.on = true; ruch = true;
+    if (pod) z.xl = IS.x - slowaO[i].getBoundingClientRect().left;
+    if (!ZN_X[i]) ZN_X[i] = ZN[i].map((l) => l.offsetLeft + l.offsetWidth / 2);
+    const sg = Math.max(16, slowaO[i].offsetWidth * .32);
+    ZN[i].forEach((l, j) => { const u = (ZN_X[i][j] - z.xl) / sg; l.style.transform = 'translateY(' + (z.d * Math.exp(-u * u)).toFixed(2) + 'px)'; });
+  });
+  return ruch;
+}
+const SK = { na: -1, cs: -1, dx: 0, zejdz: 0, bx: 0, vb: 0, faza: 0, krok: 0, hop: 0, air: false, spin: 0, t0: 0, T: .3, on: false, nic: 2, cel: 2, dbl: 0, kreci: 0, nisko: 0, hamuj: 0, przech: 0 };
 function lyzwy(dt: number, c: any, now: number) {
   const S = SK, amp = Math.min(150, W * .09); S.on = true;
   S.vb += ((dt > 0 ? (c.x - S.bx) / dt : 0) - S.vb) * Math.min(1, dt * 6); S.bx = c.x;
@@ -526,11 +570,35 @@ function lyzwy(dt: number, c: any, now: number) {
     if (IS.x < c.xs - 20) { if (!S.air && IS.vx < -260) stop(-1); IS.x = c.xs - 20; IS.vx = Math.abs(IS.vx) * .3; }
     if (IS.x > c.xe) { if (!S.air && IS.vx > 260) stop(1); IS.x = c.xe; IS.vx = -Math.abs(IS.vx) * .3; }
   };
+  // słowa osnów: miejsce, na którym iskra staje, i słowa w zasięgu skoku
+  const R = IS.r * 1.95;
+  const slTop = (i: number) => { const b = slowaO[i].getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height * .22 - R, l: b.left, w: b.width }; };
+  const kand = (ex: number) => slowaO.map((_, i) => i).filter((i) => {
+    if (i === ex || (E_SL[i] || 0) > .01 || (O_SL[i] || 0) < .7) return false;
+    const q = slTop(i), dx = Math.abs(q.x - IS.x);
+    return dx > 24 && dx < 320 && q.x > c.xs && q.x < c.xe && q.y > H * .06 && Math.abs(q.y - IS.y) < 200;
+  });
+  const skokDo = (tx: number, ty: number, h: number, cs: number, cel: number) => {
+    const apex = Math.min(IS.y, ty) - h, T = Math.sqrt(2 * (IS.y - apex) / G) + Math.sqrt(2 * Math.max(1, ty - apex) / G);
+    IS.vy = -Math.sqrt(2 * G * (IS.y - apex)); IS.vx = (tx - IS.x) / T; IS.kontakt = false; S.air = true; IS.sq = -.2;
+    S.spin = 0; S.t0 = now; S.T = T; S.cs = cs; S.cel = cel; S.na = -1; S.dbl = 0;
+  };
+  const skokNa = (i: number) => { const q = slTop(i); skokDo(q.x + (Math.random() - .5) * q.w * .5, q.y, 22 + Math.random() * 26, i, +slowaO[i].dataset.k!); };
   const wybij = (h: number, spin: number) => {
     IS.vy = -Math.sqrt(2 * G * h); IS.kontakt = false; S.air = true; IS.sq = -.2; S.spin = spin; S.t0 = now;
     S.T = Math.sqrt(2 * h / G) + Math.sqrt(2 * Math.max(1, gy(S.cel) - (IS.y - h)) / G);
   };
-  if (!S.air) {
+  if (S.na >= 0) {
+    // iskra na słowie: jedzie z nim, słowo ugina się pod nią; po chwili skacze na inne słowo albo z powrotem na osnowę
+    const i = S.na, q = slTop(i);
+    IS.x = q.x + S.dx; IS.y = q.y + ZG[i].d * .8; IS.kontakt = true; IS.vx = 0;
+    if (now > S.zejdz || (E_SL[i] || 0) > .02 || IS.x < c.xs - 20 || IS.x > W - 12 || q.y < H * .04) {
+      const k = +slowaO[i].dataset.k!, ks = (E_SL[i] || 0) > .02 ? [] : kand(i);
+      ZG[i].v -= 50;
+      if (ks.length && Math.random() < .45) skokNa(ks[Math.floor(Math.random() * ks.length)]);
+      else skokDo(IS.x + (Math.random() - .5) * 120, gy(k), 26 + Math.random() * 22, -1, k);
+    }
+  } else if (!S.air) {
     IS.y = gy(S.nic); IS.kontakt = true;
     if (S.kreci && now > S.kreci) { S.kreci = 0; S.spin = 0; }
     if (S.hamuj && now > S.hamuj) { S.hamuj = 0; stop(IS.vx >= 0 ? 1 : -1); }
@@ -545,7 +613,9 @@ function lyzwy(dt: number, c: any, now: number) {
       S.hop = now + 1100 + Math.random() * 1500;
       const los = Math.random(), kier = IS.vx >= 0 ? 1 : -1;
       S.cel = S.nic; S.dbl = 0;
-      if (los < .24) {
+      const ks = kand(-1);
+      if (ks.length && Math.random() < .38) skokNa(ks[Math.floor(Math.random() * ks.length)]);  // skok na słowo osnowy
+      else if (los < .24) {
         // skok na sąsiednią osnowę
         S.cel = S.nic === 0 ? 1 : S.nic === 3 ? 2 : S.nic + (Math.random() < .5 ? -1 : 1);
         wybij(Math.max(30, gy(S.nic) - gy(S.cel) + 34), Math.random() < .35 ? kier : 0);
@@ -567,8 +637,17 @@ function lyzwy(dt: number, c: any, now: number) {
       S.spin = Math.random() < .6 ? (IS.vx >= 0 ? 1 : -1) : 0; S.t0 = now;
       S.T = Math.sqrt(2 * h / G) + Math.sqrt(2 * Math.max(1, gy(S.cel) - (IS.y - h)) / G);
     }
+    if (S.cs >= 0) {
+      // lądowanie na słowie: słowo ugina się tym mocniej, im szybciej spadła
+      const q = slTop(S.cs);
+      if (IS.vy > 0 && IS.y >= q.y && IS.y < q.y + 16 && Math.abs(IS.x - q.x) < q.w / 2 + 4) {
+        const v = IS.vy; IS.y = q.y; IS.vy = 0; IS.vx = 0; IS.kontakt = true; S.air = false; S.spin = 0;
+        S.na = S.cs; S.cs = -1; S.dx = IS.x - q.x; S.zejdz = now + 700 + Math.random() * 1500;
+        IS.sq = Math.min(.35, v / 1500); IS.sqv = 0; ZG[S.na].v += Math.min(320, v * .4); ZG[S.na].xl = IS.x - q.l;
+      } else if (IS.y > q.y + 16) S.cs = -1;
+    }
     const g0 = gy(S.cel);
-    if (IS.vy > 0 && IS.y >= g0) { IS.y = g0; IS.sq = Math.min(.35, IS.vy / 1500); IS.sqv = 0; IS.vy = 0; IS.kontakt = true; S.air = false; S.spin = 0; S.nic = S.cel; S.dbl = 0; }
+    if (S.cs < 0 && S.na < 0 && IS.vy > 0 && IS.y >= g0) { IS.y = g0; IS.sq = Math.min(.35, IS.vy / 1500); IS.sqv = 0; IS.vy = 0; IS.kontakt = true; S.air = false; S.spin = 0; S.nic = S.cel; S.dbl = 0; }
   }
   S.przech *= Math.exp(-dt * 3.5);
   IS.rot = S.spin ? S.spin * 6.2832 * sm(cl((now - S.t0) / (S.T * 1000))) : 0;
@@ -578,8 +657,8 @@ function lyzwy(dt: number, c: any, now: number) {
 function krok(dt: number, c: any, now: number) {
   const zmiana = c.id !== IS.id; IS.id = c.id;
   if (!IS.start || CICHO) { IS.x = c.x; IS.y = c.y; IS.vx = IS.vy = 0; IS.kontakt = c.tryb === 'stoj'; IS.start = true; IS.dom = c.id === 'dom'; return; }
-  if (!c.slizg) { SK.air = false; SK.on = false; SK.nic = SK.cel = 2; SK.kreci = 0; SK.hamuj = 0; SK.spin = 0; IS.rot = 0; }
-  else if (zmiana) { SK.bx = c.x; SK.vb = 0; SK.hop = now + 700; SK.krok = 0; SK.on = false; SK.nic = SK.cel = 2; }
+  if (!c.slizg) { SK.na = SK.cs = -1; SK.air = false; SK.on = false; SK.nic = SK.cel = 2; SK.kreci = 0; SK.hamuj = 0; SK.spin = 0; IS.rot = 0; }
+  else if (zmiana) { SK.na = SK.cs = -1; SK.bx = c.x; SK.vb = 0; SK.hop = now + 700; SK.krok = 0; SK.on = false; SK.nic = SK.cel = 2; }
   // zeskok z osnów: najpierw mały podskok, potem w dół
   if (zmiana && c.tryb === 'stoj' && IS.kontakt && c.y > IS.y + 40) { IS.vy = -480; IS.kontakt = false; IS.lot = false; IS.sq = -.22; }
   if (c.slizg && (SK.on || (IS.kontakt && IS.kuc <= 0 && Math.abs(c.y - IS.y) < 4))) lyzwy(dt, c, now);
@@ -704,14 +783,13 @@ function rysujIskre(A0: number) {
   g2.globalAlpha = A; g2.fillStyle = '#f0c060'; g2.beginPath(); g2.arc(IS.gx * maxo, IS.gy * maxo, pr, 0, 6.283); g2.fill();
   g2.restore();
 }
-// Znacznik sieci wchodzi na ekran nie wcześniej niż 1,5 s po poprzednim; pierwszy rozsuwa wszystkie sieci i formuje ich nazwy,
-// każdy kolejny przenosi iskrę nad następną sieć.
+// Znacznik sieci wchodzi na ekran nie wcześniej niż 1,5 s po poprzednim; pierwszy rozsuwa wszystkie sieci i formuje ich nazwy.
 let SIECI_N = 0, SIECI_T = 0;
 const SIECI_Q: HTMLElement[] = [];
 function pokazSiec() {
   const e = SIECI_Q.shift(); if (!e) return;
   e.classList.add('in'); SIECI_N = sieciEl.indexOf(e) + 1; SIECI_T = performance.now();
-  // przy pierwszym znaczniku wszystkie sieci odpływają naraz i dostają nazwy; kolejne znaczniki prowadzą wzrok iskry od sieci do sieci
+  // przy pierwszym znaczniku wszystkie sieci odpływają naraz i dostają nazwy; kolejne znaczniki niosą tylko rytm przewijania
   if (!START[SIECI_L[0]]) for (const n of SIECI_L) START[n] = CICHO ? SIECI_T - 5000 : SIECI_T;
   kick();
   if (SIECI_Q.length) setTimeout(pokazSiec, CICHO ? 0 : 1500);
@@ -857,6 +935,7 @@ function frame() {
     l.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) translate(-50%,-50%) scale(' + sk.toFixed(3) + ')';
     l.style.opacity = (1 - lad).toFixed(3);
   });
+  let zgRuch = false;
   if (LN.rtop < H && LN.rbot > 0) {
     // mnisi idą po swoich osnowach, świeca każdego świeci przed nim i oświetla słowa, które wjeżdżają na ekran;
     // na końcu słowa tłoczą się przy prawej krawędzi ekranu, częściowo już za nią: chcą przejść i czekają na kliknięcie;
@@ -895,10 +974,12 @@ function frame() {
       const gx = (tx - x0) * e + pcha + pu * (W + 80 - tx), gy = (ty - y0) * e;
       const o = Math.max(e, cl((W * .96 - x0) / (W * .14))) * (1 - cl((pu - .5) / .5));
       w.style.transform = 'translate(calc(-50% + ' + gx.toFixed(1) + 'px),' + gy.toFixed(1) + 'px)'; w.style.opacity = o.toFixed(3);
+      E_SL[i] = e; O_SL[i] = o;
       w.classList.toggle('u-plotna', u);
       const wx = x0 + gx, wy = y0 + gy;
       w.classList.toggle('lit', u || (e < .1 && wiazki.some((b) => { const d = Math.hypot(wx - b.x, wy - b.y); let da = Math.atan2(wy - b.y, wx - b.x) - b.a; da = Math.atan2(Math.sin(da), Math.cos(da)); return d < b.len && Math.abs(da) < b.half; })));
     });
+    zgRuch = zegnij(dt);
     kuPlotnu.classList.toggle('puls', LN.pr > .86);
   }
   // solipsysta: po zapaleniu świecy obraca się, a snop jego świecy oświetla kolejne słowa wokół
@@ -928,7 +1009,7 @@ function frame() {
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
   const iskraRuch = !!c && !CICHO && (solRuch || !!c.slizg || !!c.hura || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
     || !IS.dom && (Math.hypot(IS.vx, IS.vy) > 6 || Math.hypot(c.x - IS.x, c.y - IS.y) > .8 || (c.tryb === 'stoj' && !IS.kontakt))
-    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || slowaRuch || !!PUSZCZ
+    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || slowaRuch || zgRuch || !!PUSZCZ
     || (!IS.dom && (now - IS.mrug < 170 || IS.zdz > .02 || Math.abs(IS.pd - ((c.mood && c.mood.pd) || 1)) > .01 || Math.abs(IS.lid - ((c.mood && c.mood.lid) || 1)) > .01
       || Math.abs(IS.joy - ((c.mood && c.mood.joy) || 0) * (1 - .35 * WSTECZ)) > .01 || Math.abs(IS.lean) > .005 || WSTECZ > .01))
     );
@@ -956,7 +1037,7 @@ function frame() {
 }
 let tk = false;
 addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(() => { frame(); tk = false; }); } }, { passive: true });
-addEventListener('resize', () => { SZER_MAX = 0; size(); frame(); });
+addEventListener('resize', () => { SZER_MAX = 0; ZN_X.length = 0; size(); frame(); });
 const puszczaj = (ev: MouseEvent) => {
   if (PUSZCZ || CICHO || ev.button !== 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
   ev.preventDefault(); PUSZCZ = performance.now(); kick();
