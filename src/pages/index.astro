@@ -153,10 +153,11 @@ body:has(.roj) .site-footer::before{display:none}
 .roj .roj-zrodlo{transition:color .8s ease,text-shadow .8s ease}
 .roj .roj-zrodlo.zloty{color:var(--zloto);text-shadow:0 0 12px rgba(240,192,96,.45)}
 /* po solipsyście tekst płynie dalej z krótszymi odstępami */
-.roj-st.ciag[data-k=wiem]{padding-top:0;margin-top:-30vh}
-.roj-st.ciag[data-k=ja]{padding-top:16.5vh}
-.roj-st.ciag[data-k=doswiadcza]{padding-top:12vh;padding-bottom:0}
-.roj-st.ciag[data-k=dyscypliny]{padding-top:13.5vh;padding-bottom:22vh}
+/* odstępy między blokami od solipsysty: każdy o 30% większy od zmierzonego 2026-10-19 przy 878 px wysokości (80, 145, 104, 119 px) */
+.roj-st.ciag[data-k=wiem]{padding-top:0;margin-top:-27.3vh}
+.roj-st.ciag[data-k=ja]{padding-top:21.5vh}
+.roj-st.ciag[data-k=doswiadcza]{padding-top:15.5vh;padding-bottom:0}
+.roj-st.ciag[data-k=dyscypliny]{padding-top:17.6vh;padding-bottom:22vh}
 .roj .roj-dysc,.roj .roj-dysc-k{font-weight:500}
 .roj-t{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease}
 .roj-st.in .roj-t{opacity:1;transform:none}
@@ -164,7 +165,7 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-t p,.roj-lista li{font-family:var(--font-body);font-size:17px;line-height:1.9;color:var(--kosc);font-weight:300}
 .roj-t > * + *{margin-top:1em}
 /* od „Jesteś człowiekiem” dalej akapity mają więcej powietrza (jego słowo, 2026-10-19, dwa razy) */
-.roj-st:is([data-k=zombie],[data-k=wiem],[data-k=ja],[data-k=doswiadcza],[data-k=dyscypliny],[data-k=kogni]) .roj-t > * + *{margin-top:1.7em}
+.roj-st:is([data-k=zombie],[data-k=wiem],[data-k=ja],[data-k=doswiadcza],[data-k=dyscypliny],[data-k=kogni]) .roj-t > * + *{margin-top:2.2em}
 .roj .roj-duze{font-family:var(--font-display);font-weight:400;font-size:clamp(28px,2.7vw,40px);line-height:1.2;letter-spacing:.005em;color:var(--zloto)}
 .roj-t > .roj-duze{margin:.45em 0 .55em}
 .roj-t > .roj-duze:first-child{margin-top:0}
@@ -246,10 +247,10 @@ body:has(.roj) .site-footer::before{display:none}
   .roj-st.lewo .roj-t,.roj-st.kogni .roj-t,.roj-st.lepkie .roj-t{max-width:none}
   .roj-st.pierwszy{padding-top:calc(34vh + 33vw + 16px)!important;padding-bottom:0!important;align-items:flex-start}
   .roj-st.ciag[data-k=pytanie]{padding-top:14vh!important;padding-bottom:0!important}
-  .roj-st.ciag[data-k=wiem]{padding-top:0!important;padding-bottom:0!important;margin-top:-20vh}
-  .roj-st.ciag[data-k=ja]{padding-top:15vh!important;padding-bottom:0!important}
-  .roj-st.ciag[data-k=doswiadcza]{padding-top:12vh!important;padding-bottom:0!important}
-  .roj-st.ciag[data-k=dyscypliny]{padding-top:12vh!important;padding-bottom:20vh!important}
+  .roj-st.ciag[data-k=wiem]{padding-top:0!important;padding-bottom:0!important;margin-top:-17.5vh}
+  .roj-st.ciag[data-k=ja]{padding-top:19.5vh!important;padding-bottom:0!important}
+  .roj-st.ciag[data-k=doswiadcza]{padding-top:15.5vh!important;padding-bottom:0!important}
+  .roj-st.ciag[data-k=dyscypliny]{padding-top:15.6vh!important;padding-bottom:20vh!important}
   .roj-lot{font-size:15px}
   .roj-mnich-nazwa{font-size:11px}
   .roj-st.poziom,.roj-st.lepkie{padding:0!important}
