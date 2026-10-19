@@ -277,7 +277,7 @@ const GREY = hex('#5f5a54');
 // dwa płótna: rój pod tekstem, iskra (snop, lód, kropka) nad tekstem i postaciami
 const cv = document.querySelector('.roj-plotno') as HTMLCanvasElement, cv2 = document.querySelector('.roj-iskra') as HTMLCanvasElement;
 const g = cv.getContext('2d')!, g2 = cv2.getContext('2d')!;
-let W = 0, H = 0, D = 1, MOB = false, SEC: any[] = [], LN: any = null, PETLA = false, HOVP = false, AKT = 0;
+let LAB = 20, W = 0, H = 0, D = 1, MOB = false, SEC: any[] = [], LN: any = null, PETLA = false, HOVP = false, AKT = 0;
 const CICHO = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const P: any[] = [], CENT: Record<number, number[]> = {};
 const rnd = (s: number) => () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
@@ -306,7 +306,7 @@ const hura = $('.iskra-cel.hura');
 
 function size() {
   // wymiary z samego canvasu (100vw × 100vh): pasek adresu Safari nie zmienia ich, więc płótno nie skacze przy przewijaniu
-  MOB = innerWidth < 760; D = Math.min(devicePixelRatio || 1, MOB ? 1.5 : 2);
+  MOB = innerWidth < 760; LAB = MOB ? 15 : 20; D = Math.min(devicePixelRatio || 1, MOB ? 1.5 : 2);
   const w = cv.clientWidth, h = cv.clientHeight;
   if (knotLogo) IS.r = Math.max(3, knotLogo.getBoundingClientRect().width / 2);
   if (w !== W || h !== H || cv.width !== Math.round(w * D)) { W = w; H = h; cv.width = cv2.width = Math.round(W * D); cv.height = cv2.height = Math.round(H * D); }
@@ -335,7 +335,7 @@ function st(k: string, p: any, lp: number) {
   if (k === 'czesc' || k === 'pytanie') { [x, y] = brain(p); a = net ? .95 : .42; }
   else if (k === 'sieci') {
     const [bx, by, bw] = brain(p);
-    if (net) { const [ix, iy] = wyspa(p.net, 0, 0, bw, 1); x = bx + ix; y = by + iy; a = AKT ? (p.net === AKT ? 1 : .38) : .9; s = AKT && p.net === AKT ? 1.25 : 1; }
+    if (net) { const [ix, iy] = wyspa(p.net, 0, 0, bw, ROZ[p.net] || 0); x = bx + ix; y = by + iy; a = AKT ? (p.net === AKT ? 1 : .38) : .9; s = AKT && p.net === AKT ? 1.25 : 1; }
     else { x = bx + (p.sx - .5) * 120; y = by + (p.sy - .5) * 120; a = .12; }
   }
   // od solipsysty do osnów rój stoi rozproszony i się nie przestawia; ruch należy do tekstu i iskry
@@ -435,19 +435,14 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       const x = rr.left + rr.width * .12, y = rr.top - rr.height * .55, d = Math.hypot(wx - x, wy - y);
       c = { id: 'czesc', tryb: 'lot', x, y, I: 1, ang: Math.atan2(wy - y, wx - x), len: d + rr.width * .6, half: Math.max(.2, Math.min(.75, Math.atan2(rr.width * .62, d))) };
     } else if (S.k === 'sieci' || (S.k === 'pytanie' && SIECI_N)) {
-      // nazwa sieci formuje się z roju; iskra świeci na nią, przeciąga ją na sieć i ogląda sieć
+      // sieć odpływa od mózgu, jej nazwa formuje się z roju na brzegu sieci; iskra unosi się nad siecią i ogląda ją
       const wy = (A.k === 'sieci' ? 1 - t : 0) + (B.k === 'sieci' ? t : 0);
       const n = SIECI_L[Math.max(0, SIECI_N - 1)]; AKT = SIECI_N ? n : 0;
-      const s = SIECI_N ? WS[n] : null;
-      if (s && s.t < 1250) {
-        const lead = s.iskraC, kx = s.fx + (s.lx - s.fx) * lead - s.w / 2 - 20, ky = s.fy + (s.ly - s.fy) * lead;
-        c = { id: 'slowo' + n, tryb: 'lot', x: kx, y: ky, I: s.t < 500 ? .9 : .5, ang: 0, len: s.w + 34, half: .32 };
-      } else {
-        const [bx, by, bw] = brain({ u: CENT[n][0], v: CENT[n][1] });
-        const [cx0, cy0] = brain({ u: 120, v: 90 }), [ix, iy] = wyspa(n, bx, by, bw, wy);
-        const x = s ? s.lx : SIECI_N ? ix : cx0, y = s ? s.ly : SIECI_N ? iy : cy0, h = bw * .07 + 12;
-        c = { id: 'siec' + (SIECI_N ? n : 0), tryb: 'lot', x, y: y - h, I: SIECI_N ? .85 : .3, ang: Math.PI / 2, len: h + bw * .12, half: .55 };
-      }
+      const [bx, by, bw] = brain({ u: SIECI_N ? CENT[n][0] : 120, v: SIECI_N ? CENT[n][1] : 90 });
+      const [ix, iy] = SIECI_N ? wyspa(n, bx, by, bw, wy * (ROZ[n] || 0)) : [bx, by];
+      const s = SIECI_N ? WS[n] : null, lewo = MOB ? 14 : kolT.getBoundingClientRect().right + 24;
+      const x = Math.max(lewo, ix - bw * .06), y = Math.max(H * .08, iy - bw * .14 - 12), d = Math.hypot(ix - x, iy - y);
+      c = { id: 'siec' + (SIECI_N ? n : 0), tryb: 'lot', x, y, I: !SIECI_N ? .3 : s && s.t < 1800 ? .9 : .6, ang: Math.atan2(iy - y, ix - x), len: d + bw * .1, half: .5 };
     } else if (S.k === 'zombie') {
       // stoi na „zombie” i świeci na solipsystę, aż ten sam zapali świecę
       c = stoj(CEL.zombie, 'zombie');
@@ -724,10 +719,10 @@ const ioS = new IntersectionObserver((es) => es.forEach((e) => {
   if (SIECI_Q.length === 1) setTimeout(pokazSiec, CICHO ? 0 : Math.max(0, SIECI_T + 1500 - performance.now()));
 }), { rootMargin: '0px 0px -12% 0px', threshold: 1 });
 sieciEl.forEach((e) => ioS.observe(e));
-// Nazwy sieci z roju: szare punkty układają się w litery nazwy obok sieci, iskra przeciąga słowo na sieć,
-// punkty wracają do roju, a nazwa zostaje na mózgu.
+// Nazwy sieci z roju: gdy sieć odpływa od mózgu, szare punkty układają się w litery jej nazwy na jej brzegu
+// i płyną z nią; punkty wracają do roju, a nazwa zostaje przy sieci.
 const NAZWY: Record<number, string> = {}; sieciEl.forEach((e) => { NAZWY[+e.dataset.n!] = e.dataset.nazwa!; });
-const SLOWO: Record<number, any> = {}, START: Record<number, number> = {}, WS: Record<number, any> = {};
+const SLOWO: Record<number, any> = {}, START: Record<number, number> = {}, WS: Record<number, any> = {}, ROZ: Record<number, number> = {};
 const JASNY = hex('#ece6da'), kolT = $('.roj-sieci'), KOLH: Record<number, number[]> = {};
 for (const k in COL) KOLH[+k] = hex(COL[+k]);
 const RGB = new Map<number, string>();
@@ -751,7 +746,7 @@ function przygotujSlowa() {
   // słowa formują się po kolei, więc kolejne biorą punkty na zmianę z dwóch połówek szarego tła
   const szare = P.filter((p) => p.net === 1), pule = [szare.filter((_, i) => i % 2 === 0), szare.filter((_, i) => i % 2 === 1)];
   SIECI_L.forEach((n, j) => {
-    const pula = pule[j % 2], L = litery(NAZWY[n], MOB ? 16 : 24); let pts = L.pts;
+    const pula = pule[j % 2], L = litery(NAZWY[n], LAB); let pts = L.pts;
     if (pts.length > pula.length) { const co = pts.length / pula.length; pts = Array.from({ length: pula.length }, (_, i) => L.pts[Math.floor(i * co)]); }
     SLOWO[n] = { pts, w: L.w, h: L.h };
     pts.forEach((_, i) => { const p = pula[i]; (p.sl = p.sl || []).push([n, i]); });
@@ -759,25 +754,24 @@ function przygotujSlowa() {
 }
 function slowoStan(n: number, now: number, wy: number, textR: number) {
   if (!START[n] || !CENT[n]) return null;
-  const t = now - START[n], w = SLOWO[n] ? SLOWO[n].w : NAZWY[n].length * 10;
-  const K = KOTWICA[n] || CENT[n], [kx, ky, bw] = brain({ u: K[0], v: K[1] }), [ox, oy] = wyspa(n, 0, 0, bw, wy), ix = kx + ox, iy = ky + oy;
-  // słowo rodzi się nad swoją siecią, poza kolumną tekstu, a kończy na swoim miejscu w sieci
-  const lewo = MOB ? 8 : textR + 16;
-  const fx = Math.max(lewo + w / 2, Math.min(W - w / 2 - 8, ix)), fy = Math.max(H * .1, iy - bw * .2);
-  const lx = Math.max(w / 2 + 6, Math.min(W - w / 2 - 6, ix)), ly = iy;
-  const ciag = sm(cl((t - 550) / 700)), iskraC = sm(cl((t - 450) / 650));
-  return { t, w, fx, fy, lx, ly, ciag, iskraC, ax: fx + (lx - fx) * ciag, ay: fy + (ly - fy) * ciag,
-    forma: t < 500 ? sm(t / 500) : 1 - sm(cl((t - 1250) / 450)), etykieta: sm(cl((t - 1150) / 400)) };
+  const t = now - START[n], w = SLOWO[n] ? SLOWO[n].w : NAZWY[n].length * LAB * .6, r = wy * (ROZ[n] || 0);
+  const K = KOTWICA[n] || CENT[n], [kx, ky, bw] = brain({ u: K[0], v: K[1] }), [ox, oy] = wyspa(n, 0, 0, bw, r);
+  // nazwa siedzi na zewnętrznym brzegu swojej sieci, od środka mózgu na zewnątrz, i płynie z siecią
+  const dx = K[0] / 240 - .5, dy = K[1] / 180 - .5, L = Math.hypot(dx, dy) || 1, na = bw * .05 * r;
+  const ix = kx + ox + dx / L * na, iy = ky + oy + dy / L * na * .75;
+  const lewo = MOB ? w / 2 + 6 : textR + 12 + w / 2;
+  const lx = Math.max(lewo, Math.min(W - w / 2 - 6, ix)), ly = iy;
+  return { t, w, lx, ly, ax: lx, ay: ly, ciag: sm(cl((t - 250) / 650)),
+    forma: t < 550 ? sm(t / 550) : 1 - sm(cl((t - 1250) / 500)), etykieta: sm(cl((t - 1100) / 450)) };
 }
-// nazwy na mózgu nie nachodzą na siebie: nachodzące rozsuwają się w pionie, w kilku przejściach
+// nazwy przy sieciach nie nachodzą na siebie: nachodzące rozsuwają się w pionie, w kilku przejściach
 function rozsun() {
-  const k = (MOB ? 11 : 13) / (MOB ? 16 : 24), L = SIECI_L.map((n) => WS[n]).filter(Boolean), H0 = MOB ? 14 : 17;
-  for (const s of L) s.sz = s.w * k;
+  const L = SIECI_L.map((n) => WS[n]).filter(Boolean), H0 = LAB * 1.3;
   for (let it = 0; it < 8; it++) for (let i = 0; i < L.length; i++) for (let j = i + 1; j < L.length; j++) {
-    const a = L[i], b = L[j], ox = (a.sz + b.sz) / 2 + 6 - Math.abs(a.lx - b.lx), oy = H0 - Math.abs(a.ly - b.ly);
+    const a = L[i], b = L[j], ox = (a.w + b.w) / 2 + 8 - Math.abs(a.lx - b.lx), oy = H0 - Math.abs(a.ly - b.ly);
     if (ox > 0 && oy > 0) { const d = (oy / 2 + .5) * (a.ly <= b.ly ? 1 : -1); a.ly -= d; b.ly += d; }
   }
-  for (const s of L) { s.ax = s.fx + (s.lx - s.fx) * s.ciag; s.ay = s.fy + (s.ly - s.fy) * s.ciag; }
+  for (const s of L) { s.ax = s.lx; s.ay = s.ly; }
 }
 function kick() { if (!PETLA) { PETLA = true; requestAnimationFrame(() => { PETLA = false; frame(); }); } }
 function frame() {
@@ -802,6 +796,7 @@ function frame() {
   const wS = cl(wI + (A.k === 'pytanie' ? 1 - t : 0) + (B.k === 'pytanie' ? t : 0));
   let slowaRuch = false;
   SLOWA_FORMA = false;
+  for (const n of SIECI_L) ROZ[n] = START[n] ? (CICHO ? 1 : sm(cl((now - START[n] - 100) / 1100))) : 0;
   for (const n of SIECI_L) { WS[n] = slowoStan(n, now, wI, textR); if (WS[n] && WS[n].t < 1800) slowaRuch = true; if (WS[n] && WS[n].forma > 0) SLOWA_FORMA = wS > .02; }
   rozsun();
   const c = cel(A, B, t, lpA, lpB, now, lz);
@@ -838,11 +833,11 @@ function frame() {
     g.globalAlpha = al; g.strokeStyle = rgb(cr, cg, cb);
     g.beginPath(); g.moveTo(x + r * Math.cos(ang), y + r * Math.sin(ang)); g.lineTo(x + r * Math.cos(ang + 2.09), y + r * Math.sin(ang + 2.09)); g.lineTo(x + r * Math.cos(ang + 4.19), y + r * Math.sin(ang + 4.19)); g.closePath(); g.stroke();
   }
-  // nazwy sieci na mózgu, gdy słowo dotrze na swoją sieć
+  // nazwy sieci przy sieciach, gdy litery z roju się rozejdą
   if (wS > .02) {
-    g.globalCompositeOperation = 'source-over'; g.font = '500 ' + (MOB ? 11 : 13) + 'px Inter, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+    g.globalCompositeOperation = 'source-over'; g.font = '500 ' + LAB + 'px Inter, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
     for (const n of SIECI_L) { const s = WS[n]; if (!s || s.etykieta <= 0) continue;
-      g.globalAlpha = s.etykieta * wS; g.lineWidth = 4; g.strokeStyle = 'rgba(0,0,0,.85)'; g.strokeText(NAZWY[n], s.lx, s.ly); g.fillStyle = COL[n]; g.fillText(NAZWY[n], s.lx, s.ly); }
+      g.globalAlpha = s.etykieta * wS; g.lineWidth = LAB * .4; g.strokeStyle = 'rgba(0,0,0,.9)'; g.strokeText(NAZWY[n], s.lx, s.ly); g.fillStyle = COL[n]; g.fillText(NAZWY[n], s.lx, s.ly); }
   }
   // osnowy: tor jedzie w bok; po osnowach nici zostają, jak są
   tor.style.transform = 'translateX(' + LN.off + 'px)';
