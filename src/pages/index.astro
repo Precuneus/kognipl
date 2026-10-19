@@ -72,7 +72,8 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   <section class="roj-st lewo ciag" data-k="pytanie">
     <div class="roj-t">
       <p class="roj-duze" set:html={md(T.pytanie)} />
-      <p><span class="roj-zrodlo">{T.akt.replace(/\{\{|\}\}/g, '')}</span> {T.zmiany}</p>
+      <p><span class="roj-zrodlo">{T.akt.replace(/\{\{|\}\}/g, '')}</span></p>
+      <p>{T.zmiany}</p>
     </div>
   </section>
   <section class="roj-st lewo ciag" data-k="naglowek">
@@ -554,7 +555,9 @@ function zdKrok(now: number, dt: number) {
   // mózg zaczyna się rozpadać na sieci, gdy nagłówek dojdzie do góry ekranu
   // zaraz po nagłówku mózg i wszystkie sieci się zapalają, sieci dostają nazwy, a iskra zaczyna wędrować
   if (te >= F[4] && !NAGL) { NAGL = true; startSieci(now); }
-  ZD.biegnie = !CICHO && ((ZD.dir > 0 && te < TE) || (ZD.dir < 0 && te > 0));
+  ZD.ruch = !CICHO && ((ZD.dir > 0 && te < TE) || (ZD.dir < 0 && te > 0));
+  // iskra prowadzi zdanie do chwili, gdy nagłówek jest gotowy; potem od razu leci do zapalającego się mózgu
+  ZD.biegnie = ZD.ruch && !(ZD.dir > 0 && te >= F[4]);
 }
 function zdIskra(): any {
   const te = ZD.te;
@@ -977,7 +980,7 @@ function slowoStan(n: number, now: number, wy: number, textR: number) {
   const lewo = MOB ? w / 2 + 6 : textR + 12 + w / 2;
   const lx = Math.max(lewo, Math.min(W - w / 2 - 6, ix)), ly = iy;
   return { t, w, lx, ly, ax: lx, ay: ly, ciag: sm(cl((t - 250) / 650)),
-    forma: t < 550 ? sm(t / 550) : 1 - sm(cl((t - 1250) / 500)), etykieta: sm(cl((t - 1100) / 450)) };
+    forma: 0, etykieta: sm(cl(t / 550)) };  // nazwy zapalają się razem z mózgiem, bez formowania z roju
 }
 // nazwy przy sieciach nie nachodzą na siebie: nachodzące rozsuwają się w pionie, w kilku przejściach
 function rozsun() {
@@ -1139,7 +1142,7 @@ function frame() {
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
   const iskraRuch = !!c && !CICHO && (solRuch || !!c.slizg || !!c.hura || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
     || !IS.dom && (Math.hypot(IS.vx, IS.vy) > 6 || Math.hypot(c.x - IS.x, c.y - IS.y) > .8 || (c.tryb === 'stoj' && !IS.kontakt))
-    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || slowaRuch || zgRuch || !!PUSZCZ || !!ZD.biegnie
+    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || slowaRuch || zgRuch || !!PUSZCZ || !!ZD.ruch
     || (!IS.dom && (now - IS.mrug < 170 || IS.zdz > .02 || Math.abs(IS.pd - ((c.mood && c.mood.pd) || 1)) > .01 || Math.abs(IS.lid - ((c.mood && c.mood.lid) || 1)) > .01
       || Math.abs(IS.joy - ((c.mood && c.mood.joy) || 0) * (1 - .35 * WSTECZ)) > .01 || Math.abs(IS.lean) > .005 || WSTECZ > .01))
     );
