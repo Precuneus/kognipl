@@ -31,8 +31,6 @@ const SIECI = [
   [5, 'Sieć kontroli'],
   [7, 'Sieć domyślna'],
 ];
-// odstępy między sieciami: nieregularny rytm, jak w ciągłym tekście
-const ODSTEP = ['0', '6vh', '11vh', '4vh', '9vh', '14vh', '8vh'];
 const KOLOR = { 2: '#ee6b6f', 3: '#f9d780', 4: '#e58e76', 5: '#f69959', 6: '#a9b26f', 7: '#bb6fb2', 8: '#6fb3a8' };
 const OSNOWY = [['socjologia', '#8fa274'], ['psychologia', '#5f9a96'], ['biologia', '#6585b0'], ['fizyka', '#8577b3']];
 const KOL_OSN = Object.fromEntries(OSNOWY);
@@ -78,11 +76,8 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
     </div>
   </section>
   <section class="roj-st lewo ciag" data-k="naglowek">
-    <div class="roj-t"><p class="roj-duze roj-naglowek" set:html={md(T.akt)} /></div>
-  </section>
-  <section class="roj-st lewo ciag" data-k="sieci">
-    <div class="roj-t">
-      <ul class="roj-sieci">{SIECI.map(([n, nazwa], i) => <li class="roj-siec" data-n={n} data-nazwa={nazwa.replace(/^Sieć\s+/, '')} style={'margin-top:' + ODSTEP[i]}><span class="roj-ukryte">{nazwa}</span></li>)}</ul>
+    <div class="roj-t"><p class="roj-duze roj-naglowek" set:html={md(T.akt)} />
+      <ul class="roj-sieci">{SIECI.map(([n, nazwa]) => <li class="roj-siec" data-n={n} data-nazwa={nazwa.replace(/^Sieć\s+/, '')}><span class="roj-ukryte">{nazwa}</span></li>)}</ul>
     </div>
   </section>
   <section class="roj-st lepkie" data-k="zombie">
@@ -150,8 +145,8 @@ body:has(.roj) .site-footer::before{display:none}
 /* Cześć, pytanie i sieci płyną jak jeden tekst */
 .roj-st.ciag{min-height:0;padding-bottom:0}
 .roj-st.ciag[data-k=pytanie]{padding-top:10vh}
-.roj-st.ciag[data-k=naglowek]{padding-top:9vh}
-.roj-st.ciag[data-k=sieci]{padding-top:9vh;padding-bottom:24vh}
+/* po nagłówku chwila na zapalony mózg i iskrę; za nagłówkiem rój się rozprasza */
+.roj-st.ciag[data-k=naglowek]{padding-top:9vh;padding-bottom:14vh}
 /* zdanie z akapitu: iskra je złoci, ono rozpada się na punkty roju, które układają się w nagłówek */
 .roj .roj-naglowek{opacity:0}
 .roj .roj-zrodlo{transition:color .8s ease,text-shadow .8s ease}
@@ -179,7 +174,7 @@ body:has(.roj) .site-footer::before{display:none}
 .roj .roj-czesc{font-family:var(--font-display);font-weight:400;font-size:clamp(56px,6vw,96px);line-height:1;letter-spacing:.01em;color:var(--zloto);opacity:max(var(--min,.16),calc(.16 + var(--s,0) * .84));text-shadow:0 0 calc(var(--s,0) * 34px) rgba(240,192,96,calc(var(--s,0) * .7));transition:opacity .4s ease}
 .roj .roj-czesc.lit{--min:.92}
 /* sieci pojawiają się po kolei, gdy iskra je ogląda */
-.roj-sieci{list-style:none;padding:0}
+.roj-sieci{list-style:none;padding:0;margin:0!important;height:0}
 .roj-siec{height:1px}
 .roj-ukryte{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* zombie i solipsysta: ekran lepki, postać odsłania iskra */
@@ -250,7 +245,6 @@ body:has(.roj) .site-footer::before{display:none}
   .roj-st.lewo .roj-t,.roj-st.kogni .roj-t,.roj-st.lepkie .roj-t{max-width:none}
   .roj-st.pierwszy{padding-top:calc(34vh + 33vw + 16px)!important;padding-bottom:0!important;align-items:flex-start}
   .roj-st.ciag[data-k=pytanie]{padding-top:14vh!important;padding-bottom:0!important}
-  .roj-st.ciag[data-k=sieci]{padding-top:7vh!important;padding-bottom:20vh!important}
   .roj-st.ciag[data-k=wiem]{padding-top:0!important;padding-bottom:0!important;margin-top:-20vh}
   .roj-st.ciag[data-k=ja]{padding-top:15vh!important;padding-bottom:0!important}
   .roj-st.ciag[data-k=doswiadcza]{padding-top:12vh!important;padding-bottom:0!important}
@@ -356,9 +350,10 @@ function wyspa(n: number, bx: number, by: number, bw: number, wy: number) {
 }
 function st(k: string, p: any, lp: number) {
   const net = p.net > 1; let x = 0, y = 0, a = 0, c = p.col, s = 1;
-  // mózg cały do chwili, gdy nagłówek dojdzie do góry ekranu; od tej chwili rozpada się na sieci na każdym ekranie mózgu, bez czekania na przewinięcie
-  if (k === 'czesc' || ((k === 'pytanie' || k === 'naglowek') && !(ROZ[SIECI_L[0]] > 0))) { [x, y] = brain(p); a = net ? .3 : .16; }
-  else if (k === 'sieci' || k === 'pytanie' || k === 'naglowek') {
+  // mózg ciemny; po nagłówku sieci się zapalają (ZAPAL); za nagłówkiem rój się rozprasza, jak przy solipsyście
+  if (k === 'czesc') { [x, y] = brain(p); a = net ? .3 : .16; }
+  else if (k === 'pytanie' || k === 'naglowek') { [x, y] = brain(p); a = net ? .3 + .6 * ZAPAL : .16; }
+  else if (k === 'sieci') {
     const [bx, by, bw] = brain(p, 1, ROZ[SIECI_L[0]] || 0);
     if (net) { const [ix, iy] = wyspa(p.net, 0, 0, bw, ROZ[p.net] || 0); x = bx + ix; y = by + iy; a = .3; }
     else { x = bx + (p.sx - .5) * 120; y = by + (p.sy - .5) * 120; a = .12; }
@@ -505,9 +500,9 @@ function wedruj(now: number, wy: number): any {
 // Dopiero wtedy sieci się rozchodzą, a iskra leci do mózgu. Przewinięcie z powrotem w górę puszcza to samo wstecz:
 // nagłówek rozpada się, punkty wracają do akapitu, zdanie bieleje. Przebieg w czasie, kierunek z przewijania.
 const ZD: any = { te: 0, dir: 0, ok: false, biegnie: false, N: 0, S: [], T: [], sx: 0, sy: 0, tx: 0, ty: 0 };
-const ZD_F = [350, 1000, 1150, 2800, 3200, 4100];  // złoci się, rozpada, punkty widać, nagłówek się wyłania, gotowy, punkty w roju
-const ZD_LOT = 1350, ZD_FALA = 450, ZLOTO = hex('#f0c060');
-let ZD_P = 0, ZD_W = 0;
+const ZD_F = [200, 550, 650, 1500, 1750, 2300];  // złoci się, rozpada, punkty widać, nagłówek się wyłania, gotowy, punkty w roju
+const ZD_LOT = 750, ZD_FALA = 250, ZLOTO = hex('#f0c060');
+let ZD_P = 0, ZD_W = 0, ZAPAL = 0;
 function ksztalt(txt: string, font: string, lh: number, w: number, krok: number) {
   // punkty liter zdania złamanego na szerokość w, wiersz po wierszu, od lewej do prawej
   const cn = document.createElement('canvas'), x = cn.getContext('2d')!;
@@ -557,8 +552,8 @@ function zdKrok(now: number, dt: number) {
   ZD_P = te >= F[1] && te <= F[4] ? 1 : te > F[4] ? 1 - sm(cl((te - F[4]) / (F[5] - F[4]))) : 0;
   ZD_W = te < F[1] ? 0 : te < F[2] ? sm((te - F[1]) / (F[2] - F[1])) : ZD_P;
   // mózg zaczyna się rozpadać na sieci, gdy nagłówek dojdzie do góry ekranu
-  if (te >= F[4]) NAGL = true;
-  if (NAGL && !SIECI_N && b.top < H * .12) startSieci(now);
+  // zaraz po nagłówku mózg i wszystkie sieci się zapalają, sieci dostają nazwy, a iskra zaczyna wędrować
+  if (te >= F[4] && !NAGL) { NAGL = true; startSieci(now); }
   ZD.biegnie = !CICHO && ((ZD.dir > 0 && te < TE) || (ZD.dir < 0 && te > 0));
 }
 function zdIskra(): any {
@@ -570,7 +565,7 @@ function zdIskra(): any {
   }
   if (te < ZD_F[3]) {
     // ciągnie strumień: leci przed jego czołem (cel o 0,2 s do przodu), snop wstecz na strumień
-    const N = ZD.N, [lx, ly] = zdPkt(N - 1, te + 200 * (ZD.dir || 1)), [mx, my] = zdPkt(Math.floor(N * .5), te), x = lx + 16, y = ly - 12, d = Math.hypot(mx - x, my - y);
+    const N = ZD.N, [lx, ly] = zdPkt(N - 1, te + 120 * (ZD.dir || 1)), [mx, my] = zdPkt(Math.floor(N * .5), te), x = lx + 16, y = ly - 12, d = Math.hypot(mx - x, my - y);
     return { id: 'ciagnie', tryb: 'lot', x, y, I: .6, ang: Math.atan2(my - y, mx - x), len: d + 30, half: .3 };
   }
   // nad nagłówkiem, świeci na niego, gdy się wyłania
@@ -1016,7 +1011,9 @@ function frame() {
   const wS = cl(wI + (A.k === 'pytanie' || A.k === 'naglowek' ? 1 - t : 0) + (B.k === 'pytanie' || B.k === 'naglowek' ? t : 0));
   let slowaRuch = false;
   SLOWA_FORMA = false;
-  for (const n of SIECI_L) ROZ[n] = START[n] ? (CICHO ? 1 : sm(cl((now - START[n] - 100) / 1100))) : 0;
+  // sieci się nie rozchodzą (jego słowo, 2026-10-19); ZAPAL zapala mózg po nagłówku i gaśnie, gdy zdanie wraca do akapitu
+  for (const n of SIECI_L) ROZ[n] = 0;
+  ZAPAL = ZD.ok ? sm(cl((ZD.te - ZD_F[4]) / (ZD_F[5] - ZD_F[4]))) : 0;
   for (const n of SIECI_L) { WS[n] = slowoStan(n, now, wS, textR); if (WS[n] && WS[n].t < 1800) slowaRuch = true; if (WS[n] && WS[n].forma > 0) SLOWA_FORMA = wS > .02; }
   rozsun();
   zdKrok(now, dt);
