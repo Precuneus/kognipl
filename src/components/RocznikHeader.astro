@@ -1,13 +1,14 @@
 ---
+import { WIKI_ON } from '../karty/data.js';
 interface Props { rocznik?: string; current?: string }
 const { rocznik = '', current = '' } = Astro.props;
 const NAV: Record<string, string[][]> = {
-  '2026': [['plotno', 'Płótno', '/2026/'], ['watki', 'Wątki', '/2026/watki/'], ['kursy', 'Kursy', '/2026/kursy/']],
+  '2026': [['plotno', 'Płótno', '/2026/'], ['watki', 'Wątki', '/2026/watki/']],
   '2025': [['start', 'Start', '/2025/'], ['wstep-2', 'Wstęp II', '/2025/wstep-2/'], ['mip', 'Mózg i poznanie', '/2025/mip/'], ['design', 'Design Thinking', '/2025/design/'], ['drugi-mozg', 'Drugi mózg', '/2025/drugi-mozg/']],
 };
 // Menu obok logo: wiki, KiK UwB (strona z Rocznikami i informacjami KiK), Kontakt.
-// wiki linkuje, gdy istnieje src/pages/wiki/; do tego czasu stoi jako sama nazwa.
-const WIKI = Object.keys(import.meta.glob('../pages/wiki/**/*.astro')).length > 0;
+// wiki linkuje, gdy choć jedna karta jest gotowa (stan: gotowa); do tego czasu stoi jako sama nazwa.
+const WIKI = WIKI_ON;
 const kikOn = rocznik !== '' || current === 'uwb' || current === 'kik';
 const MENU = [
   { label: 'wiki', href: WIKI ? '/wiki/' : '', on: current === 'wiki', here: current === 'wiki' },
