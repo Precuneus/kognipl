@@ -380,7 +380,9 @@ function st(k: string, p: any, lp: number) {
     else { x = bx + (p.sx - .5) * 120; y = by + (p.sy - .5) * 120; a = .12; }
   }
   // od solipsysty do osnów rój stoi rozproszony i się nie przestawia; ruch należy do tekstu i iskry
-  else if (k === 'zombie' || k === 'wiem' || k === 'ja' || k === 'doswiadcza' || k === 'dyscypliny') { x = p.sx * W; y = p.sy * H; a = .14; }
+  else if (k === 'zombie' || k === 'wiem' || k === 'ja' || k === 'doswiadcza') { x = p.sx * W; y = p.sy * H; a = .14; }
+  // przy dyscyplinach roju nie ma (jego słowo, 2026-10-20); osnowy pojawiają się od razu uformowane
+  else if (k === 'dyscypliny') { x = p.sx * W; y = p.sy * H; a = 0; }
   else {
     const L = LN; x = L.x0 + p.lx * (L.x1 - L.x0); y = L.y[p.ln] + (p.cr - .5) * 5; a = .6; c = hex(OSN[p.ln]); s = .85;
     if (HOVP && x > W - kuPlotnu.offsetWidth) { a = .95; s = 1.1; }
@@ -1063,8 +1065,10 @@ function frame() {
   g.setTransform(D, 0, 0, D, 0, 0); g.clearRect(0, 0, W, H); g2.setTransform(D, 0, 0, D, 0, 0); g2.clearRect(0, 0, W, H); g.globalCompositeOperation = 'lighter'; g.lineWidth = 1;
   const NICI = (k: string) => k === 'osnowy' || k === 'kogni' || k === 'wiki', KROPKI = !NICI(A.k) && !NICI(B.k);
   for (const p of P) {
-    const s1 = st(A.k, p, lpA), s2 = t > 0 ? st(B.k, p, lpB) : s1, q = cl(t * 1.35 - p.d * .35);
+    const s1 = st(A.k, p, lpA), s2 = t > 0 ? st(B.k, p, lpB) : s1, q = A.k === 'dyscypliny' ? 1 : cl(t * 1.35 - p.d * .35);
     let x = s1[0] + (s2[0] - s1[0]) * q, y = s1[1] + (s2[1] - s1[1]) * q, al = s1[2] + (s2[2] - s1[2]) * q, sz = s1[4] + (s2[4] - s1[4]) * q;
+    // z dyscyplin do osnów punkty nie lecą przez ekran: stoją już na niciach i tylko się rozjaśniają
+    if (A.k === 'dyscypliny') al = s2[2] * t;
     const c1 = s1[3], c2 = s2[3];
     let cr = c1[0] + (c2[0] - c1[0]) * q, cg = c1[1] + (c2[1] - c1[1]) * q, cb = c1[2] + (c2[2] - c1[2]) * q, lit = 0;
     if (SLOWA_FORMA && p.sl) for (const [n, gi] of p.sl) {
