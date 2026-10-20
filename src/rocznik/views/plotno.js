@@ -71,6 +71,22 @@ export class Component extends DCLogic {
     const tubeV = (t) => "linear-gradient(to right," + t.base + " 0%," + t.hi + " 28%," + t.base + " 58%," + t.dark + " 100%)";
     const twist = (deg) => "linear-gradient(" + deg + "deg,rgba(0,0,0,0.12) 25%,rgba(0,0,0,0) 25%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.12) 50%,rgba(0,0,0,0.12) 75%,rgba(0,0,0,0) 75%)";
     const twistH = twist(45), twistV = twist(-45);
+    // osnowy jak na stronie startowej: nić z drobnych świecących trójkątów i punktów w kolorze grupy (jego słowo, 2026-10-20)
+    const PT = 240, PH = 11;
+    const pyl = (g) => {
+      let z = 7 + g * 101;
+      const r = () => { z = (z * 16807) % 2147483647; return (z - 1) / 2147483646; };
+      const kol = [GR[g].on.base, GR[g].on.hi];
+      let m = "";
+      for (let k = 0; k < 78; k++) {
+        const x = (k + r()) * PT / 78, y = PH / 2 + (r() - 0.5) * 4.4, rr = 1.2 + r() * 1.3, a = r() * 6.283, o = (0.5 + r() * 0.5).toFixed(2), c = kol[r() < 0.45 ? 1 : 0];
+        const pts = [0, 2.09, 4.19].map((d) => (x + rr * Math.cos(a + d)).toFixed(1) + "," + (y + rr * Math.sin(a + d)).toFixed(1)).join(" ");
+        m += "<polygon points='" + pts + "' fill='none' stroke='" + c + "' stroke-width='0.8' opacity='" + o + "'/>";
+      }
+      for (let k = 0; k < 40; k++) m += "<rect x='" + (r() * PT).toFixed(1) + "' y='" + (PH / 2 - 0.6 + (r() - 0.5) * 4.4).toFixed(1) + "' width='1.2' height='1.2' fill='" + kol[0] + "' opacity='" + (0.3 + r() * 0.5).toFixed(2) + "'/>";
+      return 'url("data:image/svg+xml,' + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='" + PT + "' height='" + PH + "'>" + m + "</svg>") + '")';
+    };
+    const PYL = GR.map((_, g) => pyl(g));
     const sizes = "100% 100%,100% 100%," + TW + "px " + TW + "px,100% 100%";
     const selS = SP.find((s) => s.id === sel) || null;
     const rel = new Set();
@@ -117,7 +133,7 @@ export class Component extends DCLogic {
         cardsStyle: "position:absolute;left:" + (X0 + 14) + "px;top:" + (bt + 4) + "px;width:" + (W - X0 - 14) + "px;display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px;z-index:5",
         style: "position:absolute;left:" + LX + "px;top:" + rowY[i] + "px;width:" + (X0 - LX) + "px;height:" + RH + "px;display:flex;align-items:center",
         labelStyle: "display:block;width:100%;height:100%;margin:0;padding:0 12px 0 0;border:0;background:transparent;cursor:pointer;text-align:left;font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.1;font-weight:" + (isOn ? 500 : 400) + ";color:" + (isOn ? "#f0e6d2" : (hitRows.has(n) ? "#e2ddd4" : "#8f877a")),
-        warpStyle: "position:absolute;left:" + X0 + "px;top:" + (cy(i) - WH / 2) + "px;width:" + (W - X0) + "px;height:" + WH + "px;border-radius:3px;background-image:linear-gradient(to right," + crowns.join(",") + "),linear-gradient(to right," + shade.join(",") + "),linear-gradient(to right," + lights.join(",") + ")," + twistH + "," + tubeH(t) + ";background-size:100% 100%," + sizes + ";-webkit-mask-image:" + mask + ";mask-image:" + mask
+        warpStyle: "position:absolute;left:" + X0 + "px;top:" + (cy(i) - PH / 2) + "px;width:" + (W - X0) + "px;height:" + PH + "px;border-radius:3px;background-image:linear-gradient(to right," + crowns.join(",") + "),linear-gradient(to right," + shade.join(",") + "),linear-gradient(to right," + lights.join(",") + ")," + PYL[rowG[i]] + ";background-size:100% 100%,100% 100%,100% 100%," + PT + "px 100%;background-position:0 0,0 0,0 0," + (-(i * 67) % PT) + "px 0;filter:drop-shadow(0 0 2px rgba(" + L + ",0.35));-webkit-mask-image:" + mask + ";mask-image:" + mask
       };
     });
     const threads = held.map((c) => {
@@ -144,7 +160,7 @@ export class Component extends DCLogic {
         const left = x - WW / 2 - 4;
         unders.push({
           shadowStyle: "position:absolute;left:" + (x - WW / 2) + "px;top:" + (cy(i) - 11) + "px;width:" + WW + "px;height:22px;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,0) 0px,rgba(0,0,0,0.7) 7px,rgba(0,0,0,0.7) 15px,rgba(0,0,0,0) 22px);opacity:" + (vis(c.c) ? 1 : 0.18),
-          patchStyle: "position:absolute;left:" + left + "px;top:" + (cy(i) - WH / 2) + "px;width:" + (WW + 8) + "px;height:" + WH + "px;pointer-events:none;background-image:radial-gradient(ellipse at 50% 50%,rgba(255,248,225,0.3) 0px,rgba(255,248,225,0) 70%),linear-gradient(rgba(" + L + ",0.5),rgba(" + L + ",0.5))," + twistH + "," + tubeH(t) + ";background-size:100% 100%,100% 100%," + TW + "px " + TW + "px,100% 100%;background-position:0 0,0 0," + (-((left - X0) % TW)) + "px 0,0 0"
+          patchStyle: "position:absolute;left:" + left + "px;top:" + (cy(i) - PH / 2) + "px;width:" + (WW + 8) + "px;height:" + PH + "px;pointer-events:none;background-image:radial-gradient(ellipse at 50% 50%,rgba(255,248,225,0.3) 0px,rgba(255,248,225,0) 70%),linear-gradient(rgba(" + L + ",0.18),rgba(" + L + ",0.18))," + PYL[rowG[i]] + ";background-size:100% 100%,100% 100%," + PT + "px 100%;background-position:0 0,0 0," + (-((left - X0 + i * 67) % PT)) + "px 0"
         });
       });
     });
