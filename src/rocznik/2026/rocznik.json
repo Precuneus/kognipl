@@ -262,8 +262,8 @@
    "id": "20-10-intro",
    "kurs": "Intro",
    "data": "2026-10-20",
-   "tytuł": "",
-   "odbyte": false,
+   "tytuł": "Mikro, mezo, makro",
+   "odbyte": true,
    "po_zajęciach": []
   },
   {
@@ -351,6 +351,31 @@
     "Skaner MRI"
    ],
    "opis": "Kontroler EEG streamerki zapisuje na skórze głowy zsumowane potencjały postsynaptyczne komórek piramidowych, skaner MRI odbiera sygnał radiowy z jąder wodoru. Zajęcia 03 pytają, dlaczego EEG dokładnie mierzy czas, a fMRI miejsce."
+  },
+  {
+   "tytuł": "Wykonanie dostaje swoje sieci",
+   "karty": [
+    "Mikro - wykonanie",
+    "Gry sportowe"
+   ],
+   "opis": "Na zajęciach 13.10 gry sportowe sprawdzały wykonanie. 20.10 wykonanie dostało nazwę mikro i swoje sieci: czuciowo-ruchową, grzbietową uwagi i wzrokową."
+  },
+  {
+   "tytuł": "Mezo jako predykcja",
+   "karty": [
+    "Mezo - aktualizowanie modelu",
+    "Kontrolowane halucynacje",
+    "Kłamstwo i manipulacja"
+   ],
+   "opis": "Na Neurokogni 14.10 zaskoczenie aktualizuje predykcję. Na Intro 20.10 ten sam ruch opisuje grę mezo: ludzie, losowość i mechanika aktualizują model, a kłamca wybiera kierunek tej aktualizacji."
+  },
+  {
+   "tytuł": "Strategia z odkrytej mechaniki",
+   "karty": [
+    "Makro - strategia z modeli",
+    "Odkrywanie mechaniki"
+   ],
+   "opis": "Mechanika odkrywana 13.10 staje się 20.10 materiałem strategii: gdy jest znana, ścieżka do wygranej jest jasna."
   }
  ]
 }
