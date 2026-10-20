@@ -86,10 +86,10 @@
     },
     {
      "nazwa": "Nawyk i automatyzacja",
-     "opis": "Warunkowanie, uczenie ze wzmocnienia, przejście od działania celowego do nawyku, nabywanie wprawy i pętle jąder podstawy.",
+     "opis": "Warunkowanie, uczenie ze wzmocnieniem, przejście od działania celowego do nawyku, nabywanie wprawy i pętle jąder podstawy.",
      "rodziny": [
       "Warunkowanie",
-      "Uczenie ze wzmocnienia",
+      "Uczenie ze wzmocnieniem",
       "Cel a nawyk",
       "Wprawa i ekspertyza",
       "Jądra podstawy"
@@ -231,7 +231,34 @@
    "data": "2026-10-07",
    "tytuł": "Od układu nerwowego do sieci",
    "odbyte": true,
-   "po_zajęciach": []
+   "po_zajęciach": [],
+   "opis": [
+    "Pierwsze zajęcia Neurokognitywistyki prowadziły od układu nerwowego do sieci mózgowych. Zaczęliśmy od budowy układu nerwowego, od neuronu i komórek glejowych, od płatów kory i łączności między obszarami, a potem przeszliśmy do sieci wielkoskalowych, zespołów obszarów aktywnych razem.",
+    "Każdą sieć przedstawiłem jej rolą, jednym zdaniem w pierwszej osobie. Sieć wzrokowa: „Widzę.” Sieć czuciowo-ruchowa: „Czuję ciało i się ruszam.” Sieć grzbietowa uwagi: „Koordynuję oko i rękę.” Sieć brzuszna uwagi: „Coś przerywa plan.” Sieć istotności: „Coś zagraża schematowi ciała.” Sieć kontroli: „Trzymam zadanie.” Sieć domyślna: „Ja, przeszłość i przyszłość, inni ludzie.”",
+    "Obok roli każdej sieci pokazałem przypadki jej uszkodzeń, bo uszkodzenie odsłania, co sieć wnosi do doświadczenia. Przy sieci wzrokowej ślepowidzenie, pacjentka D.F. i prozopagnozja, przy czuciowo-ruchowej Ian Waterman, przy grzbietowej uwagi zespół Bálinta, przy brzusznej zaniedbywanie stronne, przy sieci kontroli test sortowania kart, przy sieci istotności otępienie czołowo-skroniowe. Pacjent H.M. pokazał pamięć, Phineas Gage decyzje, obszary Broki i Wernickego mowę.",
+    "Zajęcia zamknęły trzy szlaki wzrokowe: brzuszny, grzbietowy i boczny, którym płynie mimika, spojrzenie i gest drugiej osoby."
+   ],
+   "karty": [
+    "Sieci wielkoskalowe",
+    "Neuron i glej",
+    "Sieć wzrokowa",
+    "Ślepowidzenie",
+    "Trzeci szlak wzrokowy",
+    "Prozopagnozja",
+    "Sieć czuciowo-ruchowa",
+    "Ian Waterman",
+    "Sieć grzbietowa uwagi",
+    "Zespół Bálinta",
+    "Sieć brzuszna uwagi",
+    "Zaniedbywanie stronne",
+    "Sieć istotności",
+    "Sieć kontroli",
+    "Test sortowania kart",
+    "Sieć domyślna",
+    "Pacjent H.M.",
+    "Phineas Gage",
+    "Język w sieciach mózgu"
+   ]
   },
   {
    "id": "13-10-intro",
@@ -248,6 +275,26 @@
      "tytuł": "Sapolsky, Human Behavioral Biology (Stanford 2010), playlista",
      "url": "https://www.youtube.com/playlist?list=PL848F2368C90DDC3D"
     }
+   ],
+   "opis": [
+    "Pierwsze zajęcia Wstępu po organizacyjnych były rozmową o grach. Otworzyłem je ustaleniem reguł dwóch ról: na Wstępie jesteśmy po imieniu i przychodzę w bluzie, na Neurokognitywistyce obowiązuje forma oficjalna, a ja mówię wprost, że gram obie role.",
+    "Zaczęliśmy od gier komputerowych, a przykłady szybko się rozszerzały: planszowe, sportowe, słowne, karciane, potem gry ekonomiczne, geopolityczne i społeczne. Sprawczość to wybór gier, których się uczymy i w które gramy: pokoje, które odwiedzamy, drzwi, przez które przechodzimy. Mówiliśmy o funkcji użyteczności, o decyzjach, co, kiedy i jak zrobić, o intencjach i eksperymencie Libeta, w którym aktywność mózgu narasta, zanim osoba badana wskaże chwilę decyzji, więc tej chwili nie da się uchwycić jako początku działania. Rozmawialiśmy też o regułach: o ich negocjowaniu, o odkrywaniu mechaniki i cech.",
+    "Przykłady przyszły z ekranu. Pierwszy sezon Westworld postawił pytania o świadomość, tożsamość, sprawczość i konsekwencje, pierwszy sezon Altered Carbon pokazał wiele sztucznych inteligencji, Matrix ludzi jako źródło obliczeń. Enty z Władcy Pierścieni posłużyły za przykład języka niosącego głęboką intersubiektywność, a Casino Royale za przykład pokera i głębi Vesper.",
+    "Doszliśmy do niedawnego roju agentów OpenAI i do dylematu dwóch przycisków z mediów społecznościowych: czerwony daje pewne przeżycie, zielony tylko wtedy, gdy naciśnie go ponad połowa. Pomiar mózgu pojawił się przy kontrolerach EEG, którymi grają streamerzy."
+   ],
+   "karty": [
+    "Poczucie sprawczości",
+    "Eksperyment Libeta",
+    "EEG",
+    "Mózg dla ruchu",
+    "Słowa na śnieg",
+    "Wielka Piątka",
+    "Makro - strategia z modeli",
+    "Jak to jest być nietoperzem",
+    "Agenci AI",
+    "Konstruowanie innych umysłów",
+    "Dylemat dwóch przycisków",
+    "Problem gapowicza"
    ]
   },
   {
@@ -256,7 +303,28 @@
    "data": "2026-10-14",
    "tytuł": "Od fotonu do bioinformacji",
    "odbyte": true,
-   "po_zajęciach": []
+   "po_zajęciach": [],
+   "opis": [
+    "Drugie zajęcia Neurokognitywistyki prowadziły od fotonu do bioinformacji. Zaczęliśmy od drogi wzrokowej, od siatkówki do pierwszorzędowej kory wzrokowej (V1). Przypomnieliśmy trzy szlaki wzrokowe oraz sieci z pierwszych zajęć.",
+    "Pręciki i czopki ułożyliśmy według położenia w siatkówce, a widmo elektromagnetyczne od promieni gamma do fal radiowych, z czułością czopków.",
+    "Potem bioinformacja: sposób, w jaki receptory biologiczne organizmu przetwarzają energię fizyczną, dzielona na eksterocepcję, propriocepcję i interocepcję. Eksterocepcję podzieliliśmy według wielkości fizycznej, którą odbiera receptor, a świat kleszcza i rekina pokazał, że każdy gatunek odbiera własny wycinek energii. Doszliśmy do interocepcji; receptor, gradient jonów, synapsa i przyrządy pomiaru przeszły na kolejne zajęcia.",
+    "W rozmowie poszliśmy w stronę predykcji. Oliver Sacks opowiada o zespole Charlesa Bonneta, w którym po utracie wzroku pojawiają się halucynacje, a Anil Seth nazywa percepcję halucynacją kontrolowaną. Mówiliśmy o predykcjach w mózgu i między sieciami, o ich aktualizacji przez zaskoczenie, o warunkowaniu i halucynacjach. Opowiedziałem o rozszczepionym mózgu, o stymulacji skrzyżowania skroniowo-ciemieniowego i wywołanych nią doznaniach oraz o osobie niewidomej, która po przywróceniu wzroku nie odróżniała wzrokiem owiec, jako kolejnym przykładzie predykcji."
+   ],
+   "karty": [
+    "Pręciki, czopki i droga wzrokowa",
+    "Trzeci szlak wzrokowy",
+    "Sieci wielkoskalowe",
+    "Widmo elektromagnetyczne",
+    "Bioinformacja",
+    "Propriocepcja",
+    "Interocepcja",
+    "Umwelt",
+    "Odległość od receptorów",
+    "Kontrolowane halucynacje",
+    "Kodowanie predykcyjne",
+    "Rozszczepiony mózg",
+    "Doświadczenie poza ciałem"
+   ]
   },
   {
    "id": "20-10-intro",
@@ -264,7 +332,22 @@
    "data": "2026-10-20",
    "tytuł": "Mikro, mezo, makro",
    "odbyte": true,
-   "po_zajęciach": []
+   "po_zajęciach": [],
+   "opis": [
+    "Zaczęliśmy od możliwości AI i od zmian ekonomicznych, które przynosi. Pokazałem studentom kogni.pl taką, jaka jest teraz, w budowie.",
+    "Potem obejrzeliśmy film Surnex o warstwach mikro, mezo i makro w grach i zmieniliśmy jego interpretację. Mikro to wykonanie: sieć okołocentralna, sieć grzbietowa uwagi i sieć wzrokowa, jak w stadium sensoryczno-motorycznym Piageta. Mezo to reagowanie na zmianę: informacja z tła o ludziach, losowości i mechanice aktualizuje Modele Mentalne, jak eksplorowanie mapy. Porównałem to z teorią umysłu, z manipulacją i kłamstwem, gdzie aktualizują się modele drugiej osoby. Zastanawialiśmy się, z jaką częstotliwością modele się aktualizują. Ujęliśmy to w ramie kodowania predykcyjnego. Makro to strategia prowadzona nabytymi modelami: gdy mechanika jest znana, ścieżka jest jasna, a trener ją pokazuje.",
+    "Pary dobrałem losowo, żeby ze sobą rozmawiały nowe osoby. Każda para szukała swoich realnych umiejętności i sprawdzała, czy są świadectwem mikro, mezo czy makro. Zajęcia zamknęło pytanie: gdyby w prawdziwym życiu był cheat, co chcesz nim oszukać?"
+   ],
+   "karty": [
+    "Mikro - wykonanie",
+    "Mezo - aktualizowanie modeli",
+    "Makro - strategia z modeli",
+    "Konstruowanie innych umysłów",
+    "Kodowanie predykcyjne",
+    "Sieć czuciowo-ruchowa",
+    "Sieć grzbietowa uwagi",
+    "Agenci AI"
+   ]
   },
   {
    "id": "21-10-neurokogni",
@@ -280,26 +363,26 @@
    "tytuł": "Dylemat przycisków jako umowa przed wyborem",
    "karty": [
     "Dylemat dwóch przycisków",
-    "Gry ekonomiczne i geopolityczne",
-    "Rój agentów"
+    "Problem gapowicza",
+    "Agenci AI"
    ],
    "opis": "Przyciski, Ostrom i rój agentów: grupa ustala regułę, zanim ktokolwiek wybierze. Agenci OpenAI zrobili sobie tablicę ogłoszeń i werbowali do poświęcenia dla kolektywu."
   },
   {
    "tytuł": "Trzy warstwy gry na trzech osnowach",
    "karty": [
-    "Gry sportowe",
+    "Mózg dla ruchu",
     "Dylemat dwóch przycisków",
-    "Odkrywanie mechaniki"
+    "Makro - strategia z modeli"
    ],
    "opis": "Gry sportowe sprawdzają wykonanie, karty i poker czytanie ludzi i prawdopodobieństw, gry planszowe system i reguły."
   },
   {
    "tytuł": "Sygnał z głowy w miejsce ręki",
    "karty": [
-    "Gra myślą - kontrolery EEG",
-    "Sprawczość jako wybór gier",
-    "Gry sportowe",
+    "EEG",
+    "Eksperyment Libeta",
+    "Mózg dla ruchu",
     "Ian Waterman"
    ],
    "opis": "Potencjał gotowości Libeta zapisano elektrodami EEG na skórze głowy, a kontroler streamerki czyta ten sam rodzaj sygnału. Gra sportowa przechodzi przez ciało, Waterman steruje ciałem przez wzrok, a kontroler EEG omija rękę."
@@ -307,15 +390,15 @@
   {
    "tytuł": "Świadomość sztucznego agenta",
    "karty": [
-    "Westworld",
-    "Rój agentów"
+    "Jak to jest być nietoperzem",
+    "Agenci AI"
    ],
    "opis": "Westworld pokazuje świadomość budzącą się w maszynie, exurb1a pyta, po czym ją poznamy, a Kurzgesagt opisuje rój agentów ludzkim językiem i zaznacza, że ten język służy opowieści."
   },
   {
    "tytuł": "Odkrywanie reguły gry",
    "karty": [
-    "Odkrywanie mechaniki",
+    "Makro - strategia z modeli",
     "Test sortowania kart"
    ],
    "opis": "Na Intro odkrywanie mechaniki gier, na Neurokogni test sortowania kart: znaleźć regułę, której nikt nie podaje, i porzucić ją, gdy przestaje działać."
@@ -324,7 +407,7 @@
    "tytuł": "Propriocepcja Iana Watermana",
    "karty": [
     "Ian Waterman",
-    "Propriocepcja i interocepcja"
+    "Propriocepcja"
    ],
    "opis": "Na zajęciach 01 Waterman ilustruje sieć czuciowo-ruchową, na zajęciach 02 propriocepcję: od szyi w dół stracił ją razem z czuciem delikatnego dotyku, więc każdy nowy ruch prowadzi wzrokiem."
   },
@@ -332,14 +415,14 @@
    "tytuł": "Wyspa: emocje i stan ciała",
    "karty": [
     "Sieć istotności",
-    "Propriocepcja i interocepcja"
+    "Interocepcja"
    ],
    "opis": "Przednia wyspa i przedni zakręt obręczy, rdzeń sieci istotności z zajęć 01, to też obszary, do których dociera interocepcja. W otępieniu czołowo-skroniowym chorzy gorzej śledzą bicie własnego serca i przeceniają swoją trafność."
   },
   {
    "tytuł": "Halucynacje w szlaku brzusznym",
    "karty": [
-    "Ślepowidzenie i szlaki wzrokowe",
+    "Sieć wzrokowa",
     "Kontrolowane halucynacje"
    ],
    "opis": "Szlak brzuszny z zajęć 01 rozpoznaje przedmioty i twarze; w zespole Charlesa Bonneta halucynacje twarzy i barw są aktywnością tych samych obszarów brzusznej kory wzrokowej (ffytche i in. 1998)."
@@ -347,7 +430,7 @@
   {
    "tytuł": "EEG i MRI",
    "karty": [
-    "Gra myślą - kontrolery EEG",
+    "EEG",
     "Skaner MRI"
    ],
    "opis": "Kontroler EEG streamerki zapisuje na skórze głowy zsumowane potencjały postsynaptyczne komórek piramidowych, skaner MRI odbiera sygnał radiowy z jąder wodoru. Zajęcia 03 pytają, dlaczego EEG dokładnie mierzy czas, a fMRI miejsce."
@@ -356,7 +439,7 @@
    "tytuł": "Wykonanie dostaje swoje sieci",
    "karty": [
     "Mikro - wykonanie",
-    "Gry sportowe"
+    "Mózg dla ruchu"
    ],
    "opis": "Na zajęciach 13.10 gry sportowe sprawdzały wykonanie. 20.10 wykonanie dostało nazwę mikro i swoje sieci: czuciowo-ruchową, grzbietową uwagi i wzrokową."
   },
@@ -365,17 +448,139 @@
    "karty": [
     "Mezo - aktualizowanie modeli",
     "Kontrolowane halucynacje",
-    "Kłamstwo i manipulacja"
+    "Konstruowanie innych umysłów"
    ],
    "opis": "Na Neurokogni 14.10 zaskoczenie aktualizuje predykcję. Na Intro 20.10 ten sam ruch opisuje grę mezo: ludzie, losowość i mechanika kształtują Modele Mentalne, a kłamca wybiera kierunek."
-  },
-  {
-   "tytuł": "Strategia z odkrytej mechaniki",
-   "karty": [
-    "Makro - strategia z modeli",
-    "Odkrywanie mechaniki"
-   ],
-   "opis": "Mechanika odkrywana 13.10 staje się 20.10 Modelem Mentalnym, na którym polega strategia: gdy jest znana, ścieżka do wygranej jest jasna."
   }
- ]
+ ],
+ "przekierowania": {
+  "bioinformacja": {
+   "karta": "Bioinformacja",
+   "watek": "14-10-neurokogni"
+  },
+  "cheat-w-zyciu": {
+   "watek": "20-10-intro"
+  },
+  "dylemat-dwoch-przyciskow": {
+   "karta": "Dylemat dwóch przycisków",
+   "watek": "13-10-intro"
+  },
+  "gra-mysla-kontrolery-eeg": {
+   "karta": "EEG",
+   "watek": "13-10-intro"
+  },
+  "gry-ekonomiczne-i-geopolityczne": {
+   "watek": "13-10-intro"
+  },
+  "gry-sportowe": {
+   "watek": "13-10-intro"
+  },
+  "ian-waterman": {
+   "karta": "Ian Waterman",
+   "watek": "07-10-neurokogni"
+  },
+  "jezyk-entow": {
+   "watek": "13-10-intro"
+  },
+  "kontrolowane-halucynacje": {
+   "karta": "Kontrolowane halucynacje",
+   "watek": "14-10-neurokogni"
+  },
+  "klamstwo-i-manipulacja": {
+   "karta": "Konstruowanie innych umysłów",
+   "watek": "20-10-intro"
+  },
+  "makro-strategia-z-modeli": {
+   "karta": "Makro: strategia z modeli",
+   "watek": "20-10-intro"
+  },
+  "mezo-aktualizowanie-modeli": {
+   "karta": "Mezo: aktualizowanie modeli",
+   "watek": "20-10-intro"
+  },
+  "mikro-wykonanie": {
+   "karta": "Mikro: wykonanie",
+   "watek": "20-10-intro"
+  },
+  "neuron-i-glej": {
+   "karta": "Neuron i glej",
+   "watek": "07-10-neurokogni"
+  },
+  "obszary-mowy": {
+   "karta": "Język w sieciach mózgu",
+   "watek": "07-10-neurokogni"
+  },
+  "odkrywanie-cech": {
+   "watek": "13-10-intro"
+  },
+  "odkrywanie-mechaniki": {
+   "watek": "13-10-intro"
+  },
+  "pacjent-h-m": {
+   "karta": "Pacjent H.M.",
+   "watek": "07-10-neurokogni"
+  },
+  "phineas-gage": {
+   "karta": "Phineas Gage",
+   "watek": "07-10-neurokogni"
+  },
+  "propriocepcja-i-interocepcja": {
+   "karta": "Propriocepcja",
+   "watek": "14-10-neurokogni"
+  },
+  "preciki-czopki-i-droga-wzrokowa": {
+   "karta": "Pręciki, czopki i droga wzrokowa",
+   "watek": "14-10-neurokogni"
+  },
+  "rawka-kleszcz-i-rekin": {
+   "karta": "Umwelt",
+   "watek": "14-10-neurokogni"
+  },
+  "rozszczepiony-mozg-i-tpj": {
+   "karta": "Rozszczepiony mózg",
+   "watek": "14-10-neurokogni"
+  },
+  "roj-agentow": {
+   "karta": "Agenci AI",
+   "watek": "13-10-intro"
+  },
+  "sieci-wielkoskalowe": {
+   "karta": "Sieci wielkoskalowe",
+   "watek": "07-10-neurokogni"
+  },
+  "siec-istotnosci": {
+   "karta": "Sieć istotności",
+   "watek": "07-10-neurokogni"
+  },
+  "skaner-mri": {
+   "karta": "Skaner MRI",
+   "watek": "14-10-neurokogni"
+  },
+  "sprawczosc-jako-wybor-gier": {
+   "karta": "Eksperyment Libeta",
+   "watek": "13-10-intro"
+  },
+  "test-sortowania-kart": {
+   "karta": "Test sortowania kart",
+   "watek": "07-10-neurokogni"
+  },
+  "trzeci-szlak-wzrokowy": {
+   "karta": "Trzeci szlak wzrokowy",
+   "watek": "07-10-neurokogni"
+  },
+  "umiejetnosci-w-trzech-warstwach": {
+   "watek": "20-10-intro"
+  },
+  "westworld": {
+   "watek": "13-10-intro"
+  },
+  "widmo-elektromagnetyczne": {
+   "karta": "Widmo elektromagnetyczne",
+   "watek": "14-10-neurokogni"
+  },
+  "slepowidzenie-i-szlaki-wzrokowe": {
+   "karta": "Ślepowidzenie",
+   "watek": "07-10-neurokogni"
+  }
+ }
 }

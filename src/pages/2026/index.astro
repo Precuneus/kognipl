@@ -8,7 +8,14 @@ BAND.reduce((start, n, g) => { for (let k = 0; k < n; k++) groupOf[OS[start + k]
 const INK = ['#b3c39b', '#8fc4bf', '#9fb7da', '#b4aada'];
 const COL = { i: '#f0c060', n: '#edbbc5' };
 const KURS = { Intro: 'Wstęp do kognitywistyki I', Neurokogni: 'Neurokognitywistyka' };
-const fresh = cardsOf(latest.id);
+import { card, segs } from '../../karty/data.js';
+import R from '../../rocznik/2026/rocznik.json';
+const zl = R['zajęcia'].find((z) => z.id === latest.id) || {};
+// Ostatnie zajęcia: przy nowym wątku jego karty z pierwszym zdaniem, przy starym jego stare karty.
+const first = (k) => { const t = (k.body.find((b) => b.t) || { t: '' }).t; const m = t.match(/^.*?[.!?](?=\s|$)/); return segs(m ? m[0] : t).map((x) => x.t).join(''); };
+const fresh = zl.karty
+  ? zl.karty.map((n) => card(n)).filter(Boolean).map((k) => ({ o: k.o, h: k.h, d: first(k), url: k.url, cls: latest.id }))
+  : cardsOf(latest.id);
 const clsOf = (s) => s.cls.endsWith('intro') ? 'i' : 'n';
 ---
 <Base title="Rocznik 2026 · kogni.pl" activePage="plotno" rocznik="2026" description="Rocznik 2026: zajęcia z kognitywistyki na Uniwersytecie w Białymstoku w roku 2026/27, wątek po wątku, karta po karcie.">

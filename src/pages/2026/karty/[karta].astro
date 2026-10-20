@@ -2,11 +2,24 @@
 import Base from '../../../layouts/Base.astro';
 import Board from '../../../components/Board.astro';
 import { SP } from '../../../rocznik/data.js';
+import R from '../../../rocznik/2026/rocznik.json';
+import { card } from '../../../karty/data.js';
+// Stare karty Rocznika: póki ich zajęcia nie mają listy kart, stoją tu jak dotąd; potem adres prowadzi
+// do karty w jednym zbiorze albo do wątku (przekierowania w rocznik.json).
 export function getStaticPaths() {
-  return SP.map((s) => ({ params: { karta: s.id }, props: { s } }));
+  const old = SP.filter((s) => s.isOld).map((s) => ({ params: { karta: s.id }, props: { s } }));
+  const red = Object.entries(R['przekierowania'] || {}).map(([slug, t]) => {
+    const k = t.karta && card(t.karta);
+    return { params: { karta: slug }, props: { to: k ? k.url : '/2026/watki/' + t.watek + '/' } };
+  });
+  return old.concat(red.filter((r) => !old.some((o) => o.params.karta === r.params.karta)));
 }
-const { s } = Astro.props;
+const { s, to } = Astro.props;
 ---
-<Base title={s.h + ' · Rocznik 2026 · kogni.pl'} activePage="" rocznik="2026">
-  <Board view="karta" state={{ id: s.id }} />
-</Base>
+{to ? (
+  <html lang="pl"><head><meta charset="UTF-8"><meta http-equiv="refresh" content={'0; url=' + to}><link rel="canonical" href={to}><meta name="robots" content="noindex"><title>kogni.pl</title></head><body><a href={to}>{to}</a></body></html>
+) : (
+  <Base title={s.h + ' · Rocznik 2026 · kogni.pl'} activePage="" rocznik="2026">
+    <Board view="karta" state={{ id: s.id }} />
+  </Base>
+)}

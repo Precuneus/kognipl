@@ -1,0 +1,144 @@
+---
+import Base from '../../layouts/Base.astro';
+import { template } from '../../rocznik/views/karta.js';
+import { KARTY, GRUPY, BASE, INK, NETN, segs, netCard, backlinks, classesOf, slugify } from '../../karty/data.js';
+export function getStaticPaths() {
+  return KARTY.map((k) => ({ params: { karta: k.id }, props: { k } }));
+}
+const { k } = Astro.props;
+const ink = INK[k.g], base = BASE[k.g];
+const group = GRUPY[k.g].charAt(0).toUpperCase() + GRUPY[k.g].slice(1);
+
+// Mózg z boku i od środka, ten sam rysunek co na karcie Rocznika; świecą sieci tej karty.
+const svgSrc = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)[0];
+const key = (n) => (n === 'JĘZ' ? 'JEZ' : n);
+const on = new Set(k.nets.map((n) => key(n[0])));
+const brain = svgSrc
+  .replace(/\{\{bn\.(\w+)\}\}/g, (_, n) => (on.has(n) ? 'fill:' + base + ';fill-opacity:0.85' : 'fill:rgba(180,155,100,0.07)'))
+  .replace(/\{\{bl\.(\w+)\}\}/g, (_, n) => (on.has(n) ? 'display:inline' : 'display:none'));
+
+// Ryciny: te same rysunki co na karcie Rocznika (szablon karta.js), w kolorze karty.
+const CAPT = {
+  rp: 'Potencjał gotowości narasta przed wskazaną na zegarze chwilą decyzji, a ta wypada przed ruchem.',
+  eeg: 'Droga sygnału z kory przez czaszkę i skórę głowy do elektrody.',
+  przyciski: 'Czerwony daje pewne przeżycie, zielony tylko wtedy, gdy naciśnie go ponad połowa.',
+  karty: 'Karta pasuje do trzech kart wzorcowych naraz, więc regułę trzeba odkryć.',
+  neuron: 'Neuron z dendrytami, ciałem komórki, aksonem i synapsami, obok komórka glejowa.',
+};
+const FIGKEY = { rp: 'isRp', eeg: 'isEeg', przyciski: 'isPrzyciski', karty: 'isKarty', neuron: 'isNeuron' };
+const svgOf = (name) => {
+  const key = FIGKEY[name]; if (!key) return '';
+  const i = template.indexOf('<sc-if value="{{bk.' + key + '}}"'); if (i < 0) return '';
+  const a = template.indexOf('<svg', i), b = template.indexOf('</svg>', a) + 6;
+  return template.slice(a, b).replace(/\{\{bk\.acc\}\}/g, base);
+};
+const inBody = new Set(k.body.filter((b) => b.fig).map((b) => b.fig));
+const blocksOut = k.body.concat(k.fig.filter((f) => !inBody.has(f)).map((f) => ({ fig: f })));
+let nfig = 0;
+const items = blocksOut.map((b) => b.fig ? { fig: svgOf(b.fig), cap: CAPT[b.fig] ? 'Ryc. ' + (++nfig) + '. ' + CAPT[b.fig] : '' } : b).filter((b) => b.t || b.fig);
+const kindOf = (u) => (/youtu\.?be/.test(u) ? 0 : (/doi\.org|frontiersin|journals|\.pdf|pubmed|ncbi/.test(u) ? 1 : 2));
+const kinds = ['Filmy', 'Artykuły', 'Inne'].map((name, q) => ({ name, items: k.l.filter((l) => kindOf(l[1]) === q) })).filter((x) => x.items.length);
+const back = backlinks(k);
+const zaj = classesOf(k);
+const nets = k.nets.map(([kod, why]) => ({ kod, name: NETN[kod] || kod, why, to: netCard(kod) }));
+---
+<Base title={k.h + ' · wiki · kogni.pl'} activePage="wiki">
+  <article class="wk" style={'--ink:' + ink + ';--base:' + base}>
+    <nav aria-label="Ścieżka" class="wk-path">
+      <a href={'/wiki/#' + slugify(GRUPY[k.g])}>{group}</a><span aria-hidden="true"> › </span><a href={'/wiki/#' + slugify(k.o)}>{k.o}</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span>
+    </nav>
+    <div class="wk-grid">
+      <div class="wk-col">
+        <section aria-label="Myśl" class="wk-box wk-mysl">
+          <h2>Myśl</h2>
+          <h1>{k.h}</h1>
+          {k.r2.length > 0 && <p class="wk-rodziny">{k.r2.join(' · ')}</p>}
+        </section>
+        <section aria-label="Opis" class="wk-box">
+          <h2>Opis</h2>
+          {items.map((b) => b.t ? (
+            <p class="wk-p">{segs(b.t).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>
+          ) : (
+            <figure class="wk-fig"><Fragment set:html={b.fig} /><figcaption>{b.cap}</figcaption></figure>
+          ))}
+        </section>
+      </div>
+      <div class="wk-col">
+        <section aria-label="Sieć mózgowa" class="wk-box">
+          <h2>Sieć mózgowa</h2>
+          {nets.length > 0 ? (
+            <Fragment>
+              <div class="wk-brain"><Fragment set:html={brain} /></div>
+              <dl>
+                {nets.map((n) => (
+                  <div class="wk-net">
+                    <dt>{n.to ? <a href={n.to.url} class="wk-kod">{n.kod}</a> : <span class="wk-kod">{n.kod}</span>}<span class="wk-netname">{n.name}</span></dt>
+                    <dd>{segs(n.why).map((s) => s.url ? <a href={s.url} style={'color:' + s.color}>{s.t}</a> : s.t)}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Fragment>
+          ) : <p class="wk-p">{k.nw}</p>}
+        </section>
+        {kinds.length > 0 && (
+          <section aria-label="Materiały" class="wk-box">
+            <h2>Materiały</h2>
+            {kinds.map((kd) => (
+              <div class="wk-kind">
+                <h3>{kd.name}</h3>
+                <ul>{kd.items.map((l) => <li><a href={l[1]} target="_blank" rel="noopener">{l[0]}</a> {l[2] && <span class="wk-meta">{l[2]}</span>}</li>)}</ul>
+              </div>
+            ))}
+          </section>
+        )}
+        {back.length > 0 && (
+          <section aria-label="Linkują tutaj" class="wk-box">
+            <h2>Linkują tutaj</h2>
+            <div class="wk-chips">{back.map((b) => <a href={b.url} class="wk-chip" style={'--c:' + INK[b.g]}>{b.h}</a>)}</div>
+          </section>
+        )}
+        {zaj.length > 0 && (
+          <section aria-label="Na zajęciach" class="wk-box">
+            <h2>Na zajęciach</h2>
+            <div class="wk-chips">{zaj.map((z) => <a href={z.url} class="wk-chip" style={'--c:' + (z.kurs === 'Intro' ? '#f0c060' : '#edbbc5')}>{z.label}</a>)}</div>
+          </section>
+        )}
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style is:global>
+.wk{max-width:1120px;margin:0 auto;padding:44px 32px 80px}
+.wk-path{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:#6f685d}
+.wk-path a{color:var(--ink);text-decoration:none}
+.wk-path [aria-current]{color:#e2ddd4}
+.wk-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start;margin-top:28px}
+.wk-col{display:flex;flex-direction:column;gap:24px;min-width:0}
+.wk-box{background:#16140f;border:1px solid rgba(180,155,100,.2);border-radius:16px;padding:20px 24px}
+.wk-box h2{margin:0 0 10px;font-size:11.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#a09888}
+.wk-mysl{border-color:color-mix(in srgb,var(--ink) 50%,transparent);padding:26px 30px 28px;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.wk-mysl h2{color:var(--ink)}
+.wk-mysl h1{margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:44px;line-height:1.12;color:#e2ddd4}
+.wk-rodziny{margin:10px 0 0;font-size:14px;color:var(--ink)}
+.wk-p{margin:14px 0 0;font-size:16.5px;line-height:1.75;color:#e2ddd4}
+.wk-box h2+.wk-p{margin-top:0}
+.wk-p a,.wk-net dd a{text-decoration:underline dotted 1px;text-underline-offset:4px}
+.wk-fig{margin:22px 0 24px}.wk-fig svg{display:block;width:100%;max-width:560px}.wk-fig figcaption{margin:10px 0 0;font-size:13px;line-height:1.55;color:#a09888}
+.wk-brain svg{display:block;width:100%;max-width:340px;margin:0 auto 14px}
+.wk dl{margin:0}
+.wk-net+.wk-net{margin-top:12px;padding-top:12px;border-top:1px solid rgba(180,155,100,.12)}
+.wk-net dt{display:flex;align-items:baseline;gap:10px;margin:0}
+.wk-kod{font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--ink);text-decoration:none}
+.wk-netname{font-size:13px;color:#a09888}
+.wk-net dd{margin:4px 0 0;font-size:14.5px;line-height:1.6;color:#e2ddd4}
+.wk-kind+.wk-kind{margin-top:14px;padding-top:14px;border-top:1px solid rgba(180,155,100,.14)}
+.wk-kind h3{margin:0 0 6px;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;line-height:1.2;color:#e2ddd4}
+.wk-kind ul{margin:0;padding:0 0 0 18px;font-size:14.5px;line-height:1.6}
+.wk-kind li{margin-bottom:8px}
+.wk-meta{color:#a09888}
+.wk-chips{display:flex;flex-wrap:wrap;gap:8px}
+.wk-chip{display:inline-flex;align-items:center;text-decoration:none;font-size:13px;min-height:36px;padding:6px 14px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);color:var(--c)}
+@media (max-width:960px){.wk-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:720px){.wk{padding:28px 16px 64px}.wk-mysl h1{font-size:34px}.wk-box{padding:18px 18px}}
+</style>
