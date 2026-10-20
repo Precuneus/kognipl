@@ -110,7 +110,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
       {GRUPY.map((g, k) => g.slowa.map((w, j) => <span class="roj-slowo-osn" data-k={k} style={'--k:' + g.kolor + ';left:' + (35 + 240 * (j + .5) / g.slowa.length).toFixed(1) + 'vw;top:calc(' + YN_VH[k] + 'vh - 24px - ' + WYS(k, j) + 'vh)'}>{[...w].map((z) => z === ' ' ? ' ' : <span class="zn">{z}</span>)}</span>))}
     </div>
     {GRUPY.map((g, k) => <div class="roj-mnich" data-k={k} style={'left:' + MNICH_X[k] + 'vw;top:calc(' + YN_VH[k] + 'vh - var(--mh))'}><div class="roj-mnich-c plonie" set:html={postac('m' + k, g.kolor)} /><span class="roj-mnich-nazwa" style={'color:' + g.kolor}>{BADACZ[g.nazwa] || g.nazwa}</span></div>)}
-    <a class="roj-ku-plotnu" href="/2026/" aria-label="Rocznik 2026: Płótno"></a>
+    <a class="roj-ku-plotnu" href="/2026/" aria-label="Rocznik 2026: Płótno"><span class="roj-wejdz">Wejdź na Płótno<svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="4" r="2" fill="currentColor" stroke="none"></circle><path d="M6 7 V12 Q6 16 10 16 H18"></path><path class="roj-wejdz-g" d="M14.5 12.5 L18 16 L14.5 19.5"></path></svg></span></a>
     </div>
   </section>
   <section class="roj-st lewo kogni" data-k="kogni">
@@ -228,6 +228,13 @@ body:has(.roj) .site-footer::before{display:none}
 .roj .roj-ku-plotnu{position:absolute;top:0;right:0;bottom:0;width:26vw;border:0;background:linear-gradient(90deg,rgba(240,192,96,0),rgba(240,192,96,0));transition:background .3s ease}
 .roj .roj-ku-plotnu::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(240,192,96,0),rgba(240,192,96,.08));opacity:0;pointer-events:none}
 .roj .roj-ku-plotnu.puls::after{animation:puls 2.6s ease-in-out infinite}
+/* drzwi do Płótna widać, gdy osnowy staną: ikona wejścia strony i napis (testy: ludzie nie widzieli, że to się klika, 2026-10-20) */
+.roj .roj-ku-plotnu::after{background:linear-gradient(90deg,rgba(240,192,96,0),rgba(240,192,96,.16))}
+.roj .roj-wejdz{position:absolute;right:32px;bottom:7vh;display:flex;align-items:center;gap:10px;white-space:nowrap;font-family:var(--font-display);font-size:24px;color:var(--zloto);text-shadow:0 0 14px rgba(240,192,96,.45);opacity:0;transform:translateX(12px);transition:opacity .8s ease,transform .8s ease;pointer-events:none}
+.roj .roj-ku-plotnu.widac .roj-wejdz{opacity:1;transform:none}
+.roj .roj-ku-plotnu.widac .roj-wejdz svg{animation:wejdz 1.6s ease-in-out infinite}
+@keyframes wejdz{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+.roj .roj-ku-plotnu:hover .roj-wejdz,.roj .roj-ku-plotnu:focus-visible .roj-wejdz{text-shadow:0 0 18px rgba(240,192,96,.8)}
 @keyframes puls{50%{opacity:1}}
 .roj .roj-ku-plotnu:hover,.roj .roj-ku-plotnu:focus-visible{background:linear-gradient(90deg,rgba(240,192,96,0),rgba(240,192,96,.07));outline:0}
 /* kognitywistyka i solipsysta w cieniu */
@@ -269,6 +276,7 @@ body:has(.roj) .site-footer::before{display:none}
   .roj-slowo-osn{font-size:11px}
   .roj-st.poziom{--mh:11vh}
   .roj .roj-ku-plotnu{width:18vw}
+  .roj .roj-wejdz{right:16px;font-size:19px;bottom:6vh}
   .roj-cien{right:-4px;top:-70px;height:90px}
   .roj-st.in .roj-cien{opacity:.25}
 }
@@ -1170,6 +1178,7 @@ function frame() {
     });
     zgRuch = zegnij(dt);
     kuPlotnu.classList.toggle('puls', LN.pr > .86);
+    kuPlotnu.classList.toggle('widac', LN.pr > .78);
   }
   // solipsysta stoi zwrócony w prawo; snop i słowa po jego prawej zapala sam CSS, bez pracy w każdej klatce
   const solRuch = false;
