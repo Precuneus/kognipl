@@ -245,7 +245,9 @@ body:has(.roj) .site-footer::before{display:none}
 @media (max-width:760px){
   .roj-st{padding:52vh 20px 8vh 20px!important;align-items:flex-start;justify-content:flex-start!important}
   .roj-st.lewo .roj-t,.roj-st.kogni .roj-t,.roj-st.lepkie .roj-t{max-width:none}
-  .roj-st.pierwszy{padding-top:calc(34vh + 33vw + 16px)!important;padding-bottom:0!important;align-items:flex-start}
+  .roj-st.pierwszy{padding-top:calc(29vh + 33vw + 16px)!important;padding-bottom:0!important;align-items:flex-start}
+  /* telefon: mózg trzyma górę ekranu, tekst żyje pod nim i znika, gdy wjeżdża pod mózg; nagłówek tuż za akapitem */
+  .roj-st.ciag[data-k=naglowek]{padding-top:2vh!important;padding-bottom:34vh!important}
   .roj-st.ciag[data-k=pytanie]{padding-top:14vh!important;padding-bottom:0!important}
   .roj-st.ciag[data-k=wiem]{padding-top:0!important;padding-bottom:0!important;margin-top:-12vh}
   .roj-st.ciag[data-k=ja]{padding-top:23.8vh!important;padding-bottom:0!important}
@@ -354,7 +356,7 @@ function size() {
 }
 function brain(p: any, sc = 1, r = 0) {
   // gdy sieci się rozchodzą (r), mózg maleje, a na szerokim ekranie przesuwa się w lewo: rozsunięte sieci mieszczą się na ekranie
-  const bw = (MOB ? W * .88 : Math.min(W * .46, 760)) * sc * (1 - (MOB ? .22 : .16) * r), cx = MOB ? W / 2 : W * (.72 - .06 * r), cy = MOB ? H * .34 : H * .52;
+  const bw = (MOB ? W * .88 : Math.min(W * .46, 760)) * sc * (1 - (MOB ? .22 : .16) * r), cx = MOB ? W / 2 : W * (.72 - .06 * r), cy = MOB ? H * .29 : H * .52;
   return [cx + (p.u / 240 - .5) * bw, cy + (p.v / 180 - .5) * bw * .75, bw];
 }
 function lines() {
@@ -558,8 +560,11 @@ function zdPkt(j: number, te: number) {
 }
 function zdKrok(now: number, dt: number) {
   const a = (zrodlo.parentElement as HTMLElement).getBoundingClientRect(), b = nagl.getBoundingClientRect(), TE = ZD_F[5];
-  if (SEKCJE.pytanie.classList.contains('in') && a.top < H * .45 && a.bottom > 0) ZD.dir = 1;
-  else if (a.top > H * .62) ZD.dir = -1;
+  // na telefonie zdanie złoci się pod mózgiem, gdy nagłówek mieści się już na ekranie,
+  // a najpóźniej tuż przed tym, jak zdanie zniknie pod mózgiem (niski ekran)
+  const dno = DNO_MOZGU(), zOn = MOB ? (a.top < dno + H * .1 && b.bottom < H - 8) || a.top < dno + 10 : a.top < H * .45, zOff = MOB ? dno + H * .24 : H * .62;
+  if (SEKCJE.pytanie.classList.contains('in') && zOn && a.bottom > 0) ZD.dir = 1;
+  else if (a.top > zOff) ZD.dir = -1;
   if (ZD.dir > 0 && !ZD.ok) zdBuduj();
   if (!ZD.ok) { ZD_P = ZD_W = 0; ZD.biegnie = false; return; }
   ZD.te = CICHO ? (ZD.dir > 0 ? TE : 0) : Math.max(0, Math.min(TE, ZD.te + ZD.dir * dt * 1000));
@@ -1010,7 +1015,19 @@ function rozsun() {
   for (const s of L) { s.ax = s.lx; s.ay = s.ly; }
 }
 function kick() { if (!PETLA) { PETLA = true; requestAnimationFrame(() => { PETLA = false; frame(); }); } }
+// telefon: dolna krawędź mózgu; tekst ekranów z mózgiem gaśnie, gdy wjeżdża nad nią, i mózg zostaje odsłonięty
+const DNO_MOZGU = () => H * .29 + W * .88 * .375;
+const POD_MOZGIEM = $$('.roj-st:is([data-k=czesc],[data-k=pytanie],[data-k=naglowek]) .roj-t');
+function maskaPodMozgiem() {
+  const dno = DNO_MOZGU(), pas = 36;
+  for (const el of POD_MOZGIEM) {
+    const t = MOB ? el.getBoundingClientRect().top : Infinity;
+    const m = t >= dno + pas ? '' : 'linear-gradient(to bottom, transparent ' + Math.round(dno - t) + 'px, #000 ' + Math.round(dno + pas - t) + 'px)';
+    if (el.style.maskImage !== m) { el.style.maskImage = m; el.style.webkitMaskImage = m; }
+  }
+}
 function frame() {
+  maskaPodMozgiem();
   if (!P.length) return;
   const sc = scrollY + H / 2; let i = 0;
   for (let j = 0; j < SEC.length; j++) if (SEC[j].c0 <= sc) i = j;
