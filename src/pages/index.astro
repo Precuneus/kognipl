@@ -10,17 +10,20 @@ const md = (t) => t.replace(/\{\{([^}|]+)(?:\|([^}]+))?\}\}/g, (_, w, k) => '<sp
 const T = {
   pytanie: 'Czym jest to, czego {{doświadczasz}}?',
   akt: 'Doświadczasz {{aktywności}} swoich własnych sieci mózgowych.',
-  zmiany: 'Zmiany struktury mózgu (np. degeneracje, lezje, uszkodzenia) i zmiany funkcjonowania struktur między sobą (np. substancje psychoaktywne, uzależnienia, nauka, rozwój) zmieniają Twoje doświadczenie.',
+  zmiany: 'Zmiany struktury mózgu (np. degeneracje, lezje, uszkodzenia) i zmiany funkcjonowania struktur między sobą (np. substancje psychoaktywne, uzależnienia, nauka, rozwój) zmieniają Twoje doświadczanie.',
   zombie: ['Jesteś człowiekiem, prawda? Czy {{zombie}}?', 'Założę, że człowiekiem i też doświadczasz, jak ja. Ale nie mogę tego wiedzieć.'],
   wiem: ['Wiem tylko tyle, ile się nauczyłem od {{środowiska}}, w którym się urodziłem.', 'Doświadczam Modeli Mentalnych, które jednocześnie są moją aktywnością biologiczną.'],
   ja: ['Ale... "{{ja}}" to też Model Mentalny', 'Model "ja" zmienia się w czasie,  Zmienia się płynnie (nauka, dryfowanie) i gwałtownie (szok, przeskok). "Ja" to Statek Tezeusza strukturalnie i funkcjonalnie połączonych komórek.'],
-  dysc: ['Dyscypliny się {{doświadczają}}.', '[[Socjologowie]], [[psychologowie]], [[biolodzy]], [[fizycy]]... muszą muszą zacząć rozmawiać aby doświadczenie było pełniejsze.'],
-  dosw: ['{{Doświadcza}} się.', 'Skoro podmiot i treść doświadczenia się zmieniają to zostaje samo doświadczenie. Doświadcza się. Swiat się doświadcza, ciało się doświadcza, ja się doświadcza.'],
+  dysc: ['Dyscypliny się {{doświadczają}}.', 'Doświadczanie się siatek pojęciowych poszczególnych dyscyplin przez: [[socjologów]], [[psychologów]], [[biologów]], [[fizyków]].'],
+  dosw: ['{{Doświadcza}} się.', 'Skoro podmiot i treść doświadczania się zmieniają to zostaje samo doświadczanie. Doświadcza się. Swiat się doświadcza, ciało się doświadcza, ja się doświadcza.'],
+  // jego tekst (2026-10-20), jak go napisał
   kogni: [
-    'W zamyśle inicjatorów, powinna być to interdyscyplinarna nauka o umyśle, adresująca najgłębsze zagadki doświadczanej rzeczywistości. Doświadcza się Model Mentalny obiektywnego świata z jego mechanikami. Mechaniki doświadczają się, a potem doświadcza się ich wytłumaczenie. W zależności od czasów, biologia żeglarza i fizyka wzburzonego morza wytłumaczy się gniewem Posejdona, albo meteorologią. Czasem wytłumaczenie się interakcji biologii z fizyką i chemią jest tak trafne, że doświadcza się na przykład wyzdrowienia.',
-    'Tylko wciąż... Wytłumacza się kawałek skały krążący wokół reaktora fuzyjnego we wszechświecie, który powstał z niczego 13,8 mld lat temu. Doświadcza się głęboka subiektywność, czasem dzielona z kimś tak bardzo, że wydaje się jakby mogła być intersubiektywna. Tyle rzeczy, które się doświadczają... nie wytłumacza się.',
+    '{{Interdyscyplinarne}} doświadczanie',
+    'Kognitywistyka łączy dyscypliny. Człowiek z zewnątrz jest opisywany przez fizykę, biologię, psychologię i socjologię. Od wewnątrz doświadcza się. Doświadczają się zmysły i doświadczają się wyjaśnienia.',
+    'Weźmy na przykład doświadczanie sztormu u wybrzeża Krety 2500 lat temu. Dzisiejsze doświadczania wyjaśnią nam, że doświadczania wtedy były wyjaśniane gniewem Posejdona. Doświadczanie sztormu dzisiaj wyjaśnia fizyka. Tylko jak głęboko sięga to wyjaśnienie? Jak dokładnie powstaje sztorm? Skąd nad morzem bierze się niż? Dlaczego ciepłe, wilgotne powietrze unosi się do góry? Czym jest ciśnienie, skoro powietrze to cząstki, które się zderzają? Dlaczego cząstki w ogóle się poruszają? Na każde pytanie jest drobniejsze wyjaśnienie, a każde z nich, opisane dzisiaj, wydaje się oczywiste. Dwie osoby, które mówią „fizyka”, mogą mieć na myśli wyjaśnienia o zupełnie innej głębokości. A pod każdym z nich jest to samo doświadczanie: fale, wiatr, strach.',
+    'Dyscypliny to wyjaśnienia przyczynowo-skutkowe dla doświadczania. Kryje się tu jednak koło: dyscypliny opierają się na doświadczaniu i wyjaśniają doświadczanie. W danej chwili jest jedno doświadczanie, wyjaśniane przez wcześniejsze doświadczania, wyjaśniane przez wcześniejsze doświadczania, wyjaśniane przez wcześniejsze doświadczania... Fizykowi, biologowi, psychologowi, socjologowi... każdemu doświadczają się inne wcześniejsze doświadczania, które inaczej wyjaśniają doświadczanie sztormu: fizykowi wiatr, biologowi ciało żeglarza, psychologowi jego strach, socjologowi zachowanie załogi.',
+    'Więc skoro doświadczają się wyjaśnienia... to niech doświadczają się interdyscyplinarne doświadczania. Spróbujmy wyjaśnić doświadczanie wszystkimi dyscyplinami naraz. Wziąć pod uwagę każdą dyscyplinę. Jakkolwiek nieintuicyjne by to było, {{spróbujmy|hura}}.',
   ],
-  sprobujmy: 'Spróbujmy je {{wytłumaczyć|hura}}.',
 };
 // Sieci w kolejności od receptorów; numer to etykieta w masce BraiNets_MASKS.
 const SIECI = [
@@ -111,15 +114,16 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
       {GRUPY.map((g, k) => g.slowa.map((w, j) => <span class="roj-slowo-osn" data-k={k} style={'--k:' + g.kolor + ';left:' + (35 + 240 * (j + .5) / g.slowa.length).toFixed(1) + 'vw;top:calc(' + YN_VH[k] + 'vh - 24px - ' + WYS(k, j) + 'vh)'}>{[...w].map((z) => z === ' ' ? ' ' : <span class="zn">{z}</span>)}</span>))}
     </div>
     {GRUPY.map((g, k) => <div class="roj-mnich" data-k={k} style={'left:' + MNICH_X[k] + 'vw;top:calc(' + YN_VH[k] + 'vh - var(--mh))'}><div class="roj-mnich-c plonie" set:html={postac('m' + k, g.kolor)} /><span class="roj-mnich-nazwa" style={'color:' + g.kolor}>{BADACZ[g.nazwa] || g.nazwa}</span></div>)}
-    <a class="roj-ku-plotnu" href="/2026/" aria-label="Rocznik 2026: Płótno"><span class="roj-wejdz">Wejdź na Płótno<svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="4" r="2" fill="currentColor" stroke="none"></circle><path d="M6 7 V12 Q6 16 10 16 H18"></path><path class="roj-wejdz-g" d="M14.5 12.5 L18 16 L14.5 19.5"></path></svg></span></a>
+    <a class="roj-ku-plotnu" href="/2026/" aria-label="Rocznik 2026: Płótno"></a>
     </div>
   </section>
   <section class="roj-st lewo kogni" data-k="kogni">
     <div class="roj-t">
-      <p class="roj-duze" set:html={md('{{Kognitywistyka}}')} />
-      <p>{T.kogni[0]}</p>
-      <div class="roj-cien-w"><p>{T.kogni[1]}</p><div class="roj-cien" set:html={postac('cien')} /></div>
-      <p class="roj-duze" set:html={md(T.sprobujmy)} />
+      <p class="roj-duze" set:html={md(T.kogni[0])} />
+      <p>{T.kogni[1]}</p>
+      <div class="roj-cien-w"><p>{T.kogni[2]}</p><div class="roj-cien" set:html={postac('cien')} /></div>
+      <p>{T.kogni[3]}</p>
+      <p set:html={md(T.kogni[4])} />
     </div>
   </section>
   <section class="roj-st wiki" data-k="wiki" aria-label="kogniwiki">
@@ -229,13 +233,7 @@ body:has(.roj) .site-footer::before{display:none}
 .roj .roj-ku-plotnu{position:absolute;top:0;right:0;bottom:0;width:26vw;border:0;background:linear-gradient(90deg,rgba(240,192,96,0),rgba(240,192,96,0));transition:background .3s ease}
 .roj .roj-ku-plotnu::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(240,192,96,0),rgba(240,192,96,.08));opacity:0;pointer-events:none}
 .roj .roj-ku-plotnu.puls::after{animation:puls 2.6s ease-in-out infinite}
-/* drzwi do Płótna widać, gdy osnowy staną: ikona wejścia strony i napis (testy: ludzie nie widzieli, że to się klika, 2026-10-20) */
-.roj .roj-ku-plotnu::after{background:linear-gradient(90deg,rgba(240,192,96,0),rgba(240,192,96,.16))}
-.roj .roj-wejdz{position:absolute;right:32px;bottom:7vh;display:flex;align-items:center;gap:10px;white-space:nowrap;font-family:var(--font-display);font-size:24px;color:var(--zloto);text-shadow:0 0 14px rgba(240,192,96,.45);opacity:0;transform:translateX(12px);transition:opacity .8s ease,transform .8s ease;pointer-events:none}
-.roj .roj-ku-plotnu.widac .roj-wejdz{opacity:1;transform:none}
-.roj .roj-ku-plotnu.widac .roj-wejdz svg{animation:wejdz 1.6s ease-in-out infinite}
-@keyframes wejdz{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
-.roj .roj-ku-plotnu:hover .roj-wejdz,.roj .roj-ku-plotnu:focus-visible .roj-wejdz{text-shadow:0 0 18px rgba(240,192,96,.8)}
+/* drzwi do Płótna bez napisu: pas po prawej zna ten, kto wie; reszta przewija dalej (jego słowo, 2026-10-20) */
 @keyframes puls{50%{opacity:1}}
 .roj .roj-ku-plotnu:hover,.roj .roj-ku-plotnu:focus-visible{background:linear-gradient(90deg,rgba(240,192,96,0),rgba(240,192,96,.07));outline:0}
 /* kognitywistyka i solipsysta w cieniu */
@@ -277,7 +275,6 @@ body:has(.roj) .site-footer::before{display:none}
   .roj-slowo-osn{font-size:11px}
   .roj-st.poziom{--mh:11vh}
   .roj .roj-ku-plotnu{width:18vw}
-  .roj .roj-wejdz{right:16px;font-size:19px;bottom:6vh}
   .roj-cien{right:-4px;top:-70px;height:90px}
   .roj-st.in .roj-cien{opacity:.25}
 }
@@ -334,7 +331,7 @@ const $$ = (s: string) => [...document.querySelectorAll(s)] as HTMLElement[];
 const SEKCJE: Record<string, HTMLElement> = {};
 $$('.roj-st').forEach((s) => { SEKCJE[s.dataset.k!] = s; });
 const poziom = SEKCJE.osnowy, zombie = SEKCJE.zombie;
-const tor = $('.roj-tor'), kuPlotnu = $('.roj-ku-plotnu'), wejdz = $('.roj-wejdz');
+const tor = $('.roj-tor'), kuPlotnu = $('.roj-ku-plotnu');
 const dyscS = $$('.roj-dysc'), loty = $$('.roj-lot'), nazwyM = $$('.roj-mnich-nazwa');
 loty.forEach((l, k) => { l.textContent = dyscS[k].textContent; });
 const czesc = $('.roj-czesc'), zrodlo = $('.roj-zrodlo'), nagl = $('.roj-naglowek');
@@ -677,11 +674,6 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       const m2 = mnisi[2], xs = m2.offsetLeft + m2.offsetWidth + 26, xe = W - kuPlotnu.offsetWidth - 22;
       const pos = Math.min(1, LN.pt * 1.3), czeka = LN.pt >= 1 ? 1 : 0, macha = LN.pr > .97 ? 1 : 0;
       c = { id: 'osnowy', tryb: 'stoj', x: xs + pos * (xe - xs), xs, xe, y: LN.y[2] - 3 - r, I: .3, ang: 0, len: W * .22, half: .14, hop: 1e9, gaze: czeka ? -.5 : 0, czeka, slizg: 1, macha };
-      // gdy pojawi się „Wejdź na Płótno”, iskra skacze na napis i kręci snopem dookoła (jego słowo, 2026-10-20)
-      if (kuPlotnu.classList.contains('widac')) {
-        const d = wejdz.getBoundingClientRect(), kat = (now / 1000) * Math.PI * 1.3;
-        c = { id: 'drzwi', tryb: 'stoj', x: d.left + d.width * .42, y: d.top - r + 2, I: .85, ang: kat, len: Math.min(W * .2, 260), half: .16, wir: 1, gaze: kat, hop: 1e9 };
-      }
     } else if (S.k === 'kogni' || S.k === 'wiki') {
       // nagłówek, potem radość przy „wytłumaczyć”, potem kropka w kogni.pl/wiki, gdy ta jest już na ekranie
       const hr = hura.getBoundingClientRect(), rr = wikiK.getBoundingClientRect();
@@ -696,7 +688,6 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
     c.x = Math.max(14, Math.min(W - 14, c.x));
     c.mood = c.id === 'czesc' ? { pd: 1.15, lid: 1 }
       : c.id === 'osnowy' ? { pd: 1.08 + .14 * (c.czeka || 0), lid: 1, joy: c.czeka ? .8 : 1 }
-      : c.id === 'drzwi' ? { pd: 1.15, lid: 1, joy: 1 }
       : c.id === 'hura' ? { pd: 1.2, lid: 1, joy: 1 }
       : c.id === 'zombie' && c.I > .1 ? { pd: 1.2, lid: 1 }
       : c.id === 'klik' || c.id.startsWith('bada') ? { pd: 1.25, lid: 1, joy: .3 }
@@ -1217,7 +1208,6 @@ function frame() {
     });
     zgRuch = zegnij(dt);
     kuPlotnu.classList.toggle('puls', LN.pr > .86);
-    kuPlotnu.classList.toggle('widac', LN.pr > .78);
   }
   // solipsysta stoi zwrócony w prawo; snop i słowa po jego prawej zapala sam CSS, bez pracy w każdej klatce
   const solRuch = false;
@@ -1227,7 +1217,7 @@ function frame() {
   if (wid) rysujIskre(1 - IS.osiadla);
   // pętla klatek tylko wtedy, gdy coś się rusza
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
-  const iskraRuch = !!c && !CICHO && (solRuch || !!c.slizg || !!c.hura || c.id === 'drzwi' || (MOZG_AKT && now - KL.t < KL_T) || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
+  const iskraRuch = !!c && !CICHO && (solRuch || !!c.slizg || !!c.hura || (MOZG_AKT && now - KL.t < KL_T) || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
     || !IS.dom && (Math.hypot(IS.vx, IS.vy) > 6 || Math.hypot(c.x - IS.x, c.y - IS.y) > .8 || (c.tryb === 'stoj' && !IS.kontakt))
     || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || slowaRuch || zgRuch || !!PUSZCZ || !!ZD.ruch
     || (!IS.dom && (now - IS.mrug < 170 || IS.zdz > .02 || Math.abs(IS.pd - ((c.mood && c.mood.pd) || 1)) > .01 || Math.abs(IS.lid - ((c.mood && c.mood.lid) || 1)) > .01
