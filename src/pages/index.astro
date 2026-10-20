@@ -380,9 +380,9 @@ function wyspa(n: number, bx: number, by: number, bw: number, wy: number) {
 }
 function st(k: string, p: any, lp: number) {
   const net = p.net > 1; let x = 0, y = 0, a = 0, c = p.col, s = 1;
-  // mózg ciemny; po nagłówku sieci się zapalają (ZAPAL); za nagłówkiem rój się rozprasza, jak przy solipsyście
+  // mózg ciemny i taki zostaje: sieci świecą tylko w snopie iskry albo po kliknięciu (jego słowo, 2026-10-20); za nagłówkiem rój się rozprasza
   if (k === 'czesc') { [x, y] = brain(p); a = net ? .3 : .16; }
-  else if (k === 'pytanie' || k === 'naglowek') { [x, y] = brain(p); a = net ? .3 + .6 * ZAPAL : .16; }
+  else if (k === 'pytanie' || k === 'naglowek') { [x, y] = brain(p); a = net ? .3 : .16; }
   else if (k === 'sieci') {
     const [bx, by, bw] = brain(p, 1, ROZ[SIECI_L[0]] || 0);
     if (net) { const [ix, iy] = wyspa(p.net, 0, 0, bw, ROZ[p.net] || 0); x = bx + ix; y = by + iy; a = .3; }
@@ -397,7 +397,7 @@ function st(k: string, p: any, lp: number) {
     if (HOVP && x > W - kuPlotnu.offsetWidth) { a = .95; s = 1.1; }
   }
   // kliknięta sieć świeci, pozostałe przygasają
-  if (KLv > 0 && net && (k === 'czesc' || k === 'pytanie' || k === 'naglowek')) { if (p.net === KL.n) { a += (.98 - a) * KLv; s = 1 + .35 * KLv; } else a *= 1 - .45 * KLv; }
+  if (KLv > 0 && net && (k === 'czesc' || k === 'pytanie' || k === 'naglowek')) { if (p.net === KL.n) { a += (.98 - a) * KLv; s = 1 + .35 * KLv; } }
   return [x, y, a, c, s];
 }
 // Bicie kropki jak serce Spark Actor: podwójne uderzenie co 2 s (soulBeat, corePulse), oddech poświaty co 3 s (soulRing), iskry.
