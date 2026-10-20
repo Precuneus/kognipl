@@ -333,7 +333,7 @@ const $$ = (s: string) => [...document.querySelectorAll(s)] as HTMLElement[];
 const SEKCJE: Record<string, HTMLElement> = {};
 $$('.roj-st').forEach((s) => { SEKCJE[s.dataset.k!] = s; });
 const poziom = SEKCJE.osnowy, zombie = SEKCJE.zombie;
-const tor = $('.roj-tor'), kuPlotnu = $('.roj-ku-plotnu');
+const tor = $('.roj-tor'), kuPlotnu = $('.roj-ku-plotnu'), wejdz = $('.roj-wejdz');
 const dyscS = $$('.roj-dysc'), loty = $$('.roj-lot'), nazwyM = $$('.roj-mnich-nazwa');
 loty.forEach((l, k) => { l.textContent = dyscS[k].textContent; });
 const czesc = $('.roj-czesc'), zrodlo = $('.roj-zrodlo'), nagl = $('.roj-naglowek');
@@ -648,6 +648,11 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       const m2 = mnisi[2], xs = m2.offsetLeft + m2.offsetWidth + 26, xe = W - kuPlotnu.offsetWidth - 22;
       const pos = Math.min(1, LN.pt * 1.3), czeka = LN.pt >= 1 ? 1 : 0, macha = LN.pr > .97 ? 1 : 0;
       c = { id: 'osnowy', tryb: 'stoj', x: xs + pos * (xe - xs), xs, xe, y: LN.y[2] - 3 - r, I: .3, ang: 0, len: W * .22, half: .14, hop: 1e9, gaze: czeka ? -.5 : 0, czeka, slizg: 1, macha };
+      // gdy pojawi się „Wejdź na Płótno”, iskra skacze na napis i kręci snopem dookoła (jego słowo, 2026-10-20)
+      if (kuPlotnu.classList.contains('widac')) {
+        const d = wejdz.getBoundingClientRect(), kat = (now / 1000) * Math.PI * 1.3;
+        c = { id: 'drzwi', tryb: 'stoj', x: d.left + d.width * .42, y: d.top - r + 2, I: .85, ang: kat, len: Math.min(W * .2, 260), half: .16, wir: 1, gaze: kat, hop: 1e9 };
+      }
     } else if (S.k === 'kogni' || S.k === 'wiki') {
       // nagłówek, potem radość przy „wytłumaczyć”, potem kropka w kogni.pl/wiki, gdy ta jest już na ekranie
       const hr = hura.getBoundingClientRect(), rr = wikiK.getBoundingClientRect();
@@ -662,6 +667,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
     c.x = Math.max(14, Math.min(W - 14, c.x));
     c.mood = c.id === 'czesc' ? { pd: 1.15, lid: 1 }
       : c.id === 'osnowy' ? { pd: 1.08 + .14 * (c.czeka || 0), lid: 1, joy: c.czeka ? .8 : 1 }
+      : c.id === 'drzwi' ? { pd: 1.15, lid: 1, joy: 1 }
       : c.id === 'hura' ? { pd: 1.2, lid: 1, joy: 1 }
       : c.id === 'zombie' && c.I > .1 ? { pd: 1.2, lid: 1 }
       : c.id.startsWith('siec') || c.id.startsWith('patrz') ? { pd: 1.12, lid: 1 }
@@ -1188,7 +1194,7 @@ function frame() {
   if (wid) rysujIskre(1 - IS.osiadla);
   // pętla klatek tylko wtedy, gdy coś się rusza
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
-  const iskraRuch = !!c && !CICHO && (solRuch || !!c.slizg || !!c.hura || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
+  const iskraRuch = !!c && !CICHO && (solRuch || !!c.slizg || !!c.hura || c.id === 'drzwi' || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
     || !IS.dom && (Math.hypot(IS.vx, IS.vy) > 6 || Math.hypot(c.x - IS.x, c.y - IS.y) > .8 || (c.tryb === 'stoj' && !IS.kontakt))
     || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || slowaRuch || zgRuch || !!PUSZCZ || !!ZD.ruch
     || (!IS.dom && (now - IS.mrug < 170 || IS.zdz > .02 || Math.abs(IS.pd - ((c.mood && c.mood.pd) || 1)) > .01 || Math.abs(IS.lid - ((c.mood && c.mood.lid) || 1)) > .01
