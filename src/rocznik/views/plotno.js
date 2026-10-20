@@ -55,14 +55,16 @@ export class Component extends DCLogic {
     };
     const PYL = GR.map((_, g) => pyl(g)), PYLV = GR.map((_, g) => pyl(g, 1));
     // nić osnowy zaczyna się w szynie dyscypliny (środek x = RX) i biegnie pod nazwą aż do tkaniny (jego słowo, 2026-10-20)
-    const RX = 111, BGC = "#0e0d0b";
-    const X0 = 382, CW = 96, Y0 = 64, RH = 40, W = X0 + CL.length * CW, LX = 122, KW = 227;
-    const BG = 10;
+    const RX = 19, BGC = "#0e0d0b";
+    // nazwa dyscypliny nad jej pierwszą osnową, nie w osobnej kolumnie (jego słowo, 2026-10-20)
+    const X0 = 290, CW = 96, Y0 = 64, RH = 40, W = X0 + CL.length * CW, LX = 30, KW = 227;
+    const BG = 10, LBL = 22;
     const rowY = [], rowG = [], bands = [];
     let yc = Y0;
     const bandH = [];
     BAND.forEach((cnt, b) => {
       const g = GR[b];
+      yc += LBL;
       const top = yc;
       for (let k = 0; k < cnt; k++) {
         const i = rowY.length, h = on.has(OS[i]) ? (this.hb[i] || 160) : 0;
@@ -70,7 +72,7 @@ export class Component extends DCLogic {
       }
       bands.push({
         label: GN[b],
-        nameStyle: "position:absolute;left:0;top:" + (top + 6) + "px;width:104px;padding-right:12px;box-sizing:border-box;text-align:right;font-size:11px;line-height:14px;letter-spacing:0.06em;text-transform:uppercase;color:" + g.ink,
+        nameStyle: "position:absolute;left:" + (RX - 3) + "px;top:" + (top - LBL + 4) + "px;white-space:nowrap;font-size:11px;line-height:14px;letter-spacing:0.08em;text-transform:uppercase;color:" + g.ink,
         railStyle: "position:absolute;left:" + (RX - PH / 2) + "px;top:" + (top + 6) + "px;width:" + PH + "px;height:" + (yc - top - 12) + "px;background-image:" + PYLV[b] + ";background-size:" + PH + "px " + PT + "px;filter:drop-shadow(0 0 2px rgba(" + GL[b] + ",0.35))"
       });
       yc += BG;
