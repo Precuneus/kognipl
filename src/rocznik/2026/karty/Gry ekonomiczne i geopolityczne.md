@@ -11,11 +11,11 @@ opis: 'Rozmowa o grach doszła do gier, w które grają całe społeczności: go
 myśl: 'Gry ekonomiczne i geopolityczne: kolejne rodzaje gier, które pojawiły się w rozmowie.'
 sieci:
 - kod: DMN
-  powód: Wyobrażanie sobie innych ludzi i skutków wspólnych reguł jest aktywnością DMN.
+  powód: 'Wyobrażasz sobie innych ludzi i skutki wspólnych reguł: to aktywność DMN.'
 - kod: CN
-  powód: Trzymanie się ustalonej reguły jest aktywnością kory czołowej i ciemieniowej.
+  powód: 'Trzymasz się ustalonej reguły: to aktywność kory czołowej i ciemieniowej.'
 - kod: SN
-  powód: Poczucie nieuczciwego podziału jest aktywnością przedniej wyspy.
+  powód: 'Poczucie nieuczciwego podziału to aktywność przedniej wyspy.'
 ryciny: []
 materiały:
 - tytuł: 'SciShow, How To Solve Game Theory''s Unsolvable Problem: woda w Los Angeles'

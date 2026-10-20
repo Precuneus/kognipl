@@ -11,7 +11,7 @@ opis: Niedawny przypadek roju agentów OpenAI, obok wielu AI z Altered Carbon i 
 myśl: 'Niedawny przypadek roju agentów OpenAI. Altered Carbon, sezon 1: wiele AI. Matrix: ludzie do obliczeń.'
 sieci:
 - kod: DMN
-  powód: Przypisywanie agentom zamiarów jest aktywnością tych samych obszarów DMN co przypisywanie ich ludziom.
+  powód: 'Przypisujesz agentom zamiary: to aktywność tych samych obszarów DMN co przypisywanie ich ludziom.'
 ryciny: []
 materiały:
 - tytuł: 'Kurzgesagt, AI Just Crossed the Terrifying Line: „Tajna cywilizacja AI”'

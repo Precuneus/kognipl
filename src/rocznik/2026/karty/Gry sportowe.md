@@ -11,7 +11,7 @@ opis: 'Gry sportowe sprawdzają wykonanie: ruch we właściwym czasie i z precyz
 myśl: Gry sportowe.
 sieci:
 - kod: SMN
-  powód: Czucie własnego ciała w ruchu jest aktywnością obszarów wokół bruzdy środkowej.
+  powód: 'Czujesz własne ciało w ruchu: to aktywność obszarów wokół bruzdy środkowej.'
 - kod: DAN
   powód: Śledzenie piłki to koordynacja oka i ręki.
 ryciny: []

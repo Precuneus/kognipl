@@ -12,9 +12,9 @@ opis: 'Gry słowne i enty z Władcy Pierścieni: język, który może nieść g�
 myśl: 'Gry słowne. Władca Pierścieni: enty jako przykład [[Obszary mowy|języka]], który może nieść głęboką intersubiektywność.'
 sieci:
 - kod: JĘZ
-  powód: Słowa są aktywnością lewego dolnego zakrętu czołowego i tylnej części lewego płata skroniowego.
+  powód: 'Słowa to aktywność lewego dolnego zakrętu czołowego i tylnej części lewego płata skroniowego.'
 - kod: DMN
-  powód: Znaczenie i opowieść są aktywnością zakrętu kątowego i bocznej kory skroniowej.
+  powód: 'Znaczenie i opowieść to aktywność zakrętu kątowego i bocznej kory skroniowej.'
 ryciny: []
 materiały:
 - tytuł: 'Anton Petrov, How Many Words Does Your Language Really Have for Snow?: elaboracja leksykalna'

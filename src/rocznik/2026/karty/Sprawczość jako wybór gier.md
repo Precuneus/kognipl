@@ -15,9 +15,9 @@ sieci:
 - kod: SMN
   powód: Potencjał gotowości narasta nad dodatkowym polem ruchowym.
 - kod: SN
-  powód: Wybór, co zrobić, jest aktywnością przedniego zakrętu obręczy, a wybór, kiedy, aktywnością pola przeddodatkowego ruchowego.
+  powód: 'Wybór, co zrobić, to aktywność przedniego zakrętu obręczy, a wybór, kiedy, aktywność pola przeddodatkowego ruchowego.'
 - kod: DMN
-  powód: Rozstrzyganie, czy w ogóle działać, jest aktywnością grzbietowo-przyśrodkowej kory czołowej.
+  powód: 'Rozstrzygasz, czy w ogóle działać: to aktywność grzbietowo-przyśrodkowej kory czołowej.'
 ryciny:
 - rp.svg
 materiały:

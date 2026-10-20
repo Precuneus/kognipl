@@ -11,13 +11,13 @@ opis: Streamerzy grają kontrolerami EEG. EEG zapisuje na skórze głowy zsumowa
 myśl: Kontrolery EEG, którymi grają streamerzy.
 sieci:
 - kod: SMN
-  powód: Wyobrażone pchanie głazu jest aktywnością obszarów wokół bruzdy środkowej, widoczną w EEG jako słabnący rytm mu.
+  powód: 'Wyobrażone pchanie głazu to aktywność obszarów wokół bruzdy środkowej, widoczna w EEG jako słabnący rytm mu.'
 - kod: VIS
-  powód: Wyobrażony talerz i konik są aktywnością kory wzrokowej.
+  powód: 'Wyobrażony talerz i konik to aktywność kory wzrokowej.'
 - kod: DAN
-  powód: Ich ruch jest aktywnością obszaru MT.
+  powód: 'Ich ruch to aktywność obszaru MT.'
 - kod: SN
-  powód: Złość jest aktywnością przedniej wyspy i przedniego zakrętu obręczy, przygotowującą ciało na zagrożenie.
+  powód: 'Złość to aktywność przedniej wyspy i przedniego zakrętu obręczy, przygotowująca ciało na zagrożenie.'
 ryciny:
 - eeg.svg
 materiały:

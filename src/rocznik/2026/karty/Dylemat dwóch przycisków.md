@@ -13,11 +13,11 @@ opis: 'Czerwony przycisk: przeżyjesz na pewno. Zielony: przeżyjesz, jeśli zie
 myśl: 'Gry społeczne. Dylemat dwóch przycisków z mediów społecznościowych: czerwony, przeżyjesz na pewno; zielony, przeżyjesz, jeśli zielony naciśnie ponad 50%. Gry karciane; Casino Royale: poker i głębia Vesper.'
 sieci:
 - kod: DMN
-  powód: Czytanie zamiarów drugiego gracza jest aktywnością skrzyżowania skroniowo-ciemieniowego i przyśrodkowej kory przedczołowej.
+  powód: 'Czytasz zamiary drugiego gracza: to aktywność skrzyżowania skroniowo-ciemieniowego i przyśrodkowej kory przedczołowej.'
 - kod: SN
-  powód: Odczuwane ryzyko przy wyborze przycisku jest aktywnością przedniej wyspy i przedniego zakrętu obręczy.
+  powód: 'Ryzyko, które czujesz przy wyborze przycisku, to aktywność przedniej wyspy i przedniego zakrętu obręczy.'
 - kod: CN
-  powód: Liczenie szans przy pokerze jest aktywnością grzbietowo-bocznej kory przedczołowej.
+  powód: 'Liczysz szanse przy pokerze: to aktywność grzbietowo-bocznej kory przedczołowej.'
 ryciny:
 - przyciski.svg
 materiały:

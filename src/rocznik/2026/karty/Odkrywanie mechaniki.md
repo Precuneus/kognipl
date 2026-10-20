@@ -11,7 +11,7 @@ opis: 'Gry planszowe: reguły, negocjowanie reguł i odkrywanie mechaniki. Regu�
 myśl: Gry planszowe; reguły, negocjowanie reguł, odkrywanie mechaniki.
 sieci:
 - kod: CN
-  powód: Wyprowadzanie reguły z kolejnych ruchów jest aktywnością kory czołowej i ciemieniowej.
+  powód: 'Wyprowadzasz regułę z kolejnych ruchów: to aktywność kory czołowej i ciemieniowej.'
 ryciny: []
 materiały:
 - tytuł: 'Surnex: warstwa makro, system i reguły'

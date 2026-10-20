@@ -7,11 +7,11 @@ rodziny:
 - '[[Wybór i wartość]]'
 głębokość:
 - organizm
-opis: 'Pytanie na koniec zajęć: gdybyś miał cheat w prawdziwym życiu, co byś oszukał? W grze cheat, który czyni ją banalną, pokazuje, co ta gra sprawdza.'
-myśl: 'Pytanie końcowe: gdybyś miał cheat w prawdziwym życiu, co byś oszukał?'
+opis: 'Pytanie na koniec zajęć: gdyby w prawdziwym życiu był cheat, co chcesz nim oszukać? W grze cheat czyniący ją banalną pokazuje, co gra sprawdza.'
+myśl: 'Pytanie końcowe: gdyby w prawdziwym życiu był cheat, co chcesz nim oszukać?'
 sieci:
 - kod: DMN
-  powód: Wyobrażanie siebie w innej przyszłości jest aktywnością sieci domyślnej (Spreng, Mar i Kim 2009).
+  powód: 'Wyobrażasz sobie siebie z cheatem: to aktywność sieci domyślnej, tej samej co wyobrażanie przyszłości (Spreng, Mar i Kim 2009).'
 ryciny: []
 materiały:
 - tytuł: 'Surnex: test oszustwa'

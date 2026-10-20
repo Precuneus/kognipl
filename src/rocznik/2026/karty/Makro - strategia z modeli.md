@@ -7,11 +7,11 @@ rodziny:
 - '[[Rozwiązywanie problemów i planowanie]]'
 głębokość:
 - organizm
-opis: 'Makro to strategia prowadzona nabytymi modelami mentalnymi. Gdy mechanika jest znana, widać jasną ścieżkę do wygranej. Tu trener pokazuje drogę, strategię.'
-myśl: 'Makro: strategia przez nabyte modele mentalne. Gdy mechanika jest znana, jest jasna ścieżka. Trener pokazuje drogę, strategię.'
+opis: 'Makro to strategia: polegasz na nabytych Modelach Mentalnych mechaniki. Gdy mechanika jest znana, widać jasną ścieżkę do wygranej. Trener pokazuje drogę, strategię: jego modele kształtują Twoje.'
+myśl: 'Makro: strategia przez nabyte Modele Mentalne. Gdy mechanika jest znana, jest jasna ścieżka. Trener pokazuje drogę, strategię.'
 sieci:
 - kod: CN
-  powód: Trzymanie planu i reguł przez kolejne ruchy jest aktywnością kory czołowej i ciemieniowej.
+  powód: 'Plan i reguły, które trzymasz przez kolejne ruchy, to aktywność sieci kontroli w korze czołowej i ciemieniowej.'
 ryciny: []
 materiały:
 - tytuł: 'Surnex: warstwa makro, system i reguły'

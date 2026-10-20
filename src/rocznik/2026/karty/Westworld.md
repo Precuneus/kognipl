@@ -13,7 +13,7 @@ sieci:
 - kod: CN
   powód: Teoria globalnej przestrzeni roboczej wiąże świadomość z korą czołową i ciemieniową.
 - kod: DMN
-  powód: Tożsamość i opowieść o sobie są aktywnością DMN.
+  powód: 'Tożsamość i opowieść o sobie to aktywność DMN.'
 ryciny: []
 materiały:
 - tytuł: 'exurb1a, How Will We Know When AI is Conscious?: „Detecting conscious AI”'

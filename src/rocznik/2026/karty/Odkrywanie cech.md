@@ -11,7 +11,7 @@ opis: W grze wychodzą na jaw cechy graczy. Osobowość to stałe skłonności, 
 myśl: Odkrywanie cech.
 sieci:
 - kod: DMN
-  powód: Ocena cech, swoich i cudzych, jest aktywnością przyśrodkowej kory przedczołowej.
+  powód: 'Oceniasz cechy, swoje i cudze: to aktywność przyśrodkowej kory przedczołowej.'
 ryciny: []
 materiały:
 - tytuł: 'Surnex: profile graczy'
