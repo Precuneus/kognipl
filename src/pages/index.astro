@@ -14,8 +14,8 @@ const T = {
   zombie: ['Twoje doświadczanie też {{istnieje}}, prawda?', 'Założę, że istnieje, tak jak moje. Ale nie mogę tego wiedzieć.'],
   wiem: ['Znam tylko moje własne {{doświadczanie}}.', 'O Twoim doświadczaniu mogę tylko wnioskować. To mój Model Mentalny, będący jednocześnie moją aktywnością biologiczną.'],
   ja: ['Ale... "{{ja}}" to też Model Mentalny', 'Model "ja" zmienia się w czasie,  Zmienia się płynnie (nauka, dryfowanie) i gwałtownie (szok, przeskok). "Ja" to Statek Tezeusza strukturalnie i funkcjonalnie połączonych komórek.'],
-  dysc: ['Dyscypliny się {{doświadczają}}.', 'Doświadczanie się siatek pojęciowych poszczególnych dyscyplin przez: [[socjologów]], [[psychologów]], [[biologów]], [[fizyków]].'],
-  dosw: ['{{Doświadcza}} się.', 'Skoro podmiot i treść doświadczania się zmieniają to zostaje samo doświadczanie. Doświadcza się. Swiat się doświadcza, ciało się doświadcza, ja się doświadcza.'],
+  dysc: ['{{Doświadczanie}} dyscyplin.', 'Doświadczanie siatek pojęciowych poszczególnych dyscyplin przez: [[socjologów]], [[psychologów]], [[biologów]], [[fizyków]].'],
+  dosw: ['{{Doświadczanie}}.', 'Skoro podmiot, który doświadcza, i treść doświadczania są zmienne, to zostaje samo doświadczanie. Doświadczanie Modeli Mentalnych świata, ciała, "ja".'],
   // jego tekst (2026-10-20), jak go napisał
   kogni: [
     '{{Interdyscyplinarne}} doświadczanie',
@@ -42,6 +42,9 @@ const KOL_OSN = Object.fromEntries(OSNOWY);
 const BADACZ = { socjologia: 'socjolog', psychologia: 'psycholog', biologia: 'biolog', fizyka: 'fizyk' };
 // nazwy dyscyplin w tekście: każda w kolorze swoich osnów; przy przewijaniu lecą pod swoich mnichów
 // lot: te nazwy wylatują do mnichów; pozostałe tylko w kolorach swoich osnów
+// w drugiej części strony nazwy dyscyplin i ich badaczy w kolorach ich osnów (jego słowo, 2026-10-21)
+const KOL_DYSC: [RegExp, number][] = [[/^socjolog/i, 0], [/^psycholog/i, 1], [/^biolog/i, 2], [/^fizy[kc]/i, 3]];
+const koloruj = (t: string) => t.replace(/(socjolog|psycholog|biolog|fizy[kc])\p{L}*/giu, (w) => { const i = KOL_DYSC.find(([r]) => r.test(w))![1]; return '<span class="roj-dysc-k" style="color:' + OSNOWY[i][1] + '">' + w + '</span>'; });
 const dysc = (t: string, lot = true) => { let k = 0; return t.replace(/\[\[([^\]]+)\]\]/g, (_, w) => { const i = k++; return '<span class="' + (lot ? 'roj-dysc' : 'roj-dysc-k') + '" data-k="' + i + '" style="color:' + OSNOWY[i][1] + '">' + w + '</span>'; }); };
 // Słowa, które oświetlają postacie: osnowy Płótna, każda grupa w swoim kolorze.
 const GRUPY = R.grupy.map((g) => ({ nazwa: g.nazwa, kolor: KOL_OSN[g.nazwa], slowa: g.osnowy.map((o) => o.nazwa) }));
@@ -120,10 +123,10 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   <section class="roj-st lewo kogni" data-k="kogni">
     <div class="roj-t">
       <p class="roj-duze" set:html={md(T.kogni[0])} />
-      <p>{T.kogni[1]}</p>
-      <div class="roj-cien-w"><p>{T.kogni[2]}</p><div class="roj-cien" set:html={postac('cien')} /></div>
-      <p>{T.kogni[3]}</p>
-      <p set:html={md(T.kogni[4])} />
+      <p set:html={koloruj(T.kogni[1])} />
+      <div class="roj-cien-w"><p set:html={koloruj(T.kogni[2])} /><div class="roj-cien" set:html={postac('cien')} /></div>
+      <p set:html={koloruj(T.kogni[3])} />
+      <p set:html={koloruj(md(T.kogni[4]))} />
     </div>
   </section>
   <section class="roj-st wiki" data-k="wiki" aria-label="kogniwiki">
@@ -308,6 +311,20 @@ const DOPISY = [
   // i wzdłuż całej przedniej granicy sieci wzrokowej, od MT w dół pod nią
   [4, [1], [84, 30, 98, 26, 103, 40, 101, 60, 99, 80, 97, 89, 86, 89, 84, 72, 88, 56, 86, 40]],
   [4, [1], [192, 108, 212, 104, 222, 112, 212, 122, 210, 132, 222, 138, 236, 140, 234, 148, 205, 148, 196, 136, 190, 118]],
+  // przegląd wobec mapy Yeo 7 z Uddin, ryc. 4B, przeniesionej na ten rysunek (jego słowo, 2026-10-21):
+  // cały biegun potyliczny w sieci wzrokowej, grzbietowa uwagi przed nim
+  [2, [1, 4], [210, 48, 226, 46, 240, 62, 240, 142, 214, 144, 211, 122, 213, 100, 208, 90, 207, 68]],
+  // zakręt skroniowy górny słuchowy w sieci czuciowo-ruchowej; brzuszna uwagi zostaje na jego końcu przy TPJ
+  [3, [8], [106, 88, 139, 78, 140, 116, 106, 120]],
+  // cały zakręt nadbrzeżny w sieci brzusznej uwagi
+  [8, [1], [132, 46, 150, 44, 162, 54, 162, 64, 150, 64, 142, 84, 132, 88]],
+  // wieczko czołowe i przednia wyspa w sieci istotności
+  [6, [1], [68, 102, 94, 92, 106, 96, 102, 112, 76, 118]],
+  // pas wzdłuż bruzdy czołowej dolnej w sieci kontroli; grzbietowa uwagi zostaje przy IFJ
+  [5, [4], [52, 54, 80, 54, 80, 76, 52, 76]],
+  // tylny zakręt skroniowy środkowy w sieci domyślnej, wieczko ciemieniowe w czuciowo-ruchowej
+  [7, [1], [158, 84, 176, 82, 186, 96, 184, 120, 166, 122, 158, 112]],
+  [3, [1], [108, 82, 134, 76, 140, 86, 128, 96, 108, 98]],
 ];
 const wWielokacie = (x: number, y: number, w: number[]) => {
   let jest = false;
