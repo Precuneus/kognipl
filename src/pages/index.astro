@@ -9,10 +9,10 @@ const WIKI = WIKI_ON ? '/wiki/' : '';
 const md = (t) => t.replace(/\{\{([^}|]+)(?:\|([^}]+))?\}\}/g, (_, w, k) => '<span class="iskra-cel' + (k ? ' ' + k : '') + '">' + w + '</span>');
 const T = {
   pytanie: 'Czym jest {{doświadczanie}}?',
-  akt: 'Doświadczasz {{aktywności}} swoich własnych sieci mózgowych.',
+  akt: 'Doświadczanie jest {{aktywnością}} sieci mózgowych.',
   zmiany: 'Zmiany struktury mózgu (np. degeneracje, lezje, uszkodzenia) i zmiany funkcjonowania struktur między sobą (np. substancje psychoaktywne, uzależnienia, nauka, rozwój) zmieniają doświadczanie.',
-  zombie: ['Jesteś człowiekiem, prawda? Czy {{zombie}}?', 'Założę, że człowiekiem i też doświadczasz, jak ja. Ale nie mogę tego wiedzieć.'],
-  wiem: ['Znam tylko moje własne {{doświadczanie}}.', 'O Twoim doświadczaniu mogę tylko wnioskować. To mój model mentalny, będący jednocześnie moją aktywnością biologiczną.'],
+  zombie: ['Twoje doświadczanie też {{istnieje}}, prawda?', 'Założę, że istnieje, tak jak moje. Ale nie mogę tego wiedzieć.'],
+  wiem: ['Znam tylko moje własne {{doświadczanie}}.', 'O Twoim doświadczaniu mogę tylko wnioskować. To mój Model Mentalny, będący jednocześnie moją aktywnością biologiczną.'],
   ja: ['Ale... "{{ja}}" to też Model Mentalny', 'Model "ja" zmienia się w czasie,  Zmienia się płynnie (nauka, dryfowanie) i gwałtownie (szok, przeskok). "Ja" to Statek Tezeusza strukturalnie i funkcjonalnie połączonych komórek.'],
   dysc: ['Dyscypliny się {{doświadczają}}.', 'Doświadczanie się siatek pojęciowych poszczególnych dyscyplin przez: [[socjologów]], [[psychologów]], [[biologów]], [[fizyków]].'],
   dosw: ['{{Doświadcza}} się.', 'Skoro podmiot i treść doświadczania się zmieniają to zostaje samo doświadczanie. Doświadcza się. Swiat się doświadcza, ciało się doświadcza, ja się doświadcza.'],
