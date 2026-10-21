@@ -83,10 +83,10 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
       <p>{T.zmiany}</p>
     </div>
   </section>
-  <section class="roj-st lewo ciag" data-k="naglowek">
-    <div class="roj-t"><p class="roj-duze roj-naglowek" set:html={md(T.akt)} />
+  <section class="roj-st lewo oba" data-k="naglowek">
+    <div class="roj-oba"><div class="roj-t"><p class="roj-duze roj-naglowek" set:html={md(T.akt)} />
       <ul class="roj-sieci">{SIECI.map(([n, nazwa]) => <li class="roj-siec" data-n={n} data-nazwa={nazwa.replace(/^Sieć\s+/, '')}><span class="roj-ukryte">{nazwa}</span></li>)}</ul>
-    </div>
+    </div></div>
   </section>
   <section class="roj-st lepkie" data-k="zombie">
     <div class="roj-lepki">
@@ -154,8 +154,10 @@ body:has(.roj) .site-footer::before{display:none}
 /* Cześć, pytanie i sieci płyną jak jeden tekst */
 .roj-st.ciag{min-height:0;padding-bottom:0}
 .roj-st.ciag[data-k=pytanie]{padding-top:10vh}
-/* po nagłówku chwila na zapalony mózg i iskrę; za nagłówkiem rój się rozprasza */
-.roj-st.ciag[data-k=naglowek]{padding-top:9vh;padding-bottom:14vh}
+/* nagłówek zostaje u góry ekranu; pod nim, po lewej, wchodzi mózg od środka, boczny zostaje po prawej,
+   iskra ogląda oba (jego słowo, 2026-10-21); za tym ekranem rój się rozprasza */
+.roj-st.oba{display:block;height:230vh;padding:0}
+.roj-oba{position:sticky;top:0;height:100vh;padding:9vh 56px 0 8vw}
 /* zdanie z akapitu: iskra je złoci, ono rozpada się na punkty roju, które układają się w nagłówek */
 .roj .roj-naglowek{opacity:0}
 .roj .roj-zrodlo{transition:color .8s ease,text-shadow .8s ease}
@@ -256,7 +258,8 @@ body:has(.roj) .site-footer::before{display:none}
   .roj-st.lewo .roj-t,.roj-st.kogni .roj-t,.roj-st.lepkie .roj-t{max-width:none}
   .roj-st.pierwszy{padding-top:calc(29vh + 33vw + 16px)!important;padding-bottom:0!important;align-items:flex-start}
   /* telefon: mózg trzyma górę ekranu, tekst żyje pod nim i znika, gdy wjeżdża pod mózg; nagłówek tuż za akapitem */
-  .roj-st.ciag[data-k=naglowek]{padding-top:2vh!important;padding-bottom:34vh!important}
+  .roj-st.oba{padding:0!important;height:200vh}
+  .roj-oba{padding:2vh 20px 0}
   .roj-st.ciag[data-k=pytanie]{padding-top:14vh!important;padding-bottom:0!important}
   .roj-st.ciag[data-k=wiem]{padding-top:0!important;padding-bottom:0!important;margin-top:-12vh}
   .roj-st.ciag[data-k=ja]{padding-top:23.8vh!important;padding-bottom:0!important}
@@ -290,6 +293,11 @@ body:has(.roj) .site-footer::before{display:none}
 // bo Safari zaszumia getImageData (ochrona przed fingerprintingiem) i psuje etykiety.
 // Ruch przy przewijaniu: każdy ekran ma swój stan, przejścia przewijają się w obie strony.
 const MAPA = '02h,1c,068,16,46,1k,05h,1c,4d,1m,04,15,04w,1f,4j,1y,03,1a,04b,19,4t,1h,3f,1h,046,1b,4v,1d,3l,13,38,15,042,1c,4w,1c,3n,11,3a,15,03z,1e,4x,1b,3y,17,03w,1f,4x,1a,3z,1a,03r,1h,4y,19,3z,11,48,18,03j,1j,4y,17,310,4e,16,03e,1n,4w,17,310,4h,15,03a,1v,4r,15,311,4k,14,036,1w,4s,15,310,4n,13,033,1z,4s,14,310,4p,13,02z,114,4p,14,310,4r,13,02v,118,4n,14,3z,4u,12,02t,1x,55,1a,4l,12,310,4w,12,02p,1v,5c,19,4j,12,310,4y,12,02l,1t,5j,18,4h,12,310,4z,13,02i,1r,5n,17,4h,12,310,410,16,02c,1q,5q,18,4g,12,310,4e,11,4n,17,027,1p,5u,17,4f,13,310,49,18,4m,18,024,1o,5v,19,4e,13,3z,48,1b,4m,19,021,1n,5x,19,4e,13,3z,48,12,48,12,4m,19,01y,1o,5z,18,4e,13,3z,11,4j,11,4l,1b,01v,1n,512,17,4d,13,310,11,416,1b,01t,1n,515,15,4d,13,3z,11,418,1b,01r,1m,519,14,4c,12,310,41a,1b,01p,1m,51c,12,4b,13,310,4p,11,4k,1c,01n,1l,51g,4b,12,310,11,41a,1d,01l,1l,51h,4a,12,311,12,4a,13,4w,1d,01k,1k,51j,49,13,311,14,42,1i,4n,1e,01i,1k,51k,49,12,311,1p,52,4k,1f,01i,1i,51m,48,12,312,1n,56,4h,1h,01g,1i,51o,46,12,313,1l,5a,4c,52,1i,01f,1i,51q,44,13,312,1l,5c,4b,53,1i,01d,1i,51s,15,313,1j,5f,4a,54,1h,01d,1h,51t,15,313,1i,5i,46,51,41,54,1i,01b,1h,51t,16,3m,11,3g,1h,5k,46,56,1j,019,1h,51t,15,3n,11,3g,1f,5o,44,57,1j,017,1h,51u,15,3m,11,3g,1f,510,1k,016,1g,51u,16,313,1d,512,1l,014,1g,51v,16,3n,11,34,12,39,1c,511,1o,012,1h,51u,16,313,1b,513,1p,010,1h,51u,17,3p,11,3d,1a,511,1t,0y,1h,51v,17,3q,11,3b,1a,511,72,1t,0x,1h,51v,16,3q,11,3c,19,511,75,1r,0w,1h,51w,16,312,19,512,78,1p,0u,1h,51x,16,311,19,511,7b,1p,0t,1e,520,15,312,19,510,7d,1p,0r,1f,520,15,311,19,510,7f,1o,0r,1e,520,15,312,19,5z,7h,1o,0p,1f,520,15,311,1a,5y,7j,1n,0p,1f,51z,15,312,1a,5w,11,7l,1n,0o,1e,520,15,312,1b,5u,7o,1m,0o,1e,51z,16,312,1b,5t,12,7n,1n,0m,1e,51z,16,313,1c,5s,12,7o,1m,0m,1e,51y,17,313,1e,5p,12,71,11,7o,1m,0l,1d,51y,17,314,1h,5k,14,7q,1m,0l,1d,51x,18,314,1l,5e,16,7r,1l,0l,1c,51w,1a,313,116,7s,1k,0k,1d,518,46,5e,12,47,14,315,1k,67,1e,7t,1j,0k,1c,519,4a,16,4f,12,315,1h,6c,1b,7v,1j,0j,1c,518,4w,12,315,1f,6f,1a,7w,1i,0i,1c,518,11,4w,12,315,1e,6h,19,7x,1i,0h,1b,519,11,4v,12,316,1e,6i,18,7x,1j,0g,1b,519,12,4u,12,316,1d,6k,17,7y,1j,0f,1b,51a,13,4r,13,3p,11,3g,1c,6m,16,7y,1g,42,13,0c,1b,51b,16,4l,72,14,315,1d,6c,11,69,16,7y,1f,45,12,0b,1b,51c,1g,7e,12,3o,11,3g,1d,6c,13,68,15,7y,1d,48,12,0a,1b,51b,1f,7g,12,3o,11,3f,1d,6o,15,7y,1d,49,12,09,1b,51b,1f,7h,12,312,1e,6o,15,7y,1c,4a,12,09,1b,51a,15,7b,11,7h,11,312,1e,6o,14,710,1b,4b,12,08,1a,519,16,7u,11,312,1e,6n,15,73,11,710,17,4b,12,08,19,517,18,7w,312,1d,6o,15,715,16,4c,12,07,18,516,12,75,14,7v,312,1d,6n,16,715,16,4c,12,07,18,514,13,79,11,7v,11,312,1b,6m,18,75,11,7h,11,7h,16,4c,12,07,18,513,13,7b,11,7v,313,1a,6k,1b,7m,11,7h,16,4d,11,08,17,511,15,7c,11,7u,11,312,1a,6j,1c,714,16,4d,11,08,78,5x,17,718,11,312,1b,6g,1d,715,16,4d,11,08,78,5s,1c,7e,11,7u,11,311,1c,6c,1f,715,17,4d,11,08,79,5o,72,15,71h,11,3z,115,715,17,4d,11,09,78,5n,73,12,71k,12,3w,117,715,17,4d,12,08,78,5l,71s,11,3t,11a,714,18,4d,12,08,78,5k,71t,11,3o,11,31,11e,713,18,4c,12,21,08,78,5j,71u,11,3o,11,61,11f,711,19,4c,11,22,11,07,78,5j,71u,11,3n,63,11g,7z,1a,4c,11,23,11,07,78,5h,71v,11,3m,67,11e,7j,41,7e,1b,4a,12,24,07,78,5h,71v,12,3h,12,69,11g,71,11,7c,46,7b,1c,4a,11,25,11,06,7a,5f,71v,1k,69,11j,7a,49,78,1f,48,12,26,07,7a,5d,71w,1g,6c,11l,78,4a,77,1h,46,13,26,11,06,7d,59,7t,12,712,1d,6d,11u,4b,76,1j,43,14,28,07,7f,54,7r,14,713,1a,6f,11v,4c,74,1s,28,11,06,719,14,713,18,6g,11w,4c,73,1u,28,11,07,71a,12,713,11,62,12,6h,11y,4b,1y,29,07,71c,11,710,62,13,6g,120,4c,1y,29,08,729,15,6g,123,4c,18,44,1l,2a,11,08,726,63,11,6g,126,4c,17,46,1k,2a,11,09,71d,11,7p,6h,12b,4c,16,47,1k,2a,11,0a,7q,12,719,6e,11h,73,1v,4d,14,49,1i,2b,11,0b,7p,19,710,6c,11h,78,1v,4p,1i,2b,11,0c,7o,1e,7u,6b,11g,7a,1w,4p,1i,2b,11,0c,7o,1g,7r,69,11g,7a,11,74,1v,4o,1h,2c,11,0d,7n,1h,7p,69,11f,74,14,78,1x,4n,1h,2c,11,0e,7m,1j,7m,69,11e,74,11,73,11,78,1y,4n,1g,2d,0g,7l,1k,7l,62,11,65,11d,74,11,74,11,77,111,4m,1g,2d,0h,7k,11,78,1c,7j,62,11,64,11b,71,12,73,11,75,11,74,115,4m,1f,2e,0j,7t,1c,7g,62,11,64,114,79,14,77,11,71,119,4k,1f,2e,11,0k,7v,1b,7d,62,11,64,110,7d,11,7a,11d,4i,1f,2f,11,0m,7u,1c,7b,12,65,1x,7f,11,79,18,7a,1y,4g,1g,2f,0q,7c,12,7f,1c,78,12,65,1u,7r,17,7e,1y,4d,1h,2f,11,0u,7r,1d,71,15,65,1s,7s,16,7i,1z,47,1k,2g,11,0x,717,64,1r,7q,15,74,11,7j,11n,2i,11,010,72,11,715,1q,7a,11,79,11,74,14,7r,11m,2i,11,013,12,716,1l,73,11,76,12,76,1c,7t,11j,2l,11,015,12,716,1h,75,16,75,1d,7a,12,7k,11g,2o,11,017,12,715,1e,72,13,79,1d,710,11e,2q,11,01a,11,714,1a,73,12,79,1d,713,11c,2s,11,01c,12,712,16,75,11,79,1b,718,119,2u,11,01e,12,711,13,76,11,78,1a,71b,118,2v,01h,12,7z,12,76,11,78,18,71e,118,2v,01j,716,11,76,18,71g,118,2w,01m,712,11,75,17,71j,117,2x,01p,7x,11,74,18,71h,11b,2w,11,01r,7y,18,71k,119,2x,11,01r,7w,18,71j,11b,2y,01r,7v,18,71i,11d,2y,11,01r,7v,16,71i,11f,2y,01s,7u,15,71i,11h,2x,11,01r,7v,13,71i,11k,2w,01s,7v,12,71h,11o,2t,11,01s,7v,11,71h,11s,2p,11,01t,7u,12,71e,11z,2k,11,01u,7u,12,7n,12,7m,125,2f,12,01v,7t,13,7m,16,7a,12i,29,12,01x,7t,13,7j,12z,06,13,021,7s,14,7h,131,02b,7q,15,7f,133,02b,7p,17,7b,137,02a,7o,1a,75,13b,02b,7l,13s,02c,7i,13u,02c,12,7d,13x,02d,17,71,143,02e,149,02g,148,02h,146,02k,144,02m,141,02q,13x,02u,13t,02y,13p,032,13l,036,13h,03a,13d,03e,1j,03,12n,03k,15,0d,12l,043,12k,045,12i,046,12h,048,12g,048,12f,04a,12d,04c,12b,04f,128,04h,127,04h,126,04j,123,04l,122,04l,121,04n,1z,03,1y,04o,1z,04,1v,04q,1z,06,1r,04s,1y,0a,1m,04u,1y,0e,1f,04x,1y,05q,1x,05r,1x,05r,1x,02g';
+// Mózg od środka: przekrój strzałkowy (rysunek z serii Lynch i Jaffe, MATERIALS/Images/BRAIN/2024_Brain_Networks/Medial),
+// sieci z mapy Yeo 7, widok przyśrodkowy (Uddin, Yeo i Spreng 2019, ryc. 4B), przeniesionej na rysunek splajnem cienkiej płyty
+// po punktach orientacyjnych (biegun czołowy, szczyt, biegun potyliczny, obrys spoidła wielkiego); układ limbiczny, spoidło,
+// pień i móżdżek szare. Ta sama siatka 240×180 i ten sam zapis co MAPA.
+const MAPA_M = '091,72,61,22,0j,13,05u,74,6a,0a,34,15,05i,13,06,72,6h,32,03,36,1j,04x,7b,03,72,6h,34,02,3f,1b,05,32,04m,7d,51,02,6i,36,01,3i,17,34,02,35,04h,7c,55,6i,37,02,3t,02,37,04c,7c,57,01,6e,3a,02,3u,02,3a,045,7d,59,02,6c,3b,02,3u,02,3c,040,7a,5f,02,6c,3b,02,3v,01,3e,03v,7b,5h,02,6d,317,02,3f,03,32,03l,7b,5k,03,6d,316,02,3g,02,33,43,03g,74,5s,03,6e,315,02,3h,02,32,11,44,03e,72,5u,04,6d,39,02,3u,02,3i,02,31,12,44,037,73,03,5w,07,6a,39,02,3u,12,3i,03,64,43,034,75,02,5u,63,07,6a,39,02,3u,12,3g,63,02,65,44,030,77,02,5u,63,02,6g,31k,65,02,65,45,02x,79,02,5m,02,55,6m,31h,6g,46,02t,7b,02,5m,02,54,6m,31f,6k,47,02q,7b,51,02,5e,12,56,02,53,6n,31d,6n,48,02n,7a,53,02,5f,12,54,02,53,6n,3t,02,3g,6r,48,02k,7b,54,02,5f,13,53,02,52,6o,3t,02,3d,6u,4a,02h,7b,55,02,5g,11,51,01,51,02,6r,3t,02,38,610,4a,02,42,02b,7b,5q,04,6b,02,6f,3z,613,4a,03,43,027,7c,5s,04,6s,3s,6y,01,6b,4a,02,44,025,7d,58,02,5i,63,02,6r,3r,6y,02,6b,4a,02,46,022,7f,57,02,5i,63,03,6q,38,02,3f,6z,03,6c,4i,01z,7j,55,02,5h,65,02,6r,37,02,37,12,21,614,02,6d,4j,01x,7l,59,03,5a,611,35,02,34,14,22,67,11,61,23,66,22,6g,73,03,6e,4j,01v,7n,58,04,58,616,04,15,03,21,66,13,2f,02,7d,02,74,6c,4j,01t,7j,11,74,5b,02,55,618,03,16,03,72,64,02,11,27,71,28,02,7d,02,79,67,45,12,4d,01r,7j,12,75,5g,618,03,65,79,61,71,03,25,7b,02,7c,03,7h,44,12,4e,01p,7k,11,77,5e,618,03,66,7e,23,7d,02,7b,03,7j,43,11,4g,01n,7u,59,13,616,04,66,7i,01,7d,02,7b,03,7k,41,12,4h,01l,7l,02,78,59,12,6r,05,61,07,63,03,66,7j,03,7n,02,7n,12,54,4e,01k,7l,02,78,59,12,6p,06,63,05,69,7o,03,7m,02,7p,56,4d,01i,7m,02,77,5a,12,52,6d,02,66,03,6i,54,7q,01,76,02,71,01,7c,02,7l,02,73,57,42,51,49,01g,7n,02,77,5a,12,53,6c,02,64,03,6j,56,7w,05,11,79,12,7m,11,75,5b,47,01f,7o,02,76,5c,11,54,6b,07,6g,5d,75,51,74,52,7l,03,79,12,74,11,7o,5c,46,01e,7o,02,76,5c,12,53,6b,05,6b,510,76,53,79,02,7a,11,7u,5c,46,01c,7p,12,76,5d,11,53,6a,03,6c,51d,77,02,7a,11,7j,02,75,12,73,5d,44,01b,7q,12,76,5f,6b,03,6c,51i,73,02,7a,12,7g,03,76,12,75,5c,43,03,41,017,7b,13,7c,02,75,5g,6a,03,6c,5r,02,5t,02,7a,12,7f,03,77,12,76,5d,01,11,01,43,016,7b,13,7c,02,75,5f,6a,03,6a,5t,06,5r,02,7a,12,7e,02,78,02,78,5c,11,01,44,015,7i,02,75,04,74,5f,68,02,6c,5u,0b,5n,01,7a,12,7d,02,79,02,78,11,5c,01,45,014,7i,02,76,05,72,5f,65,04,6c,5u,0c,12,06,5f,02,52,7l,02,7a,02,77,12,73,58,03,43,12,013,7t,03,72,5f,63,03,6c,5p,0d,1a,09,51,12,57,02,53,7j,03,7a,02,7d,57,03,42,14,012,7v,03,5e,05,6c,56,12,5d,04,12,06,1l,07,11,57,03,53,7i,02,7b,01,7g,55,02,53,13,42,0z,12,7w,03,5d,02,6e,57,12,57,02,53,11,04,1w,04,59,02,55,7g,01,7c,02,72,01,7e,53,02,54,11,44,0w,11,73,11,01,7w,01,12,58,01,52,6f,58,06,51,12,02,116,02,5a,02,54,7f,02,7b,03,72,01,7f,51,02,55,45,0w,74,03,7w,13,55,03,52,6d,5a,06,11c,02,5a,01,15,7d,02,7b,02,7k,03,56,45,0u,76,04,7v,13,53,03,53,67,5e,05,11g,02,5c,14,02,79,02,7b,02,7l,02,57,44,21,0t,7a,04,7t,12,52,02,55,65,5d,05,11k,02,5c,13,03,77,02,7b,02,7l,03,58,42,23,0r,7d,03,7t,11,03,57,62,5d,04,11o,02,5g,02,74,03,7b,02,7l,03,72,58,25,0p,7g,02,7s,03,72,5e,72,53,03,11s,02,5g,04,71,02,7c,02,7j,04,73,58,25,0p,7g,02,7s,03,73,59,76,04,11u,03,5g,03,72,01,7b,02,7i,05,74,58,25,0p,71a,02,76,56,77,03,11w,03,5h,73,02,79,02,7i,05,76,57,26,0n,71k,54,76,03,120,02,5g,74,02,78,01,7i,02,13,76,58,26,0n,71t,03,122,02,5f,75,01,77,01,7l,12,78,57,27,0m,71a,02,7e,04,125,03,5e,76,02,73,02,7l,12,78,56,28,0m,71a,02,7e,04,126,03,5c,77,07,7f,12,7f,55,29,0l,719,02,7f,03,129,03,5a,78,06,78,12,75,11,7h,53,2b,0k,719,02,7e,03,115,03,18,04,1r,03,59,7b,03,77,12,7p,52,2b,0l,718,02,7e,02,110,02,14,03,18,04,14,02,1n,03,57,7c,02,77,12,7q,2c,0o,715,01,7e,02,1x,06,1n,06,1l,03,55,7c,02,75,01,7t,2d,0i,73,04,7j,01,7i,01,7e,02,1w,04,1v,04,1k,08,7c,03,12,71,01,7s,2e,0i,75,05,7g,02,7g,02,7d,02,1w,03,110,03,1k,05,12,7c,02,12,7t,2f,0i,78,04,7f,02,7e,02,7e,02,1u,02,115,03,1l,02,12,719,2e,0i,7c,02,7f,02,7c,03,7e,02,1s,03,118,03,1k,04,718,2d,02,22,0f,7d,02,7f,03,79,03,7e,02,1s,03,11b,02,1l,03,717,2d,02,23,0e,7e,02,7f,03,76,04,7f,02,1r,03,11d,03,1k,03,714,2l,0d,7f,02,7f,0b,7h,1r,03,1y,02,1b,01,12,04,1l,02,7k,01,7g,2n,0d,7g,01,7g,08,7j,1r,02,1u,02,13,02,1b,01,12,05,1l,03,7i,02,7e,2p,0c,7y,06,7k,1q,02,1s,05,1k,05,1l,03,7h,03,7d,2q,0b,7z,05,7k,1p,02,1r,04,1q,03,1m,02,7h,02,7d,2d,01,2c,0b,710,04,7j,1q,02,1p,04,1u,02,1m,02,7v,2c,02,2d,0a,711,03,7i,02,11f,03,1i,02,16,02,14,02,1m,02,7u,2c,02,2f,09,7i,02,7h,03,7g,04,11d,03,1g,06,16,09,1m,02,7s,2b,02,2h,09,7i,02,7i,02,7g,05,11c,02,1d,06,1e,06,1m,02,7r,28,04,2i,0a,7h,02,7i,02,7j,02,11b,02,1c,05,1l,02,1n,02,7q,26,04,2l,09,7h,02,713,02,11n,04,1p,02,1m,02,7p,26,03,2n,0a,7g,02,714,02,1n,02,1w,02,1t,01,1n,02,7f,01,77,26,03,2o,0b,71m,01,1o,01,1u,02,1v,02,1m,02,7f,01,75,27,03,2p,0c,7e,02,7k,02,7k,02,1m,02,1k,02,14,04,1x,02,1m,01,7f,02,72,28,02,2r,0c,11,7d,02,7k,02,7k,04,1l,02,1k,01,14,02,1z,02,1m,02,7f,02,28,02,2s,0c,7e,03,7k,01,7b,12,79,04,1j,02,111,02,13,01,1k,02,1l,02,7e,21,03,26,02,2t,0b,7g,02,7k,02,7a,12,7c,03,1i,02,1y,04,13,03,1i,02,1l,02,79,27,09,2t,02,21,09,7g,03,7j,02,7q,03,1h,02,1w,02,18,02,1i,02,1l,02,2g,06,2v,01,23,09,7g,02,7k,02,7q,03,1h,02,1u,02,1a,02,1i,01,1l,02,2g,05,2v,02,23,09,7h,02,7j,03,7q,03,1h,02,115,02,1i,02,1k,04,2f,03,2v,02,25,08,7i,01,7k,03,7q,11,02,1h,03,114,01,1j,02,1i,05,2f,03,2o,02,23,03,26,08,13,711,03,7o,13,02,1i,04,111,01,1j,02,1i,02,2i,02,2p,07,27,08,14,711,04,73,03,7d,17,02,1j,04,1y,02,1k,02,1g,02,2j,02,2q,05,29,08,13,713,03,12,02,78,1e,02,1k,03,1l,02,1a,01,1m,02,1f,02,2j,02,2r,03,2a,08,14,7f,02,7n,14,02,74,1i,02,16,01,16,01,17,02,1l,02,1x,02,1d,02,2j,02,2t,02,2b,08,13,7g,02,7m,15,03,1l,08,16,04,15,02,1l,04,1i,07,16,03,1a,02,2k,02,2t,02,2b,08,14,7g,02,7i,19,02,1m,05,1b,02,15,01,1n,02,1g,0b,15,05,15,03,2l,02,216,09,14,7f,04,7f,1b,02,112,02,14,02,112,03,76,23,03,12,07,13,21,01,2m,03,217,09,14,7e,04,72,02,76,1h,02,113,01,14,02,110,03,77,25,04,23,02,2r,04,217,0b,13,7j,03,75,11m,02,14,01,110,02,79,213,05,217,0g,13,7j,03,11n,01,14,02,1y,01,7a,02,210,11,24,02,217,0g,14,7j,03,11m,02,13,02,1x,02,78,22,05,25,12,2w,01,217,0e,18,7i,04,1h,02,112,01,14,01,1x,01,73,12,71,25,03,21,05,13,2w,02,216,0e,1a,7g,13,03,1g,02,111,01,13,02,1a,06,1g,02,73,12,26,02,23,04,13,2e,11,2i,02,215,0f,1a,7e,16,02,1g,02,1l,01,1e,02,12,02,17,06,11,04,1e,02,73,03,25,02,25,1k,02,2h,01,215,0g,1a,7d,17,02,1g,02,1i,03,1e,05,17,03,18,02,1g,22,09,26,1e,0a,21,11,21j,0h,1a,7b,1a,02,1g,02,1e,03,1g,04,17,02,1b,02,1k,05,26,1f,0b,14,2m,02,2s,0i,19,7b,1b,02,1g,03,1a,03,1i,03,17,02,13,01,18,03,1a,02,18,03,25,1h,0d,16,2j,02,2r,0j,1a,78,1d,02,1h,04,14,04,1k,03,16,02,12,03,18,04,19,02,19,02,24,1l,0c,18,23,11,2c,03,2o,0m,1a,75,1f,03,1i,01,14,04,1k,02,17,01,12,02,1b,03,19,02,1b,23,1e,01,18,0d,1b,2c,04,2m,0o,18,01,16,01,1e,02,1n,02,1l,02,16,01,12,02,1e,02,18,02,1r,02,18,01,12,02,12,08,19,2d,03,23,12,2h,0x,16,01,1f,03,117,03,15,02,11,02,1g,02,17,02,1q,02,16,01,16,02,13,07,19,2d,03,14,2g,0y,1a,01,1d,03,115,03,15,01,1l,02,16,02,1n,03,18,02,16,01,15,07,18,2c,02,16,2f,0z,19,01,1f,05,111,03,15,01,1m,01,16,02,1l,02,11,01,19,01,1b,01,13,06,18,2c,01,17,2e,012,1o,03,110,01,17,02,1m,02,1r,02,1c,02,1a,02,12,08,17,2b,01,19,2b,015,1n,03,1y,02,17,02,1n,02,11h,02,12,08,17,2a,02,18,2b,017,1n,03,1w,01,12,02,14,01,12,02,1l,01,1g,02,13,01,110,09,11,01,14,2a,1a,29,01a,1n,01,1v,02,12,01,15,01,12,02,1l,02,14,02,19,01,13,02,111,0b,14,29,1a,28,01d,11g,02,12,02,14,02,12,02,1m,01,14,02,18,02,1n,02,1i,01,11,08,15,29,1a,27,01,12,01c,11d,03,11,02,15,01,14,01,1m,02,14,01,18,01,1n,01,11,02,1k,08,15,28,1b,25,02,12,01e,11a,06,15,02,14,01,1m,02,14,01,17,01,11b,0a,15,28,1a,24,02,22,01h,117,05,16,02,15,02,1m,02,13,02,15,02,14,02,16,02,1x,0b,15,26,02,19,23,02,23,01j,114,04,17,02,16,02,1m,02,14,01,15,02,1d,02,111,07,17,24,02,19,03,24,01m,19,01,1q,03,17,03,18,02,1m,02,13,02,14,02,119,01,17,07,16,23,12,02,17,03,25,01w,1o,03,18,03,19,03,1m,01,14,01,15,01,118,02,17,08,15,23,13,01,13,01,13,02,25,01w,1o,03,17,03,1b,01,11,01,1m,02,13,02,14,02,13,02,111,02,19,08,14,23,17,01,14,26,01w,1m,04,16,03,1b,02,1q,02,13,01,19,01,111,01,1b,0b,24,1c,25,020,1h,05,14,06,1a,02,1s,01,13,02,17,02,110,02,1d,0a,24,1c,24,025,19,07,13,0c,110,02,13,01,17,02,11g,09,24,1c,23,02m,12,0f,1z,01,13,02,17,01,11h,09,23,1c,23,02k,13,0h,1y,02,13,02,16,01,11g,0b,22,1c,22,02j,15,0i,1y,01,14,01,16,02,18,02,115,0c,1e,02i,17,0j,1x,02,14,01,11o,0b,1d,02h,18,0j,1y,01,14,02,1o,01,1z,0b,1b,02i,18,0j,1y,02,14,02,1m,02,13,01,11,02,11,01,1r,0c,17,02k,19,0i,1z,01,15,03,1j,02,14,03,11,02,1r,0e,13,02m,1a,0h,1z,02,15,03,12,02,1d,02,112,033,1b,0g,1z,02,17,07,17,05,1q,06,18,032,1b,0g,110,01,19,09,13,03,1t,05,18,032,1c,0f,110,02,1a,07,117,01,12,034,1c,0f,111,01,11o,038,1b,0f,111,01,1v,01,12,02,1p,02,13,032,1b,0f,111,02,1d,02,18,02,15,02,11,02,1v,032,1a,0f,11f,02,1a,02,15,02,1x,033,18,0g,11e,02,1c,02,113,033,17,0h,11d,02,16,02,15,02,113,034,15,0i,112,02,18,02,17,01,11a,03s,11c,01,19,01,1z,01,19,03t,11b,01,18,02,1z,01,18,03u,11a,02,18,01,119,03v,119,01,19,01,116,01,12,03v,119,01,19,02,115,03z,117,02,19,02,1p,03,1f,03x,11i,01,1r,02,1f,03y,11g,02,1r,02,1e,03z,11g,02,1s,01,1d,041,11g,01,116,041,11g,01,116,042,11e,02,1u,02,18,044,1g,02,1w,01,1w,01,17,046,1f,02,1e,02,1e,02,1a,02,1c,01,18,01,17,047,1d,02,1f,02,1d,02,1b,01,19,05,18,02,15,049,1b,01,1h,02,16,02,14,02,1c,01,19,02,1c,01,13,04c,18,03,1q,01,14,01,1a,01,12,03,17,02,1c,01,12,04f,15,03,1r,02,12,01,1b,02,11,01,1a,01,1c,04p,1n,01,14,05,1c,02,1b,01,1c,04o,1o,01,14,05,1c,02,1a,02,1b,04o,1u,04,1d,01,1b,02,19,04q,1k,02,17,06,1c,01,1l,04r,1k,02,16,02,12,03,1b,02,1k,04s,1n,02,13,01,14,03,1a,02,1h,04u,1o,02,18,04,11,02,17,01,1c,04z,1o,01,18,09,16,01,1b,050,1o,01,18,0h,12,059,1m,02,18,05s,1j,02,1a,05t,1u,05u,17,02,1k,05w,15,02,1k,05y,13,02,1b,02,11,02,15,02g';
 const COL: Record<number, string> = { 1: '#7d7466', 2: '#ee6b6f', 3: '#f9d780', 4: '#e58e76', 5: '#f69959', 6: '#a9b26f', 7: '#bb6fb2', 8: '#6fb3a8' };
 // sieć brzuszna uwagi (VAN) według Uddin, Yeo i Spreng 2019, ryc. 6C (za Corbettą i Shulman): złącze skroniowo-ciemieniowe,
 // w masce podpisane TPJ i dotąd w sieci istotności, oraz kora brzuszno-czołowa (IFG) nad przednim końcem bruzdy bocznej;
@@ -350,6 +358,8 @@ const GREY = hex('#5f5a54');
 // dwa płótna: rój pod tekstem, iskra (snop, lód, kropka) nad tekstem i postaciami
 const cv = document.querySelector('.roj-plotno') as HTMLCanvasElement, cv2 = document.querySelector('.roj-iskra') as HTMLCanvasElement;
 const g = cv.getContext('2d')!, g2 = cv2.getContext('2d')!;
+let OBA = 0, MOB_DY = 0, NH = 0, OBA_TOP = 0;
+const MB = { cx: 0, cy: 0, bw: 0 };
 let LAB = 20, W = 0, H = 0, D = 1, MOB = false, SEC: any[] = [], LN: any = null, PETLA = false, HOVP = false, AKT = 0;
 const CICHO = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const P: any[] = [], CENT: Record<number, number[]> = {};
@@ -387,14 +397,31 @@ function size() {
   if (w !== W || h !== H || cv.width !== Math.round(w * D)) { W = w; H = h; cv.width = cv2.width = Math.round(W * D); cv.height = cv2.height = Math.round(H * D); }
   // c0..c1: odcinek, na którym ekran trwa w swoim stanie; przejścia między c1 jednego a c0 następnego.
   SEC = $$('.roj-st').map((s) => {
-    const lep = s.classList.contains('poziom') || s.classList.contains('lepkie'), hh = lep ? H : s.offsetHeight;
+    const lep = s.classList.contains('poziom') || s.classList.contains('lepkie') || s.classList.contains('oba'), hh = lep ? H : s.offsetHeight;
     return { k: s.dataset.k, top: s.offsetTop, h: hh, c0: s.offsetTop + hh / 2, c1: lep ? s.offsetTop + s.offsetHeight - H / 2 : s.offsetTop + hh / 2 };
   });
+  NH = nagl.offsetHeight; OBA_TOP = SEKCJE.naglowek.offsetTop;
 }
 function brain(p: any, sc = 1, r = 0) {
   // gdy sieci się rozchodzą (r), mózg maleje, a na szerokim ekranie przesuwa się w lewo: rozsunięte sieci mieszczą się na ekranie
-  const bw = (MOB ? W * .88 : Math.min(W * .46, 760)) * sc * (1 - (MOB ? .22 : .16) * r), cx = MOB ? W / 2 : W * (.72 - .06 * r), cy = MOB ? H * .29 : H * .52;
+  const bw = (MOB ? W * .88 : Math.min(W * .46, 760)) * sc * (1 - (MOB ? .22 : .16) * r), cx = MOB ? W / 2 : W * (.72 - .06 * r), cy = MOB ? H * .29 + MOB_DY : H * .52;
   return [cx + (p.u / 240 - .5) * bw, cy + (p.v / 180 - .5) * bw * .75, bw];
+}
+// mózg od środka: na szerokim ekranie po lewej pod nagłówkiem, na telefonie pod mózgiem z boku;
+// na telefonie mózg z boku zsuwa się, gdy trzeba, żeby zmieścić nad sobą nagłówek
+function brainM(p: any) { return [MB.cx + (p.u / 240 - .5) * MB.bw, MB.cy + (p.v / 180 - .5) * MB.bw * .75, MB.bw]; }
+function geomM() {
+  if (MOB) {
+    const gora = H * .02 + NH + 10, latGora = H * .29 - W * .88 * .375;
+    MOB_DY = OBA * Math.max(0, gora - latGora);
+    const dol = H * .29 + MOB_DY + W * .88 * .375 + 12;
+    MB.bw = Math.min(W * .84, (H * .98 - dol) / .75); MB.cx = W / 2; MB.cy = dol + MB.bw * .375;
+  } else {
+    const gora = H * .09 + NH + H * .05;
+    MOB_DY = 0; MB.bw = Math.min(W * .36, 580, (H * .97 - gora) / .75); MB.cx = W * .08 + MB.bw * .47;
+    // na wysokości mózgu z boku, jeśli pod nagłówkiem jest miejsce
+    MB.cy = Math.min(Math.max(gora + MB.bw * .375, H * .52), H * .97 - MB.bw * .375);
+  }
 }
 function lines() {
   // tor jedzie w bok do 78% przewinięcia; resztę ekran stoi, a postacie pchają słowa do Płótna
@@ -408,6 +435,13 @@ function wyspa(n: number, bx: number, by: number, bw: number, wy: number) {
 }
 function st(k: string, p: any, lp: number) {
   const net = p.net > 1; let x = 0, y = 0, a = 0, c = p.col, s = 1;
+  // mózg od środka widać tylko na ekranie z nagłówkiem; gdzie indziej jego punkty gasną i odlatują z rojem
+  if (p.med) {
+    if (k !== 'czesc' && k !== 'pytanie' && k !== 'naglowek') return [p.sx * W, p.sy * H, 0, c, 1];
+    [x, y] = brainM(p); a = k === 'naglowek' ? (net ? .3 : .16) * OBA : 0;
+    if (KLv > 0 && net && p.net === KL.n && a > 0) { a += (.98 * OBA - a) * KLv; s = 1 + .35 * KLv; }
+    return [x, y, a, c, s];
+  }
   // mózg ciemny i taki zostaje: sieci świecą tylko w snopie iskry albo po kliknięciu (jego słowo, 2026-10-20); za nagłówkiem rój się rozprasza
   if (k === 'czesc') { [x, y] = brain(p); a = net ? .3 : .16; }
   else if (k === 'pytanie' || k === 'naglowek') { [x, y] = brain(p); a = net ? .3 : .16; }
@@ -529,25 +563,30 @@ function snopStart() {
 new IntersectionObserver((es) => { SOL_WID = es[0].isIntersecting; snopStart(); }).observe(sol);
 function zakonczSol() { SOL.t0 = performance.now() - 10000; solKlasy(performance.now()); }
 // Klik w sieć mózgu (jego słowo, 2026-10-20): sieć się zapala, iskra leci szybko w miejsce kliknięcia, potem bada tę sieć.
-const SIATKA = new Uint8Array(240 * 180), KL: any = { n: 0, t: -1e9, x: 0, y: 0, pt: 0, px: 0, py: 0 }, KL_T = 7000;
-let KLv = 0, MOZG_AKT = false;
+const SIATKA = new Uint8Array(240 * 180), SIATKA_M = new Uint8Array(240 * 180), KL: any = { med: false, n: 0, t: -1e9, x: 0, y: 0, pt: 0, px: 0, py: 0 }, KL_T = 7000;
+let KLv = 0, MOZG_AKT = false, NA_MED = false;
 const naSieci = (x: number, y: number) => {
   if (!MOZG_AKT || !P.length) return 0;
+  const szukaj = (cx: number, cy: number, bw: number, S: Uint8Array) => {
+    const u = Math.round((x - cx) / bw * 240 + 120), v = Math.round((y - cy) / (bw * .75) * 180 + 90);
+    for (let rr = 0; rr <= 3; rr++) for (let dv = -rr; dv <= rr; dv++) for (let du = -rr; du <= rr; du++) {
+      const uu = u + du, vv = v + dv; if (uu < 0 || vv < 0 || uu >= 240 || vv >= 180) continue;
+      const n = S[vv * 240 + uu]; if (n > 1) return n;
+    }
+    return 0;
+  };
   const [cx, cy, bw] = brain({ u: 120, v: 90 });
-  const u = Math.round((x - cx) / bw * 240 + 120), v = Math.round((y - cy) / (bw * .75) * 180 + 90);
-  for (let rr = 0; rr <= 3; rr++) for (let dv = -rr; dv <= rr; dv++) for (let du = -rr; du <= rr; du++) {
-    const uu = u + du, vv = v + dv; if (uu < 0 || vv < 0 || uu >= 240 || vv >= 180) continue;
-    const n = SIATKA[vv * 240 + uu]; if (n > 1) return n;
-  }
-  return 0;
+  let n = szukaj(cx, cy, bw, SIATKA); NA_MED = false;
+  if (!n && OBA > .5) { n = szukaj(MB.cx, MB.cy, MB.bw, SIATKA_M); NA_MED = n > 0; }
+  return n;
 };
 function klikCel(now: number): any {
   const tt = now - KL.t;
   // najpierw szybki lot w miejsce kliknięcia, potem badanie sieci: punkt po punkcie, snop z bliska
   if (tt < 450 && Math.hypot(IS.x - KL.x, IS.y - (KL.y - 14)) > 10) return { id: 'klik', tryb: 'lot', x: KL.x, y: KL.y - 14, I: .9, ang: Math.PI / 2, len: 60, half: .5 };
   if (now > KL.pt) {
-    const L = P.filter((p) => p.net === KL.n); const p = L[Math.floor(Math.random() * L.length)];
-    if (p) { const [x, y] = brain(p); KL.px = x; KL.py = y; }
+    const L = P.filter((p) => p.net === KL.n && !!p.med === KL.med); const p = L[Math.floor(Math.random() * L.length)];
+    if (p) { const [x, y] = KL.med ? brainM(p) : brain(p); KL.px = x; KL.py = y; }
     const d = 650 + Math.random() * 600; KL.pt = now + d; setTimeout(kick, d + 20);
   }
   const x = KL.px + (Math.random() < .5 ? -1 : 1) * 4, y = KL.py - 30;
@@ -555,15 +594,34 @@ function klikCel(now: number): any {
 }
 // Wędrówka iskry przy mózgu: co chwilę losuje, co robi dalej. Ogląda wybraną sieć snopem z bliska,
 // siada na nazwie sieci i świeci na nią albo krąży nad mózgiem i świeci na boki. Mózg świeci tylko w jej snopie.
-const WED: any = { typ: '', n: 0, t: 0, T: 0, ux: 0, uy: 0, gz: 0, gzt: 0 };
+// Gdy wchodzi mózg od środka, iskra najpierw leci do niego, potem ogląda na zmianę jeden i drugi widok.
+const WED: any = { typ: '', n: 0, t: 0, T: 0, ux: 0, uy: 0, gz: 0, gzt: 0, med: false, byl: false, pu: 0, pv: 0 };
+const SIECI_M: number[] = [];
 function wedruj(now: number, wy: number): any {
-  if (now > WED.t + WED.T) {
-    const los = Math.random(), L = SIECI_L.filter((n) => WS[n]);
+  if (now > WED.t + WED.T || (WED.med && OBA <= .5) || (OBA > .5 && !WED.byl)) {
+    const los = Math.random();
+    WED.med = OBA > .5 && (!WED.byl || Math.random() < .5); if (WED.med) WED.byl = true;
+    const L = WED.med ? SIECI_M : SIECI_L.filter((n) => WS[n]);
     WED.t = now; WED.n = L.length ? L[Math.floor(Math.random() * L.length)] : SIECI_L[0];
-    if (los < .42) { WED.typ = 'patrz'; WED.T = 1600 + Math.random() * 2200; WED.ux = (Math.random() - .5) * .16; WED.uy = .08 + Math.random() * .1; }
+    if (WED.med) {
+      const M = P.filter((p) => p.med && p.net === WED.n), p = M[Math.floor(Math.random() * M.length)] || { u: 120, v: 90 };
+      WED.pu = p.u; WED.pv = p.v;
+      if (los < .65) { WED.typ = 'patrz'; WED.T = 1600 + Math.random() * 2200; WED.ux = (Math.random() - .5) * .16; WED.uy = .06 + Math.random() * .08; }
+      else { WED.typ = 'krazy'; WED.T = 1200 + Math.random() * 1800; WED.ux = .1 + Math.random() * .8; WED.uy = .1 + Math.random() * .8; WED.gzt = 0; }
+    }
+    else if (los < .42) { WED.typ = 'patrz'; WED.T = 1600 + Math.random() * 2200; WED.ux = (Math.random() - .5) * .16; WED.uy = .08 + Math.random() * .1; }
     else if (los < .72 && WS[WED.n] && WS[WED.n].etykieta > .9) { WED.typ = 'siad'; WED.T = 1800 + Math.random() * 2600; WED.ux = (Math.random() - .5) * .6; }
     else { WED.typ = 'krazy'; WED.T = 1200 + Math.random() * 1800; WED.ux = .1 + Math.random() * .8; WED.uy = .1 + Math.random() * .8; WED.gzt = 0; }
     setTimeout(kick, WED.T + 20);
+  }
+  if (WED.med) {
+    const n = WED.n, [ix, iy, bw] = brainM({ u: WED.pu, v: WED.pv });
+    if (WED.typ === 'patrz') {
+      const x = Math.max(14, ix + WED.ux * bw), y = Math.max(H * .08, iy - WED.uy * bw - 12), d = Math.hypot(ix - x, iy - y);
+      return { id: 'patrz' + n + 'm', tryb: 'lot', x, y, I: .75, ang: Math.atan2(iy - y, ix - x), len: d + bw * .1, half: .5 };
+    }
+    if (now > WED.gzt) { WED.gz = Math.random() * 6.283; const d = 400 + Math.random() * 900; WED.gzt = now + d; setTimeout(kick, d + 20); }
+    return { id: 'krazym', tryb: 'lot', x: Math.max(14, MB.cx + (WED.ux - .5) * MB.bw), y: Math.max(H * .08, MB.cy + (WED.uy - .5) * MB.bw * .75), I: .55, ang: WED.gz, len: MB.bw * .32, half: .42 };
   }
   const n = WED.n, r = wy * (ROZ[n] || 0), [bx, by, bw] = brain({ u: CENT[n][0], v: CENT[n][1] }, 1, r), [ix, iy] = wyspa(n, bx, by, bw, r);
   const lewo = MOB ? 14 : kolT.getBoundingClientRect().right + 24;
@@ -609,7 +667,7 @@ function zdBuduj() {
   const txt = (zrodlo.textContent || '').trim(), par = zrodlo.parentElement as HTMLElement, cz = getComputedStyle(zrodlo), cn = getComputedStyle(nagl);
   const S = ksztalt(txt, '400 ' + FS_Z + 'px ' + cz.fontFamily, parseFloat(getComputedStyle(par).lineHeight) || FS_Z * 1.9, par.clientWidth, 1);
   const T = ksztalt(txt, cn.fontWeight + ' ' + FS_N + 'px ' + cn.fontFamily, parseFloat(cn.lineHeight) || FS_N * 1.2, nagl.clientWidth, 1.5);
-  const szare = P.filter((p) => p.net === 1), N = Math.min(MOB ? 900 : 1500, szare.length, Math.max(S.length, T.length));
+  const szare = P.filter((p) => p.net === 1 && !p.med), N = Math.min(MOB ? 900 : 1500, szare.length, Math.max(S.length, T.length));
   ZD.N = N; ZD.S = []; ZD.T = [];
   for (const p of P) p.zj = -1;
   for (let j = 0; j < N; j++) {
@@ -726,7 +784,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       : c.id.startsWith('siad') ? { pd: 1.05, lid: .92, joy: .4 }
       : c.id === 'zdanie' ? { pd: 1.18, lid: 1 }
       : c.id === 'ciagnie' ? { pd: 1.1, lid: 1, joy: .6 }
-      : c.id === 'krazy' ? { pd: 1.06, lid: 1 }
+      : c.id === 'krazy' || c.id === 'krazym' ? { pd: 1.06, lid: 1 }
       : { pd: 1, lid: 1 };
   }
   return c;
@@ -1053,7 +1111,7 @@ function litery(t: string, fs: number) {
 function przygotujSlowa() {
   if (SLOWO[SIECI_L[0]]) return;
   // słowa formują się naraz, więc każde bierze własną część szarego tła
-  const szare = P.filter((p) => p.net === 1), N = SIECI_L.length, pule = SIECI_L.map((_, j) => szare.filter((_, i) => i % N === j));
+  const szare = P.filter((p) => p.net === 1 && !p.med), N = SIECI_L.length, pule = SIECI_L.map((_, j) => szare.filter((_, i) => i % N === j));
   SIECI_L.forEach((n, j) => {
     const pula = pule[j], L = litery(NAZWY[n], LAB); let pts = L.pts;
     if (pts.length > pula.length) { const co = pts.length / pula.length; pts = Array.from({ length: pula.length }, (_, i) => L.pts[Math.floor(i * co)]); }
@@ -1084,17 +1142,23 @@ function rozsun() {
 }
 function kick() { if (!PETLA) { PETLA = true; requestAnimationFrame(() => { PETLA = false; frame(); }); } }
 // telefon: dolna krawędź mózgu; tekst ekranów z mózgiem gaśnie, gdy wjeżdża nad nią, i mózg zostaje odsłonięty
-const DNO_MOZGU = () => H * .29 + W * .88 * .375;
+const DNO_MOZGU = () => H * .29 + MOB_DY + W * .88 * .375;
 const POD_MOZGIEM = $$('.roj-st:is([data-k=czesc],[data-k=pytanie],[data-k=naglowek]) .roj-t');
+const NAGL_T = nagl.parentElement as HTMLElement;
 function maskaPodMozgiem() {
-  const dno = DNO_MOZGU(), pas = 36;
+  const dno = DNO_MOZGU(), pas = 36, gora = dno - W * .88 * .75;
   for (const el of POD_MOZGIEM) {
     const t = MOB ? el.getBoundingClientRect().top : Infinity;
-    const m = t >= dno + pas ? '' : 'linear-gradient(to bottom, transparent ' + Math.round(dno - t) + 'px, #000 ' + Math.round(dno + pas - t) + 'px)';
+    let m = t >= dno + pas ? '' : 'linear-gradient(to bottom, transparent ' + Math.round(dno - t) + 'px, #000 ' + Math.round(dno + pas - t) + 'px)';
+    // nagłówek przechodzi pod mózgiem i wynurza się nad nim, gdzie zostaje u góry ekranu
+    if (el === NAGL_T && m) m = 'linear-gradient(to bottom, #000 ' + Math.round(gora - pas - t) + 'px, transparent ' + Math.round(gora - t) + 'px, transparent ' + Math.round(dno - t) + 'px, #000 ' + Math.round(dno + pas - t) + 'px)';
     if (el.style.maskImage !== m) { el.style.maskImage = m; el.style.webkitMaskImage = m; }
   }
 }
 function frame() {
+  // mózg od środka wchodzi, gdy nagłówek stanie u góry ekranu
+  OBA = CICHO ? (scrollY >= OBA_TOP - H * .05 ? 1 : 0) : sm(cl((scrollY - OBA_TOP + H * .05) / (H * .5)));
+  geomM();
   maskaPodMozgiem();
   if (!P.length) return;
   const sc = scrollY + H / 2; let i = 0;
@@ -1281,11 +1345,25 @@ function frame() {
     const u = cc[0] + r(), v = cc[1] + r(), net = cc[2];
     P.push({ u, v, net, col: hex(COL[net]), a: r() * 6.28, s: .8 + r() * 1.2, sx: r(), sy: r(), d: r(), cr: Math.sqrt(r()), ln: (r() * 4) | 0, lx: r() });
   }
+  // mózg od środka: osobne punkty, tyle, ile mieści mniejszy rysunek
+  const cellsM: number[][] = []; let im = 0;
+  for (const tk of MAPA_M.split(',')) {
+    const v = +tk[0], n = parseInt(tk.slice(1), 36);
+    if (v > 0) for (let q = im; q < im + n; q++) { cellsM.push([q % 240, (q / 240) | 0, v]); SIATKA_M[q] = v; }
+    im += n;
+  }
+  const rm = rnd(11);
+  for (let k = 0, NP = innerWidth < 760 ? 2000 : 3400; k < NP; k++) {
+    let cc; do { cc = cellsM[(rm() * cellsM.length) | 0]; } while (cc[2] === 1 && rm() > .4);
+    const net = cc[2];
+    P.push({ med: 1, u: cc[0] + rm(), v: cc[1] + rm(), net, col: hex(COL[net]), a: rm() * 6.28, s: .8 + rm() * 1.2, sx: rm(), sy: rm(), d: rm(), cr: Math.sqrt(rm()), ln: (rm() * 4) | 0, lx: rm() });
+  }
+  for (const n of SIECI_L) if (P.some((p) => p.med && p.net === n)) SIECI_M.push(n);
   const cs: Record<number, number[]> = {};
-  for (const p of P) if (p.net > 1) { cs[p.net] = cs[p.net] || [0, 0, 0]; cs[p.net][0] += p.u; cs[p.net][1] += p.v; cs[p.net][2]++; }
+  for (const p of P) if (p.net > 1 && !p.med) { cs[p.net] = cs[p.net] || [0, 0, 0]; cs[p.net][0] += p.u; cs[p.net][1] += p.v; cs[p.net][2]++; }
   for (const k in cs) CENT[k] = [cs[k][0] / cs[k][2], cs[k][1] / cs[k][2]];
   size(); frame();
-  document.fonts.ready.then(() => { przygotujSlowa(); kick(); });
+  document.fonts.ready.then(() => { NH = nagl.offsetHeight; przygotujSlowa(); kick(); });
 }
 let tk = false;
 addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(() => { frame(); tk = false; }); } }, { passive: true });
@@ -1299,7 +1377,7 @@ kuPlotnu.addEventListener('click', puszczaj);
 addEventListener('click', (ev) => {
   if ((ev.target as HTMLElement).closest('a,button')) return;
   const n = naSieci(ev.clientX, ev.clientY); if (!n) return;
-  KL.n = n; KL.t = performance.now(); KL.x = ev.clientX; KL.y = ev.clientY; KL.pt = 0; kick();
+  KL.n = n; KL.med = NA_MED; KL.t = performance.now(); KL.x = ev.clientX; KL.y = ev.clientY; KL.pt = 0; kick();
 });
 addEventListener('pointermove', (ev) => { if (ev.pointerType !== 'mouse') return; document.body.style.cursor = naSieci(ev.clientX, ev.clientY) && !(ev.target as HTMLElement).closest('a,button') ? 'pointer' : ''; }, { passive: true });
 slowaO.forEach((w) => w.addEventListener('click', (ev) => { if (w.classList.contains('u-plotna')) puszczaj(ev); }));
