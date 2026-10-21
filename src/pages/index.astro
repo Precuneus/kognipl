@@ -8,11 +8,11 @@ import { WIKI_ON } from '../karty/data.js';
 const WIKI = WIKI_ON ? '/wiki/' : '';
 const md = (t) => t.replace(/\{\{([^}|]+)(?:\|([^}]+))?\}\}/g, (_, w, k) => '<span class="iskra-cel' + (k ? ' ' + k : '') + '">' + w + '</span>');
 const T = {
-  pytanie: 'Czym jest to, czego {{doświadczasz}}?',
+  pytanie: 'Czym jest {{doświadczanie}}?',
   akt: 'Doświadczasz {{aktywności}} swoich własnych sieci mózgowych.',
-  zmiany: 'Zmiany struktury mózgu (np. degeneracje, lezje, uszkodzenia) i zmiany funkcjonowania struktur między sobą (np. substancje psychoaktywne, uzależnienia, nauka, rozwój) zmieniają Twoje doświadczanie.',
+  zmiany: 'Zmiany struktury mózgu (np. degeneracje, lezje, uszkodzenia) i zmiany funkcjonowania struktur między sobą (np. substancje psychoaktywne, uzależnienia, nauka, rozwój) zmieniają doświadczanie.',
   zombie: ['Jesteś człowiekiem, prawda? Czy {{zombie}}?', 'Założę, że człowiekiem i też doświadczasz, jak ja. Ale nie mogę tego wiedzieć.'],
-  wiem: ['Wiem tylko tyle, ile się nauczyłem od {{środowiska}}, w którym się urodziłem.', 'Doświadczam Modeli Mentalnych, które jednocześnie są moją aktywnością biologiczną.'],
+  wiem: ['Znam tylko moje własne {{doświadczanie}}.', 'O Twoim doświadczaniu mogę tylko wnioskować. To mój model mentalny, będący jednocześnie moją aktywnością biologiczną.'],
   ja: ['Ale... "{{ja}}" to też Model Mentalny', 'Model "ja" zmienia się w czasie,  Zmienia się płynnie (nauka, dryfowanie) i gwałtownie (szok, przeskok). "Ja" to Statek Tezeusza strukturalnie i funkcjonalnie połączonych komórek.'],
   dysc: ['Dyscypliny się {{doświadczają}}.', 'Doświadczanie się siatek pojęciowych poszczególnych dyscyplin przez: [[socjologów]], [[psychologów]], [[biologów]], [[fizyków]].'],
   dosw: ['{{Doświadcza}} się.', 'Skoro podmiot i treść doświadczania się zmieniają to zostaje samo doświadczanie. Doświadcza się. Swiat się doświadcza, ciało się doświadcza, ja się doświadcza.'],
@@ -66,7 +66,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   + `<g class="plomien"><path d="M34.25 76 C37.25 81 38.25 85 36.75 88.5 C35.75 90.5 32.75 90.5 31.75 88.5 C30.25 85 31.25 81 34.25 76 Z"/><ellipse class="rdzen" cx="34.25" cy="87" rx="1.2" ry="2.4"/></g>`
   + `</svg>`;
 ---
-<Base title="kogni.pl" activePage="" description="kogni.pl: kognitywistyka na Uniwersytecie w Białymstoku. Czym jest to, czego doświadczasz?">
+<Base title="kogni.pl" activePage="" description="kogni.pl: kognitywistyka na Uniwersytecie w Białymstoku. Czym jest doświadczanie?">
 <canvas class="roj-plotno" aria-hidden="true"></canvas>
 <canvas class="roj-plotno roj-iskra" aria-hidden="true"></canvas>
 <main class="roj">
@@ -304,6 +304,10 @@ const DOPISY = [
   // tył, przed MT+, w sieci kontroli (L-FPN: tylny płat skroniowy dolny, przed MT+)
   [7, [1], [56, 130, 100, 139, 138, 136, 138, 151, 133, 152, 110, 154, 90, 154, 70, 150, 56, 140]],
   [5, [1], [138, 136, 160, 132, 182, 127, 185, 137, 170, 143, 150, 148, 138, 151]],
+  // sieć grzbietowa uwagi (jego słowo, 2026-10-21; ryc. 4B, 4C): z pola FEF w dół bruzdą przedśrodkową ku tylnemu IFG (IFJ)
+  // i wzdłuż całej przedniej granicy sieci wzrokowej, od MT w dół pod nią
+  [4, [1], [84, 30, 98, 26, 103, 40, 101, 60, 99, 80, 97, 89, 86, 89, 84, 72, 88, 56, 86, 40]],
+  [4, [1], [192, 108, 212, 104, 222, 112, 212, 122, 210, 132, 222, 138, 236, 140, 234, 148, 205, 148, 196, 136, 190, 118]],
 ];
 const wWielokacie = (x: number, y: number, w: number[]) => {
   let jest = false;
