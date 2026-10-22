@@ -174,9 +174,9 @@ body:has(.roj) .rocznik-bar,body:has(.roj) .rocznik-menu{display:none}
 @media (min-width:761px){
   .roj-menu-st{position:static}
   .roj-menu-st > *{position:absolute}
-  .roj-menu-st > :nth-child(1){left:14vw;top:calc(24vh - var(--hh,96px))}
-  .roj-menu-st > :nth-child(2){left:23vw;top:calc(44vh - var(--hh,96px))}
-  .roj-menu-st > :nth-child(3){left:32vw;top:calc(64vh - var(--hh,96px))}
+  .roj-menu-st > :nth-child(1){left:calc(8vw + 140px);top:calc(24vh - var(--hh,96px))}
+  .roj-menu-st > :nth-child(2){left:calc(17vw + 140px);top:calc(44vh - var(--hh,96px))}
+  .roj-menu-st > :nth-child(3){left:calc(26vw + 140px);top:calc(64vh - var(--hh,96px))}
 }
 .roj a.roj-btn,.roj span.roj-btn{display:block;box-sizing:border-box;min-width:6.6em;padding:.5em 1.05em;border:1px solid rgba(240,192,96,.55);background:rgba(0,0,0,.62);font-family:var(--font-display);font-weight:400;font-size:27px;line-height:1.2;letter-spacing:.02em;color:var(--kosc);text-decoration:underline;text-decoration-color:rgba(240,192,96,.75);text-decoration-thickness:1px;text-underline-offset:.26em;transition:border-color .2s ease,background .2s ease,color .2s ease,opacity .9s ease}
 .roj a.roj-btn:hover{border-color:var(--zloto);background:rgba(240,192,96,.1);color:var(--zloto)}
@@ -482,7 +482,7 @@ const BS = { cx: 0, cy: 0, bw: 0 };
 function geomS() {
   if (MOB) return;
   const kr = menuA.length ? menuA[2].getBoundingClientRect().right : W * .45, m = Math.max(24, Math.min(W * .05, 96));
-  BS.bw = Math.min(W * .42, 640, H * .62, W - m - kr - 40); BS.cx = W - m - BS.bw / 2; BS.cy = H * .54;
+  BS.bw = Math.min(W * .42, 640, H * .62, W - m - kr - 40); BS.cx = Math.max(kr + 40 + BS.bw / 2, W - m - BS.bw / 2 - W * .06); BS.cy = H * .47;
 }
 function brainS(p: any) { return MOB ? brain(p) : [BS.cx + (p.u / 240 - .5) * BS.bw, BS.cy + (p.v / 180 - .5) * BS.bw * .75, BS.bw]; }
 // mózg tam, gdzie go teraz widać: na ekranie startowym i przy przejściu z niego inaczej niż w reszcie strony
@@ -633,14 +633,12 @@ function landGeom() {
   for (let k = 0; k < 4; k++) {
     const r = el[k].getBoundingClientRect(), L = LG[k], tx = r.left - (MOB ? 10 : 14), ty = r.top + r.height / 2;
     let P: number[];
-    // trzy kreski wychodzą spod logo, opadają i skręcają w prawo ku przyciskom na schodach; czwarta wychodzi spod logo,
-    // schodzi lewym brzegiem ekranu i pod mózgiem dochodzi z lewej do Story pośrodku; na telefonie wszystkie schodzą lewym brzegiem
-    // i skręcają do swoich przycisków
+    // wszystkie cztery wychodzą z jednego punktu pod kropką ı i rozchodzą się wachlarzem: opadają i skręcają w prawo ku przyciskom
+    // na schodach i ku Story (jego słowo, 2026-10-22: zaczepienie przy logo ma być ładne); na telefonie wszystkie schodzą lewym
+    // brzegiem i skręcają do swoich przycisków
     if (!MOB) {
-      const sx = lr.left + lr.width * (.08 + .08 * k), sy = lr.bottom + 6;
-      P = k < 3
-        ? [sx, sy, sx, sy + (ty - sy) * .75, sx + (tx - sx) * .3, ty, tx, ty]
-        : [lr.left + lr.width * .3, lr.bottom + 6, W * .02, ty * .85, tx - (tx - W * .02) * .5, ty + 8, tx, ty];
+      const sx = knotXY()[0], sy = lr.bottom + 8;
+      P = [sx, sy, sx + (tx - sx) * .06, sy + (ty - sy) * .55, sx + (tx - sx) * .4, ty, tx, ty];
     } else {
       const sx = lr.left + 14 + 5 * k, sy = lr.bottom + 4;
       P = k < 3
