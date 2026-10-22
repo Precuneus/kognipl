@@ -73,7 +73,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
 <canvas class="roj-plotno" aria-hidden="true"></canvas>
 <canvas class="roj-plotno roj-iskra" aria-hidden="true"></canvas>
 <main class="roj">
-  <!-- ekran startowy (jego słowo, 2026-10-22): logo w lewym górnym rogu, przyciski po prawej; rój formuje do nich kreski ze strzałkami -->
+  <!-- ekran startowy (jego słowo, 2026-10-22): logo w lewym górnym rogu, przyciski po prawej; rój formuje z logo kreski ze strzałkami do przycisków; do historii wchodzi się tylko przyciskiem Story -->
   <section class="roj-st start" data-k="start" aria-label="Menu">
     <nav class="roj-menu-st" aria-label="Główne">
       {WIKI ? <a class="roj-btn" href={WIKI}>Wiki</a> : <span class="roj-btn wkrotce">Wiki</span>}
@@ -166,12 +166,19 @@ body:has(.roj) .rocznik-bar,body:has(.roj) .rocznik-menu{display:none}
 .roj-st.pierwszy{min-height:calc(100vh - 120px);align-items:flex-end;padding-top:0;padding-bottom:14vh}
 /* ekran startowy: pusty ekran na wysokość okna; przyciski stoją na nim w pionowej kolumnie, Story niżej i dopiero po czasie */
 .roj-st.start{display:block;min-height:0;height:100vh;padding:0}
-.roj-menu-st{position:absolute;left:clamp(24px,calc(49vw - 240px),37vw);top:calc(20vh - var(--hh,96px));display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.roj-menu-st{position:absolute;right:clamp(24px,5vw,96px);top:calc(13vh - var(--hh,96px));display:flex;flex-direction:column;align-items:stretch;gap:16px}
 .roj a.roj-btn,.roj span.roj-btn{display:block;box-sizing:border-box;min-width:6.6em;padding:.5em 1.05em;border:1px solid rgba(240,192,96,.55);background:rgba(0,0,0,.62);font-family:var(--font-display);font-weight:400;font-size:27px;line-height:1.2;letter-spacing:.02em;color:var(--kosc);text-decoration:underline;text-decoration-color:rgba(240,192,96,.75);text-decoration-thickness:1px;text-underline-offset:.26em;transition:border-color .2s ease,background .2s ease,color .2s ease,opacity .9s ease}
 .roj a.roj-btn:hover{border-color:var(--zloto);background:rgba(240,192,96,.1);color:var(--zloto)}
 .roj span.roj-btn.wkrotce{color:#6e675c;border-color:rgba(240,192,96,.22);text-decoration-color:rgba(240,192,96,.3)}
-.roj a.roj-story{position:absolute;left:clamp(24px,calc(49vw - 240px),37vw);top:calc(84vh - var(--hh,96px));opacity:0;pointer-events:none}
-.roj a.roj-story.on{opacity:1;pointer-events:auto}
+.roj a.roj-story{position:absolute;right:clamp(24px,5vw,96px);top:calc(84vh - var(--hh,96px));opacity:0;pointer-events:none}
+.roj a.roj-story.on{opacity:1;pointer-events:auto;animation:storyPuls 3.4s ease-in-out 1.4s infinite}
+@keyframes storyPuls{0%,100%{box-shadow:0 0 0 0 rgba(240,192,96,0)}50%{box-shadow:0 0 16px 1px rgba(240,192,96,.3)}}
+/* kółko, strzałka albo palec na zamkniętym ekranie startowym przypominają, którędy się wchodzi */
+.roj a.roj-story.nudge{animation:storyNudge .9s ease-out 1}
+@keyframes storyNudge{0%{box-shadow:0 0 0 0 rgba(240,192,96,.7);transform:scale(1)}30%{transform:scale(1.045)}100%{box-shadow:0 0 0 22px rgba(240,192,96,0);transform:scale(1)}}
+html.roj-blok{overscroll-behavior:none}
+#czesc:focus{outline:none}
+@media (prefers-reduced-motion:reduce){.roj a.roj-story.on,.roj a.roj-story.nudge{animation:none}}
 /* Cześć, pytanie i sieci płyną jak jeden tekst */
 .roj-st.ciag{min-height:0;padding-bottom:0}
 .roj-st.ciag[data-k=pytanie]{padding-top:10vh}
@@ -278,9 +285,9 @@ body:has(.roj) .rocznik-bar,body:has(.roj) .rocznik-menu{display:none}
   body:has(.roj) .rocznik-head{padding-left:20px;padding-right:20px}
   .roj-st{padding:52vh 20px 8vh 20px!important;align-items:flex-start;justify-content:flex-start!important}
   .roj-st.start{padding:0!important}
-  .roj-menu-st{left:20px;top:calc(29vh + 33vw + 40px - var(--hh,96px));gap:14px}
+  .roj-menu-st{right:20px;top:calc(29vh + 33vw + 40px - var(--hh,96px));gap:14px}
   .roj a.roj-btn,.roj span.roj-btn{font-size:22px}
-  .roj a.roj-story{left:20px;top:calc(83vh - var(--hh,96px))}
+  .roj a.roj-story{right:20px;top:calc(83vh - var(--hh,96px))}
   /* telefon: nagłówek stoi pod mózgiem z boku i tam zostaje, zamiast przechodzić pod mózgiem na górę ekranu */
   .roj-oba{position:sticky;top:calc(29vh + 33vw + 40px);height:auto;padding:0 20px}
   .roj-st.lewo .roj-t,.roj-st.kogni .roj-t,.roj-st.lepkie .roj-t{max-width:none}
@@ -557,9 +564,9 @@ let KIER = 1, KIER_T = -1e9, OSTATNI_Y = scrollY, WSTECZ = 0;
 const DIP = new Map<HTMLElement, number[]>();
 const G = 2600;
 const knotXY = () => { const r = knotLogo!.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
-// Ekran startowy (jego słowo, 2026-10-22): logo, przyciski Wiki, Kursy, Kontakt. 1 s po otwarciu iskra skacze z logo na kreskę,
-// a rój formuje trzy wygięte kreski ze strzałkami od prawego górnego rogu ku przyciskom; iskra sunie po nich tam i z powrotem.
-// 2 s po starcie tego ruchu rośnie czwarta kreska ku dołowi ekranu i wchodzi przycisk Story. Pierwsze przewinięcie ląduje na Cześć.
+// Ekran startowy (jego słowo, 2026-10-22): logo po lewej, przyciski Wiki, Kursy, Kontakt po prawej. 1 s po otwarciu iskra skacze z logo
+// na kreskę, a rój formuje z logo trzy wygięte kreski ze strzałkami ku przyciskom; iskra zjeżdża po nich i wraca.
+// 2 s po starcie tego ruchu rośnie czwarta kreska ku dołowi ekranu i wchodzi przycisk Story. Do historii wchodzi się tylko jego kliknięciem.
 const menuA = $$('.roj-menu-st > *'), storyB = $('.roj-story');
 const LAND: any = { t0: 0, jump: 1000, T: [1000, 1160, 1320, 3000], D: [1300, 1300, 1300, 1500], ride: 0, k: 0, u: .25, dir: 1, pause: 0, sw: 0, kNext: 0, from: [0, 0], rot: 0, last: 0, on: false };
 const LD: any = { front: [0, 0, 0, 0], w: 0 };
@@ -572,20 +579,26 @@ function railPt(k: number, s: number) {
   RX = T[i * 2] + (T[i * 2 + 2] - T[i * 2]) * q; RY = T[i * 2 + 1] + (T[i * 2 + 3] - T[i * 2 + 1]) * q;
   const dx = T[i * 2 + 2] - T[i * 2], dy = T[i * 2 + 3] - T[i * 2 + 1], m = Math.hypot(dx, dy) || 1; NX = -dy / m; NY = dx / m;
 }
-// kreski kończą się strzałką tuż przy prawej krawędzi swojego przycisku; kształt liczy się z miejsca przycisków w każdej klatce
+// kreski wychodzą z logo, a kończą się strzałką tuż przy lewej krawędzi swojego przycisku; kształt liczy się z miejsca logo i przycisków w każdej klatce
+const logoA = document.querySelector('.rocznik-logo') as HTMLElement | null;
 function landGeom() {
-  const el = [menuA[0], menuA[1], menuA[2], storyB];
+  const el = [menuA[0], menuA[1], menuA[2], storyB], lr = (logoA || knotLogo!).getBoundingClientRect(), dy0 = knotXY()[1];
   for (let k = 0; k < 4; k++) {
-    const r = el[k].getBoundingClientRect(), L = LG[k], tx = r.right + (MOB ? 10 : 14), ty = r.top + r.height / 2;
+    const r = el[k].getBoundingClientRect(), L = LG[k], tx = r.left - (MOB ? 10 : 14), ty = r.top + r.height / 2;
     let P: number[];
-    // trzy kreski wychodzą z prawego górnego rogu, wyginają się nad mózgiem i opadają ku przyciskom; czwarta wychodzi z prawego dołu mózgu
-    const [bx, by] = brain({ u: 224, v: 100 });
-    if (!MOB) P = k < 3
-      ? [W * .965 - 9 * k, H * .09 + 11 * k, W * (.80 - .045 * k) - 9 * k, H * (.02 + .01 * k), tx + W * .075, ty - H * (.26 - .03 * k), tx, ty]
-      : [bx, by, W * .95, H * .8, tx + W * .2, ty + H * .02, tx, ty];
-    else P = k < 3
-      ? [W * .9 - 7 * k, H * .05 + 6 * k, W * .8 - 7 * k, H * .05 + 6 * k + (ty - H * .05) * .42, tx + W * .36, ty - H * .05, tx, ty]
-      : [bx, by, W * .96, H * .55, tx + W * .45, ty - H * .04, tx, ty];
+    // trzy kreski wychodzą z prawego brzegu logo, wyginają się nad mózgiem i opadają ku przyciskom; czwarta wychodzi spod logo,
+    // schodzi lewym brzegiem ekranu i skręca pod mózgiem do Story; na telefonie wszystkie schodzą lewym brzegiem i skręcają do przycisków
+    if (!MOB) {
+      const sx = lr.right + 10, sy = dy0 + (k - 1) * 6;
+      P = k < 3
+        ? [sx, sy, sx + (tx - sx) * .33, sy - 10 - 5 * k, tx - (tx - sx) * .3, ty - H * .09, tx, ty]
+        : [lr.left + lr.width * .3, lr.bottom + 6, W * .03, H * .55, W * .42, Math.min(H - 10, ty + H * .08), tx, ty];
+    } else {
+      const sx = lr.left + 14 + 5 * k, sy = lr.bottom + 4;
+      P = k < 3
+        ? [sx, sy, sx - 6, ty - 90, tx - W * .35, ty - 2, tx, ty]
+        : [sx, sy, sx - 8, ty * .6, tx - W * .4, Math.min(H - 10, ty + 4), tx, ty];
+    }
     const N = 40, xs: number[] = [], ys: number[] = [], cum: number[] = [0];
     for (let i = 0; i <= N; i++) {
       const u = i / N, v = 1 - u, a = v * v * v, b = 3 * v * v * u, c = 3 * v * u * u, d = u * u * u;
@@ -602,7 +615,7 @@ function landGeom() {
     L.dx = ex / m; L.dy = ey / m; L.tx = tx; L.ty = ty;
   }
 }
-// kreski rosną od prawego górnego rogu ku przyciskom; Story wchodzi, gdy czwarta kreska dochodzi do celu
+// kreski rosną z logo ku przyciskom; Story wchodzi, gdy czwarta kreska dochodzi do celu
 function landKrok(now: number) {
   const tl = now - LAND.t0;
   for (let k = 0; k < 4; k++) LD.front[k] = CICHO ? 1 : sm(cl((tl - LAND.T[k]) / LAND.D[k]));
@@ -617,8 +630,8 @@ function landIskra(now: number): any {
   if (!IS.id.startsWith('szyn')) L.ride = 0;
   if (!L.ride) {
     railPt(0, .24);
-    const c: any = { id: 'szyn-skok', tryb: 'stoj', x: RX, y: RY - r, hop: 1e9, I: 0 };
-    if (IS.id === 'szyn-skok' && IS.kontakt && Math.hypot(IS.x - c.x, IS.y - c.y) < 8) { L.ride = 1; L.k = 0; L.u = .25; L.dir = 1; L.pause = 0; L.sw = 0; }
+    const c: any = { id: 'szyn-skok', tryb: RY - r < IS.y - 4 ? 'lot' : 'stoj', x: RX, y: RY - r, hop: 1e9, I: 0 };
+    if (IS.id === 'szyn-skok' && (IS.kontakt || Math.abs(IS.vy) < 40) && Math.hypot(IS.x - c.x, IS.y - c.y) < 8) { L.ride = 1; L.k = 0; L.u = .25; L.dir = 1; L.pause = 0; L.sw = 0; }
     else return c;
   }
   const ok = [0, 1, 2, 3].filter((k) => LD.front[k] > .92);
@@ -637,7 +650,7 @@ function landIskra(now: number): any {
   let x: number, y: number, ang: number;
   if (L.sw > 0) {
     railPt(L.kNext, LO); const u = sm(cl(L.sw));
-    x = L.from[0] + (RX - L.from[0]) * u; y = L.from[1] + (RY - L.from[1]) * u - Math.sin(u * Math.PI) * 30; ang = Math.atan2(RY - L.from[1], RX - L.from[0]);
+    x = L.from[0] + (RX - L.from[0]) * u; y = L.from[1] + (RY - L.from[1]) * u - Math.sin(u * Math.PI) * Math.max(6, Math.min(30, Math.min(L.from[1], RY) - r - 14)); ang = Math.atan2(RY - L.from[1], RX - L.from[0]);
   } else {
     const s = Math.min(LO + (HI - LO) * sm(L.u), Math.max(.08, LD.front[L.k] - .04));
     railPt(L.k, s); x = RX; y = RY; ang = Math.atan2(-NX, NY) + (L.dir < 0 ? Math.PI : 0);
@@ -1529,60 +1542,83 @@ function frame() {
   size(); frame();
   document.fonts.ready.then(() => { NH = nagl.offsetHeight; przygotujSlowa(); kick(); });
 }
-// Pierwsze przewinięcie z ekranu startowego ląduje na Cześć (jego słowo, 2026-10-22): kółko, strzałka, spacja i przeciągnięcie palcem
-// jadą od razu do Cześć; w górę z Cześć wracają na ekran startowy. Gdy przeglądarka już ruszyła z przewijaniem (przeciągnięty
-// pasek, długi gest palca), po chwili ciszy dociąga do bliższego z dwóch miejsc.
+// Do historii wchodzi się tylko kliknięciem Story (jego słowo, 2026-10-22): ekran startowy trzyma przewijanie, kółko, strzałki, spacja
+// i palec go nie ruszają, a przycisk Story, gdy ma się pokazać, przypomina, którędy się wchodzi. Kliknięcie otwiera przewijanie i jedzie
+// do Cześć; w górę z Cześć wraca na ekran startowy i znów go zamyka. Reszta strony jest wtedy nieaktywna (inert), więc Tab nie wchodzi
+// w tekst poza ekranem. Odświeżenie w środku strony i adres z # otwierają stronę bez blokady.
 const LAND_Y = () => SEKCJE.start.offsetHeight;
-let SCR: any = null, SCR_END = -1e9;
+const OSLONA = [...$('.roj').children, ...$$('.site-footer')].filter((e) => e !== SEKCJE.start) as HTMLElement[];
+let BLOK = false, SCR: any = null, SCR_END = -1e9, NUDGE_T = -1e9;
+const T_START = performance.now();
+function zaprzyj(on: boolean) {
+  BLOK = on; document.documentElement.classList.toggle('roj-blok', on);
+  for (const e of OSLONA) (e as any).inert = on;
+}
+if (scrollY < 3 && !location.hash) zaprzyj(true);
+function przypomnij() {
+  const n = performance.now();
+  if (!LAND.on || CICHO || n - NUDGE_T < 1500) return;
+  NUDGE_T = n; storyB.classList.remove('nudge'); void storyB.offsetWidth; storyB.classList.add('nudge');
+}
 function jedzDo(y: number) {
-  if (CICHO) { scrollTo(0, y); frame(); return; }
-  SCR = { from: scrollY, to: y, t0: performance.now(), dur: 900 };
+  const koniec = () => {
+    if (y < 3) zaprzyj(true);
+    else { const c = document.getElementById('czesc'); if (c) { c.setAttribute('tabindex', '-1'); c.focus({ preventScroll: true }); } }
+  };
+  if (CICHO) { scrollTo(0, y); koniec(); frame(); return; }
+  SCR = { from: scrollY, to: y, t0: performance.now(), dur: 1100 };
   const krok = (n: number) => {
     if (!SCR) return;
     const u = cl((n - SCR.t0) / SCR.dur), e = u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
     scrollTo({ top: SCR.from + (SCR.to - SCR.from) * e, behavior: 'instant' as ScrollBehavior });
-    if (u < 1) requestAnimationFrame(krok); else { SCR = null; SCR_END = n; }
+    if (u < 1) requestAnimationFrame(krok); else { SCR = null; SCR_END = n; koniec(); }
   };
   requestAnimationFrame(krok);
 }
 const wolne = () => !SCR && performance.now() > SCR_END + 450;
-const wDol = () => scrollY < LAND_Y() - 3, wGore = () => scrollY > 3 && scrollY <= LAND_Y() + 3;
+const wGore = () => scrollY > 3 && scrollY <= LAND_Y() + 3;
 addEventListener('wheel', (ev) => {
   if (ev.ctrlKey || Math.abs(ev.deltaX) > Math.abs(ev.deltaY)) return;
+  if (BLOK) { ev.preventDefault(); if (ev.deltaY > 4) przypomnij(); return; }
   if (!wolne()) { ev.preventDefault(); return; }
-  if (ev.deltaY > 4 && wDol()) { ev.preventDefault(); jedzDo(LAND_Y()); }
-  else if (ev.deltaY < -4 && wGore()) { ev.preventDefault(); jedzDo(0); }
+  if (ev.deltaY < -4 && wGore()) { ev.preventDefault(); jedzDo(0); }
 }, { passive: false });
 addEventListener('keydown', (ev) => {
   if (ev.ctrlKey || ev.metaKey || ev.altKey || (ev.target as HTMLElement).closest('input,textarea,select,[contenteditable]')) return;
-  const dol = ev.key === 'ArrowDown' || ev.key === 'PageDown' || (ev.key === ' ' && !ev.shiftKey), gora = ev.key === 'ArrowUp' || ev.key === 'PageUp' || (ev.key === ' ' && ev.shiftKey);
+  const dol = ev.key === 'ArrowDown' || ev.key === 'PageDown' || ev.key === 'End' || (ev.key === ' ' && !ev.shiftKey);
+  const gora = ev.key === 'ArrowUp' || ev.key === 'PageUp' || ev.key === 'Home' || (ev.key === ' ' && ev.shiftKey);
   if (!dol && !gora) return;
+  if (BLOK) { ev.preventDefault(); if (dol) przypomnij(); return; }
   if (!wolne()) { ev.preventDefault(); return; }
-  if (dol && wDol()) { ev.preventDefault(); jedzDo(LAND_Y()); }
-  else if (gora && wGore()) { ev.preventDefault(); jedzDo(0); }
+  if (gora && wGore()) { ev.preventDefault(); jedzDo(0); }
 });
 let TY0 = 0, TGEST = false;
 addEventListener('touchstart', (ev) => { TY0 = ev.touches[0].clientY; TGEST = false; }, { passive: true });
 addEventListener('touchmove', (ev) => {
-  if (SCR || TGEST) { if (ev.cancelable) ev.preventDefault(); return; }
+  if (!ev.cancelable || ev.touches.length > 1) return;
   const dy = TY0 - ev.touches[0].clientY;
-  if (Math.abs(dy) < 4 || !ev.cancelable || !wolne()) return;
-  if (dy > 0 && wDol()) { ev.preventDefault(); TGEST = true; jedzDo(LAND_Y()); }
-  else if (dy < 0 && wGore()) { ev.preventDefault(); TGEST = true; jedzDo(0); }
+  if (BLOK) { ev.preventDefault(); if (dy > 6) przypomnij(); return; }
+  if (SCR || TGEST) { ev.preventDefault(); return; }
+  if (Math.abs(dy) < 4 || !wolne()) return;
+  if (dy < 0 && wGore()) { ev.preventDefault(); TGEST = true; jedzDo(0); }
 }, { passive: false });
+// przesunięcie spoza kółka, klawiszy i palca (pasek przewijania, pozycja przywrócona po odświeżeniu): w pierwszej chwili otwiera stronę,
+// potem wraca na ekran startowy; gdy blokady nie ma, ekran w połowie drogi dociąga do bliższego z dwóch miejsc
 let CISZA: any = 0;
 addEventListener('scroll', () => {
   if (SCR) return;
+  if (BLOK) { if (scrollY > 3) { if (performance.now() - T_START < 1500) zaprzyj(false); else scrollTo(0, 0); } return; }
+  if (scrollY < 3) { zaprzyj(true); return; }
   clearTimeout(CISZA);
   CISZA = setTimeout(() => {
     if (SCR || !wolne() || scrollY < 3 || scrollY > LAND_Y() - 3) return;
     jedzDo(KIER > 0 || scrollY > LAND_Y() * .5 ? LAND_Y() : 0);
   }, 140);
 }, { passive: true });
-document.querySelector('.roj-story')!.addEventListener('click', (ev) => {
+storyB.addEventListener('click', (ev) => {
   const e = ev as MouseEvent;
   if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-  e.preventDefault(); jedzDo(LAND_Y());
+  e.preventDefault(); zaprzyj(false); jedzDo(LAND_Y());
 });
 let tk = false;
 addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(() => { frame(); tk = false; }); } }, { passive: true });
