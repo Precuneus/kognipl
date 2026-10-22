@@ -38,7 +38,8 @@ const blocks = (body) => body.trim().split(/\n\s*\n/).map((b) => b.trim()).filte
 const order = (s) => [CL.findIndex((c) => c.id === s.cls), OSFULL.findIndex((o) => o.nazwa === s.o)];
 
 // Splot: zajęcia spotykają osnowę. Zajęcia z listą `karty` (jeden zbiór kart, jego decyzja 2026-10-20)
-// wiążą węzeł na każdej osnowie, do której należą rodziny ich kart; okno węzła wylicza te karty.
+// wiążą węzeł na każdej osnowie, do której należą rodziny ich kart. Nagłówek i opis węzła stoją w `splot`
+// zajęć w rocznik.json; okno węzła wylicza karty zakorzenione na tej osnowie, a gdy żadna nie jest, karty jej rodzin.
 // Zajęcia bez listy czytają jeszcze stare karty Rocznika z ./2026/karty.
 const OLD = Object.entries(notes).map(([file, mod]) => {
   const f = mod.frontmatter;
@@ -74,15 +75,17 @@ R['zajęcia'].forEach((z) => {
     if (!k) throw new Error('Zajęcia ' + z.id + ': brak karty ' + name);
     k.osnowy.forEach((o) => {
       if (!by[o]) {
-        by[o] = { id: z.id + '-' + slugify(o), stem: '', cls: z.id, o, isOld: false, isNew: true, cards: [], r2: [],
-          url: cls.url + '#os-' + OSFULL.findIndex((x) => x.nazwa === o), h: o, d: '', m: '', i: '', l: [], net: [], nets: [], nw: '', fig: [], body: [], dep: [] };
+        const t = (z.splot || {})[o];
+        by[o] = { id: z.id + '-' + slugify(o), stem: '', cls: z.id, o, isOld: false, isNew: true, cards: [], homed: [], family: [], r2: [],
+          url: cls.url + '#os-' + OSFULL.findIndex((x) => x.nazwa === o), txt: !!t, h: t ? t.h : o, d: t ? t.d : '', m: '', i: '', l: [], net: [], nets: [], nw: '', fig: [], body: [], dep: [] };
         NEW.push(by[o]);
       }
       const sp = by[o];
-      sp.cards.push(chip(k, cls));
+      (k.o === o ? sp.homed : sp.family).push(chip(k, cls));
       k.r2.forEach((r) => { if (OSFULL.find((x) => x.nazwa === o).rodziny.indexOf(r) >= 0 && sp.r2.indexOf(r) < 0) sp.r2.push(r); });
     });
   });
+  Object.values(by).forEach((sp) => { sp.cards = sp.homed.length ? sp.homed : sp.family; delete sp.homed; delete sp.family; });
 });
 
 export const SP = OLD.concat(NEW).sort((a, b) => { const x = order(a), y = order(b); return x[0] - y[0] || x[1] - y[1]; });

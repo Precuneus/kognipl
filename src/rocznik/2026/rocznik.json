@@ -258,7 +258,65 @@
     "Pacjent H.M.",
     "Phineas Gage",
     "Język w sieciach mózgu"
-   ]
+   ],
+   "splot": {
+    "Sieci mózgu i predykcja": {
+     "h": "Sieci wielkoskalowe i ich role",
+     "d": "Przeszliśmy od łączności między obszarami do sieci wielkoskalowych, zespołów obszarów aktywnych razem. Każdą sieć przedstawiliśmy jej rolą w jednym zdaniu, od sieci wzrokowej („Widzę.”) do sieci domyślnej („Ja, przeszłość i przyszłość, inni ludzie.”)."
+    },
+    "Pomiar mózgu": {
+     "h": "Łączność strukturalna i funkcjonalna",
+     "d": "Rozróżniliśmy łączność strukturalną i łączność funkcjonalną, z której wyodrębnia się sieci wielkoskalowe. Zespoły obszarów aktywnych razem nazwaliśmy sieciami wielkoskalowymi."
+    },
+    "Neuron i synapsa": {
+     "h": "Neuron i komórki glejowe",
+     "d": "Układ nerwowy zaczęliśmy od neuronu, jego dendrytów, aksonu i synaps, oraz od komórek glejowych. Potem przeszliśmy do płatów kory i łączności między obszarami."
+    },
+    "Percepcja i uwaga": {
+     "h": "Przypadki uszkodzeń wzroku i uwagi",
+     "d": "Przy sieci wzrokowej omówiliśmy ślepowidzenie, pacjentkę D.F. i prozopagnozję, przy sieci grzbietowej uwagi zespół Bálinta, przy sieci brzusznej uwagi zaniedbywanie stronne. Zajęcia zamknęły szlaki wzrokowe: brzuszny, grzbietowy i boczny."
+    },
+    "Świadomość": {
+     "h": "Ślepowidzenie i prozopagnozja",
+     "d": "Ślepowidzenie i prozopagnozja posłużyły za przykłady rozpadu widzenia na szlaki. Rozmawialiśmy o tym, że uszkodzenie odsłania, co sieć wnosi do doświadczania widzenia."
+    },
+    "Umysł społeczny": {
+     "h": "Mimika, spojrzenie i gest",
+     "d": "Zajęcia zamknął boczny szlak wzrokowy niosący mimikę, spojrzenie i gest drugiej osoby. Sieć domyślna dostała rolę „Ja, przeszłość i przyszłość, inni ludzie.”"
+    },
+    "Ciało i ruch": {
+     "h": "Ruch prowadzony wzrokiem",
+     "d": "Sieć czuciowo-ruchowa dostała rolę „Czuję ciało i się ruszam.” Przy niej omówiliśmy Iana Watermana, który nowe ruchy prowadzi wzrokiem."
+    },
+    "Pamięć i przestrzeń": {
+     "h": "Pamięć pacjenta H.M.",
+     "d": "Obok przypadków przypisanych sieciom pacjent H.M. pokazał pamięć. Rozmawialiśmy o tym, że nowe zdarzenia trzyma w pamięci tylko przez chwilę."
+    },
+    "Emocje": {
+     "h": "Sieć istotności i zagrożenie",
+     "d": "Sieć istotności dostała rolę „Coś zagraża schematowi ciała.” Przy jej uszkodzeniu rozmawialiśmy o otępieniu czołowo-skroniowym: o obojętności, słabnącej empatii i odhamowaniu."
+    },
+    "Myślenie": {
+     "h": "Zmieniająca się reguła",
+     "d": "Sieć kontroli dostała rolę „Trzymam zadanie.” Jej uszkodzenie omówiliśmy na teście sortowania kart, w którym reguła zmienia się bez zapowiedzi."
+    },
+    "Nawyk i automatyzacja": {
+     "h": "Wprawa w lustrze",
+     "d": "Przy pacjencie H.M. rozmawialiśmy o rysowaniu w lustrze, którego uczy się z dnia na dzień. Rozmawialiśmy też o pamięci jako o systemach: jeden zapisuje zdarzenia, inny uczy wprawy."
+    },
+    "Decyzja i działanie": {
+     "h": "Decyzje Phineasa Gage'a",
+     "d": "Phineas Gage pokazał decyzje. Rozmawialiśmy o uszkodzeniu jego kory przedczołowej prętem i o tym, jak zmienia się po takim uszkodzeniu zachowanie i sposób wybierania."
+    },
+    "Osobowość i zdrowie psychiczne": {
+     "h": "Gage i osobowość",
+     "d": "Po uszkodzeniu kory przedczołowej zachowanie Phineasa Gage'a się zmieniło."
+    },
+    "Język": {
+     "h": "Obszary mowy",
+     "d": "Na mapie płatów obszar Broki leży w płacie czołowym, a obszar Wernickego w skroniowym. Od nich zaczęliśmy mapę języka w mózgu."
+    }
+   }
   },
   {
    "id": "13-10-intro",
@@ -295,7 +353,49 @@
     "Konstruowanie innych umysłów",
     "Dylemat dwóch przycisków",
     "Problem gapowicza"
-   ]
+   ],
+   "splot": {
+    "Decyzja i działanie": {
+     "h": "Sprawczość jako wybór gier",
+     "d": "Sprawczość to wybór gier, których się uczymy i w które gramy: pokoje, które odwiedzamy, oraz drzwi, przez które przechodzimy. Rozmawialiśmy o decyzjach (co, kiedy i jak zrobić) oraz o eksperymencie Libeta, w którym aktywność mózgu narasta, zanim osoba badana wskaże chwilę decyzji."
+    },
+    "Pomiar mózgu": {
+     "h": "Kontrolery EEG streamerów",
+     "d": "Rozmawialiśmy o kontrolerach EEG (elektroencefalografii), którymi grają streamerzy. EEG zapisuje napięcie elektrodami na skórze głowy, a tak samo zapisano potencjał gotowości w eksperymencie Libeta."
+    },
+    "Ciało i ruch": {
+     "h": "Gry sportowe",
+     "d": "Gry sportowe sprawdzają wykonanie, czyli ruch we właściwym czasie i z dokładnością. Rozmawialiśmy przy nich o propozycji, że mózg istnieje dla ruchu."
+    },
+    "Język": {
+     "h": "Gry słowne i enty",
+     "d": "Gry słowne zaprowadziły do entów z Władcy Pierścieni, których język może nieść głęboką intersubiektywność. Przykładem były słowa na śnieg i pytanie, w jakich wspólnotach słownictwo się rozrasta."
+    },
+    "Osobowość i zdrowie psychiczne": {
+     "h": "Cechy graczy",
+     "d": "W grze wychodzą na jaw cechy graczy. Osobowość to stałe skłonności, którymi ludzie różnią się w grach i poza nimi; rozmawialiśmy też o Wielkiej Piątce."
+    },
+    "Myślenie": {
+     "h": "Odkrywanie mechaniki",
+     "d": "Gry planszowe wprowadziły reguły, ich negocjowanie i odkrywanie mechaniki. Odkrywanie mechaniki to wyprowadzanie reguły gry z kolejnych ruchów, zanim ktokolwiek ją poda."
+    },
+    "Nawyk i automatyzacja": {
+     "h": "Reguły nagrody",
+     "d": "Rozmawialiśmy o obchodzeniu reguł nagrody przez agentów OpenAI."
+    },
+    "Świadomość": {
+     "h": "Westworld",
+     "d": "Pierwszy sezon Westworld postawił pytania o świadomość, tożsamość, sprawczość i konsekwencje. Pytanie, po czym rozpoznać świadomość w innym systemie, zostało otwarte."
+    },
+    "Sztuczni agenci": {
+     "h": "Rój agentów",
+     "d": "Doszliśmy do niedawnego roju agentów OpenAI, obok wielu AI z Altered Carbon i ludzi jako źródła obliczeń w Matrixie. Pytanie dotyczyło tego, jak wielu agentów się koordynuje."
+    },
+    "Umysł społeczny": {
+     "h": "Przyciski i poker",
+     "d": "W dylemacie dwóch przycisków z mediów społecznościowych czerwony daje pewne przeżycie, a zielony tylko wtedy, gdy naciśnie go ponad połowa. Przy pokerze z Casino Royale gra toczy się o to, kto lepiej czyta drugą osobę."
+    }
+   }
   },
   {
    "id": "14-10-neurokogni",
@@ -324,7 +424,53 @@
     "Kodowanie predykcyjne",
     "Rozszczepiony mózg",
     "Doświadczenie poza ciałem"
-   ]
+   ],
+   "splot": {
+    "Percepcja i uwaga": {
+     "h": "Droga wzrokowa",
+     "d": "Zaczęliśmy od drogi wzrokowej, od siatkówki przez ciało kolankowate boczne do pierwszorzędowej kory wzrokowej (V1). Pręciki i czopki ułożyliśmy według położenia w siatkówce, a szlaki wzrokowe przypomnieliśmy z pierwszych zajęć."
+    },
+    "Umysł społeczny": {
+     "h": "Szlak boczny",
+     "d": "Przypomnieliśmy szlaki wzrokowe z pierwszych zajęć, w tym boczny, niosący mimikę, spojrzenie i gest drugiej osoby."
+    },
+    "Sieci mózgu i predykcja": {
+     "h": "Predykcje i zaskoczenie",
+     "d": "Rozmawialiśmy o predykcjach w mózgu i między sieciami oraz o ich aktualizacji przez zaskoczenie. Przykładami były zespół Charlesa Bonneta u Olivera Sacksa, halucynacja kontrolowana Anila Setha i osoba, która po przywróceniu wzroku nie odróżniała wzrokiem owiec."
+    },
+    "Pomiar mózgu": {
+     "h": "Sieci z pierwszych zajęć",
+     "d": "Przypomnieliśmy sieci wielkoskalowe z pierwszych zajęć. Przyrządy do pomiaru mózgu przeszły na kolejne zajęcia."
+    },
+    "Energia i jej przemiany": {
+     "h": "Od promieni gamma do fal radiowych",
+     "d": "Widmo elektromagnetyczne ułożyliśmy od promieni gamma do fal radiowych, razem z czułością czopków. To energia fizyczna, którą receptory przetwarzają na bioinformację."
+    },
+    "Neuron i synapsa": {
+     "h": "Energia na receptorze",
+     "d": "Bioinformację zdefiniowaliśmy jako sposób, w jaki receptory biologiczne organizmu przetwarzają energię fizyczną. Receptor, gradient jonów i synapsa przeszły na kolejne zajęcia."
+    },
+    "Ciało i ruch": {
+     "h": "Propriocepcja i interocepcja",
+     "d": "Bioinformację podzieliliśmy na eksterocepcję, propriocepcję i interocepcję. Propriocepcja to bioinformacja o tym, gdzie jest ciało i jak się rusza, a interocepcja o tym, jak się mamy w środku."
+    },
+    "Emocje": {
+     "h": "Jak się mamy w środku",
+     "d": "Doszliśmy do interocepcji, bioinformacji o stanie wnętrza ciała. Chodzi o ciśnienie krwi, oddech i stan narządów."
+    },
+    "Ewolucja": {
+     "h": "Świat kleszcza i rekina",
+     "d": "Eksterocepcję podzieliliśmy według wielkości fizycznej odbieranej przez receptor. Świat kleszcza i rekina posłużył za przykład, że każdy gatunek odbiera własny wycinek energii."
+    },
+    "Świadomość": {
+     "h": "Rozszczepienie i doznania poza ciałem",
+     "d": "Rozszczepiony mózg to mózg po przecięciu spoidła wielkiego, łączącego lewą i prawą półkulę. Omówiliśmy też stymulację skrzyżowania skroniowo-ciemieniowego i wywołane nią doznania."
+    },
+    "Język": {
+     "h": "Półkule i pole widzenia",
+     "d": "Przy rozszczepionym mózgu rozmawialiśmy o tym, że każda półkula odbiera obraz z przeciwległej połowy pola widzenia."
+    }
+   }
   },
   {
    "id": "20-10-intro",
@@ -347,7 +493,37 @@
     "Sieć czuciowo-ruchowa",
     "Sieć grzbietowa uwagi",
     "Agenci AI"
-   ]
+   ],
+   "splot": {
+    "Ciało i ruch": {
+     "h": "Warstwa mikro",
+     "d": "Mikro to wykonanie: celowanie, trafianie w czas i dokładność ruchu. Mikro porównaliśmy ze stadium sensoryczno-motorycznym Piageta; przypisaliśmy mu sieć czuciowo-ruchową, sieć grzbietową uwagi i sieć wzrokową."
+    },
+    "Nawyk i automatyzacja": {
+     "h": "Umiejętności w parach",
+     "d": "Pary dobraliśmy losowo, żeby ze sobą rozmawiały nowe osoby. Każda para szukała swoich realnych umiejętności i sprawdzała, czy są świadectwem mikro, mezo czy makro."
+    },
+    "Umysł społeczny": {
+     "h": "Kłamstwo i manipulacja",
+     "d": "Warstwę mezo porównaliśmy z teorią umysłu: nasze Modele Mentalne drugiej osoby aktualizują się jej ruchami i słowami. Kłamstwo i manipulacja wybierają kierunek tej aktualizacji."
+    },
+    "Sieci mózgu i predykcja": {
+     "h": "Warstwa mezo",
+     "d": "Mezo to reagowanie na zmianę: bioinformacja z tła, o ludziach, losowości i mechanice gry, aktualizuje Modele Mentalne, jak eksplorowanie mapy. Ujęliśmy to w ramie kodowania predykcyjnego i zastanawialiśmy się, z jaką częstotliwością Modele Mentalne się aktualizują."
+    },
+    "Myślenie": {
+     "h": "Warstwa makro",
+     "d": "Makro to strategia prowadzona nabytymi Modelami Mentalnymi: gdy mechanika jest znana, droga jest jasna, a trener ją pokazuje. Jego Modele Mentalne kształtują Modele Mentalne uczącej się osoby."
+    },
+    "Percepcja i uwaga": {
+     "h": "Oko i ręka w mikro",
+     "d": "Do warstwy mikro przypisaliśmy sieć grzbietową uwagi z rolą „Koordynuję oko i rękę.” Obok niej mikro obejmuje sieć czuciowo-ruchową i sieć wzrokową."
+    },
+    "Sztuczni agenci": {
+     "h": "AI i zmiany ekonomiczne",
+     "d": "Zajęcia zaczęły się od możliwości AI i od zmian ekonomicznych, które przynosi."
+    }
+   }
   },
   {
    "id": "21-10-neurokogni",
