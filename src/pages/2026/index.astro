@@ -1,22 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Board from '../../components/Board.astro';
-import { latest, cardsOf, viewData } from '../../rocznik/data.js';
-const { OS, BAND } = viewData('plotno');
-const groupOf = {};
-BAND.reduce((start, n, g) => { for (let k = 0; k < n; k++) groupOf[OS[start + k]] = g; return start + n; }, 0);
-const INK = ['#b3c39b', '#8fc4bf', '#9fb7da', '#b4aada'];
-const COL = { i: '#f0c060', n: '#edbbc5' };
-const KURS = { Intro: 'Wstęp do kognitywistyki I', Neurokogni: 'Neurokognitywistyka' };
-import { card, segs } from '../../karty/data.js';
-import R from '../../rocznik/2026/rocznik.json';
-const zl = R['zajęcia'].find((z) => z.id === latest.id) || {};
-// Ostatnie zajęcia: przy nowym wątku jego karty z pierwszym zdaniem, przy starym jego stare karty.
-const first = (k) => { const t = (k.body.find((b) => b.t) || { t: '' }).t; const m = t.match(/^.*?[.!?](?=\s|$)/); return segs(m ? m[0] : t).map((x) => x.t).join(''); };
-const fresh = zl.karty
-  ? zl.karty.map((n) => card(n)).filter(Boolean).map((k) => ({ o: k.o, h: k.h, d: first(k), url: k.url, cls: latest.id }))
-  : cardsOf(latest.id);
-const clsOf = (s) => s.cls.endsWith('intro') ? 'i' : 'n';
+// Rocznik 2026: samo Płótno; sekcja Ostatnie zajęcia zniknęła (jego słowo, 2026-10-22), opis zajęć stoi w dymku przy ich etykiecie.
 ---
 <Base title="Rocznik 2026 · kogni.pl" activePage="plotno" rocznik="2026" description="Rocznik 2026: zajęcia z kognitywistyki na Uniwersytecie w Białymstoku w roku 2026/27, wątek po wątku, karta po karcie.">
 <h1 class="sr-only">Rocznik 2026</h1>
@@ -24,25 +9,5 @@ const clsOf = (s) => s.cls.endsWith('intro') ? 'i' : 'n';
 <section aria-labelledby="plotno">
   <h2 class="sr-only" id="plotno">Płótno: cały rok, zajęcia na osnowach</h2>
   <div class="start-plotno"><Board view="plotno" /></div>
-</section>
-
-<section class="start-latest" aria-labelledby="ostatnie">
-  <div class="start-latest-head">
-    <div>
-      <p class="start-latest-kicker" style={'color:' + COL[latest.c]} id="ostatnie">Ostatnie zajęcia · {KURS[latest.course] || latest.course} · {latest.date}</p>
-      <h2 class="start-latest-title">{latest.title}</h2>
-    </div>
-    <a class="start-latest-all" href={latest.url}>Cały wątek →</a>
-  </div>
-  <div class="start-cards">
-    {fresh.map((s) => (
-      <a class="start-card" href={s.url} style={'border-color:' + COL[clsOf(s)] + '55'}>
-        <span class="start-card-os" style={'color:' + INK[groupOf[s.o]]}>{s.o}</span>
-        <h3>{s.h}</h3>
-        <p>{s.d}</p>
-        <span class="start-card-enter" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="4" r="2" fill="currentColor" stroke="none"></circle><path d="M6 7 V12 Q6 16 10 16 H18"></path><path d="M14.5 12.5 L18 16 L14.5 19.5"></path></svg></span>
-      </a>
-    ))}
-  </div>
 </section>
 </Base>
