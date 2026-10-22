@@ -73,7 +73,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
 <canvas class="roj-plotno" aria-hidden="true"></canvas>
 <canvas class="roj-plotno roj-iskra" aria-hidden="true"></canvas>
 <main class="roj">
-  <!-- ekran startowy (jego słowo, 2026-10-22): logo w lewym górnym rogu, przyciski po prawej; rój formuje z logo kreski ze strzałkami do przycisków; do historii wchodzi się tylko przyciskiem Story -->
+  <!-- ekran startowy (jego słowo, 2026-10-22): logo w lewym górnym rogu, przyciski po prawej; rój formuje z logo kreski ze strzałkami do przycisków; Story stoi pośrodku, a do historii wchodzi się tylko nim -->
   <section class="roj-st start" data-k="start" aria-label="Menu">
     <nav class="roj-menu-st" aria-label="Główne">
       {WIKI ? <a class="roj-btn" href={WIKI}>Wiki</a> : <span class="roj-btn wkrotce">Wiki</span>}
@@ -170,7 +170,7 @@ body:has(.roj) .rocznik-bar,body:has(.roj) .rocznik-menu{display:none}
 .roj a.roj-btn,.roj span.roj-btn{display:block;box-sizing:border-box;min-width:6.6em;padding:.5em 1.05em;border:1px solid rgba(240,192,96,.55);background:rgba(0,0,0,.62);font-family:var(--font-display);font-weight:400;font-size:27px;line-height:1.2;letter-spacing:.02em;color:var(--kosc);text-decoration:underline;text-decoration-color:rgba(240,192,96,.75);text-decoration-thickness:1px;text-underline-offset:.26em;transition:border-color .2s ease,background .2s ease,color .2s ease,opacity .9s ease}
 .roj a.roj-btn:hover{border-color:var(--zloto);background:rgba(240,192,96,.1);color:var(--zloto)}
 .roj span.roj-btn.wkrotce{color:#6e675c;border-color:rgba(240,192,96,.22);text-decoration-color:rgba(240,192,96,.3)}
-.roj a.roj-story{position:absolute;right:clamp(24px,5vw,96px);top:calc(84vh - var(--hh,96px));opacity:0;pointer-events:none}
+.roj a.roj-story{position:absolute;left:0;right:0;margin:0 auto;width:fit-content;text-align:center;top:calc(87vh - var(--hh,96px));opacity:0;pointer-events:none}
 .roj a.roj-story.on{opacity:1;pointer-events:auto;animation:storyPuls 3.4s ease-in-out 1.4s infinite}
 @keyframes storyPuls{0%,100%{box-shadow:0 0 0 0 rgba(240,192,96,0)}50%{box-shadow:0 0 16px 1px rgba(240,192,96,.3)}}
 /* kółko, strzałka albo palec na zamkniętym ekranie startowym przypominają, którędy się wchodzi */
@@ -287,7 +287,7 @@ html.roj-blok{overscroll-behavior:none}
   .roj-st.start{padding:0!important}
   .roj-menu-st{right:20px;top:calc(29vh + 33vw + 40px - var(--hh,96px));gap:14px}
   .roj a.roj-btn,.roj span.roj-btn{font-size:22px}
-  .roj a.roj-story{right:20px;top:calc(83vh - var(--hh,96px))}
+  .roj a.roj-story{top:calc(86vh - var(--hh,96px))}
   /* telefon: nagłówek stoi pod mózgiem z boku i tam zostaje, zamiast przechodzić pod mózgiem na górę ekranu */
   .roj-oba{position:sticky;top:calc(29vh + 33vw + 40px);height:auto;padding:0 20px}
   .roj-st.lewo .roj-t,.roj-st.kogni .roj-t,.roj-st.lepkie .roj-t{max-width:none}
@@ -433,6 +433,7 @@ function size() {
   // wysokość nagłówka strony: przyciski ekranu startowego liczą od niej swoje miejsce na ekranie
   document.documentElement.style.setProperty('--hh', $('.roj').offsetTop + 'px');
   if (w !== W || h !== H || cv.width !== Math.round(w * D)) { W = w; H = h; cv.width = cv2.width = Math.round(W * D); cv.height = cv2.height = Math.round(H * D); }
+  geomS();
   // c0..c1: odcinek, na którym ekran trwa w swoim stanie; przejścia między c1 jednego a c0 następnego.
   SEC = $$('.roj-st').map((s) => {
     const lep = s.classList.contains('poziom') || s.classList.contains('lepkie') || s.classList.contains('oba'), hh = lep ? H : s.offsetHeight;
@@ -444,6 +445,20 @@ function brain(p: any, sc = 1, r = 0) {
   // gdy sieci się rozchodzą (r), mózg maleje, a na szerokim ekranie przesuwa się w lewo: rozsunięte sieci mieszczą się na ekranie
   const bw = (MOB ? W * .88 : Math.min(W * .46, 760)) * sc * (1 - (MOB ? .22 : .16) * r), cx = MOB ? W / 2 : W * (.72 - .06 * r), cy = MOB ? H * .29 + MOB_DY : H * .52;
   return [cx + (p.u / 240 - .5) * bw, cy + (p.v / 180 - .5) * bw * .75, bw];
+}
+// mózg na ekranie startowym stoi pośrodku, pod kreskami i nad Story, z dala od przycisków po prawej; przy przejściu do Cześć odpływa
+// na swoje miejsce. Telefon zostaje przy mózgu z boku.
+const BS = { cx: 0, cy: 0, bw: 0 };
+function geomS() {
+  if (MOB) return;
+  const bl = menuA.length ? menuA[0].getBoundingClientRect().left : W * .75;
+  BS.bw = Math.min(W * .42, 640, H * .62); BS.cx = Math.min(W * .5, bl - 48 - BS.bw / 2); BS.cy = H * .54;
+}
+function brainS(p: any) { return MOB ? brain(p) : [BS.cx + (p.u / 240 - .5) * BS.bw, BS.cy + (p.v / 180 - .5) * BS.bw * .75, BS.bw]; }
+// mózg tam, gdzie go teraz widać: na ekranie startowym i przy przejściu z niego inaczej niż w reszcie strony
+function brainB(p: any, sc = 1, r = 0) {
+  const a = brain(p, sc, r); if (LD.w < .005 || MOB) return a;
+  const b = brainS(p), w = LD.w; return [a[0] + (b[0] - a[0]) * w, a[1] + (b[1] - a[1]) * w, a[2] + (b[2] - a[2]) * w];
 }
 // mózg od środka: na szerokim ekranie po lewej pod nagłówkiem, na telefonie pod mózgiem z boku;
 // na telefonie mózg z boku zsuwa się, gdy trzeba, żeby zmieścić nad sobą nagłówek
@@ -474,7 +489,7 @@ function wyspa(n: number, bx: number, by: number, bw: number, wy: number) {
 function st(k: string, p: any, lp: number) {
   const net = p.net > 1; let x = 0, y = 0, a = 0, c = p.col, s = 1;
   // punkty kreski ekranu startowego są niewidoczne, dopóki nie polecą na kreskę (to robi pętla klatek)
-  if (p.lonly) { [x, y] = brain(p); return [x, y, 0, c, 1]; }
+  if (p.lonly) { [x, y] = k === 'start' ? brainS(p) : brain(p); return [x, y, 0, c, 1]; }
   // mózg od środka widać tylko na ekranie z nagłówkiem; gdzie indziej jego punkty gasną i odlatują z rojem
   if (p.med) {
     if (k !== 'czesc' && k !== 'pytanie' && k !== 'naglowek') return [p.sx * W, p.sy * H, 0, c, 1];
@@ -484,7 +499,8 @@ function st(k: string, p: any, lp: number) {
   }
   // mózg przygaszony i taki zostaje: sieci świecą tylko w snopie iskry albo po kliknięciu (jego słowo, 2026-10-20);
   // jaśniej niż przedtem, żeby go było widać (jego słowo, 2026-10-22); za nagłówkiem rój się rozprasza
-  if (k === 'start' || k === 'czesc') { [x, y] = brain(p); a = net ? BR_S : BR_T; }
+  if (k === 'start') { [x, y] = brainS(p); a = net ? BR_S : BR_T; }
+  else if (k === 'czesc') { [x, y] = brain(p); a = net ? BR_S : BR_T; }
   else if (k === 'pytanie' || k === 'naglowek') { [x, y] = brain(p); a = net ? BR_S : BR_T; }
   else if (k === 'sieci') {
     const [bx, by, bw] = brain(p, 1, ROZ[SIECI_L[0]] || 0);
@@ -564,13 +580,14 @@ let KIER = 1, KIER_T = -1e9, OSTATNI_Y = scrollY, WSTECZ = 0;
 const DIP = new Map<HTMLElement, number[]>();
 const G = 2600;
 const knotXY = () => { const r = knotLogo!.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
-// Ekran startowy (jego słowo, 2026-10-22): logo po lewej, przyciski Wiki, Kursy, Kontakt po prawej. 1 s po otwarciu iskra skacze z logo
-// na kreskę, a rój formuje z logo trzy wygięte kreski ze strzałkami ku przyciskom; iskra zjeżdża po nich i wraca.
-// 2 s po starcie tego ruchu rośnie czwarta kreska ku dołowi ekranu i wchodzi przycisk Story. Do historii wchodzi się tylko jego kliknięciem.
+// Ekran startowy (jego słowo, 2026-10-22): logo po lewej, przyciski Wiki, Kursy, Kontakt po prawej, mózg pośrodku, Story pod nim.
+// Rój formuje z logo trzy wygięte kreski ze strzałkami ku przyciskom, potem czwartą ku Story. Iskra stoi w logo; gdy ktoś próbuje
+// przewinąć ekran, schodzi czwartą kreską do Story, czeka tam i wraca. Do historii wchodzi się tylko kliknięciem Story.
 const menuA = $$('.roj-menu-st > *'), storyB = $('.roj-story');
-const LAND: any = { t0: 0, jump: 1000, T: [1000, 1160, 1320, 3000], D: [1300, 1300, 1300, 1500], ride: 0, k: 0, u: .25, dir: 1, pause: 0, sw: 0, kNext: 0, from: [0, 0], rot: 0, last: 0, on: false };
+// g: 0 Iskra w logo, 1 skacze na czwartą kreskę, 2 zjeżdża do Story, 3 czeka przy Story, 4 wraca
+const LAND: any = { t0: 0, T: [1000, 1160, 1320, 3000], D: [1300, 1300, 1300, 1500], g: 0, u: 0, dwell: 0, last: 0, on: false };
 const LD: any = { front: [0, 0, 0, 0], w: 0 };
-const TAB = 96, LO = .1, HI = .93;
+const TAB = 96, GS0 = .03, GS1 = .97;
 const LG = [0, 1, 2, 3].map(() => ({ tab: new Float32Array(TAB * 2), len: 0, dx: -1, dy: 0, tx: 0, ty: 0 }));
 let RX = 0, RY = 0, NX = 0, NY = 0;
 // punkt kreski k w odległości s (0 do 1) wzdłuż jej długości, i jej normalna
@@ -587,17 +604,18 @@ function landGeom() {
     const r = el[k].getBoundingClientRect(), L = LG[k], tx = r.left - (MOB ? 10 : 14), ty = r.top + r.height / 2;
     let P: number[];
     // trzy kreski wychodzą z prawego brzegu logo, wyginają się nad mózgiem i opadają ku przyciskom; czwarta wychodzi spod logo,
-    // schodzi lewym brzegiem ekranu i skręca pod mózgiem do Story; na telefonie wszystkie schodzą lewym brzegiem i skręcają do przycisków
+    // schodzi lewym brzegiem ekranu i pod mózgiem dochodzi z lewej do Story pośrodku; na telefonie wszystkie schodzą lewym brzegiem
+    // i skręcają do swoich przycisków
     if (!MOB) {
       const sx = lr.right + 10, sy = dy0 + (k - 1) * 6;
       P = k < 3
         ? [sx, sy, sx + (tx - sx) * .33, sy - 10 - 5 * k, tx - (tx - sx) * .3, ty - H * .09, tx, ty]
-        : [lr.left + lr.width * .3, lr.bottom + 6, W * .03, H * .55, W * .42, Math.min(H - 10, ty + H * .08), tx, ty];
+        : [lr.left + lr.width * .3, lr.bottom + 6, W * .02, ty * .85, tx - (tx - W * .02) * .5, ty + 8, tx, ty];
     } else {
       const sx = lr.left + 14 + 5 * k, sy = lr.bottom + 4;
       P = k < 3
         ? [sx, sy, sx - 6, ty - 90, tx - W * .35, ty - 2, tx, ty]
-        : [sx, sy, sx - 8, ty * .6, tx - W * .4, Math.min(H - 10, ty + 4), tx, ty];
+        : [sx, sy, sx - 8, ty * .8, tx * .45, ty + 6, tx, ty];
     }
     const N = 40, xs: number[] = [], ys: number[] = [], cum: number[] = [0];
     for (let i = 0; i <= N; i++) {
@@ -621,41 +639,25 @@ function landKrok(now: number) {
   for (let k = 0; k < 4; k++) LD.front[k] = CICHO ? 1 : sm(cl((tl - LAND.T[k]) / LAND.D[k]));
   if (!LAND.on && (CICHO || tl > LAND.T[3] + LAND.D[3] * .7)) { LAND.on = true; storyB.classList.add('on'); }
 }
-// Iskra na ekranie startowym: do pierwszej sekundy mieszka w logo; potem skacze na pierwszą kreskę i jeździ po kreskach
-// tam i z powrotem, na ich początku przeskakując na następną; przy strzałce chwilę macha przyciskowi.
+// Iskra na ekranie startowym mieszka w logo. Gdy ktoś próbuje przewinąć zamknięty ekran, skacze na początek czwartej kreski,
+// zjeżdża nią do Story, chwilę tam macha i wraca do logo.
 function landIskra(now: number): any {
-  const L = LAND, tl = now - L.t0, r = IS.r * 1.95;
-  if (tl < L.jump) { const [x, y] = knotXY(); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; }
-  const dt = Math.min(.05, Math.max(0, (now - (L.last || now)) / 1000)); L.last = now;
-  if (!IS.id.startsWith('szyn')) L.ride = 0;
-  if (!L.ride) {
-    railPt(0, .24);
-    const c: any = { id: 'szyn-skok', tryb: RY - r < IS.y - 4 ? 'lot' : 'stoj', x: RX, y: RY - r, hop: 1e9, I: 0 };
-    if (IS.id === 'szyn-skok' && (IS.kontakt || Math.abs(IS.vy) < 40) && Math.hypot(IS.x - c.x, IS.y - c.y) < 8) { L.ride = 1; L.k = 0; L.u = .25; L.dir = 1; L.pause = 0; L.sw = 0; }
+  const L = LAND, r = IS.r * 1.95, dt = Math.min(.05, Math.max(0, (now - (L.last || now)) / 1000)); L.last = now;
+  const dom = () => { const [x, y] = knotXY(); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; };
+  if (!L.g || !L.on) { L.g = 0; return dom(); }
+  if (L.g === 1) {
+    railPt(3, GS0);
+    const c: any = { id: 'szyn-skok', tryb: 'stoj', x: RX, y: RY - r, hop: 1e9, I: 0 };
+    if (IS.id === 'szyn-skok' && (IS.kontakt || Math.abs(IS.vy) < 40) && Math.hypot(IS.x - c.x, IS.y - c.y) < 8) { L.g = 2; L.u = 0; }
     else return c;
   }
-  const ok = [0, 1, 2, 3].filter((k) => LD.front[k] > .92);
-  if (L.sw > 0) {
-    L.sw += dt / .4;
-    if (L.sw >= 1) { L.sw = 0; L.k = L.kNext; L.u = 0; L.dir = 1; }
-  } else if (L.pause > 0) L.pause -= dt;
-  else {
-    L.u += L.dir * dt / (2.7 + .3 * L.k);
-    if (L.u >= 1) { L.u = 1; L.dir = -1; L.pause = .5; }
-    else if (L.u <= 0) {
-      L.u = 0; const nx = ok.filter((k) => k !== L.k);
-      if (nx.length) { L.kNext = nx[L.rot++ % nx.length]; L.sw = 1e-4; railPt(L.k, LO); L.from = [RX, RY]; } else L.dir = 1;
-    }
-  }
-  let x: number, y: number, ang: number;
-  if (L.sw > 0) {
-    railPt(L.kNext, LO); const u = sm(cl(L.sw));
-    x = L.from[0] + (RX - L.from[0]) * u; y = L.from[1] + (RY - L.from[1]) * u - Math.sin(u * Math.PI) * Math.max(6, Math.min(30, Math.min(L.from[1], RY) - r - 14)); ang = Math.atan2(RY - L.from[1], RX - L.from[0]);
-  } else {
-    const s = Math.min(LO + (HI - LO) * sm(L.u), Math.max(.08, LD.front[L.k] - .04));
-    railPt(L.k, s); x = RX; y = RY; ang = Math.atan2(-NX, NY) + (L.dir < 0 ? Math.PI : 0);
-  }
-  return { id: 'szyn', tryb: 'stoj', rail: 1, x, y: y - r, I: .24, ang, len: 120, half: .3, hop: 1e9, macha: L.pause > 0 ? 1 : 0, gaze: ang };
+  if (L.g === 2) { L.u += dt / 2.6; if (L.u >= 1) { L.u = 1; L.g = 3; L.dwell = 4.5; nudgeStory(); } }
+  else if (L.g === 3) { if (!CICHO) { L.dwell -= dt; if (L.dwell <= 0) L.g = 4; } }
+  else if (L.g === 4) { L.u -= dt / 2; if (L.u <= 0) { L.u = 0; L.g = 0; return dom(); } }
+  const dir = L.g === 4 ? -1 : 1, s = Math.min(GS0 + (GS1 - GS0) * sm(L.u), Math.max(GS0, LD.front[3] - .04));
+  railPt(3, s);
+  const ang = Math.atan2(-NX, NY) + (dir < 0 ? Math.PI : 0);
+  return { id: 'szyn', tryb: 'stoj', rail: 1, x: RX, y: RY - r, I: .24, ang, len: 120, half: .3, hop: 1e9, macha: L.g === 3 ? 1 : 0, gaze: ang };
 }
 // Solipsysta: iskra stoi na „zombie” i świeci na niego; postać wyłania się z ciemności, sama zapala świecę,
 // a snop jej świecy odsłania i oświetla słowa wokół; potem postać obraca się z płonącą świecą.
@@ -709,7 +711,7 @@ const naSieci = (x: number, y: number) => {
     }
     return 0;
   };
-  const [cx, cy, bw] = brain({ u: 120, v: 90 });
+  const [cx, cy, bw] = brainB({ u: 120, v: 90 });
   let n = szukaj(cx, cy, bw, SIATKA); NA_MED = false;
   if (!n && OBA > .5) { n = szukaj(MB.cx, MB.cy, MB.bw, SIATKA_M); NA_MED = n > 0; }
   return n;
@@ -720,7 +722,7 @@ function klikCel(now: number): any {
   if (tt < 450 && Math.hypot(IS.x - KL.x, IS.y - (KL.y - 14)) > 10) return { id: 'klik', tryb: 'lot', x: KL.x, y: KL.y - 14, I: .9, ang: Math.PI / 2, len: 60, half: .5 };
   if (now > KL.pt) {
     const L = P.filter((p) => p.net === KL.n && !!p.med === KL.med); const p = L[Math.floor(Math.random() * L.length)];
-    if (p) { const [x, y] = KL.med ? brainM(p) : brain(p); KL.px = x; KL.py = y; }
+    if (p) { const [x, y] = KL.med ? brainM(p) : brainB(p); KL.px = x; KL.py = y; }
     const d = 650 + Math.random() * 600; KL.pt = now + d; setTimeout(kick, d + 20);
   }
   const x = KL.px + (Math.random() < .5 ? -1 : 1) * 4, y = KL.py - 30;
@@ -1316,7 +1318,7 @@ function frame() {
   const lpA = cl((sc - A.top) / A.h), lpB = cl((sc - B.top) / B.h);
   // kreski ekranu startowego: ważą tyle, ile ekran startowy jeszcze trwa na ekranie
   LD.w = A.k === 'start' ? 1 - t : B.k === 'start' ? t : 0;
-  if (LD.w > .005) { landKrok(now); landGeom(); }
+  if (LD.w > .005) { geomS(); landKrok(now); landGeom(); }
   const mzk = (k: string) => k === 'start' || k === 'czesc' || k === 'pytanie' || k === 'naglowek';
   MOZG_AKT = t < .5 ? mzk(A.k) : mzk(B.k);
   { const tt = now - KL.t; KLv = !MOZG_AKT ? 0 : CICHO ? (tt < KL_T ? 1 : 0) : sm(cl(tt / 250)) * (1 - sm(cl((tt - KL_T + 1200) / 1200))); }
@@ -1543,7 +1545,7 @@ function frame() {
   document.fonts.ready.then(() => { NH = nagl.offsetHeight; przygotujSlowa(); kick(); });
 }
 // Do historii wchodzi się tylko kliknięciem Story (jego słowo, 2026-10-22): ekran startowy trzyma przewijanie, kółko, strzałki, spacja
-// i palec go nie ruszają, a przycisk Story, gdy ma się pokazać, przypomina, którędy się wchodzi. Kliknięcie otwiera przewijanie i jedzie
+// i palec go nie ruszają, a Story, gdy ma się pokazać, przypomina, którędy się wchodzi: drga, a Iskra schodzi do niego po kresce. Kliknięcie otwiera przewijanie i jedzie
 // do Cześć; w górę z Cześć wraca na ekran startowy i znów go zamyka. Reszta strony jest wtedy nieaktywna (inert), więc Tab nie wchodzi
 // w tekst poza ekranem. Odświeżenie w środku strony i adres z # otwierają stronę bez blokady.
 const LAND_Y = () => SEKCJE.start.offsetHeight;
@@ -1551,14 +1553,23 @@ const OSLONA = [...$('.roj').children, ...$$('.site-footer')].filter((e) => e !=
 let BLOK = false, SCR: any = null, SCR_END = -1e9, NUDGE_T = -1e9;
 const T_START = performance.now();
 function zaprzyj(on: boolean) {
-  BLOK = on; document.documentElement.classList.toggle('roj-blok', on);
+  BLOK = on; document.documentElement.classList.toggle('roj-blok', on); if (on) LAND.g = 0;
   for (const e of OSLONA) (e as any).inert = on;
 }
 if (scrollY < 3 && !location.hash) zaprzyj(true);
-function przypomnij() {
+function nudgeStory() {
   const n = performance.now();
-  if (!LAND.on || CICHO || n - NUDGE_T < 1500) return;
+  if (CICHO || n - NUDGE_T < 1500) return;
   NUDGE_T = n; storyB.classList.remove('nudge'); void storyB.offsetWidth; storyB.classList.add('nudge');
+}
+// próba przewinięcia zamkniętego ekranu: Story drga, a Iskra schodzi do niego czwartą kreską (albo, gdy już tam jest, zostaje dłużej)
+function przypomnij() {
+  const L = LAND;
+  if (!L.on) return;
+  nudgeStory();
+  if (CICHO) { if (L.g !== 3) { L.g = 3; L.u = 1; setTimeout(() => { L.g = 0; kick(); }, 4500); kick(); } return; }
+  if (L.g === 0) L.g = 1; else if (L.g === 4) L.g = 2; else if (L.g === 3) L.dwell = 4.5;
+  kick();
 }
 function jedzDo(y: number) {
   const koniec = () => {
