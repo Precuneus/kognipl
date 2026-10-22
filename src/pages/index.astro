@@ -73,7 +73,16 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
 <canvas class="roj-plotno" aria-hidden="true"></canvas>
 <canvas class="roj-plotno roj-iskra" aria-hidden="true"></canvas>
 <main class="roj">
-  <section class="roj-st lewo pierwszy" data-k="czesc">
+  <!-- ekran startowy (jego słowo, 2026-10-22): logo w lewym górnym rogu, przyciski po prawej; rój formuje do nich kreski ze strzałkami -->
+  <section class="roj-st start" data-k="start" aria-label="Menu">
+    <nav class="roj-menu-st" aria-label="Główne">
+      {WIKI ? <a class="roj-btn" href={WIKI}>Wiki</a> : <span class="roj-btn wkrotce">Wiki</span>}
+      <a class="roj-btn" href="/2026/kursy/">Kursy</a>
+      <a class="roj-btn" href="/kontakt">Kontakt</a>
+    </nav>
+    <a class="roj-btn roj-story" href="#czesc">Story</a>
+  </section>
+  <section class="roj-st lewo pierwszy" data-k="czesc" id="czesc">
     <div class="roj-t"><h1 class="roj-czesc">Cześć!</h1></div>
   </section>
   <section class="roj-st lewo ciag" data-k="pytanie">
@@ -143,6 +152,10 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
 body:has(.roj){background:#000}
 body:has(.roj) .rocznik-head,body:has(.roj) .site-footer{position:relative;z-index:1}
 body:has(.roj) .site-footer::before{display:none}
+/* na stronie startowej logo stoi w lewym górnym rogu, a menu przejmują przyciski ekranu startowego */
+body:has(.roj) .rocznik-head{align-items:flex-start;max-width:none;margin:0;padding-left:8vw;padding-right:8vw}
+body:has(.roj) .rocznik-title{justify-content:flex-start}
+body:has(.roj) .rocznik-bar,body:has(.roj) .rocznik-menu{display:none}
 .roj-plotno{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
 .roj-plotno.roj-iskra{z-index:3}
 .roj{position:relative;z-index:1;--kosc:#ece6da;--mgla:#b3aa9b;--zloto:#f0c060}
@@ -151,6 +164,14 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-st.srodek{justify-content:center;padding-left:56px}
 .roj-st.srodek .roj-t{max-width:680px}
 .roj-st.pierwszy{min-height:calc(100vh - 120px);align-items:flex-end;padding-top:0;padding-bottom:14vh}
+/* ekran startowy: pusty ekran na wysokość okna; przyciski stoją na nim w pionowej kolumnie, Story niżej i dopiero po czasie */
+.roj-st.start{display:block;min-height:0;height:100vh;padding:0}
+.roj-menu-st{position:absolute;left:clamp(24px,calc(49vw - 240px),37vw);top:calc(20vh - var(--hh,96px));display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.roj a.roj-btn,.roj span.roj-btn{display:block;box-sizing:border-box;min-width:6.6em;padding:.5em 1.05em;border:1px solid rgba(240,192,96,.55);background:rgba(0,0,0,.62);font-family:var(--font-display);font-weight:400;font-size:27px;line-height:1.2;letter-spacing:.02em;color:var(--kosc);text-decoration:underline;text-decoration-color:rgba(240,192,96,.75);text-decoration-thickness:1px;text-underline-offset:.26em;transition:border-color .2s ease,background .2s ease,color .2s ease,opacity .9s ease}
+.roj a.roj-btn:hover{border-color:var(--zloto);background:rgba(240,192,96,.1);color:var(--zloto)}
+.roj span.roj-btn.wkrotce{color:#6e675c;border-color:rgba(240,192,96,.22);text-decoration-color:rgba(240,192,96,.3)}
+.roj a.roj-story{position:absolute;left:clamp(24px,calc(49vw - 240px),37vw);top:calc(84vh - var(--hh,96px));opacity:0;pointer-events:none}
+.roj a.roj-story.on{opacity:1;pointer-events:auto}
 /* Cześć, pytanie i sieci płyną jak jeden tekst */
 .roj-st.ciag{min-height:0;padding-bottom:0}
 .roj-st.ciag[data-k=pytanie]{padding-top:10vh}
@@ -254,12 +275,18 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-wiki-kropka{position:absolute;left:calc(50% - .19em);top:-.07em;width:.26em;height:.26em;border-radius:50%;background:#f0c060;box-shadow:0 0 0 .075em #0e0d0b,0 0 0 .12em rgba(240,192,96,.9),0 0 .45em .14em rgba(240,192,96,.45)}
 .roj-js .roj-wiki-kropka{opacity:0}
 @media (max-width:760px){
+  body:has(.roj) .rocznik-head{padding-left:20px;padding-right:20px}
   .roj-st{padding:52vh 20px 8vh 20px!important;align-items:flex-start;justify-content:flex-start!important}
+  .roj-st.start{padding:0!important}
+  .roj-menu-st{left:20px;top:calc(29vh + 33vw + 40px - var(--hh,96px));gap:14px}
+  .roj a.roj-btn,.roj span.roj-btn{font-size:22px}
+  .roj a.roj-story{left:20px;top:calc(83vh - var(--hh,96px))}
+  /* telefon: nagłówek stoi pod mózgiem z boku i tam zostaje, zamiast przechodzić pod mózgiem na górę ekranu */
+  .roj-oba{position:sticky;top:calc(29vh + 33vw + 40px);height:auto;padding:0 20px}
   .roj-st.lewo .roj-t,.roj-st.kogni .roj-t,.roj-st.lepkie .roj-t{max-width:none}
   .roj-st.pierwszy{padding-top:calc(29vh + 33vw + 16px)!important;padding-bottom:0!important;align-items:flex-start}
   /* telefon: mózg trzyma górę ekranu, tekst żyje pod nim i znika, gdy wjeżdża pod mózg; nagłówek tuż za akapitem */
   .roj-st.oba{padding:0!important;height:200vh}
-  .roj-oba{padding:2vh 20px 0}
   .roj-st.ciag[data-k=pytanie]{padding-top:14vh!important;padding-bottom:0!important}
   .roj-st.ciag[data-k=wiem]{padding-top:0!important;padding-bottom:0!important;margin-top:-12vh}
   .roj-st.ciag[data-k=ja]{padding-top:23.8vh!important;padding-bottom:0!important}
@@ -355,6 +382,8 @@ const YN = [.30, .48, .66, .84];
 const hex = (h: string) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
 const mix = (a: number[], b: number[], q: number) => [0, 1, 2].map((i) => Math.round(a[i] + (b[i] - a[i]) * q));
 const GREY = hex('#5f5a54');
+// jasność przygaszonego mózgu: punkt sieci i punkt tła (przedtem .3 i .16)
+const BR_S = .46, BR_T = .26;
 // dwa płótna: rój pod tekstem, iskra (snop, lód, kropka) nad tekstem i postaciami
 const cv = document.querySelector('.roj-plotno') as HTMLCanvasElement, cv2 = document.querySelector('.roj-iskra') as HTMLCanvasElement;
 const g = cv.getContext('2d')!, g2 = cv2.getContext('2d')!;
@@ -394,6 +423,8 @@ function size() {
   MOB = innerWidth < 760; LAB = MOB ? 15 : 20; D = Math.min(devicePixelRatio || 1, MOB ? 1.25 : 1.5);
   const w = cv.clientWidth, h = cv.clientHeight;
   if (knotLogo) IS.r = Math.max(3, knotLogo.getBoundingClientRect().width / 2);
+  // wysokość nagłówka strony: przyciski ekranu startowego liczą od niej swoje miejsce na ekranie
+  document.documentElement.style.setProperty('--hh', $('.roj').offsetTop + 'px');
   if (w !== W || h !== H || cv.width !== Math.round(w * D)) { W = w; H = h; cv.width = cv2.width = Math.round(W * D); cv.height = cv2.height = Math.round(H * D); }
   // c0..c1: odcinek, na którym ekran trwa w swoim stanie; przejścia między c1 jednego a c0 następnego.
   SEC = $$('.roj-st').map((s) => {
@@ -435,23 +466,26 @@ function wyspa(n: number, bx: number, by: number, bw: number, wy: number) {
 }
 function st(k: string, p: any, lp: number) {
   const net = p.net > 1; let x = 0, y = 0, a = 0, c = p.col, s = 1;
+  // punkty kreski ekranu startowego są niewidoczne, dopóki nie polecą na kreskę (to robi pętla klatek)
+  if (p.lonly) { [x, y] = brain(p); return [x, y, 0, c, 1]; }
   // mózg od środka widać tylko na ekranie z nagłówkiem; gdzie indziej jego punkty gasną i odlatują z rojem
   if (p.med) {
     if (k !== 'czesc' && k !== 'pytanie' && k !== 'naglowek') return [p.sx * W, p.sy * H, 0, c, 1];
-    [x, y] = brainM(p); a = k === 'naglowek' ? (net ? .3 : .16) * OBA : 0;
+    [x, y] = brainM(p); a = k === 'naglowek' ? (net ? BR_S : BR_T) * OBA : 0;
     if (KLv > 0 && net && p.net === KL.n && a > 0) { a += (.98 * OBA - a) * KLv; s = 1 + .35 * KLv; }
     return [x, y, a, c, s];
   }
-  // mózg ciemny i taki zostaje: sieci świecą tylko w snopie iskry albo po kliknięciu (jego słowo, 2026-10-20); za nagłówkiem rój się rozprasza
-  if (k === 'czesc') { [x, y] = brain(p); a = net ? .3 : .16; }
-  else if (k === 'pytanie' || k === 'naglowek') { [x, y] = brain(p); a = net ? .3 : .16; }
+  // mózg przygaszony i taki zostaje: sieci świecą tylko w snopie iskry albo po kliknięciu (jego słowo, 2026-10-20);
+  // jaśniej niż przedtem, żeby go było widać (jego słowo, 2026-10-22); za nagłówkiem rój się rozprasza
+  if (k === 'start' || k === 'czesc') { [x, y] = brain(p); a = net ? BR_S : BR_T; }
+  else if (k === 'pytanie' || k === 'naglowek') { [x, y] = brain(p); a = net ? BR_S : BR_T; }
   else if (k === 'sieci') {
     const [bx, by, bw] = brain(p, 1, ROZ[SIECI_L[0]] || 0);
-    if (net) { const [ix, iy] = wyspa(p.net, 0, 0, bw, ROZ[p.net] || 0); x = bx + ix; y = by + iy; a = .3; }
-    else { x = bx + (p.sx - .5) * 120; y = by + (p.sy - .5) * 120; a = .12; }
+    if (net) { const [ix, iy] = wyspa(p.net, 0, 0, bw, ROZ[p.net] || 0); x = bx + ix; y = by + iy; a = BR_S; }
+    else { x = bx + (p.sx - .5) * 120; y = by + (p.sy - .5) * 120; a = .18; }
   }
   // od solipsysty do osnów rój stoi rozproszony i się nie przestawia; ruch należy do tekstu i iskry
-  else if (k === 'zombie' || k === 'wiem' || k === 'ja' || k === 'doswiadcza') { x = p.sx * W; y = p.sy * H; a = .14; }
+  else if (k === 'zombie' || k === 'wiem' || k === 'ja' || k === 'doswiadcza') { x = p.sx * W; y = p.sy * H; a = .2; }
   // przy dyscyplinach roju nie ma (jego słowo, 2026-10-20); osnowy pojawiają się od razu uformowane
   else if (k === 'dyscypliny') { x = p.sx * W; y = p.sy * H; a = 0; }
   else {
@@ -459,7 +493,7 @@ function st(k: string, p: any, lp: number) {
     if (HOVP && x > W - kuPlotnu.offsetWidth) { a = .95; s = 1.1; }
   }
   // kliknięta sieć świeci, pozostałe przygasają
-  if (KLv > 0 && net && (k === 'czesc' || k === 'pytanie' || k === 'naglowek')) { if (p.net === KL.n) { a += (.98 - a) * KLv; s = 1 + .35 * KLv; } }
+  if (KLv > 0 && net && (k === 'start' || k === 'czesc' || k === 'pytanie' || k === 'naglowek')) { if (p.net === KL.n) { a += (.98 - a) * KLv; s = 1 + .35 * KLv; } }
   return [x, y, a, c, s];
 }
 // Bicie kropki jak serce Spark Actor: podwójne uderzenie co 2 s (soulBeat, corePulse), oddech poświaty co 3 s (soulRing), iskry.
@@ -523,6 +557,93 @@ let KIER = 1, KIER_T = -1e9, OSTATNI_Y = scrollY, WSTECZ = 0;
 const DIP = new Map<HTMLElement, number[]>();
 const G = 2600;
 const knotXY = () => { const r = knotLogo!.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+// Ekran startowy (jego słowo, 2026-10-22): logo, przyciski Wiki, Kursy, Kontakt. 1 s po otwarciu iskra skacze z logo na kreskę,
+// a rój formuje trzy wygięte kreski ze strzałkami od prawego górnego rogu ku przyciskom; iskra sunie po nich tam i z powrotem.
+// 2 s po starcie tego ruchu rośnie czwarta kreska ku dołowi ekranu i wchodzi przycisk Story. Pierwsze przewinięcie ląduje na Cześć.
+const menuA = $$('.roj-menu-st > *'), storyB = $('.roj-story');
+const LAND: any = { t0: 0, jump: 1000, T: [1000, 1160, 1320, 3000], D: [1300, 1300, 1300, 1500], ride: 0, k: 0, u: .25, dir: 1, pause: 0, sw: 0, kNext: 0, from: [0, 0], rot: 0, last: 0, on: false };
+const LD: any = { front: [0, 0, 0, 0], w: 0 };
+const TAB = 96, LO = .1, HI = .93;
+const LG = [0, 1, 2, 3].map(() => ({ tab: new Float32Array(TAB * 2), len: 0, dx: -1, dy: 0, tx: 0, ty: 0 }));
+let RX = 0, RY = 0, NX = 0, NY = 0;
+// punkt kreski k w odległości s (0 do 1) wzdłuż jej długości, i jej normalna
+function railPt(k: number, s: number) {
+  const L = LG[k], f = Math.max(0, Math.min(1, s)) * (TAB - 1), i = Math.min(TAB - 2, f | 0), q = f - i, T = L.tab;
+  RX = T[i * 2] + (T[i * 2 + 2] - T[i * 2]) * q; RY = T[i * 2 + 1] + (T[i * 2 + 3] - T[i * 2 + 1]) * q;
+  const dx = T[i * 2 + 2] - T[i * 2], dy = T[i * 2 + 3] - T[i * 2 + 1], m = Math.hypot(dx, dy) || 1; NX = -dy / m; NY = dx / m;
+}
+// kreski kończą się strzałką tuż przy prawej krawędzi swojego przycisku; kształt liczy się z miejsca przycisków w każdej klatce
+function landGeom() {
+  const el = [menuA[0], menuA[1], menuA[2], storyB];
+  for (let k = 0; k < 4; k++) {
+    const r = el[k].getBoundingClientRect(), L = LG[k], tx = r.right + (MOB ? 10 : 14), ty = r.top + r.height / 2;
+    let P: number[];
+    // trzy kreski wychodzą z prawego górnego rogu, wyginają się nad mózgiem i opadają ku przyciskom; czwarta wychodzi z prawego dołu mózgu
+    const [bx, by] = brain({ u: 224, v: 100 });
+    if (!MOB) P = k < 3
+      ? [W * .965 - 9 * k, H * .09 + 11 * k, W * (.80 - .045 * k) - 9 * k, H * (.02 + .01 * k), tx + W * .075, ty - H * (.26 - .03 * k), tx, ty]
+      : [bx, by, W * .95, H * .8, tx + W * .2, ty + H * .02, tx, ty];
+    else P = k < 3
+      ? [W * .9 - 7 * k, H * .05 + 6 * k, W * .8 - 7 * k, H * .05 + 6 * k + (ty - H * .05) * .42, tx + W * .36, ty - H * .05, tx, ty]
+      : [bx, by, W * .96, H * .55, tx + W * .45, ty - H * .04, tx, ty];
+    const N = 40, xs: number[] = [], ys: number[] = [], cum: number[] = [0];
+    for (let i = 0; i <= N; i++) {
+      const u = i / N, v = 1 - u, a = v * v * v, b = 3 * v * v * u, c = 3 * v * u * u, d = u * u * u;
+      xs.push(a * P[0] + b * P[2] + c * P[4] + d * P[6]); ys.push(a * P[1] + b * P[3] + c * P[5] + d * P[7]);
+      if (i) cum.push(cum[i - 1] + Math.hypot(xs[i] - xs[i - 1], ys[i] - ys[i - 1]));
+    }
+    L.len = cum[N]; let j = 0;
+    for (let i = 0; i < TAB; i++) {
+      const d = L.len * i / (TAB - 1); while (j < N - 1 && cum[j + 1] < d) j++;
+      const f = (d - cum[j]) / (cum[j + 1] - cum[j] || 1);
+      L.tab[i * 2] = xs[j] + (xs[j + 1] - xs[j]) * f; L.tab[i * 2 + 1] = ys[j] + (ys[j + 1] - ys[j]) * f;
+    }
+    const ex = L.tab[TAB * 2 - 2] - L.tab[TAB * 2 - 4], ey = L.tab[TAB * 2 - 1] - L.tab[TAB * 2 - 3], m = Math.hypot(ex, ey) || 1;
+    L.dx = ex / m; L.dy = ey / m; L.tx = tx; L.ty = ty;
+  }
+}
+// kreski rosną od prawego górnego rogu ku przyciskom; Story wchodzi, gdy czwarta kreska dochodzi do celu
+function landKrok(now: number) {
+  const tl = now - LAND.t0;
+  for (let k = 0; k < 4; k++) LD.front[k] = CICHO ? 1 : sm(cl((tl - LAND.T[k]) / LAND.D[k]));
+  if (!LAND.on && (CICHO || tl > LAND.T[3] + LAND.D[3] * .7)) { LAND.on = true; storyB.classList.add('on'); }
+}
+// Iskra na ekranie startowym: do pierwszej sekundy mieszka w logo; potem skacze na pierwszą kreskę i jeździ po kreskach
+// tam i z powrotem, na ich początku przeskakując na następną; przy strzałce chwilę macha przyciskowi.
+function landIskra(now: number): any {
+  const L = LAND, tl = now - L.t0, r = IS.r * 1.95;
+  if (tl < L.jump) { const [x, y] = knotXY(); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; }
+  const dt = Math.min(.05, Math.max(0, (now - (L.last || now)) / 1000)); L.last = now;
+  if (!IS.id.startsWith('szyn')) L.ride = 0;
+  if (!L.ride) {
+    railPt(0, .24);
+    const c: any = { id: 'szyn-skok', tryb: 'stoj', x: RX, y: RY - r, hop: 1e9, I: 0 };
+    if (IS.id === 'szyn-skok' && IS.kontakt && Math.hypot(IS.x - c.x, IS.y - c.y) < 8) { L.ride = 1; L.k = 0; L.u = .25; L.dir = 1; L.pause = 0; L.sw = 0; }
+    else return c;
+  }
+  const ok = [0, 1, 2, 3].filter((k) => LD.front[k] > .92);
+  if (L.sw > 0) {
+    L.sw += dt / .4;
+    if (L.sw >= 1) { L.sw = 0; L.k = L.kNext; L.u = 0; L.dir = 1; }
+  } else if (L.pause > 0) L.pause -= dt;
+  else {
+    L.u += L.dir * dt / (2.7 + .3 * L.k);
+    if (L.u >= 1) { L.u = 1; L.dir = -1; L.pause = .5; }
+    else if (L.u <= 0) {
+      L.u = 0; const nx = ok.filter((k) => k !== L.k);
+      if (nx.length) { L.kNext = nx[L.rot++ % nx.length]; L.sw = 1e-4; railPt(L.k, LO); L.from = [RX, RY]; } else L.dir = 1;
+    }
+  }
+  let x: number, y: number, ang: number;
+  if (L.sw > 0) {
+    railPt(L.kNext, LO); const u = sm(cl(L.sw));
+    x = L.from[0] + (RX - L.from[0]) * u; y = L.from[1] + (RY - L.from[1]) * u - Math.sin(u * Math.PI) * 30; ang = Math.atan2(RY - L.from[1], RX - L.from[0]);
+  } else {
+    const s = Math.min(LO + (HI - LO) * sm(L.u), Math.max(.08, LD.front[L.k] - .04));
+    railPt(L.k, s); x = RX; y = RY; ang = Math.atan2(-NX, NY) + (L.dir < 0 ? Math.PI : 0);
+  }
+  return { id: 'szyn', tryb: 'stoj', rail: 1, x, y: y - r, I: .24, ang, len: 120, half: .3, hop: 1e9, macha: L.pause > 0 ? 1 : 0, gaze: ang };
+}
 // Solipsysta: iskra stoi na „zombie” i świeci na niego; postać wyłania się z ciemności, sama zapala świecę,
 // a snop jej świecy odsłania i oświetla słowa wokół; potem postać obraca się z płonącą świecą.
 const SOL: any = { t0: 0, done: false };
@@ -730,7 +851,6 @@ function startSieci(now: number) {
 }
 function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, lz: number): any {
   const r = IS.r * 1.95;
-  if (scrollY < 4 && knotLogo && KLv <= .01) { const [x, y] = knotXY(); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; }
   const S = t < .5 ? A : B;
   const stoj = (el: HTMLElement | null, id: string): any => {
     if (!el) return null; const rr = el.getBoundingClientRect();
@@ -740,7 +860,8 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
   if (ZD.biegnie && scrollY >= 4) c = zdIskra();
   if (!c && KLv > .01 && MOZG_AKT) c = klikCel(now);
   if (!c) {
-    if (S.k === 'czesc') {
+    if (S.k === 'start') c = landIskra(now);
+    else if (S.k === 'czesc') {
       // unosi się nad słowem i świeci na nie z góry
       const rr = czesc.getBoundingClientRect(), wx = rr.left + rr.width * .5, wy = rr.top + rr.height * .55;
       const x = rr.left + rr.width * .12, y = rr.top - rr.height * .55, d = Math.hypot(wx - x, wy - y);
@@ -772,7 +893,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
     } else if (S.k === 'naglowek') c = ZD.te >= ZD_F[4] ? stoj(CEL.naglowek, 'naglowek') : stoj(CEL.pytanie, 'pytanie');
     else c = stoj(CEL[S.k], S.k);
   }
-  if (c && c.tryb === 'stoj' && (c.y < H * .06 || c.y > H * .94)) { c.tryb = 'lot'; c.y = Math.max(H * .06, Math.min(H * .94, c.y)); }
+  if (c && c.tryb === 'stoj' && !c.rail && (c.y < H * .06 || c.y > H * .94)) { c.tryb = 'lot'; c.y = Math.max(H * .06, Math.min(H * .94, c.y)); }
   if (c) {
     c.x = Math.max(14, Math.min(W - 14, c.x));
     c.mood = c.id === 'czesc' ? { pd: 1.15, lid: 1 }
@@ -785,6 +906,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
       : c.id === 'zdanie' ? { pd: 1.18, lid: 1 }
       : c.id === 'ciagnie' ? { pd: 1.1, lid: 1, joy: .6 }
       : c.id === 'krazy' || c.id === 'krazym' ? { pd: 1.06, lid: 1 }
+      : c.id.startsWith('szyn') ? { pd: 1.1, lid: 1, joy: .45 }
       : { pd: 1, lid: 1 };
   }
   return c;
@@ -945,7 +1067,16 @@ function krok(dt: number, c: any, now: number) {
   else if (zmiana) { SK.na = SK.cs = -1; SK.bx = c.x; SK.vb = 0; SK.hop = now + 700; SK.krok = 0; SK.on = false; SK.nic = SK.cel = 2; }
   // zeskok z osnów: najpierw mały podskok, potem w dół
   if (zmiana && c.tryb === 'stoj' && IS.kontakt && c.y > IS.y + 40) { IS.vy = -480; IS.kontakt = false; IS.lot = false; IS.sq = -.22; }
-  if (c.slizg && (SK.on || (IS.kontakt && IS.kuc <= 0 && Math.abs(c.y - IS.y) < 4))) lyzwy(dt, c, now);
+  // skok z logo na kreskę: łuk nad ekranem startowym, lądowanie na kresce
+  if (zmiana && c.id === 'szyn-skok' && c.y > IS.y) {
+    const h = Math.max(26, Math.min(80, IS.y - 12)), apex = IS.y - h, T = Math.sqrt(2 * h / G) + Math.sqrt(2 * Math.max(1, c.y - apex) / G);
+    IS.vy = -Math.sqrt(2 * G * h); IS.vx = (c.x - IS.x) / T; IS.lot = true; IS.kontakt = false; IS.kuc = 0; IS.sq = -.22;
+  }
+  if (c.rail) {
+    // jazda po kresce: iskra stoi dokładnie na niej, jej ruch prowadzi czas, nie fizyka
+    const d = Math.max(dt, .004); IS.vx = (c.x - IS.x) / d; IS.vy = (c.y - IS.y) / d;
+    IS.x = c.x; IS.y = c.y; IS.kontakt = true; IS.lot = false; IS.kuc = 0;
+  } else if (c.slizg && (SK.on || (IS.kontakt && IS.kuc <= 0 && Math.abs(c.y - IS.y) < 4))) lyzwy(dt, c, now);
   else if (c.tryb === 'lot') {
     IS.kontakt = false; IS.lot = false; IS.kuc = 0;
     const k = c.id === 'dom' ? 110 : c.id === 'wiki' ? 80 : c.id === 'klik' ? 320 : c.id.startsWith('bada') ? 90 : 60, d = 2 * Math.sqrt(k) * .8;
@@ -1151,13 +1282,14 @@ function maskaPodMozgiem() {
     const t = MOB ? el.getBoundingClientRect().top : Infinity;
     let m = t >= dno + pas ? '' : 'linear-gradient(to bottom, transparent ' + Math.round(dno - t) + 'px, #000 ' + Math.round(dno + pas - t) + 'px)';
     // nagłówek przechodzi pod mózgiem i wynurza się nad nim, gdzie zostaje u góry ekranu
-    if (el === NAGL_T && m) m = 'linear-gradient(to bottom, #000 ' + Math.round(gora - pas - t) + 'px, transparent ' + Math.round(gora - t) + 'px, transparent ' + Math.round(dno - t) + 'px, #000 ' + Math.round(dno + pas - t) + 'px)';
+    if (el === NAGL_T && m && !MOB) m = 'linear-gradient(to bottom, #000 ' + Math.round(gora - pas - t) + 'px, transparent ' + Math.round(gora - t) + 'px, transparent ' + Math.round(dno - t) + 'px, #000 ' + Math.round(dno + pas - t) + 'px)';
     if (el.style.maskImage !== m) { el.style.maskImage = m; el.style.webkitMaskImage = m; }
   }
 }
 function frame() {
   // mózg od środka wchodzi, gdy nagłówek stanie u góry ekranu
-  OBA = CICHO ? (scrollY >= OBA_TOP - H * .05 ? 1 : 0) : sm(cl((scrollY - OBA_TOP + H * .05) / (H * .5)));
+  // na telefonie jest tylko mózg z boku (jego słowo, 2026-10-22): mózg od środka się nie pojawia
+  OBA = MOB ? 0 : CICHO ? (scrollY >= OBA_TOP - H * .05 ? 1 : 0) : sm(cl((scrollY - OBA_TOP + H * .05) / (H * .5)));
   geomM();
   maskaPodMozgiem();
   if (!P.length) return;
@@ -1169,7 +1301,10 @@ function frame() {
   const now = performance.now();
   SEK = now / 1000; FAZA = md1(SEK / 2); PL = CICHO ? 0 : KF(BEAT, FAZA) - 1;
   const lpA = cl((sc - A.top) / A.h), lpB = cl((sc - B.top) / B.h);
-  const mzk = (k: string) => k === 'czesc' || k === 'pytanie' || k === 'naglowek';
+  // kreski ekranu startowego: ważą tyle, ile ekran startowy jeszcze trwa na ekranie
+  LD.w = A.k === 'start' ? 1 - t : B.k === 'start' ? t : 0;
+  if (LD.w > .005) { landKrok(now); landGeom(); }
+  const mzk = (k: string) => k === 'start' || k === 'czesc' || k === 'pytanie' || k === 'naglowek';
   MOZG_AKT = t < .5 ? mzk(A.k) : mzk(B.k);
   { const tt = now - KL.t; KLv = !MOZG_AKT ? 0 : CICHO ? (tt < KL_T ? 1 : 0) : sm(cl(tt / 250)) * (1 - sm(cl((tt - KL_T + 1200) / 1200))); }
   const dt = Math.min(.033, Math.max(0, (now - (IS.last || now)) / 1000)); IS.last = now;
@@ -1193,7 +1328,7 @@ function frame() {
   const c = cel(A, B, t, lpA, lpB, now, lz);
   if (c) { krok(dt, c, now); wiazka(dt, c, now); oko(dt, c, now); }
   const wid = !!c && !IS.dom;
-  const PCH = wid && c.id !== 'dom' && c.id !== 'wiki' ? (MOB ? 22 : 30) : 0;
+  const PCH = wid && c.id !== 'dom' && c.id !== 'wiki' && !c.rail ? (MOB ? 22 : 30) : 0;
   if (knotLogo) knotLogo.style.opacity = wid ? '0' : '';
   g.setTransform(D, 0, 0, D, 0, 0); g.clearRect(0, 0, W, H); g2.setTransform(D, 0, 0, D, 0, 0); g2.clearRect(0, 0, W, H); g.globalCompositeOperation = 'lighter'; g.lineWidth = 1;
   const NICI = (k: string) => k === 'osnowy' || k === 'kogni' || k === 'wiki', KROPKI = !NICI(A.k) && !NICI(B.k);
@@ -1217,6 +1352,21 @@ function frame() {
       const [zx, zy] = zdPkt(p.zj, ZD.te);
       x += (zx - x) * ZD_P; y += (zy - y) * ZD_P; al += (.95 - al) * ZD_W;
       cr += (ZLOTO[0] - cr) * ZD_W; cg += (ZLOTO[1] - cg) * ZD_W; cb += (ZLOTO[2] - cb) * ZD_W; lit = Math.max(lit, ZD_W);
+    }
+    if (LD.w > .005 && p.ld !== undefined) {
+      // punkt kreski: leci z mózgu na swoje miejsce na kresce, gdy czoło kreski go minie; strzałka to dwie krótkie kreski za jej końcem
+      const rel = sm(cl((LD.front[p.ld] * 1.1 - p.ls) / .05)) * LD.w;
+      if (rel > .003) {
+        let lx: number, ly: number;
+        if (p.ls <= 1) { railPt(p.ld, p.ls); lx = RX + NX * p.lo; ly = RY + NY * p.lo; }
+        else {
+          const L = LG[p.ld], a = (p.ls - 1) * 10, th = p.lv * .5, cs = Math.cos(th), sn = Math.sin(th), bx = -L.dx, by = -L.dy, len = MOB ? 18 : 26;
+          lx = L.tx + (bx * cs - by * sn) * a * len; ly = L.ty + (bx * sn + by * cs) * a * len;
+        }
+        x += (lx - x) * rel; y += (ly - y) * rel;
+        al += (.9 * (1 - .3 * (.5 + .5 * Math.sin(p.ls * 24 - SEK * 2.4))) - al) * rel;
+        cr += (ZLOTO[0] - cr) * rel; cg += (ZLOTO[1] - cg) * rel; cb += (ZLOTO[2] - cb) * rel; lit = Math.max(lit, rel);
+      }
     }
     if (al < .02 || y < -20 || y > H + 20) continue;
     let sw = 0;
@@ -1314,7 +1464,7 @@ function frame() {
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
   const iskraRuch = !!c && !CICHO && (solRuch || !!c.slizg || !!c.hura || (MOZG_AKT && now - KL.t < KL_T) || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
     || !IS.dom && (Math.hypot(IS.vx, IS.vy) > 6 || Math.hypot(c.x - IS.x, c.y - IS.y) > .8 || (c.tryb === 'stoj' && !IS.kontakt))
-    || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || slowaRuch || zgRuch || !!PUSZCZ || !!ZD.ruch
+    || (LD.w > .005 && !CICHO) || IS.kuc > 0 || Math.abs(IS.sq) > .004 || dipRuch || Math.abs((c.I || 0) - IS.bi) > .01 || slowaRuch || zgRuch || !!PUSZCZ || !!ZD.ruch
     || (!IS.dom && (now - IS.mrug < 170 || IS.zdz > .02 || Math.abs(IS.pd - ((c.mood && c.mood.pd) || 1)) > .01 || Math.abs(IS.lid - ((c.mood && c.mood.lid) || 1)) > .01
       || Math.abs(IS.joy - ((c.mood && c.mood.joy) || 0) * (1 - .35 * WSTECZ)) > .01 || Math.abs(IS.lean) > .005 || WSTECZ > .01))
     );
@@ -1345,7 +1495,7 @@ function frame() {
     const u = cc[0] + r(), v = cc[1] + r(), net = cc[2];
     P.push({ u, v, net, col: hex(COL[net]), a: r() * 6.28, s: .8 + r() * 1.2, sx: r(), sy: r(), d: r(), cr: Math.sqrt(r()), ln: (r() * 4) | 0, lx: r() });
   }
-  // mózg od środka: osobne punkty, tyle, ile mieści mniejszy rysunek
+  // mózg od środka: osobne punkty, tyle, ile mieści mniejszy rysunek; na telefonie go nie ma (jego słowo, 2026-10-22)
   const cellsM: number[][] = []; let im = 0;
   for (const tk of MAPA_M.split(',')) {
     const v = +tk[0], n = parseInt(tk.slice(1), 36);
@@ -1353,18 +1503,87 @@ function frame() {
     im += n;
   }
   const rm = rnd(11);
-  for (let k = 0, NP = innerWidth < 760 ? 2000 : 3400; k < NP; k++) {
+  for (let k = 0, NP = innerWidth < 760 ? 0 : 3400; k < NP; k++) {
     let cc; do { cc = cellsM[(rm() * cellsM.length) | 0]; } while (cc[2] === 1 && rm() > .4);
     const net = cc[2];
     P.push({ med: 1, u: cc[0] + rm(), v: cc[1] + rm(), net, col: hex(COL[net]), a: rm() * 6.28, s: .8 + rm() * 1.2, sx: rm(), sy: rm(), d: rm(), cr: Math.sqrt(rm()), ln: (rm() * 4) | 0, lx: rm() });
   }
   for (const n of SIECI_L) if (P.some((p) => p.med && p.net === n)) SIECI_M.push(n);
+  // kreski ekranu startowego: osobne punkty, które czekają niewidoczne w mózgu z boku i lecą na kreski, gdy ich czoło je minie;
+  // ls to miejsce wzdłuż kreski (od 0 do 1), a potem po dwie kreski strzałki (od 1 do 1,1)
+  {
+    const NL = innerWidth < 760 ? [200, 200, 200, 230] : [480, 480, 480, 520], AR = innerWidth < 760 ? 12 : 20, bok = P.filter((p) => !p.med), rl = rnd(23);
+    const dodaj = (k: number, ls: number, lv: number) => {
+      const q = bok[(rl() * bok.length) | 0];
+      P.push({ lonly: 1, u: q.u, v: q.v, net: 0, col: GREY, a: rl() * 6.28, s: 1, sx: rl(), sy: rl(), d: rl(), cr: rl(), ln: 0, lx: 0, ld: k, ls, lo: (rl() - .5) * 5.4, lv });
+    };
+    NL.forEach((n, k) => {
+      for (let i = 0; i < n; i++) dodaj(k, (i + .5) / n, 0);
+      for (const lv of [-1, 1]) for (let i = 0; i < AR; i++) dodaj(k, 1 + (i + 1) / AR * .1, lv);
+    });
+  }
+  LAND.t0 = CICHO ? -1e9 : performance.now();
   const cs: Record<number, number[]> = {};
   for (const p of P) if (p.net > 1 && !p.med) { cs[p.net] = cs[p.net] || [0, 0, 0]; cs[p.net][0] += p.u; cs[p.net][1] += p.v; cs[p.net][2]++; }
   for (const k in cs) CENT[k] = [cs[k][0] / cs[k][2], cs[k][1] / cs[k][2]];
   size(); frame();
   document.fonts.ready.then(() => { NH = nagl.offsetHeight; przygotujSlowa(); kick(); });
 }
+// Pierwsze przewinięcie z ekranu startowego ląduje na Cześć (jego słowo, 2026-10-22): kółko, strzałka, spacja i przeciągnięcie palcem
+// jadą od razu do Cześć; w górę z Cześć wracają na ekran startowy. Gdy przeglądarka już ruszyła z przewijaniem (przeciągnięty
+// pasek, długi gest palca), po chwili ciszy dociąga do bliższego z dwóch miejsc.
+const LAND_Y = () => SEKCJE.start.offsetHeight;
+let SCR: any = null, SCR_END = -1e9;
+function jedzDo(y: number) {
+  if (CICHO) { scrollTo(0, y); frame(); return; }
+  SCR = { from: scrollY, to: y, t0: performance.now(), dur: 900 };
+  const krok = (n: number) => {
+    if (!SCR) return;
+    const u = cl((n - SCR.t0) / SCR.dur), e = u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
+    scrollTo({ top: SCR.from + (SCR.to - SCR.from) * e, behavior: 'instant' as ScrollBehavior });
+    if (u < 1) requestAnimationFrame(krok); else { SCR = null; SCR_END = n; }
+  };
+  requestAnimationFrame(krok);
+}
+const wolne = () => !SCR && performance.now() > SCR_END + 450;
+const wDol = () => scrollY < LAND_Y() - 3, wGore = () => scrollY > 3 && scrollY <= LAND_Y() + 3;
+addEventListener('wheel', (ev) => {
+  if (ev.ctrlKey || Math.abs(ev.deltaX) > Math.abs(ev.deltaY)) return;
+  if (!wolne()) { ev.preventDefault(); return; }
+  if (ev.deltaY > 4 && wDol()) { ev.preventDefault(); jedzDo(LAND_Y()); }
+  else if (ev.deltaY < -4 && wGore()) { ev.preventDefault(); jedzDo(0); }
+}, { passive: false });
+addEventListener('keydown', (ev) => {
+  if (ev.ctrlKey || ev.metaKey || ev.altKey || (ev.target as HTMLElement).closest('input,textarea,select,[contenteditable]')) return;
+  const dol = ev.key === 'ArrowDown' || ev.key === 'PageDown' || (ev.key === ' ' && !ev.shiftKey), gora = ev.key === 'ArrowUp' || ev.key === 'PageUp' || (ev.key === ' ' && ev.shiftKey);
+  if (!dol && !gora) return;
+  if (!wolne()) { ev.preventDefault(); return; }
+  if (dol && wDol()) { ev.preventDefault(); jedzDo(LAND_Y()); }
+  else if (gora && wGore()) { ev.preventDefault(); jedzDo(0); }
+});
+let TY0 = 0, TGEST = false;
+addEventListener('touchstart', (ev) => { TY0 = ev.touches[0].clientY; TGEST = false; }, { passive: true });
+addEventListener('touchmove', (ev) => {
+  if (SCR || TGEST) { if (ev.cancelable) ev.preventDefault(); return; }
+  const dy = TY0 - ev.touches[0].clientY;
+  if (Math.abs(dy) < 4 || !ev.cancelable || !wolne()) return;
+  if (dy > 0 && wDol()) { ev.preventDefault(); TGEST = true; jedzDo(LAND_Y()); }
+  else if (dy < 0 && wGore()) { ev.preventDefault(); TGEST = true; jedzDo(0); }
+}, { passive: false });
+let CISZA: any = 0;
+addEventListener('scroll', () => {
+  if (SCR) return;
+  clearTimeout(CISZA);
+  CISZA = setTimeout(() => {
+    if (SCR || !wolne() || scrollY < 3 || scrollY > LAND_Y() - 3) return;
+    jedzDo(KIER > 0 || scrollY > LAND_Y() * .5 ? LAND_Y() : 0);
+  }, 140);
+}, { passive: true });
+document.querySelector('.roj-story')!.addEventListener('click', (ev) => {
+  const e = ev as MouseEvent;
+  if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  e.preventDefault(); jedzDo(LAND_Y());
+});
 let tk = false;
 addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(() => { frame(); tk = false; }); } }, { passive: true });
 addEventListener('resize', () => { ZD.ok = false; SZER_MAX = 0; ZN_X.length = 0; SNOP_K.length = 0; size(); frame(); });
