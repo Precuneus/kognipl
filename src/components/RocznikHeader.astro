@@ -2,8 +2,9 @@
 import { WIKI_ON } from '../karty/data.js';
 interface Props { rocznik?: string; current?: string }
 const { rocznik = '', current = '' } = Astro.props;
+// Rocznik 2026 ma jeden widok, więc jego nazwa sama prowadzi na Płótno (jego słowo, 2026-10-22); Rocznik 2025 zostaje z nazwą do /uwb/ i menu
 const NAV: Record<string, string[][]> = {
-  '2026': [['plotno', 'Płótno', '/2026/']],
+  '2026': [['plotno', 'Rocznik 2026', '/2026/']],
   '2025': [['start', 'Start', '/2025/'], ['wstep-2', 'Wstęp II', '/2025/wstep-2/'], ['mip', 'Mózg i poznanie', '/2025/mip/'], ['design', 'Design Thinking', '/2025/design/'], ['drugi-mozg', 'Drugi mózg', '/2025/drugi-mozg/']],
 };
 // Menu obok logo, tymi samymi słowami co przyciski strony głównej (jego słowo, 2026-10-22): Wiki, Kursy (prosto na Rocznik 2026), Kontakt.
@@ -29,9 +30,9 @@ const own = (NAV[rocznik] || []).map(([k, label, href]) => ({ label, href, on: c
   </div>
   {own.length > 0 && (
     <nav aria-label={'Rocznik ' + rocznik} class="rocznik-views">
-      <a href="/uwb/" class="rocznik-nazwa">Rocznik {rocznik}</a>
-      <span class="rocznik-sep" aria-hidden="true"></span>
-      {own.map((x) => <a href={x.href} class={x.on ? 'on' : ''} aria-current={x.on ? 'page' : undefined}>{x.label}</a>)}
+      {own.length > 1 && <a href="/uwb/" class="rocznik-nazwa">Rocznik {rocznik}</a>}
+      {own.length > 1 && <span class="rocznik-sep" aria-hidden="true"></span>}
+      {own.map((x) => <a href={x.href} class={own.length > 1 ? (x.on ? 'on' : '') : 'rocznik-nazwa'} aria-current={x.on ? 'page' : undefined}>{x.label}</a>)}
     </nav>
   )}
 </header>
