@@ -109,7 +109,8 @@ const nets = k.nets.map(([kod, why]) => ({ kod, name: NETN[kod] || kod, why, to:
 </Base>
 
 <style is:global>
-.wk{max-width:1120px;margin:0 auto;padding:44px 32px 80px}
+/* kolumna na linii logo, jak w indeksie wiki (2026-10-22) */
+.wk{max-width:1120px;margin:0 8vw;padding:56px 0 80px}
 .wk-path{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:#6f685d}
 .wk-path a{color:var(--ink);text-decoration:none}
 .wk-path [aria-current]{color:#e2ddd4}
@@ -140,5 +141,5 @@ const nets = k.nets.map(([kod, why]) => ({ kod, name: NETN[kod] || kod, why, to:
 .wk-chips{display:flex;flex-wrap:wrap;gap:8px}
 .wk-chip{display:inline-flex;align-items:center;text-decoration:none;font-size:13px;min-height:36px;padding:6px 14px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);color:var(--c)}
 @media (max-width:960px){.wk-grid{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:720px){.wk{padding:28px 16px 64px}.wk-mysl h1{font-size:34px}.wk-box{padding:18px 18px}}
+@media (max-width:720px){.wk{margin:0 20px;padding:28px 0 64px}.wk-mysl h1{font-size:34px}.wk-box{padding:18px 18px}}
 </style>

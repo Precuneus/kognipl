@@ -35,7 +35,8 @@ export function getStaticPaths() {
 </Base>
 
 <style is:global>
-.wi{max-width:1120px;margin:0 auto;padding:44px 32px 80px}
+/* kolumna zaczyna się na linii logo (8vw, na telefonie 20px), a wstęp ma pod menu oddech (2026-10-22) */
+.wi{max-width:1120px;margin:0 8vw;padding:64px 0 80px}
 .wi-intro{max-width:720px;margin:0 0 8px}
 .wi-intro p{margin:0 0 14px;font-size:16.5px;line-height:1.75;color:#cfc8bb}
 .wi-intro a{color:#f0c060;text-decoration:underline dotted 1px;text-underline-offset:4px}
@@ -48,5 +49,5 @@ export function getStaticPaths() {
 .wi-fname{font-size:13.5px;color:var(--ink)}
 .wi-cards{display:flex;flex-wrap:wrap;gap:6px 8px}
 .wi-cards a{display:inline-flex;align-items:center;text-decoration:none;font-size:13.5px;min-height:32px;padding:4px 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);color:var(--c)}
-@media (max-width:720px){.wi{padding:28px 16px 64px}.wi-fam{grid-template-columns:minmax(0,1fr);gap:6px}}
+@media (max-width:720px){.wi{margin:0 20px;padding:32px 0 64px}.wi-fam{grid-template-columns:minmax(0,1fr);gap:6px}}
 </style>
