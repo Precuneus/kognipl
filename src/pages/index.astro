@@ -70,11 +70,14 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   + `</svg>`;
 ---
 <Base title="kogni.pl" activePage="" description="kogni.pl: kognitywistyka na Uniwersytecie w Białymstoku. Czym jest doświadczanie?">
+<!-- przełącznik animacji (jego słowo, 2026-10-22): wybór czytelnika wygrywa z ustawieniem systemu; klasa staje na html, zanim ruszy skrypt strony -->
+<script is:inline>(function(){var z=null;try{z=localStorage.getItem('kogni-animacje')}catch(e){}var c=z?z==='off':matchMedia('(prefers-reduced-motion: reduce)').matches;if(c)document.documentElement.classList.add('roj-cicho')})();</script>
 <canvas class="roj-plotno" aria-hidden="true"></canvas>
 <canvas class="roj-plotno roj-iskra" aria-hidden="true"></canvas>
 <main class="roj">
   <!-- ekran startowy (jego słowo, 2026-10-22): logo w lewym górnym rogu, przyciski po lewej schodami od logo ku Story, mózg po prawej; rój formuje z logo kreski ze strzałkami do przycisków; Story stoi pośrodku, a do historii wchodzi się tylko nim -->
   <section class="roj-st start" data-k="start" aria-label="Menu">
+    <button type="button" class="roj-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="roj-anim-tor" aria-hidden="true"></span></button>
     <nav class="roj-menu-st" aria-label="Główne">
       {WIKI ? <a class="roj-btn" href={WIKI}>Wiki</a> : <span class="roj-btn wkrotce">Wiki</span>}
       <a class="roj-btn" href="/2026/kursy/">Kursy</a>
@@ -185,6 +188,15 @@ body:has(.roj) .rocznik-bar,body:has(.roj) .rocznik-menu{display:none}
 .roj a.roj-story.nudge{animation:storyNudge .9s ease-out 1}
 @keyframes storyNudge{0%{box-shadow:0 0 0 0 rgba(240,192,96,.7);transform:scale(1)}30%{transform:scale(1.045)}100%{box-shadow:0 0 0 22px rgba(240,192,96,0);transform:scale(1)}}
 html.roj-blok{overscroll-behavior:none}
+/* przełącznik animacji w prawym górnym rogu, na wysokości logo */
+.roj-anim{position:absolute;right:8vw;top:calc(38px - var(--hh,96px));z-index:4;display:flex;align-items:center;gap:10px;padding:4px 0;background:none;border:0;cursor:pointer;font-family:Inter,sans-serif;font-weight:300;font-size:14px;letter-spacing:.04em;color:var(--mgla)}
+.roj-anim:hover{color:var(--kosc)}
+.roj-anim-tor{position:relative;width:34px;height:18px;box-sizing:border-box;border:1px solid rgba(240,192,96,.55);border-radius:9px;transition:background .2s ease}
+.roj-anim-tor::after{content:'';position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#6e675c;transition:transform .2s ease,background .2s ease}
+.roj-anim[aria-checked="true"] .roj-anim-tor{background:rgba(240,192,96,.16)}
+.roj-anim[aria-checked="true"] .roj-anim-tor::after{transform:translateX(16px);background:var(--zloto)}
+.roj-anim:focus-visible{outline:1px solid var(--zloto);outline-offset:4px}
+html.roj-cicho .roj *{animation:none!important}
 #czesc:focus{outline:none}
 @media (prefers-reduced-motion:reduce){.roj a.roj-story.on,.roj a.roj-story.nudge{animation:none}}
 /* Cześć, pytanie i sieci płyną jak jeden tekst */
@@ -296,6 +308,7 @@ html.roj-blok{overscroll-behavior:none}
   .roj-menu-st{right:20px;top:calc(29vh + 33vw + 40px - var(--hh,96px));gap:14px}
   .roj a.roj-btn,.roj span.roj-btn{font-size:22px}
   .roj a.roj-story{top:calc(86vh - var(--hh,96px))}
+  .roj-anim{right:20px;top:calc(24px - var(--hh,96px));font-size:13px}
   /* telefon: nagłówek stoi pod mózgiem z boku i tam zostaje, zamiast przechodzić pod mózgiem na górę ekranu */
   .roj-oba{position:sticky;top:calc(29vh + 33vw + 40px);height:auto;padding:0 20px}
   .roj-st.lewo .roj-t,.roj-st.kogni .roj-t,.roj-st.lepkie .roj-t{max-width:none}
@@ -327,6 +340,7 @@ html.roj-blok{overscroll-behavior:none}
   .roj-st.in .roj-cien{opacity:.25}
 }
 @media (prefers-reduced-motion:reduce){.roj-t{opacity:1;transform:none;transition:none}}
+html.roj-cicho .roj-t{opacity:1;transform:none;transition:none}
 </style>
 
 <script>
@@ -405,7 +419,15 @@ const g = cv.getContext('2d')!, g2 = cv2.getContext('2d')!;
 let OBA = 0, MOB_DY = 0, NH = 0, OBA_TOP = 0;
 const MB = { cx: 0, cy: 0, bw: 0 };
 let LAB = 20, W = 0, H = 0, D = 1, MOB = false, SEC: any[] = [], LN: any = null, PETLA = false, HOVP = false, AKT = 0;
-const CICHO = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// bez ruchu: ustawienie systemu albo przełącznik na ekranie startowym (klasę stawia skrypt w znaczniku)
+const CICHO = document.documentElement.classList.contains('roj-cicho');
+{
+  const b = document.querySelector('.roj-anim') as HTMLButtonElement | null;
+  if (b) {
+    b.setAttribute('aria-checked', String(!CICHO));
+    b.addEventListener('click', () => { try { localStorage.setItem('kogni-animacje', CICHO ? 'on' : 'off'); } catch (e) {} location.reload(); });
+  }
+}
 const P: any[] = [], CENT: Record<number, number[]> = {};
 const rnd = (s: number) => () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
 const cl = (t: number) => Math.max(0, Math.min(1, t));
