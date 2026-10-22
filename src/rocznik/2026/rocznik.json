@@ -233,9 +233,9 @@
    "odbyte": true,
    "po_zajęciach": [],
    "opis": [
-    "Pierwsze zajęcia Neurokognitywistyki prowadziły od układu nerwowego do sieci mózgowych. Zaczęliśmy od budowy układu nerwowego, od neuronu i komórek glejowych, od płatów kory i łączności między obszarami, a potem przeszliśmy do sieci wielkoskalowych, zespołów obszarów aktywnych razem.",
+    "Zaczęliśmy od budowy układu nerwowego, od neuronu i komórek glejowych, od płatów kory i łączności między obszarami, a potem przeszliśmy do sieci wielkoskalowych, zespołów obszarów aktywnych razem.",
     "Każdą sieć przedstawiłem jej rolą, jednym zdaniem w pierwszej osobie. Sieć wzrokowa: „Widzę.” Sieć czuciowo-ruchowa: „Czuję ciało i się ruszam.” Sieć grzbietowa uwagi: „Koordynuję oko i rękę.” Sieć brzuszna uwagi: „Coś przerywa plan.” Sieć istotności: „Coś zagraża schematowi ciała.” Sieć kontroli: „Trzymam zadanie.” Sieć domyślna: „Ja, przeszłość i przyszłość, inni ludzie.”",
-    "Obok roli każdej sieci pokazałem przypadki jej uszkodzeń, bo uszkodzenie odsłania, co sieć wnosi do doświadczenia. Przy sieci wzrokowej ślepowidzenie, pacjentka D.F. i prozopagnozja, przy czuciowo-ruchowej Ian Waterman, przy grzbietowej uwagi zespół Bálinta, przy brzusznej zaniedbywanie stronne, przy sieci kontroli test sortowania kart, przy sieci istotności otępienie czołowo-skroniowe. Pacjent H.M. pokazał pamięć, Phineas Gage decyzje, obszary Broki i Wernickego mowę.",
+    "Obok roli każdej sieci pokazałem przypadki jej uszkodzeń, bo uszkodzenie odsłania, jakim doświadczeniem jest aktywność tej sieci. Przy sieci wzrokowej omówiłem ślepowidzenie, pacjentkę D.F. i prozopagnozję, przy czuciowo-ruchowej Iana Watermana, przy grzbietowej uwagi zespół Bálinta, przy brzusznej zaniedbywanie stronne, przy sieci kontroli test sortowania kart, a przy sieci istotności otępienie czołowo-skroniowe. Pacjent H.M. posłużył za przykład pamięci, Phineas Gage za przykład decyzji, a obszary Broki i Wernickego za przykład mowy.",
     "Zajęcia zamknęły trzy szlaki wzrokowe: brzuszny, grzbietowy i boczny, którym płynie mimika, spojrzenie i gest drugiej osoby."
    ],
    "karty": [
@@ -335,9 +335,8 @@
     }
    ],
    "opis": [
-    "Pierwsze zajęcia Wstępu po organizacyjnych były rozmową o grach. Otworzyłem je ustaleniem reguł dwóch ról: na Wstępie jesteśmy po imieniu i przychodzę w bluzie, na Neurokognitywistyce obowiązuje forma oficjalna, a ja mówię wprost, że gram obie role.",
-    "Zaczęliśmy od gier komputerowych, a przykłady szybko się rozszerzały: planszowe, sportowe, słowne, karciane, potem gry ekonomiczne, geopolityczne i społeczne. Sprawczość to wybór gier, których się uczymy i w które gramy: pokoje, które odwiedzamy, drzwi, przez które przechodzimy. Mówiliśmy o funkcji użyteczności, o decyzjach, co, kiedy i jak zrobić, o intencjach i eksperymencie Libeta, w którym aktywność mózgu narasta, zanim osoba badana wskaże chwilę decyzji, więc tej chwili nie da się uchwycić jako początku działania. Rozmawialiśmy też o regułach: o ich negocjowaniu, o odkrywaniu mechaniki i cech.",
-    "Przykłady przyszły z ekranu. Pierwszy sezon Westworld postawił pytania o świadomość, tożsamość, sprawczość i konsekwencje, pierwszy sezon Altered Carbon pokazał wiele sztucznych inteligencji, Matrix ludzi jako źródło obliczeń. Enty z Władcy Pierścieni posłużyły za przykład języka niosącego głęboką intersubiektywność, a Casino Royale za przykład pokera i głębi Vesper.",
+    "Pierwsze zajęcia Wstępu po organizacyjnych były rozmową o grach. Zaczęliśmy od gier komputerowych, a przykłady szybko się rozszerzały: planszowe, sportowe, słowne, karciane, potem gry ekonomiczne, geopolityczne i społeczne. Sprawczość to wybór gier, których się uczymy i w które gramy: pokoje, które odwiedzamy, drzwi, przez które przechodzimy. Mówiliśmy o funkcji użyteczności, o decyzjach, co, kiedy i jak zrobić, o intencjach i eksperymencie Libeta, w którym aktywność mózgu narasta, zanim nadejdzie chwila, którą osoba badana wskazuje jako moment decyzji, więc ta chwila przychodzi, gdy działanie już trwa. Rozmawialiśmy też o regułach: o ich negocjowaniu, o odkrywaniu mechaniki i cech.",
+    "Pierwszy sezon Westworld postawił pytania o świadomość, tożsamość, sprawczość i konsekwencje, pierwszy sezon Altered Carbon pokazał wiele sztucznych inteligencji, Matrix ludzi jako źródło obliczeń. Enty z Władcy Pierścieni posłużyły za przykład języka niosącego głęboką intersubiektywność, a Casino Royale za przykład pokera i głębi Vesper.",
     "Doszliśmy do niedawnego roju agentów OpenAI i do dylematu dwóch przycisków z mediów społecznościowych: czerwony daje pewne przeżycie, zielony tylko wtedy, gdy naciśnie go ponad połowa. Pomiar mózgu pojawił się przy kontrolerach EEG, którymi grają streamerzy."
    ],
    "karty": [
@@ -405,9 +404,9 @@
    "odbyte": true,
    "po_zajęciach": [],
    "opis": [
-    "Drugie zajęcia Neurokognitywistyki prowadziły od fotonu do bioinformacji. Zaczęliśmy od drogi wzrokowej, od siatkówki do pierwszorzędowej kory wzrokowej (V1). Przypomnieliśmy trzy szlaki wzrokowe oraz sieci z pierwszych zajęć.",
-    "Pręciki i czopki ułożyliśmy według położenia w siatkówce, a widmo elektromagnetyczne od promieni gamma do fal radiowych, z czułością czopków.",
-    "Potem bioinformacja: sposób, w jaki receptory biologiczne organizmu przetwarzają energię fizyczną, dzielona na eksterocepcję, propriocepcję i interocepcję. Eksterocepcję podzieliliśmy według wielkości fizycznej, którą odbiera receptor, a świat kleszcza i rekina pokazał, że każdy gatunek odbiera własny wycinek energii. Doszliśmy do interocepcji; receptor, gradient jonów, synapsa i przyrządy pomiaru przeszły na kolejne zajęcia.",
+    "Zaczęliśmy od drogi wzrokowej, od siatkówki do pierwszorzędowej kory wzrokowej (V1). Przypomnieliśmy trzy szlaki wzrokowe oraz sieci z pierwszych zajęć.",
+    "Pręciki i czopki ułożyliśmy według położenia w siatkówce i przeszliśmy przez widmo elektromagnetyczne od promieni gamma do fal radiowych aż do wąskiego pasma światła, na które odpowiadają trzy rodzaje czopków.",
+    "Potem zdefiniowaliśmy bioinformację jako sposób, w jaki receptory biologiczne organizmu przetwarzają energię fizyczną, i rozróżniliśmy w niej eksterocepcję, propriocepcję i interocepcję. Eksterocepcję podzieliliśmy według wielkości fizycznej, którą odbiera receptor, a świat kleszcza i rekina pokazał, że każdy gatunek odbiera własny wycinek energii. Doszliśmy do interocepcji; receptor, gradient jonów, synapsa i przyrządy pomiaru przeszły na kolejne zajęcia.",
     "W rozmowie poszliśmy w stronę predykcji. Oliver Sacks opowiada o zespole Charlesa Bonneta, w którym po utracie wzroku pojawiają się halucynacje, a Anil Seth nazywa percepcję halucynacją kontrolowaną. Mówiliśmy o predykcjach w mózgu i między sieciami, o ich aktualizacji przez zaskoczenie, o warunkowaniu i halucynacjach. Opowiedziałem o rozszczepionym mózgu, o stymulacji skrzyżowania skroniowo-ciemieniowego i wywołanych nią doznaniach oraz o osobie niewidomej, która po przywróceniu wzroku nie odróżniała wzrokiem owiec, jako kolejnym przykładzie predykcji."
    ],
    "karty": [
@@ -481,7 +480,7 @@
    "po_zajęciach": [],
    "opis": [
     "Zaczęliśmy od możliwości AI i od zmian ekonomicznych, które przynosi. Pokazałem studentom kogni.pl taką, jaka jest teraz, w budowie.",
-    "Potem obejrzeliśmy film Surnex o warstwach mikro, mezo i makro w grach i zmieniliśmy jego interpretację. Mikro to wykonanie: sieć okołocentralna, sieć grzbietowa uwagi i sieć wzrokowa, jak w stadium sensoryczno-motorycznym Piageta. Mezo to reagowanie na zmianę: informacja z tła o ludziach, losowości i mechanice aktualizuje Modele Mentalne, jak eksplorowanie mapy. Porównałem to z teorią umysłu, z manipulacją i kłamstwem, gdzie aktualizują się modele drugiej osoby. Zastanawialiśmy się, z jaką częstotliwością modele się aktualizują. Ujęliśmy to w ramie kodowania predykcyjnego. Makro to strategia prowadzona nabytymi modelami: gdy mechanika jest znana, ścieżka jest jasna, a trener ją pokazuje.",
+    "Potem obejrzeliśmy film Surnex o warstwach mikro, mezo i makro w grach i zmieniliśmy jego interpretację. Mikro to wykonanie: sieć czuciowo-ruchowa, sieć grzbietowa uwagi i sieć wzrokowa, jak w stadium sensoryczno-motorycznym Piageta. Mezo to reagowanie na zmianę: informacja z tła o ludziach, losowości i mechanice aktualizuje Modele Mentalne, jak eksplorowanie mapy. Porównałem to z teorią umysłu, z manipulacją i kłamstwem, gdzie aktualizują się modele drugiej osoby. Zastanawialiśmy się, z jaką częstotliwością modele się aktualizują. Ujęliśmy to w ramie kodowania predykcyjnego. Makro to strategia prowadzona nabytymi modelami: gdy mechanika jest znana, ścieżka jest jasna, a trener ją pokazuje.",
     "Podzieliłem losowo studentów na pary, żeby ze sobą rozmawiały nowe osoby. Każda para szukała swoich realnych umiejętności i sprawdzała, czy są świadectwem mikro, mezo czy makro. Zajęcia zamknęło pytanie: Jaki cheat najbardziej ułatwiłby Ci życie i dlaczego?"
    ],
    "karty": [
