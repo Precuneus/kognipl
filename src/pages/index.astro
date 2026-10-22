@@ -188,8 +188,8 @@ body:has(.roj) .rocznik-bar,body:has(.roj) .rocznik-menu{display:none}
 .roj a.roj-story.nudge{animation:storyNudge .9s ease-out 1}
 @keyframes storyNudge{0%{box-shadow:0 0 0 0 rgba(240,192,96,.7);transform:scale(1)}30%{transform:scale(1.045)}100%{box-shadow:0 0 0 22px rgba(240,192,96,0);transform:scale(1)}}
 html.roj-blok{overscroll-behavior:none}
-/* przełącznik animacji w prawym górnym rogu, na wysokości logo */
-.roj-anim{position:absolute;right:8vw;top:calc(38px - var(--hh,96px));z-index:4;display:flex;align-items:center;gap:10px;padding:4px 0;background:none;border:0;cursor:pointer;font-family:Inter,sans-serif;font-weight:300;font-size:14px;letter-spacing:.04em;color:var(--mgla)}
+/* przełącznik animacji w prawym górnym rogu, na wysokości logo; stoi na ekranie przez całą historię (jego słowo, 2026-10-22) */
+.roj-anim{position:fixed;right:calc(8vw - 10px);top:32px;z-index:20;display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.55);border:0;border-radius:15px;cursor:pointer;font-family:Inter,sans-serif;font-weight:300;font-size:14px;letter-spacing:.04em;color:var(--mgla)}
 .roj-anim:hover{color:var(--kosc)}
 .roj-anim-tor{position:relative;width:34px;height:18px;box-sizing:border-box;border:1px solid rgba(240,192,96,.55);border-radius:9px;transition:background .2s ease}
 .roj-anim-tor::after{content:'';position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#6e675c;transition:transform .2s ease,background .2s ease}
@@ -308,7 +308,7 @@ html.roj-cicho .roj *{animation:none!important}
   .roj-menu-st{right:20px;top:calc(29vh + 33vw + 40px - var(--hh,96px));gap:14px}
   .roj a.roj-btn,.roj span.roj-btn{font-size:22px}
   .roj a.roj-story{top:calc(86vh - var(--hh,96px))}
-  .roj-anim{right:20px;top:calc(24px - var(--hh,96px));font-size:13px}
+  .roj-anim{right:10px;top:18px;font-size:13px}
   /* telefon: nagłówek stoi pod mózgiem z boku i tam zostaje, zamiast przechodzić pod mózgiem na górę ekranu */
   .roj-oba{position:sticky;top:calc(29vh + 33vw + 40px);height:auto;padding:0 20px}
   .roj-st.lewo .roj-t,.roj-st.kogni .roj-t,.roj-st.lepkie .roj-t{max-width:none}
@@ -425,7 +425,8 @@ const CICHO = document.documentElement.classList.contains('roj-cicho');
   const b = document.querySelector('.roj-anim') as HTMLButtonElement | null;
   if (b) {
     b.setAttribute('aria-checked', String(!CICHO));
-    b.addEventListener('click', () => { try { localStorage.setItem('kogni-animacje', CICHO ? 'on' : 'off'); } catch (e) {} location.reload(); });
+    // przełączenie przeładowuje stronę; miejsce w historii wraca po przeładowaniu
+    b.addEventListener('click', () => { try { localStorage.setItem('kogni-animacje', CICHO ? 'on' : 'off'); sessionStorage.setItem('kogni-anim-y', String(scrollY)); } catch (e) {} location.reload(); });
   }
 }
 const P: any[] = [], CENT: Record<number, number[]> = {};
@@ -1584,6 +1585,7 @@ function zaprzyj(on: boolean) {
   BLOK = on; document.documentElement.classList.toggle('roj-blok', on); if (on) LAND.g = 0;
   for (const e of OSLONA) (e as any).inert = on;
 }
+{ let y = 0; try { y = +(sessionStorage.getItem('kogni-anim-y') || 0); sessionStorage.removeItem('kogni-anim-y'); } catch (e) {} if (y > 2) scrollTo(0, y); }
 if (scrollY < 3 && !location.hash) zaprzyj(true);
 function nudgeStory() {
   const n = performance.now();
