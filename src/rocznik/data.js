@@ -1,7 +1,7 @@
 // Rocznik 2026: the karty in ./2026/karty (one Markdown note per splot, Obsidian-style)
 // and ./2026/rocznik.json (osnowy, zajęcia, połączenia) assembled for the views.
 import R from './2026/rocznik.json';
-import { ALL } from '../karty/data.js';
+import { ALL, segs } from '../karty/data.js';
 const SZKICE = typeof process !== 'undefined' && process.env.WIKI_SZKICE === '1';
 
 const notes = import.meta.glob('./2026/karty/*.md', { eager: true });
@@ -28,7 +28,8 @@ export const CL = R['zajęcia'].map((z) => {
     title: z['tytuł'] || '', held: !!z.odbyte,
     after: (z['po_zajęciach'] || []).map((a) => ({ label: a['tytuł'], url: a.url })),
     url: '/2026/?z=' + z.id,
-    opis: (z.opis || []).map((p) => p.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_, a, b) => b || a)),
+    // opis zajęć z [[kartami]] w zdaniach: link do gotowej karty, sama nazwa przy niegotowej (jego słowo, 2026-10-22)
+    opis: (z.opis || []).map((p) => segs(p)),
   };
 });
 
@@ -54,7 +55,7 @@ const OLD = Object.entries(notes).map(([file, mod]) => {
     cls: cls.id, o: unlink(f.osnowa), dep: (f['głębokość'] || []).map((x) => LV.indexOf(x)),
     m: f['myśl'] || '', i: body.length && body[0].t ? body[0].t : '',
     l: (f['materiały'] || []).map((x) => [x['tytuł'], x.url, x.czas ? String(x.czas) : '']),
-    h: title, d: f.opis || '', r2: (f.rodziny || []).map(unlink),
+    h: title, d: f.opis || '', dSeg: segs(f.opis || ''), r2: (f.rodziny || []).map(unlink),
     net: (f.sieci || []).map((x) => x.kod), nets: (f.sieci || []).map((x) => [x.kod, x['powód']]),
     nw: f.bez_sieci || '', fig: (f.ryciny || []).map((x) => x.replace(/\.svg$/, '')), body,
   };
@@ -77,7 +78,7 @@ R['zajęcia'].forEach((z) => {
       if (!by[o]) {
         const t = (z.splot || {})[o];
         by[o] = { id: z.id + '-' + slugify(o), stem: '', cls: z.id, o, isOld: false, isNew: true, cards: [], homed: [], family: [], r2: [],
-          url: cls.url, txt: !!t, h: t ? t.h : o, d: t ? t.d : '', m: '', i: '', l: [], net: [], nets: [], nw: '', fig: [], body: [], dep: [] };
+          url: cls.url, txt: !!t, h: t ? t.h : o, d: t ? t.d : '', dSeg: segs(t ? t.d : ''), m: '', i: '', l: [], net: [], nets: [], nw: '', fig: [], body: [], dep: [] };
         NEW.push(by[o]);
       }
       const sp = by[o];
@@ -111,7 +112,8 @@ export const opisOf = (id) => ((R['zajęcia'].find((z) => z.id === id) || {}).op
 export function viewData(kind) {
   const OS = kind === 'plotno' ? OSFULL.map((o) => o.nazwa)
     : OSFULL.map((o) => [o.nazwa, o.rodziny.join(' · ')]);
-  const OP = kind === 'plotno' ? OSFULL.map((o) => [o.opis, o.rodziny]) : undefined;
+  // osnowa: dwa, trzy zdania z ogólnymi kartami jako linkami zamiast rzędu rodzin (jego słowo, 2026-10-22)
+  const OP = kind === 'plotno' ? OSFULL.map((o) => [o.opis, o.rodziny, segs(o.tekst || o.opis)]) : undefined;
   return { OS, OP, BAND, GN, LV, CL, SP, CN };
 }
 

@@ -14,6 +14,7 @@
     {
      "nazwa": "Kultura i społeczeństwo",
      "opis": "Przekaz zachowań między pokoleniami, różnice kulturowe, demografię i naukę jako działanie zbiorowe.",
+     "tekst": "Zachowania przechodzą z pokolenia na pokolenie przez kulturę, a wspólnoty różnią się tym, co przekazują dalej i jak zakładają rodziny. Nauka też jest działaniem zbiorowym, a kognitywistyka powstała ze spotkania dyscyplin, których szkoły, od [[Podejście obliczeniowe|podejścia obliczeniowego]] po [[Poznanie ucieleśnione|poznanie ucieleśnione]], spierają się o to, czym jest umysł. [[Kryzys kognitywistyki|Kryzys kognitywistyki]] i narodziny [[Neuronauka poznawcza|neuronauki poznawczej]] pokazują, jak ta wspólnota zmienia własne pytania.",
      "rodziny": [
       "Kultura",
       "Nauka jako zbiorowość",
@@ -23,6 +24,7 @@
     {
      "nazwa": "Umysł społeczny",
      "opis": "Rozumienie cudzych umysłów, więzi, współpracę i rozwój dziecka w relacji z innymi.",
+     "tekst": "Innych ludzi znasz z modeli zbudowanych z ich ruchów i słów, a [[Konstruowanie innych umysłów|konstruowanie innych umysłów]] widać u dziecka w [[Test fałszywych przekonań|teście fałszywych przekonań]]. Z tych modeli rośnie [[Wspólna intencjonalność|wspólna intencjonalność]], [[Empatia poznawcza i afektywna|empatia]] i więź z opiekunem, przy którym dziecko uczy się w [[Strefa najbliższego rozwoju|strefie najbliższego rozwoju]]. Współpraca i konflikt rozgrywają się w grach takich jak [[Problem gapowicza|problem gapowicza]] i [[Dylemat dwóch przycisków|dylemat dwóch przycisków]].",
      "rodziny": [
       "Teoria umysłu",
       "Wspólna intencjonalność",
@@ -34,6 +36,7 @@
     {
      "nazwa": "Sztuczni agenci",
      "opis": "Działanie modeli językowych i agentów AI oraz ich wpływ na zatrudnienie.",
+     "tekst": "Modele językowe przewidują kolejne słowo na podstawie ogromnych zbiorów tekstu, a [[Agenci AI|agenci AI]] składają z nich działanie: planują, używają narzędzi i współpracują ze sobą. Ich zdolności zmieniają zatrudnienie i to, które zadania zostają ludziom.",
      "rodziny": [
       "Modele językowe",
       "Agenci AI",
@@ -48,6 +51,7 @@
     {
      "nazwa": "Język",
      "opis": "Mózgowe podłoże mowy, rozumienie i czytanie oraz wpływ języka na myślenie.",
+     "tekst": "Mowa i rozumienie są aktywnością wielu sieci naraz, a [[Język w sieciach mózgu|język w sieciach mózgu]] sięga od obszarów Broki i Wernickego po [[Obszar wzrokowy słów|obszar wzrokowy słów]], który przejmuje czytanie. Każde słowo przewidujesz, zanim padnie, więc słowo niespodziewane budzi [[Zaskoczenie słowem|zaskoczenie]] widoczne w zapisie EEG. Słownictwo rośnie tam, gdzie wspólnota go potrzebuje, jak [[Słowa na śnieg|słowa na śnieg]], a [[Mowa wewnętrzna|mowa wewnętrzna]] towarzyszy myśleniu.",
      "rodziny": [
       "Mózg języka",
       "Język a myślenie",
@@ -57,6 +61,7 @@
     {
      "nazwa": "Świadomość",
      "opis": "Oznaki i stany świadomości, jaźń i jej podział.",
+     "tekst": "Świadomość jest tym, [[Jak to jest być nietoperzem|jak to jest być]] danym organizmem, a jej oznaki odczytujemy [[Raport jako pomiar|z raportu]], z zachowania i z aktywności mózgu, także u pacjentów z [[Ukryta świadomość|ukrytą świadomością]]. Stany zmienione, od [[Marzenia senne|marzeń sennych]] i [[Anestezja ogólna|anestezji ogólnej]] po [[Doświadczenie poza ciałem|doświadczenie poza ciałem]], pokazują, jak doświadczenie zmienia się razem z aktywnością sieci. [[Rozszczepiony mózg|Rozszczepiony mózg]] stawia pytanie o jedność ja.",
      "rodziny": [
       "Oznaki świadomości",
       "Stany zmienione",
@@ -66,6 +71,7 @@
     {
      "nazwa": "Myślenie",
      "opis": "Rozumowanie, rozwiązywanie problemów i planowanie, odkrywanie reguł, funkcje wykonawcze, inteligencję i twórczość.",
+     "tekst": "Myślisz, przeszukując [[Przestrzeń problemu|przestrzeń problemu]] i trzymając jej części w [[Pamięć robocza|pamięci roboczej]], a rozumowanie przybiera formę [[Dedukcja, indukcja, abdukcja|dedukcji, indukcji i abdukcji]]. Reguły odkrywasz z kolejnych prób, co sprawdza [[Test sortowania kart|test sortowania kart]], a strategia prowadzona nabytymi modelami to warstwa [[Makro - strategia z modeli|makro]]. Twórczość często idzie [[Myślenie przez analogię|przez analogię]].",
      "rodziny": [
       "Rozumowanie i wnioskowanie",
       "Rozwiązywanie problemów i planowanie",
@@ -78,6 +84,7 @@
     {
      "nazwa": "Decyzja i działanie",
      "opis": "Powstawanie intencji i jej czas, poczucie sprawczości, wybór i wartość opcji oraz lukę między intencją a działaniem.",
+     "tekst": "[[Eksperyment Libeta|Eksperyment Libeta]] i [[Eksperyment Desmurgeta|eksperyment Desmurgeta]] pytają, kiedy powstaje intencja i skąd bierze się [[Poczucie sprawczości|poczucie sprawczości]]. Przy wyborze ważysz wartość opcji, a uszkodzenia [[Kora oczodołowo-czołowa|kory oczodołowo-czołowej]] u [[Phineas Gage|Phineasa Gage'a]] i [[Pacjent Elliot|pacjenta Elliota]] pokazują, jak to ważenie się rozpada. Wybór kształtują [[Efekt kosztów utopionych|koszty utopione]] i napięcie między [[Eksploracja i eksploatacja|eksploracją a eksploatacją]], a lukę między intencją a działaniem zamyka czasem [[Działanie przed motywacją|działanie przed motywacją]].",
      "rodziny": [
       "Intencja i sprawczość",
       "Wybór i wartość",
@@ -87,6 +94,7 @@
     {
      "nazwa": "Nawyk i automatyzacja",
      "opis": "Warunkowanie, uczenie ze wzmocnieniem, przejście od działania celowego do nawyku, nabywanie wprawy i pętle jąder podstawy.",
+     "tekst": "Uczysz się przez [[Warunkowanie klasyczne i instrumentalne|warunkowanie klasyczne i instrumentalne]], a [[Dopaminowe zaskoczenie nagrodą|dopaminowe zaskoczenie nagrodą]] aktualizuje to, czego się spodziewasz. Powtarzane działanie przechodzi [[Od uwagi do automatyzmu|od uwagi do automatyzmu]] i [[Działanie celowe i nawykowe|od celu do nawyku]], wzdłuż [[Drogi jąder podstawy|dróg jąder podstawy]]. To samo uczenie daje wprawę i [[Uzależnienie jako uczenie się|uzależnienie]].",
      "rodziny": [
       "Warunkowanie",
       "Uczenie ze wzmocnieniem",
@@ -98,6 +106,7 @@
     {
      "nazwa": "Pamięć i przestrzeń",
      "opis": "Zapisywanie, utrwalanie i odtwarzanie śladów pamięci oraz mapy przestrzeni i pojęć.",
+     "tekst": "Hipokamp i kora wokół niego budują [[Mapy poznawcze|mapy poznawcze]], w przestrzeni z [[Komórki miejsca i komórki siatki|komórkami miejsca i komórkami siatki]], a w świecie pojęć z [[Komórki pojęciowe|komórkami pojęciowymi]]. Wspomnienie budujesz na nowo za każdym razem, pod obecnymi oczekiwaniami, bo [[Pamięć jako rekonstrukcja|pamięć jest rekonstrukcją]], a te same sieci są aktywne, gdy [[Wyobrażanie przyszłości|wyobrażasz sobie przyszłość]]. [[Pacjent H.M.|Pacjent H.M.]] pokazał, że systemy pamięci da się rozdzielić, a [[Utrwalanie pamięci we śnie|sen utrwala]] nowe wspomnienia.",
      "rodziny": [
       "Mapy przestrzeni",
       "Przestrzenie pojęć",
@@ -109,6 +118,7 @@
     {
      "nazwa": "Osobowość i zdrowie psychiczne",
      "opis": "Trwałe cechy osobowości, neuroróżnorodność oraz zaburzenia nastroju, lęku i tożsamości.",
+     "tekst": "Osobowość to trwałe skłonności, którymi ludzie różnią się od siebie, a [[Wielka Piątka|Wielka Piątka]] opisuje je pięcioma wymiarami. Neuroróżnorodność, od [[Spektrum autyzmu|spektrum autyzmu]] po [[ADHD|ADHD]], to różne układy aktywności tych samych sieci. Nastrój i lęk podtrzymują [[Ruminacja|ruminacja]] i [[Perfekcjonizm|perfekcjonizm]], a trauma może rozszczepić tożsamość, jak w [[Dysocjacyjne zaburzenie tożsamości|dysocjacyjnym zaburzeniu tożsamości]].",
      "rodziny": [
       "Nastrój i lęk",
       "Trauma i dysocjacja",
@@ -119,6 +129,7 @@
     {
      "nazwa": "Emocje",
      "opis": "Powstawanie, wyrażanie i regulację emocji, nagrodę i przyjemność oraz reakcje strachu, stresu i bólu.",
+     "tekst": "Emocje konstruujesz z bioinformacji z wnętrza ciała i z pojęć, które masz, jak głosi [[Teoria emocji konstruowanych|teoria emocji konstruowanych]], a [[Efekt Kuleszowa|efekt Kuleszowa]] i [[Atrybucja pobudzenia|atrybucja pobudzenia]] pokazują, jak kontekst nadaje pobudzeniu znaczenie. Nagroda dzieli się na [[Chcenie i lubienie|chcenie i lubienie]], ból zależy od oczekiwań, co widać w [[Efekt placebo|efekcie placebo]], a strach u [[Pacjentka S.M.|pacjentki S.M.]] zniknął razem z ciałami migdałowatymi. Emocje regulujesz, gdy [[Ponowna ocena i tłumienie|oceniasz sytuację na nowo albo tłumisz]] ich wyraz.",
      "rodziny": [
       "Konstruowanie emocji",
       "Nagroda i przyjemność",
@@ -130,6 +141,7 @@
     {
      "nazwa": "Ciało i ruch",
      "opis": "Czucie własnego ciała, sterowanie ruchem, schemat ciała z narzędziami oraz wpływ wysiłku, snu i fizjologii na mózg.",
+     "tekst": "Ciało czujesz od środka przez [[Interocepcja|interocepcję]], a jego położenie i ruch przez [[Propriocepcja|propriocepcję]], której utrata u [[Ian Waterman|Iana Watermana]] przeniosła sterowanie ruchem na wzrok. Według propozycji, że [[Mózg dla ruchu|mózg istnieje dla ruchu]], ruch zaczyna się od predykcji, a jego wykonanie to warstwa [[Mikro - wykonanie|mikro]]. Schemat ciała obejmuje narzędzia i przestrzeń wokół, co pokazują [[Iluzja gumowej ręki|iluzja gumowej ręki]] i [[Kończyna fantomowa|kończyna fantomowa]], a [[Allostaza|allostaza]] dostraja ciało do tego, czego będzie potrzebować.",
      "rodziny": [
       "Interocepcja",
       "Propriocepcja i dotyk",
@@ -141,6 +153,7 @@
     {
      "nazwa": "Percepcja i uwaga",
      "opis": "Przetwarzanie bodźców od fizyki światła i receptorów przez szlaki kory po obrazy umysłowe oraz uwagę i jej zaburzenia.",
+     "tekst": "Widzenie zaczyna się od światła na [[Pręciki, czopki i droga wzrokowa|pręcikach i czopkach]] i biegnie drogą wzrokową do kory, gdzie rozchodzi się na szlaki, z [[Trzeci szlak wzrokowy|trzecim szlakiem wzrokowym]] dla ruchów twarzy i ciała. Uszkodzenia rozkładają widzenie na części, jak w [[Ślepowidzenie|ślepowidzeniu]], [[Prozopagnozja|prozopagnozji]], [[Zespół Bálinta|zespole Bálinta]] i [[Zaniedbywanie stronne|zaniedbywaniu stronnym]]. Uwaga wybiera, co z tego zobaczysz, co pokazuje [[Ślepota z nieuwagi|ślepota z nieuwagi]], a [[Afantazja|afantazja]] pokazuje, że obrazy umysłowe różnią się między ludźmi.",
      "rodziny": [
       "Światło",
       "Oko i barwa",
@@ -160,6 +173,7 @@
     {
      "nazwa": "Sieci mózgu i predykcja",
      "opis": "Anatomię mózgu, jego sieci wielkoskalowe, rytmy i dojrzewanie oraz predykcję i zaskoczenie.",
+     "tekst": "Twoje doświadczenie jest aktywnością [[Sieci wielkoskalowe|sieci wielkoskalowych]], zespołów obszarów aktywnych razem, od [[Sieć wzrokowa|sieci wzrokowej]] po [[Sieć domyślna|sieć domyślną]]. Sieci przewidują, co nadejdzie od receptorów, a [[Kodowanie predykcyjne|kodowanie predykcyjne]] opisuje, jak zaskoczenie aktualizuje Twoje modele. Sieci dojrzewają wzdłuż [[Gradient główny kory|gradientu głównego kory]], a [[Rytmy alfa i gamma|rytmy alfa i gamma]] porządkują ich aktywność w czasie.",
      "rodziny": [
       "Predykcja",
       "Sieci wielkoskalowe",
@@ -171,6 +185,7 @@
     {
      "nazwa": "Neuron i synapsa",
      "opis": "Elektryczne i chemiczne działanie pojedynczego neuronu i synapsy oraz zmiany siły połączeń między neuronami.",
+     "tekst": "[[Neuron i glej|Neurony i komórki glejowe]] budują układ nerwowy, a [[Bioinformacja|bioinformacja]] przepływa wzdłuż aksonu jako [[Potencjał czynnościowy|potencjały czynnościowe]], zebrane wcześniej z [[Potencjał stopniowany|potencjałów stopniowanych]] na dendrytach. Na [[Synapsa chemiczna i elektryczna|synapsie chemicznej]] bioinformacja jest transformowana przez przekaźnik i jego receptory, na które działają też substancje takie jak [[Kofeina i receptor adenozynowy|kofeina]], a na elektrycznej przekazywana dalej. Siła połączeń zmienia się z doświadczeniem według [[Reguła Hebba|reguły Hebba]].",
      "rodziny": [
       "Budowa i elektryka neuronu",
       "Przekaźnictwo synaptyczne",
@@ -180,6 +195,7 @@
     {
      "nazwa": "Życie i umieranie",
      "opis": "Procesy molekularne, energetyczne i regulacyjne, którymi komórki i ich wspólnoty utrzymują się przy życiu, uczą się, współdziałają i umierają.",
+     "tekst": "Komórki utrzymują się przy życiu dzięki cząsteczkom, genom i energii, regulują własny stan i umierają w uporządkowany sposób. Uczą się też bez mózgu i tworzą wspólnoty, od biofilmów bakterii po tkanki.",
      "rodziny": [
       "Cząsteczki i geny",
       "Energia komórki",
@@ -191,6 +207,7 @@
     {
      "nazwa": "Ewolucja",
      "opis": "Zmiany gatunków i układów nerwowych w czasie oraz zdolności poznawcze różnych zwierząt.",
+     "tekst": "Układy nerwowe zmieniały się razem z gatunkami, od sieci nerwowej parzydełkowców po mózg człowieka. Każdy gatunek żyje we własnym [[Umwelt|Umwelt]], wycinku świata dostępnym jego receptorom, a poznanie zwierząt pokazuje, jak różne są te światy.",
      "rodziny": [
       "Ewolucja układu nerwowego",
       "Człowiek w ewolucji",
@@ -205,6 +222,7 @@
     {
      "nazwa": "Energia i jej przemiany",
      "opis": "Entropię i kierunek czasu, symetrie i prawa zachowania, elektryczność i fale elektromagnetyczne oraz zjawiska kwantowe.",
+     "tekst": "Entropia wyznacza kierunek czasu, a z symetrii wynikają prawa zachowania. Światło to fala elektromagnetyczna, a [[Widmo elektromagnetyczne|widmo elektromagnetyczne]] sięga od promieni gamma do fal radiowych, z wąskim pasmem widzialnym dla czopków. Zjawiska kwantowe opisują energię w najmniejszych porcjach, takich jak foton.",
      "rodziny": [
       "Entropia i prawa fizyki",
       "Elektryczność i fale elektromagnetyczne",
@@ -214,6 +232,7 @@
     {
      "nazwa": "Pomiar mózgu",
      "opis": "Sygnały fizyczne, którymi przyrządy mierzą aktywność mózgu, i rozdzielczość tych pomiarów.",
+     "tekst": "Aktywność mózgu mierzysz przez sygnały fizyczne: [[EEG|EEG]] zapisuje napięcie elektryczne na skórze głowy, a [[Skaner MRI|skaner MRI]] sygnał hemodynamiczny i magnetyczny. Każdy przyrząd ma swoją rozdzielczość w czasie i w przestrzeni, więc EEG śledzi milisekundy, a fMRI milimetry. Dyfuzja wody, przepływ krwi i ciśnienie dają kolejne obrazy tej samej tkanki.",
      "rodziny": [
       "Sygnał elektryczny",
       "Sygnał hemodynamiczny i magnetyczny",
@@ -233,10 +252,10 @@
    "odbyte": true,
    "po_zajęciach": [],
    "opis": [
-    "Zaczęliśmy od budowy układu nerwowego, od neuronu i komórek glejowych, od płatów kory i łączności między obszarami, a potem przeszliśmy do sieci wielkoskalowych, zespołów obszarów aktywnych razem.",
-    "Każdą sieć przedstawiłem jej rolą, jednym zdaniem w pierwszej osobie. Sieć wzrokowa: „Widzę.” Sieć czuciowo-ruchowa: „Czuję ciało i się ruszam.” Sieć grzbietowa uwagi: „Koordynuję oko i rękę.” Sieć brzuszna uwagi: „Coś przerywa plan.” Sieć istotności: „Coś zagraża schematowi ciała.” Sieć kontroli: „Trzymam zadanie.” Sieć domyślna: „Ja, przeszłość i przyszłość, inni ludzie.”",
-    "Obok roli każdej sieci pokazałem przypadki jej uszkodzeń, bo uszkodzenie odsłania, jakim doświadczeniem jest aktywność tej sieci. Przy sieci wzrokowej omówiłem ślepowidzenie, pacjentkę D.F. i prozopagnozję, przy czuciowo-ruchowej Iana Watermana, przy grzbietowej uwagi zespół Bálinta, przy brzusznej zaniedbywanie stronne, przy sieci kontroli test sortowania kart, a przy sieci istotności otępienie czołowo-skroniowe. Pacjent H.M. posłużył za przykład pamięci, Phineas Gage za przykład decyzji, a obszary Broki i Wernickego za przykład mowy.",
-    "Zajęcia zamknęły trzy szlaki wzrokowe: brzuszny, grzbietowy i boczny, którym płynie mimika, spojrzenie i gest drugiej osoby."
+    "Zaczęliśmy od budowy układu nerwowego, od [[Neuron i glej|neuronu i komórek glejowych]], od płatów kory i łączności między obszarami, a potem przeszliśmy do [[Sieci wielkoskalowe|sieci wielkoskalowych]], zespołów obszarów aktywnych razem.",
+    "Każdą sieć przedstawiłem jej rolą, jednym zdaniem w pierwszej osobie. [[Sieć wzrokowa|Sieć wzrokowa]]: „Widzę.” [[Sieć czuciowo-ruchowa|Sieć czuciowo-ruchowa]]: „Czuję ciało i się ruszam.” [[Sieć grzbietowa uwagi|Sieć grzbietowa uwagi]]: „Koordynuję oko i rękę.” [[Sieć brzuszna uwagi|Sieć brzuszna uwagi]]: „Coś przerywa plan.” [[Sieć istotności|Sieć istotności]]: „Coś zagraża schematowi ciała.” [[Sieć kontroli|Sieć kontroli]]: „Trzymam zadanie.” [[Sieć domyślna|Sieć domyślna]]: „Ja, przeszłość i przyszłość, inni ludzie.”",
+    "Obok roli każdej sieci pokazałem przypadki jej uszkodzeń, bo uszkodzenie odsłania, jakim doświadczeniem jest aktywność tej sieci. Przy sieci wzrokowej omówiłem [[Ślepowidzenie|ślepowidzenie]], pacjentkę D.F. i [[Prozopagnozja|prozopagnozję]], przy czuciowo-ruchowej [[Ian Waterman|Iana Watermana]], przy grzbietowej uwagi [[Zespół Bálinta|zespół Bálinta]], przy brzusznej [[Zaniedbywanie stronne|zaniedbywanie stronne]], przy sieci kontroli [[Test sortowania kart|test sortowania kart]], a przy sieci istotności otępienie czołowo-skroniowe. [[Pacjent H.M.|Pacjent H.M.]] posłużył za przykład pamięci, [[Phineas Gage|Phineas Gage]] za przykład decyzji, a [[Język w sieciach mózgu|obszary Broki i Wernickego]] za przykład mowy.",
+    "Zajęcia zamknęły trzy szlaki wzrokowe: brzuszny, grzbietowy i [[Trzeci szlak wzrokowy|boczny]], którym płynie mimika, spojrzenie i gest drugiej osoby."
    ],
    "karty": [
     "Sieci wielkoskalowe",
@@ -262,59 +281,59 @@
    "splot": {
     "Sieci mózgu i predykcja": {
      "h": "Sieci wielkoskalowe i ich role",
-     "d": "Przeszliśmy od łączności między obszarami do sieci wielkoskalowych, zespołów obszarów aktywnych razem. Każdą sieć przedstawiliśmy jej rolą w jednym zdaniu, od sieci wzrokowej („Widzę.”) do sieci domyślnej („Ja, przeszłość i przyszłość, inni ludzie.”)."
+     "d": "Przeszliśmy od łączności między obszarami do [[Sieci wielkoskalowe|sieci wielkoskalowych]], zespołów obszarów aktywnych razem. Każdą sieć przedstawiłem jej rolą w jednym zdaniu: [[Sieć wzrokowa|sieć wzrokową]], [[Sieć czuciowo-ruchowa|czuciowo-ruchową]], [[Sieć grzbietowa uwagi|grzbietową uwagi]], [[Sieć brzuszna uwagi|brzuszną uwagi]], [[Sieć istotności|istotności]], [[Sieć kontroli|kontroli]] i [[Sieć domyślna|domyślną]]."
     },
     "Pomiar mózgu": {
      "h": "Łączność strukturalna i funkcjonalna",
-     "d": "Rozróżniliśmy łączność strukturalną i łączność funkcjonalną, z której wyodrębnia się sieci wielkoskalowe. Zespoły obszarów aktywnych razem nazwaliśmy sieciami wielkoskalowymi."
+     "d": "Rozróżniliśmy łączność strukturalną i funkcjonalną, a z łączności funkcjonalnej wyodrębnia się [[Sieci wielkoskalowe|sieci wielkoskalowe]], zespoły obszarów aktywnych razem."
     },
     "Neuron i synapsa": {
      "h": "Neuron i komórki glejowe",
-     "d": "Układ nerwowy zaczęliśmy od neuronu, jego dendrytów, aksonu i synaps, oraz od komórek glejowych. Potem przeszliśmy do płatów kory i łączności między obszarami."
+     "d": "Układ nerwowy zaczęliśmy od [[Neuron i glej|neuronu i komórek glejowych]], od dendrytów, aksonu i synaps. Potem przeszliśmy do płatów kory i łączności między obszarami."
     },
     "Percepcja i uwaga": {
      "h": "Przypadki uszkodzeń wzroku i uwagi",
-     "d": "Przy sieci wzrokowej omówiliśmy ślepowidzenie, pacjentkę D.F. i prozopagnozję, przy sieci grzbietowej uwagi zespół Bálinta, przy sieci brzusznej uwagi zaniedbywanie stronne. Zajęcia zamknęły szlaki wzrokowe: brzuszny, grzbietowy i boczny."
+     "d": "Przy sieci wzrokowej omówiłem [[Ślepowidzenie|ślepowidzenie]], pacjentkę D.F. i [[Prozopagnozja|prozopagnozję]], przy sieci grzbietowej uwagi [[Zespół Bálinta|zespół Bálinta]], a przy sieci brzusznej uwagi [[Zaniedbywanie stronne|zaniedbywanie stronne]]. Zajęcia zamknęły trzy szlaki wzrokowe: brzuszny, grzbietowy i [[Trzeci szlak wzrokowy|boczny]]."
     },
     "Świadomość": {
      "h": "Ślepowidzenie i prozopagnozja",
-     "d": "Ślepowidzenie i prozopagnozja posłużyły za przykłady rozpadu widzenia na szlaki. Rozmawialiśmy o tym, że uszkodzenie odsłania, co sieć wnosi do doświadczania widzenia."
+     "d": "[[Ślepowidzenie|Ślepowidzenie]] i [[Prozopagnozja|prozopagnozja]] posłużyły za przykłady rozpadu widzenia na szlaki. Każde z nich odsłania, jakim doświadczeniem jest aktywność uszkodzonej części sieci wzrokowej."
     },
     "Umysł społeczny": {
      "h": "Mimika, spojrzenie i gest",
-     "d": "Zajęcia zamknął boczny szlak wzrokowy niosący mimikę, spojrzenie i gest drugiej osoby. Sieć domyślna dostała rolę „Ja, przeszłość i przyszłość, inni ludzie.”"
+     "d": "Zajęcia zamknął [[Trzeci szlak wzrokowy|boczny szlak wzrokowy]], którym płynie mimika, spojrzenie i gest drugiej osoby. [[Sieć domyślna|Sieć domyślna]] dostała rolę „Ja, przeszłość i przyszłość, inni ludzie.”"
     },
     "Ciało i ruch": {
      "h": "Ruch prowadzony wzrokiem",
-     "d": "Sieć czuciowo-ruchowa dostała rolę „Czuję ciało i się ruszam.” Przy niej omówiliśmy Iana Watermana, który nowe ruchy prowadzi wzrokiem."
+     "d": "[[Sieć czuciowo-ruchowa|Sieć czuciowo-ruchowa]] dostała rolę „Czuję ciało i się ruszam.” Przy niej omówiłem [[Ian Waterman|Iana Watermana]], który po utracie propriocepcji prowadzi ruchy wzrokiem."
     },
     "Pamięć i przestrzeń": {
      "h": "Pamięć pacjenta H.M.",
-     "d": "Obok przypadków przypisanych sieciom pacjent H.M. pokazał pamięć. Rozmawialiśmy o tym, że nowe zdarzenia trzyma w pamięci tylko przez chwilę."
+     "d": "[[Pacjent H.M.|Pacjent H.M.]] posłużył za przykład pamięci. Po operacji pamiętał nowe zdarzenia tylko przez chwilę."
     },
     "Emocje": {
      "h": "Sieć istotności i zagrożenie",
-     "d": "Sieć istotności dostała rolę „Coś zagraża schematowi ciała.” Przy jej uszkodzeniu rozmawialiśmy o otępieniu czołowo-skroniowym: o obojętności, słabnącej empatii i odhamowaniu."
+     "d": "[[Sieć istotności|Sieć istotności]] dostała rolę „Coś zagraża schematowi ciała.” Przy jej uszkodzeniu rozmawialiśmy o otępieniu czołowo-skroniowym: o obojętności, słabnącej empatii i odhamowaniu."
     },
     "Myślenie": {
      "h": "Zmieniająca się reguła",
-     "d": "Sieć kontroli dostała rolę „Trzymam zadanie.” Jej uszkodzenie omówiliśmy na teście sortowania kart, w którym reguła zmienia się bez zapowiedzi."
+     "d": "[[Sieć kontroli|Sieć kontroli]] dostała rolę „Trzymam zadanie.” Jej uszkodzenie omówiłem na [[Test sortowania kart|teście sortowania kart]], w którym reguła zmienia się bez zapowiedzi."
     },
     "Nawyk i automatyzacja": {
      "h": "Wprawa w lustrze",
-     "d": "Przy pacjencie H.M. rozmawialiśmy o rysowaniu w lustrze, którego uczy się z dnia na dzień. Rozmawialiśmy też o pamięci jako o systemach: jeden zapisuje zdarzenia, inny uczy wprawy."
+     "d": "Przy [[Pacjent H.M.|pacjencie H.M.]] rozmawialiśmy o rysowaniu w lustrze, którego uczył się z dnia na dzień. Rozmawialiśmy też o pamięci jako o systemach, z których jeden obejmuje zdarzenia, a inny wprawę."
     },
     "Decyzja i działanie": {
      "h": "Decyzje Phineasa Gage'a",
-     "d": "Phineas Gage pokazał decyzje. Rozmawialiśmy o uszkodzeniu jego kory przedczołowej prętem i o tym, jak zmienia się po takim uszkodzeniu zachowanie i sposób wybierania."
+     "d": "[[Phineas Gage|Phineas Gage]] posłużył za przykład decyzji. Rozmawialiśmy o uszkodzeniu jego kory przedczołowej prętem i o tym, jak po takim uszkodzeniu zmienia się zachowanie i sposób wybierania."
     },
     "Osobowość i zdrowie psychiczne": {
      "h": "Gage i osobowość",
-     "d": "Po uszkodzeniu kory przedczołowej zachowanie Phineasa Gage'a się zmieniło."
+     "d": "Po uszkodzeniu kory przedczołowej zmieniło się zachowanie [[Phineas Gage|Phineasa Gage'a]]."
     },
     "Język": {
      "h": "Obszary mowy",
-     "d": "Na mapie płatów obszar Broki leży w płacie czołowym, a obszar Wernickego w skroniowym. Od nich zaczęliśmy mapę języka w mózgu."
+     "d": "Na mapie płatów obszar Broki leży w płacie czołowym, a obszar Wernickego w skroniowym. Od nich zaczęliśmy mapę [[Język w sieciach mózgu|języka w sieciach mózgu]]."
     }
    }
   },
@@ -335,9 +354,9 @@
     }
    ],
    "opis": [
-    "Pierwsze zajęcia Wstępu po organizacyjnych były rozmową o grach. Zaczęliśmy od gier komputerowych, a przykłady szybko się rozszerzały: planszowe, sportowe, słowne, karciane, potem gry ekonomiczne, geopolityczne i społeczne. Sprawczość to wybór gier, których się uczymy i w które gramy: pokoje, które odwiedzamy, drzwi, przez które przechodzimy. Mówiliśmy o funkcji użyteczności, o decyzjach, co, kiedy i jak zrobić, o intencjach i eksperymencie Libeta, w którym aktywność mózgu narasta, zanim nadejdzie chwila, którą osoba badana wskazuje jako moment decyzji, więc ta chwila przychodzi, gdy działanie już trwa. Rozmawialiśmy też o regułach: o ich negocjowaniu, o odkrywaniu mechaniki i cech.",
+    "Pierwsze zajęcia Wstępu po organizacyjnych były rozmową o grach. Zaczęliśmy od gier komputerowych, a przykłady szybko się rozszerzały: planszowe, sportowe, słowne, karciane, potem gry ekonomiczne, geopolityczne i społeczne. [[Poczucie sprawczości|Sprawczość]] to wybór gier, których się uczymy i w które gramy: pokoje, które odwiedzamy, drzwi, przez które przechodzimy. Mówiliśmy o funkcji użyteczności, o decyzjach, co, kiedy i jak zrobić, o intencjach i [[Eksperyment Libeta|eksperymencie Libeta]], w którym aktywność mózgu narasta, zanim nadejdzie chwila, którą osoba badana wskazuje jako moment decyzji, więc ta chwila przychodzi, gdy działanie już trwa. Rozmawialiśmy też o regułach: o ich negocjowaniu, o odkrywaniu mechaniki i cech.",
     "Pierwszy sezon Westworld postawił pytania o świadomość, tożsamość, sprawczość i konsekwencje, pierwszy sezon Altered Carbon pokazał wiele sztucznych inteligencji, Matrix ludzi jako źródło obliczeń. Enty z Władcy Pierścieni posłużyły za przykład języka niosącego głęboką intersubiektywność, a Casino Royale za przykład pokera i głębi Vesper.",
-    "Doszliśmy do niedawnego roju agentów OpenAI i do dylematu dwóch przycisków z mediów społecznościowych: czerwony daje pewne przeżycie, zielony tylko wtedy, gdy naciśnie go ponad połowa. Pomiar mózgu pojawił się przy kontrolerach EEG, którymi grają streamerzy."
+    "Doszliśmy do niedawnego roju [[Agenci AI|agentów]] OpenAI i do [[Dylemat dwóch przycisków|dylematu dwóch przycisków]] z mediów społecznościowych: czerwony daje pewne przeżycie, zielony tylko wtedy, gdy naciśnie go ponad połowa. Pomiar mózgu pojawił się przy kontrolerach [[EEG|EEG]], którymi grają streamerzy."
    ],
    "karty": [
     "Poczucie sprawczości",
@@ -356,43 +375,43 @@
    "splot": {
     "Decyzja i działanie": {
      "h": "Sprawczość jako wybór gier",
-     "d": "Sprawczość to wybór gier, których się uczymy i w które gramy: pokoje, które odwiedzamy, oraz drzwi, przez które przechodzimy. Rozmawialiśmy o decyzjach (co, kiedy i jak zrobić) oraz o eksperymencie Libeta, w którym aktywność mózgu narasta, zanim osoba badana wskaże chwilę decyzji."
+     "d": "Sprawczość to wybór gier, których się uczymy i w które gramy: pokoje, które odwiedzamy, oraz drzwi, przez które przechodzimy. Rozmawialiśmy o decyzjach, co, kiedy i jak zrobić, o [[Poczucie sprawczości|poczuciu sprawczości]] i o [[Eksperyment Libeta|eksperymencie Libeta]], w którym aktywność mózgu narasta, zanim nadejdzie chwila, którą osoba badana wskazuje jako moment decyzji."
     },
     "Pomiar mózgu": {
      "h": "Kontrolery EEG streamerów",
-     "d": "Rozmawialiśmy o kontrolerach EEG (elektroencefalografii), którymi grają streamerzy. EEG zapisuje napięcie elektrodami na skórze głowy, a tak samo zapisano potencjał gotowości w eksperymencie Libeta."
+     "d": "Rozmawialiśmy o kontrolerach [[EEG|EEG]] (elektroencefalografii), którymi grają streamerzy. EEG zapisuje napięcie elektrodami na skórze głowy, a tak samo zapisano potencjał gotowości w eksperymencie Libeta."
     },
     "Ciało i ruch": {
      "h": "Gry sportowe",
-     "d": "Gry sportowe sprawdzają wykonanie, czyli ruch we właściwym czasie i z dokładnością. Rozmawialiśmy przy nich o propozycji, że mózg istnieje dla ruchu."
+     "d": "Gry sportowe sprawdzają wykonanie, czyli ruch we właściwym czasie i z dokładnością. Rozmawialiśmy przy nich o propozycji, że [[Mózg dla ruchu|mózg istnieje dla ruchu]]."
     },
     "Język": {
      "h": "Gry słowne i enty",
-     "d": "Gry słowne zaprowadziły do entów z Władcy Pierścieni, których język może nieść głęboką intersubiektywność. Przykładem były słowa na śnieg i pytanie, w jakich wspólnotach słownictwo się rozrasta."
+     "d": "Gry słowne zaprowadziły do entów z Władcy Pierścieni, których język może nieść głęboką intersubiektywność. Przykładem były [[Słowa na śnieg|słowa na śnieg]] i pytanie, w jakich wspólnotach słownictwo się rozrasta."
     },
     "Osobowość i zdrowie psychiczne": {
      "h": "Cechy graczy",
-     "d": "W grze wychodzą na jaw cechy graczy. Osobowość to stałe skłonności, którymi ludzie różnią się w grach i poza nimi; rozmawialiśmy też o Wielkiej Piątce."
+     "d": "W grze wychodzą na jaw cechy graczy. Osobowość to stałe skłonności, którymi ludzie różnią się w grach i poza nimi; rozmawialiśmy też o [[Wielka Piątka|Wielkiej Piątce]]."
     },
     "Myślenie": {
      "h": "Odkrywanie mechaniki",
-     "d": "Gry planszowe wprowadziły reguły, ich negocjowanie i odkrywanie mechaniki. Odkrywanie mechaniki to wyprowadzanie reguły gry z kolejnych ruchów, zanim ktokolwiek ją poda."
+     "d": "Gry planszowe wprowadziły reguły, ich negocjowanie i odkrywanie mechaniki, czyli wyprowadzanie reguły gry z kolejnych ruchów, zanim ktokolwiek ją poda. Znana mechanika otwiera drogę do strategii prowadzonej modelami, [[Makro - strategia z modeli|warstwy makro]]."
     },
     "Nawyk i automatyzacja": {
      "h": "Reguły nagrody",
-     "d": "Rozmawialiśmy o obchodzeniu reguł nagrody przez agentów OpenAI."
+     "d": "Rozmawialiśmy o obchodzeniu reguł nagrody przez [[Agenci AI|agentów AI]] OpenAI."
     },
     "Świadomość": {
      "h": "Westworld",
-     "d": "Pierwszy sezon Westworld postawił pytania o świadomość, tożsamość, sprawczość i konsekwencje. Pytanie, po czym rozpoznać świadomość w innym systemie, zostało otwarte."
+     "d": "Pierwszy sezon Westworld postawił pytania o świadomość, tożsamość, sprawczość i konsekwencje. Otwarte zostało pytanie, po czym rozpoznać świadomość w innym systemie i [[Jak to jest być nietoperzem|jak to jest być]] tym systemem."
     },
     "Sztuczni agenci": {
      "h": "Rój agentów",
-     "d": "Doszliśmy do niedawnego roju agentów OpenAI, obok wielu AI z Altered Carbon i ludzi jako źródła obliczeń w Matrixie. Pytanie dotyczyło tego, jak wielu agentów się koordynuje."
+     "d": "Doszliśmy do niedawnego roju [[Agenci AI|agentów AI]] OpenAI, obok wielu AI z Altered Carbon i ludzi jako źródła obliczeń w Matrixie. Pytanie dotyczyło tego, jak wielu agentów się koordynuje."
     },
     "Umysł społeczny": {
      "h": "Przyciski i poker",
-     "d": "W dylemacie dwóch przycisków z mediów społecznościowych czerwony daje pewne przeżycie, a zielony tylko wtedy, gdy naciśnie go ponad połowa. Przy pokerze z Casino Royale gra toczy się o to, kto lepiej czyta drugą osobę."
+     "d": "W [[Dylemat dwóch przycisków|dylemacie dwóch przycisków]] z mediów społecznościowych czerwony daje pewne przeżycie, a zielony tylko wtedy, gdy naciśnie go ponad połowa. Pewny zysk czerwonego przypomina [[Problem gapowicza|problem gapowicza]]. Przy pokerze z Casino Royale gra toczy się o to, kto lepiej czyta drugą osobę, czyli o [[Konstruowanie innych umysłów|konstruowanie innych umysłów]]."
     }
    }
   },
@@ -404,10 +423,10 @@
    "odbyte": true,
    "po_zajęciach": [],
    "opis": [
-    "Zaczęliśmy od drogi wzrokowej, od siatkówki do pierwszorzędowej kory wzrokowej (V1). Przypomnieliśmy trzy szlaki wzrokowe oraz sieci z pierwszych zajęć.",
-    "Pręciki i czopki ułożyliśmy według położenia w siatkówce i przeszliśmy przez widmo elektromagnetyczne od promieni gamma do fal radiowych aż do wąskiego pasma światła, na które odpowiadają trzy rodzaje czopków.",
-    "Potem zdefiniowaliśmy bioinformację jako sposób, w jaki receptory biologiczne organizmu przetwarzają energię fizyczną, i rozróżniliśmy w niej eksterocepcję, propriocepcję i interocepcję. Eksterocepcję podzieliliśmy według wielkości fizycznej, którą odbiera receptor, a świat kleszcza i rekina pokazał, że każdy gatunek odbiera własny wycinek energii. Doszliśmy do interocepcji; receptor, gradient jonów, synapsa i przyrządy pomiaru przeszły na kolejne zajęcia.",
-    "W rozmowie poszliśmy w stronę predykcji. Oliver Sacks opowiada o zespole Charlesa Bonneta, w którym po utracie wzroku pojawiają się halucynacje, a Anil Seth nazywa percepcję halucynacją kontrolowaną. Mówiliśmy o predykcjach w mózgu i między sieciami, o ich aktualizacji przez zaskoczenie, o warunkowaniu i halucynacjach. Opowiedziałem o rozszczepionym mózgu, o stymulacji skrzyżowania skroniowo-ciemieniowego i wywołanych nią doznaniach oraz o osobie niewidomej, która po przywróceniu wzroku nie odróżniała wzrokiem owiec, jako kolejnym przykładzie predykcji."
+    "Zaczęliśmy od drogi wzrokowej, od siatkówki do pierwszorzędowej kory wzrokowej (V1). Przypomnieliśmy [[Trzeci szlak wzrokowy|trzy szlaki wzrokowe]] oraz [[Sieci wielkoskalowe|sieci]] z pierwszych zajęć.",
+    "[[Pręciki, czopki i droga wzrokowa|Pręciki i czopki]] ułożyliśmy według położenia w siatkówce i przeszliśmy przez [[Widmo elektromagnetyczne|widmo elektromagnetyczne]] od promieni gamma do fal radiowych aż do wąskiego pasma światła, na które odpowiadają trzy rodzaje czopków.",
+    "Potem zdefiniowaliśmy [[Bioinformacja|bioinformację]] jako sposób, w jaki receptory biologiczne organizmu przetwarzają energię fizyczną, i rozróżniliśmy w niej eksterocepcję, [[Propriocepcja|propriocepcję]] i [[Interocepcja|interocepcję]]. Eksterocepcję podzieliliśmy według wielkości fizycznej, którą odbiera receptor, a [[Umwelt|świat kleszcza i rekina]] pokazał, że każdy gatunek odbiera własny wycinek energii. Doszliśmy do interocepcji; receptor, gradient jonów, synapsa i przyrządy pomiaru przeszły na kolejne zajęcia.",
+    "W rozmowie poszliśmy w stronę predykcji. Oliver Sacks opowiada o zespole Charlesa Bonneta, w którym po utracie wzroku pojawiają się halucynacje, a Anil Seth nazywa percepcję [[Kontrolowane halucynacje|halucynacją kontrolowaną]]. Mówiliśmy o [[Kodowanie predykcyjne|predykcjach w mózgu]] i między sieciami, o ich aktualizacji przez zaskoczenie, o warunkowaniu i halucynacjach. Opowiedziałem o [[Rozszczepiony mózg|rozszczepionym mózgu]], o stymulacji skrzyżowania skroniowo-ciemieniowego i towarzyszących jej [[Doświadczenie poza ciałem|doznaniach]] oraz o osobie niewidomej, która po przywróceniu wzroku nie odróżniała wzrokiem owiec, jako kolejnym przykładzie predykcji."
    ],
    "karty": [
     "Pręciki, czopki i droga wzrokowa",
@@ -427,47 +446,47 @@
    "splot": {
     "Percepcja i uwaga": {
      "h": "Droga wzrokowa",
-     "d": "Zaczęliśmy od drogi wzrokowej, od siatkówki przez ciało kolankowate boczne do pierwszorzędowej kory wzrokowej (V1). Pręciki i czopki ułożyliśmy według położenia w siatkówce, a szlaki wzrokowe przypomnieliśmy z pierwszych zajęć."
+     "d": "Zaczęliśmy od drogi wzrokowej, od siatkówki przez ciało kolankowate boczne do pierwszorzędowej kory wzrokowej (V1). [[Pręciki, czopki i droga wzrokowa|Pręciki i czopki]] ułożyliśmy według położenia w siatkówce, a szlaki wzrokowe, z [[Trzeci szlak wzrokowy|trzecim szlakiem]], przypomnieliśmy z pierwszych zajęć."
     },
     "Umysł społeczny": {
      "h": "Szlak boczny",
-     "d": "Przypomnieliśmy szlaki wzrokowe z pierwszych zajęć, w tym boczny, niosący mimikę, spojrzenie i gest drugiej osoby."
+     "d": "Przypomnieliśmy szlaki wzrokowe z pierwszych zajęć, w tym [[Trzeci szlak wzrokowy|boczny]], którym płynie mimika, spojrzenie i gest drugiej osoby."
     },
     "Sieci mózgu i predykcja": {
      "h": "Predykcje i zaskoczenie",
-     "d": "Rozmawialiśmy o predykcjach w mózgu i między sieciami oraz o ich aktualizacji przez zaskoczenie. Przykładami były zespół Charlesa Bonneta u Olivera Sacksa, halucynacja kontrolowana Anila Setha i osoba, która po przywróceniu wzroku nie odróżniała wzrokiem owiec."
+     "d": "Rozmawialiśmy o predykcjach w mózgu i między [[Sieci wielkoskalowe|sieciami]] oraz o ich aktualizacji przez zaskoczenie, czyli o [[Kodowanie predykcyjne|kodowaniu predykcyjnym]]. Przykładami były zespół Charlesa Bonneta u Olivera Sacksa, [[Kontrolowane halucynacje|halucynacja kontrolowana]] Anila Setha i osoba, która po przywróceniu wzroku nie odróżniała wzrokiem owiec."
     },
     "Pomiar mózgu": {
      "h": "Sieci z pierwszych zajęć",
-     "d": "Przypomnieliśmy sieci wielkoskalowe z pierwszych zajęć. Przyrządy do pomiaru mózgu przeszły na kolejne zajęcia."
+     "d": "Przypomnieliśmy [[Sieci wielkoskalowe|sieci wielkoskalowe]] z pierwszych zajęć. Przyrządy do pomiaru mózgu przeszły na kolejne zajęcia."
     },
     "Energia i jej przemiany": {
      "h": "Od promieni gamma do fal radiowych",
-     "d": "Widmo elektromagnetyczne ułożyliśmy od promieni gamma do fal radiowych, razem z czułością czopków. To energia fizyczna, którą receptory przetwarzają na bioinformację."
+     "d": "[[Widmo elektromagnetyczne|Widmo elektromagnetyczne]] przeszliśmy od promieni gamma do fal radiowych aż do wąskiego pasma światła, na które odpowiadają trzy rodzaje czopków. To energia fizyczna, którą receptory przetwarzają na bioinformację."
     },
     "Neuron i synapsa": {
      "h": "Energia na receptorze",
-     "d": "Bioinformację zdefiniowaliśmy jako sposób, w jaki receptory biologiczne organizmu przetwarzają energię fizyczną. Receptor, gradient jonów i synapsa przeszły na kolejne zajęcia."
+     "d": "[[Bioinformacja|Bioinformację]] zdefiniowaliśmy jako sposób, w jaki receptory biologiczne organizmu przetwarzają energię fizyczną. Receptor, gradient jonów i synapsa przeszły na kolejne zajęcia."
     },
     "Ciało i ruch": {
      "h": "Propriocepcja i interocepcja",
-     "d": "Bioinformację podzieliliśmy na eksterocepcję, propriocepcję i interocepcję. Propriocepcja to bioinformacja o tym, gdzie jest ciało i jak się rusza, a interocepcja o tym, jak się mamy w środku."
+     "d": "W bioinformacji rozróżniliśmy eksterocepcję, [[Propriocepcja|propriocepcję]] i [[Interocepcja|interocepcję]]. Propriocepcja to bioinformacja o tym, gdzie jest ciało i jak się rusza, a interocepcja o tym, jak się mamy w środku."
     },
     "Emocje": {
      "h": "Jak się mamy w środku",
-     "d": "Doszliśmy do interocepcji, bioinformacji o stanie wnętrza ciała. Chodzi o ciśnienie krwi, oddech i stan narządów."
+     "d": "Doszliśmy do [[Interocepcja|interocepcji]], bioinformacji o stanie wnętrza ciała: o ciśnieniu krwi, oddechu i stanie narządów."
     },
     "Ewolucja": {
      "h": "Świat kleszcza i rekina",
-     "d": "Eksterocepcję podzieliliśmy według wielkości fizycznej odbieranej przez receptor. Świat kleszcza i rekina posłużył za przykład, że każdy gatunek odbiera własny wycinek energii."
+     "d": "Eksterocepcję podzieliliśmy według wielkości fizycznej odbieranej przez receptor. Świat kleszcza i rekina posłużył za przykład, że każdy gatunek żyje we własnym [[Umwelt|Umwelt]], wycinku energii dostępnym jego receptorom."
     },
     "Świadomość": {
      "h": "Rozszczepienie i doznania poza ciałem",
-     "d": "Rozszczepiony mózg to mózg po przecięciu spoidła wielkiego, łączącego lewą i prawą półkulę. Omówiliśmy też stymulację skrzyżowania skroniowo-ciemieniowego i wywołane nią doznania."
+     "d": "[[Rozszczepiony mózg|Rozszczepiony mózg]] to mózg po przecięciu spoidła wielkiego, łączącego lewą i prawą półkulę. Omówiłem też stymulację skrzyżowania skroniowo-ciemieniowego, podczas której osoba badana miała [[Doświadczenie poza ciałem|doświadczenie poza ciałem]]."
     },
     "Język": {
      "h": "Półkule i pole widzenia",
-     "d": "Przy rozszczepionym mózgu rozmawialiśmy o tym, że każda półkula odbiera obraz z przeciwległej połowy pola widzenia."
+     "d": "Przy [[Rozszczepiony mózg|rozszczepionym mózgu]] rozmawialiśmy o tym, że każda półkula odbiera obraz z przeciwległej połowy pola widzenia."
     }
    }
   },
@@ -479,9 +498,9 @@
    "odbyte": true,
    "po_zajęciach": [],
    "opis": [
-    "Zaczęliśmy od możliwości AI i od zmian ekonomicznych, które przynosi. Pokazałem studentom kogni.pl taką, jaka jest teraz, w budowie.",
-    "Potem obejrzeliśmy film Surnex o warstwach mikro, mezo i makro w grach i zmieniliśmy jego interpretację. Mikro to wykonanie: sieć czuciowo-ruchowa, sieć grzbietowa uwagi i sieć wzrokowa, jak w stadium sensoryczno-motorycznym Piageta. Mezo to reagowanie na zmianę: informacja z tła o ludziach, losowości i mechanice aktualizuje Modele Mentalne, jak eksplorowanie mapy. Porównałem to z teorią umysłu, z manipulacją i kłamstwem, gdzie aktualizują się modele drugiej osoby. Zastanawialiśmy się, z jaką częstotliwością modele się aktualizują. Ujęliśmy to w ramie kodowania predykcyjnego. Makro to strategia prowadzona nabytymi modelami: gdy mechanika jest znana, ścieżka jest jasna, a trener ją pokazuje.",
-    "Podzieliłem losowo studentów na pary, żeby ze sobą rozmawiały nowe osoby. Każda para szukała swoich realnych umiejętności i sprawdzała, czy są świadectwem mikro, mezo czy makro. Zajęcia zamknęło pytanie: Jaki cheat najbardziej ułatwiłby Ci życie i dlaczego?"
+    "Zaczęliśmy od możliwości [[Agenci AI|AI]] i od zmian ekonomicznych, które przynosi. Pokazałem studentom kogni.pl taką, jaka jest teraz, w budowie.",
+    "Potem obejrzeliśmy film Surnex o warstwach [[Mikro - wykonanie|mikro]], [[Mezo - aktualizowanie modeli|mezo]] i [[Makro - strategia z modeli|makro]] w grach i zmieniliśmy jego interpretację. Mikro to wykonanie: [[Sieć czuciowo-ruchowa|sieć czuciowo-ruchowa]], [[Sieć grzbietowa uwagi|sieć grzbietowa uwagi]] i [[Sieć wzrokowa|sieć wzrokowa]], jak w stadium sensoryczno-motorycznym Piageta. Mezo to reagowanie na zmianę: informacja z tła o ludziach, losowości i mechanice aktualizuje Modele Mentalne, jak eksplorowanie mapy. Porównałem to z [[Konstruowanie innych umysłów|teorią umysłu]], z manipulacją i kłamstwem, gdzie aktualizują się modele drugiej osoby. Zastanawialiśmy się, z jaką częstotliwością modele się aktualizują. Ujęliśmy to w ramie [[Kodowanie predykcyjne|kodowania predykcyjnego]]. Makro to strategia prowadzona nabytymi modelami: gdy mechanika jest znana, ścieżka jest jasna, a trener ją pokazuje.",
+    "Podzieliłem losowo studentów na pary, żeby ze sobą rozmawiały nowe osoby. Każda para szukała swoich realnych umiejętności i sprawdzała, czy są świadectwem [[Mikro - wykonanie|mikro]], [[Mezo - aktualizowanie modeli|mezo]] czy [[Makro - strategia z modeli|makro]]. Zajęcia zamknęło pytanie: Jaki cheat najbardziej ułatwiłby Ci życie i dlaczego?"
    ],
    "karty": [
     "Mikro - wykonanie",
@@ -496,31 +515,31 @@
    "splot": {
     "Ciało i ruch": {
      "h": "Warstwa mikro",
-     "d": "Mikro to wykonanie: celowanie, trafianie w czas i dokładność ruchu. Mikro porównaliśmy ze stadium sensoryczno-motorycznym Piageta; przypisaliśmy mu sieć czuciowo-ruchową, sieć grzbietową uwagi i sieć wzrokową."
+     "d": "[[Mikro - wykonanie|Mikro]] to wykonanie: celowanie, trafianie w czas i dokładność ruchu. Mikro porównaliśmy ze stadium sensoryczno-motorycznym Piageta i przypisaliśmy mu [[Sieć czuciowo-ruchowa|sieć czuciowo-ruchową]], [[Sieć grzbietowa uwagi|sieć grzbietową uwagi]] i [[Sieć wzrokowa|sieć wzrokową]]."
     },
     "Nawyk i automatyzacja": {
      "h": "Umiejętności w parach",
-     "d": "Pary dobraliśmy losowo, żeby ze sobą rozmawiały nowe osoby. Każda para szukała swoich realnych umiejętności i sprawdzała, czy są świadectwem mikro, mezo czy makro."
+     "d": "Podzieliłem losowo studentów na pary, żeby ze sobą rozmawiały nowe osoby. Każda para szukała swoich realnych umiejętności i sprawdzała, czy są świadectwem [[Mikro - wykonanie|mikro]], [[Mezo - aktualizowanie modeli|mezo]] czy [[Makro - strategia z modeli|makro]]."
     },
     "Umysł społeczny": {
      "h": "Kłamstwo i manipulacja",
-     "d": "Warstwę mezo porównaliśmy z teorią umysłu: nasze Modele Mentalne drugiej osoby aktualizują się jej ruchami i słowami. Kłamstwo i manipulacja wybierają kierunek tej aktualizacji."
+     "d": "Warstwę mezo porównaliśmy z [[Konstruowanie innych umysłów|teorią umysłu]]: nasze Modele Mentalne drugiej osoby aktualizują się jej ruchami i słowami. Kłamstwo i manipulacja wybierają kierunek tej aktualizacji."
     },
     "Sieci mózgu i predykcja": {
      "h": "Warstwa mezo",
-     "d": "Mezo to reagowanie na zmianę: bioinformacja z tła, o ludziach, losowości i mechanice gry, aktualizuje Modele Mentalne, jak eksplorowanie mapy. Ujęliśmy to w ramie kodowania predykcyjnego i zastanawialiśmy się, z jaką częstotliwością Modele Mentalne się aktualizują."
+     "d": "[[Mezo - aktualizowanie modeli|Mezo]] to reagowanie na zmianę: bioinformacja z tła, o ludziach, losowości i mechanice gry, aktualizuje Modele Mentalne, jak eksplorowanie mapy. Ujęliśmy to w ramie [[Kodowanie predykcyjne|kodowania predykcyjnego]] i zastanawialiśmy się, z jaką częstotliwością Modele Mentalne się aktualizują. Warstwę mikro oparliśmy na [[Sieć czuciowo-ruchowa|sieci czuciowo-ruchowej]] i [[Sieć grzbietowa uwagi|sieci grzbietowej uwagi]]."
     },
     "Myślenie": {
      "h": "Warstwa makro",
-     "d": "Makro to strategia prowadzona nabytymi Modelami Mentalnymi: gdy mechanika jest znana, droga jest jasna, a trener ją pokazuje. Jego Modele Mentalne kształtują Modele Mentalne uczącej się osoby."
+     "d": "[[Makro - strategia z modeli|Makro]] to strategia prowadzona nabytymi Modelami Mentalnymi: gdy mechanika jest znana, droga jest jasna, a trener ją pokazuje. Jego Modele Mentalne kształtują Modele Mentalne uczącej się osoby."
     },
     "Percepcja i uwaga": {
      "h": "Oko i ręka w mikro",
-     "d": "Do warstwy mikro przypisaliśmy sieć grzbietową uwagi z rolą „Koordynuję oko i rękę.” Obok niej mikro obejmuje sieć czuciowo-ruchową i sieć wzrokową."
+     "d": "Do warstwy mikro przypisaliśmy [[Sieć grzbietowa uwagi|sieć grzbietową uwagi]] z rolą „Koordynuję oko i rękę.” Obok niej mikro obejmuje [[Sieć czuciowo-ruchowa|sieć czuciowo-ruchową]] i [[Sieć wzrokowa|sieć wzrokową]]."
     },
     "Sztuczni agenci": {
      "h": "AI i zmiany ekonomiczne",
-     "d": "Zajęcia zaczęły się od możliwości AI i od zmian ekonomicznych, które przynosi."
+     "d": "Zajęcia zaczęły się od możliwości [[Agenci AI|AI]] i od zmian ekonomicznych, które przynosi."
     }
    }
   },
