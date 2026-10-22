@@ -9,11 +9,11 @@ export function getStaticPaths() {
 <Base title="wiki · kogni.pl" activePage="wiki">
   <div class="wi">
     <h1 class="sr-only">kogni.pl/wiki</h1>
-    <!-- wstęp zamiast nagłówka: wiki to jego spojrzenie na kognitywistykę (jego słowo, 2026-10-22) -->
+    <!-- wstęp: kognitywistyka jako interdyscyplinarne doświadczanie, łuk historii ze strony głównej, potem linki z Płótna (jego słowo, 2026-10-22) -->
     <div class="wi-intro">
-      <p>Wiki to moje spojrzenie na kognitywistykę, zapisane jako karty pojęć. Każda karta opisuje jedno pojęcie: co nim nazywamy, co pokazały badania i aktywnością których sieci jest to, czego wtedy doświadczasz.</p>
-      <p>Patrzę na kognitywistykę od strony doświadczenia, a doświadczanie jest aktywnością Twoich sieci mózgowych. Socjologia, psychologia, biologia i fizyka mają własne siatki pojęciowe, a kognitywistyka jest miejscem, w którym te siatki się spotykają.</p>
-      <p>Karty linkują do siebie nawzajem. Ta sama informacja wraca w kilku z nich, bo powtórzenie w nowym kontekście buduje skojarzenia. Poniżej karty układają się w porządku <a href="/2026/">Płótna</a>, a z kolejnymi zajęciami przybywa kart gotowych do czytania.</p>
+      <p>Kognitywistykę traktuję jako interdyscyplinarne doświadczanie. Doświadczanie jest aktywnością sieci mózgowych, więc zmiany w mózgu, od uszkodzeń po naukę i rozwój, zmieniają to, czego doświadczasz. Znam tylko własne doświadczanie, a o Twoim wnioskuję. To wnioskowanie jest moim Modelem Mentalnym, a „ja” też jest Modelem Mentalnym, zmiennym jak Statek Tezeusza.</p>
+      <p>Z zewnątrz człowieka opisują fizyka, biologia, psychologia i socjologia, a od wewnątrz jest doświadczanie. Każda dyscyplina wyjaśnia doświadczanie przyczynowo, ale sama opiera się na doświadczaniu. Wyjaśnienia zataczają więc koło. Sztorm u wybrzeża Krety 2500 lat temu wyjaśniano gniewem Posejdona, a dziś wyjaśnia go fizyka. Każdemu badaczowi ten sam sztorm wyjaśnia się inaczej: fizykowi wiatrem, biologowi ciałem żeglarza, psychologowi jego strachem, socjologowi zachowaniem załogi. Skoro doświadczają się wyjaśnienia, w tej wiki wyjaśniam doświadczanie wszystkimi dyscyplinami naraz.</p>
+      <p>Na <a href="/2026/">Płótnie</a> widzisz osnowy każdej dyscypliny i zajęcia biegnące przez nie pionowymi wątkami. Tam, gdzie zajęcia spotykają osnowę, zawiązuje się splot, a jego okno prowadzi Cię do kart tej wiki. Klikając etykietę zajęć u góry Płótna, otwierasz ich opis, w którym karty też są linkami. Karty linkują do siebie nawzajem, więc do jednego pojęcia dojdziesz z kilku osnów. W części Na zajęciach karta pokazuje, które zajęcia do niej prowadzą.</p>
     </div>
     {INDEX.map((g) => (
       <section class="wi-group" id={g.nazwa.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase()} style={'--ink:' + INK[g.g] + ';--base:' + BASE[g.g]}>
