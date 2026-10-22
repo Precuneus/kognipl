@@ -60,14 +60,21 @@ export const card = (name) => byName[name];
 export const netCard = (kod) => byName[NETCARD[kod]];
 
 // Tekst z [[linkami]] na odcinki: link do karty gotowej, reszta zostaje słowami.
+// [[Karta|słowa]] linkuje kartę; {{Osnowa|słowa}} i {{#dyscyplina|słowa}} linkują jej miejsce w indeksie wiki (2026-10-22).
 export function segs(t) {
   const out = [];
-  const re = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
+  const re = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]|\{\{([^}|]+)(?:\|([^}]+))?\}\}/g;
   let last = 0, m;
   while ((m = re.exec(t))) {
     if (m.index > last) out.push({ t: t.slice(last, m.index) });
-    const k = byName[m[1]];
-    out.push(k ? { t: m[2] || m[1], url: k.url, color: INK[k.g], label: k.h } : { t: m[2] || m[1] });
+    if (m[3]) {
+      const g = m[3].startsWith('#') ? GRUPY.indexOf(m[3].slice(1)) : -1, o = OSNOWY.find((x) => x.nazwa === m[3]);
+      const gi = g >= 0 ? g : o ? o.g : -1;
+      out.push(gi >= 0 ? { t: m[4] || m[3].replace(/^#/, ''), url: '/wiki/#' + slugify(m[3].replace(/^#/, '')), color: INK[gi], label: m[3].replace(/^#/, '') } : { t: m[4] || m[3] });
+    } else {
+      const k = byName[m[1]];
+      out.push(k ? { t: m[2] || m[1], url: k.url, color: INK[k.g], label: k.h } : { t: m[2] || m[1] });
+    }
     last = re.lastIndex;
   }
   if (last < t.length) out.push({ t: t.slice(last) });

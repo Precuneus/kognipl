@@ -1,6 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { INDEX, INK, BASE, WIKI_ON } from '../../karty/data.js';
+import KartaWiki from '../../components/KartaWiki.astro';
+import { INDEX, INK, BASE, WIKI_ON, card } from '../../karty/data.js';
+// pierwszy artykuł wiki: karta Kognitywistyka w szablonie karty (jego słowo, 2026-10-22)
+const pierwsza = card('Kognitywistyka');
 // Indeks powstaje dopiero, gdy choć jedna karta jest gotowa.
 export function getStaticPaths() {
   return WIKI_ON ? [{ params: { indeks: undefined } }] : [];
@@ -8,13 +11,7 @@ export function getStaticPaths() {
 ---
 <Base title="wiki · kogni.pl" activePage="wiki">
   <div class="wi">
-    <h1 class="sr-only">kogni.pl/wiki</h1>
-    <!-- wstęp: kognitywistyka jako interdyscyplinarne doświadczanie, łuk historii ze strony głównej, potem linki z Płótna (jego słowo, 2026-10-22) -->
-    <div class="wi-intro">
-      <p>Kognitywistykę traktuję jako interdyscyplinarne doświadczanie. Doświadczanie jest aktywnością sieci mózgowych, więc zmiany w mózgu, od uszkodzeń po naukę i rozwój, zmieniają to, czego doświadczasz. Znam tylko własne doświadczanie, a o Twoim wnioskuję. To wnioskowanie jest moim Modelem Mentalnym, a „ja” też jest Modelem Mentalnym, zmiennym jak Statek Tezeusza.</p>
-      <p>Z zewnątrz człowieka opisują fizyka, biologia, psychologia i socjologia, a od wewnątrz jest doświadczanie. Każda dyscyplina wyjaśnia doświadczanie przyczynowo, ale sama opiera się na doświadczaniu. Wyjaśnienia zataczają więc koło. Sztorm u wybrzeża Krety 2500 lat temu wyjaśniano gniewem Posejdona, a dziś wyjaśnia go fizyka. Każdemu badaczowi ten sam sztorm wyjaśnia się inaczej: fizykowi wiatrem, biologowi ciałem żeglarza, psychologowi jego strachem, socjologowi zachowaniem załogi. Skoro doświadczają się wyjaśnienia, w tej wiki wyjaśniam doświadczanie wszystkimi dyscyplinami naraz.</p>
-      <p>Na <a href="/2026/">Płótnie</a> widzisz osnowy każdej dyscypliny i zajęcia biegnące przez nie pionowymi wątkami. Tam, gdzie zajęcia spotykają osnowę, zawiązuje się splot, a jego okno prowadzi Cię do kart tej wiki. Klikając etykietę zajęć u góry Płótna, otwierasz ich opis, w którym karty też są linkami. Karty linkują do siebie nawzajem, więc do jednego pojęcia dojdziesz z kilku osnów. W części Na zajęciach karta pokazuje, które zajęcia do niej prowadzą.</p>
-    </div>
+    {pierwsza ? <KartaWiki k={pierwsza} wstep /> : <h1 class="sr-only">kogni.pl/wiki</h1>}
     {INDEX.map((g) => (
       <section class="wi-group" id={g.nazwa.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase()} style={'--ink:' + INK[g.g] + ';--base:' + BASE[g.g]}>
         <h2 class="wi-gname">{g.nazwa}</h2>
