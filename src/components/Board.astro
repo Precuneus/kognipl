@@ -2,13 +2,12 @@
 import '../rocznik/rocznik.css';
 import { toHTML } from '../rocznik/engine.js';
 import * as plotno from '../rocznik/views/plotno.js';
-import * as watki from '../rocznik/views/watki.js';
 import * as karta from '../rocznik/views/karta.js';
 import { viewData } from '../rocznik/data.js';
 
-interface Props { view: 'plotno' | 'watki' | 'karta'; state?: Record<string, unknown> }
+interface Props { view: 'plotno' | 'karta'; state?: Record<string, unknown> }
 const { view, state = {} } = Astro.props;
-const views = { plotno, watki, karta };
+const views = { plotno, karta };
 const props = { data: viewData(view), ...state };
 const html = toHTML(views[view], props);
 const json = JSON.stringify(props).replace(/</g, '\\u003c');
@@ -19,26 +18,22 @@ const json = JSON.stringify(props).replace(/</g, '\\u003c');
 <script>
   import { mount } from '../rocznik/engine.js';
   import * as plotno from '../rocznik/views/plotno.js';
-  import * as watki from '../rocznik/views/watki.js';
   import * as karta from '../rocznik/views/karta.js';
-  const views = { plotno, watki, karta };
+  const views = { plotno, karta };
   document.querySelectorAll('[data-board]').forEach((el) => {
     const kind = el.getAttribute('data-board');
     const props = JSON.parse(el.nextElementSibling.textContent);
     if (kind === 'plotno') {
       const o = new URLSearchParams(location.search).get('o');
       if (o) props.on = [o];
+      // ?z=<zajęcia> otwiera dymek tych zajęć (dawne adresy Wątków tu prowadzą)
+      const z = new URLSearchParams(location.search).get('z');
+      if (z) props.z = z;
     }
     const c = mount(el, views[kind], props);
     if (kind === 'plotno' && props.on && props.on.length) {
       const row = Array.from(el.querySelectorAll('.osn-name')).find((b) => b.textContent === props.on[0]);
       if (row) window.scrollTo({ top: row.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2 });
-    }
-    if (kind === 'watki') {
-      history.replaceState({ cls: c.state.cls }, '');
-      window.addEventListener('popstate', (e) => {
-        if (e.state && e.state.cls) { Object.assign(c.state, { cls: e.state.cls, focus: null }); c._redraw(); }
-      });
     }
   });
 </script>

@@ -5,12 +5,12 @@ import { SP } from '../../../rocznik/data.js';
 import R from '../../../rocznik/2026/rocznik.json';
 import { card } from '../../../karty/data.js';
 // Stare karty Rocznika: póki ich zajęcia nie mają listy kart, stoją tu jak dotąd; potem adres prowadzi
-// do karty w jednym zbiorze albo do wątku (przekierowania w rocznik.json).
+// do karty w jednym zbiorze albo do dymku zajęć na Płótnie (przekierowania w rocznik.json).
 export function getStaticPaths() {
   const old = SP.filter((s) => s.isOld).map((s) => ({ params: { karta: s.id }, props: { s } }));
   const red = Object.entries(R['przekierowania'] || {}).map(([slug, t]) => {
     const k = t.karta && card(t.karta);
-    return { params: { karta: slug }, props: { to: k ? k.url : '/2026/watki/' + t.watek + '/' } };
+    return { params: { karta: slug }, props: { to: k ? k.url : '/2026/?z=' + t.watek } };
   });
   return old.concat(red.filter((r) => !old.some((o) => o.params.karta === r.params.karta)));
 }

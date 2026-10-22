@@ -81,7 +81,7 @@ export const backlinks = (k) => KARTY.filter((x) => x !== k && text(x).indexOf('
 const MONTHS = ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sierpnia', 'września', 'października', 'listopada', 'grudnia'];
 export const classesOf = (k) => R['zajęcia'].filter((z) => (z.karty || []).indexOf(k.stem) >= 0).map((z) => {
   const [, m, d] = z.data.split('-').map(Number);
-  return { label: z.kurs + ' ' + d + ' ' + MONTHS[m - 1] + (z['tytuł'] ? ': ' + z['tytuł'] : ''), url: '/2026/watki/' + z.id + '/', kurs: z.kurs };
+  return { label: z.kurs + ' ' + d + ' ' + MONTHS[m - 1] + (z['tytuł'] ? ': ' + z['tytuł'] : ''), url: '/2026/?z=' + z.id, kurs: z.kurs };
 });
 
 // Indeks: grupa › osnowa › rodzina › karty; karta stoi przy każdej swojej rodzinie.

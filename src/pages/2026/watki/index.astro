@@ -1,8 +1,17 @@
 ---
-import Base from '../../../layouts/Base.astro';
-import Board from '../../../components/Board.astro';
+// Wątki zniknęły (jego słowo, 2026-10-22): adres prowadzi na Płótno z dymkiem ostatnich zajęć.
 import { latest } from '../../../rocznik/data.js';
+const to = '/2026/?z=' + latest.id;
 ---
-<Base title={'Rocznik 2026 · ' + latest.course + ' ' + latest.short + ' · kogni.pl'} activePage="watki" rocznik="2026">
-  <Board view="watki" state={{ cls: latest.id }} />
-</Base>
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>kogni.pl</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href={'https://kogni.pl' + to}>
+<meta http-equiv="refresh" content={'0; url=' + to}>
+<script is:inline define:vars={{ to }}>location.replace(to);</script>
+</head>
+<body><p><a href={to}>{'kogni.pl' + to}</a></p></body>
+</html>

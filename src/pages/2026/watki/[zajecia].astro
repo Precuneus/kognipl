@@ -1,12 +1,20 @@
 ---
-import Base from '../../../layouts/Base.astro';
-import Board from '../../../components/Board.astro';
+// Wątki zniknęły (jego słowo, 2026-10-22): adres zajęć prowadzi na Płótno z ich dymkiem.
 import { held } from '../../../rocznik/data.js';
 export function getStaticPaths() {
-  return held.map((c) => ({ params: { zajecia: c.id }, props: { c } }));
+  return held.map((c) => ({ params: { zajecia: c.id }, props: { to: '/2026/?z=' + c.id } }));
 }
-const { c } = Astro.props;
+const { to } = Astro.props;
 ---
-<Base title={'Rocznik 2026 · ' + c.course + ' ' + c.short + ': ' + c.title + ' · kogni.pl'} activePage="watki" rocznik="2026">
-  <Board view="watki" state={{ cls: c.id }} />
-</Base>
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>kogni.pl</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href={'https://kogni.pl' + to}>
+<meta http-equiv="refresh" content={'0; url=' + to}>
+<script is:inline define:vars={{ to }}>location.replace(to);</script>
+</head>
+<body><p><a href={to}>{'kogni.pl' + to}</a></p></body>
+</html>

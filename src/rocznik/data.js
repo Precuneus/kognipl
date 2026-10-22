@@ -27,7 +27,7 @@ export const CL = R['zajęcia'].map((z) => {
     short: d + '.' + String(m).padStart(2, '0'), date: d + ' ' + MONTHS[m - 1],
     title: z['tytuł'] || '', held: !!z.odbyte,
     after: (z['po_zajęciach'] || []).map((a) => ({ label: a['tytuł'], url: a.url })),
-    url: '/2026/watki/' + z.id + '/',
+    url: '/2026/?z=' + z.id,
     opis: (z.opis || []).map((p) => p.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_, a, b) => b || a)),
   };
 });
@@ -77,7 +77,7 @@ R['zajęcia'].forEach((z) => {
       if (!by[o]) {
         const t = (z.splot || {})[o];
         by[o] = { id: z.id + '-' + slugify(o), stem: '', cls: z.id, o, isOld: false, isNew: true, cards: [], homed: [], family: [], r2: [],
-          url: cls.url + '#os-' + OSFULL.findIndex((x) => x.nazwa === o), txt: !!t, h: t ? t.h : o, d: t ? t.d : '', m: '', i: '', l: [], net: [], nets: [], nw: '', fig: [], body: [], dep: [] };
+          url: cls.url, txt: !!t, h: t ? t.h : o, d: t ? t.d : '', m: '', i: '', l: [], net: [], nets: [], nw: '', fig: [], body: [], dep: [] };
         NEW.push(by[o]);
       }
       const sp = by[o];
