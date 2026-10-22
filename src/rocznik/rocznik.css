@@ -7,10 +7,11 @@
 .rocznik-bar{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;line-height:1;color:#8f877a}
 .rocznik-menu{display:flex;align-items:baseline;gap:22px}
 .rocznik-menu a,.rocznik-menu span{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:400;line-height:1;color:#8f877a;text-decoration:none;transition:color .18s ease}
-.rocznik-menu a.on{color:#e2ddd4}
 .rocznik-head-start .rocznik-menu a{color:#cfc8bb}
 .rocznik-menu a:hover{color:#f0c060}
 .rocznik-menu .wkrotce{color:#5e584f}
+/* strona, na której jesteś, świeci w menu złotem (jego słowo, 2026-10-22) */
+.rocznik-menu a.on,.rocznik-head-start .rocznik-menu a.on{color:#f0c060}
 .rocznik-views{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 26px;font-size:14px}
 .rocznik-views a{color:#a09888;text-decoration:none}
 .rocznik-views a.on{color:#f0c060}

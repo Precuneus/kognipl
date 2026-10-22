@@ -14,7 +14,7 @@
     {
      "nazwa": "Kultura i społeczeństwo",
      "opis": "Przekaz zachowań między pokoleniami, różnice kulturowe, demografię i naukę jako działanie zbiorowe.",
-     "tekst": "Zachowania przechodzą z pokolenia na pokolenie przez kulturę, a wspólnoty różnią się tym, co przekazują dalej i jak zakładają rodziny. Nauka też jest działaniem zbiorowym, a kognitywistyka powstała ze spotkania dyscyplin, których szkoły, od [[Podejście obliczeniowe|podejścia obliczeniowego]] po [[Poznanie ucieleśnione|poznanie ucieleśnione]], spierają się o to, czym jest umysł. [[Kryzys kognitywistyki|Kryzys kognitywistyki]] i narodziny [[Neuronauka poznawcza|neuronauki poznawczej]] pokazują, jak ta wspólnota zmienia własne pytania.",
+     "tekst": "Zachowania przechodzą z pokolenia na pokolenie przez kulturę. Nauka też jest działaniem zbiorowym, w którym szkoły kognitywistyki, od [[Podejście obliczeniowe|podejścia obliczeniowego]] po [[Poznanie ucieleśnione|poznanie ucieleśnione]], spierają się o to, czym jest umysł. Z tych sporów wyrosła [[Neuronauka poznawcza|neuronauka poznawcza]], a [[Kryzys kognitywistyki|kryzys kognitywistyki]] pokazuje, że wspólnota zmienia własne pytania.",
      "rodziny": [
       "Kultura",
       "Nauka jako zbiorowość",
@@ -24,7 +24,7 @@
     {
      "nazwa": "Umysł społeczny",
      "opis": "Rozumienie cudzych umysłów, więzi, współpracę i rozwój dziecka w relacji z innymi.",
-     "tekst": "Innych ludzi znasz z modeli zbudowanych z ich ruchów i słów, a [[Konstruowanie innych umysłów|konstruowanie innych umysłów]] widać u dziecka w [[Test fałszywych przekonań|teście fałszywych przekonań]]. Z tych modeli rośnie [[Wspólna intencjonalność|wspólna intencjonalność]], [[Empatia poznawcza i afektywna|empatia]] i więź z opiekunem, przy którym dziecko uczy się w [[Strefa najbliższego rozwoju|strefie najbliższego rozwoju]]. Współpraca i konflikt rozgrywają się w grach takich jak [[Problem gapowicza|problem gapowicza]] i [[Dylemat dwóch przycisków|dylemat dwóch przycisków]].",
+     "tekst": "Innych ludzi znasz z modeli zbudowanych z ich ruchów i słów. To [[Konstruowanie innych umysłów|konstruowanie innych umysłów]], które dziecko pokazuje w [[Test fałszywych przekonań|teście fałszywych przekonań]]. Z modeli rośnie [[Wspólna intencjonalność|wspólna intencjonalność]], dzięki której grasz z innymi w gry takie jak [[Dylemat dwóch przycisków|dylemat dwóch przycisków]] czy [[Problem gapowicza|problem gapowicza]].",
      "rodziny": [
       "Teoria umysłu",
       "Wspólna intencjonalność",
@@ -36,7 +36,7 @@
     {
      "nazwa": "Sztuczni agenci",
      "opis": "Działanie modeli językowych i agentów AI oraz ich wpływ na zatrudnienie.",
-     "tekst": "Modele językowe przewidują kolejne słowo na podstawie ogromnych zbiorów tekstu, a [[Agenci AI|agenci AI]] składają z nich działanie: planują, używają narzędzi i współpracują ze sobą. Ich zdolności zmieniają zatrudnienie i to, które zadania zostają ludziom.",
+     "tekst": "Model językowy przewiduje kolejne słowo, nauczony na ogromnych zbiorach tekstu. [[Agenci AI|Agenci AI]] składają z takich modeli działanie: planują, używają narzędzi i współpracują ze sobą. Zmieniają przez to zatrudnienie i to, które zadania zostają ludziom.",
      "rodziny": [
       "Modele językowe",
       "Agenci AI",
@@ -51,7 +51,7 @@
     {
      "nazwa": "Język",
      "opis": "Mózgowe podłoże mowy, rozumienie i czytanie oraz wpływ języka na myślenie.",
-     "tekst": "Mowa i rozumienie są aktywnością wielu sieci naraz, a [[Język w sieciach mózgu|język w sieciach mózgu]] sięga od obszarów Broki i Wernickego po [[Obszar wzrokowy słów|obszar wzrokowy słów]], który przejmuje czytanie. Każde słowo przewidujesz, zanim padnie, więc słowo niespodziewane budzi [[Zaskoczenie słowem|zaskoczenie]] widoczne w zapisie EEG. Słownictwo rośnie tam, gdzie wspólnota go potrzebuje, jak [[Słowa na śnieg|słowa na śnieg]], a [[Mowa wewnętrzna|mowa wewnętrzna]] towarzyszy myśleniu.",
+     "tekst": "[[Język w sieciach mózgu|Język]] jest aktywnością wielu sieci naraz, od obszarów Broki i Wernickego po [[Obszar wzrokowy słów|obszar wzrokowy słów]], aktywny przy czytaniu. Każde słowo przewidujesz, zanim padnie, więc słowo niespodziewane budzi [[Zaskoczenie słowem|zaskoczenie]] widoczne w zapisie EEG. Słownictwo rośnie tam, gdzie wspólnota go potrzebuje, jak [[Słowa na śnieg|słowa na śnieg]].",
      "rodziny": [
       "Mózg języka",
       "Język a myślenie",
@@ -61,7 +61,7 @@
     {
      "nazwa": "Świadomość",
      "opis": "Oznaki i stany świadomości, jaźń i jej podział.",
-     "tekst": "Świadomość jest tym, [[Jak to jest być nietoperzem|jak to jest być]] danym organizmem, a jej oznaki odczytujemy [[Raport jako pomiar|z raportu]], z zachowania i z aktywności mózgu, także u pacjentów z [[Ukryta świadomość|ukrytą świadomością]]. Stany zmienione, od [[Marzenia senne|marzeń sennych]] i [[Anestezja ogólna|anestezji ogólnej]] po [[Doświadczenie poza ciałem|doświadczenie poza ciałem]], pokazują, jak doświadczenie zmienia się razem z aktywnością sieci. [[Rozszczepiony mózg|Rozszczepiony mózg]] stawia pytanie o jedność ja.",
+     "tekst": "Świadomość jest tym, [[Jak to jest być nietoperzem|jak to jest być]] danym organizmem. Jej oznaki odczytujesz [[Raport jako pomiar|z raportu]], z zachowania i z aktywności mózgu, także u pacjentów z [[Ukryta świadomość|ukrytą świadomością]]. W [[Marzenia senne|marzeniach sennych]], w [[Anestezja ogólna|anestezji]] i przy [[Doświadczenie poza ciałem|wyjściu poza ciało]] doświadczenie zmienia się razem z aktywnością sieci, a [[Rozszczepiony mózg|rozszczepiony mózg]] stawia pytanie o jedność ja.",
      "rodziny": [
       "Oznaki świadomości",
       "Stany zmienione",
@@ -71,7 +71,7 @@
     {
      "nazwa": "Myślenie",
      "opis": "Rozumowanie, rozwiązywanie problemów i planowanie, odkrywanie reguł, funkcje wykonawcze, inteligencję i twórczość.",
-     "tekst": "Myślisz, przeszukując [[Przestrzeń problemu|przestrzeń problemu]] i trzymając jej części w [[Pamięć robocza|pamięci roboczej]], a rozumowanie przybiera formę [[Dedukcja, indukcja, abdukcja|dedukcji, indukcji i abdukcji]]. Reguły odkrywasz z kolejnych prób, co sprawdza [[Test sortowania kart|test sortowania kart]], a strategia prowadzona nabytymi modelami to warstwa [[Makro - strategia z modeli|makro]]. Twórczość często idzie [[Myślenie przez analogię|przez analogię]].",
+     "tekst": "Myślisz, przeszukując [[Przestrzeń problemu|przestrzeń problemu]] i trzymając jej części w [[Pamięć robocza|pamięci roboczej]]. Wnioskujesz przez [[Dedukcja, indukcja, abdukcja|dedukcję, indukcję i abdukcję]], a reguły odkrywasz z kolejnych prób, jak w [[Test sortowania kart|teście sortowania kart]]. Gdy reguły znasz, prowadzi Cię strategia z nabytych modeli, czyli warstwa [[Makro - strategia z modeli|makro]].",
      "rodziny": [
       "Rozumowanie i wnioskowanie",
       "Rozwiązywanie problemów i planowanie",
@@ -84,7 +84,7 @@
     {
      "nazwa": "Decyzja i działanie",
      "opis": "Powstawanie intencji i jej czas, poczucie sprawczości, wybór i wartość opcji oraz lukę między intencją a działaniem.",
-     "tekst": "[[Eksperyment Libeta|Eksperyment Libeta]] i [[Eksperyment Desmurgeta|eksperyment Desmurgeta]] pytają, kiedy powstaje intencja i skąd bierze się [[Poczucie sprawczości|poczucie sprawczości]]. Przy wyborze ważysz wartość opcji, a uszkodzenia [[Kora oczodołowo-czołowa|kory oczodołowo-czołowej]] u [[Phineas Gage|Phineasa Gage'a]] i [[Pacjent Elliot|pacjenta Elliota]] pokazują, jak to ważenie się rozpada. Wybór kształtują [[Efekt kosztów utopionych|koszty utopione]] i napięcie między [[Eksploracja i eksploatacja|eksploracją a eksploatacją]], a lukę między intencją a działaniem zamyka czasem [[Działanie przed motywacją|działanie przed motywacją]].",
+     "tekst": "W [[Eksperyment Libeta|eksperymencie Libeta]] i [[Eksperyment Desmurgeta|eksperymencie Desmurgeta]] badacze sprawdzają, kiedy powstaje intencja i skąd bierze się [[Poczucie sprawczości|poczucie sprawczości]]. Wybierając, ważysz wartość opcji, a uszkodzenia [[Kora oczodołowo-czołowa|kory oczodołowo-czołowej]] u [[Phineas Gage|Phineasa Gage'a]] i [[Pacjent Elliot|pacjenta Elliota]] rozbijają to ważenie. Ważenie zniekształcają też [[Efekt kosztów utopionych|koszty utopione]].",
      "rodziny": [
       "Intencja i sprawczość",
       "Wybór i wartość",
@@ -94,7 +94,7 @@
     {
      "nazwa": "Nawyk i automatyzacja",
      "opis": "Warunkowanie, uczenie ze wzmocnieniem, przejście od działania celowego do nawyku, nabywanie wprawy i pętle jąder podstawy.",
-     "tekst": "Uczysz się przez [[Warunkowanie klasyczne i instrumentalne|warunkowanie klasyczne i instrumentalne]], a [[Dopaminowe zaskoczenie nagrodą|dopaminowe zaskoczenie nagrodą]] aktualizuje to, czego się spodziewasz. Powtarzane działanie przechodzi [[Od uwagi do automatyzmu|od uwagi do automatyzmu]] i [[Działanie celowe i nawykowe|od celu do nawyku]], wzdłuż [[Drogi jąder podstawy|dróg jąder podstawy]]. To samo uczenie daje wprawę i [[Uzależnienie jako uczenie się|uzależnienie]].",
+     "tekst": "Uczysz się przez [[Warunkowanie klasyczne i instrumentalne|warunkowanie]], a [[Dopaminowe zaskoczenie nagrodą|dopaminowe zaskoczenie nagrodą]] aktualizuje to, czego się spodziewasz. Powtarzane działanie przechodzi [[Działanie celowe i nawykowe|od celu do nawyku]] wzdłuż [[Drogi jąder podstawy|dróg jąder podstawy]]. To samo uczenie daje wprawę i [[Uzależnienie jako uczenie się|uzależnienie]].",
      "rodziny": [
       "Warunkowanie",
       "Uczenie ze wzmocnieniem",
@@ -106,7 +106,7 @@
     {
      "nazwa": "Pamięć i przestrzeń",
      "opis": "Zapisywanie, utrwalanie i odtwarzanie śladów pamięci oraz mapy przestrzeni i pojęć.",
-     "tekst": "Hipokamp i kora wokół niego budują [[Mapy poznawcze|mapy poznawcze]], w przestrzeni z [[Komórki miejsca i komórki siatki|komórkami miejsca i komórkami siatki]], a w świecie pojęć z [[Komórki pojęciowe|komórkami pojęciowymi]]. Wspomnienie budujesz na nowo za każdym razem, pod obecnymi oczekiwaniami, bo [[Pamięć jako rekonstrukcja|pamięć jest rekonstrukcją]], a te same sieci są aktywne, gdy [[Wyobrażanie przyszłości|wyobrażasz sobie przyszłość]]. [[Pacjent H.M.|Pacjent H.M.]] pokazał, że systemy pamięci da się rozdzielić, a [[Utrwalanie pamięci we śnie|sen utrwala]] nowe wspomnienia.",
+     "tekst": "Twój hipokamp buduje [[Mapy poznawcze|mapy poznawcze]] przestrzeni i pojęć. Każde wspomnienie [[Pamięć jako rekonstrukcja|budujesz na nowo]], tymi samymi sieciami, którymi [[Wyobrażanie przyszłości|wyobrażasz sobie przyszłość]]. [[Pacjent H.M.|Pacjent H.M.]] pokazał, że systemy pamięci da się rozdzielić.",
      "rodziny": [
       "Mapy przestrzeni",
       "Przestrzenie pojęć",
@@ -118,7 +118,7 @@
     {
      "nazwa": "Osobowość i zdrowie psychiczne",
      "opis": "Trwałe cechy osobowości, neuroróżnorodność oraz zaburzenia nastroju, lęku i tożsamości.",
-     "tekst": "Osobowość to trwałe skłonności, którymi ludzie różnią się od siebie, a [[Wielka Piątka|Wielka Piątka]] opisuje je pięcioma wymiarami. Neuroróżnorodność, od [[Spektrum autyzmu|spektrum autyzmu]] po [[ADHD|ADHD]], to różne układy aktywności tych samych sieci. Nastrój i lęk podtrzymują [[Ruminacja|ruminacja]] i [[Perfekcjonizm|perfekcjonizm]], a trauma może rozszczepić tożsamość, jak w [[Dysocjacyjne zaburzenie tożsamości|dysocjacyjnym zaburzeniu tożsamości]].",
+     "tekst": "Osobowość to trwałe skłonności, którymi różnisz się od innych, a [[Wielka Piątka|Wielka Piątka]] opisuje je pięcioma wymiarami. [[Spektrum autyzmu|Spektrum autyzmu]] i [[ADHD|ADHD]] należą do neuroróżnorodności. Nastrój i lęk podtrzymuje [[Ruminacja|ruminacja]], a trauma może rozszczepić tożsamość, jak w [[Dysocjacyjne zaburzenie tożsamości|dysocjacyjnym zaburzeniu tożsamości]].",
      "rodziny": [
       "Nastrój i lęk",
       "Trauma i dysocjacja",
@@ -129,7 +129,7 @@
     {
      "nazwa": "Emocje",
      "opis": "Powstawanie, wyrażanie i regulację emocji, nagrodę i przyjemność oraz reakcje strachu, stresu i bólu.",
-     "tekst": "Emocje konstruujesz z bioinformacji z wnętrza ciała i z pojęć, które masz, jak głosi [[Teoria emocji konstruowanych|teoria emocji konstruowanych]], a [[Efekt Kuleszowa|efekt Kuleszowa]] i [[Atrybucja pobudzenia|atrybucja pobudzenia]] pokazują, jak kontekst nadaje pobudzeniu znaczenie. Nagroda dzieli się na [[Chcenie i lubienie|chcenie i lubienie]], ból zależy od oczekiwań, co widać w [[Efekt placebo|efekcie placebo]], a strach u [[Pacjentka S.M.|pacjentki S.M.]] zniknął razem z ciałami migdałowatymi. Emocje regulujesz, gdy [[Ponowna ocena i tłumienie|oceniasz sytuację na nowo albo tłumisz]] ich wyraz.",
+     "tekst": "Emocje [[Teoria emocji konstruowanych|konstruujesz]] z bioinformacji z wnętrza ciała i z pojęć, które znasz. Ten sam stan ciała znaczy co innego w innym kontekście, co pokazuje [[Efekt Kuleszowa|efekt Kuleszowa]]. Nagrodę przeżywasz jako [[Chcenie i lubienie|chcenie i lubienie]], a ból zmienia się z oczekiwaniami, jak w [[Efekt placebo|efekcie placebo]].",
      "rodziny": [
       "Konstruowanie emocji",
       "Nagroda i przyjemność",
@@ -141,7 +141,7 @@
     {
      "nazwa": "Ciało i ruch",
      "opis": "Czucie własnego ciała, sterowanie ruchem, schemat ciała z narzędziami oraz wpływ wysiłku, snu i fizjologii na mózg.",
-     "tekst": "Ciało czujesz od środka przez [[Interocepcja|interocepcję]], a jego położenie i ruch przez [[Propriocepcja|propriocepcję]], której utrata u [[Ian Waterman|Iana Watermana]] przeniosła sterowanie ruchem na wzrok. Według propozycji, że [[Mózg dla ruchu|mózg istnieje dla ruchu]], ruch zaczyna się od predykcji, a jego wykonanie to warstwa [[Mikro - wykonanie|mikro]]. Schemat ciała obejmuje narzędzia i przestrzeń wokół, co pokazują [[Iluzja gumowej ręki|iluzja gumowej ręki]] i [[Kończyna fantomowa|kończyna fantomowa]], a [[Allostaza|allostaza]] dostraja ciało do tego, czego będzie potrzebować.",
+     "tekst": "Ciało czujesz od środka przez [[Interocepcja|interocepcję]], a jego położenie i ruch przez [[Propriocepcja|propriocepcję]]. [[Ian Waterman|Ian Waterman]] po utracie propriocepcji prowadzi ruchy wzrokiem. Według propozycji, że [[Mózg dla ruchu|mózg istnieje dla ruchu]], ruch zaczyna się od predykcji, a jego wykonanie to warstwa [[Mikro - wykonanie|mikro]].",
      "rodziny": [
       "Interocepcja",
       "Propriocepcja i dotyk",
@@ -153,7 +153,7 @@
     {
      "nazwa": "Percepcja i uwaga",
      "opis": "Przetwarzanie bodźców od fizyki światła i receptorów przez szlaki kory po obrazy umysłowe oraz uwagę i jej zaburzenia.",
-     "tekst": "Widzenie zaczyna się od światła na [[Pręciki, czopki i droga wzrokowa|pręcikach i czopkach]] i biegnie drogą wzrokową do kory, gdzie rozchodzi się na szlaki, z [[Trzeci szlak wzrokowy|trzecim szlakiem wzrokowym]] dla ruchów twarzy i ciała. Uszkodzenia rozkładają widzenie na części, jak w [[Ślepowidzenie|ślepowidzeniu]], [[Prozopagnozja|prozopagnozji]], [[Zespół Bálinta|zespole Bálinta]] i [[Zaniedbywanie stronne|zaniedbywaniu stronnym]]. Uwaga wybiera, co z tego zobaczysz, co pokazuje [[Ślepota z nieuwagi|ślepota z nieuwagi]], a [[Afantazja|afantazja]] pokazuje, że obrazy umysłowe różnią się między ludźmi.",
+     "tekst": "Widzenie zaczyna się od światła padającego na [[Pręciki, czopki i droga wzrokowa|pręciki i czopki]]. W korze rozdziela się na szlaki, a [[Trzeci szlak wzrokowy|trzeci szlak wzrokowy]] niesie ruchy twarzy i ciała. Uszkodzenia rozbijają widzenie na części, jak w [[Ślepowidzenie|ślepowidzeniu]], [[Prozopagnozja|prozopagnozji]] i [[Zaniedbywanie stronne|zaniedbywaniu stronnym]].",
      "rodziny": [
       "Światło",
       "Oko i barwa",
@@ -173,7 +173,7 @@
     {
      "nazwa": "Sieci mózgu i predykcja",
      "opis": "Anatomię mózgu, jego sieci wielkoskalowe, rytmy i dojrzewanie oraz predykcję i zaskoczenie.",
-     "tekst": "Twoje doświadczenie jest aktywnością [[Sieci wielkoskalowe|sieci wielkoskalowych]], zespołów obszarów aktywnych razem, od [[Sieć wzrokowa|sieci wzrokowej]] po [[Sieć domyślna|sieć domyślną]]. Sieci przewidują, co nadejdzie od receptorów, a [[Kodowanie predykcyjne|kodowanie predykcyjne]] opisuje, jak zaskoczenie aktualizuje Twoje modele. Sieci dojrzewają wzdłuż [[Gradient główny kory|gradientu głównego kory]], a [[Rytmy alfa i gamma|rytmy alfa i gamma]] porządkują ich aktywność w czasie.",
+     "tekst": "Twoje doświadczenie jest aktywnością [[Sieci wielkoskalowe|sieci wielkoskalowych]], od [[Sieć wzrokowa|sieci wzrokowej]] po [[Sieć domyślna|sieć domyślną]]. Sieci przewidują, co nadejdzie od receptorów, a [[Kodowanie predykcyjne|kodowanie predykcyjne]] opisuje, jak zaskoczenie aktualizuje Twoje modele. Sieci dojrzewają wzdłuż [[Gradient główny kory|gradientu głównego kory]].",
      "rodziny": [
       "Predykcja",
       "Sieci wielkoskalowe",
@@ -185,7 +185,7 @@
     {
      "nazwa": "Neuron i synapsa",
      "opis": "Elektryczne i chemiczne działanie pojedynczego neuronu i synapsy oraz zmiany siły połączeń między neuronami.",
-     "tekst": "[[Neuron i glej|Neurony i komórki glejowe]] budują układ nerwowy, a [[Bioinformacja|bioinformacja]] przepływa wzdłuż aksonu jako [[Potencjał czynnościowy|potencjały czynnościowe]], zebrane wcześniej z [[Potencjał stopniowany|potencjałów stopniowanych]] na dendrytach. Na [[Synapsa chemiczna i elektryczna|synapsie chemicznej]] bioinformacja jest transformowana przez przekaźnik i jego receptory, na które działają też substancje takie jak [[Kofeina i receptor adenozynowy|kofeina]], a na elektrycznej przekazywana dalej. Siła połączeń zmienia się z doświadczeniem według [[Reguła Hebba|reguły Hebba]].",
+     "tekst": "[[Bioinformacja|Bioinformacja]] przepływa wzdłuż aksonu [[Neuron i glej|neuronu]] jako [[Potencjał czynnościowy|potencjały czynnościowe]]. Na [[Synapsa chemiczna i elektryczna|synapsie chemicznej]] przekaźnik, przenosząc ją do następnego neuronu, transformuje ją, a na synapsie elektrycznej jest ona przekazywana. Neurony aktywne razem wzmacniają swoje połączenia według [[Reguła Hebba|reguły Hebba]].",
      "rodziny": [
       "Budowa i elektryka neuronu",
       "Przekaźnictwo synaptyczne",
@@ -195,7 +195,7 @@
     {
      "nazwa": "Życie i umieranie",
      "opis": "Procesy molekularne, energetyczne i regulacyjne, którymi komórki i ich wspólnoty utrzymują się przy życiu, uczą się, współdziałają i umierają.",
-     "tekst": "Komórki utrzymują się przy życiu dzięki cząsteczkom, genom i energii, regulują własny stan i umierają w uporządkowany sposób. Uczą się też bez mózgu i tworzą wspólnoty, od biofilmów bakterii po tkanki.",
+     "tekst": "Komórka utrzymuje się przy życiu, czerpiąc energię i regulując własny stan według swoich genów. Komórki uczą się też bez mózgu i łączą we wspólnoty, od biofilmów bakterii po tkanki. Umierają w uporządkowany sposób, w procesie zwanym apoptozą.",
      "rodziny": [
       "Cząsteczki i geny",
       "Energia komórki",
@@ -207,7 +207,7 @@
     {
      "nazwa": "Ewolucja",
      "opis": "Zmiany gatunków i układów nerwowych w czasie oraz zdolności poznawcze różnych zwierząt.",
-     "tekst": "Układy nerwowe zmieniały się razem z gatunkami, od sieci nerwowej parzydełkowców po mózg człowieka. Każdy gatunek żyje we własnym [[Umwelt|Umwelt]], wycinku świata dostępnym jego receptorom, a poznanie zwierząt pokazuje, jak różne są te światy.",
+     "tekst": "Układy nerwowe zmieniały się razem z gatunkami, od sieci nerwowej parzydełkowców po mózg człowieka. Każdy gatunek żyje we własnym [[Umwelt|Umwelt]], wycinku świata dostępnym jego receptorom.",
      "rodziny": [
       "Ewolucja układu nerwowego",
       "Człowiek w ewolucji",
@@ -222,7 +222,7 @@
     {
      "nazwa": "Energia i jej przemiany",
      "opis": "Entropię i kierunek czasu, symetrie i prawa zachowania, elektryczność i fale elektromagnetyczne oraz zjawiska kwantowe.",
-     "tekst": "Entropia wyznacza kierunek czasu, a z symetrii wynikają prawa zachowania. Światło to fala elektromagnetyczna, a [[Widmo elektromagnetyczne|widmo elektromagnetyczne]] sięga od promieni gamma do fal radiowych, z wąskim pasmem widzialnym dla czopków. Zjawiska kwantowe opisują energię w najmniejszych porcjach, takich jak foton.",
+     "tekst": "Z symetrii wynikają prawa zachowania energii, a entropia wyznacza kierunek czasu. Światło to wąskie pasmo [[Widmo elektromagnetyczne|widma elektromagnetycznego]], które sięga od promieni gamma do fal radiowych. Energię światła niesie foton, jej najmniejsza porcja.",
      "rodziny": [
       "Entropia i prawa fizyki",
       "Elektryczność i fale elektromagnetyczne",
@@ -232,7 +232,7 @@
     {
      "nazwa": "Pomiar mózgu",
      "opis": "Sygnały fizyczne, którymi przyrządy mierzą aktywność mózgu, i rozdzielczość tych pomiarów.",
-     "tekst": "Aktywność mózgu mierzysz przez sygnały fizyczne: [[EEG|EEG]] zapisuje napięcie elektryczne na skórze głowy, a [[Skaner MRI|skaner MRI]] sygnał hemodynamiczny i magnetyczny. Każdy przyrząd ma swoją rozdzielczość w czasie i w przestrzeni, więc EEG śledzi milisekundy, a fMRI milimetry. Dyfuzja wody, przepływ krwi i ciśnienie dają kolejne obrazy tej samej tkanki.",
+     "tekst": "Aktywność mózgu mierzysz przez sygnały fizyczne: [[EEG|EEG]] zapisuje napięcie elektryczne na skórze głowy, a [[Skaner MRI|skaner MRI]] sygnał hemodynamiczny i magnetyczny. Każdy przyrząd ma swoją rozdzielczość: EEG śledzi milisekundy, a fMRI milimetry. Dyfuzja wody, przepływ krwi i ciśnienie dają kolejne obrazy tej samej tkanki.",
      "rodziny": [
       "Sygnał elektryczny",
       "Sygnał hemodynamiczny i magnetyczny",

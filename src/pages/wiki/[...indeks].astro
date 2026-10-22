@@ -8,7 +8,13 @@ export function getStaticPaths() {
 ---
 <Base title="wiki · kogni.pl" activePage="wiki">
   <div class="wi">
-    <h1 class="wi-title">kogn<span>ı</span>.pl/wiki</h1>
+    <h1 class="sr-only">kogni.pl/wiki</h1>
+    <!-- wstęp zamiast nagłówka: wiki to jego spojrzenie na kognitywistykę (jego słowo, 2026-10-22) -->
+    <div class="wi-intro">
+      <p>Wiki to moje spojrzenie na kognitywistykę, zapisane jako karty pojęć. Każda karta opisuje jedno pojęcie: co nim nazywamy, co pokazały badania i aktywnością których sieci jest to, czego wtedy doświadczasz.</p>
+      <p>Patrzę na kognitywistykę od strony doświadczenia, a doświadczanie jest aktywnością Twoich sieci mózgowych. Socjologia, psychologia, biologia i fizyka mają własne siatki pojęciowe, a kognitywistyka jest miejscem, w którym te siatki się spotykają.</p>
+      <p>Karty linkują do siebie nawzajem. Ta sama informacja wraca w kilku z nich, bo powtórzenie w nowym kontekście buduje skojarzenia. Poniżej karty układają się w porządku <a href="/2026/">Płótna</a>, a z kolejnymi zajęciami przybywa kart gotowych do czytania.</p>
+    </div>
     {INDEX.map((g) => (
       <section class="wi-group" id={g.nazwa.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase()} style={'--ink:' + INK[g.g] + ';--base:' + BASE[g.g]}>
         <h2 class="wi-gname">{g.nazwa}</h2>
@@ -30,8 +36,9 @@ export function getStaticPaths() {
 
 <style is:global>
 .wi{max-width:1120px;margin:0 auto;padding:44px 32px 80px}
-.wi-title{margin:0 0 36px;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(40px,5vw,64px);letter-spacing:.04em;color:#e2ddd4}
-.wi-title span{color:#f0c060}
+.wi-intro{max-width:720px;margin:0 0 8px}
+.wi-intro p{margin:0 0 14px;font-size:16.5px;line-height:1.75;color:#cfc8bb}
+.wi-intro a{color:#f0c060;text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wi-group{margin-top:40px}
 .wi-gname{margin:0 0 14px;font-size:12.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);border-left:3px solid var(--base);padding-left:10px}
 .wi-os{padding:16px 0;border-top:1px solid rgba(180,155,100,.12)}
