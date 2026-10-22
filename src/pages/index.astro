@@ -73,7 +73,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
 <canvas class="roj-plotno" aria-hidden="true"></canvas>
 <canvas class="roj-plotno roj-iskra" aria-hidden="true"></canvas>
 <main class="roj">
-  <!-- ekran startowy (jego słowo, 2026-10-22): logo w lewym górnym rogu, przyciski po prawej; rój formuje z logo kreski ze strzałkami do przycisków; Story stoi pośrodku, a do historii wchodzi się tylko nim -->
+  <!-- ekran startowy (jego słowo, 2026-10-22): logo w lewym górnym rogu, przyciski po lewej schodami od logo ku Story, mózg po prawej; rój formuje z logo kreski ze strzałkami do przycisków; Story stoi pośrodku, a do historii wchodzi się tylko nim -->
   <section class="roj-st start" data-k="start" aria-label="Menu">
     <nav class="roj-menu-st" aria-label="Główne">
       {WIKI ? <a class="roj-btn" href={WIKI}>Wiki</a> : <span class="roj-btn wkrotce">Wiki</span>}
@@ -167,6 +167,14 @@ body:has(.roj) .rocznik-bar,body:has(.roj) .rocznik-menu{display:none}
 /* ekran startowy: pusty ekran na wysokość okna; przyciski stoją na nim w pionowej kolumnie, Story niżej i dopiero po czasie */
 .roj-st.start{display:block;min-height:0;height:100vh;padding:0}
 .roj-menu-st{position:absolute;right:clamp(24px,5vw,96px);top:calc(13vh - var(--hh,96px));display:flex;flex-direction:column;align-items:stretch;gap:16px}
+/* na szerokim ekranie przyciski schodzą schodami od logo ku Story: każdy niżej i bliżej środka (jego słowo, 2026-10-22) */
+@media (min-width:761px){
+  .roj-menu-st{position:static}
+  .roj-menu-st > *{position:absolute}
+  .roj-menu-st > :nth-child(1){left:14vw;top:calc(24vh - var(--hh,96px))}
+  .roj-menu-st > :nth-child(2){left:23vw;top:calc(44vh - var(--hh,96px))}
+  .roj-menu-st > :nth-child(3){left:32vw;top:calc(64vh - var(--hh,96px))}
+}
 .roj a.roj-btn,.roj span.roj-btn{display:block;box-sizing:border-box;min-width:6.6em;padding:.5em 1.05em;border:1px solid rgba(240,192,96,.55);background:rgba(0,0,0,.62);font-family:var(--font-display);font-weight:400;font-size:27px;line-height:1.2;letter-spacing:.02em;color:var(--kosc);text-decoration:underline;text-decoration-color:rgba(240,192,96,.75);text-decoration-thickness:1px;text-underline-offset:.26em;transition:border-color .2s ease,background .2s ease,color .2s ease,opacity .9s ease}
 .roj a.roj-btn:hover{border-color:var(--zloto);background:rgba(240,192,96,.1);color:var(--zloto)}
 .roj span.roj-btn.wkrotce{color:#6e675c;border-color:rgba(240,192,96,.22);text-decoration-color:rgba(240,192,96,.3)}
@@ -389,8 +397,8 @@ const YN = [.30, .48, .66, .84];
 const hex = (h: string) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
 const mix = (a: number[], b: number[], q: number) => [0, 1, 2].map((i) => Math.round(a[i] + (b[i] - a[i]) * q));
 const GREY = hex('#5f5a54');
-// jasność przygaszonego mózgu: punkt sieci i punkt tła (przedtem .3 i .16)
-const BR_S = .46, BR_T = .26;
+// jasność przygaszonego mózgu: punkt sieci i punkt tła (przedtem .3 i .16); na ekranie startowym jaśniej (jego słowo, 2026-10-22)
+const BR_S = .46, BR_T = .26, BR_S0 = .68, BR_T0 = .38;
 // dwa płótna: rój pod tekstem, iskra (snop, lód, kropka) nad tekstem i postaciami
 const cv = document.querySelector('.roj-plotno') as HTMLCanvasElement, cv2 = document.querySelector('.roj-iskra') as HTMLCanvasElement;
 const g = cv.getContext('2d')!, g2 = cv2.getContext('2d')!;
@@ -446,13 +454,13 @@ function brain(p: any, sc = 1, r = 0) {
   const bw = (MOB ? W * .88 : Math.min(W * .46, 760)) * sc * (1 - (MOB ? .22 : .16) * r), cx = MOB ? W / 2 : W * (.72 - .06 * r), cy = MOB ? H * .29 + MOB_DY : H * .52;
   return [cx + (p.u / 240 - .5) * bw, cy + (p.v / 180 - .5) * bw * .75, bw];
 }
-// mózg na ekranie startowym stoi pośrodku, pod kreskami i nad Story, z dala od przycisków po prawej; przy przejściu do Cześć odpływa
+// mózg na ekranie startowym stoi po prawej, z dala od schodów przycisków; przy przejściu do Cześć odpływa
 // na swoje miejsce. Telefon zostaje przy mózgu z boku.
 const BS = { cx: 0, cy: 0, bw: 0 };
 function geomS() {
   if (MOB) return;
-  const bl = menuA.length ? menuA[0].getBoundingClientRect().left : W * .75;
-  BS.bw = Math.min(W * .42, 640, H * .62); BS.cx = Math.min(W * .5, bl - 48 - BS.bw / 2); BS.cy = H * .54;
+  const kr = menuA.length ? menuA[2].getBoundingClientRect().right : W * .45, m = Math.max(24, Math.min(W * .05, 96));
+  BS.bw = Math.min(W * .42, 640, H * .62, W - m - kr - 40); BS.cx = W - m - BS.bw / 2; BS.cy = H * .54;
 }
 function brainS(p: any) { return MOB ? brain(p) : [BS.cx + (p.u / 240 - .5) * BS.bw, BS.cy + (p.v / 180 - .5) * BS.bw * .75, BS.bw]; }
 // mózg tam, gdzie go teraz widać: na ekranie startowym i przy przejściu z niego inaczej niż w reszcie strony
@@ -499,7 +507,7 @@ function st(k: string, p: any, lp: number) {
   }
   // mózg przygaszony i taki zostaje: sieci świecą tylko w snopie iskry albo po kliknięciu (jego słowo, 2026-10-20);
   // jaśniej niż przedtem, żeby go było widać (jego słowo, 2026-10-22); za nagłówkiem rój się rozprasza
-  if (k === 'start') { [x, y] = brainS(p); a = net ? BR_S : BR_T; }
+  if (k === 'start') { [x, y] = brainS(p); a = net ? BR_S0 : BR_T0; }
   else if (k === 'czesc') { [x, y] = brain(p); a = net ? BR_S : BR_T; }
   else if (k === 'pytanie' || k === 'naglowek') { [x, y] = brain(p); a = net ? BR_S : BR_T; }
   else if (k === 'sieci') {
@@ -580,7 +588,7 @@ let KIER = 1, KIER_T = -1e9, OSTATNI_Y = scrollY, WSTECZ = 0;
 const DIP = new Map<HTMLElement, number[]>();
 const G = 2600;
 const knotXY = () => { const r = knotLogo!.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
-// Ekran startowy (jego słowo, 2026-10-22): logo po lewej, przyciski Wiki, Kursy, Kontakt po prawej, mózg pośrodku, Story pod nim.
+// Ekran startowy (jego słowo, 2026-10-22): logo po lewej, przyciski Wiki, Kursy, Kontakt schodami od logo ku Story, mózg po prawej.
 // Rój formuje z logo trzy wygięte kreski ze strzałkami ku przyciskom, potem czwartą ku Story. Iskra stoi w logo; gdy ktoś próbuje
 // przewinąć ekran, schodzi czwartą kreską do Story, czeka tam i wraca. Do historii wchodzi się tylko kliknięciem Story.
 const menuA = $$('.roj-menu-st > *'), storyB = $('.roj-story');
@@ -599,17 +607,17 @@ function railPt(k: number, s: number) {
 // kreski wychodzą z logo, a kończą się strzałką tuż przy lewej krawędzi swojego przycisku; kształt liczy się z miejsca logo i przycisków w każdej klatce
 const logoA = document.querySelector('.rocznik-logo') as HTMLElement | null;
 function landGeom() {
-  const el = [menuA[0], menuA[1], menuA[2], storyB], lr = (logoA || knotLogo!).getBoundingClientRect(), dy0 = knotXY()[1];
+  const el = [menuA[0], menuA[1], menuA[2], storyB], lr = (logoA || knotLogo!).getBoundingClientRect();
   for (let k = 0; k < 4; k++) {
     const r = el[k].getBoundingClientRect(), L = LG[k], tx = r.left - (MOB ? 10 : 14), ty = r.top + r.height / 2;
     let P: number[];
-    // trzy kreski wychodzą z prawego brzegu logo, wyginają się nad mózgiem i opadają ku przyciskom; czwarta wychodzi spod logo,
+    // trzy kreski wychodzą spod logo, opadają i skręcają w prawo ku przyciskom na schodach; czwarta wychodzi spod logo,
     // schodzi lewym brzegiem ekranu i pod mózgiem dochodzi z lewej do Story pośrodku; na telefonie wszystkie schodzą lewym brzegiem
     // i skręcają do swoich przycisków
     if (!MOB) {
-      const sx = lr.right + 10, sy = dy0 + (k - 1) * 6;
+      const sx = lr.left + lr.width * (.08 + .08 * k), sy = lr.bottom + 6;
       P = k < 3
-        ? [sx, sy, sx + (tx - sx) * .33, sy - 10 - 5 * k, tx - (tx - sx) * .3, ty - H * .09, tx, ty]
+        ? [sx, sy, sx, sy + (ty - sy) * .75, sx + (tx - sx) * .3, ty, tx, ty]
         : [lr.left + lr.width * .3, lr.bottom + 6, W * .02, ty * .85, tx - (tx - W * .02) * .5, ty + 8, tx, ty];
     } else {
       const sx = lr.left + 14 + 5 * k, sy = lr.bottom + 4;
