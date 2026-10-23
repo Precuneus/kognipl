@@ -266,7 +266,9 @@ html.roj-cicho .roj-dymek,html.roj-cicho .roj-dymek-b{animation:none}
 /* zombie i solipsysta: ekran lepki, postać odsłania iskra */
 /* solipsysta też jedzie z przewijaniem; dolny margines trzyma dawną wysokość ekranu i odstępy do Wiem (2026-10-23) */
 .roj-st.lepkie{display:block;padding:0 0 15vh}
-.roj-lepki{position:relative;min-height:100vh;overflow:hidden}
+.roj-lepki{position:sticky;top:0;height:100vh;overflow:hidden}
+/* ekran osnów stoi, bo przewijanie przesuwa po nim tor z mnichami i słowami; jedzie tylko ekran solipsysty (2026-10-23) */
+.roj-st.lepkie .roj-lepki{position:relative;height:auto;min-height:100vh}
 .roj-st.lepkie .roj-lepki{display:flex;align-items:center;padding:0 56px 0 8vw}
 .roj-st.lepkie .roj-t{max-width:min(40vw,560px)}
 .roj-st.lepkie .roj-t{position:relative}
