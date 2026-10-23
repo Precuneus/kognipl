@@ -1,15 +1,16 @@
 ---
 import Base from '../../layouts/Base.astro';
 import KartaWiki from '../../components/KartaWiki.astro';
+import { template } from '../../rocznik/views/karta.js';
 import { INDEX, INK, BASE, WIKI_ON, KARTY, NETN, card, netCard, segs } from '../../karty/data.js';
-import { mozgSvg, KOLOR } from '../../karty/mozg.js';
+import { KOLOR } from '../../karty/mozg.js';
 // pierwszy artykuł wiki: karta Kognitywistyka w szablonie karty (jego słowo, 2026-10-22)
 const pierwsza = card('Kognitywistyka');
 
 // Mapa sieci: mózg z karty, każda sieć w kolorze ze strony startowej; klik pokazuje karty,
 // które wskazują tę sieć w części Sieć mózgowa (jego, 2026-10-23: *Build the brain index first*).
 // siedem sieci modelu strony; sieć limbiczna wchodzi do domyślnej (data.js, 2026-10-23)
-// kolory sieci i rysunek mózgu ze strony startowej (mozg.js, 2026-10-23)
+// kolory sieci ze strony startowej (mozg.js, 2026-10-23)
 const ROLA = { VIS: '„Widzę.”', SMN: '„Czuję ciało i się ruszam.”', DAN: '„Koordynuję oko i rękę.”', VAN: '„Coś przerywa plan.”', SN: '„Coś zagraża schematowi ciała.”', CN: '„Trzymam zadanie.”', DMN: '„Ja, przeszłość i przyszłość, inni ludzie.”' };
 const plain = (t) => segs(t).map((s) => s.t).join('');
 const ile = (n) => n + ' ' + (n === 1 ? 'karta' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 'karty' : 'kart');
@@ -20,7 +21,11 @@ const SIECI = Object.keys(KOLOR).map((kod) => {
   return { kod, nazwa: NETN[kod], kolor: KOLOR[kod], rola: ROLA[kod], own, karty };
 }).filter((s) => s.karty.length);
 const shown = new Set(SIECI.map((s) => s.kod));
-const mapa = mozgSvg([...shown], { klik: true, label: 'Sieci mózgu z boku' }).replace('<svg ', '<svg data-wn ').replace('class="mozg-svg sieci-svg"', 'class="mozg-svg sieci-svg wn-svg"');
+const mapa = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)[0]
+  .replace(/<svg [^>]*>/, '<svg viewBox="10 4 236 340" class="sieci-svg wn-svg" data-wn role="img" aria-label="Sieci mózgu z boku i od środka">')
+  // obszary limbiczne rysunku należą do sieci domyślnej i świecą razem z nią
+  .replace(/style="\{\{bn\.(\w+)\}\}"/g, (_, n0) => { const n = n0 === 'LIM' ? 'DMN' : n0; return shown.has(n) ? 'class="nb" data-k="' + n + '" style="fill:' + KOLOR[n] + '"' : 'style="display:none"'; })
+  .replace(/style="\{\{bl\.(\w+)\}\}"/g, (_, n) => (shown.has(n) ? 'class="nl" data-k="' + n + '"' : 'style="display:none"'));
 // Indeks powstaje dopiero, gdy choć jedna karta jest gotowa.
 export function getStaticPaths() {
   return WIKI_ON ? [{ params: { indeks: undefined } }] : [];
@@ -92,9 +97,6 @@ export function getStaticPaths() {
 /* mapa sieci w prawym panelu pierwszego artykułu (2026-10-23): mózg, pod nim lista sieci w jednej kolumnie, pod nią karty wybranej sieci */
 .wn-lead{margin:0 0 14px;font-size:14px;line-height:1.6;color:#cfc8bb}
 .wn-fig{margin:0 auto 12px;max-width:300px}
-/* mózg ze strony startowej (mozg.js): wybrana sieć w kolorze, pozostałe szare, bo filtr wygładzający zamienia przezroczystość w dziury */
-.wn .mozg-svg .nb{fill-opacity:1;transition:fill .2s ease}
-.wn .mozg-svg.has-on .nb:not(.on){fill:#5c5750!important}
 .wn-legend{margin:0;grid-template-columns:minmax(0,1fr);gap:2px}
 .wn-legend li{margin:0}
 .wn-legend button{padding:7px 10px;gap:10px}

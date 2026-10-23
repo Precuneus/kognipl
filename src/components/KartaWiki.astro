@@ -2,7 +2,7 @@
 // Karta wiki w jednym szablonie: strona karty i pierwszy artykuł na /wiki/ (2026-10-22).
 import { template } from '../rocznik/views/karta.js';
 import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, classesOf, slugify } from '../karty/data.js';
-import { mozgSvg, KOLOR } from '../karty/mozg.js';
+import { KOLOR } from '../karty/mozg.js';
 interface Props { k: any; wstep?: boolean }
 const { k, wstep = false } = Astro.props;
 const ink = INK[k.g], base = BASE[k.g];
@@ -40,8 +40,16 @@ const zaj = classesOf(k);
 const nets = k.nets.map(([kod, why, lim]) => ({ kod, name: lim ? NETN[kod] + ', obszary limbiczne' : NETN[kod] || kod, why, to: lim ? card('Sieć limbiczna') : netCard(kod), lim: !!lim }))
   .filter((n) => !own || (n.kod === ownKey && n.lim === (own === 'LIM')))
   .sort((a, b) => Number(a.lim) - Number(b.lim));
-// Mózg z boku ze strony startowej, w jej kolorach sieci (2026-10-23)
-const brain = mozgSvg(own ? [ownKey] : nets.map((n) => n.kod), { label: 'Sieci tej karty na mózgu z boku' });
+// Mózg z boku i od środka jako schemat (jego słowo, 2026-10-23: *this has to be a diagram*); sieci tej karty w kolorach
+// strony startowej z delikatną poświatą, obszary limbiczne świecą razem z siecią domyślną.
+const svgSrc = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)[0];
+const key = (n) => (n === 'JĘZ' ? 'JEZ' : n);
+const on = new Set(own ? [ownKey] : nets.map((n) => key(n.kod)));
+const lit = (n) => on.has(n) || (n === 'LIM' && on.has('DMN'));
+const kolor = (n) => KOLOR[n === 'LIM' ? 'DMN' : n] || base;
+const brain = svgSrc
+  .replace(/\{\{bn\.(\w+)\}\}/g, (_, n) => (lit(n) ? 'fill:' + kolor(n) + ';fill-opacity:0.92;filter:drop-shadow(0 0 2.5px ' + kolor(n) + ')' : 'fill:rgba(180,155,100,0.035)'))
+  .replace(/\{\{bl\.(\w+)\}\}/g, (_, n) => (lit(n) && n !== 'LIM' ? 'display:inline' : 'display:none'));
 ---
   <article class={'wk' + (wstep ? ' wk-wstep' : '')} style={'--ink:' + ink + ';--base:' + base}>
   <nav aria-label="Ścieżka" class="wk-path">
@@ -137,7 +145,6 @@ const brain = mozgSvg(own ? [ownKey] : nets.map((n) => n.kod), { label: 'Sieci t
 .wk-p a,.wk-net dd a{text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wk-fig{margin:22px 0 24px}.wk-fig svg{display:block;width:100%;max-width:560px}.wk-fig figcaption{margin:10px 0 0;font-size:13px;line-height:1.55;color:#a09888}
 .wk-brain svg{display:block;width:100%;max-width:340px;margin:0 auto 14px}
-.mozg-kod{font-family:'Inter',sans-serif;font-size:8px;font-weight:600;fill:#0e0d0b}
 .wk dl{margin:0}
 .wk-net+.wk-net{margin-top:12px;padding-top:12px;border-top:1px solid rgba(180,155,100,.12)}
 .wk-net dt{display:flex;align-items:baseline;gap:10px;margin:0}
