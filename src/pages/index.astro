@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import R from '../rocznik/2026/rocznik.json';
-import { WIKI_ON } from '../karty/data.js';
+import { WIKI_ON, netCard, segs } from '../karty/data.js';
 
 // Strona startowa: ekrany przewijane nad rojem cząstek z masek sieci. Złote zdania duże, białe opisy małe.
 // {{słowo}} to miejsce, na którym staje iskra (kropka z logo, która wędruje z czytelnikiem); {{słowo|klasa}} dokłada klasę.
@@ -36,6 +36,13 @@ const SIECI = [
   [7, 'Sieć domyślna'],
 ];
 const KOLOR = { 2: '#ee6b6f', 3: '#f9d780', 4: '#e58e76', 5: '#f69959', 6: '#a9b26f', 7: '#bb6fb2', 8: '#6fb3a8' };
+// Dymek sieci po kliknięciu mózgu (jego słowo, 2026-10-23): kod, nazwa, zdanie z karty sieci o tym, czego aktywnością jest ta sieć
+// (zaczyna się od jej roli w drugiej osobie, więc rola osobno by się powtarzała), i link do jej karty w wiki.
+const KOD = { 2: 'VIS', 3: 'SMN', 4: 'DAN', 5: 'CN', 6: 'SN', 7: 'DMN', 8: 'VAN' };
+const DYMKI = SIECI.map(([n, nazwa]) => {
+  const kod = KOD[n], k = netCard(kod), w = k && k.nets.find((x) => x[0] === kod);
+  return { n, kod, nazwa, kolor: KOLOR[n], txt: w ? segs(w[1]).map((x) => x.t).join('') : '', url: k ? k.url : '' };
+});
 const OSNOWY = [['socjologia', '#8fa274'], ['psychologia', '#5f9a96'], ['biologia', '#6585b0'], ['fizyka', '#8577b3']];
 const KOL_OSN = Object.fromEntries(OSNOWY);
 // mnich to badacz swojej dyscypliny
@@ -145,6 +152,17 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   </section>
   <div class="roj-loty" aria-hidden="true">{OSNOWY.map(([n, c]) => <span class="roj-lot" style={'color:' + c}></span>)}</div>
 </main>
+<div class="roj-dymek-w" hidden>
+  <span class="roj-dymek-b" aria-hidden="true"></span><span class="roj-dymek-b" aria-hidden="true"></span>
+  <div class="roj-dymek" role="dialog" aria-labelledby="roj-dymek-t">
+    <button type="button" class="roj-dymek-x" aria-label="Zamknij">×</button>
+    <p class="roj-dymek-kod"></p>
+    <h2 class="roj-dymek-t" id="roj-dymek-t"></h2>
+    <p class="roj-dymek-p"></p>
+    <a class="roj-dymek-a" href="/wiki/">Karta w wiki →</a>
+  </div>
+</div>
+<script is:inline type="application/json" id="roj-dymki" set:html={JSON.stringify(DYMKI)}></script>
 
 <style is:global>
 body:has(.roj){background:#000}
@@ -179,6 +197,23 @@ html.roj-blok{overscroll-behavior:none}
 .roj-anim[aria-checked="true"] .roj-anim-tor::after{transform:translateX(16px);background:var(--zloto)}
 .roj-anim:focus-visible{outline:1px solid var(--zloto);outline-offset:4px}
 html.roj-cicho .roj *{animation:none!important}
+/* dymek sieci: jak dymek splotu na Płótnie, dwa kółka od klikniętego miejsca do ramki w kolorze sieci (2026-10-23) */
+.roj-dymek-w{position:fixed;inset:0;z-index:15;pointer-events:none}
+.roj-dymek-w[hidden]{display:none}
+.roj-dymek{position:absolute;width:300px;box-sizing:border-box;padding:16px 18px 14px;background:#16140f;border:1px solid color-mix(in srgb,var(--c) 55%,transparent);border-radius:16px;box-shadow:0 14px 40px rgba(0,0,0,.65);pointer-events:auto;font-family:Inter,sans-serif;text-align:left;animation:dymekIn .25s ease-out both}
+.roj-dymek-b{position:absolute;border-radius:50%;box-sizing:border-box;background:#16140f;border:1.5px solid color-mix(in srgb,var(--c) 75%,transparent);animation:dymekIn .25s ease-out both}
+.roj-dymek-kod{margin:0;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--c)}
+.roj-dymek-t{margin:2px 0 0;font-family:var(--font-display);font-weight:500;font-size:25px;line-height:1.15;color:#e2ddd4}
+.roj-dymek-p{margin:10px 0 0;font-size:13.5px;font-weight:300;line-height:1.6;color:#e2ddd4}
+.roj-dymek-a{display:inline-block;margin-top:10px;font-size:13px;color:#f0c060;text-decoration:none;border-bottom:1px solid rgba(240,192,96,.35)}
+.roj-dymek-a:hover{border-color:#f0c060}
+.roj-dymek-a[hidden]{display:none}
+.roj-dymek-x{position:absolute;top:8px;right:10px;padding:2px 6px;background:none;border:0;color:#8f877a;font-size:20px;line-height:1;cursor:pointer}
+.roj-dymek-x:hover{color:#e2ddd4}
+.roj-dymek-x:focus-visible,.roj-dymek-a:focus-visible{outline:1px solid #f0c060;outline-offset:3px}
+@keyframes dymekIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+html.roj-cicho .roj-dymek,html.roj-cicho .roj-dymek-b{animation:none}
+@media (max-width:760px){.roj-dymek{left:12px!important;right:12px;width:auto}.roj-dymek-b{display:none}}
 #czesc:focus{outline:none}
 @media (prefers-reduced-motion:reduce){.roj a.roj-story.on,.roj a.roj-story.nudge{animation:none}}
 /* Cześć, pytanie i sieci płyną jak jeden tekst */
@@ -586,7 +621,7 @@ function knot(w: number, cx: number, cy: number, rb0: number, rc: number) {
 const IS: any = { x: 0, y: 0, vx: 0, vy: 0, kontakt: false, lot: false, kuc: 0, sq: 0, sqv: 0, id: '', dom: true, start: false,
   bi: 0, bang: 0, blen: 0, bhalf: .28, look: -1, last: 0, r: 4.4, py: 0,
   gx: 0, gy: 0, pd: 1, lid: 1, zdz: 0, joy: 0, lean: 0, rot: 0, mrug: -1e9, nast: 0, mach: 0, hura: 0, osiadla: 0, skala: 1 };
-let KIER = 1, KIER_T = -1e9, OSTATNI_Y = scrollY, WSTECZ = 0;
+let KIER = 1, KIER_T = -1e9, OSTATNI_Y = scrollY, WSTECZ = 0, SCR_DY = 0, SEL_K = '';
 const DIP = new Map<HTMLElement, number[]>();
 const G = 2600;
 const knotXY = () => { const r = knotLogo!.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
@@ -705,7 +740,7 @@ new IntersectionObserver((es) => { SOL_WID = es[0].isIntersecting; snopStart(); 
 function zakonczSol() { SOL.t0 = performance.now() - 10000; solKlasy(performance.now()); }
 // Klik w sieć mózgu (jego słowo, 2026-10-20): sieć się zapala, iskra leci szybko w miejsce kliknięcia, potem bada tę sieć.
 const SIATKA = new Uint8Array(240 * 180), SIATKA_M = new Uint8Array(240 * 180), KL: any = { med: false, n: 0, t: -1e9, x: 0, y: 0, pt: 0, px: 0, py: 0 }, KL_T = 7000;
-let KLv = 0, MOZG_AKT = false, NA_MED = false;
+let KLv = 0, MOZG_AKT = false, NA_MED = false, DYM_N = 0, DYM_Y = 0;
 const naSieci = (x: number, y: number) => {
   if (!MOZG_AKT || !P.length) return 0;
   const szukaj = (cx: number, cy: number, bw: number, S: Uint8Array) => {
@@ -723,15 +758,21 @@ const naSieci = (x: number, y: number) => {
 };
 function klikCel(now: number): any {
   const tt = now - KL.t;
-  // najpierw szybki lot w miejsce kliknięcia, potem badanie sieci: punkt po punkcie, snop z bliska
-  if (tt < 450 && Math.hypot(IS.x - KL.x, IS.y - (KL.y - 14)) > 10) return { id: 'klik', tryb: 'lot', x: KL.x, y: KL.y - 14, I: .9, ang: Math.PI / 2, len: 60, half: .5 };
+  // najpierw płynny lot w miejsce kliknięcia, potem spokojne badanie sieci: od punktu do pobliskiego punktu, snop z bliska
+  // (jego słowo, 2026-10-23: ruchy były chaotyczne; punkty losowane przez cały mózg co pół sekundy rzucały iskrą, a snop drgał)
+  if (tt < 700 && Math.hypot(IS.x - KL.x, IS.y - (KL.y - 14)) > 10) return { id: 'klik', tryb: 'lot', x: KL.x, y: KL.y - 14, I: .9, ang: Math.PI / 2, len: 60, half: .5 };
   if (now > KL.pt) {
-    const L = P.filter((p) => p.net === KL.n && !!p.med === KL.med); const p = L[Math.floor(Math.random() * L.length)];
-    if (p) { const [x, y] = KL.med ? brainM(p) : brainB(p); KL.px = x; KL.py = y; }
-    const d = 650 + Math.random() * 600; KL.pt = now + d; setTimeout(kick, d + 20);
+    const L = P.filter((p) => p.net === KL.n && !!p.med === KL.med);
+    let best: number[] | null = null;
+    for (let i = 0; i < 24 && L.length; i++) {
+      const [x, y] = KL.med ? brainM(L[(Math.random() * L.length) | 0]) : brainB(L[(Math.random() * L.length) | 0]), d = Math.hypot(x - KL.px, y - KL.py);
+      if (d > 30 && d < 110) { best = [x, y]; break; }
+      if (!best) best = [x, y];
+    }
+    if (best) { KL.px = best[0]; KL.py = best[1]; }
+    const d = 1300 + Math.random() * 900; KL.pt = now + d; setTimeout(kick, d + 20);
   }
-  const x = KL.px + (Math.random() < .5 ? -1 : 1) * 4, y = KL.py - 30;
-  return { id: 'bada' + KL.n, tryb: 'lot', x: KL.px, y, I: .9, ang: Math.atan2(KL.py - y, KL.px - x), len: 70, half: .55 };
+  return { id: 'bada' + KL.n, tryb: 'lot', x: KL.px, y: KL.py - 30, I: .9, ang: Math.PI / 2 + Math.sin(now / 900) * .25, len: 70, half: .55 };
 }
 // Wędrówka iskry przy mózgu: co chwilę losuje, co robi dalej. Ogląda wybraną sieć snopem z bliska,
 // siada na nazwie sieci i świeci na nią albo krąży nad mózgiem i świeci na boki. Mózg świeci tylko w jej snopie.
@@ -871,7 +912,10 @@ function startSieci(now: number) {
 }
 function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, lz: number): any {
   const r = IS.r * 1.95;
-  const S = t < .5 ? A : B;
+  // ekran, który prowadzi iskrę, zmienia się z zapasem: przewijanie w tę i z powrotem przy połowie przejścia nie przerzuca jej między celami
+  let S = t < .5 ? A : B;
+  if (A !== B && SEL_K === A.k && t < .62) S = A; else if (A !== B && SEL_K === B.k && t > .38) S = B;
+  SEL_K = S.k;
   const stoj = (el: HTMLElement | null, id: string): any => {
     if (!el) return null; const rr = el.getBoundingClientRect();
     return { id, tryb: 'stoj', x: rr.left + rr.width * .5, y: rr.top + rr.height * .2 - r, el: el.closest('p,h1,li') as HTMLElement, I: 0 };
@@ -1092,6 +1136,9 @@ function krok(dt: number, c: any, now: number) {
     const h = Math.max(26, Math.min(80, IS.y - 12)), apex = IS.y - h, T = Math.sqrt(2 * h / G) + Math.sqrt(2 * Math.max(1, c.y - apex) / G);
     IS.vy = -Math.sqrt(2 * G * h); IS.vx = (c.x - IS.x) / T; IS.lot = true; IS.kontakt = false; IS.kuc = 0; IS.sq = -.22;
   }
+  // gdy strona się przewija, a cel jedzie razem z nią, iskra jedzie też: sprężyna nie szarpie jej za tekstem (jego słowo, 2026-10-23: ruchy płynne)
+  if (!zmiana && !c.rail && SCR_DY !== 0 && Math.abs(c.y - IS.cy0 + SCR_DY) < 3 && Math.abs(c.x - IS.cx0) < 3) { IS.x += c.x - IS.cx0; IS.y += c.y - IS.cy0; }
+  IS.cx0 = c.x; IS.cy0 = c.y;
   if (c.rail) {
     // jazda po kresce: iskra stoi dokładnie na niej, jej ruch prowadzi czas, nie fizyka
     const d = Math.max(dt, .004); IS.vx = (c.x - IS.x) / d; IS.vy = (c.y - IS.y) / d;
@@ -1099,8 +1146,11 @@ function krok(dt: number, c: any, now: number) {
   } else if (c.slizg && (SK.on || (IS.kontakt && IS.kuc <= 0 && Math.abs(c.y - IS.y) < 4))) lyzwy(dt, c, now);
   else if (c.tryb === 'lot') {
     IS.kontakt = false; IS.lot = false; IS.kuc = 0;
-    const k = c.id === 'dom' ? 110 : c.id === 'wiki' ? 80 : c.id === 'klik' ? 320 : c.id.startsWith('bada') ? 90 : 60, d = 2 * Math.sqrt(k) * .8;
+    // sprężyna prawie krytycznie tłumiona: iskra dolatuje bez przestrzeliwania; lot do klikniętej sieci i jej badanie mają też
+    // górną granicę prędkości, a przelotów w historii, które gonią tekst w swoim czasie, granica nie dotyczy
+    const k = c.id === 'dom' ? 110 : c.id === 'wiki' ? 80 : c.id === 'klik' ? 120 : c.id.startsWith('bada') ? 36 : 60, d = 2 * Math.sqrt(k) * .96;
     IS.vx += ((c.x - IS.x) * k - IS.vx * d) * dt; IS.vy += ((c.y - IS.y) * k - IS.vy * d) * dt;
+    if (c.id === 'klik' || c.id.startsWith('bada')) { const v = Math.hypot(IS.vx, IS.vy), VM = 1300; if (v > VM) { IS.vx *= VM / v; IS.vy *= VM / v; } }
     IS.x += IS.vx * dt; IS.y += IS.vy * dt;
   } else if (IS.kuc > 0) {
     // przysiad przed skokiem
@@ -1326,8 +1376,10 @@ function frame() {
   if (LD.w > .005) { geomS(); landKrok(now); landGeom(); }
   const mzk = (k: string) => k === 'start' || k === 'czesc' || k === 'pytanie' || k === 'naglowek';
   MOZG_AKT = t < .5 ? mzk(A.k) : mzk(B.k);
+  if (DYM_N && now - KL.t > KL_T - 1300) KL.t = now - (KL_T - 1300);
   { const tt = now - KL.t; KLv = !MOZG_AKT ? 0 : CICHO ? (tt < KL_T ? 1 : 0) : sm(cl(tt / 250)) * (1 - sm(cl((tt - KL_T + 1200) / 1200))); }
   const dt = Math.min(.033, Math.max(0, (now - (IS.last || now)) / 1000)); IS.last = now;
+  SCR_DY = scrollY - OSTATNI_Y;
   if (scrollY !== OSTATNI_Y) { KIER = scrollY > OSTATNI_Y ? 1 : -1; KIER_T = now; OSTATNI_Y = scrollY; }
   WSTECZ = KIER < 0 ? cl(1 - (now - KIER_T - 500) / 900) : 0;
   // wyzwalacz: solipsysta, gdy tekst o zombie dojdzie do środka ekranu; krótki ekran lepki, potem tekst płynie dalej
@@ -1648,10 +1700,42 @@ const puszczaj = (ev: MouseEvent) => {
 };
 kuPlotnu.addEventListener('click', puszczaj);
 addEventListener('click', (ev) => {
-  if ((ev.target as HTMLElement).closest('a,button')) return;
-  const n = naSieci(ev.clientX, ev.clientY); if (!n) return;
-  KL.n = n; KL.med = NA_MED; KL.t = performance.now(); KL.x = ev.clientX; KL.y = ev.clientY; KL.pt = 0; kick();
+  const el = ev.target as HTMLElement;
+  if (el.closest('a,button,.roj-dymek')) return;
+  const n = naSieci(ev.clientX, ev.clientY); if (!n) { dymekZamknij(); return; }
+  KL.n = n; KL.med = NA_MED; KL.t = performance.now(); KL.x = KL.px = ev.clientX; KL.y = KL.py = ev.clientY; KL.pt = 0; kick();
+  dymekPokaz(n, ev.clientX, ev.clientY);
 });
+// Dymek sieci (jego słowo, 2026-10-23): po kliknięciu sieci staje przy klikniętym miejscu, jak dymek splotu na Płótnie; sieć świeci,
+// dopóki dymek jest otwarty. Zamyka go krzyżyk, Escape, kliknięcie obok sieci i przewinięcie strony.
+const DYM_W = $('.roj-dymek-w'), DYM = $('.roj-dymek'), DYM_B = $$('.roj-dymek-b');
+const DYM_D: any[] = JSON.parse(($('#roj-dymki') || { textContent: '[]' }).textContent || '[]');
+function dymekPokaz(n: number, x: number, y: number) {
+  const d = DYM_D.find((q) => q.n === n); if (!d || !d.txt) { dymekZamknij(); return; }
+  DYM_N = n; DYM_Y = scrollY;
+  DYM_W.style.setProperty('--c', d.kolor);
+  DYM.querySelector('.roj-dymek-kod')!.textContent = d.kod;
+  DYM.querySelector('.roj-dymek-t')!.textContent = d.nazwa;
+  DYM.querySelector('.roj-dymek-p')!.textContent = d.txt;
+  const a = DYM.querySelector('.roj-dymek-a') as HTMLAnchorElement; a.hidden = !d.url; if (d.url) a.href = d.url;
+  DYM_W.hidden = false;
+  const w = DYM.offsetWidth, h = DYM.offsetHeight, m = 12, vw = innerWidth, vh = innerHeight;
+  // nad klikniętym miejscem, gdy jest tam miejsce, inaczej pod nim; na szerokim ekranie w prawo od niego, przy prawej krawędzi w lewo
+  const gora = y - h - 52 >= 64, top = Math.max(m, Math.min(vh - h - m, gora ? y - h - 52 : y + 52));
+  let left = m, dir = 1;
+  if (!MOB) { left = x + 52; if (left + w > vw - m) { left = x - 52 - w; dir = -1; } left = Math.max(m, left); }
+  DYM.style.left = left + 'px'; DYM.style.top = top + 'px';
+  const sy = gora ? -1 : 1;
+  [[20, 7], [38, 12]].forEach(([o, r], i) => { const b = DYM_B[i]; b.style.width = b.style.height = r + 'px'; b.style.left = (x + dir * o - r / 2) + 'px'; b.style.top = (y + sy * o - r / 2) + 'px'; });
+}
+function dymekZamknij() {
+  if (DYM_W.hidden) return;
+  DYM_W.hidden = true; DYM_N = 0; KL.t = Math.min(KL.t, performance.now() - KL_T + 1200); kick();
+}
+DYM.querySelector('.roj-dymek-x')!.addEventListener('click', dymekZamknij);
+addEventListener('keydown', (ev) => { if (ev.key === 'Escape') dymekZamknij(); });
+addEventListener('scroll', () => { if (DYM_N && Math.abs(scrollY - DYM_Y) > 40) dymekZamknij(); }, { passive: true });
+addEventListener('resize', dymekZamknij);
 addEventListener('pointermove', (ev) => { if (ev.pointerType !== 'mouse') return; document.body.style.cursor = naSieci(ev.clientX, ev.clientY) && !(ev.target as HTMLElement).closest('a,button') ? 'pointer' : ''; }, { passive: true });
 slowaO.forEach((w) => w.addEventListener('click', (ev) => { if (w.classList.contains('u-plotna')) puszczaj(ev); }));
 addEventListener('pageshow', () => { PUSZCZ = 0; kick(); });
