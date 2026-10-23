@@ -75,14 +75,9 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
 <canvas class="roj-plotno" aria-hidden="true"></canvas>
 <canvas class="roj-plotno roj-iskra" aria-hidden="true"></canvas>
 <main class="roj">
-  <!-- ekran startowy (jego słowo, 2026-10-22): logo w lewym górnym rogu, przyciski po lewej schodami od logo ku Story, mózg po prawej; rój formuje z logo kreski ze strzałkami do przycisków; Story stoi pośrodku, a do historii wchodzi się tylko nim -->
-  <section class="roj-st start" data-k="start" aria-label="Menu">
+  <!-- ekran startowy (jego słowo, 2026-10-23): nagłówek ten sam co na innych stronach, mózg pośrodku i klikalny; rój formuje z logo kreskę ze strzałką do Story, a do historii wchodzi się tylko nim -->
+  <section class="roj-st start" data-k="start" aria-label="Start">
     <button type="button" class="roj-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="roj-anim-tor" aria-hidden="true"></span></button>
-    <nav class="roj-menu-st" aria-label="Główne">
-      {WIKI ? <a class="roj-btn" href={WIKI}>Wiki</a> : <span class="roj-btn wkrotce">Wiki</span>}
-      <a class="roj-btn" href="/2026/">Kursy</a>
-      <a class="roj-btn" href="/kontakt">Kontakt</a>
-    </nav>
     <a class="roj-btn roj-story" href="#czesc">Story</a>
   </section>
   <section class="roj-st lewo pierwszy" data-k="czesc" id="czesc">
@@ -155,10 +150,6 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
 body:has(.roj){background:#000}
 body:has(.roj) .rocznik-head,body:has(.roj) .site-footer{position:relative;z-index:1}
 body:has(.roj) .site-footer::before{display:none}
-/* na stronie startowej logo stoi w lewym górnym rogu, a menu przejmują przyciski ekranu startowego */
-body:has(.roj) .rocznik-head{align-items:flex-start;max-width:none;margin:0;padding-left:8vw;padding-right:8vw}
-body:has(.roj) .rocznik-title{justify-content:flex-start}
-body:has(.roj) .rocznik-bar,body:has(.roj) .rocznik-menu{display:none}
 .roj-plotno{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
 .roj-plotno.roj-iskra{z-index:3}
 .roj{position:relative;z-index:1;--kosc:#ece6da;--mgla:#b3aa9b;--zloto:#f0c060}
@@ -167,17 +158,8 @@ body:has(.roj) .rocznik-bar,body:has(.roj) .rocznik-menu{display:none}
 .roj-st.srodek{justify-content:center;padding-left:56px}
 .roj-st.srodek .roj-t{max-width:680px}
 .roj-st.pierwszy{min-height:calc(100vh - 120px);align-items:flex-end;padding-top:0;padding-bottom:14vh}
-/* ekran startowy: pusty ekran na wysokość okna; przyciski stoją na nim w pionowej kolumnie, Story niżej i dopiero po czasie */
+/* ekran startowy: pusty ekran na wysokość okna z mózgiem pośrodku; Story niżej i dopiero po czasie */
 .roj-st.start{display:block;min-height:0;height:100vh;padding:0}
-.roj-menu-st{position:absolute;right:clamp(24px,5vw,96px);top:calc(13vh - var(--hh,96px));display:flex;flex-direction:column;align-items:stretch;gap:16px}
-/* na szerokim ekranie przyciski schodzą schodami od logo ku Story: każdy niżej i bliżej środka (jego słowo, 2026-10-22) */
-@media (min-width:761px){
-  .roj-menu-st{position:static}
-  .roj-menu-st > *{position:absolute}
-  .roj-menu-st > :nth-child(1){left:calc(8vw + 140px);top:calc(24vh - var(--hh,96px))}
-  .roj-menu-st > :nth-child(2){left:calc(17vw + 140px);top:calc(44vh - var(--hh,96px))}
-  .roj-menu-st > :nth-child(3){left:calc(26vw + 140px);top:calc(64vh - var(--hh,96px))}
-}
 .roj a.roj-btn,.roj span.roj-btn{display:block;box-sizing:border-box;min-width:6.6em;padding:.5em 1.05em;border:1px solid rgba(240,192,96,.55);background:rgba(0,0,0,.62);font-family:var(--font-display);font-weight:400;font-size:27px;line-height:1.2;letter-spacing:.02em;color:var(--kosc);text-decoration:underline;text-decoration-color:rgba(240,192,96,.75);text-decoration-thickness:1px;text-underline-offset:.26em;transition:border-color .2s ease,background .2s ease,color .2s ease,opacity .9s ease}
 .roj a.roj-btn:hover{border-color:var(--zloto);background:rgba(240,192,96,.1);color:var(--zloto)}
 .roj span.roj-btn.wkrotce{color:#6e675c;border-color:rgba(240,192,96,.22);text-decoration-color:rgba(240,192,96,.3)}
@@ -302,10 +284,8 @@ html.roj-cicho .roj *{animation:none!important}
 .roj-wiki-kropka{position:absolute;left:calc(50% - .19em);top:-.07em;width:.26em;height:.26em;border-radius:50%;background:#f0c060;box-shadow:0 0 0 .075em #0e0d0b,0 0 0 .12em rgba(240,192,96,.9),0 0 .45em .14em rgba(240,192,96,.45)}
 .roj-js .roj-wiki-kropka{opacity:0}
 @media (max-width:760px){
-  body:has(.roj) .rocznik-head{padding-left:20px;padding-right:20px}
   .roj-st{padding:52vh 20px 8vh 20px!important;align-items:flex-start;justify-content:flex-start!important}
   .roj-st.start{padding:0!important}
-  .roj-menu-st{right:20px;top:calc(29vh + 33vw + 40px - var(--hh,96px));gap:14px}
   .roj a.roj-btn,.roj span.roj-btn{font-size:22px}
   .roj a.roj-story{top:calc(86vh - var(--hh,96px))}
   .roj-anim{right:10px;top:18px;font-size:13px}
@@ -477,18 +457,17 @@ function brain(p: any, sc = 1, r = 0) {
   const bw = (MOB ? W * .88 : Math.min(W * .46, 760)) * sc * (1 - (MOB ? .22 : .16) * r), cx = MOB ? W / 2 : W * (.72 - .06 * r), cy = MOB ? H * .29 + MOB_DY : H * .52;
   return [cx + (p.u / 240 - .5) * bw, cy + (p.v / 180 - .5) * bw * .75, bw];
 }
-// mózg na ekranie startowym stoi po prawej, z dala od schodów przycisków; przy przejściu do Cześć odpływa
-// na swoje miejsce. Telefon zostaje przy mózgu z boku.
+// mózg na ekranie startowym stoi pośrodku, między nagłówkiem a Story, i jest większy niż w historii (jego słowo, 2026-10-23);
+// przy przejściu do Cześć odpływa na swoje miejsce, na telefonie w górę ekranu.
 const BS = { cx: 0, cy: 0, bw: 0 };
 function geomS() {
-  if (MOB) return;
-  const kr = menuA.length ? menuA[2].getBoundingClientRect().right : W * .45, m = Math.max(24, Math.min(W * .05, 96));
-  BS.bw = Math.min(W * .42, 640, H * .62, W - m - kr - 40); BS.cx = Math.max(kr + 40 + BS.bw / 2, W - m - BS.bw / 2 - W * .06); BS.cy = H * .47;
+  const top = $('.roj').offsetTop, bot = top + storyB.offsetTop;
+  BS.bw = MOB ? W * .8 : Math.min(W * .5, 760, (bot - top - 40) / .75); BS.cx = W / 2; BS.cy = (top + bot) / 2;
 }
-function brainS(p: any) { return MOB ? brain(p) : [BS.cx + (p.u / 240 - .5) * BS.bw, BS.cy + (p.v / 180 - .5) * BS.bw * .75, BS.bw]; }
+function brainS(p: any) { return [BS.cx + (p.u / 240 - .5) * BS.bw, BS.cy + (p.v / 180 - .5) * BS.bw * .75, BS.bw]; }
 // mózg tam, gdzie go teraz widać: na ekranie startowym i przy przejściu z niego inaczej niż w reszcie strony
 function brainB(p: any, sc = 1, r = 0) {
-  const a = brain(p, sc, r); if (LD.w < .005 || MOB) return a;
+  const a = brain(p, sc, r); if (LD.w < .005) return a;
   const b = brainS(p), w = LD.w; return [a[0] + (b[0] - a[0]) * w, a[1] + (b[1] - a[1]) * w, a[2] + (b[2] - a[2]) * w];
 }
 // mózg od środka: na szerokim ekranie po lewej pod nagłówkiem, na telefonie pod mózgiem z boku;
@@ -611,10 +590,10 @@ let KIER = 1, KIER_T = -1e9, OSTATNI_Y = scrollY, WSTECZ = 0;
 const DIP = new Map<HTMLElement, number[]>();
 const G = 2600;
 const knotXY = () => { const r = knotLogo!.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
-// Ekran startowy (jego słowo, 2026-10-22): logo po lewej, przyciski Wiki, Kursy, Kontakt schodami od logo ku Story, mózg po prawej.
-// Rój formuje z logo trzy wygięte kreski ze strzałkami ku przyciskom, potem czwartą ku Story. Iskra stoi w logo; gdy ktoś próbuje
-// przewinąć ekran, schodzi czwartą kreską do Story, czeka tam i wraca. Do historii wchodzi się tylko kliknięciem Story.
-const menuA = $$('.roj-menu-st > *'), storyB = $('.roj-story');
+// Ekran startowy (jego słowo, 2026-10-23): Wiki, Kursy i Kontakt są w nagłówku jak na innych stronach, mózg stoi pośrodku.
+// Rój formuje z logo wygiętą kreskę ze strzałką ku Story (kreska 3; kreski 0 do 2 prowadziły do przycisków, które zniknęły).
+// Iskra stoi w logo; gdy ktoś próbuje przewinąć ekran, schodzi kreską do Story, czeka tam i wraca. Do historii wchodzi się tylko kliknięciem Story.
+const storyB = $('.roj-story');
 // g: 0 Iskra w logo, 1 skacze na czwartą kreskę, 2 zjeżdża do Story, 3 czeka przy Story, 4 wraca
 const LAND: any = { t0: 0, T: [1000, 1160, 1320, 3000], D: [1300, 1300, 1300, 1500], g: 0, u: 0, dwell: 0, last: 0, on: false };
 const LD: any = { front: [0, 0, 0, 0], w: 0 };
@@ -627,24 +606,21 @@ function railPt(k: number, s: number) {
   RX = T[i * 2] + (T[i * 2 + 2] - T[i * 2]) * q; RY = T[i * 2 + 1] + (T[i * 2 + 3] - T[i * 2 + 1]) * q;
   const dx = T[i * 2 + 2] - T[i * 2], dy = T[i * 2 + 3] - T[i * 2 + 1], m = Math.hypot(dx, dy) || 1; NX = -dy / m; NY = dx / m;
 }
-// kreski wychodzą z logo, a kończą się strzałką tuż przy lewej krawędzi swojego przycisku; kształt liczy się z miejsca logo i przycisków w każdej klatce
+// kreska wychodzi z logo, a kończy się strzałką tuż przy lewej krawędzi Story; kształt liczy się z miejsca logo i Story w każdej klatce
 const logoA = document.querySelector('.rocznik-logo') as HTMLElement | null;
 function landGeom() {
-  const el = [menuA[0], menuA[1], menuA[2], storyB], lr = (logoA || knotLogo!).getBoundingClientRect();
-  for (let k = 0; k < 4; k++) {
-    const r = el[k].getBoundingClientRect(), L = LG[k], tx = r.left - (MOB ? 10 : 14), ty = r.top + r.height / 2;
+  const lr = (logoA || knotLogo!).getBoundingClientRect();
+  for (let k = 3; k < 4; k++) {
+    const r = storyB.getBoundingClientRect(), L = LG[k], tx = r.left - (MOB ? 10 : 14), ty = r.top + r.height / 2;
     let P: number[];
-    // wszystkie cztery wychodzą z jednego punktu pod kropką ı i rozchodzą się wachlarzem: opadają i skręcają w prawo ku przyciskom
-    // na schodach i ku Story (jego słowo, 2026-10-22: zaczepienie przy logo ma być ładne); na telefonie wszystkie schodzą lewym
-    // brzegiem i skręcają do swoich przycisków
+    // wychodzi z punktu pod kropką ı, opada lewym marginesem obok mózgu i skręca w prawo ku Story (jego słowo, 2026-10-22:
+    // zaczepienie przy logo ma być ładne); na telefonie, gdzie mózg zajmuje szerokość ekranu, schodzi samym brzegiem
     if (!MOB) {
       const sx = knotXY()[0], sy = lr.bottom + 8;
       P = [sx, sy, sx + (tx - sx) * .06, sy + (ty - sy) * .55, sx + (tx - sx) * .4, ty, tx, ty];
     } else {
-      const sx = lr.left + 14 + 5 * k, sy = lr.bottom + 4;
-      P = k < 3
-        ? [sx, sy, sx - 6, ty - 90, tx - W * .35, ty - 2, tx, ty]
-        : [sx, sy, sx - 8, ty * .8, tx * .45, ty + 6, tx, ty];
+      const sx = lr.left + 14, sy = lr.bottom + 4;
+      P = [sx, sy, 6, sy + (ty - sy) * .35, 10, ty, tx, ty];
     }
     const N = 40, xs: number[] = [], ys: number[] = [], cum: number[] = [0];
     for (let i = 0; i <= N; i++) {
@@ -1562,6 +1538,7 @@ function frame() {
       P.push({ lonly: 1, u: q.u, v: q.v, net: 0, col: GREY, a: rl() * 6.28, s: 1, sx: rl(), sy: rl(), d: rl(), cr: rl(), ln: 0, lx: 0, ld: k, ls, lo: (rl() - .5) * 5.4, lv });
     };
     NL.forEach((n, k) => {
+      if (k < 3) return;
       for (let i = 0; i < n; i++) dodaj(k, (i + .5) / n, 0);
       for (const lv of [-1, 1]) for (let i = 0; i < AR; i++) dodaj(k, 1 + (i + 1) / AR * .1, lv);
     });

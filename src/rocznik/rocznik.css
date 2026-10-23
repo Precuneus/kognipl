@@ -27,13 +27,13 @@
   .rocznik-menu{gap:14px}
   .rocznik-views{gap:6px 18px}
 }
-/* logo stoi tam, gdzie na stronie głównej: w lewym górnym rogu, 8vw od brzegu (jego słowo, 2026-10-22); menu zostaje pośrodku */
-body:not(:has(.roj)) .rocznik-head{max-width:none}
-body:not(:has(.roj)) .rocznik-logo{position:absolute;left:8vw;top:34px}
-body:not(:has(.roj)) .rocznik-bar{display:none}
+/* jeden nagłówek na wszystkich stronach, startowej też (jego słowo, 2026-10-23): logo w lewym górnym rogu, 8vw od brzegu; menu pośrodku */
+.rocznik-head{max-width:none}
+.rocznik-logo{position:absolute;left:8vw;top:34px}
+.rocznik-bar{display:none}
 @media (max-width:720px){
-  body:not(:has(.roj)) .rocznik-head{padding-top:58px}
-  body:not(:has(.roj)) .rocznik-logo{left:20px;top:22px}
+  .rocznik-head{padding-top:58px}
+  .rocznik-logo{left:20px;top:22px}
 }
 
 .rocznik{color:#e2ddd4;font-family:'Inter',sans-serif;font-weight:300;font-size:15px;line-height:1.7}
