@@ -225,13 +225,15 @@ html.roj-cicho .roj-dymek,html.roj-cicho .roj-dymek-b{animation:none}
 .roj-st.ciag[data-k=pytanie]{padding-top:10vh}
 /* nagłówek zostaje u góry ekranu; pod nim, po lewej, wchodzi mózg od środka, boczny zostaje po prawej,
    iskra ogląda oba (jego słowo, 2026-10-21); za tym ekranem rój się rozprasza */
-.roj-st.oba{display:block;height:230vh;padding:0}
-.roj-oba{position:sticky;top:0;height:100vh;padding:9vh 56px 0 8vw}
+/* przewinięcie zawsze coś przesuwa (jego słowo, 2026-10-23: *Always when I scroll, something must move*): ekran z nagłówkiem
+   nie stoi, tekst jedzie obok stojącego mózgu, a złote zdanie wjeżdża z dołu po szerokim odstępie */
+.roj-st.oba{display:block;padding:0 0 30vh}
+.roj-oba{position:relative;padding:9vh 56px 0 8vw}
 /* zdanie z akapitu: iskra je złoci, ono rozpada się na punkty roju, które układają się w nagłówek */
 .roj .roj-naglowek{opacity:0}
 /* jego tekst pod nagłówkiem wyłania się, gdy nagłówek jest gotowy; drugi akapit złoty i z większym odstępem (jego słowo, 2026-10-23) */
 .roj .roj-zatrzymaj{opacity:0}
-.roj .roj-zatrzymaj > p + p{margin-top:1.4em}
+.roj .roj-zatrzymaj > p + p{margin-top:50vh}
 .roj .roj-zrodlo{transition:color .8s ease,text-shadow .8s ease}
 .roj .roj-zrodlo.zloty{color:var(--zloto);text-shadow:0 0 12px rgba(240,192,96,.45)}
 /* po solipsyście tekst płynie dalej z krótszymi odstępami */
@@ -262,8 +264,9 @@ html.roj-cicho .roj-dymek,html.roj-cicho .roj-dymek-b{animation:none}
 .roj-siec{height:1px}
 .roj-ukryte{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* zombie i solipsysta: ekran lepki, postać odsłania iskra */
-.roj-st.lepkie{display:block;height:115vh;padding:0}
-.roj-lepki{position:sticky;top:0;height:100vh;overflow:hidden}
+/* solipsysta też jedzie z przewijaniem; dolny margines trzyma dawną wysokość ekranu i odstępy do Wiem (2026-10-23) */
+.roj-st.lepkie{display:block;padding:0 0 15vh}
+.roj-lepki{position:relative;min-height:100vh;overflow:hidden}
 .roj-st.lepkie .roj-lepki{display:flex;align-items:center;padding:0 56px 0 8vw}
 .roj-st.lepkie .roj-t{max-width:min(40vw,560px)}
 .roj-st.lepkie .roj-t{position:relative}
@@ -332,11 +335,11 @@ html.roj-cicho .roj-dymek,html.roj-cicho .roj-dymek-b{animation:none}
   .roj a.roj-story{top:calc(86vh - var(--hh,96px))}
   .roj-anim{right:10px;top:18px;font-size:13px}
   /* telefon: nagłówek stoi pod mózgiem z boku i tam zostaje, zamiast przechodzić pod mózgiem na górę ekranu */
-  .roj-oba{position:sticky;top:calc(29vh + 33vw + 40px);height:auto;padding:0 20px}
+  .roj-oba{position:relative;padding:calc(29vh + 33vw + 40px) 20px 0}
   .roj-st.lewo .roj-t,.roj-st.kogni .roj-t,.roj-st.lepkie .roj-t{max-width:none}
   .roj-st.pierwszy{padding-top:calc(29vh + 33vw + 16px)!important;padding-bottom:0!important;align-items:flex-start}
   /* telefon: mózg trzyma górę ekranu, tekst żyje pod nim i znika, gdy wjeżdża pod mózg; nagłówek tuż za akapitem */
-  .roj-st.oba{padding:0!important;height:200vh}
+  .roj-st.oba{padding:0 0 30vh!important}
   .roj-st.ciag[data-k=pytanie]{padding-top:14vh!important;padding-bottom:0!important}
   .roj-st.ciag[data-k=wiem]{padding-top:0!important;padding-bottom:0!important;margin-top:-12vh}
   .roj-st.ciag[data-k=ja]{padding-top:23.8vh!important;padding-bottom:0!important}
@@ -345,7 +348,7 @@ html.roj-cicho .roj-dymek,html.roj-cicho .roj-dymek-b{animation:none}
   .roj-lot{font-size:15px}
   .roj-mnich-nazwa{font-size:11px}
   .roj-st.poziom,.roj-st.lepkie{padding:0!important}
-  .roj-st.lepkie{height:110vh}
+  .roj-st.lepkie{padding-bottom:10vh!important}
   .roj-st.lepkie .roj-lepki{padding:22vh 20px 0!important;align-items:flex-start}
   .roj-sol{position:relative;left:auto;top:auto;transform:none;width:92vw;height:30vh;margin:3vh auto 0!important}
   .roj-sol-p{height:13vh}
