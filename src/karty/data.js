@@ -19,8 +19,9 @@ const osOf = {};
 OSNOWY.forEach((o) => o.rodziny.forEach((r) => { osOf[r] = o.nazwa; }));
 
 // Kolor grupy: base do mózgu i nici, ink do tekstu na ciemnym tle.
-export const BASE = ['#8fa274', '#5f9a96', '#6585b0', '#8577b3'];
-export const INK = ['#b3c39b', '#8fc4bf', '#9fb7da', '#b4aada'];
+// piąty kolor, złoty, mają karty całej wiki, jak Mapa osnów (grupa: wiki, 2026-10-23)
+export const BASE = ['#8fa274', '#5f9a96', '#6585b0', '#8577b3', '#c89a3c'];
+export const INK = ['#b3c39b', '#8fc4bf', '#9fb7da', '#b4aada', '#f0c060'];
 
 export const NETN = { VIS: 'sieć wzrokowa', SMN: 'sieć czuciowo-ruchowa', DAN: 'sieć grzbietowa uwagi', VAN: 'sieć brzuszna uwagi', SN: 'sieć istotności', CN: 'sieć kontroli', DMN: 'sieć domyślna', LIM: 'sieć limbiczna', 'JĘZ': 'sieć językowa' };
 // Karta każdej sieci (jego, 2026-10-20) nosi jej pełną nazwę jako tytuł.
@@ -41,7 +42,9 @@ export const ALL = Object.entries(notes).map(([file, mod]) => {
   const osnowy = [o, ...r2.map((r) => osOf[r])].filter((x, i, a) => a.indexOf(x) === i);
   return {
     id: slugify(title), stem, h: title, url: '/wiki/' + slugify(title) + '/',
-    o, g: home.g, r2, osnowy,
+    // karta dyscypliny może należeć do innej grupy niż jej osnowa (pole grupa): wtedy bierze kolor tej grupy, a ścieżka prowadzi
+    // od grupy, jak na mapie osnów (jego słowo, 2026-10-23: *Review all the connections and make them proper*)
+    o, g: f.grupa === 'wiki' ? 4 : f.grupa && GRUPY.indexOf(f.grupa) >= 0 ? GRUPY.indexOf(f.grupa) : home.g, grupa: f.grupa || '', r2, osnowy,
     body: blocks(mod.rawContent()),
     // sieć limbiczna z podziału Yeo i in. wchodzi do sieci domyślnej: model strony ma siedem sieci, a w jednym badaniu fMRI
     // wieloechowym jej obszary łączyły się w większości z siecią domyślną (Girn i in. 2024); trzeci element znaczy wiersz limbiczny

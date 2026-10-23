@@ -5,7 +5,7 @@ import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, classesOf, slug
 interface Props { k: any; wstep?: boolean }
 const { k, wstep = false } = Astro.props;
 const ink = INK[k.g], base = BASE[k.g];
-const group = GRUPY[k.g].charAt(0).toUpperCase() + GRUPY[k.g].slice(1);
+const group = GRUPY[k.g] ? GRUPY[k.g].charAt(0).toUpperCase() + GRUPY[k.g].slice(1) : 'Wiki';
 
 // Mózg z boku i od środka, ten sam rysunek co na karcie Rocznika; świecą sieci tej karty.
 const svgSrc = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)[0];
@@ -45,7 +45,16 @@ const nets = k.nets.map(([kod, why, lim]) => ({ kod, name: lim ? NETN[kod] + ', 
 ---
   <article class={'wk' + (wstep ? ' wk-wstep' : '')} style={'--ink:' + ink + ';--base:' + base}>
   <nav aria-label="Ścieżka" class="wk-path">
-    <a href={'/wiki/#' + slugify(GRUPY[k.g])}>{group}</a><span aria-hidden="true"> › </span><a href={'/wiki/#' + slugify(k.o)}>{k.o}</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span>
+    {k.grupa ? (
+      // karta dyscypliny: ścieżka od jej grupy na mapie osnów; karta grupy stoi sama (2026-10-23)
+      k.grupa === 'wiki'
+        ? <Fragment><a href="/wiki/">Wiki</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
+        : k.grupa.toLowerCase() === k.h.toLowerCase()
+        ? <Fragment><a href="/wiki/mapa-osnow/">Mapa osnów</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
+        : <Fragment><a href={'/wiki/' + slugify(group) + '/'}>{group}</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
+    ) : (
+      <Fragment><a href={'/wiki/#' + slugify(GRUPY[k.g])}>{group}</a><span aria-hidden="true"> › </span><a href={'/wiki/#' + slugify(k.o)}>{k.o}</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
+    )}
   </nav>
   <div class="wk-grid">
     <div class="wk-col">
@@ -111,7 +120,7 @@ const nets = k.nets.map(([kod, why, lim]) => ({ kod, name: lim ? NETN[kod] + ', 
 
 <style is:global>
 /* kolumna na linii logo, jak w indeksie wiki (2026-10-22) */
-.wk{max-width:1120px;margin:0 8vw;padding:56px 0 80px}
+.wk{max-width:1168px;margin:0 auto;padding:56px 24px 80px}
 .wk-path{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:#6f685d}
 .wk-path a{color:var(--ink);text-decoration:none}
 .wk-path [aria-current]{color:#e2ddd4}
@@ -143,5 +152,5 @@ const nets = k.nets.map(([kod, why, lim]) => ({ kod, name: lim ? NETN[kod] + ', 
 .wk-chip{display:inline-flex;align-items:center;text-decoration:none;font-size:13px;min-height:36px;padding:6px 14px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);color:var(--c)}
 .wk-wstep{margin:0;padding:0 0 32px}
 @media (max-width:960px){.wk-grid{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:720px){.wk{margin:0 20px;padding:28px 0 64px}.wk.wk-wstep{margin:0;padding:0 0 24px}.wk-mysl h1{font-size:34px}.wk-box{padding:18px 18px}}
+@media (max-width:720px){.wk{margin:0 20px;padding:28px 0 64px;max-width:none}.wk.wk-wstep{margin:0;padding:0 0 24px}.wk-mysl h1{font-size:34px}.wk-box{padding:18px 18px}}
 </style>

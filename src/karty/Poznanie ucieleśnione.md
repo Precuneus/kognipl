@@ -22,7 +22,7 @@ rekordy:
 - nunez_et_al_2019
 stan: gotowa
 ---
-Poznanie ucieleśnione (ang. embodied cognition) to ujęcie, według którego poznanie jest z natury zakorzenione w cechach ciała, a w historii kognitywistyki jedno z wyzwań dla jej [[Podejście obliczeniowe|podstaw]] (Núñez i in. 2019)<!--[s:nunez2019-hard-core-challenges]-->. Thagard zalicza ciało do wyzwań, które krytycy stawiają kognitywistyce: zarzucają jej, że pomija rolę ciała w myśleniu i działaniu oraz rolę fizycznego otoczenia, w którym myślenie jest osadzone i w które sięga (Thagard 2023)<!--[s:thagard2023-critique-challenges]-->.
+Poznanie ucieleśnione (ang. embodied cognition) to ujęcie, według którego poznanie jest z natury zakorzenione w cechach ciała, a w historii [[Kognitywistyka|kognitywistyki]] jedno z wyzwań dla jej podstaw (Núñez i in. 2019)<!--[s:nunez2019-hard-core-challenges]-->. Te podstawy opisuje karta [[Podejście obliczeniowe]]. Thagard zalicza ciało do wyzwań, które krytycy stawiają kognitywistyce: zarzucają jej, że pomija rolę ciała w myśleniu i działaniu oraz rolę fizycznego otoczenia, w którym myślenie jest osadzone i w które sięga (Thagard 2023)<!--[s:thagard2023-critique-challenges]-->.
 
 Patrzysz na kubek, a oczy skaczą po jego krawędziach. Kevin O'Regan i Alva Noë proponują, by widzenie rozumieć jako sposób działania, szczególny sposób eksplorowania otoczenia, a doświadczenie widzenia pojawia się według nich wtedy, gdy organizm opanowuje prawa zależności czuciowo-ruchowych (ang. sensorimotor contingencies) (O'Regan i Noë 2001)<!--[s:oregan2001-seeing-is-acting]-->. Ujęcie enaktywne (ang. enactive approach) Evana Thompsona wiąże umysł z samym życiem: gdzie jest życie, tam jest umysł (Thompson 2007)<!--[s:thompson2007-life-mind-continuity]-->.
 
