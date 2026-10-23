@@ -1,9 +1,28 @@
 ---
 import Base from '../../layouts/Base.astro';
 import KartaWiki from '../../components/KartaWiki.astro';
-import { INDEX, INK, BASE, WIKI_ON, card } from '../../karty/data.js';
+import { template } from '../../rocznik/views/karta.js';
+import { INDEX, INK, BASE, WIKI_ON, KARTY, NETN, card, netCard, segs } from '../../karty/data.js';
 // pierwszy artykuł wiki: karta Kognitywistyka w szablonie karty (jego słowo, 2026-10-22)
 const pierwsza = card('Kognitywistyka');
+
+// Mapa sieci: mózg z karty, każda sieć w kolorze ze strony startowej; klik pokazuje karty,
+// które wskazują tę sieć w części Sieć mózgowa (jego, 2026-10-23: *Build the brain index first*).
+const KOLOR = { VIS: '#ee6b6f', SMN: '#f9d780', DAN: '#e58e76', VAN: '#6fb3a8', SN: '#a9b26f', CN: '#f69959', DMN: '#bb6fb2', LIM: '#cfc3a6' };
+const ROLA = { VIS: '„Widzę.”', SMN: '„Czuję ciało i się ruszam.”', DAN: '„Koordynuję oko i rękę.”', VAN: '„Coś przerywa plan.”', SN: '„Coś zagraża schematowi ciała.”', CN: '„Trzymam zadanie.”', DMN: '„Ja, przeszłość i przyszłość, inni ludzie.”' };
+const plain = (t) => segs(t).map((s) => s.t).join('');
+const ile = (n) => n + ' ' + (n === 1 ? 'karta' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 'karty' : 'kart');
+const SIECI = Object.keys(KOLOR).map((kod) => {
+  const own = netCard(kod);
+  const karty = KARTY.filter((k) => k !== own && k.nets.some((n) => n[0] === kod))
+    .map((k) => ({ h: k.h, url: k.url, g: k.g, why: plain(k.nets.find((n) => n[0] === kod)[1]) }));
+  return { kod, nazwa: NETN[kod], kolor: KOLOR[kod], rola: ROLA[kod], own, karty };
+}).filter((s) => s.karty.length);
+const shown = new Set(SIECI.map((s) => s.kod));
+const mapa = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)[0]
+  .replace(/<svg [^>]*>/, '<svg viewBox="10 4 236 340" class="sieci-svg wn-svg" data-wn role="img" aria-label="Sieci mózgu z boku i od środka">')
+  .replace(/style="\{\{bn\.(\w+)\}\}"/g, (_, n) => (shown.has(n) ? 'class="nb" data-k="' + n + '" style="fill:' + KOLOR[n] + '"' : 'style="display:none"'))
+  .replace(/style="\{\{bl\.(\w+)\}\}"/g, (_, n) => (shown.has(n) ? 'class="nl" data-k="' + n + '"' : 'style="display:none"'));
 // Indeks powstaje dopiero, gdy choć jedna karta jest gotowa.
 export function getStaticPaths() {
   return WIKI_ON ? [{ params: { indeks: undefined } }] : [];
@@ -12,6 +31,31 @@ export function getStaticPaths() {
 <Base title="wiki · kogni.pl" activePage="wiki">
   <div class="wi">
     {pierwsza ? <KartaWiki k={pierwsza} wstep /> : <h1 class="sr-only">kogni.pl/wiki</h1>}
+    {SIECI.length > 0 && (
+      <section class="wn" id="sieci" aria-labelledby="wn-h">
+        <h2 class="wi-gname" id="wn-h" style="--ink:#f0c060;--base:#c89a3c">Sieci mózgu</h2>
+        <p class="wn-lead">Wybierz sieć, a zobaczysz karty, które wskazują ją w części Sieć mózgowa.</p>
+        <div class="wn-grid">
+          <figure class="wn-fig"><Fragment set:html={mapa} /></figure>
+          <div class="wn-side">
+            <ul class="sieci-legend wn-legend" aria-label="Sieci mózgu">
+              {SIECI.map((s) => (
+                <li><button type="button" data-k={s.kod} aria-pressed="false" aria-controls={'wn-' + s.kod.toLowerCase()} style={'--c:' + s.kolor}>
+                  <span class="sieci-sw" aria-hidden="true"></span>
+                  <span class="sieci-txt"><span class="sieci-kod">{s.kod}</span> <span class="sieci-nazwa">{s.nazwa}</span>{s.rola && <span class="wn-rola">{s.rola}</span>}<span class="wn-n">{ile(s.karty.length)}</span></span>
+                </button></li>
+              ))}
+            </ul>
+            {SIECI.map((s) => (
+              <div class="wn-out" id={'wn-' + s.kod.toLowerCase()} hidden style={'--c:' + s.kolor}>
+                <p class="wn-out-h">{s.own ? <a href={s.own.url}>{s.own.h} →</a> : s.nazwa}</p>
+                <div class="wi-cards">{s.karty.map((k) => <a href={k.url} title={k.why} style={'--c:' + INK[k.g]}>{k.h}</a>)}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
     {INDEX.map((g) => (
       <section class="wi-group" id={g.nazwa.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase()} style={'--ink:' + INK[g.g] + ';--base:' + BASE[g.g]}>
         <h2 class="wi-gname">{g.nazwa}</h2>
@@ -47,4 +91,56 @@ export function getStaticPaths() {
 .wi-cards{display:flex;flex-wrap:wrap;gap:6px 8px}
 .wi-cards a{display:inline-flex;align-items:center;text-decoration:none;font-size:13.5px;min-height:32px;padding:4px 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);color:var(--c)}
 @media (max-width:720px){.wi{margin:0 20px;padding:32px 0 64px}.wi-fam{grid-template-columns:minmax(0,1fr);gap:6px}}
+/* mapa sieci nad indeksem (2026-10-23) */
+.wn{margin-top:40px}
+.wn-lead{max-width:720px;margin:0 0 18px;font-size:15px;line-height:1.7;color:#cfc8bb}
+.wn-grid{display:grid;grid-template-columns:minmax(220px,320px) minmax(0,1fr);gap:32px;align-items:start}
+.wn-fig{margin:0;position:sticky;top:24px}
+.wn-legend{margin:0;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.wn-legend li{margin:0}
+.wn-rola{display:block;font-family:var(--font-display);font-size:19px;line-height:1.3;color:var(--text-primary)}
+.wn-n{display:block;font-size:12px;color:#8f877a}
+.wn-out{margin-top:14px;padding:16px 18px;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);border-radius:14px;background:#16140f}
+.wn-out[hidden]{display:none}
+.wn-out-h{margin:0 0 12px;font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.2}
+.wn-out-h a{color:var(--c);text-decoration:none}
+.wn-out-h a:hover{text-decoration:underline;text-underline-offset:4px}
+@media (max-width:720px){.wn-grid{grid-template-columns:minmax(0,1fr);gap:16px}.wn-fig{position:static;max-width:240px;margin:0 auto}.wn-legend{grid-template-columns:1fr 1fr;gap:4px}.wn-legend button{padding:7px 8px;gap:8px}.wn-rola{display:none}}
 </style>
+
+<script>
+// Klik na sieć (na mózgu albo na liście) zapala ją i pokazuje jej karty; drugi klik gasi. Adres #siec-dmn otwiera sieć od razu.
+const root = document.querySelector('.wn');
+if (root) {
+  const svg = root.querySelector('[data-wn]');
+  const btns = [...root.querySelectorAll('.wn-legend button')];
+  const outs = [...root.querySelectorAll('.wn-out')];
+  let cur = null;
+  const light = (k) => {
+    svg.classList.toggle('has-on', !!k);
+    svg.querySelectorAll('[data-k]').forEach((e) => e.classList.toggle('on', e.dataset.k === k));
+  };
+  const pick = (k) => {
+    cur = cur === k ? null : k;
+    light(cur);
+    btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.k === cur)));
+    let out = null;
+    outs.forEach((o) => { o.hidden = o.id !== 'wn-' + (cur || '').toLowerCase(); if (!o.hidden) out = o; });
+    history.replaceState(null, '', location.pathname + location.search + (cur ? '#siec-' + cur.toLowerCase() : ''));
+    if (out) { const r = out.getBoundingClientRect(); if (r.bottom > innerHeight) out.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+  };
+  const hover = (k) => { if (!cur) light(k); };
+  btns.forEach((b) => {
+    b.addEventListener('click', () => pick(b.dataset.k));
+    b.addEventListener('mouseenter', () => hover(b.dataset.k));
+    b.addEventListener('mouseleave', () => hover(null));
+  });
+  svg.querySelectorAll('.nb').forEach((e) => {
+    e.addEventListener('click', () => pick(e.dataset.k));
+    e.addEventListener('mouseenter', () => hover(e.dataset.k));
+    e.addEventListener('mouseleave', () => hover(null));
+  });
+  const h = /^#siec-(\w+)$/.exec(location.hash);
+  if (h && btns.some((b) => b.dataset.k === h[1].toUpperCase())) { pick(h[1].toUpperCase()); root.scrollIntoView(); }
+}
+</script>

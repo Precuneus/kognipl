@@ -57,7 +57,7 @@ body:not(:has(.roj)) .rocznik-bar{display:none}
   .rocznik-karta .w-nic{left:225px !important}
   .rocznik > div{padding-left:16px !important;padding-right:16px !important}
 }
-body:has(.rocznik),body:has(.sieci){background:#0e0d0b}
+body:has(.rocznik),body:has(.sieci),body:has(.wi),body:has(.wk){background:#0e0d0b}
 
 /* Rocznik 2026 front: the newest class */
 .start-latest{max-width:1120px;margin:80px auto 0;padding:0 24px}
