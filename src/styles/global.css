@@ -223,6 +223,29 @@ a { color: inherit; }
   border-color: rgba(232, 168, 76, 0.3);
 }
 
+.footer-ai {
+  max-width: 520px;
+  margin: 14px auto 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-dim);
+}
+
+.footer-ai a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+
+.footer-ai a:hover {
+  color: var(--warm-glow);
+  border-color: rgba(232, 168, 76, 0.3);
+}
+
 /* === ANIMATIONS === */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(12px); }
