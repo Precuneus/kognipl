@@ -101,7 +101,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   </section>
   <section class="roj-st lewo oba" data-k="naglowek">
     <div class="roj-oba"><div class="roj-t"><p class="roj-duze roj-naglowek" set:html={md(T.akt)} />
-      <div class="roj-zatrzymaj">{T.zatrzymaj.map((t) => <p>{t}</p>)}</div>
+      <div class="roj-zatrzymaj">{T.zatrzymaj.map((t, i) => <p class={i ? 'roj-duze' : undefined}>{t}</p>)}</div>
       <ul class="roj-sieci">{SIECI.map(([n, nazwa]) => <li class="roj-siec" data-n={n} data-nazwa={nazwa.replace(/^Sieć\s+/, '')}><span class="roj-ukryte">{nazwa}</span></li>)}</ul>
     </div></div>
   </section>
@@ -228,9 +228,9 @@ html.roj-cicho .roj-dymek,html.roj-cicho .roj-dymek-b{animation:none}
 .roj-oba{position:sticky;top:0;height:100vh;padding:9vh 56px 0 8vw}
 /* zdanie z akapitu: iskra je złoci, ono rozpada się na punkty roju, które układają się w nagłówek */
 .roj .roj-naglowek{opacity:0}
-/* jego tekst pod nagłówkiem wyłania się, gdy nagłówek jest gotowy */
+/* jego tekst pod nagłówkiem wyłania się, gdy nagłówek jest gotowy; drugi akapit złoty i z większym odstępem (jego słowo, 2026-10-23) */
 .roj .roj-zatrzymaj{opacity:0}
-.roj .roj-zatrzymaj > p + p{margin-top:1em}
+.roj .roj-zatrzymaj > p + p{margin-top:1.4em}
 .roj .roj-zrodlo{transition:color .8s ease,text-shadow .8s ease}
 .roj .roj-zrodlo.zloty{color:var(--zloto);text-shadow:0 0 12px rgba(240,192,96,.45)}
 /* po solipsyście tekst płynie dalej z krótszymi odstępami */
