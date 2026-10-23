@@ -2,19 +2,16 @@
 // Karta wiki w jednym szablonie: strona karty i pierwszy artykuł na /wiki/ (2026-10-22).
 import { template } from '../rocznik/views/karta.js';
 import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, classesOf, slugify } from '../karty/data.js';
+import { mozgSvg, KOLOR } from '../karty/mozg.js';
 interface Props { k: any; wstep?: boolean }
 const { k, wstep = false } = Astro.props;
 const ink = INK[k.g], base = BASE[k.g];
 const group = GRUPY[k.g] ? GRUPY[k.g].charAt(0).toUpperCase() + GRUPY[k.g].slice(1) : 'Wiki';
 
-// Mózg z boku i od środka, ten sam rysunek co na karcie Rocznika; świecą sieci tej karty.
-const svgSrc = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)[0];
-const key = (n) => (n === 'JĘZ' ? 'JEZ' : n);
-// wiersz limbiczny zapala też obszary limbiczne rysunku, jako część sieci domyślnej
-const on = new Set(k.nets.flatMap((n) => (n[2] ? [key(n[0]), n[2]] : [key(n[0])])));
-const brain = svgSrc
-  .replace(/\{\{bn\.(\w+)\}\}/g, (_, n) => (on.has(n) ? 'fill:' + base + ';fill-opacity:0.85' : 'fill:rgba(180,155,100,0.07)'))
-  .replace(/\{\{bl\.(\w+)\}\}/g, (_, n) => (on.has(n) && n !== 'LIM' ? 'display:inline' : 'display:none'));
+// Karta sieci pokazuje tylko swoją sieć (jego słowo, 2026-10-23: *the page is about dan so for the networks we use a single network*);
+// sieć limbiczna należy do domyślnej.
+const own = Object.keys(NETN).find((kod) => netCard(kod) === k);
+const ownKey = own === 'LIM' ? 'DMN' : own;
 
 // Ryciny: te same rysunki co na karcie Rocznika (szablon karta.js), w kolorze karty.
 const CAPT = {
@@ -41,7 +38,10 @@ const back = backlinks(k);
 const zaj = classesOf(k);
 // wiersz limbiczny stoi pod siecią domyślną, po jej własnym wierszu, i prowadzi do karty Sieć limbiczna, która to wyjaśnia
 const nets = k.nets.map(([kod, why, lim]) => ({ kod, name: lim ? NETN[kod] + ', obszary limbiczne' : NETN[kod] || kod, why, to: lim ? card('Sieć limbiczna') : netCard(kod), lim: !!lim }))
+  .filter((n) => !own || (n.kod === ownKey && n.lim === (own === 'LIM')))
   .sort((a, b) => Number(a.lim) - Number(b.lim));
+// Mózg z boku ze strony startowej, w jej kolorach sieci (2026-10-23)
+const brain = mozgSvg(own ? [ownKey] : nets.map((n) => n.kod), { label: 'Sieci tej karty na mózgu z boku' });
 ---
   <article class={'wk' + (wstep ? ' wk-wstep' : '')} style={'--ink:' + ink + ';--base:' + base}>
   <nav aria-label="Ścieżka" class="wk-path">
@@ -58,8 +58,8 @@ const nets = k.nets.map(([kod, why, lim]) => ({ kod, name: lim ? NETN[kod] + ', 
   </nav>
   <div class="wk-grid">
     <div class="wk-col">
-      <section aria-label="Myśl" class="wk-box wk-mysl">
-        <h2>Myśl</h2>
+      <section aria-label="Termin" class="wk-box wk-mysl">
+        <h2>Termin</h2>
         <h1>{k.h}</h1>
         {k.r2.length > 0 && <p class="wk-rodziny">{k.r2.join(' · ')}</p>}
       </section>
@@ -82,7 +82,7 @@ const nets = k.nets.map(([kod, why, lim]) => ({ kod, name: lim ? NETN[kod] + ', 
             <dl>
               {nets.map((n) => (
                 <div class="wk-net">
-                  <dt>{n.to ? <a href={n.to.url} class="wk-kod">{n.kod}</a> : <span class="wk-kod">{n.kod}</span>}<span class="wk-netname">{n.name}</span></dt>
+                  <dt>{n.to ? <a href={n.to.url} class="wk-kod" style={KOLOR[n.kod] ? 'color:' + KOLOR[n.kod] : ''}>{n.kod}</a> : <span class="wk-kod" style={KOLOR[n.kod] ? 'color:' + KOLOR[n.kod] : ''}>{n.kod}</span>}<span class="wk-netname">{n.name}</span></dt>
                   <dd>{segs(n.why).map((s) => s.url ? <a href={s.url} style={'color:' + s.color}>{s.t}</a> : s.t)}</dd>
                 </div>
               ))}
@@ -137,6 +137,7 @@ const nets = k.nets.map(([kod, why, lim]) => ({ kod, name: lim ? NETN[kod] + ', 
 .wk-p a,.wk-net dd a{text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wk-fig{margin:22px 0 24px}.wk-fig svg{display:block;width:100%;max-width:560px}.wk-fig figcaption{margin:10px 0 0;font-size:13px;line-height:1.55;color:#a09888}
 .wk-brain svg{display:block;width:100%;max-width:340px;margin:0 auto 14px}
+.mozg-kod{font-family:'Inter',sans-serif;font-size:8px;font-weight:600;fill:#0e0d0b}
 .wk dl{margin:0}
 .wk-net+.wk-net{margin-top:12px;padding-top:12px;border-top:1px solid rgba(180,155,100,.12)}
 .wk-net dt{display:flex;align-items:baseline;gap:10px;margin:0}
