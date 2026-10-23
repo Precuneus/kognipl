@@ -43,7 +43,10 @@ export const ALL = Object.entries(notes).map(([file, mod]) => {
     id: slugify(title), stem, h: title, url: '/wiki/' + slugify(title) + '/',
     o, g: home.g, r2, osnowy,
     body: blocks(mod.rawContent()),
-    nets: (f.sieci || []).map((x) => [x.kod, strip(x['powód'])]),
+    // sieć limbiczna z podziału Yeo i in. wchodzi do sieci domyślnej: model strony ma siedem sieci, a w jednym badaniu fMRI
+    // wieloechowym jej obszary łączyły się w większości z siecią domyślną (Girn i in. 2024); trzeci element znaczy wiersz limbiczny
+    // (jego słowo, 2026-10-23: *it should go to the dmn*)
+    nets: (f.sieci || []).map((x) => (x.kod === 'LIM' ? ['DMN', strip(x['powód']), 'LIM'] : [x.kod, strip(x['powód'])])),
     nw: strip(f.bez_sieci || ''),
     l: (f['materiały'] || []).map((x) => [x['tytuł'], x.url, x.czas ? String(x.czas) : '']),
     fig: (f.ryciny || []).map((x) => x.replace(/\.svg$/, '')),

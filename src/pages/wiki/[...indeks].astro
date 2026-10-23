@@ -8,20 +8,22 @@ const pierwsza = card('Kognitywistyka');
 
 // Mapa sieci: mózg z karty, każda sieć w kolorze ze strony startowej; klik pokazuje karty,
 // które wskazują tę sieć w części Sieć mózgowa (jego, 2026-10-23: *Build the brain index first*).
-const KOLOR = { VIS: '#ee6b6f', SMN: '#f9d780', DAN: '#e58e76', VAN: '#6fb3a8', SN: '#a9b26f', CN: '#f69959', DMN: '#bb6fb2', LIM: '#cfc3a6' };
+// siedem sieci modelu strony; sieć limbiczna wchodzi do domyślnej (data.js, 2026-10-23)
+const KOLOR = { VIS: '#ee6b6f', SMN: '#f9d780', DAN: '#e58e76', VAN: '#6fb3a8', SN: '#a9b26f', CN: '#f69959', DMN: '#bb6fb2' };
 const ROLA = { VIS: '„Widzę.”', SMN: '„Czuję ciało i się ruszam.”', DAN: '„Koordynuję oko i rękę.”', VAN: '„Coś przerywa plan.”', SN: '„Coś zagraża schematowi ciała.”', CN: '„Trzymam zadanie.”', DMN: '„Ja, przeszłość i przyszłość, inni ludzie.”' };
 const plain = (t) => segs(t).map((s) => s.t).join('');
 const ile = (n) => n + ' ' + (n === 1 ? 'karta' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 'karty' : 'kart');
 const SIECI = Object.keys(KOLOR).map((kod) => {
   const own = netCard(kod);
   const karty = KARTY.filter((k) => k !== own && k.nets.some((n) => n[0] === kod))
-    .map((k) => ({ h: k.h, url: k.url, g: k.g, why: plain(k.nets.find((n) => n[0] === kod)[1]) }));
+    .map((k) => ({ h: k.h, url: k.url, g: k.g, why: plain((k.nets.find((n) => n[0] === kod && !n[2]) || k.nets.find((n) => n[0] === kod))[1]) }));
   return { kod, nazwa: NETN[kod], kolor: KOLOR[kod], rola: ROLA[kod], own, karty };
 }).filter((s) => s.karty.length);
 const shown = new Set(SIECI.map((s) => s.kod));
 const mapa = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)[0]
   .replace(/<svg [^>]*>/, '<svg viewBox="10 4 236 340" class="sieci-svg wn-svg" data-wn role="img" aria-label="Sieci mózgu z boku i od środka">')
-  .replace(/style="\{\{bn\.(\w+)\}\}"/g, (_, n) => (shown.has(n) ? 'class="nb" data-k="' + n + '" style="fill:' + KOLOR[n] + '"' : 'style="display:none"'))
+  // obszary limbiczne rysunku należą do sieci domyślnej i świecą razem z nią
+  .replace(/style="\{\{bn\.(\w+)\}\}"/g, (_, n0) => { const n = n0 === 'LIM' ? 'DMN' : n0; return shown.has(n) ? 'class="nb" data-k="' + n + '" style="fill:' + KOLOR[n] + '"' : 'style="display:none"'; })
   .replace(/style="\{\{bl\.(\w+)\}\}"/g, (_, n) => (shown.has(n) ? 'class="nl" data-k="' + n + '"' : 'style="display:none"'));
 // Indeks powstaje dopiero, gdy choć jedna karta jest gotowa.
 export function getStaticPaths() {
@@ -30,14 +32,14 @@ export function getStaticPaths() {
 ---
 <Base title="wiki · kogni.pl" activePage="wiki">
   <div class="wi">
-    {pierwsza ? <KartaWiki k={pierwsza} wstep /> : <h1 class="sr-only">kogni.pl/wiki</h1>}
-    {SIECI.length > 0 && (
-      <section class="wn" id="sieci" aria-labelledby="wn-h">
-        <h2 class="wi-gname" id="wn-h" style="--ink:#f0c060;--base:#c89a3c">Sieci mózgu</h2>
-        <p class="wn-lead">Wybierz sieć, a zobaczysz karty, które wskazują ją w części Sieć mózgowa.</p>
-        <div class="wn-grid">
-          <figure class="wn-fig"><Fragment set:html={mapa} /></figure>
-          <div class="wn-side">
+    {/* mapa sieci w prawym panelu pierwszego artykułu, w miejscu jego części Sieć mózgowa (jego słowo, 2026-10-23: *embed the sieci mozgowe in the wiki main page to the panel to the right*) */}
+    {pierwsza ? (
+      <KartaWiki k={pierwsza} wstep>
+        {SIECI.length > 0 && (
+          <section slot="siec" class="wk-box wn" id="sieci" aria-labelledby="wn-h">
+            <h2 id="wn-h">Sieci mózgu</h2>
+            <p class="wn-lead">Wybierz sieć, a zobaczysz karty, które wskazują ją w części Sieć mózgowa.</p>
+            <figure class="wn-fig"><Fragment set:html={mapa} /></figure>
             <ul class="sieci-legend wn-legend" aria-label="Sieci mózgu">
               {SIECI.map((s) => (
                 <li><button type="button" data-k={s.kod} aria-pressed="false" aria-controls={'wn-' + s.kod.toLowerCase()} style={'--c:' + s.kolor}>
@@ -52,10 +54,10 @@ export function getStaticPaths() {
                 <div class="wi-cards">{s.karty.map((k) => <a href={k.url} title={k.why} style={'--c:' + INK[k.g]}>{k.h}</a>)}</div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-    )}
+          </section>
+        )}
+      </KartaWiki>
+    ) : <h1 class="sr-only">kogni.pl/wiki</h1>}
     {INDEX.map((g) => (
       <section class="wi-group" id={g.nazwa.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase()} style={'--ink:' + INK[g.g] + ';--base:' + BASE[g.g]}>
         <h2 class="wi-gname">{g.nazwa}</h2>
@@ -91,21 +93,21 @@ export function getStaticPaths() {
 .wi-cards{display:flex;flex-wrap:wrap;gap:6px 8px}
 .wi-cards a{display:inline-flex;align-items:center;text-decoration:none;font-size:13.5px;min-height:32px;padding:4px 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);color:var(--c)}
 @media (max-width:720px){.wi{margin:0 20px;padding:32px 0 64px}.wi-fam{grid-template-columns:minmax(0,1fr);gap:6px}}
-/* mapa sieci nad indeksem (2026-10-23) */
-.wn{margin-top:40px}
-.wn-lead{max-width:720px;margin:0 0 18px;font-size:15px;line-height:1.7;color:#cfc8bb}
-.wn-grid{display:grid;grid-template-columns:minmax(220px,320px) minmax(0,1fr);gap:32px;align-items:start}
-.wn-fig{margin:0;position:sticky;top:24px}
-.wn-legend{margin:0;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+/* mapa sieci w prawym panelu pierwszego artykułu (2026-10-23): mózg, pod nim lista sieci w jednej kolumnie, pod nią karty wybranej sieci */
+.wn-lead{margin:0 0 14px;font-size:14px;line-height:1.6;color:#cfc8bb}
+.wn-fig{margin:0 auto 12px;max-width:300px}
+.wn-legend{margin:0;grid-template-columns:minmax(0,1fr);gap:2px}
 .wn-legend li{margin:0}
-.wn-rola{display:block;font-family:var(--font-display);font-size:19px;line-height:1.3;color:var(--text-primary)}
+.wn-legend button{padding:7px 10px;gap:10px}
+.wn-legend .sieci-sw{flex-basis:12px;height:12px;margin-top:5px}
+.wn-rola{display:block;font-family:var(--font-display);font-size:17px;line-height:1.3;color:var(--text-primary)}
 .wn-n{display:block;font-size:12px;color:#8f877a}
-.wn-out{margin-top:14px;padding:16px 18px;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);border-radius:14px;background:#16140f}
+.wn-out{margin-top:12px;padding:14px 16px;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);border-radius:14px;background:#16140f}
 .wn-out[hidden]{display:none}
-.wn-out-h{margin:0 0 12px;font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.2}
+.wn-out-h{margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.2}
 .wn-out-h a{color:var(--c);text-decoration:none}
 .wn-out-h a:hover{text-decoration:underline;text-underline-offset:4px}
-@media (max-width:720px){.wn-grid{grid-template-columns:minmax(0,1fr);gap:16px}.wn-fig{position:static;max-width:240px;margin:0 auto}.wn-legend{grid-template-columns:1fr 1fr;gap:4px}.wn-legend button{padding:7px 8px;gap:8px}.wn-rola{display:none}}
+@media (max-width:720px){.wn-fig{max-width:260px}.wn-legend button{padding:6px 8px;gap:8px}.wn-rola{display:none}}
 </style>
 
 <script>

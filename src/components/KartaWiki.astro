@@ -1,7 +1,7 @@
 ---
 // Karta wiki w jednym szablonie: strona karty i pierwszy artykuł na /wiki/ (2026-10-22).
 import { template } from '../rocznik/views/karta.js';
-import { GRUPY, BASE, INK, NETN, segs, netCard, backlinks, classesOf, slugify } from '../karty/data.js';
+import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, classesOf, slugify } from '../karty/data.js';
 interface Props { k: any; wstep?: boolean }
 const { k, wstep = false } = Astro.props;
 const ink = INK[k.g], base = BASE[k.g];
@@ -10,10 +10,11 @@ const group = GRUPY[k.g].charAt(0).toUpperCase() + GRUPY[k.g].slice(1);
 // Mózg z boku i od środka, ten sam rysunek co na karcie Rocznika; świecą sieci tej karty.
 const svgSrc = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)[0];
 const key = (n) => (n === 'JĘZ' ? 'JEZ' : n);
-const on = new Set(k.nets.map((n) => key(n[0])));
+// wiersz limbiczny zapala też obszary limbiczne rysunku, jako część sieci domyślnej
+const on = new Set(k.nets.flatMap((n) => (n[2] ? [key(n[0]), n[2]] : [key(n[0])])));
 const brain = svgSrc
   .replace(/\{\{bn\.(\w+)\}\}/g, (_, n) => (on.has(n) ? 'fill:' + base + ';fill-opacity:0.85' : 'fill:rgba(180,155,100,0.07)'))
-  .replace(/\{\{bl\.(\w+)\}\}/g, (_, n) => (on.has(n) ? 'display:inline' : 'display:none'));
+  .replace(/\{\{bl\.(\w+)\}\}/g, (_, n) => (on.has(n) && n !== 'LIM' ? 'display:inline' : 'display:none'));
 
 // Ryciny: te same rysunki co na karcie Rocznika (szablon karta.js), w kolorze karty.
 const CAPT = {
@@ -38,7 +39,9 @@ const kindOf = (u) => (/youtu\.?be/.test(u) ? 0 : (/doi\.org|frontiersin|journal
 const kinds = ['Filmy', 'Artykuły', 'Inne'].map((name, q) => ({ name, items: k.l.filter((l) => kindOf(l[1]) === q) })).filter((x) => x.items.length);
 const back = backlinks(k);
 const zaj = classesOf(k);
-const nets = k.nets.map(([kod, why]) => ({ kod, name: NETN[kod] || kod, why, to: netCard(kod) }));
+// wiersz limbiczny stoi pod siecią domyślną, po jej własnym wierszu, i prowadzi do karty Sieć limbiczna, która to wyjaśnia
+const nets = k.nets.map(([kod, why, lim]) => ({ kod, name: lim ? NETN[kod] + ', obszary limbiczne' : NETN[kod] || kod, why, to: lim ? card('Sieć limbiczna') : netCard(kod), lim: !!lim }))
+  .sort((a, b) => Number(a.lim) - Number(b.lim));
 ---
   <article class={'wk' + (wstep ? ' wk-wstep' : '')} style={'--ink:' + ink + ';--base:' + base}>
   <nav aria-label="Ścieżka" class="wk-path">
@@ -61,6 +64,7 @@ const nets = k.nets.map(([kod, why]) => ({ kod, name: NETN[kod] || kod, why, to:
       </section>
     </div>
     <div class="wk-col">
+      {Astro.slots.has('siec') ? <slot name="siec" /> : (
       <section aria-label="Sieć mózgowa" class="wk-box">
         <h2>Sieć mózgowa</h2>
         {nets.length > 0 ? (
@@ -77,6 +81,7 @@ const nets = k.nets.map(([kod, why]) => ({ kod, name: NETN[kod] || kod, why, to:
           </Fragment>
         ) : <p class="wk-p">{k.nw}</p>}
       </section>
+      )}
       {kinds.length > 0 && (
         <section aria-label="Materiały" class="wk-box">
           <h2>Materiały</h2>
