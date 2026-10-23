@@ -3,23 +3,24 @@ tytuł: Kryzys kognitywistyki
 osnowa: '[[Kultura i społeczeństwo]]'
 rodziny:
 - '[[Nauka jako zbiorowość]]'
-głębokość:
-- grupa organizmów
-opis: 'Kognitywistyka powstała jako jedna nauka o umyśle z tezą „poznanie to obliczanie”. Konekcjonizm i poznanie ucieleśnione podważyły jej podstawowe założenia, a analiza zespołu Rafaela Núñeza z 2019 roku pokazuje dziedzinę zdominowaną przez psychologię i uczelnie różniące się w tym, czego ma uczyć.'
-myśl: 'Programy kognitywistyki rozwijają się obok siebie, każdy na własnych założeniach o tym, czym jest poznanie, a spójny szkielet opisu poznania pozostaje zadaniem.'
 sieci: []
 bez_sieci: 'Kryzys kognitywistyki dotyczy dziedziny nauki: jej założeń, czasopism i programów studiów.'
 ryciny: []
 materiały:
 - tytuł: 'Núñez i in. 2019: What happened to cognitive science?'
   url: https://doi.org/10.1038/s41562-019-0626-2
+- tytuł: 'Thagard 2023: Cognitive Science, Stanford Encyclopedia of Philosophy'
+  url: https://plato.stanford.edu/entries/cognitive-science/
 rekordy:
 - nunez_et_al_2019
+stan: gotowa
 ---
-Rewolucja poznawcza sprzed ponad pół wieku, z tezą „poznanie to obliczanie”, zapoczątkowała kognitywistykę jako przedsięwzięcie wielu dyscyplin. Nazwana w liczbie pojedynczej, miała mieć spójny przedmiot, uzupełniające się metody i zintegrowane teorie (Núñez i in. 2019)<!--[s:nunez2019-integration-not-materialized]-->.
+Kryzys kognitywistyki to w ujęciu kursu stan dziedziny, w którym programy kognitywistyki rozwijają się obok siebie, każdy na własnych założeniach o tym, czym jest poznanie.
 
-Nowe ujęcia zakwestionowały jej fundamenty. Konekcjonizm (ang. connectionism) podważył założenie, że umysł liczy krok po kroku, a poznanie ucieleśnione (ang. embodied cognition) osadziło poznanie w cechach ciała. Z każdym takim wyzwaniem proponowane drogi rozchodziły się coraz dalej, a spójna nauka o umyśle oddalała się (Núñez i in. 2019)<!--[s:nunez2019-hard-core-challenges]-->.
+Rewolucja poznawcza sprzed ponad pół wieku, z hasłem [[Podejście obliczeniowe|„poznanie to obliczanie”]], zapoczątkowała kognitywistykę jako przedsięwzięcie wielu dyscyplin (Núñez i in. 2019)<!--[s:nunez2019-integration-not-materialized]-->. Jej angielską nazwę, cognitive science, celowo zapisano w liczbie pojedynczej, aby wyrazić dążenie do zintegrowanego i spójnego programu badań (Núñez i in. 2019)<!--[s:nunez2019-singular-label]-->: dziedzina miała mieć spójny przedmiot, uzupełniające się metody i zintegrowane teorie (Núñez i in. 2019)<!--[s:nunez2019-integration-not-materialized]-->.
 
-Zespół Rafaela Núñeza sprawdził stan dziedziny na danych. W 1020 artykułach czasopisma Cognitive Science autorzy z afiliacją psychologiczną występują prawie czterokrotnie częściej, niż wynikałoby z ich udziału wśród dyscyplin założycielskich (Núñez i in. 2019)<!--[s:nunez2019-psychology-overrepresented]-->. Uczelnie nadające dyplom z kognitywistyki różnią się zasadniczo w tym, co ma być jej programem (Núñez i in. 2019)<!--[s:nunez2019-degenerating-problemshift]-->. W terminach Imre Lakatosa twardy rdzeń kognitywistyki był podważany od środka przez kolejne szkoły, a dziedzina nie zbudowała wokół niego trwałego pasa ochronnego hipotez pomocniczych; efektem jest „degenerujące przesunięcie problemowe” i nieudany program badawczy (Núñez i in. 2019)<!--[s:nunez2019-degenerating-problemshift]-->.
+Nowe ujęcia rzuciły wyzwanie jej podstawom: konekcjonizm (ang. connectionism) zakwestionował założenie, że umysł liczy szeregowo, a [[Poznanie ucieleśnione|poznanie ucieleśnione]] (ang. embodied cognition) przyjęło, że poznanie jest z natury zakorzenione w cechach ciała (Núñez i in. 2019)<!--[s:nunez2019-hard-core-challenges]-->. Wobec tak podstawowych wyzwań, stawianych na różnych płaszczyznach, proponowane drogi rozchodziły się coraz bardziej, a perspektywa spójnej nauki o umyśle stawała się coraz odleglejsza (Núñez i in. 2019)<!--[s:nunez2019-hard-core-challenges]-->.
 
-W ujęciu kursu ten stan to kryzys: programy kognitywistyki rozwijają się obok siebie, każdy na własnych założeniach o tym, czym jest poznanie. Kurs przyjmuje jedno rozumienie, szukając spójnego szkieletu opisu poznania: doświadczenie to aktywność biologiczna organizmu.
+Według Núñeza i współautorów kognitywistyka nie stała się zintegrowaną i spójną dziedziną interdyscyplinarną (Núñez i in. 2019)<!--[s:nunez2019-failed-integration]-->. W 1020 artykułach i komentarzach opublikowanych po 2000 roku w czasopiśmie „Cognitive Science” autorzy z wydziałów i instytutów psychologii występują prawie czterokrotnie częściej, niż gdyby każda z sześciu dyscyplin założycielskich miała równy udział (Núñez i in. 2019)<!--[s:nunez2019-psychology-overrepresented]-->, a badaczki i badacze [[Neuronauka poznawcza|neuronauki poznawczej]] publikują zwykle poza czasopismami kognitywistyki (Núñez i in. 2019)<!--[s:nunez2019-neuroscientists-publish-outside]-->. Uczelnie nadające dyplom z kognitywistyki w dużej mierze nie zgadzają się co do tego, jaki ma być program jej studiów (Núñez i in. 2019)<!--[s:nunez2019-degenerating-problemshift]-->. Autorzy odczytują ten stan w terminach filozofa nauki Imre Lakatosa: twardy rdzeń (ang. hard core) kognitywistyki, czyli jej podstawowe założenia, był podważany od środka przez różne szkoły, a dziedzina nie zbudowała wokół spójnego rdzenia trwałego pasa ochronnego (ang. protective belt) hipotez pomocniczych, co doprowadziło do „degenerującego się przesunięcia problemowego” (ang. degenerating problemshift) i nieudanego programu badawczego (Núñez i in. 2019)<!--[s:nunez2019-degenerating-problemshift]-->. Paul Thagard odpowiada, że kognitywistyka ma wiele rywalizujących podejść, bez unifikacji, jaką biologii dają teoria ewolucji i genetyka, ale współpraca jej dyscyplin przyczyniła się do postępu w rozumieniu wielu aspektów poznania (Thagard 2023)<!--[s:thagard2023-no-unification]-->.
+
+Kurs przyjmuje jedno rozumienie, szukając spójnego szkieletu opisu poznania: doświadczanie to aktywność żywego ciała, a [[Kognitywistyka|kognitywistyka]] jest tu rozumiana jako doświadczanie wyjaśnień zgrupowanych w dyscypliny.

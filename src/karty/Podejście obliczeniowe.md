@@ -3,24 +3,23 @@ tytuł: Podejście obliczeniowe
 osnowa: '[[Kultura i społeczeństwo]]'
 rodziny:
 - '[[Nauka jako zbiorowość]]'
-głębokość:
-- grupa organizmów
-opis: 'Podejście obliczeniowe opisuje umysł jako przetwarzanie reprezentacji według reguł, tym samym językiem w mózgu i w komputerze. Z jego tezy „poznanie to obliczanie” narodziła się kognitywistyka, a spór o jego klasyczną wersję wraca dziś przy modelach językowych.'
-myśl: 'W podejściu obliczeniowym umysł to obliczenie, opisywane bez względu na to, co je wykonuje, więc ten sam opis obejmuje mózg i komputer.'
 sieci: []
-bez_sieci: 'Podejście obliczeniowe to program badawczy: opisuje poznanie językiem reprezentacji i reguł, niezależnym od podłoża.'
+bez_sieci: 'Podejście obliczeniowe to program badawczy: opisuje poznanie językiem reprezentacji i procedur obliczeniowych.'
 ryciny: []
 materiały:
 - tytuł: 'Fodor i Pylyshyn 1988: Connectionism and cognitive architecture: A critical analysis'
   url: https://doi.org/10.1016/0010-0277(88)90031-5
 - tytuł: 'Núñez i in. 2019: What happened to cognitive science?'
   url: https://doi.org/10.1038/s41562-019-0626-2
+- tytuł: 'Thagard 2023: Cognitive Science, Stanford Encyclopedia of Philosophy'
+  url: https://plato.stanford.edu/entries/cognitive-science/
 rekordy:
 - fodor_pylyshyn_1988
 - nunez_et_al_2019
+stan: gotowa
 ---
-Kognitywistyka narodziła się z tezy „poznanie to obliczanie” (Núñez i in. 2019)<!--[s:nunez2019-integration-not-materialized]-->. W podejściu obliczeniowym umysł to układ przetwarzający reprezentacje według reguł, a opis tych reguł obejmuje tym samym językiem mózg i komputer.
+Podejście obliczeniowe (ang. computational approach) to program badawczy kognitywistyki, który wychodzi od jej głównej hipotezy, [[Kognitywistyka|hipotezy obliczeniowej]]: myślenie najlepiej rozumieć w kategoriach struktur reprezentacji w umyśle i działających na nich procedur obliczeniowych (Thagard 2023)<!--[s:thagard2023-central-hypothesis]-->. Większość badań przyjmuje, że reprezentacje umysłowe przypominają struktury danych w komputerze, a procedury obliczeniowe algorytmy (Thagard 2023)<!--[s:thagard2023-central-hypothesis]-->. Kognitywistyka posługuje się przy tym analogią między umysłem, mózgiem i komputerem, w której każdy z nich podsuwa nowe pomysły o pozostałych, a różne komputery i sposoby programowania podsuwają różne obrazy działania umysłu (Thagard 2023)<!--[s:thagard2023-three-way-analogy]-->. Hasłem rewolucji poznawczej, z której narodziła się kognitywistyka, było „poznanie to obliczanie” (Núñez i in. 2019)<!--[s:nunez2019-integration-not-materialized]-->.
 
-Jerry Fodor i Zenon Pylyshyn bronili w 1988 roku wersji klasycznej: reprezentacje umysłowe mają strukturę złożoną z części, jak zdanie, a procesy umysłowe działają na tej strukturze (Fodor i Pylyshyn 1988)<!--[s:fodor1988-classical-combinatorial]-->. Konekcjonizm (ang. connectionism), z sieciami prostych jednostek przetwarzających informację równolegle, podważył już wcześniej założenie, że umysł liczy krok po kroku (Núñez i in. 2019)<!--[s:nunez2019-hard-core-challenges]-->. Ten sam spór wraca przy modelach językowych uczonych [[Predykcja następnego tokenu|predykcji następnego tokenu]].
+Podejście obliczeniowe wyjaśniło wiele aspektów rozwiązywania problemów, uczenia się i używania języka przez ludzi, ale część krytyków filozoficznych uważa je za gruntownie chybione (Thagard 2023)<!--[s:thagard2023-computational-approach-record]-->. Do ich wyzwań należy rola ciała w myśleniu i działaniu (Thagard 2023)<!--[s:thagard2023-critique-challenges]-->, a [[Poznanie ucieleśnione|poznanie ucieleśnione]] przyjęło, że poznanie jest z natury zakorzenione w cechach ciała (Núñez i in. 2019)<!--[s:nunez2019-hard-core-challenges]-->. Konekcjonizm (ang. connectionism), zainspirowany gęstą siecią połączeń w układzie nerwowym, zakwestionował założenie, że umysł liczy szeregowo, krok po kroku (Núñez i in. 2019)<!--[s:nunez2019-connectionism-inspired]-->. Konekcjoniści zaproponowali nowe ujęcie reprezentacji i obliczeń: neurony i ich połączenia podsunęły im struktury danych, a potencjały czynnościowe neuronów i rozprzestrzenianie się aktywacji algorytmy (Thagard 2023)<!--[s:thagard2023-connectionist-proposal]-->. Jerry Fodor i Zenon Pylyshyn bronili w 1988 roku przeciw nim ujęcia klasycznego (ang. classical). Teorie klasyczne i konekcjonistyczne różnią się według nich tym, czym są reprezentacje i procesy umysłowe: w klasycznych reprezentacje z reguły mają kombinatoryczną strukturę składników (ang. combinatorial constituent structure) i kombinatoryczną semantykę, a procesy umysłowe są z reguły wrażliwe na tę strukturę (Fodor i Pylyshyn 1988)<!--[s:fodor1988-classical-combinatorial]-->.
 
-Na kogni.pl doświadczenie to aktywność biologiczna organizmu, więc opis obliczeniowy mówi o strukturze tej aktywności. Czy to samo obliczenie wykonane w krzemie byłoby doświadczeniem, pozostaje pytaniem otwartym, tym samym, które stawia [[Chiński pokój]]. Rozejście się tego programu z innymi opisuje [[Kryzys kognitywistyki]].
+W ujęciu kursu doświadczanie to aktywność żywego ciała, więc opis obliczeniowy mówi o strukturze tej aktywności. O rozejściu się programów kognitywistyki mówi karta [[Kryzys kognitywistyki|Kryzys kognitywistyki]].
