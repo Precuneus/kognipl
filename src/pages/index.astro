@@ -641,7 +641,7 @@ const knotXY = () => { const r = knotLogo!.getBoundingClientRect(); return [r.le
 // Do historii wchodzi się tylko kliknięciem Story.
 const storyB = $('.roj-story');
 const LAND: any = { t0: 0, T: [0, 0, 0, 1000], D: [1, 1, 1, 2600], last: 0, done: false, ph: -1, mrug: 0,
-  s: 0, dir: -1, h: 50, hs: 50, py: 0, air: 0, ay0: 0, avy: 0, at: 0, aT: 0, obrot: 0, kul: 0, hop: 0, hopT: 0, hopH: 0, hopTT: 0, hopO: 0, nastHop: 0, wraca: false };
+  s: 0, dir: -1, h: 50, hs: 50, py: 0, air: 0, ay0: 0, avy: 0, at: 0, aT: 0, obrot: 0, kul: 0, hop: 0, hopT: 0, hopH: 0, hopTT: 0, hopO: 0, nastHop: 0, wraca: false, lot: null as any };
 const LD: any = { front: [0, 0, 0, 0], w: 0 };
 // na rampie grawitacja księżycowa (jego słowo, 2026-10-24: *more like on the moon*)
 const TAB = 160, GS0 = .012, GS1 = .988, GR = 420;
@@ -687,11 +687,16 @@ function landKrok(now: number) {
 // dla zachęty i zjeżdża. Potem jeździ jak na Księżycu: prędkość wynika z wysokości, a każdy przejazd losuje, jak wysoko doleci.
 // Czasem zawraca na ścianie, zanim dojdzie do krawędzi; częściej wylatuje nad nią pionowo, kręci od pół do trzech obrotów w którąś
 // stronę albo kuli się w locie, ląduje i zjeżdża z powrotem; w dole podskakuje różnie wysoko, z obrotem albo bez.
+// Plecak odrzutowy (jego słowo, 2026-10-24): częściej niż pionowo wylatuje z krawędzi przez cały ekran, łukiem, z pętlą albo zygzakiem,
+// na drugą krawędź albo z powrotem na tę samą, kręcąc obroty; dysze ciągną za nią dwie białe smugi. Snop na rampie świeci jaśniej.
 function landIskra(now: number): any {
   const L = LAND, r = IS.r * 1.95, dt = Math.min(.05, Math.max(0, (now - (L.last || now)) / 1000));
   if (L.done && now - L.last > 250) L.wraca = true;
   L.last = now;
   const los = (a: number, b: number) => a + Math.random() * (b - a);
+  // plecak: kierunek „w górę” Iskry (dysze są po przeciwnej stronie), ciąg dysz 0 do 1 i widoczność
+  const jet = (up: number, thr: number, vis = 1) => { IS.jUp = up; IS.jThr = thr; IS.jVis = vis; };
+  const wNorm = () => Math.atan2(-NY, -NX);
   const na = (s: number, off: number) => { railPt(3, s); return [RX - NX * (r + off), RY - NY * (r + off)]; };
   const jedzie = (x: number, y: number, ang: number, I: number, rot = 0, len = 120, half = .3, bnag = 0) => ({ id: 'szyn', tryb: 'stoj', rail: 1, x, y, I, ang, len, half, hop: 1e9, gaze: ang, rot, bnag });
   const lipY = () => { railPt(3, GS1); return RY; };
@@ -703,14 +708,35 @@ function landIskra(now: number): any {
     railPt(3, L.s); L.air = 1; L.ay0 = RY; L.at = 0; const h = Math.min(Math.max(L.hs, 10), hMax()); L.avy = -Math.sqrt(2 * GR * h); L.aT = 2 * -L.avy / GR;
     const o = [.5, 1, 1, 1.5, 2, 2.5, 3][(Math.random() * 7) | 0]; L.kul = Math.random() < .2 ? 1 : 0;
     L.obrot = (L.kul ? 0 : o * 6.2832) * (Math.random() < .5 ? -1 : 1); IS.sq = -.22;
+    if (Math.random() < .6) przelot();
   };
-  if (CICHO) { L.done = true; const [x, y] = na(.5, 0); return jedzie(x, y, 0, 0); }
+  // przelot przez ekran: krzywa z krawędzi w dół przez środek ekranu na drugą krawędź (czasem z powrotem na tę samą)
+  const przelot = () => {
+    const [ax, ay] = na(L.s, 0), wraca = Math.random() < .3, sB = wraca ? L.s : (L.s > .5 ? GS0 : GS1), [bx, by] = na(sB, 0);
+    const d = H * los(.3, .62), P = wraca
+      ? [ax, ay, ax + (W / 2 - ax) * 1.3, ay + H * .04, ax + (W / 2 - ax) * 1.3, ay + d, ax, ay]
+      : [ax, ay, ax + (bx - ax) * .08, ay + d, bx - (bx - ax) * .08, by + d, bx, by];
+    const typ = wraca ? 0 : [0, 1, 1, 2][(Math.random() * 4) | 0];
+    let len = 0, px = ax, py = ay;
+    for (let i = 1; i <= 24; i++) { const [x, y] = bz(P, i / 24); len += Math.hypot(x - px, y - py); px = x; py = y; }
+    L.lot = { P, typ, sB, t: 0, T: Math.max(2.4, Math.min(4.6, len / 380)), R: los(50, MOB ? 70 : 120), amp: los(30, 70), n: 2 + ((Math.random() * 2) | 0),
+      sgn: Math.sign(bx - ax) || 1, obrot: [0, 1, 2, 3, -1, -2][(Math.random() * 6) | 0] * 6.2832 };
+    L.air = 0;
+  };
+  const lotPkt = (u: number) => {
+    const Q = L.lot; let [x, y] = bz(Q.P, u);
+    if (Q.typ === 1 && u > .35 && u < .65) { const w = (u - .35) / .3; x -= Q.sgn * Q.R * Math.sin(6.2832 * w); y -= Q.R * (1 - Math.cos(6.2832 * w)); }
+    if (Q.typ === 2) { y += Q.amp * Math.sin(Q.n * Math.PI * u); }
+    return [Math.max(12, Math.min(W - 12, x)), Math.max(24, y)];
+  };
+  if (CICHO) { L.done = true; const [x, y] = na(.5, 0); jet(wNorm(), 0); return jedzie(x, y, 0, 0); }
   if (!L.done) {
     const tl = now - L.t0, T3 = L.T[3] + 250, E3 = L.T[3] + L.D[3];
-    if (tl < T3) { const [x, y] = knotXY(); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; }
+    if (tl < T3) { const [x, y] = knotXY(); jet(-Math.PI / 2, 0, 0); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; }
     if (tl < E3) {
       const u = cl((tl - T3) / (E3 - T3)), s = Math.min(GS0 + (GS1 - GS0) * sm(u), Math.max(GS0, LD.front[3] * 1.1 - .045));
       const [x, y] = na(s, 0), w = sm(cl(u / .08)), [kx, ky] = knotXY(), ang = Math.atan2(-NX, NY);
+      jet(wNorm(), 0, w);
       return jedzie(kx + (x - kx) * w, ky + (y - ky) * w, ang, 0);
     }
     // na górze: snop rośnie (1 s), trzy mrugnięcia, przy każdym snop gaśnie (1,1 do 2,2 s), dwa podskoki zachęty (2,3 do 3,2 s), zjazd
@@ -718,12 +744,14 @@ function landIskra(now: number): any {
     if (p < 3200) {
       let [x, y] = na(GS1, 0);
       const ang = Math.atan2(sr.top + sr.height / 2 - y, sr.left + sr.width / 2 - x), roz = sm(cl(p / 1000));
-      let I = .9 * roz;
+      let I = .9 * roz, thr = 0;
+      jet(wNorm(), 0);
       for (const m of [1100, 1450, 1800]) if (p >= m && p < m + 150) { I = 0; if (L.mrug < m) { L.mrug = m; IS.mrug = now; } }
       for (const [h0, t0, T] of [[14, 2300, 380], [24, 2720, 480]]) {
-        if (p >= t0 && p < t0 + T) { const u = (p - t0) / T; if (L.ph !== t0) { L.ph = t0; IS.sq = -.22; } y -= h0 * 4 * u * (1 - u); }
+        if (p >= t0 && p < t0 + T) { const u = (p - t0) / T; if (L.ph !== t0) { L.ph = t0; IS.sq = -.22; } y -= h0 * 4 * u * (1 - u); thr = u < .5 ? .7 : .15; }
         else if (L.ph === t0 && p >= t0 + T) { L.ph = -t0; IS.sq = .3; }
       }
+      IS.jThr = thr;
       return jedzie(x, y, ang, I, 0, 40 + 300 * roz, .34, 1);
     }
     L.done = true; L.s = GS1; L.dir = -1; L.py = lipY(); L.nastHop = now + los(1500, 4000); L.h = L.hs = .7 * hMax();
@@ -731,8 +759,17 @@ function landIskra(now: number): any {
   if (L.wraca) {
     // powrót na ekran startowy: lot na prawą krawędź rampy i zjazd
     const [x, y] = na(GS1, 0);
-    if (Math.hypot(IS.x - x, IS.y - y) > 6) return { id: 'rampa-lot', tryb: 'lot', x, y, I: 0 };
-    L.wraca = false; L.s = GS1; L.dir = -1; L.air = 0; L.hop = 0; L.py = y; L.h = L.hs = .7 * hMax();
+    if (Math.hypot(IS.x - x, IS.y - y) > 6) { jet(Math.atan2(IS.vy, IS.vx), .8); return { id: 'rampa-lot', tryb: 'lot', x, y, I: 0 }; }
+    L.wraca = false; L.s = GS1; L.dir = -1; L.air = 0; L.hop = 0; L.lot = null; L.py = y; L.h = L.hs = .7 * hMax();
+  }
+  if (L.lot) {
+    const Q = L.lot; Q.t += dt; const u = cl(Q.t / Q.T), ue = .5 - .5 * Math.cos(Math.PI * u);
+    if (u >= 1) { L.s = Q.sB; L.lot = null; L.dir = L.s > .5 ? -1 : 1; IS.sq = .32; L.py = lipY(); }
+    else {
+      const [x, y] = lotPkt(ue), [x2, y2] = lotPkt(Math.min(1, ue + .01)), kier = Math.atan2(y2 - y, x2 - x), rot = Q.obrot * sm(u);
+      jet(kier + rot, u < .9 ? 1 : .4);
+      return jedzie(x, y, kier, .5, rot, 170, .3);
+    }
   }
   if (L.air) {
     L.at += dt; const u = cl(L.at / L.aT);
@@ -740,7 +777,7 @@ function landIskra(now: number): any {
     const x = RX - NX * r;
     if (L.kul) IS.sq = .3 * Math.sin(Math.PI * u);
     if (u >= 1) { L.air = 0; L.dir = L.s > .5 ? -1 : 1; IS.sq = .32; }
-    else return jedzie(x, Math.min(y, RY), -Math.PI / 2, 0, L.obrot * sm(u));
+    else { jet(-Math.PI / 2 + L.obrot * sm(u), L.avy + GR * L.at < 0 ? 1 : .3); return jedzie(x, Math.min(y, RY), -Math.PI / 2, 0, L.obrot * sm(u)); }
   }
   // jazda: prędkość z wysokości nad szczytem tego przejazdu; na ścianie poniżej szczytu zawraca
   // (nowa wysokość wchodzi płynnie przez dół rampy, żeby prędkość nie skakała)
@@ -755,7 +792,7 @@ function landIskra(now: number): any {
   else if (L.s <= GS0 && L.dir < 0) { L.s = GS0; wylot(); }
   // podskok w dole rampy: wysokość, czas lotu z księżycowej grawitacji i obrót losowane
   if (!L.hop && now > L.nastHop && L.s > .3 && L.s < .7) {
-    L.hop = 1; L.hopT = 0; L.hopH = los(12, MOB ? 40 : 60); L.hopTT = 2 * Math.sqrt(2 * L.hopH / GR); L.hopO = [0, 0, 1, -1, 2, -2][(Math.random() * 6) | 0] * 6.2832; IS.sq = -.2;
+    L.hop = 1; L.hopT = 0; L.hopH = los(40, MOB ? 110 : 170); L.hopTT = 2 * Math.sqrt(2 * L.hopH / GR); L.hopO = [0, 0, 1, -1, 2, -2][(Math.random() * 6) | 0] * 6.2832; IS.sq = -.2;
   }
   let off = 0, rot = 0;
   if (L.hop) {
@@ -763,7 +800,8 @@ function landIskra(now: number): any {
     if (u >= 1) { L.hop = 0; IS.sq = .25; L.nastHop = now + los(1500, 5000); } else { off = L.hopH * 4 * u * (1 - u); rot = L.hopO * sm(u); }
   }
   const [x, y] = na(L.s, off), ang = Math.atan2(-NX, NY) + (L.dir < 0 ? Math.PI : 0);
-  return jedzie(x, y, ang, .22, rot);
+  jet(wNorm() + rot, L.hop ? (L.hopT / L.hopTT < .5 ? .9 : .2) : 0);
+  return jedzie(x, y, ang, .62, rot, 190, .32);
 }
 // Solipsysta: iskra stoi na „zombie” i świeci na niego; postać wyłania się z ciemności, sama zapala świecę,
 // a snop jej świecy odsłania i oświetla słowa wokół; potem postać obraca się z płonącą świecą.
@@ -1302,6 +1340,50 @@ function oko(dt: number, c: any, now: number) {
   IS.mach += ((c.macha && IS.kontakt ? 1 : 0) - IS.mach) * Math.min(1, dt * 6);
   IS.skala += ((c.skala || 1) - IS.skala) * Math.min(1, dt * 5);
 }
+// Plecak odrzutowy Iskry na ekranie startowym: dwie dysze po przeciwnej stronie niż jej „góra”, płomień, gdy ciągnie,
+// i dwie białe smugi, które zostają w powietrzu, rozpływają się i gasną w 1,6 s.
+const SMUGI: any[] = [];
+function bz(P: number[], u: number) {
+  const v = 1 - u, a = v * v * v, b = 3 * v * v * u, c = 3 * v * u * u, d = u * u * u;
+  return [a * P[0] + b * P[2] + c * P[4] + d * P[6], a * P[1] + b * P[3] + c * P[5] + d * P[7]];
+}
+function rysujPlecak(dt: number) {
+  const now = performance.now(), A = (IS.jVis || 0) * LD.w, r = IS.r * IS.skala;
+  for (let i = SMUGI.length - 1; i >= 0; i--) { const q = SMUGI[i]; if (now - q.t > 1600) SMUGI.splice(i, 1); else { q.x += q.vx * dt; q.y += q.vy * dt; q.vx *= 1 - dt * 1.6; q.vy *= 1 - dt * 1.6; } }
+  if (IS.jUp === undefined) return;
+  let da = IS.jUp - (IS.jA ?? IS.jUp); da = Math.atan2(Math.sin(da), Math.cos(da)); IS.jA = (IS.jA ?? IS.jUp) + da * Math.min(1, dt * 18);
+  IS.jT = (IS.jT || 0) + ((IS.jThr || 0) - (IS.jT || 0)) * Math.min(1, dt * 10);
+  const ux = Math.cos(IS.jA), uy = Math.sin(IS.jA), px = -uy, py = ux;
+  // smugi
+  if (A > .05 && IS.jT > .08 && !CICHO) for (const k of [-1, 1]) {
+    const nx = IS.x - ux * r * 3.6 + px * k * r * .8, ny = IS.y - uy * r * 3.6 + py * k * r * .8;
+    SMUGI.push({ x: nx, y: ny, vx: -ux * 90 * IS.jT + (Math.random() - .5) * 14, vy: -uy * 90 * IS.jT + (Math.random() - .5) * 14, t: now, k, s: IS.jT });
+  }
+  g2.save(); g2.globalCompositeOperation = 'lighter'; g2.lineCap = 'round';
+  for (let i = 1; i < SMUGI.length; i++) {
+    const a = SMUGI[i - 1], b = SMUGI[i];
+    let j = i - 1; while (j >= 0 && SMUGI[j].k !== b.k) j--;
+    if (j < 0) continue; const c = SMUGI[j]; if (b.t - c.t > 80) continue;
+    const age = (now - b.t) / 1600; void a;
+    g2.globalAlpha = .7 * Math.pow(1 - age, 1.6) * b.s * LD.w; g2.strokeStyle = '#ffffff'; g2.lineWidth = 1.2 + age * 3.4;
+    g2.beginPath(); g2.moveTo(c.x, c.y); g2.lineTo(b.x, b.y); g2.stroke();
+  }
+  if (A < .02) { g2.restore(); return; }
+  // płomień z dysz
+  if (IS.jT > .05) for (const k of [-1, 1]) {
+    const bx = IS.x - ux * r * 3.3 + px * k * r * .8, by = IS.y - uy * r * 3.3 + py * k * r * .8, L = r * (1.6 + 2.6 * IS.jT) * (.85 + .3 * Math.random());
+    const gr = g2.createLinearGradient(bx, by, bx - ux * L, by - uy * L);
+    gr.addColorStop(0, 'rgba(255,255,255,' + .95 * A + ')'); gr.addColorStop(.35, 'rgba(255,214,140,' + .7 * A + ')'); gr.addColorStop(1, 'rgba(240,192,96,0)');
+    g2.globalAlpha = 1; g2.fillStyle = gr; g2.beginPath();
+    g2.moveTo(bx + px * r * .45, by + py * r * .45); g2.lineTo(bx - ux * L, by - uy * L); g2.lineTo(bx - px * r * .45, by - py * r * .45); g2.closePath(); g2.fill();
+  }
+  // plecak: dwie zaokrąglone dysze na krótkiej belce, rysowane kreską jak Iskra
+  g2.globalCompositeOperation = 'source-over'; g2.globalAlpha = .95 * A; g2.strokeStyle = '#f0c060'; g2.fillStyle = '#0e0d0b'; g2.lineWidth = r * .3; g2.lineJoin = 'round';
+  g2.translate(IS.x, IS.y); g2.rotate(IS.jA + Math.PI / 2);
+  for (const k of [-1, 1]) { g2.beginPath(); g2.roundRect(k * r * .8 - r * .5, r * 1.9, r, r * 1.6, r * .45); g2.fill(); g2.stroke(); }
+  g2.beginPath(); g2.moveTo(-r * .8, r * 2.05); g2.lineTo(r * .8, r * 2.05); g2.stroke();
+  g2.restore();
+}
 function rysujIskre(A0: number) {
   const r = IS.r * IS.skala, A = A0;
   if (A < .02) return;
@@ -1621,7 +1703,7 @@ function frame() {
   rysujLod(dt);
   const dipRuch = dipy(dt);
   if (IS.osiadla > .01 && c) { const em = wikiK.getBoundingClientRect().height / .26; knot(IS.osiadla, IS.x, IS.y, Math.max(6, em * .25), em * .1625); }
-  if (wid) rysujIskre(1 - IS.osiadla);
+  if (wid) { rysujPlecak(dt); rysujIskre(1 - IS.osiadla); }
   // pętla klatek tylko wtedy, gdy coś się rusza
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
   const iskraRuch = !!c && !CICHO && (solRuch || !!c.slizg || !!c.hura || (MOZG_AKT && now - KL.t < KL_T) || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
