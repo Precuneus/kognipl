@@ -640,10 +640,11 @@ const knotXY = () => { const r = knotLogo!.getBoundingClientRect(); return [r.le
 // a gdy dochodzi z nią na górę, jeździ po niej jak po rampie: z brzegu na brzeg, nad krawędziami wyskakuje i kręci obroty, w dole podskakuje.
 // Do historii wchodzi się tylko kliknięciem Story.
 const storyB = $('.roj-story');
-const LAND: any = { t0: 0, T: [0, 0, 0, 1000], D: [1, 1, 1, 2600], last: 0, done: false, ph: -1,
-  s: 0, dir: -1, h: 50, air: 0, ay0: 0, avy: 0, at: 0, aT: 0, obrot: 0, hop: 0, hopT: 0, nastHop: 0, wraca: false };
+const LAND: any = { t0: 0, T: [0, 0, 0, 1000], D: [1, 1, 1, 2600], last: 0, done: false, ph: -1, mrug: 0,
+  s: 0, dir: -1, h: 50, hs: 50, py: 0, air: 0, ay0: 0, avy: 0, at: 0, aT: 0, obrot: 0, kul: 0, hop: 0, hopT: 0, hopH: 0, hopTT: 0, hopO: 0, nastHop: 0, wraca: false };
 const LD: any = { front: [0, 0, 0, 0], w: 0 };
-const TAB = 160, GS0 = .012, GS1 = .988, GR = 1100;
+// na rampie grawitacja księżycowa (jego słowo, 2026-10-24: *more like on the moon*)
+const TAB = 160, GS0 = .012, GS1 = .988, GR = 420;
 const LG = [0, 1, 2, 3].map(() => ({ tab: new Float32Array(TAB * 2), len: 0 }));
 let RX = 0, RY = 0, NX = 0, NY = 0;
 // punkt kreski k w odległości s (0 do 1) wzdłuż jej długości, i jej normalna; styczna to (NY, -NX), wnętrze U leży po stronie -N
@@ -682,19 +683,26 @@ function landKrok(now: number) {
   for (let k = 0; k < 4; k++) LD.front[k] = CICHO ? 1 : sm(cl((tl - LAND.T[k]) / LAND.D[k]));
 }
 // Iskra na rampie (jego słowo, 2026-10-24): rusza z logo 0,25 s po kresce i zjeżdża za jej czołem, aż dochodzą razem pod Animacje.
-// Potem jeździ: prędkość wynika z wysokości (energia stała, więc dolatuje zawsze tak samo wysoko), nad krawędzią wylatuje pionowo w górę,
-// kręci jeden, dwa albo pół obrotu w którąś stronę, ląduje i zjeżdża z powrotem; w dole czasem podskakuje.
+// Na górze, zanim zjedzie pierwszy raz, rozwija snop, patrzy w dół, mruga kilka razy (snop gaśnie z każdym mrugnięciem), podskakuje
+// dla zachęty i zjeżdża. Potem jeździ jak na Księżycu: prędkość wynika z wysokości, a każdy przejazd losuje, jak wysoko doleci.
+// Czasem zawraca na ścianie, zanim dojdzie do krawędzi; częściej wylatuje nad nią pionowo, kręci od pół do trzech obrotów w którąś
+// stronę albo kuli się w locie, ląduje i zjeżdża z powrotem; w dole podskakuje różnie wysoko, z obrotem albo bez.
 function landIskra(now: number): any {
   const L = LAND, r = IS.r * 1.95, dt = Math.min(.05, Math.max(0, (now - (L.last || now)) / 1000));
   if (L.done && now - L.last > 250) L.wraca = true;
   L.last = now;
+  const los = (a: number, b: number) => a + Math.random() * (b - a);
   const na = (s: number, off: number) => { railPt(3, s); return [RX - NX * (r + off), RY - NY * (r + off)]; };
-  const jedzie = (x: number, y: number, ang: number, I: number, rot = 0) => ({ id: 'szyn', tryb: 'stoj', rail: 1, x, y, I, ang, len: 120, half: .3, hop: 1e9, gaze: ang, rot });
-  const hMax = () => { railPt(3, GS1); return Math.max(16, RY - r - 14); };
-  const wylot = (h: number) => {
-    // wylot nad krawędzią: pionowo w górę i z powrotem na to samo miejsce, z obrotem
-    railPt(3, L.s); L.air = 1; L.ay0 = RY; L.at = 0; L.h = Math.min(h, hMax()); L.avy = -Math.sqrt(2 * GR * L.h); L.aT = 2 * -L.avy / GR;
-    const o = [1, 1, 2, -1, -2, .5][(Math.random() * 6) | 0]; L.obrot = o * 6.2832 * (L.s > .5 ? -1 : 1); IS.sq = -.22;
+  const jedzie = (x: number, y: number, ang: number, I: number, rot = 0, len = 120, half = .3, bnag = 0) => ({ id: 'szyn', tryb: 'stoj', rail: 1, x, y, I, ang, len, half, hop: 1e9, gaze: ang, rot, bnag });
+  const lipY = () => { railPt(3, GS1); return RY; };
+  const hMax = () => Math.max(16, lipY() - r - 14);
+  // jak wysoko doleci następny przejazd, losowane w dole rampy (tam się odpycha): co czwarty zawraca na ścianie poniżej krawędzi
+  const nowyH = () => { railPt(3, .5); const g = RY - lipY(); L.h = Math.random() < .25 ? -g * los(.12, .5) : los(.3, 1) * hMax(); };
+  const wylot = () => {
+    // wylot nad krawędzią: pionowo w górę i z powrotem na to samo miejsce
+    railPt(3, L.s); L.air = 1; L.ay0 = RY; L.at = 0; const h = Math.min(Math.max(L.hs, 10), hMax()); L.avy = -Math.sqrt(2 * GR * h); L.aT = 2 * -L.avy / GR;
+    const o = [.5, 1, 1, 1.5, 2, 2.5, 3][(Math.random() * 7) | 0]; L.kul = Math.random() < .2 ? 1 : 0;
+    L.obrot = (L.kul ? 0 : o * 6.2832) * (Math.random() < .5 ? -1 : 1); IS.sq = -.22;
   };
   if (CICHO) { L.done = true; const [x, y] = na(.5, 0); return jedzie(x, y, 0, 0); }
   if (!L.done) {
@@ -703,36 +711,59 @@ function landIskra(now: number): any {
     if (tl < E3) {
       const u = cl((tl - T3) / (E3 - T3)), s = Math.min(GS0 + (GS1 - GS0) * sm(u), Math.max(GS0, LD.front[3] * 1.1 - .045));
       const [x, y] = na(s, 0), w = sm(cl(u / .08)), [kx, ky] = knotXY(), ang = Math.atan2(-NX, NY);
-      return jedzie(kx + (x - kx) * w, ky + (y - ky) * w, ang, .24);
+      return jedzie(kx + (x - kx) * w, ky + (y - ky) * w, ang, 0);
     }
-    // na górze pierwszy wylot z obrotem, potem jazda w lewo
-    L.done = true; L.s = GS1; L.dir = -1; L.nastHop = now + 2500; wylot(46);
+    // na górze: snop rośnie (1 s), trzy mrugnięcia, przy każdym snop gaśnie (1,1 do 2,2 s), dwa podskoki zachęty (2,3 do 3,2 s), zjazd
+    const p = tl - E3, sr = storyB.getBoundingClientRect();
+    if (p < 3200) {
+      let [x, y] = na(GS1, 0);
+      const ang = Math.atan2(sr.top + sr.height / 2 - y, sr.left + sr.width / 2 - x), roz = sm(cl(p / 1000));
+      let I = .9 * roz;
+      for (const m of [1100, 1450, 1800]) if (p >= m && p < m + 150) { I = 0; if (L.mrug < m) { L.mrug = m; IS.mrug = now; } }
+      for (const [h0, t0, T] of [[14, 2300, 380], [24, 2720, 480]]) {
+        if (p >= t0 && p < t0 + T) { const u = (p - t0) / T; if (L.ph !== t0) { L.ph = t0; IS.sq = -.22; } y -= h0 * 4 * u * (1 - u); }
+        else if (L.ph === t0 && p >= t0 + T) { L.ph = -t0; IS.sq = .3; }
+      }
+      return jedzie(x, y, ang, I, 0, 40 + 300 * roz, .34, 1);
+    }
+    L.done = true; L.s = GS1; L.dir = -1; L.py = lipY(); L.nastHop = now + los(1500, 4000); L.h = L.hs = .7 * hMax();
   }
   if (L.wraca) {
     // powrót na ekran startowy: lot na prawą krawędź rampy i zjazd
     const [x, y] = na(GS1, 0);
     if (Math.hypot(IS.x - x, IS.y - y) > 6) return { id: 'rampa-lot', tryb: 'lot', x, y, I: 0 };
-    L.wraca = false; L.s = GS1; L.dir = -1; L.air = 0; L.hop = 0; L.h = 40;
+    L.wraca = false; L.s = GS1; L.dir = -1; L.air = 0; L.hop = 0; L.py = y; L.h = L.hs = .7 * hMax();
   }
   if (L.air) {
     L.at += dt; const u = cl(L.at / L.aT);
     railPt(3, L.s); const y = L.ay0 + L.avy * L.at + .5 * GR * L.at * L.at;
-    const x = RX - NX * r, rot = L.obrot * sm(u);
-    if (u >= 1) { L.air = 0; L.dir = L.s > .5 ? -1 : 1; IS.sq = .32; L.h = (MOB ? 22 : 30) + Math.random() * (MOB ? 34 : 56); }
-    else return jedzie(x, Math.min(y, RY), -Math.PI / 2, 0, rot);
+    const x = RX - NX * r;
+    if (L.kul) IS.sq = .3 * Math.sin(Math.PI * u);
+    if (u >= 1) { L.air = 0; L.dir = L.s > .5 ? -1 : 1; IS.sq = .32; }
+    else return jedzie(x, Math.min(y, RY), -Math.PI / 2, 0, L.obrot * sm(u));
   }
-  // jazda: prędkość z wysokości nad szczytem lotu
-  railPt(3, L.s); const lipY = (railPt(3, GS1), RY); railPt(3, L.s);
-  const v = Math.max(60, Math.sqrt(Math.max(0, 2 * GR * (RY - (lipY - L.h)))));
+  // jazda: prędkość z wysokości nad szczytem tego przejazdu; na ścianie poniżej szczytu zawraca
+  // (nowa wysokość wchodzi płynnie przez dół rampy, żeby prędkość nie skakała)
+  L.hs += (L.h - L.hs) * Math.min(1, dt * 6);
+  railPt(3, L.s); const yT = RY, v2 = 2 * GR * (yT - (lipY() - L.hs)), wGore = yT < L.py - .01;
+  L.py = yT;
+  if (v2 < 16 * 16 && wGore) { L.dir = -L.dir; L.hs = L.h; }
+  const v = Math.max(16, Math.sqrt(Math.max(0, v2))), s0 = L.s;
   L.s += L.dir * v * dt / (LG[3].len || 1);
-  if (L.s >= GS1 && L.dir > 0) { L.s = GS1; wylot(L.h); }
-  else if (L.s <= GS0 && L.dir < 0) { L.s = GS0; wylot(L.h); }
-  // podskok w dole rampy, raz na kilka przejazdów
-  if (!L.hop && now > L.nastHop && L.s > .35 && L.s < .65) { L.hop = 1; L.hopT = 0; IS.sq = -.2; }
-  let off = 0;
-  if (L.hop) { L.hopT += dt; const u = L.hopT / .42; if (u >= 1) { L.hop = 0; IS.sq = .25; L.nastHop = now + 2500 + Math.random() * 4000; } else off = 34 * 4 * u * (1 - u); }
+  if ((s0 - .5) * (L.s - .5) <= 0) nowyH();
+  if (L.s >= GS1 && L.dir > 0) { L.s = GS1; wylot(); }
+  else if (L.s <= GS0 && L.dir < 0) { L.s = GS0; wylot(); }
+  // podskok w dole rampy: wysokość, czas lotu z księżycowej grawitacji i obrót losowane
+  if (!L.hop && now > L.nastHop && L.s > .3 && L.s < .7) {
+    L.hop = 1; L.hopT = 0; L.hopH = los(12, MOB ? 40 : 60); L.hopTT = 2 * Math.sqrt(2 * L.hopH / GR); L.hopO = [0, 0, 1, -1, 2, -2][(Math.random() * 6) | 0] * 6.2832; IS.sq = -.2;
+  }
+  let off = 0, rot = 0;
+  if (L.hop) {
+    L.hopT += dt; const u = L.hopT / L.hopTT;
+    if (u >= 1) { L.hop = 0; IS.sq = .25; L.nastHop = now + los(1500, 5000); } else { off = L.hopH * 4 * u * (1 - u); rot = L.hopO * sm(u); }
+  }
   const [x, y] = na(L.s, off), ang = Math.atan2(-NX, NY) + (L.dir < 0 ? Math.PI : 0);
-  return jedzie(x, y, ang, .22, L.hop ? L.dir * 6.2832 * sm(cl(L.hopT / .42)) : 0);
+  return jedzie(x, y, ang, .22, rot);
 }
 // Solipsysta: iskra stoi na „zombie” i świeci na niego; postać wyłania się z ciemności, sama zapala świecę,
 // a snop jej świecy odsłania i oświetla słowa wokół; potem postać obraca się z płonącą świecą.
@@ -1229,10 +1260,11 @@ function krok(dt: number, c: any, now: number) {
 function wiazka(dt: number, c: any, now: number) {
   const I = (c.I || 0) * (1 - .6 * WSTECZ);
   const e = Math.min(1, dt * 6);
-  IS.bi += (I - IS.bi) * (CICHO ? 1 : e);
+  // c.bnag: snop idzie za celem bez wygładzania, żeby gasł razem z mrugnięciem
+  IS.bi += (I - IS.bi) * (CICHO || c.bnag ? 1 : e);
   if (c.len) {
     let da = c.ang - IS.bang; da = Math.atan2(Math.sin(da), Math.cos(da));
-    IS.bang += da * (CICHO ? 1 : Math.min(1, dt * 7)); IS.blen += (c.len - IS.blen) * (CICHO ? 1 : e); IS.bhalf += (c.half - IS.bhalf) * e;
+    IS.bang += da * (CICHO ? 1 : Math.min(1, dt * 7)); IS.blen += (c.len - IS.blen) * (CICHO || c.bnag ? 1 : e); IS.bhalf += (c.half - IS.bhalf) * e;
     if (c.wir) IS.bang = c.ang;
   }
   const s = c.id === 'czesc' ? +(IS.bi.toFixed(3)) : 0;
