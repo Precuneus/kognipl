@@ -85,7 +85,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
 <canvas class="roj-plotno" aria-hidden="true"></canvas>
 <canvas class="roj-plotno roj-iskra" aria-hidden="true"></canvas>
 <main class="roj">
-  <!-- ekran startowy (jego słowo, 2026-10-23): nagłówek ten sam co na innych stronach, mózg pośrodku i klikalny; rój formuje z logo kreskę ze strzałką do Story, a do historii wchodzi się tylko nim -->
+  <!-- ekran startowy (jego słowo, 2026-10-23): nagłówek ten sam co na innych stronach, mózg pośrodku i klikalny; rój formuje z logo kreski do Story i od Story do Animacje, a do historii wchodzi się tylko nim -->
   <section class="roj-st start" data-k="start" aria-label="Start">
     <button type="button" class="roj-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="roj-anim-tor" aria-hidden="true"></span></button>
     <a class="roj-btn roj-story on" href="#czesc">Story</a>
@@ -635,7 +635,7 @@ const DIP = new Map<HTMLElement, number[]>();
 const G = 2600;
 const knotXY = () => { const r = knotLogo!.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
 // Ekran startowy (jego słowo, 2026-10-23): Wiki, Kursy i Kontakt są w nagłówku jak na innych stronach, mózg stoi pośrodku.
-// Story i przyciski nagłówka stoją od początku (jego słowo, 2026-10-24). Rój formuje z logo wygiętą kreskę ze strzałką ku Story (kreska 3),
+// Story i przyciski nagłówka stoją od początku (jego słowo, 2026-10-24). Rój formuje z logo wygiętą kreskę ku Story (kreska 3),
 // a sekundę po niej lustrzaną kreskę od Story do przełącznika Animacje (kreska 2): rampę Iskry. Iskra zjeżdża za czołem pierwszej kreski,
 // dochodzi z nią do Story, przeskakuje nad nim, jedzie za czołem drugiej i wskakuje na Animacje. Do historii wchodzi się tylko kliknięciem Story.
 const storyB = $('.roj-story'), animB = document.querySelector('.roj-anim') as HTMLElement;
@@ -651,7 +651,7 @@ function railPt(k: number, s: number) {
   RX = T[i * 2] + (T[i * 2 + 2] - T[i * 2]) * q; RY = T[i * 2 + 1] + (T[i * 2 + 3] - T[i * 2 + 1]) * q;
   const dx = T[i * 2 + 2] - T[i * 2], dy = T[i * 2 + 3] - T[i * 2 + 1], m = Math.hypot(dx, dy) || 1; NX = -dy / m; NY = dx / m;
 }
-// kreska wychodzi z logo, a kończy się strzałką tuż przy lewej krawędzi Story; kształt liczy się z miejsca logo i Story w każdej klatce
+// kreska wychodzi z logo, a kończy się tuż przy lewej krawędzi Story; kształt liczy się z miejsca logo i Story w każdej klatce
 const logoA = document.querySelector('.rocznik-logo') as HTMLElement | null;
 function landGeom() {
   const lr = (logoA || knotLogo!).getBoundingClientRect();
@@ -1645,7 +1645,7 @@ function frame() {
   // granice mózgu z boku w siatce 240×180: nazwy sieci stoją nad nim i pod nim
   for (const p of P) if (!p.lonly && p.net >= 1) { BR_U[0] = Math.min(BR_U[0], p.u); BR_U[1] = Math.max(BR_U[1], p.u); BR_V[0] = Math.min(BR_V[0], p.v); BR_V[1] = Math.max(BR_V[1], p.v); }
   // kreski ekranu startowego: osobne punkty, które czekają niewidoczne w mózgu z boku i lecą na kreski, gdy ich czoło je minie;
-  // ls to miejsce wzdłuż kreski (od 0 do 1), a potem po dwie kreski strzałki (od 1 do 1,1)
+  // ls to miejsce wzdłuż kreski (od 0 do 1)
   {
     const NL = innerWidth < 760 ? [200, 200, 230, 230] : [480, 480, 520, 520], bok = P.filter((p) => !p.med), rl = rnd(23);
     const dodaj = (k: number, ls: number, lv: number) => {
