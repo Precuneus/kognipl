@@ -635,116 +635,104 @@ const DIP = new Map<HTMLElement, number[]>();
 const G = 2600;
 const knotXY = () => { const r = knotLogo!.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
 // Ekran startowy (jego słowo, 2026-10-23): Wiki, Kursy i Kontakt są w nagłówku jak na innych stronach, mózg stoi pośrodku.
-// Story i przyciski nagłówka stoją od początku (jego słowo, 2026-10-24). Rój formuje z logo wygiętą kreskę ku Story (kreska 3),
-// a sekundę po niej lustrzaną kreskę od Story do przełącznika Animacje (kreska 2): rampę Iskry. Iskra zjeżdża za czołem pierwszej kreski,
-// dochodzi z nią do Story, przeskakuje nad nim, jedzie za czołem drugiej i wskakuje na Animacje. Do historii wchodzi się tylko kliknięciem Story.
-const storyB = $('.roj-story'), animB = document.querySelector('.roj-anim') as HTMLElement;
-// g (po wejściu): 0 Iskra na Animacje, 1 skacze na koniec rampy, 2 zjeżdża do Story, 3 czeka przy Story, 4 wjeżdża z powrotem
-const LAND: any = { t0: 0, T: [1000, 1160, 3300, 1000], D: [1300, 1300, 1300, 1300], g: 0, u: 0, dwell: 0, last: 0, on: false, done: false, ph: -1 };
+// Story i przyciski nagłówka stoją od początku (jego słowo, 2026-10-24). Rój formuje z logo jedną kreskę w kształcie U: lewym brzegiem w dół,
+// tuż pod Story i prawym brzegiem w górę pod Animacje, symetryczną względem środka Story. Iskra zjeżdża za jej czołem, coraz bliżej,
+// a gdy dochodzi z nią na górę, jeździ po niej jak po rampie: z brzegu na brzeg, nad krawędziami wyskakuje i kręci obroty, w dole podskakuje.
+// Do historii wchodzi się tylko kliknięciem Story.
+const storyB = $('.roj-story');
+const LAND: any = { t0: 0, T: [0, 0, 0, 1000], D: [1, 1, 1, 2600], last: 0, done: false, ph: -1,
+  s: 0, dir: -1, h: 50, air: 0, ay0: 0, avy: 0, at: 0, aT: 0, obrot: 0, hop: 0, hopT: 0, nastHop: 0, wraca: false };
 const LD: any = { front: [0, 0, 0, 0], w: 0 };
-const TAB = 96, GS0 = .03, GS1 = .97;
-const LG = [0, 1, 2, 3].map(() => ({ tab: new Float32Array(TAB * 2), len: 0, dx: -1, dy: 0, tx: 0, ty: 0 }));
+const TAB = 160, GS0 = .012, GS1 = .988, GR = 1100;
+const LG = [0, 1, 2, 3].map(() => ({ tab: new Float32Array(TAB * 2), len: 0 }));
 let RX = 0, RY = 0, NX = 0, NY = 0;
-// punkt kreski k w odległości s (0 do 1) wzdłuż jej długości, i jej normalna
+// punkt kreski k w odległości s (0 do 1) wzdłuż jej długości, i jej normalna; styczna to (NY, -NX), wnętrze U leży po stronie -N
 function railPt(k: number, s: number) {
   const L = LG[k], f = Math.max(0, Math.min(1, s)) * (TAB - 1), i = Math.min(TAB - 2, f | 0), q = f - i, T = L.tab;
   RX = T[i * 2] + (T[i * 2 + 2] - T[i * 2]) * q; RY = T[i * 2 + 1] + (T[i * 2 + 3] - T[i * 2 + 1]) * q;
   const dx = T[i * 2 + 2] - T[i * 2], dy = T[i * 2 + 3] - T[i * 2 + 1], m = Math.hypot(dx, dy) || 1; NX = -dy / m; NY = dx / m;
 }
-// kreska wychodzi z logo, a kończy się tuż przy lewej krawędzi Story; kształt liczy się z miejsca logo i Story w każdej klatce
+// lewa połowa wychodzi spod kropki ı, opada lewym marginesem obok mózgu i skręca pod Story; prawa to jej odbicie względem środka Story
+// (na telefonie, gdzie mózg zajmuje szerokość ekranu, kreska schodzi samym brzegiem); kształt liczy się z miejsca logo i Story w każdej klatce
 const logoA = document.querySelector('.rocznik-logo') as HTMLElement | null;
 function landGeom() {
-  const lr = (logoA || knotLogo!).getBoundingClientRect();
-  for (let k = 3; k < 4; k++) {
-    const r = storyB.getBoundingClientRect(), L = LG[k], tx = r.left - (MOB ? 10 : 14), ty = r.top + r.height / 2;
-    let P: number[];
-    // wychodzi z punktu pod kropką ı, opada lewym marginesem obok mózgu i skręca w prawo ku Story (jego słowo, 2026-10-22:
-    // zaczepienie przy logo ma być ładne); na telefonie, gdzie mózg zajmuje szerokość ekranu, schodzi samym brzegiem
-    if (!MOB) {
-      const sx = knotXY()[0], sy = lr.bottom + 8;
-      P = [sx, sy, sx + (tx - sx) * .06, sy + (ty - sy) * .55, sx + (tx - sx) * .4, ty, tx, ty];
-    } else {
-      const sx = lr.left + 14, sy = lr.bottom + 4;
-      P = [sx, sy, 6, sy + (ty - sy) * .35, 10, ty, tx, ty];
-    }
-    const N = 40, xs: number[] = [], ys: number[] = [], cum: number[] = [0];
-    for (let i = 0; i <= N; i++) {
-      const u = i / N, v = 1 - u, a = v * v * v, b = 3 * v * v * u, c = 3 * v * u * u, d = u * u * u;
-      xs.push(a * P[0] + b * P[2] + c * P[4] + d * P[6]); ys.push(a * P[1] + b * P[3] + c * P[5] + d * P[7]);
-      if (i) cum.push(cum[i - 1] + Math.hypot(xs[i] - xs[i - 1], ys[i] - ys[i - 1]));
-    }
-    L.len = cum[N]; let j = 0;
-    for (let i = 0; i < TAB; i++) {
-      const d = L.len * i / (TAB - 1); while (j < N - 1 && cum[j + 1] < d) j++;
-      const f = (d - cum[j]) / (cum[j + 1] - cum[j] || 1);
-      L.tab[i * 2] = xs[j] + (xs[j + 1] - xs[j]) * f; L.tab[i * 2 + 1] = ys[j] + (ys[j + 1] - ys[j]) * f;
-    }
-    const ex = L.tab[TAB * 2 - 2] - L.tab[TAB * 2 - 4], ey = L.tab[TAB * 2 - 1] - L.tab[TAB * 2 - 3], m = Math.hypot(ex, ey) || 1;
-    L.dx = ex / m; L.dy = ey / m; L.tx = tx; L.ty = ty;
+  const lr = (logoA || knotLogo!).getBoundingClientRect(), r = storyB.getBoundingClientRect(), L = LG[3];
+  const cx = r.left + r.width / 2, by = r.bottom + 12;
+  let P: number[];
+  if (!MOB) { const sx = knotXY()[0], sy = lr.bottom + 8; P = [sx, sy, sx + (cx - sx) * .04, sy + (by - sy) * .62, sx + (cx - sx) * .3, by, cx, by]; }
+  else { const sx = lr.left + 14, sy = lr.bottom + 4; P = [sx, sy, 4, sy + (by - sy) * .8, 4, by, cx, by]; }
+  const N = 48, xs: number[] = [], ys: number[] = [];
+  for (let i = 0; i <= N; i++) {
+    const u = i / N, v = 1 - u, a = v * v * v, b = 3 * v * v * u, c = 3 * v * u * u, d = u * u * u;
+    xs.push(a * P[0] + b * P[2] + c * P[4] + d * P[6]); ys.push(a * P[1] + b * P[3] + c * P[5] + d * P[7]);
   }
-  // rampa: odbicie kreski 3 względem środka Story, biegnąca od prawej krawędzi Story pod Animacje
-  const A = LG[3], B = LG[2], sr = storyB.getBoundingClientRect(), ox = 2 * (sr.left + sr.width / 2);
-  for (let i = 0; i < TAB; i++) { const j = TAB - 1 - i; B.tab[i * 2] = ox - A.tab[j * 2]; B.tab[i * 2 + 1] = A.tab[j * 2 + 1]; }
-  B.len = A.len; B.tx = B.tab[TAB * 2 - 2]; B.ty = B.tab[TAB * 2 - 1];
-  const bx = B.tx - B.tab[TAB * 2 - 4], by = B.ty - B.tab[TAB * 2 - 3], bm = Math.hypot(bx, by) || 1; B.dx = bx / bm; B.dy = by / bm;
+  for (let i = N - 1; i >= 0; i--) { xs.push(2 * cx - xs[i]); ys.push(ys[i]); }
+  const M = xs.length - 1, cum: number[] = [0];
+  for (let i = 1; i <= M; i++) cum.push(cum[i - 1] + Math.hypot(xs[i] - xs[i - 1], ys[i] - ys[i - 1]));
+  L.len = cum[M]; let j = 0;
+  for (let i = 0; i < TAB; i++) {
+    const d = L.len * i / (TAB - 1); while (j < M - 1 && cum[j + 1] < d) j++;
+    const f = (d - cum[j]) / (cum[j + 1] - cum[j] || 1);
+    L.tab[i * 2] = xs[j] + (xs[j + 1] - xs[j]) * f; L.tab[i * 2 + 1] = ys[j] + (ys[j + 1] - ys[j]) * f;
+  }
 }
-// kreski rosną: z logo ku Story, potem od Story ku Animacje
+// kreska rośnie z logo przez dół pod Story aż pod Animacje
 function landKrok(now: number) {
   const tl = now - LAND.t0;
   for (let k = 0; k < 4; k++) LD.front[k] = CICHO ? 1 : sm(cl((tl - LAND.T[k]) / LAND.D[k]));
 }
-// Wejście (jego słowo, 2026-10-24): Iskra rusza z logo 0,25 s po kresce do Story i zjeżdża za jej czołem, coraz bliżej, aż dochodzą do Story razem;
-// przeskakuje nad Story na początek rampy, jedzie za jej czołem i wskakuje na Animacje. Tam mieszka, dopóki ekran startowy jest otwarty.
-// Gdy ktoś próbuje przewinąć zamknięty ekran, zjeżdża rampą do Story, chwilę tam macha i wjeżdża z powrotem.
+// Iskra na rampie (jego słowo, 2026-10-24): rusza z logo 0,25 s po kresce i zjeżdża za jej czołem, aż dochodzą razem pod Animacje.
+// Potem jeździ: prędkość wynika z wysokości (energia stała, więc dolatuje zawsze tak samo wysoko), nad krawędzią wylatuje pionowo w górę,
+// kręci jeden, dwa albo pół obrotu w którąś stronę, ląduje i zjeżdża z powrotem; w dole czasem podskakuje.
 function landIskra(now: number): any {
-  const L = LAND, r = IS.r * 1.95, dt = Math.min(.05, Math.max(0, (now - (L.last || now)) / 1000)); L.last = now;
-  const nadAnim = () => { const b = animB.getBoundingClientRect(); return [b.left + b.width / 2, b.top - r]; };
-  const naAnim = () => {
-    const [x, y] = nadAnim();
-    return IS.id === 'anim' || IS.id.startsWith('szyn') || Math.hypot(IS.x - x, IS.y - y) < 4 ? { id: 'anim', tryb: 'stoj', x, y, hop: 1e9, I: 0 } : { id: 'anim-lot', tryb: 'lot', x, y, I: 0 };
+  const L = LAND, r = IS.r * 1.95, dt = Math.min(.05, Math.max(0, (now - (L.last || now)) / 1000));
+  if (L.done && now - L.last > 250) L.wraca = true;
+  L.last = now;
+  const na = (s: number, off: number) => { railPt(3, s); return [RX - NX * (r + off), RY - NY * (r + off)]; };
+  const jedzie = (x: number, y: number, ang: number, I: number, rot = 0) => ({ id: 'szyn', tryb: 'stoj', rail: 1, x, y, I, ang, len: 120, half: .3, hop: 1e9, gaze: ang, rot });
+  const hMax = () => { railPt(3, GS1); return Math.max(16, RY - r - 14); };
+  const wylot = (h: number) => {
+    // wylot nad krawędzią: pionowo w górę i z powrotem na to samo miejsce, z obrotem
+    railPt(3, L.s); L.air = 1; L.ay0 = RY; L.at = 0; L.h = Math.min(h, hMax()); L.avy = -Math.sqrt(2 * GR * L.h); L.aT = 2 * -L.avy / GR;
+    const o = [1, 1, 2, -1, -2, .5][(Math.random() * 6) | 0]; L.obrot = o * 6.2832 * (L.s > .5 ? -1 : 1); IS.sq = -.22;
   };
-  const tan = () => Math.atan2(-NX, NY);
+  if (CICHO) { L.done = true; const [x, y] = na(.5, 0); return jedzie(x, y, 0, 0); }
   if (!L.done) {
-    const tl = now - L.t0, T3 = L.T[3] + 250, E3 = L.T[3] + L.D[3], T2 = L.T[2] + 250, E2 = L.T[2] + L.D[2];
-    if (CICHO || tl > E2 + 550) { L.done = true; L.on = true; L.g = 0; IS.sq = .3; IS.vx = IS.vy = 0; return naAnim(); }
-    // faza: 0 w logo, 1 zjazd, 2 przy Story, 3 skok nad Story, 4 na początku rampy, 5 wjazd, 6 pod Animacje, 7 skok na Animacje
-    const ph = tl < T3 ? 0 : tl < E3 ? 1 : tl < E3 + 350 ? 2 : tl < L.T[2] - 100 ? 3 : tl < T2 ? 4 : tl < E2 ? 5 : tl < E2 + 100 ? 6 : 7;
-    if (ph !== L.ph) { if (ph === 3 || ph === 7) IS.sq = -.22; else if (ph === 4) IS.sq = .3; L.ph = ph; }
-    const jedz = (k: number, t0: number, t1: number) => {
-      const u = cl((tl - t0) / (t1 - t0)), sx = Math.min(GS0 + (GS1 - GS0) * sm(u), Math.max(GS0, LD.front[k] * 1.1 - .07)); railPt(k, sx); return u;
-    };
-    const ruch = (x: number, y: number, ang: number, I: number) => ({ id: 'szyn-w', tryb: 'stoj', rail: 1, x, y, I, ang, len: 120, half: .3, hop: 1e9, gaze: ang });
-    const skacz = (x0: number, y0: number, x1: number, y1: number, t0: number, t1: number) => {
-      const u = cl((tl - t0) / (t1 - t0)), T = (t1 - t0) / 1000, h = G * T * T / 8;
-      return ruch(x0 + (x1 - x0) * u, y0 + (y1 - y0) * u - h * 4 * u * (1 - u), Math.atan2(y1 - y0, x1 - x0), 0);
-    };
-    if (ph === 0) { const [x, y] = knotXY(); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; }
-    if (ph === 1) {
-      const u = jedz(3, T3, E3), w = sm(cl(u / .2)), [kx, ky] = knotXY();
-      return ruch(kx + (RX - kx) * w, ky + (RY - r - ky) * w, tan(), .24);
+    const tl = now - L.t0, T3 = L.T[3] + 250, E3 = L.T[3] + L.D[3];
+    if (tl < T3) { const [x, y] = knotXY(); return { id: 'dom', tryb: 'lot', x, y, I: 0 }; }
+    if (tl < E3) {
+      const u = cl((tl - T3) / (E3 - T3)), s = Math.min(GS0 + (GS1 - GS0) * sm(u), Math.max(GS0, LD.front[3] * 1.1 - .045));
+      const [x, y] = na(s, 0), w = sm(cl(u / .08)), [kx, ky] = knotXY(), ang = Math.atan2(-NX, NY);
+      return jedzie(kx + (x - kx) * w, ky + (y - ky) * w, ang, .24);
     }
-    if (ph === 2) { railPt(3, GS1); return ruch(RX, RY - r, -.5, 0); }
-    if (ph === 3) { railPt(3, GS1); const x0 = RX, y0 = RY - r; railPt(2, GS0); return skacz(x0, y0, RX, RY - r, E3 + 350, L.T[2] - 100); }
-    if (ph === 4) { railPt(2, GS0); return ruch(RX, RY - r, tan(), 0); }
-    if (ph === 5) { jedz(2, T2, E2); return ruch(RX, RY - r, tan(), .24); }
-    railPt(2, GS1);
-    if (ph === 6) return ruch(RX, RY - r, -1.2, 0);
-    const [ax, ay] = nadAnim(); return skacz(RX, RY - r, ax, ay, E2 + 100, E2 + 550);
+    // na górze pierwszy wylot z obrotem, potem jazda w lewo
+    L.done = true; L.s = GS1; L.dir = -1; L.nastHop = now + 2500; wylot(46);
   }
-  if (!L.g) return naAnim();
-  if (L.g === 1) {
-    railPt(2, GS1);
-    const c: any = { id: 'szyn-skok', tryb: 'stoj', x: RX, y: RY - r, hop: 1e9, I: 0 };
-    if (IS.id === 'szyn-skok' && (IS.kontakt || Math.abs(IS.vy) < 40) && Math.hypot(IS.x - c.x, IS.y - c.y) < 8) { L.g = 2; L.u = 0; }
-    else return c;
+  if (L.wraca) {
+    // powrót na ekran startowy: lot na prawą krawędź rampy i zjazd
+    const [x, y] = na(GS1, 0);
+    if (Math.hypot(IS.x - x, IS.y - y) > 6) return { id: 'rampa-lot', tryb: 'lot', x, y, I: 0 };
+    L.wraca = false; L.s = GS1; L.dir = -1; L.air = 0; L.hop = 0; L.h = 40;
   }
-  if (L.g === 2) { L.u += dt / 2.6; if (L.u >= 1) { L.u = 1; L.g = 3; L.dwell = 4.5; nudgeStory(); } }
-  else if (L.g === 3) { if (!CICHO) { L.dwell -= dt; if (L.dwell <= 0) L.g = 4; } }
-  else if (L.g === 4) { L.u -= dt / 2; if (L.u <= 0) { L.u = 0; L.g = 0; return naAnim(); } }
-  // rampa biegnie od Story do Animacje, więc zjazd to ruch wstecz po niej
-  railPt(2, GS1 - (GS1 - GS0) * sm(L.u));
-  const ang = tan() + (L.g === 4 ? 0 : Math.PI);
-  return { id: 'szyn', tryb: 'stoj', rail: 1, x: RX, y: RY - r, I: .24, ang, len: 120, half: .3, hop: 1e9, macha: L.g === 3 ? 1 : 0, gaze: ang };
+  if (L.air) {
+    L.at += dt; const u = cl(L.at / L.aT);
+    railPt(3, L.s); const y = L.ay0 + L.avy * L.at + .5 * GR * L.at * L.at;
+    const x = RX - NX * r, rot = L.obrot * sm(u);
+    if (u >= 1) { L.air = 0; L.dir = L.s > .5 ? -1 : 1; IS.sq = .32; L.h = (MOB ? 22 : 30) + Math.random() * (MOB ? 34 : 56); }
+    else return jedzie(x, Math.min(y, RY), -Math.PI / 2, 0, rot);
+  }
+  // jazda: prędkość z wysokości nad szczytem lotu
+  railPt(3, L.s); const lipY = (railPt(3, GS1), RY); railPt(3, L.s);
+  const v = Math.max(60, Math.sqrt(Math.max(0, 2 * GR * (RY - (lipY - L.h)))));
+  L.s += L.dir * v * dt / (LG[3].len || 1);
+  if (L.s >= GS1 && L.dir > 0) { L.s = GS1; wylot(L.h); }
+  else if (L.s <= GS0 && L.dir < 0) { L.s = GS0; wylot(L.h); }
+  // podskok w dole rampy, raz na kilka przejazdów
+  if (!L.hop && now > L.nastHop && L.s > .35 && L.s < .65) { L.hop = 1; L.hopT = 0; IS.sq = -.2; }
+  let off = 0;
+  if (L.hop) { L.hopT += dt; const u = L.hopT / .42; if (u >= 1) { L.hop = 0; IS.sq = .25; L.nastHop = now + 2500 + Math.random() * 4000; } else off = 34 * 4 * u * (1 - u); }
+  const [x, y] = na(L.s, off), ang = Math.atan2(-NX, NY) + (L.dir < 0 ? Math.PI : 0);
+  return jedzie(x, y, ang, .22, L.hop ? L.dir * 6.2832 * sm(cl(L.hopT / .42)) : 0);
 }
 // Solipsysta: iskra stoi na „zombie” i świeci na niego; postać wyłania się z ciemności, sama zapala świecę,
 // a snop jej świecy odsłania i oświetla słowa wokół; potem postać obraca się z płonącą świecą.
@@ -1005,8 +993,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
     } else if (S.k === 'naglowek') c = ZD.te >= ZD_F[4] ? stoj(CEL.naglowek, 'naglowek') : stoj(CEL.pytanie, 'pytanie');
     else c = stoj(CEL[S.k], S.k);
   }
-  // Animacje stoi przy górnej krawędzi i Iskra stoi na nim naprawdę
-  if (c && c.tryb === 'stoj' && !c.rail && c.id !== 'anim' && (c.y < H * .06 || c.y > H * .94)) { c.tryb = 'lot'; c.y = Math.max(H * .06, Math.min(H * .94, c.y)); }
+  if (c && c.tryb === 'stoj' && !c.rail && (c.y < H * .06 || c.y > H * .94)) { c.tryb = 'lot'; c.y = Math.max(H * .06, Math.min(H * .94, c.y)); }
   if (c) {
     c.x = Math.max(14, Math.min(W - 14, c.x));
     c.mood = c.id === 'czesc' ? { pd: 1.15, lid: 1 }
@@ -1191,7 +1178,7 @@ function krok(dt: number, c: any, now: number) {
   if (c.rail) {
     // jazda po kresce: iskra stoi dokładnie na niej, jej ruch prowadzi czas, nie fizyka
     const d = Math.max(dt, .004); IS.vx = (c.x - IS.x) / d; IS.vy = (c.y - IS.y) / d;
-    IS.x = c.x; IS.y = c.y; IS.kontakt = true; IS.lot = false; IS.kuc = 0;
+    IS.x = c.x; IS.y = c.y; IS.kontakt = true; IS.lot = false; IS.kuc = 0; if (c.rot) IS.rot = c.rot;
   } else if (c.slizg && (SK.on || (IS.kontakt && IS.kuc <= 0 && Math.abs(c.y - IS.y) < 4))) lyzwy(dt, c, now);
   else if (c.tryb === 'lot') {
     IS.kontakt = false; IS.lot = false; IS.kuc = 0;
@@ -1499,11 +1486,7 @@ function frame() {
       const rel = sm(cl((LD.front[p.ld] * 1.1 - p.ls) / .05)) * LD.w;
       if (rel > .003) {
         let lx: number, ly: number;
-        if (p.ls <= 1) { railPt(p.ld, p.ls); lx = RX + NX * p.lo; ly = RY + NY * p.lo; }
-        else {
-          const L = LG[p.ld], a = (p.ls - 1) * 10, th = p.lv * .5, cs = Math.cos(th), sn = Math.sin(th), bx = -L.dx, by = -L.dy, len = MOB ? 18 : 26;
-          lx = L.tx + (bx * cs - by * sn) * a * len; ly = L.ty + (bx * sn + by * cs) * a * len;
-        }
+        railPt(p.ld, p.ls); lx = RX + NX * p.lo; ly = RY + NY * p.lo;
         x += (lx - x) * rel; y += (ly - y) * rel;
         al += (.9 * (1 - .3 * (.5 + .5 * Math.sin(p.ls * 24 - SEK * 2.4))) - al) * rel;
         cr += (ZLOTO[0] - cr) * rel; cg += (ZLOTO[1] - cg) * rel; cb += (ZLOTO[2] - cb) * rel; lit = Math.max(lit, rel);
@@ -1647,14 +1630,13 @@ function frame() {
   // kreski ekranu startowego: osobne punkty, które czekają niewidoczne w mózgu z boku i lecą na kreski, gdy ich czoło je minie;
   // ls to miejsce wzdłuż kreski (od 0 do 1)
   {
-    const NL = innerWidth < 760 ? [200, 200, 230, 230] : [480, 480, 520, 520], bok = P.filter((p) => !p.med), rl = rnd(23);
+    const NL = innerWidth < 760 ? [0, 0, 0, 460] : [0, 0, 0, 1040], bok = P.filter((p) => !p.med), rl = rnd(23);
     const dodaj = (k: number, ls: number, lv: number) => {
       const q = bok[(rl() * bok.length) | 0];
       P.push({ lonly: 1, u: q.u, v: q.v, net: 0, col: GREY, a: rl() * 6.28, s: 1, sx: rl(), sy: rl(), d: rl(), cr: rl(), ln: 0, lx: 0, ld: k, ls, lo: (rl() - .5) * 5.4, lv });
     };
     NL.forEach((n, k) => {
-      if (k < 2) return;
-      // same kreski, bez grotów (jego słowo, 2026-10-24)
+      // jedna kreska, bez grotów (jego słowo, 2026-10-24)
       for (let i = 0; i < n; i++) dodaj(k, (i + .5) / n, 0);
     });
   }
@@ -1674,7 +1656,7 @@ const OSLONA = [...$('.roj').children, ...$$('.site-footer')].filter((e) => e !=
 let BLOK = false, SCR: any = null, SCR_END = -1e9, NUDGE_T = -1e9;
 const T_START = performance.now();
 function zaprzyj(on: boolean) {
-  BLOK = on; document.documentElement.classList.toggle('roj-blok', on); if (on) LAND.g = 0;
+  BLOK = on; document.documentElement.classList.toggle('roj-blok', on);
   for (const e of OSLONA) (e as any).inert = on;
 }
 { let y = 0; try { y = +(sessionStorage.getItem('kogni-anim-y') || 0); sessionStorage.removeItem('kogni-anim-y'); } catch (e) {} if (y > 2) scrollTo(0, y); }
@@ -1684,15 +1666,8 @@ function nudgeStory() {
   if (CICHO || n - NUDGE_T < 1500) return;
   NUDGE_T = n; storyB.classList.remove('nudge'); void storyB.offsetWidth; storyB.classList.add('nudge');
 }
-// próba przewinięcia zamkniętego ekranu: Story drga, a Iskra zjeżdża do niego rampą (albo, gdy już tam jest, zostaje dłużej)
-function przypomnij() {
-  const L = LAND;
-  nudgeStory();
-  if (!L.on) return;
-  if (CICHO) { if (L.g !== 3) { L.g = 3; L.u = 1; setTimeout(() => { L.g = 0; kick(); }, 4500); kick(); } return; }
-  if (L.g === 0) L.g = 1; else if (L.g === 4) L.g = 2; else if (L.g === 3) L.dwell = 4.5;
-  kick();
-}
+// próba przewinięcia zamkniętego ekranu: Story drga; Iskra i tak jeździ obok niego po rampie
+function przypomnij() { nudgeStory(); }
 function jedzDo(y: number) {
   const koniec = () => {
     if (y < 3) zaprzyj(true);
