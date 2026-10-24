@@ -644,7 +644,8 @@ const LAND: any = { t0: 0, T: [0, 0, 0, 1000], D: [1, 1, 1, 2600], last: 0, done
   s: 0, dir: -1, h: 50, hs: 50, py: 0, air: 0, ay0: 0, avy: 0, at: 0, aT: 0, obrot: 0, kul: 0, hop: 0, hopT: 0, hopH: 0, hopTT: 0, hopO: 0, nastHop: 0, wraca: false, lot: null as any };
 const LD: any = { front: [0, 0, 0, 0], w: 0 };
 // na rampie grawitacja księżycowa (jego słowo, 2026-10-24: *more like on the moon*)
-const TAB = 160, GS0 = .012, GS1 = .988, GR = 420;
+// (i bezwładność: przelot to ciało z prędkością, któremu plecak zmienia kierunek z ograniczonym przyspieszeniem; jego słowo, 2026-10-24)
+const TAB = 160, GS0 = .012, GS1 = .988, GR = 250, LOT_V = 330, LOT_A = 420;
 const LG = [0, 1, 2, 3].map(() => ({ tab: new Float32Array(TAB * 2), len: 0 }));
 let RX = 0, RY = 0, NX = 0, NY = 0;
 // punkt kreski k w odległości s (0 do 1) wzdłuż jej długości, i jej normalna; styczna to (NY, -NX), wnętrze U leży po stronie -N
@@ -658,16 +659,18 @@ function railPt(k: number, s: number) {
 const logoA = document.querySelector('.rocznik-logo') as HTMLElement | null;
 function landGeom() {
   const lr = (logoA || knotLogo!).getBoundingClientRect(), r = storyB.getBoundingClientRect(), L = LG[3];
-  const cx = r.left + r.width / 2, by = r.bottom + 12;
+  // łuk kończy się przed lewym brzegiem Story, pod Story kreska biegnie prosto, więc zaokrąglony róg nie zahacza o przycisk
+  const cx = r.left + r.width / 2, by = r.bottom + 12, ex = r.left - (MOB ? 10 : 24);
   let P: number[];
-  if (!MOB) { const sx = knotXY()[0], sy = lr.bottom + 8; P = [sx, sy, sx + (cx - sx) * .04, sy + (by - sy) * .62, sx + (cx - sx) * .3, by, cx, by]; }
-  else { const sx = lr.left + 14, sy = lr.bottom + 4; P = [sx, sy, 4, sy + (by - sy) * .8, 4, by, cx, by]; }
+  if (!MOB) { const sx = knotXY()[0], sy = lr.bottom + 8; P = [sx, sy, sx + (ex - sx) * .04, sy + (by - sy) * .5, sx + (ex - sx) * .55, by, ex, by]; }
+  else { const sx = lr.left + 14, sy = lr.bottom + 4; P = [sx, sy, 4, sy + (by - sy) * .72, 4 + (ex - 4) * .3, by, ex, by]; }
   const N = 48, xs: number[] = [], ys: number[] = [];
   for (let i = 0; i <= N; i++) {
     const u = i / N, v = 1 - u, a = v * v * v, b = 3 * v * v * u, c = 3 * v * u * u, d = u * u * u;
     xs.push(a * P[0] + b * P[2] + c * P[4] + d * P[6]); ys.push(a * P[1] + b * P[3] + c * P[5] + d * P[7]);
   }
-  for (let i = N - 1; i >= 0; i--) { xs.push(2 * cx - xs[i]); ys.push(ys[i]); }
+  xs.push(cx); ys.push(by);
+  for (let i = N; i >= 0; i--) { xs.push(2 * cx - xs[i]); ys.push(ys[i]); }
   const M = xs.length - 1, cum: number[] = [0];
   for (let i = 1; i <= M; i++) cum.push(cum[i - 1] + Math.hypot(xs[i] - xs[i - 1], ys[i] - ys[i - 1]));
   L.len = cum[M]; let j = 0;
@@ -687,8 +690,10 @@ function landKrok(now: number) {
 // dla zachęty i zjeżdża. Potem jeździ jak na Księżycu: prędkość wynika z wysokości, a każdy przejazd losuje, jak wysoko doleci.
 // Czasem zawraca na ścianie, zanim dojdzie do krawędzi; częściej wylatuje nad nią pionowo, kręci od pół do trzech obrotów w którąś
 // stronę albo kuli się w locie, ląduje i zjeżdża z powrotem; w dole podskakuje różnie wysoko, z obrotem albo bez.
-// Plecak odrzutowy (jego słowo, 2026-10-24): częściej niż pionowo wylatuje z krawędzi przez cały ekran, łukiem, z pętlą albo zygzakiem,
+// Plecak odrzutowy (jego słowo, 2026-10-24): częściej niż pionowo wylatuje z krawędzi przez cały ekran, łukiem, z pętlą albo falą,
 // na drugą krawędź albo z powrotem na tę samą, kręcąc obroty; dysze ciągną za nią dwie białe smugi. Snop na rampie świeci jaśniej.
+// W locie ma bezwładność: wylatuje z prędkością, z jaką jechała, plecak skręca ją łagodnie, a ląduje z prędkością, z którą zjeżdża dalej.
+// Obroty mają górną granicę prędkości, więc krótki lot dostaje mniej obrotów.
 function landIskra(now: number): any {
   const L = LAND, r = IS.r * 1.95, dt = Math.min(.05, Math.max(0, (now - (L.last || now)) / 1000));
   if (L.done && now - L.last > 250) L.wraca = true;
@@ -705,29 +710,38 @@ function landIskra(now: number): any {
   const nowyH = () => { railPt(3, .5); const g = RY - lipY(); L.h = Math.random() < .25 ? -g * los(.12, .5) : los(.3, 1) * hMax(); };
   const wylot = () => {
     // wylot nad krawędzią: pionowo w górę i z powrotem na to samo miejsce
-    railPt(3, L.s); L.air = 1; L.ay0 = RY; L.at = 0; const h = Math.min(Math.max(L.hs, 10), hMax()); L.avy = -Math.sqrt(2 * GR * h); L.aT = 2 * -L.avy / GR;
-    const o = [.5, 1, 1, 1.5, 2, 2.5, 3][(Math.random() * 7) | 0]; L.kul = Math.random() < .2 ? 1 : 0;
+    railPt(3, L.s); L.air = 1; L.ay0 = RY; L.hop = 0; L.at = 0; const h = Math.min(Math.max(L.hs, 10), hMax()); L.avy = -Math.sqrt(2 * GR * h); L.aT = 2 * -L.avy / GR;
+    const o = Math.min([.5, 1, 1, 1.5, 2, 2.5, 3][(Math.random() * 7) | 0], Math.max(.5, Math.floor(L.aT * 2.2) / 2)); L.kul = Math.random() < .2 ? 1 : 0;
     L.obrot = (L.kul ? 0 : o * 6.2832) * (Math.random() < .5 ? -1 : 1); IS.sq = -.22;
     if (Math.random() < .6) przelot();
   };
-  // przelot przez ekran: krzywa z krawędzi w dół przez środek ekranu na drugą krawędź (czasem z powrotem na tę samą)
+  // przelot przez ekran: punkty drogi od krawędzi przez środek ekranu na drugą krawędź (czasem z powrotem na tę samą);
+  // najpierw w górę, dalej w tę stronę, w którą jechała, a na koniec z góry na krawędź, żeby zjechać dalej w tym samym kierunku
   const przelot = () => {
     const [ax, ay] = na(L.s, 0), wraca = Math.random() < .3, sB = wraca ? L.s : (L.s > .5 ? GS0 : GS1), [bx, by] = na(sB, 0);
-    const d = H * los(.3, .62), P = wraca
-      ? [ax, ay, ax + (W / 2 - ax) * 1.3, ay + H * .04, ax + (W / 2 - ax) * 1.3, ay + d, ax, ay]
-      : [ax, ay, ax + (bx - ax) * .08, ay + d, bx - (bx - ax) * .08, by + d, bx, by];
+    const inA = L.s > .5 ? -1 : 1, inB = sB > .5 ? -1 : 1, top = Math.max(30, ay - 50), d = H * los(.32, .6), mx = W / 2 + los(-.08, .08) * W;
     const typ = wraca ? 0 : [0, 1, 1, 2][(Math.random() * 4) | 0];
-    let len = 0, px = ax, py = ay;
-    for (let i = 1; i <= 24; i++) { const [x, y] = bz(P, i / 24); len += Math.hypot(x - px, y - py); px = x; py = y; }
-    L.lot = { P, typ, sB, t: 0, T: Math.max(2.4, Math.min(4.6, len / 380)), R: los(50, MOB ? 70 : 120), amp: los(30, 70), n: 2 + ((Math.random() * 2) | 0),
-      sgn: Math.sign(bx - ax) || 1, obrot: [0, 1, 2, 3, -1, -2][(Math.random() * 6) | 0] * 6.2832 };
+    let P: number[][] = [[ax, ay], [ax + inA * 30, top]];
+    if (wraca) P.push([ax + inA * W * .3, ay + d * .55], [mx, ay + d], [ax + inA * W * .22, ay + d * .45], [ax + inA * 30, top]);
+    else {
+      P.push([ax + inA * W * .15, ay + d * .7], [mx, ay + d]);
+      if (typ === 1) { const R = los(90, MOB ? 110 : 160); for (let i = 1; i < 8; i++) { const a = Math.PI / 2 - inA * i * Math.PI / 4; P.push([mx + Math.cos(a) * R, ay + d - R + Math.sin(a) * R]); } P.push([mx, ay + d]); }
+      if (typ === 2) { const A = los(50, 90); P.push([mx + (bx - mx) * .33, ay + d - A], [mx + (bx - mx) * .66, ay + d + A * .5]); }
+      P.push([bx + inB * W * .15, by + d * .6], [bx + inB * 30, Math.max(30, by - 50)]);
+    }
+    P.push([bx, by]);
+    P = P.map(([x, y]) => [Math.max(14, Math.min(W - 14, x)), Math.max(28, y)]);
+    const cum = [0]; for (let i = 1; i < P.length; i++) cum.push(cum[i - 1] + Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]));
+    const v0 = Math.sqrt(2 * GR * Math.max(4, L.hs));
+    L.lot = { P, cum, len: cum[cum.length - 1], c: 0, sB, t: 0, x: ax, y: ay, vx: 0, vy: -Math.min(v0, LOT_V),
+      obrot: [0, 1, 1, 2, -1, -1, -2][(Math.random() * 7) | 0] * 6.2832, rot: 0, ax: 0, ay: 0 };
     L.air = 0;
   };
-  const lotPkt = (u: number) => {
-    const Q = L.lot; let [x, y] = bz(Q.P, u);
-    if (Q.typ === 1 && u > .35 && u < .65) { const w = (u - .35) / .3; x -= Q.sgn * Q.R * Math.sin(6.2832 * w); y -= Q.R * (1 - Math.cos(6.2832 * w)); }
-    if (Q.typ === 2) { y += Q.amp * Math.sin(Q.n * Math.PI * u); }
-    return [Math.max(12, Math.min(W - 12, x)), Math.max(24, y)];
+  // punkt drogi w odległości c (0 do 1) wzdłuż niej
+  const lotPkt = (c: number) => {
+    const Q = L.lot, d = c * Q.len; let i = 1; while (i < Q.cum.length - 1 && Q.cum[i] < d) i++;
+    const f = (d - Q.cum[i - 1]) / (Q.cum[i] - Q.cum[i - 1] || 1), A = Q.P[i - 1], B = Q.P[i];
+    return [A[0] + (B[0] - A[0]) * f, A[1] + (B[1] - A[1]) * f];
   };
   if (CICHO) { L.done = true; const [x, y] = na(.5, 0); jet(wNorm(), 0); return jedzie(x, y, 0, 0); }
   if (!L.done) {
@@ -763,12 +777,31 @@ function landIskra(now: number): any {
     L.wraca = false; L.s = GS1; L.dir = -1; L.air = 0; L.hop = 0; L.lot = null; L.py = y; L.h = L.hs = .7 * hMax();
   }
   if (L.lot) {
-    const Q = L.lot; Q.t += dt; const u = cl(Q.t / Q.T), ue = .5 - .5 * Math.cos(Math.PI * u);
-    if (u >= 1) { L.s = Q.sB; L.lot = null; L.dir = L.s > .5 ? -1 : 1; IS.sq = .32; L.py = lipY(); }
-    else {
-      const [x, y] = lotPkt(ue), [x2, y2] = lotPkt(Math.min(1, ue + .01)), kier = Math.atan2(y2 - y, x2 - x), rot = Q.obrot * sm(u);
-      jet(kier + rot, u < .9 ? 1 : .4);
-      return jedzie(x, y, kier, .5, rot, 170, .3);
+    // lot z bezwładnością: punkt prowadzący biegnie drogą, ale nie dalej niż 110 px przed nią; plecak kieruje prędkość ku niemu
+    // z przyspieszeniem najwyżej LOT_A, więc zakręt przy pełnej prędkości zajmuje co najmniej sekundę; po 14 s bez lądowania wraca lotem na prawą krawędź
+    const Q = L.lot; Q.t += dt;
+    let [cx, cy] = lotPkt(Q.c), dx = cx - Q.x, dy = cy - Q.y, dd = Math.hypot(dx, dy);
+    if (dd < 150 && Q.c < 1) { Q.c = Math.min(1, Q.c + LOT_V * 1.1 * dt / Q.len); [cx, cy] = lotPkt(Q.c); dx = cx - Q.x; dy = cy - Q.y; dd = Math.hypot(dx, dy); }
+    // gdy punkt prowadzący jest z boku albo z tyłu, zwalnia: wolniej skręca ciaśniej, więc nie krąży wokół niego
+    const vm = Math.hypot(Q.vx, Q.vy), zg = vm > 1 ? (Q.vx * dx + Q.vy * dy) / (vm * (dd || 1)) : 1;
+    const vd = (Q.c < 1 ? LOT_V : Math.min(LOT_V, dd * 1.6)) * (.3 + .7 * Math.max(0, zg)), vx = dx / (dd || 1) * vd, vy = dy / (dd || 1) * vd;
+    let ax = (vx - Q.vx) * 2.4, ay = (vy - Q.vy) * 2.4; const am = Math.hypot(ax, ay); if (am > LOT_A) { ax *= LOT_A / am; ay *= LOT_A / am; }
+    Q.ax += (ax - Q.ax) * Math.min(1, dt * 5); Q.ay += (ay - Q.ay) * Math.min(1, dt * 5);
+    Q.vx += Q.ax * dt; Q.vy += Q.ay * dt; Q.x += Q.vx * dt; Q.y += Q.vy * dt;
+    if (Q.y < 22) { Q.y = 22; Q.vy = Math.max(0, Q.vy); }
+    // obrót: najwyżej jeden obrót na 1,4 s
+    const cel = Q.obrot * sm(cl(Q.t / Math.max(1.4 * Math.abs(Q.obrot) / 6.2832, 1)));
+    Q.rot += Math.max(-4.5 * dt, Math.min(4.5 * dt, (Q.c >= 1 ? 0 : cel) - Q.rot));
+    if (Q.t > 14) { L.lot = null; L.wraca = true; IS.rot = 0; return { id: 'rampa-lot', tryb: 'lot', x: Q.x, y: Q.y, I: 0 }; }
+    if (Q.c >= 1 && dd < 5) {
+      // lądowanie: zjeżdża z krawędzi z prędkością, z którą przyleciała
+      const v = Math.hypot(Q.vx, Q.vy); L.s = Q.sB; L.lot = null; L.dir = L.s > .5 ? -1 : 1; IS.sq = .3; L.py = lipY();
+      L.h = L.hs = Math.min(hMax(), v * v / (2 * GR)); IS.rot = 0;
+    } else {
+      // dysze pchają przeciw grawitacji i w stronę przyspieszenia
+      const tx = Q.ax, ty = Q.ay - GR, kier = Math.atan2(Q.vy, Q.vx);
+      jet(Math.atan2(ty, tx) + Q.rot, Math.min(1, .35 + Math.hypot(tx, ty) / (LOT_A + GR) * .9));
+      return jedzie(Q.x, Q.y, kier, .5, Q.rot, 170, .3);
     }
   }
   if (L.air) {
@@ -785,19 +818,21 @@ function landIskra(now: number): any {
   railPt(3, L.s); const yT = RY, v2 = 2 * GR * (yT - (lipY() - L.hs)), wGore = yT < L.py - .01;
   L.py = yT;
   if (v2 < 16 * 16 && wGore) { L.dir = -L.dir; L.hs = L.h; }
-  const v = Math.max(16, Math.sqrt(Math.max(0, v2))), s0 = L.s;
+  // opór księżycowej atmosfery: w dole rampy prędkość nie przekracza 420 px/s
+  const v = Math.min(420, Math.max(16, Math.sqrt(Math.max(0, v2)))), s0 = L.s;
   L.s += L.dir * v * dt / (LG[3].len || 1);
   if ((s0 - .5) * (L.s - .5) <= 0) nowyH();
   if (L.s >= GS1 && L.dir > 0) { L.s = GS1; wylot(); }
   else if (L.s <= GS0 && L.dir < 0) { L.s = GS0; wylot(); }
   // podskok w dole rampy: wysokość, czas lotu z księżycowej grawitacji i obrót losowane
-  if (!L.hop && now > L.nastHop && L.s > .3 && L.s < .7) {
-    L.hop = 1; L.hopT = 0; L.hopH = los(40, MOB ? 110 : 170); L.hopTT = 2 * Math.sqrt(2 * L.hopH / GR); L.hopO = [0, 0, 1, -1, 2, -2][(Math.random() * 6) | 0] * 6.2832; IS.sq = -.2;
+  // (plecak unosi ją miękko i trzyma: podskok trwa 0,95 do 1,25 s niezależnie od wysokości, więc kończy się, zanim dojedzie do krawędzi)
+  if (!L.hop && now > L.nastHop && L.s > .42 && L.s < .58) {
+    L.hop = 1; L.hopT = 0; L.hopH = los(40, MOB ? 80 : 110); L.hopTT = los(.95, 1.25); L.hopO = [0, 0, 1, -1, 2, -2][(Math.random() * 6) | 0] * 6.2832; if (Math.abs(L.hopO) > 6.2832) L.hopO = Math.sign(L.hopO) * 6.2832; if (L.hopTT < .9) L.hopO = 0; IS.sq = -.2;
   }
   let off = 0, rot = 0;
   if (L.hop) {
     L.hopT += dt; const u = L.hopT / L.hopTT;
-    if (u >= 1) { L.hop = 0; IS.sq = .25; L.nastHop = now + los(1500, 5000); } else { off = L.hopH * 4 * u * (1 - u); rot = L.hopO * sm(u); }
+    if (u >= 1) { L.hop = 0; IS.sq = .25; L.nastHop = now + los(1500, 5000); } else { const q = Math.sin(Math.PI * u); off = L.hopH * q * q; rot = L.hopO * sm(u); }
   }
   const [x, y] = na(L.s, off), ang = Math.atan2(-NX, NY) + (L.dir < 0 ? Math.PI : 0);
   jet(wNorm() + rot, L.hop ? (L.hopT / L.hopTT < .5 ? .9 : .2) : 0);
@@ -1255,7 +1290,7 @@ function krok(dt: number, c: any, now: number) {
     // górną granicę prędkości, a przelotów w historii, które gonią tekst w swoim czasie, granica nie dotyczy
     const k = c.id === 'dom' ? 110 : c.id === 'wiki' ? 80 : c.id === 'klik' ? 120 : c.id.startsWith('bada') ? 36 : 60, d = 2 * Math.sqrt(k) * .96;
     IS.vx += ((c.x - IS.x) * k - IS.vx * d) * dt; IS.vy += ((c.y - IS.y) * k - IS.vy * d) * dt;
-    if (c.id === 'klik' || c.id.startsWith('bada')) { const v = Math.hypot(IS.vx, IS.vy), VM = 1300; if (v > VM) { IS.vx *= VM / v; IS.vy *= VM / v; } }
+    if (c.id === 'klik' || c.id.startsWith('bada') || c.id === 'rampa-lot') { const v = Math.hypot(IS.vx, IS.vy), VM = c.id === 'rampa-lot' ? 420 : 1300; if (v > VM) { IS.vx *= VM / v; IS.vy *= VM / v; } }
     IS.x += IS.vx * dt; IS.y += IS.vy * dt;
   } else if (IS.kuc > 0) {
     // przysiad przed skokiem
