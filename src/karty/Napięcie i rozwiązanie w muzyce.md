@@ -16,8 +16,8 @@ materiały:
   url: https://youtu.be/7mLqpA-PMwM?t=25
   czas: 0:25–2:17 (1:52)
 - tytuł: 'Vsauce, What Is The Scariest Thing? (dysonans i tryton)'
-  url: https://youtu.be/9Vmwsg8Eabo?t=1174
-  czas: 19:34–21:53 (2:19)
+  url: https://youtu.be/9Vmwsg8Eabo?t=1181
+  czas: 19:41–22:00 (2:19)
 - tytuł: 'Salimpoor i in. 2011: Anatomically distinct dopamine release during anticipation and experience of peak emotion to music'
   url: https://doi.org/10.1038/nn.2726
 rekordy:

@@ -16,8 +16,8 @@ materiały:
   url: https://youtu.be/bSs7B6IBuXg?t=737
   czas: 12:17–19:49 (7:32)
 - tytuł: 'Vsauce (Michael Stevens), What Is The Scariest Thing?'
-  url: https://youtu.be/9Vmwsg8Eabo?t=457
-  czas: 7:37–8:32 (0:55)
+  url: https://youtu.be/9Vmwsg8Eabo?t=459
+  czas: 7:39–8:38 (0:59)
 - tytuł: 'Freedom in Thought, The Most Powerful Way to Think | First Principles'
   url: https://youtu.be/HZRDUZuIKg4?t=78
   czas: 1:18–2:56 (1:38)

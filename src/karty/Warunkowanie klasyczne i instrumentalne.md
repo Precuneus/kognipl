@@ -16,8 +16,8 @@ bez_sieci: ''
 ryciny: []
 materiały:
 - tytuł: 'Vsauce, What Is The Scariest Thing?'
-  url: https://youtu.be/9Vmwsg8Eabo?t=153
-  czas: 2:33–5:57 (3:24)
+  url: https://youtu.be/9Vmwsg8Eabo?t=157
+  czas: 2:37–6:03 (3:26)
 - tytuł: 'Anton Petrov, Even Single Cells and Molecules Have Memories? This Changes Everything!'
   url: https://youtu.be/aQa0DowQ_oE?t=80
   czas: 1:20–4:02 (2:42)

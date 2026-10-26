@@ -15,8 +15,8 @@ bez_sieci: ''
 ryciny: []
 materiały:
 - tytuł: 'Vsauce (Mind Field), What Is The Scariest Thing?'
-  url: https://youtu.be/9Vmwsg8Eabo?t=2097
-  czas: 34:57–39:31 (4:34)
+  url: https://youtu.be/9Vmwsg8Eabo?t=2104
+  czas: 35:04–39:31 (4:27)
 - tytuł: 'Feinstein i in. 2011: The Human Amygdala and the Induction and Experience of Fear'
   url: https://doi.org/10.1016/j.cub.2010.11.042
 - tytuł: 'Feinstein i in. 2013: Fear and panic in humans with bilateral amygdala damage'
