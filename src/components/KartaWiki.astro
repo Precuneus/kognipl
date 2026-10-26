@@ -43,8 +43,7 @@ const nets = k.nets.map(([kod, why, lim]) => ({ kod, name: lim ? NETN[kod] + ', 
 // Mózg z boku i od środka jako schemat (jego słowo, 2026-10-23: *this has to be a diagram*); sieci tej karty w kolorach
 // strony startowej z delikatną poświatą, obszary limbiczne świecą razem z siecią domyślną.
 const svgSrc = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)[0];
-const key = (n) => (n === 'JĘZ' ? 'JEZ' : n);
-const on = new Set(own ? [ownKey] : nets.map((n) => key(n.kod)));
+const on = new Set(own ? [ownKey] : nets.map((n) => n.kod));
 const lit = (n) => on.has(n) || (n === 'LIM' && on.has('DMN'));
 const kolor = (n) => KOLOR[n === 'LIM' ? 'DMN' : n] || base;
 const brain = svgSrc

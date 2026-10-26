@@ -23,7 +23,7 @@ OSNOWY.forEach((o) => o.rodziny.forEach((r) => { osOf[r] = o.nazwa; }));
 export const BASE = ['#8fa274', '#5f9a96', '#6585b0', '#8577b3', '#c89a3c'];
 export const INK = ['#b3c39b', '#8fc4bf', '#9fb7da', '#b4aada', '#f0c060'];
 
-export const NETN = { VIS: 'sieć wzrokowa', SMN: 'sieć czuciowo-ruchowa', DAN: 'sieć grzbietowa uwagi', VAN: 'sieć brzuszna uwagi', SN: 'sieć istotności', CN: 'sieć kontroli', DMN: 'sieć domyślna', LIM: 'sieć limbiczna', 'JĘZ': 'sieć językowa' };
+export const NETN = { VIS: 'sieć wzrokowa', SMN: 'sieć czuciowo-ruchowa', DAN: 'sieć grzbietowa uwagi', VAN: 'sieć brzuszna uwagi', SN: 'sieć istotności', CN: 'sieć kontroli', DMN: 'sieć domyślna', LIM: 'sieć limbiczna' };
 // Karta każdej sieci (jego, 2026-10-20) nosi jej pełną nazwę jako tytuł.
 const NETCARD = Object.fromEntries(Object.entries(NETN).map(([k, v]) => [k, v.charAt(0).toUpperCase() + v.slice(1)]));
 

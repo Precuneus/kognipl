@@ -8,10 +8,8 @@ głębokość:
 - sieć mózgowa
 opis: 'Dziewczynka urodzona bez lewej półkuli zaczęła mówić z opóźnieniem, a w latach szkolnych uzyskiwała w testach językowych wyniki w normie, w fonologii i czytaniu słów wyjątkowo dobre. Grzbietowe drogi istoty białej łączące jej prawe obszary językowe są istotnie większe niż w którejkolwiek półkuli dzieci z grupy kontrolnej. Po chirurgicznym usunięciu lewej półkuli pięć z dziesięciu badanych osób, wszystkie z przyczyną sprzed urodzenia, osiągnęło niemal dojrzałą znajomość gramatyki zdania.'
 myśl: 'Typowe miejsce sieci językowej to lewa półkula, a po wczesnej utracie lewej półkuli prawa buduje własną sieć językową, czasem z wynikiem w normie.'
-sieci:
-- kod: JĘZ
-  powód: 'U dziewczynki bez lewej półkuli słuchanie krótkich opowiadań aktywowało prawe obszary czołowe i skroniowe, podobnie jak obustronne obszary u dzieci w tym samym wieku (Asaridou i in. 2020)<!--[s:asaridou2020-normal-language-large-right-arcuate]-->.'
-bez_sieci: ''
+sieci: []
+bez_sieci: 'U dziewczynki bez lewej półkuli słuchanie krótkich opowiadań aktywowało prawe obszary czołowe i skroniowe, podobnie jak obustronne obszary u dzieci w tym samym wieku (Asaridou i in. 2020)<!--[s:asaridou2020-normal-language-large-right-arcuate]-->; sieci mózgu opisuje karta Język w sieciach mózgu.'
 ryciny: []
 materiały:
 - tytuł: 'Professor Dave Explains, Brain Lateralization: The Split Brain'

@@ -9,8 +9,6 @@ głębokość:
 opis: Pacjent P.S. po przecięciu spoidła wielkiego zobaczył lewą półkulą kurzą łapkę, a prawą zaśnieżoną scenę. Lewa ręka wybrała łopatę, a mówiąca lewa półkula od razu podała powód, łopatą sprząta się kurnik. Michael Gazzaniga nazwał tę czynność, układanie opowieści wykraczającej poza dostępne dane, interpretatorem.
 myśl: 'Wyjaśnianie własnego działania to osobna czynność, którą lewa półkula wykonuje z tego, co do niej dociera, więc powód, który podajesz, bywa opowieścią dopisaną po fakcie.'
 sieci:
-- kod: JĘZ
-  powód: 'Opowieść podaje mówiąca lewa półkula, a prawa, której pokazano zaśnieżoną scenę, pozostaje niema (Gazzaniga 2000)<!--[s:gazzaniga2000-chicken-claw-shovel]-->.'
 - kod: VIS
   powód: 'Obraz z jednej połowy pola widzenia trafia do przeciwległej półkuli, a po przecięciu spoidła półkule słabo go wymieniają, co pokazuje pacjent DDC, który porównywał bodźce z obu połówek pola z trafnością 55,4%, bliską przypadkowi (Pinto i in. 2017)<!--[s:pinto2017-field-and-task-effects]-->.'
 bez_sieci: ''

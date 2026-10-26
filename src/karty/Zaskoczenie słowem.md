@@ -9,8 +9,6 @@ głębokość:
 opis: 'Słuchając, sięgasz predykcją po następne słowo, zanim ono padnie. Rzeczownik mało prawdopodobny według modelu językowego wywołuje u słuchających osób większą falę N400, odpowiedź mózgu mierzoną kilkaset milisekund po początku słowa, a przed słowem łatwym do odgadnięcia rośnie aktywność lewych obszarów czołowo-skroniowych.'
 myśl: 'Rozumienie mowy to ciąg predykcji: Twoje sieci stawiają na następne słowo, zanim padnie, a słowo mało prawdopodobne wywołuje większe zaskoczenie.'
 sieci:
-- kod: JĘZ
-  powód: 'W EEG przed słowem łatwym do odgadnięcia rosła aktywność lewych obszarów czołowo-skroniowych (Kölbl i in. 2026)<!--[s:kolbl2026-predictability-n400-preactivation]-->.'
 - kod: SMN
   powód: 'MEG pokazał tendencję do silniejszego udziału obszarów czuciowo-ruchowych przy słowach trudnych do odgadnięcia (Kölbl i in. 2026)<!--[s:kolbl2026-predictability-n400-preactivation]-->.'
 bez_sieci: ''

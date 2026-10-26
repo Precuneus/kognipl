@@ -12,8 +12,6 @@ myśl: 'Nauka czytania zajmuje w lewej korze potyliczno-skroniowej, dalej od rec
 sieci:
 - kod: VIS
   powód: 'We wczesnych obszarach wzrokowych V1–V4 litera liczy się głównie według miejsca w polu widzenia, a w obszarze wzrokowym słów według pozycji w słowie (Agrawal i Dehaene 2025)<!--[s:agrawal2025-v1v4-retinotopic-vwfa-ordinal]-->.'
-- kod: JĘZ
-  powód: 'U pięciolatków przed nauką czytania przyszły obszar wzrokowy słów był silniej niż sąsiedni obszar rozpoznawania twarzy połączony z lewymi obszarami skroniowymi i czołowymi, które mogą odpowiadać obszarom językowym (Saygin i in. 2016)<!--[s:saygin2016-connectivity-at-5-predicts-vwfa-at-8]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:
