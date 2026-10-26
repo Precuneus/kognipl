@@ -23,10 +23,14 @@ materiały:
   url: https://doi.org/10.1038/nn1176
 - tytuł: 'García-Cordero i in. 2016: Feeling, learning from and being aware of inner states: interoceptive dimensions in neurodegeneration and stroke'
   url: https://doi.org/10.1098/rstb.2016.0006
+- tytuł: 'Vsauce (Mind Field), What Is The Scariest Thing?'
+  url: https://youtu.be/9Vmwsg8Eabo?t=459
+  czas: 7:39–8:38 (0:59)
 rekordy:
 - seeley_2007
 - menon_and_uddin_2010
 - uddin_yeo_spreng_2019
+- vsauce_scariest-thing_9Vmwsg8Eabo
 stan: gotowa
 ---
 Sieć istotności (ang. salience network) to przednia wyspa (ang. anterior insula) i przedni zakręt obręczy (ang. anterior cingulate cortex) obu półkul (Uddin, Yeo i Spreng 2019; Menon i Uddin 2010)<!--[s:uddin2019-mcin-core-salience]--><!--[s:menon2010-salience-network-switching]-->. Według Uddin, Yeo i Sprenga do sieci należą też, słabiej opisane, obszary podkorowe, między innymi jądro środkowe ciała migdałowatego, podwzgórze i istota szara okołowodociągowa, a nazwa pochodzi od jej szerokiej roli w wyodrębnianiu tego, co ważne, czyli istotne (ang. salient). Seeley i współpracownicy wyodrębnili ją z łączności funkcjonalnej (ang. functional connectivity), czyli zgodności, z jaką aktywność obszarów rośnie i spada w czasie, zmierzonej u zdrowych dorosłych bez zadania: sieć zakotwiczoną w przedniej części zakrętu obręczy i w korze czołowo-wyspowej, silnie połączoną z obszarami podkorowymi i limbicznymi, obok sieci kontroli wykonawczej, czyli [[Sieć kontroli|sieci kontroli]] (Seeley i in. 2007)<!--[s:seeley2007-salience-network-dacc-frontoinsula]-->.
