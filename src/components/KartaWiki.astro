@@ -4,6 +4,7 @@ import { template } from '../rocznik/views/karta.js';
 import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, classesOf, slugify } from '../karty/data.js';
 import { KOLOR } from '../karty/mozg.js';
 import '../styles/wiki.css';
+import TerminDymek from './TerminDymek.astro';
 interface Props { k: any; wstep?: boolean }
 const { k, wstep = false } = Astro.props;
 const ink = INK[k.g], base = BASE[k.g];
@@ -74,7 +75,7 @@ const brain = svgSrc
       <section aria-label="Opis" class="wk-box">
         <h2>Opis</h2>
         {items.map((b) => b.t ? (
-          <p class="wk-p">{segs(b.t).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>
+          <p class="wk-p">{segs(b.t).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>
         ) : (
           <figure class="wk-fig"><Fragment set:html={b.fig} /><figcaption>{b.cap}</figcaption></figure>
         ))}
@@ -91,7 +92,7 @@ const brain = svgSrc
               {nets.map((n) => (
                 <div class="wk-net">
                   <dt>{n.to ? <a href={n.to.url} class="wk-kod" style={KOLOR[n.kod] ? 'color:' + KOLOR[n.kod] : ''}>{n.kod}</a> : <span class="wk-kod" style={KOLOR[n.kod] ? 'color:' + KOLOR[n.kod] : ''}>{n.kod}</span>}<span class="wk-netname">{n.name}</span></dt>
-                  <dd>{segs(n.why).map((s) => s.url ? <a href={s.url} style={'color:' + s.color}>{s.t}</a> : s.t)}</dd>
+                  <dd>{segs(n.why).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</dd>
                 </div>
               ))}
             </dl>
@@ -125,4 +126,4 @@ const brain = svgSrc
     </div>
   </div>
 </article>
-
+<TerminDymek />

@@ -6,6 +6,7 @@ import R from '../../../rocznik/2026/rocznik.json';
 import { held } from '../../../rocznik/data.js';
 import { segs, card, INK } from '../../../karty/data.js';
 import '../../../styles/wiki.css';
+import TerminDymek from '../../../components/TerminDymek.astro';
 export function getStaticPaths() {
   return held.map((c) => ({ params: { zajecia: c.id }, props: { c } }));
 }
@@ -45,12 +46,12 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
       <section aria-label="Opis" class="wk-box">
         <h2>Opis</h2>
         {(z.opis || []).map((p, i) => [
-          <p class="wk-p">{segs(p).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>,
+          <p class="wk-p">{segs(p).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>,
           ...figs.filter((f) => f.po === i).map((f) => (
             <figure class="wk-fig wz-fig">
               <div class={f.czesci.length > 1 ? 'wz-czesci' : ''}>{f.czesci.map((q) => q.obraz ? <img src={q.obraz} alt={unmark(q.alt || f.podpis)} loading="lazy" class={q.jasne ? 'wz-jasne' : ''} /> : <Fragment set:html={q.svg} />)}</div>
-              <figcaption>{'Ryc. ' + f.n + '. '}{segs(unmark(f.podpis)).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}
-                {f.lista && <ul class="wz-lista">{f.lista.map((x) => <li>{segs(unmark(x)).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}</li>)}</ul>}
+              <figcaption>{'Ryc. ' + f.n + '. '}{segs(unmark(f.podpis)).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}
+                {f.lista && <ul class="wz-lista">{f.lista.map((x) => <li>{segs(unmark(x)).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</li>)}</ul>}
                 {f.dopis && <span>{' ' + unmark(f.dopis)}</span>}
                 {f.zrodla.length > 0 && <span class="wz-zrodlo">{f.zrodla.length > 1 ? ' Źródła: ' : ' Źródło: '}{f.zrodla.map((z2, i) => [i > 0 ? '; ' : '', <a href={z2.url} target="_blank" rel="noopener">{z2.t}</a>])}</span>}
               </figcaption>
@@ -77,6 +78,7 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
     </div>
   </div>
 </article>
+<TerminDymek />
 </Base>
 
 <style is:global>

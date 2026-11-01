@@ -1,0 +1,54 @@
+---
+// Dymek terminu (jego słowo, 2026-11-01: *Where we have a term... clicking it should open a bubble with 1-2 sentences of explanations
+// and cta in the bottom right to open a card in the wiki*): kliknięcie terminu z definicją (data-def) otwiera dymek przy nim,
+// z nazwą karty, jej pierwszym zdaniem albo dwoma i przyciskiem do karty w prawym dolnym rogu. Ctrl, Cmd i Shift otwierają kartę od razu.
+---
+<div class="td-w" hidden>
+  <div class="td" role="dialog" aria-label="Termin">
+    <button type="button" class="td-x" aria-label="Zamknij">×</button>
+    <p class="td-t"></p>
+    <p class="td-p"></p>
+    <p class="td-cta"><a class="td-a" href="#">Otwórz kartę</a></p>
+  </div>
+</div>
+
+<style is:global>
+  .td-w[hidden]{display:none}
+  .td{position:fixed;z-index:60;width:min(320px,calc(100vw - 24px));background:#16140f;border:1px solid rgba(180,155,100,.32);border-radius:14px;padding:16px 18px 14px;box-shadow:0 10px 34px rgba(0,0,0,.55);animation:tdIn .18s ease-out}
+  @keyframes tdIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .td-x{position:absolute;top:6px;right:8px;background:none;border:0;color:#a09888;font-size:20px;line-height:1;cursor:pointer;padding:4px}
+  .td-x:hover{color:#e2ddd4}
+  .td-t{margin:0 22px 6px 0;font-family:var(--font-display);font-size:21px;font-weight:500;line-height:1.15;color:var(--c,#f0c060)}
+  .td-p{margin:0;font-size:14.5px;line-height:1.6;color:#e2ddd4}
+  .td-cta{margin:12px 0 0;text-align:right}
+  .td-a{display:inline-flex;align-items:center;min-height:34px;padding:5px 15px;border-radius:999px;border:1px solid var(--c,#f0c060);color:var(--c,#f0c060);text-decoration:none;font-size:13.5px;letter-spacing:.02em}
+  .td-a:hover{background:rgba(240,192,96,.08)}
+</style>
+
+<script>
+  const W = document.querySelector('.td-w') as HTMLElement, B = W.querySelector('.td') as HTMLElement;
+  const T = B.querySelector('.td-t') as HTMLElement, P = B.querySelector('.td-p') as HTMLElement, A = B.querySelector('.td-a') as HTMLAnchorElement;
+  let OD: HTMLElement | null = null;
+  const zamknij = () => { W.hidden = true; OD = null; };
+  const pokaz = (a: HTMLAnchorElement) => {
+    OD = a; const c = a.style.color || '#f0c060';
+    B.style.setProperty('--c', c); T.textContent = a.title || a.textContent || ''; P.textContent = a.dataset.def || ''; A.href = a.href;
+    W.hidden = false;
+    const r = a.getBoundingClientRect(), w = B.offsetWidth, h = B.offsetHeight, m = 12;
+    let left = Math.max(m, Math.min(innerWidth - w - m, r.left + r.width / 2 - w / 2));
+    let top = r.bottom + 10; if (top + h > innerHeight - m) top = Math.max(m, r.top - h - 10);
+    B.style.left = left + 'px'; B.style.top = top + 'px';
+  };
+  document.addEventListener('click', (ev) => {
+    const e = ev as MouseEvent, el = e.target as HTMLElement;
+    const a = el.closest('a[data-def]') as HTMLAnchorElement | null;
+    if (a && a.dataset.def && e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+      e.preventDefault(); if (OD === a) zamknij(); else pokaz(a); return;
+    }
+    if (!el.closest('.td')) zamknij();
+  });
+  B.querySelector('.td-x')!.addEventListener('click', zamknij);
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') zamknij(); });
+  addEventListener('scroll', () => { if (OD) zamknij(); }, { passive: true });
+  addEventListener('resize', zamknij);
+</script>

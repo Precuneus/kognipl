@@ -829,19 +829,24 @@
     {
      "po": 6,
      "plik": "szlaki",
-     "podpis": "Stacje na szlakach wzrokowych:",
+     "podpis": "Stacje na szlakach wzrokowych, od siatkówki do kory:",
      "lista": [
-      "z siatkówki przez ciało kolankowate boczne we wzgórzu do pierwszorzędowej kory wzrokowej (V1) (Chapelle 2025)<!--[s:chapelle2025-rgc-lgn-v1]-->;",
-      "szlak brzuszny, co to jest: druga okolica kory wzrokowej (V2), czwarta okolica kory wzrokowej (V4), tylna część dolnej kory skroniowej (TEO) i przednia część dolnej kory skroniowej (TE);",
-      "szlak grzbietowy, gdzie i jak sięgnąć: V2, trzecia okolica kory wzrokowej (V3) i pole PG w płaciku ciemieniowym dolnym (Kravitz i in. 2011)<!--[s:kravitz2011-ventral-te-dorsal-pg]--><!--[s:kravitz2011-v1-to-mt-via-v2-v3-v4]-->;",
-      "[[Trzeci szlak wzrokowy|szlak boczny]], mimika i gest: obszar środkowy skroniowy (MT) i bruzda skroniowa górna (STS) (Pitcher i Ungerleider 2021)<!--[s:pitcher2021-three-visual-pathways]-->."
+      "V1, pierwszorzędowa kora wzrokowa: pierwsza stacja w korze, do której z siatkówki przez ciało kolankowate boczne we wzgórzu dociera bioinformacja (Chapelle 2025)<!--[s:chapelle2025-rgc-lgn-v1]-->.",
+      "V2, druga okolica kory wzrokowej: stacja tuż za V1, przez którą bioinformacja płynie dalej, ku kolejnym stacjom szlaków (Kravitz i in. 2013)<!--[s:kravitz2013-v1-to-teo-via-v2-v4-mt]-->.",
+      "V4, czwarta okolica kory wzrokowej: stacja szlaku brzusznego; jej neuron odpowiada na wycinek pola widzenia około pięć razy większy niż neuron V1 (Kravitz i in. 2013)<!--[s:kravitz2013-rf-size-and-complexity-grow]-->.",
+      "TEO, tylna część dolnej kory skroniowej: kolejna stacja szlaku brzusznego, w której wycinek pola widzenia neuronu jest jeszcze większy (Kravitz i in. 2013)<!--[s:kravitz2013-rf-size-and-complexity-grow]-->.",
+      "TE, przednia część dolnej kory skroniowej: koniec szlaku brzusznego, gdzie rozpoznajesz przedmiot; wycinek pola sięga około 12°, a odpowiedź neuronu najmniej zależy od tego, gdzie i jak widzisz przedmiot (Kravitz i in. 2011; 2013)<!--[s:kravitz2011-ventral-te-dorsal-pg]--><!--[s:kravitz2013-rf-size-and-complexity-grow]-->.",
+      "V3, trzecia okolica kory wzrokowej: stacja, przez którą V1 łączy się z obszarem MT (Kravitz i in. 2011)<!--[s:kravitz2011-v1-to-mt-via-v2-v3-v4]-->.",
+      "PG, pole w tylnej części płacika ciemieniowego dolnego: cel szlaku grzbietowego, który ustala, gdzie jest przedmiot i jak po niego sięgnąć (Kravitz i in. 2011; Pitcher i Ungerleider 2021)<!--[s:kravitz2011-ventral-te-dorsal-pg]--><!--[s:pitcher2021-three-visual-pathways]-->.",
+      "MT, obszar środkowy skroniowy: obszar wybiórczy dla ruchu, od którego zaczyna się droga szlaku bocznego do bruzdy skroniowej górnej (Pitcher i Ungerleider 2021)<!--[s:pitcher2021-mt-proposal-ffa-ventral]-->.",
+      "STS, bruzda skroniowa górna: struktura, w której [[Trzeci szlak wzrokowy|szlak boczny]] przetwarza ruch twarzy i ciała drugiej osoby: mimikę, spojrzenie, intencję i nastrój (Pitcher i Ungerleider 2021)<!--[s:pitcher2021-sts-moving-faces-bodies]-->."
      ],
      "dopis": "Kolejność stacji to schemat: z V1 bioinformacja dociera do TEO także na skróty, przez V2, V4 albo MT (Kravitz i in. 2013)<!--[s:kravitz2013-v1-to-teo-via-v2-v4-mt]-->."
     },
     {
      "po": 8,
      "plik": "osie",
-     "podpis": "Dwie osie. Sieci leżą coraz dalej od receptorów: najbliżej wzrokowa i czuciowo-ruchowa, dalej grzbietowa uwagi i kontroli, najdalej domyślna. Prostopadle do tej osi biegnie oś walencji, na której razem leżą sieć istotności, sieć brzuszna uwagi i obszary limbiczne: czy to, co się dzieje, przyciąga, czy odpycha. To moja hipoteza."
+     "podpis": "Trzy osie, moja hipoteza w jej obecnej postaci. Oś czasoprzestrzenna: sieci coraz dalej od receptorów, od wzrokowej i czuciowo-ruchowej przez grzbietową uwagi i kontroli po domyślną. Prostopadle do niej biegnie oś walencji: obszary limbiczne niosą to, co przyciąga i odpycha, czyli to, dokąd celujesz, a przecinają oś czasoprzestrzenną w korze oczodołowo-czołowej, biegunie skroniowym i przednim zakręcie obręczy. Osobna oś to skutki zaskoczenia według tego, skąd płynie bioinformacja: sieć istotności z wnętrza ciała, sieć brzuszna uwagi ze świata i z ruchu ciała."
     }
    ]
   }

@@ -57,6 +57,15 @@ export const ALL = Object.entries(notes).map(([file, mod]) => {
   };
 });
 
+// definicja do dymka terminu (jego słowo, 2026-11-01: *clicking it should open a bubble with 1-2 sentences of explanations and cta in the
+// bottom right to open a card in the wiki*): pierwsze jedno albo dwa zdania karty, bez cytowań i bez angielskich nazw
+const defOf = (body) => {
+  const b = body.find((x) => x.t); if (!b) return '';
+  const s = b.t.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_, a, c) => c || a).replace(/\s*\(ang\.[^)]*\)/g, '').replace(/\s*\([^()]*\d{4}[^()]*\)/g, '');
+  const z = s.match(/[^.!?]+[.!?](?=\s|$)/g) || [s];
+  return (z[0].length < 150 && z[1] ? z[0] + z[1] : z[0]).trim();
+};
+ALL.forEach((k) => { k.def = defOf(k.body); });
 export const KARTY = ALL.filter((k) => k.ready || SZKICE).sort((a, b) => a.h.localeCompare(b.h, 'pl'));
 export const WIKI_ON = KARTY.length > 0;
 
@@ -79,7 +88,7 @@ export function segs(t) {
       out.push(gi >= 0 ? { t: m[4] || m[3].replace(/^#/, ''), url: '/wiki/#' + slugify(m[3].replace(/^#/, '')), color: INK[gi], label: m[3].replace(/^#/, '') } : { t: m[4] || m[3] });
     } else {
       const k = byName[m[1]];
-      out.push(k ? { t: m[2] || m[1], url: k.url, color: INK[k.g], label: k.h } : { t: m[2] || m[1] });
+      out.push(k ? { t: m[2] || m[1], url: k.url, color: INK[k.g], label: k.h, def: k.def } : { t: m[2] || m[1] });
     }
     last = re.lastIndex;
   }
