@@ -6,7 +6,7 @@ rodziny:
 - '[[Predykcja]]'
 - '[[Sygnał elektryczny]]'
 sieci: []
-bez_sieci: 'Rytmy alfa i gamma biegną połączeniami między obszarami kory, więc mogą dotyczyć każdej sieci. Kierunek ich wpływu zmierzono w obszarach wzrokowych: gamma przeważa w połączeniach wstępujących, alfa i beta w zwrotnych (Michalareas i in. 2016)<!--[s:michalareas2016-human-meg-gamma-ff-alphabeta-fb]-->.'
+bez_sieci: 'W ujęciu kursu rytmy alfa i gamma dotyczą każdej sieci. Zmierzono je w obszarach wzrokowych: w paśmie gamma przeważają tam wpływy biegnące połączeniami wstępującymi, a w paśmie alfa i beta wpływy biegnące połączeniami zwrotnymi (Michalareas i in. 2016)<!--[s:michalareas2016-human-meg-gamma-ff-alphabeta-fb]-->.'
 ryciny: []
 materiały:
 - tytuł: 'Mr. Science, Nothing About Spiders Is Normal…Here''s Why'

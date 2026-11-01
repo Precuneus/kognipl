@@ -2,9 +2,11 @@
 import { WIKI_ON } from '../karty/data.js';
 interface Props { rocznik?: string; current?: string }
 const { rocznik = '', current = '' } = Astro.props;
-// Rocznik 2026 ma jeden widok, więc jego nazwa sama prowadzi na Płótno (jego słowo, 2026-10-22); Rocznik 2025 zostaje z nazwą do /uwb/ i menu
+// Nazwa Rocznika 2026 sama prowadzi na Płótno (jego słowo, 2026-10-22), a obok niej stoją Lista zajęć i Studiowanie 101
+// (jego słowo, 2026-11-01: *add a menu item "lista zajęć" next to rocznik 2026. And add a Studiowanie 101 page there also*);
+// Rocznik 2025 zostaje z nazwą do /uwb/ i menu
 const NAV: Record<string, string[][]> = {
-  '2026': [['plotno', 'Rocznik 2026', '/2026/']],
+  '2026': [['plotno', 'Rocznik 2026', '/2026/'], ['lista', 'Lista zajęć', '/2026/zajecia/'], ['studiowanie', 'Studiowanie 101', '/2026/studiowanie/']],
   '2025': [['start', 'Start', '/2025/'], ['wstep-2', 'Wstęp II', '/2025/wstep-2/'], ['mip', 'Mózg i poznanie', '/2025/mip/'], ['design', 'Design Thinking', '/2025/design/'], ['drugi-mozg', 'Drugi mózg', '/2025/drugi-mozg/']],
 };
 // Menu obok logo, tymi samymi słowami co przyciski strony głównej (jego słowo, 2026-10-22): Wiki, Kursy (prosto na Rocznik 2026), Kontakt.
@@ -17,6 +19,9 @@ const MENU = [
   { label: 'Kontakt', href: '/kontakt', on: current === 'kontakt', here: current === 'kontakt' },
 ];
 const own = (NAV[rocznik] || []).map(([k, label, href]) => ({ label, href, on: current === k }));
+// pierwszy widok, który sam nosi nazwę Rocznika, zastępuje nazwę prowadzącą do /uwb/
+const self = own.length > 0 && own[0].label === 'Rocznik ' + rocznik;
+const named = own.length > 1 && !self;
 ---
 <header class={'rocznik-head' + (rocznik ? '' : ' rocznik-head-start')}>
   <div class="rocznik-title">
@@ -30,9 +35,12 @@ const own = (NAV[rocznik] || []).map(([k, label, href]) => ({ label, href, on: c
   </div>
   {own.length > 0 && (
     <nav aria-label={'Rocznik ' + rocznik} class="rocznik-views">
-      {own.length > 1 && <a href="/uwb/" class="rocznik-nazwa">Rocznik {rocznik}</a>}
-      {own.length > 1 && <span class="rocznik-sep" aria-hidden="true"></span>}
-      {own.map((x) => <a href={x.href} class={own.length > 1 ? (x.on ? 'on' : '') : 'rocznik-nazwa'} aria-current={x.on ? 'page' : undefined}>{x.label}</a>)}
+      {named && <a href="/uwb/" class="rocznik-nazwa">Rocznik {rocznik}</a>}
+      {named && <span class="rocznik-sep" aria-hidden="true"></span>}
+      {own.map((x, i) => [
+        <a href={x.href} class={self && i === 0 ? 'rocznik-nazwa' : (x.on ? 'on' : '')} aria-current={x.on ? 'page' : undefined}>{x.label}</a>,
+        self && i === 0 && own.length > 1 && <span class="rocznik-sep" aria-hidden="true"></span>,
+      ])}
     </nav>
   )}
 </header>

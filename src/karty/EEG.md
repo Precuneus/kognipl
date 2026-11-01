@@ -5,7 +5,7 @@ rodziny:
 - '[[Sygnał elektryczny]]'
 - '[[Rozdzielczość pomiaru]]'
 sieci: []
-bez_sieci: 'EEG to przyrząd spoza ciała: elektrody na skórze głowy odbierają zmiany potencjału kory, więc EEG obejmuje wszystkie sieci, choć obszary położone głęboko słabiej.'
+bez_sieci: 'EEG mierzy z powierzchni głowy: elektrody na skórze odbierają zmiany potencjału kory, więc pomiar obejmuje wszystkie sieci, obszary głębokie słabiej.'
 ryciny:
 - eeg.svg
 materiały:

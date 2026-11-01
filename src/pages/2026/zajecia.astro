@@ -1,0 +1,39 @@
+---
+// Lista zajęć Rocznika 2026 obok Płótna (jego słowo, 2026-11-01: *add a menu item "lista zajęć" next to rocznik 2026*):
+// zajęcia po kolei, odbyte prowadzą do swojego wpisu, nadchodzące stoją jako data i kurs.
+import Base from '../../layouts/Base.astro';
+import { CL } from '../../rocznik/data.js';
+const ink = (c) => (c.course === 'Intro' ? '#f0c060' : '#edbbc5');
+---
+<Base title="Lista zajęć · Rocznik 2026 · kogni.pl" activePage="lista" rocznik="2026" description="Zajęcia Rocznika 2026 po kolei, każde z własnym wpisem.">
+
+<style is:global>
+  body:has(.lista){background:#0e0d0b}
+  .lista{max-width:680px;margin:0 auto;padding:56px 24px 96px}
+  .lista h1{font-family:var(--font-display);font-size:40px;font-weight:400;line-height:1.2;color:#f0c060;text-shadow:0 0 14px rgba(240,192,96,.25);margin:0 0 32px;text-align:center;animation:fadeUp .8s ease-out both}
+  .lista ol{list-style:none;margin:0;padding:0;animation:fadeUp .8s ease-out .15s both}
+  .lista li{border-top:1px solid rgba(180,155,100,.14)}
+  .lista li:last-child{border-bottom:1px solid rgba(180,155,100,.14)}
+  .lista-row{display:grid;grid-template-columns:64px 104px 1fr;align-items:baseline;gap:12px;padding:14px 8px;text-decoration:none;color:#e2ddd4;transition:background .18s ease}
+  a.lista-row:hover{background:#16140f}
+  .lista-data{font-family:var(--font-body);font-size:14px;font-weight:400;color:#a09888;font-variant-numeric:tabular-nums}
+  .lista-kurs{font-family:var(--font-body);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+  .lista-tytul{font-family:var(--font-display);font-size:21px;line-height:1.3}
+  .lista-przed .lista-tytul,.lista-przed .lista-kurs{opacity:.45}
+  @media (max-width:720px){.lista{padding:40px 16px 72px}.lista h1{font-size:32px}.lista-row{grid-template-columns:52px 1fr;gap:4px 12px}.lista-tytul{grid-column:2;font-size:19px}}
+</style>
+
+<div class="lista">
+  <h1>Lista zajęć</h1>
+  <ol>
+    {CL.map((c) => (
+      <li class={c.held ? '' : 'lista-przed'} style={'--ink:' + ink(c)}>
+        {c.held
+          ? <a class="lista-row" href={c.url}><span class="lista-data">{c.short}</span><span class="lista-kurs">{c.course}</span><span class="lista-tytul">{c.title}</span></a>
+          : <div class="lista-row"><span class="lista-data">{c.short}</span><span class="lista-kurs">{c.course}</span><span class="lista-tytul">{c.title}</span></div>}
+      </li>
+    ))}
+  </ol>
+</div>
+
+</Base>
