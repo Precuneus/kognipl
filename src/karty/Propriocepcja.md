@@ -9,7 +9,7 @@ sieci:
 - kod: SMN
   powód: 'Czujesz, jak ktoś zgina Ci palec: to aktywność sieci czuciowo-ruchowej; u dziesięciu badanych w skanerze 7 T bierne ruchy palców pobudzały głębokie warstwy pierwszorzędowej kory ruchowej (M1), do której dociera bioinformacja z wrzecion mięśniowych i receptorów stawów (Knudsen i in. 2025)<!--[s:knudsen2025-passive-finger-m1-deep-layers]-->.'
 - kod: VIS
-  powód: 'Ian Waterman, bez propriocepcji od linii kołnierza w dół, ruch prowadzi wzrokiem (Miall i in. 2021; de Bruin, van Elk i Newen 2012)<!--[s:miall2021-iw-acquired-peripheral-large-fibre-loss]--><!--[s:miall2021-iw-below-collar-conscious-control]--><!--[s:debruin2012-ian-waterman-deafferentation]-->.'
+  powód: 'Ian Waterman, bez propriocepcji od szyi w dół, ruchy prowadzi wzrokiem (Miall i in. 2021; de Bruin, van Elk i Newen 2012)<!--[s:miall2021-iw-acquired-peripheral-large-fibre-loss]--><!--[s:miall2021-iw-below-collar-conscious-control]--><!--[s:debruin2012-ian-waterman-deafferentation]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:
