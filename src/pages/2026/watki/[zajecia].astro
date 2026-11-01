@@ -1,20 +1,63 @@
 ---
-// Wątki zniknęły (jego słowo, 2026-10-22): adres zajęć prowadzi na Płótno z ich dymkiem.
+// Wpis zajęć: cały opis, karty i materiały po zajęciach na własnej stronie; dymek na Płótnie otwiera dwa i pół
+// akapitu i prowadzi tutaj (jego słowo, 2026-11-01: *it should open with 2,5 para and with cta to open an entire entry*).
+import Base from '../../../layouts/Base.astro';
+import R from '../../../rocznik/2026/rocznik.json';
 import { held } from '../../../rocznik/data.js';
+import { segs, card, INK } from '../../../karty/data.js';
+import '../../../styles/wiki.css';
 export function getStaticPaths() {
-  return held.map((c) => ({ params: { zajecia: c.id }, props: { to: '/2026/?z=' + c.id } }));
+  return held.map((c) => ({ params: { zajecia: c.id }, props: { c } }));
 }
-const { to } = Astro.props;
+const { c } = Astro.props;
+const z = R['zajęcia'].find((x) => x.id === c.id);
+const ink = c.course === 'Intro' ? '#f0c060' : '#edbbc5';
+const karty = (z.karty || []).map((name) => card(name) ? { h: card(name).h, url: card(name).url, color: INK[card(name).g] } : { h: name });
+const plain = (p) => p.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_, a, b) => b || a);
+const first = z.opis && z.opis.length ? plain(z.opis[0]).split(/(?<=\.)\s/)[0] : '';
 ---
-<!doctype html>
-<html lang="pl">
-<head>
-<meta charset="utf-8">
-<title>kogni.pl</title>
-<meta name="robots" content="noindex">
-<link rel="canonical" href={'https://kogni.pl' + to}>
-<meta http-equiv="refresh" content={'0; url=' + to}>
-<script is:inline define:vars={{ to }}>location.replace(to);</script>
-</head>
-<body><p><a href={to}>{'kogni.pl' + to}</a></p></body>
-</html>
+<Base title={c.title + ' · ' + c.course + ' ' + c.short + ' · kogni.pl'} activePage="plotno" rocznik="2026" description={first}>
+<article class="wk wz" style={'--ink:' + ink}>
+  <nav aria-label="Ścieżka" class="wk-path">
+    <a href="/2026/">Rocznik 2026</a><span aria-hidden="true"> › </span><a href={'/2026/?z=' + c.id}>{c.course} {c.short}</a><span aria-hidden="true"> › </span><span aria-current="page">{c.title}</span>
+  </nav>
+  <div class="wk-grid">
+    <div class="wk-col">
+      <section aria-label="Zajęcia" class="wk-box wk-mysl">
+        <h2>{c.course} · {c.date}</h2>
+        <h1>{c.title}</h1>
+      </section>
+      <section aria-label="Opis" class="wk-box">
+        <h2>Opis</h2>
+        {(z.opis || []).map((p) => (
+          <p class="wk-p">{segs(p).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>
+        ))}
+      </section>
+    </div>
+    <div class="wk-col">
+      {karty.length > 0 && (
+        <section aria-label="Karty" class="wk-box">
+          <h2>Karty</h2>
+          <div class="wk-chips">{karty.map((k) => k.url
+            ? <a href={k.url} class="wk-chip" style={'--c:' + k.color}>{k.h}</a>
+            : <span class="wk-chip wz-szkic">{k.h}</span>)}</div>
+        </section>
+      )}
+      {c.after.length > 0 && (
+        <section aria-label="Po zajęciach" class="wk-box">
+          <h2>Po zajęciach</h2>
+          <ul class="wz-po">{c.after.map((a) => <li><a href={a.url} target="_blank" rel="noopener">{a.label}</a></li>)}</ul>
+        </section>
+      )}
+    </div>
+  </div>
+</article>
+</Base>
+
+<style is:global>
+.wz .wk-mysl h1{font-style:normal}
+.wz-szkic{--c:#6f685d;color:#a09888}
+.wz-po{margin:0;padding:0 0 0 18px;font-size:14.5px;line-height:1.6}
+.wz-po li{margin-bottom:8px}
+.wz-po a{color:var(--ink)}
+</style>

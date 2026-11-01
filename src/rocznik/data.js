@@ -27,7 +27,8 @@ export const CL = R['zajęcia'].map((z) => {
     short: d + '.' + String(m).padStart(2, '0'), date: d + ' ' + MONTHS[m - 1],
     title: z['tytuł'] || '', held: !!z.odbyte,
     after: (z['po_zajęciach'] || []).map((a) => ({ label: a['tytuł'], url: a.url })),
-    url: '/2026/?z=' + z.id,
+    // wpis zajęć na własnej stronie (jego słowo, 2026-11-01); ?z= nadal otwiera dymek na Płótnie
+    url: '/2026/watki/' + z.id + '/',
     // opis zajęć z [[kartami]] w zdaniach: link do gotowej karty, sama nazwa przy niegotowej (jego słowo, 2026-10-22)
     opis: (z.opis || []).map((p) => segs(p)),
   };
