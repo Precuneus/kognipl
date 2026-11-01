@@ -9,10 +9,8 @@ głębokość:
 - komórka
 opis: 'W klasycznym schemacie jąder podstawy (ang. basal ganglia) droga bezpośrednia ułatwia ruch, a droga pośrednia go hamuje; z tego bilansu Roger Albin z zespołem i Mahlon DeLong wyprowadzają objawy chorób Parkinsona i Huntingtona. Droga hiperbezpośrednia biegnie z kory ruchowej przez jądro niskowzgórzowe z pominięciem prążkowia i dociera do gałki bladej szybciej niż drogi przez prążkowie, a u myszy neurony obu klasycznych dróg aktywują się razem, gdy zwierzę zaczyna działanie.'
 myśl: 'Jądra podstawy według hipotezy Jonathana Minka zdejmują hamowanie z wybranego programu ruchowego i hamują konkurencyjne, a obie klasyczne drogi pracują przy tym razem.'
-sieci:
-- kod: SMN
-  powód: 'Drogę hiperbezpośrednią zaczynają obszary ruchowe kory (Nambu i in. 2002)<!--[s:nambu2002-hyperdirect-first-then-direct]-->, rdzeń sieci czuciowo-ruchowej (Uddin i in. 2019)<!--[s:uddin2019-pn-core-motor-somatosensory]-->.'
-bez_sieci: ''
+sieci: []
+bez_sieci: 'Do prążkowia biegną u naczelnych projekcje z kory czołowej wielu sieci: z kory oczodołowej i przyśrodkowej przedczołowej, z grzbietowo-bocznej kory przedczołowej i z obszarów ruchowych (Haber 2003)<!--[s:haber2003-frontal-gradient-into-striatum]-->, więc drogi jąder podstawy dotyczą wielu sieci naraz. Drogę hiperbezpośrednią Nambu i współpracownicy opisali jako biegnącą z obszarów ruchowych kory (Nambu i in. 2002)<!--[s:nambu2002-hyperdirect-first-then-direct]-->.'
 ryciny: []
 materiały:
 - tytuł: 'Brains Explained, The Basal Ganglia - Direct and Indirect Pathways'

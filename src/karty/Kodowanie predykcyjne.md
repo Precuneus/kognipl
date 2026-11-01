@@ -3,10 +3,8 @@ tytuł: Kodowanie predykcyjne
 osnowa: '[[Sieci mózgu i predykcja]]'
 rodziny:
 - '[[Predykcja]]'
-sieci:
-- kod: VIS
-  powód: 'Model opisuje korę wzrokową, a komórki z hamowaniem na końcach, wyjaśniane przez ten model, są u kota i małpy szczególnie liczne w jej warstwach 2 i 3 (Rao i Ballard 1999)<!--[s:rao1999-endstopping-defined]-->.'
-bez_sieci: ''
+sieci: []
+bez_sieci: 'Predykcja zachodzi w każdej komórce mózgu, więc dotyczy wszystkich sieci naraz. Rao i Ballard opisali swój model dla kory wzrokowej (Rao i Ballard 1999)<!--[s:rao1999-feedback-predictions-feedforward-errors]-->.'
 ryciny: []
 materiały:
 - tytuł: 'Rao i Ballard 1999: model kodowania predykcyjnego kory wzrokowej'

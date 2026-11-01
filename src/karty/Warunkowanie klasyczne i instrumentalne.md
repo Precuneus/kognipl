@@ -9,10 +9,8 @@ głębokość:
 - sieć mózgowa
 opis: 'Warunkowanie klasyczne (ang. classical conditioning) uczy, że bodziec zapowiada to, co zaraz stanie się w ciele, jak fioletowy kwadrat przed wstrząsem elektrycznym. Warunkowanie instrumentalne (ang. instrumental conditioning) uczy ruchu, który zmienia sytuację, jak u kota Thorndike''a otwierającego skrzynkę. Gołębie dziobią zapalony klucz także wtedy, gdy jedzenie przychodzi niezależnie od ich ruchu, więc Olgierd stawia hipotezę, że oba rodzaje to jedna architektura uczenia o różnym udziale ruchu.'
 myśl: 'Ciało uczy się z bodźców, które zapowiadają zmianę jego stanu, a według hipotezy Olgierda warunkowanie klasyczne i instrumentalne to jedna architektura uczenia o różnym udziale ruchu, rozdzielona dopiero przez projekt eksperymentu.'
-sieci:
-- kod: SMN
-  powód: 'Według hipotezy Olgierda sieć czuciowo-ruchowa przygotowuje ruch także w warunkowaniu klasycznym, w którym projekt eksperymentu odbiera ruchowi wpływ na skutek.'
-bez_sieci: ''
+sieci: []
+bez_sieci: 'Warunkowanie opisują pomiary zachowania i ciała: pot przy fioletowym kwadracie zapowiadającym wstrząs (Stevens 2019)<!--[s:stevens2019-purple-square-shock-sweat]--> i czas, w jakim kot otwiera skrzynkę (Thorndike 1898)<!--[s:thorndike1898-puzzle-box-method]-->.'
 ryciny: []
 materiały:
 - tytuł: 'Vsauce, What Is The Scariest Thing?'

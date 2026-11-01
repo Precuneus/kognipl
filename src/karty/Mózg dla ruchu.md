@@ -4,12 +4,8 @@ osnowa: '[[Ciało i ruch]]'
 rodziny:
 - '[[Sterowanie ruchem]]'
 - '[[Fizjologia i zdrowie ciała]]'
-sieci:
-- kod: SMN
-  powód: 'Poruszasz ręką albo stopą: to aktywność kory ruchowej i somatosensorycznej po obu stronach bruzdy środkowej (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-pn-core-motor-somatosensory]-->.'
-- kod: DMN
-  powód: 'Hipokamp, którego przednia część urosła u starszych dorosłych po treningu aerobowym (Erickson i in. 2011)<!--[s:erickson2011-aerobic-hippocampus-2-percent]-->, należy do przyśrodkowej skroniowej podsieci sieci domyślnej (Andrews-Hanna i in. 2010)<!--[s:andrewshanna2010-core-and-two-subsystems]-->.'
-bez_sieci: ''
+sieci: []
+bez_sieci: 'Propozycja Llinása i Roya obejmuje cały mózg (Llinás i Roy 2009)<!--[s:llinas2009-brain-for-intelligent-motricity]-->, więc dotyczy wszystkich sieci naraz.'
 ryciny: []
 materiały:
 - tytuł: 'Kiana Docherty, What daily exercise does to your mind: myślenie wyewoluowało z ruchu'

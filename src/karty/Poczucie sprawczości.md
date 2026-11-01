@@ -4,8 +4,8 @@ osnowa: '[[Decyzja i działanie]]'
 rodziny:
 - '[[Intencja i sprawczość]]'
 sieci:
-- kod: SMN
-  powód: 'Naciskasz klawisz ruchem dowolnym: to aktywność kory ruchowej i somatosensorycznej po obu stronach bruzdy środkowej (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-pn-core-motor-somatosensory]-->.'
+- kod: VAN
+  powód: 'Ruch daje skutek inny od przewidzianego, a Twoje poczucie sprawczości słabnie: w metaanalizie 22 badań szło to w parze z aktywnością skrzyżowania skroniowo-ciemieniowego obu półkul (Zito, Wiest i Aybek 2020)<!--[s:zito2020-decreased-agency-bilateral-tpj]-->. Korę skroniowo-ciemieniową, razem z dolną korą czołową, Corbetta i Shulman zaliczają do sieci brzusznej uwagi, działającej głównie w prawej półkuli (Corbetta i Shulman 2002)<!--[s:corbetta2002-ventral-network-circuit-breaker]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:

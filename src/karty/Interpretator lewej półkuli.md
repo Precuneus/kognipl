@@ -8,10 +8,8 @@ głębokość:
 - organizm
 opis: Pacjent P.S. po przecięciu spoidła wielkiego zobaczył lewą półkulą kurzą łapkę, a prawą zaśnieżoną scenę. Lewa ręka wybrała łopatę, a mówiąca lewa półkula od razu podała powód, łopatą sprząta się kurnik. Michael Gazzaniga nazwał tę czynność, układanie opowieści wykraczającej poza dostępne dane, interpretatorem.
 myśl: 'Wyjaśnianie własnego działania to osobna czynność, którą lewa półkula wykonuje z tego, co do niej dociera, więc powód, który podajesz, bywa opowieścią dopisaną po fakcie.'
-sieci:
-- kod: VIS
-  powód: 'Obraz z jednej połowy pola widzenia trafia do przeciwległej półkuli, a po przecięciu spoidła półkule słabo go wymieniają, co pokazuje pacjent DDC, który porównywał bodźce z obu połówek pola z trafnością 55,4%, bliską przypadkowi (Pinto i in. 2017)<!--[s:pinto2017-field-and-task-effects]-->.'
-bez_sieci: ''
+sieci: []
+bez_sieci: 'Gazzaniga opisuje interpretator jako proces lewej półkuli (Gazzaniga 2000)<!--[s:gazzaniga2000-chicken-claw-shovel]-->, więc dotyczy on wszystkich jej sieci naraz. Po przecięciu spoidła półkule słabo wymieniają bioinformację: pacjent DDC porównywał bodźce z obu połówek pola widzenia z trafnością 55,4%, bliską przypadkowi, a z jednej połówki z trafnością 90,4% (Pinto i in. 2017)<!--[s:pinto2017-field-and-task-effects]-->.'
 ryciny: []
 materiały:
 - tytuł: 'Gazzaniga 2000: Cerebral specialization and interhemispheric communication: does the corpus callosum enable the human condition?'

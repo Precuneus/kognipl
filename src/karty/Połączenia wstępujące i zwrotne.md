@@ -9,10 +9,8 @@ głębokość:
 - komórka
 opis: 'Połączenia wstępujące (feedforward) biegną od obszaru bliższego receptorom do dalszego, połączenia zwrotne (feedback) w stronę receptorów. We wczesnych obszarach wzrokowych makaka wstępujące wychodzą głównie z warstw powierzchownych i kończą się w warstwie 4, zwrotne wychodzą głównie z warstw głębokich i kończą się poza warstwą 4, więc warstwy zdradzają kierunek połączenia. W modelach predykcyjnych zwrotne niosą predykcje, a wstępujące zaskoczenie.'
 myśl: 'Kierunek połączenia w korze widać w warstwach, a w [[Kodowanie predykcyjne|kodowaniu predykcyjnym]] ten kierunek rozdziela predykcje i zaskoczenie.'
-sieci:
-- kod: VIS
-  powód: 'Reguły warstw opisano w obszarach wzrokowych makaka położonych blisko V1 (Markov i in. 2014)<!--[s:markov2014-supragranular-ff-infragranular-fb]-->.'
-bez_sieci: ''
+sieci: []
+bez_sieci: 'Połączenia wstępujące i zwrotne łączą obszary kory w każdej sieci. Układ ich warstw Markov i współpracownicy zebrali z badań obszarów wzrokowych makaka blisko V1 (Markov i in. 2014)<!--[s:markov2014-supragranular-ff-infragranular-fb]-->.'
 ryciny: []
 materiały:
 - tytuł: 'Bastos i in. 2012: warstwy kory w kodowaniu predykcyjnym'

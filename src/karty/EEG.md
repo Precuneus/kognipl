@@ -4,10 +4,8 @@ osnowa: '[[Pomiar mózgu]]'
 rodziny:
 - '[[Sygnał elektryczny]]'
 - '[[Rozdzielczość pomiaru]]'
-sieci:
-- kod: SMN
-  powód: 'Ruszasz palcem z własnej woli: odcinek potencjału gotowości stromiejący od około 400 ms przed ruchem to aktywność przeciwległej pierwszorzędowej kory ruchowej i bocznej kory przedruchowej (Shibasaki i Hallett 2006)<!--[s:shibasaki2006-early-late-bp-sources]-->.'
-bez_sieci: ''
+sieci: []
+bez_sieci: 'EEG to przyrząd spoza ciała: elektrody na skórze głowy odbierają zmiany potencjału kory, więc EEG obejmuje wszystkie sieci, choć obszary położone głęboko słabiej.'
 ryciny:
 - eeg.svg
 materiały:

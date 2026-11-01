@@ -7,8 +7,6 @@ rodziny:
 sieci:
 - kod: VIS
   powód: 'Widzisz barwę, twarz albo wzór: to aktywność sieci wzrokowej, a halucynacje barw, twarzy i tekstur w zespole Charlesa Bonneta to aktywność brzusznej kory wzrokowej poza pierwszorzędową korą wzrokową (ffytche i in. 1998)<!--[s:ffytche1998-cbs-ventral-extrastriate]-->.'
-- kod: DMN
-  powód: 'Twoje predykcje płyną w stronę receptorów z obszarów od nich dalszych, a sieć domyślna leży na krańcu głównego gradientu łączności kory, naprzeciw sieci wzrokowej i czuciowo-ruchowej (Margulies i in. 2016)<!--[s:margulies2016-dmn-far-end-from-sensorimotor]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:

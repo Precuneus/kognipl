@@ -5,10 +5,8 @@ rodziny:
 - '[[Rytmy i fale]]'
 - '[[Predykcja]]'
 - '[[Sygnał elektryczny]]'
-sieci:
-- kod: VIS
-  powód: 'Patrzysz na ekran: u badanych w obszarach wzrokowych kory w paśmie gamma przeważają wpływy biegnące dalej od receptorów, w paśmie alfa i beta zaś wpływy biegnące w stronę receptorów (Michalareas i in. 2016)<!--[s:michalareas2016-human-meg-gamma-ff-alphabeta-fb]-->.'
-bez_sieci: ''
+sieci: []
+bez_sieci: 'Rytmy alfa i gamma biegną połączeniami między obszarami kory, więc mogą dotyczyć każdej sieci. Kierunek ich wpływu zmierzono w obszarach wzrokowych: gamma przeważa w połączeniach wstępujących, alfa i beta w zwrotnych (Michalareas i in. 2016)<!--[s:michalareas2016-human-meg-gamma-ff-alphabeta-fb]-->.'
 ryciny: []
 materiały:
 - tytuł: 'Mr. Science, Nothing About Spiders Is Normal…Here''s Why'
