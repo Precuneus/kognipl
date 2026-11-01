@@ -79,6 +79,30 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
   </div>
 </article>
 <TerminDymek />
+<script>
+  // Etykiety rycin (jego słowo, 2026-11-01: *When you draw something you use a label, a podpis, etykieta. And you use a regular font with
+  // white bold letters. I want this to look better*): każdy podpis na rycinie (text.et) dostaje plakietkę na swoją miarę, ciemną,
+  // z cienką ciepłą obwódką; podpisy w kilku wierszach o tym samym wyrównaniu dzielą jedną plakietkę
+  const NS = 'http://www.w3.org/2000/svg';
+  document.querySelectorAll('.wz-fig svg').forEach((svg) => {
+    const ts = [...svg.querySelectorAll('text.et')] as SVGTextElement[];
+    const grupy: SVGTextElement[][] = [];
+    for (const t of ts) {
+      const g = grupy.find((gr) => { const l = gr[gr.length - 1], fs = parseFloat(t.getAttribute('font-size') || '12');
+        return l.getAttribute('text-anchor') === t.getAttribute('text-anchor') && Math.abs(+l.getAttribute('x')! - +t.getAttribute('x')!) < 1 && +t.getAttribute('y')! - +l.getAttribute('y')! > 0 && +t.getAttribute('y')! - +l.getAttribute('y')! <= fs * 1.6; });
+      if (g) g.push(t); else grupy.push([t]);
+    }
+    for (const gr of grupy) {
+      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      for (const t of gr) { const b = t.getBBox(); x0 = Math.min(x0, b.x); y0 = Math.min(y0, b.y); x1 = Math.max(x1, b.x + b.width); y1 = Math.max(y1, b.y + b.height); }
+      const fs = parseFloat(gr[0].getAttribute('font-size') || '12'), px = fs * .62, py = fs * .3;
+      const r = document.createElementNS(NS, 'rect');
+      r.setAttribute('x', String(x0 - px)); r.setAttribute('y', String(y0 - py)); r.setAttribute('width', String(x1 - x0 + 2 * px)); r.setAttribute('height', String(y1 - y0 + 2 * py));
+      r.setAttribute('rx', String(Math.min(fs * .9, (y1 - y0 + 2 * py) / 2))); r.setAttribute('class', 'et-tlo');
+      gr[0].parentNode!.insertBefore(r, gr[0]);
+    }
+  });
+</script>
 </Base>
 
 <style is:global>
@@ -88,6 +112,8 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
 .wz-po li{margin-bottom:8px}
 .wz-po a{color:var(--ink)}
 .wz-fig svg{max-width:100%}
+.wz-fig svg text.et{font-family:var(--font-body);font-weight:500;letter-spacing:.015em;fill:#ebe3d3}
+.wz-fig svg .et-tlo{fill:rgba(18,17,13,.9);stroke:rgba(214,198,166,.42);stroke-width:1;vector-effect:non-scaling-stroke}
 .wz-fig img{display:block;width:100%;max-width:560px;height:auto;border-radius:10px}
 .wz-fig img.wz-jasne{background:#ece6da;padding:10px}
 .wz-czesci{display:grid;grid-template-columns:1fr;gap:10px;align-items:center}
