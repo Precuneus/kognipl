@@ -15,6 +15,12 @@ const ink = c.course === 'Intro' ? '#f0c060' : '#edbbc5';
 const karty = (z.karty || []).map((name) => card(name) ? { h: card(name).h, url: card(name).url, color: INK[card(name).g] } : { h: name });
 const plain = (p) => p.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_, a, b) => b || a);
 const first = z.opis && z.opis.length ? plain(z.opis[0]).split(/(?<=\.)\s/)[0] : '';
+// Ryciny wpisu (jego słowo, 2026-11-01: *we should start adding illustrations to the website. To the kursy*): pole `ryciny` zajęć,
+// każda po akapicie `po`, numerowana w kolejności i podpisana; rysunki w src/rocznik/2026/ryciny/wpisy/, w kolorze kursu.
+const RYC = import.meta.glob('../../../rocznik/2026/ryciny/wpisy/*.svg', { query: '?raw', import: 'default', eager: true });
+const unmark = (t) => String(t || '').replace(/<!--\[s:[^\]]*\]-->/g, '');
+const figs = (z.ryciny || []).slice().sort((x, y) => x.po - y.po).map((r, i) => ({ ...r, n: i + 1, svg: RYC['../../../rocznik/2026/ryciny/wpisy/' + r.plik + '.svg'] || '' }));
+figs.forEach((f) => { if (!f.svg) throw new Error('Wpis ' + c.id + ': brak ryciny ' + f.plik); });
 ---
 <Base title={c.title + ' · ' + c.course + ' ' + c.short + ' · kogni.pl'} activePage="plotno" rocznik="2026" description={first}>
 <article class="wk wz" style={'--ink:' + ink}>
@@ -29,9 +35,12 @@ const first = z.opis && z.opis.length ? plain(z.opis[0]).split(/(?<=\.)\s/)[0] :
       </section>
       <section aria-label="Opis" class="wk-box">
         <h2>Opis</h2>
-        {(z.opis || []).map((p) => (
-          <p class="wk-p">{segs(p).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>
-        ))}
+        {(z.opis || []).map((p, i) => [
+          <p class="wk-p">{segs(p).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>,
+          ...figs.filter((f) => f.po === i).map((f) => (
+            <figure class="wk-fig wz-fig"><Fragment set:html={f.svg} /><figcaption>{'Ryc. ' + f.n + '. '}{segs(unmark(f.podpis)).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}</figcaption></figure>
+          )),
+        ])}
       </section>
     </div>
     <div class="wk-col">
@@ -60,4 +69,6 @@ const first = z.opis && z.opis.length ? plain(z.opis[0]).split(/(?<=\.)\s/)[0] :
 .wz-po{margin:0;padding:0 0 0 18px;font-size:14.5px;line-height:1.6}
 .wz-po li{margin-bottom:8px}
 .wz-po a{color:var(--ink)}
+.wz-fig svg{max-width:100%}
+.wz-fig figcaption a{text-decoration:none}
 </style>

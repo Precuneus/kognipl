@@ -1,6 +1,7 @@
 ---
 // Studiowanie 101 w Roczniku 2026 (jego słowo, 2026-11-01: *add a Studiowanie 101 page there also, adapt the text of the old page*):
-// jego tekst z sekcji Studiowanie 101 strony KiK, na ciemnym tle Rocznika; sekcja na stronie KiK zostaje.
+// jego tekst z sekcji Studiowanie 101 strony KiK, na ciemnym tle Rocznika; potem także Koło Naukowe, Erasmus+ z MOST i Przydatne linki
+// (jego słowo, 2026-11-01: *you can more more things from the last year. Erasmus, most, etc.*); strona KiK zostaje.
 import Base from '../../layouts/Base.astro';
 ---
 <Base title="Studiowanie 101 · Rocznik 2026 · kogni.pl" activePage="studiowanie" rocznik="2026" description="Jak się odnaleźć na studiach kognitywistyki: pierwszy rok, drugi rok, stypendia i Erasmus+.">
@@ -17,23 +18,43 @@ import Base from '../../layouts/Base.astro';
   .stud-card a:hover{color:#f0c060;border-color:#f0c060}
   .stud-highlight{margin-top:28px;padding:18px 22px;border-left:2px solid #f0c060;background:rgba(240,192,96,.05);border-radius:0 10px 10px 0}
   .stud-highlight p{font-family:var(--font-display);font-size:20px;line-height:1.45;color:#e2ddd4}
+  .stud-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;margin:0 0 28px;font-family:var(--font-body);font-size:14px}
+  .stud-nav a{color:#a09888;text-decoration:none}.stud-nav a:hover{color:#f0c060}
+  .stud-card + .stud-card{margin-top:28px}
+  .stud-card{scroll-margin-top:24px}
+  .stud-card h2.stud-title{font-size:30px;color:#f0c060;margin:0 0 18px}
+  .stud-card h3{font-family:var(--font-display);font-size:23px;font-weight:400;line-height:1.3;color:#e2ddd4;margin:30px 0 10px}
+  .stud-card h3:first-child{margin-top:0}
+  .stud-card ul,.stud-card ol{margin:12px 0 0;padding-left:22px;font-family:var(--font-body);font-size:16px;font-weight:300;line-height:1.8;color:#cfc8bb}
+  .stud-card ul + p,.stud-card ol + p{margin-top:14px}
+  .links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:6px}
+  .stud-card a.link-card{display:block;border:1px solid rgba(180,155,100,.2);border-radius:10px;padding:14px 16px;background:#0e0d0b;transition:border-color .18s ease}
+  .stud-card a.link-card:hover{border-color:#f0c060}
+  .link-title{font-family:var(--font-display);font-size:19px;color:#e2ddd4}
+  .link-desc{font-family:var(--font-body);font-size:13px;color:#a09888;margin-top:4px}
   @media (max-width:720px){.stud{padding:40px 16px 72px}.stud h1{font-size:32px}.stud-card{padding:28px 22px 24px}.stud-card h2{font-size:22px}}
 </style>
 
 <div class="stud">
   <h1>Studiowanie 101</h1>
-  <div class="stud-card">
+  <nav class="stud-nav" aria-label="Sekcje">
+    <a href="#studiowanie">Pierwsze kroki</a>
+    <a href="#knk">Koło Naukowe</a>
+    <a href="#erasmus">Erasmus+ i MOST</a>
+    <a href="#linki">Przydatne linki</a>
+  </nav>
+  <div class="stud-card" id="studiowanie">
     <p>Więc jesteś na studiach. Super. Masz dużo możliwości. Nowi znajomi, koło naukowe, wyjazdy, konferencje, staże... To może być świetny czas, najważniejsze jest jedno – przejmij inicjatywę i zacznij działać. Przede wszystkim musisz zrozumieć, że studia to nie szkoła średnia. Tutaj o wiele więcej zależy od Ciebie, wiele zajęć i wyjazdów jest opcjonalnych, ale opłacalnych. Kognitywistyka daje niesamowite możliwości i to Ty wybierasz czy skorzystać z tych możliwości.</p>
 
-    <h2>Jak się odnaleźć na studiach?</h2>
+    <h3>Jak się odnaleźć na studiach?</h3>
 
     <p>Przede wszystkim, rozmawiaj i komunikuj, jeśli czegoś nie wiesz lub nie rozumiesz. W szkole średniej odpowiedzi były gotowe i całe sedno Twojej edukacji skupiało się na trafieniu w klucz na maturze. Bez sensu. Teraz jest inaczej, masz kontrolę i to <a href="https://youtu.be/QUjYy4Ksy1E" target="_blank" rel="noopener">Ty wyznaczasz poprzeczkę.</a> Nauka kognitywistyki to w dużym stopniu błądzenie i szukanie odpowiedzi. Liczy się proces. Trafne pytania znaczą o wiele więcej niż gotowe odpowiedzi. Zadawaj jak najwięcej pytań. Sobie, znajomym, prowadzącym. Jeśli coś Ci się nie zgadza idź za tą intuicją i dociekaj. Myśl. Weryfikuj. Dociekaj.</p>
 
-    <h2>Czego się spodziewać na 1 roku?</h2>
+    <h3>Czego się spodziewać na 1 roku?</h3>
 
     <p>Mnóstwa nowości i rewolucji w głowie. Przede wszystkim, musisz zrozumieć, że teraz jesteś głównym charakterem swojego świata i masz wpływ na swoją przyszłość. Studia z kognitywistyki nie dadzą Ci gotowego rozwiązania. Musisz wziąć side questy i rozwijać się samodzielnie. Zaciekaw się przedmiotami, kołem naukowym, możliwościami. Rozmawiaj z ludźmi, pytaj, rozwijaj się. Przekonaj się czy to dla Ciebie. Może po roku uznasz, że wolisz inne studia. Albo po kilku miesiącach zdecydujesz, że studia nie są dla Ciebie. Albo odnajdziesz coś interesującego i Cię to wciągnie. Nie dowiesz się dopóki nie spróbujesz. Próbowanie wymaga działania. Więc działaj i nie zostawiaj decyzji na przyszłość. I scrolluj mniej.</p>
 
-    <h2>Jak może wyglądać Twój drugi rok?</h2>
+    <h3>Jak może wyglądać Twój drugi rok?</h3>
 
     <p>Zaczyna się drugi rok. Wracasz na uczelnię po zasłużonym wakacyjnym odpoczynku. Październik jest intensywny. Kompletujesz zaświadczenia do <a href="https://uwb.edu.pl/student/stypendia-kredyty/stypendia-studenci-3998" target="_blank" rel="noopener">Stypendium Rektora</a>. Dostaje je do 8% studentów kierunku: w roku 2025/2026 po 1300 zł miesięcznie przez 9 miesięcy. Ze średnią powyżej 4,5 i osiągnięciami masz realną szansę. Do tego dorzucasz do 1000 zł miesięcznie z <a href="https://uwb.edu.pl/student/stypendia-kredyty/kredyt-studencki" target="_blank" rel="noopener">kredytu studenckiego</a>. Składasz też wniosek o <a href="https://www.radio.bialystok.pl/wiadomosci/index/id/253758" target="_blank" rel="noopener">Stypendium Prezydenta Miasta Białegostoku</a>. Miasto przyznaje je co roku studentom do 26 lat ze średnią od 4,5 i osiągnięciami, wnioski od 15 września do 15 października, a ta sama osoba może je dostać raz na dwa lata. Wypłata przychodzi jednorazowo w grudniu. Ej, okazuje się, że nie musisz już pracować dorywczo i możesz skupić się na studiach. Masz więcej czasu na naukę, aktywność w kole naukowym, wyjazdy na konferencje, udział w projektach badawczych... Zaczynasz zbierać osiągnięcia do większych stypendiów, na horyzoncie na przyszły rok jest <a href="https://www.gov.pl/web/nauka/informacja-na-temat-stypendiow-ministra-nauki-i-szkolnictwa-wyzszego-za-znaczace-osiagniecia-dla-studentow-na-rok-akademicki-20262027-konkurs-sst07" target="_blank" rel="noopener">Stypendium Ministra Nauki i Szkolnictwa Wyższego</a>, do 17 000 zł.</p>
 
@@ -44,6 +65,135 @@ import Base from '../../layouts/Base.astro';
     <div class="stud-highlight">
     <p>Tak może wyglądać Twój drugi rok. Tę ścieżkę przeszli studenci przed Tobą.</p>
     </div>
+  </div>
+  <div class="stud-card" id="knk">
+  <h2 class="stud-title">Koło Naukowe Kognitywistów (KNK)</h2>
+
+  <p>KNK to studencka organizacja naukowa działająca przy Wydziale Filozofii i Kognitywistyki UwB. Jeśli chcesz robić coś więcej niż zaliczać przedmioty, tu jest twoje miejsce.</p>
+
+  <h3>Spotkania</h3>
+
+  <p>Spotykamy się we wtorki w sali 327 o g. 16:45. Na spotkaniach ogólnych omawiamy bieżące projekty, planujemy wydarzenia i dyskutujemy o tym co nas akurat interesuje naukowo.</p>
+
+  <h3>Co robimy?</h3>
+
+  <p>KNK organizuje wydarzenia naukowe dla studentów i nie tylko. Największe z nich to <a href="https://cyberbrain.pl" target="_blank" rel="noopener">CYBER BRAIN</a> – coroczna impreza w ramach Tygodnia Mózgu, podczas której zapraszamy naukowców z całej Polski. Wykłady, dyskusje, kawiarnia naukowa. W 2026 roku mieliśmy dziesięcioro prelegentów z czterech różnych miast.</p>
+
+  <p>Poza wydarzeniami: wyjeżdżamy na konferencje naukowe, angażujemy się w projekty badawcze, prowadzimy warsztaty i integrujemy się na mniej formalnych wyjściach. Jeśli masz pomysł na projekt albo wydarzenie, KNK to miejsce żeby go zrealizować.</p>
+
+  <div class="stud-highlight">
+  <p>Śledź nas na <a href="https://facebook.com/knk.uwb" target="_blank" rel="noopener">Facebooku</a> żeby być na bieżąco z wydarzeniami i aktywnościami Koła.</p>
+  </div>
+  </div>
+
+  <div class="stud-card" id="erasmus">
+  <h2 class="stud-title">Erasmus+ 101</h2>
+
+  <h3>Kto może wziąć udział?</h3>
+
+  <p>Program dla wszystkich osób na studiach 1., 2. i 3. stopnia, z wyjątkiem osób na:</p>
+  <ul>
+  <li>ostatnim semestrze swoich studiów</li>
+  <li>pierwszym roku studiów 1 stopnia</li>
+  <li>pierwszym semestrze studiów 2 lub 3 stopnia</li>
+  </ul>
+
+  <p>Na Erasmusa wyjeżdżasz na studia, na praktyki albo na BIP. W sumie masz 12 miesięcy mobilności na stopień studiów (12 m-cy na licencjat; nowe 12 m-cy na magisterkę; nowe 12 m-cy na doktoracie). Na przykład, możesz wyjechać na studia na 6 miesięcy i na praktyki na 4 miesiące. Albo na 10 miesięcy na studia, na 4 tygodnie na praktyki i na 5 dni na BIP.</p>
+
+  <h3>1. Studia</h3>
+
+  <p>Wyjeżdżasz na jedną z uczelni partnerskich na semestr. Jeśli zaczynasz od semestru zimowego to możesz przedłużyć wyjazd na drugi semestr. Albo możesz pojechać na semestr na uczelnię X, a na drugi semestr na uczelnię Y.</p>
+
+  <p>Wydział Filozofii i Kognitywistyki współpracuje z następującymi uczelniami zagranicznymi:</p>
+  <ol>
+  <li>Uniwersytet Johannesa Keplera w Linz (Austria)</li>
+  <li>Uniwersytet w Tartu (Estonia)</li>
+  <li>Uniwersytet w Liège (Belgia)</li>
+  <li>Uniwersytet Ondokuz Mayis w Samsun (Turcja)</li>
+  <li>Uniwersytet w Ostrawie (Czechy)</li>
+  <li>Uniwersytet Josipa Juraja Strossmayera w Osijeku (Chorwacja)</li>
+  <li>Uniwersytet w Pardubicach (Czechy)</li>
+  <li>Uniwersytet w Szeged (Węgry)</li>
+  </ol>
+
+  <h3>Rekrutacja</h3>
+
+  <p>Bierzesz udział w rekrutacji. Rekrutacja główna odbywa się w marcu i obejmuje wyjazdy na cały następny rok akademicki: semestr zimowy, letni albo oba. W październiku, gdy zostają wolne miejsca, wydział ogłasza rekrutację uzupełniającą na semestr letni.</p>
+
+  <p>Na rekrutację musisz przygotować aktualny formularz zgłoszeniowy na dany rok – dostępny na stronie. Wypełniasz ten formularz i przynosisz na początku marca / października do dziekanatu. Będzie ogłoszenie mailem o rekrutacji wraz z deadlinem na przyniesienie formularza i terminem rozmowy kwalifikacyjnej. Na rozmowie będzie ktoś z koordynatorów i ktoś z samorządu studentów, zapytamy o motywacje na wyjazd, zainteresowania, preferowaną uczelnię i porozmawiamy chwilę w języku w którym będą prowadzone zajęcia na uczelni docelowej. Po chwili dostaniesz wynik rozmowy i zapewne możesz już pakować walizkę na wyjazd!</p>
+
+  <p>Po pomyślnej rekrutacji skontaktuje się z Tobą Dział Współpracy Międzynarodowej (DWM) i większość dokumentów załatwisz przez nich. Przeprowadzą Cię przez przygotowania krok po kroku. Ubezpieczenie, umowy itp. Z nami musisz jeszcze uzgodnić Learning Agreement.</p>
+
+  <h3>Learning Agreement</h3>
+
+  <p>Learning Agreement to dokument, w którym wpisujesz zamienniki przedmiotów z UwB które będziesz realizować na uczelni przyjmującej. Sprawdź stronę wydziału, wyślij maila, znajdź listę przedmiotów. Sprawdź swój program studiów i przedmioty jakie masz do zrealizowania w semestrze wyjazdu. Porównaj co brzmi podobnie z nazwy i opisu. Kilka porad:</p>
+  <ul>
+  <li>Poszukaj najpierw zamienników dla przedmiotów z Twojego semestru z UwB. Im więcej znajdziesz podobnych przedmiotów tym lepiej.</li>
+  <li>Dla niektórych przedmiotów nie znajdziesz zamienników, to normalne. Zapytaj przed wyjazdem prowadzących te przedmioty o warunki zaliczenia. Zdalny projekt, opracowanie materiału, prezentacja... Wyjdź z inicjatywą i wszystko da się ustalić.</li>
+  <li>W Learning Agreement powinno być około 30 pkt ECTS. Żeby dozbierać punkty możesz wpisać niektóre z przedmiotów na uczelni docelowej jako fakultety na UwB. Zobacz też w swoim programie studiów przedmioty na kolejne semestry. Być może tam jest coś, co jest podobne do oferty przedmiotów na uczelni docelowej? Jeśli tak to możesz je wpisać.</li>
+  </ul>
+
+  <p>Learning Agreement tworzysz w USOSweb, w module Wymiana studencka. Koordynator wydziałowy zatwierdza go w systemie, a uczelnia przyjmująca akceptuje go przez sieć EWP.</p>
+
+  <h3>Na miejscu</h3>
+
+  <p>Po przyjeździe na miejsce masz trochę czasu na rozejrzenie się w sytuacji. Możliwe, że niektóre przedmioty nie wystartowały. Albo są jakieś inne ciekawe przedmioty. Albo któryś przedmiot jest tak nudnie prowadzony, że zasypiasz. Zorientuj się w warunkach zaliczenia, zasadach na przedmiotach, sprawdź różnych prowadzących, wypytaj innych studentów co warto wybrać. Na wypadek takich sytuacji masz 30 dni na zmiany w Learning Agreement. Kontaktujesz się z koordynatorem i uzupełniasz część "during the mobility". Musisz "usunąć" niechciane przedmioty i "dodać" nowe. Zmiany zrobione, masz teraz przed sobą semestr zaplanowany przez siebie!</p>
+
+  <p>Pod koniec wyjazdu zdajesz przedmioty, zdobywasz Transcript of Records i wracasz do Polski. Semestr zaliczony, przygoda przeżyta. Well done.</p>
+
+  <div class="stud-highlight">
+  <p>Dodatkowa rada: Jeśli masz ambicje naukowe to oprócz przedmiotów zorientuj się jakie laboratoria / eksperymenty prowadzi przyjmująca uczelnia. Mogą być na innym wydziale. Jeśli znajdziesz coś, co Cię interesuje to pójdź tam i powiedz, że jesteś na Erasmusie i chcesz pomóc w badaniach bo ciekawi Cię to czy tamto i chcesz się nauczyć. Powinni zareagować entuzjastycznie i zaangażować Cię w coś. Jeśli to wypali to będziesz mieć udział w projekcie badawczym, a jeśli projekt prowadzi do publikacji to dogadaj się, żeby Cię dodać. Taka współpraca przełoży się później na stypendia i możliwości rozwoju naukowego.</p>
+  </div>
+
+  <h3>2. Praktyki</h3>
+
+  <p>Praktyki długoterminowe trwają od 2 do 12 miesięcy. Praktyki krótkoterminowe mieszane trwają od 5 do 30 dni na miejscu i obejmują obowiązkową część online. Krótkoterminowe są dostępne po ukończeniu pierwszego roku studiów I stopnia. W skrócie – jedziesz do laboratorium / firmy / urzędu i pracujesz tam. Idealny wyjazd na wakacyjną przerwę albo po studiach. W drugim przypadku to praktyki absolwenckie = załatwiasz wszystkie formalności przed obroną i jedziesz po skończeniu studiów.</p>
+
+  <p>Jak znaleźć miejsce? Tutaj wszystko zależy od Ciebie. Miejsce musi być związane z Twoim kierunkiem studiów. Poszukaj ciekawych laboratoriów. Sprawdź, gdzie pracują autorzy artykułów, które lubisz. Znajdź coś, co autentycznie Cię interesuje.</p>
+
+  <p>Jak już znajdziesz to piszesz maila do tego miejsca. "Dzień dobry, nic nie umiem ale chcę się nauczyć i przyjechać na X miesięcy na staż Erasmus." Warto też dodać, że jakiś artykuł Cię zaciekawił, coś było interesującego i ogólnie bardzo chcesz dołączyć do laboratorium. Powinni zareagować pozytywnie i jest duża szansa, że to będzie Twoje przyszłe miejsce wyjazdu! A jak się nie uda tam? To piszesz do kolejnego miejsca!</p>
+
+  <h3>3. BIP</h3>
+
+  <p>BIP to Blended Intensive Program. Jedziesz na kilka dni na specjalne warsztaty organizowane przez jedną z uczelni w Europie. Przed wyjazdem weźmiesz udział w części wirtualnej – szkoleniu lub przygotowaniu online. Ten program to świetna forma wyjazdu i okazja, żeby żyć i uczyć się w innym kraju.</p>
+
+  <h3>4. MOST</h3>
+
+  <p>Bonusowo, jak już jesteśmy przy wyjazdach, polecam również program MOST. Jedziesz na semestr lub dwa na inną uczelnię w Polsce, realizując tamtejsze przedmioty. Nie ma tutaj dopłat ale to świetna opcja na doświadczenie innego miasta, studiów na innym uniwersytecie oraz nawiązanie cennych kontaktów.</p>
+  </div>
+
+  <div class="stud-card" id="linki">
+  <h2 class="stud-title">Przydatne linki</h2>
+
+  <div class="links-grid">
+  <a href="https://filozofia.uwb.edu.pl/student/rozklady-zajec" class="link-card" target="_blank" rel="noopener">
+  <div class="link-title">Rozkład zajęć</div>
+  <div class="link-desc">Rozkłady zajęć dla KiK UwB</div>
+  </a>
+  <a href="https://uwb.edu.pl/student/centrum-wsparcia/bezplatne-konsultacje-psychologiczne" class="link-card" target="_blank" rel="noopener">
+  <div class="link-title">Pomoc psychologiczna</div>
+  <div class="link-desc">Darmowa pomoc dla studentów i pracowników</div>
+  </a>
+  <a href="https://uwb.edu.pl/student/stypendia-kredyty/stypendia-studenci-3998" class="link-card" target="_blank" rel="noopener">
+  <div class="link-title">Stypendium Rektora</div>
+  <div class="link-desc">Stypendium za wyniki i osiągnięcia</div>
+  </a>
+  <a href="https://uwb.edu.pl/student/stypendia-kredyty/kredyt-studencki" class="link-card" target="_blank" rel="noopener">
+  <div class="link-title">Kredyt studencki</div>
+  <div class="link-desc">Informacje o kredycie studenckim</div>
+  </a>
+  <a href="https://www.gov.pl/web/nauka/informacja-na-temat-stypendiow-ministra-nauki-i-szkolnictwa-wyzszego-za-znaczace-osiagniecia-dla-studentow-na-rok-akademicki-20262027-konkurs-sst07" class="link-card" target="_blank" rel="noopener">
+  <div class="link-title">Stypendium Ministra</div>
+  <div class="link-desc">do 17 000 zł za znaczące osiągnięcia</div>
+  </a>
+  <a href="https://www.mojestypendium.pl/" class="link-card" target="_blank" rel="noopener">
+  <div class="link-title">Wyszukiwarka stypendiów</div>
+  <div class="link-desc">mojestypendium.pl</div>
+  </a>
+  </div>
+
+  <h3>Kontakt</h3>
+  <p>Koordynator wydziałowy Erasmus+: <a href="mailto:o.borowiecki@uwb.edu.pl">o.borowiecki@uwb.edu.pl</a></p>
   </div>
 </div>
 
