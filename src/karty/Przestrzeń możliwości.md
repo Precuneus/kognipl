@@ -20,7 +20,7 @@ rekordy:
 - exurb1a_then-next-comes_o1OsDWT_DUc
 stan: gotowa
 ---
-Przestrzeń możliwości (ang. possibility space) to wszystko, co w danej chwili może się wydarzyć: działania, które możesz podjąć, oraz ich możliwe skutki. Tu jest rozumiana jako przestrzeń, którą kształtują Twoje [[Predykcja|predykcje]]. Twoje Modele Mentalne tworzą predykcje tego, co mieści się w jej ścianach. Każdej możliwości nadają prawdopodobieństwo.
+Przestrzeń możliwości (ang. possibility space) to wszystko, co w danej chwili może się wydarzyć: działania, które możesz podjąć, oraz ich możliwe skutki. Tu jest rozumiana jako przestrzeń, którą kształtują Twoje [[Predykcja|predykcje]]. Twoje [[Modele Mentalne|Modele Mentalne]] tworzą predykcje tego, co mieści się w jej ścianach. Każdej możliwości nadają prawdopodobieństwo.
 
 Ściany tej przestrzeni wyznaczają ciało, otoczenie i inni ludzie. Wyobraź sobie dziecko w pokoju. Samo eksploruje: zagląda do szuflad i wspina się na krzesło. Z rodzeństwem rozrabia i psoci. Kiedy w pokoju jest rodzic, to on wyznacza ściany. Ten sam pokój ma więc inną przestrzeń możliwości zależnie od tego, kto w nim jest.
 

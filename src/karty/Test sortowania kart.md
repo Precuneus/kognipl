@@ -30,6 +30,6 @@ Osoby po uszkodzeniu kory przedczołowej uczą się pierwszej reguły bez więks
 
 U zdrowych osób w skanerze środkowa część grzbietowo-bocznej kory przedczołowej zwiększa aktywność przy każdej ocenie, dobrej i złej, kiedy bieżący ruch trzeba odnieść do wcześniejszych, utrzymywanych w [[Pamięć robocza|pamięci roboczej]]. Pętla kory brzuszno-bocznej przedczołowej z jądrem ogoniastym i wzgórzem zwiększa aktywność przy ocenie „źle”, która każe zmienić regułę (Monchi i in. 2001)<!--[s:monchi2001-dlpfc-feedback-vlpfc-shift]-->. Jądro ogoniaste to jedno z [[Drogi jąder podstawy|jąder podstawy]] (ang. basal nuclei), położonych głęboko w mózgu struktur sterujących ruchem (Betts i in. 2022)<!--[s:betts2022-basal-nuclei-caudate]-->, a kora grzbietowo-boczna należy do [[Sieć kontroli|sieci kontroli]], której rdzeń leży w bocznej korze przedczołowej (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-lfpn-core-lateral-pfc]-->.
 
-Kiedy gra zmienia zasady w połowie, a Ty grasz dalej po staremu, każde „źle” przynosi zaskoczenie, zanim złapiesz nową regułę. Każde zaskoczenie aktualizuje Twoje Modele Mentalne gry, a Twoja sieć kontroli trzyma nową regułę, dopóki ta reguła przynosi „dobrze”.
+Kiedy gra zmienia zasady w połowie, a Ty grasz dalej po staremu, każde „źle” przynosi zaskoczenie, zanim złapiesz nową regułę. Każde zaskoczenie aktualizuje Twoje [[Modele Mentalne|Modele Mentalne]] gry, a Twoja sieć kontroli trzyma nową regułę, dopóki ta reguła przynosi „dobrze”.
 
 ![[karty.svg]]

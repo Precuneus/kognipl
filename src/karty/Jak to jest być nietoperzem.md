@@ -37,4 +37,4 @@ Kurs odpowiada argumentem tożsamości. Wychodzi on od przesłanki, że zmiany w
 
 Znaczenia słów ćwiczymy latami na doświadczeniach wspólnych, takich jak przejazd tą samą trasą w grze wyścigowej, a im dalej znaczenie odchodzi od świata fizycznego, tym mniej doświadczenia jest wspólne. Do najbardziej prywatnych doświadczeń, żałoby, intensywnej medytacji, świadomego snu, używamy tych samych pospolitych słów, które w uchu odbiorcy niosą inne znaczenie, więc pary i bliscy przyjaciele budują własny język na doświadczenia przeżyte razem. Badaczka, która pyta pacjentkę, co ta widzi, dostaje [[Raport jako pomiar|raport]] złożony z takich etykiet.
 
-Kiedy mówisz komuś, że coś Cię zachwyciło, podajesz mu etykietę wyćwiczoną na innych doświadczeniach. Z tej etykiety kształtują się jego Modele Mentalne Twojego zachwytu, a samo doświadczenie zostaje po Twojej stronie.
+Kiedy mówisz komuś, że coś Cię zachwyciło, podajesz mu etykietę wyćwiczoną na innych doświadczeniach. Z tej etykiety kształtują się jego [[Modele Mentalne|Modele Mentalne]] Twojego zachwytu, a samo doświadczenie zostaje po Twojej stronie.

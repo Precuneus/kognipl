@@ -30,4 +30,4 @@ Metaanaliza 62 niezależnych oszacowań z udziałem ponad 100 000 osób w każdy
 
 Średnie wartości cech zmieniają się przez całe życie. W metaanalizie 92 prób podłużnych sumienność i dominacja społeczna, aspekt ekstrawersji, rosną zwłaszcza między 20. a 40. rokiem życia, a neurotyczność w tym samym czasie spada. Otwartość i żywość społeczna, drugi aspekt ekstrawersji, rosną w okresie dorastania i spadają w starości, a ugodowość zmienia się dopiero w starości (Roberts i in. 2006)<!--[s:roberts2006-change-young-adulthood]-->.
 
-Kiedy w kwestionariuszu odpowiadasz, czy jesteś osobą staranną, polegasz na Modelach Mentalnych siebie, ukształtowanych przez to, jak działasz od lat i jak inni na to odpowiadają. Kolejne lata dalej je kształtują, więc Twój wynik to odczyt jednego okresu Twojego życia, który czas może przesunąć.
+Kiedy w kwestionariuszu odpowiadasz, czy jesteś osobą staranną, polegasz na [[Modele Mentalne|Modelach Mentalnych]] siebie, ukształtowanych przez to, jak działasz od lat i jak inni na to odpowiadają. Kolejne lata dalej je kształtują, więc Twój wynik to odczyt jednego okresu Twojego życia, który czas może przesunąć.
