@@ -801,8 +801,7 @@
      "plik": "platy-wyspa",
      "czesci": [
       {
-       "obraz": "/images/2026/platy-mozgu-pl.svg",
-       "jasne": true,
+       "plik": "platy",
        "alt": "Płaty mózgu z polskimi podpisami"
       },
       {
