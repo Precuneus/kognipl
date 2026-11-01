@@ -19,13 +19,19 @@ const first = z.opis && z.opis.length ? plain(z.opis[0]).split(/(?<=\.)\s/)[0] :
 // każda po akapicie `po`, numerowana w kolejności i podpisana; rysunki w src/rocznik/2026/ryciny/wpisy/, w kolorze kursu.
 const RYC = import.meta.glob('../../../rocznik/2026/ryciny/wpisy/*.svg', { query: '?raw', import: 'default', eager: true });
 const unmark = (t) => String(t || '').replace(/<!--\[s:[^\]]*\]-->/g, '');
-const figs = (z.ryciny || []).slice().sort((x, y) => x.po - y.po).map((r, i) => ({ ...r, n: i + 1, svg: RYC['../../../rocznik/2026/ryciny/wpisy/' + r.plik + '.svg'] || '' }));
-figs.forEach((f) => { if (!f.svg) throw new Error('Wpis ' + c.id + ': brak ryciny ' + f.plik); });
+// rycina z otwartego źródła (jego słowo, 2026-11-01: *Find add, and cite open source images where possible*): pole `obraz` (adres w public),
+// `zrodlo` z autorem i licencją, `jasne` kładzie rysunek o ciemnych podpisach na jasnym tle; podpis może mieć listę `lista`
+const figs = (z.ryciny || []).slice().sort((x, y) => x.po - y.po).map((r, i) => ({ ...r, n: i + 1, svg: r.obraz ? '' : RYC['../../../rocznik/2026/ryciny/wpisy/' + r.plik + '.svg'] || '' }));
+figs.forEach((f) => { if (!f.svg && !f.obraz) throw new Error('Wpis ' + c.id + ': brak ryciny ' + f.plik); });
+// poprzednie i następne zajęcia (jego słowo, 2026-11-01: *I should see a menu on the top, to click right to the previous class and right to the next*)
+const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = held[hi + 1];
 ---
 <Base title={c.title + ' · ' + c.course + ' ' + c.short + ' · kogni.pl'} activePage="plotno" rocznik="2026" description={first}>
 <article class="wk wz" style={'--ink:' + ink}>
-  <nav aria-label="Ścieżka" class="wk-path">
-    <a href="/2026/">Rocznik 2026</a><span aria-hidden="true"> › </span><a href={'/2026/?z=' + c.id}>{c.course} {c.short}</a><span aria-hidden="true"> › </span><span aria-current="page">{c.title}</span>
+  <nav aria-label="Zajęcia" class="wz-nav">
+    {prev ? <a href={prev.url} class="wz-nav-l" title={prev.title}><span aria-hidden="true">‹</span> {prev.course} {prev.short}</a> : <span class="wz-nav-l"></span>}
+    <a href={'/2026/?z=' + c.id} class="wz-nav-c" aria-current="page">{c.course} {c.short}</a>
+    {next ? <a href={next.url} class="wz-nav-r" title={next.title}>{next.course} {next.short} <span aria-hidden="true">›</span></a> : <span class="wz-nav-r"></span>}
   </nav>
   <div class="wk-grid">
     <div class="wk-col">
@@ -38,7 +44,14 @@ figs.forEach((f) => { if (!f.svg) throw new Error('Wpis ' + c.id + ': brak rycin
         {(z.opis || []).map((p, i) => [
           <p class="wk-p">{segs(p).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>,
           ...figs.filter((f) => f.po === i).map((f) => (
-            <figure class="wk-fig wz-fig"><Fragment set:html={f.svg} /><figcaption>{'Ryc. ' + f.n + '. '}{segs(unmark(f.podpis)).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}</figcaption></figure>
+            <figure class="wk-fig wz-fig">
+              {f.obraz ? <img src={f.obraz} alt={unmark(f.alt || f.podpis)} loading="lazy" class={f.jasne ? 'wz-jasne' : ''} /> : <Fragment set:html={f.svg} />}
+              <figcaption>{'Ryc. ' + f.n + '. '}{segs(unmark(f.podpis)).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}
+                {f.lista && <ul class="wz-lista">{f.lista.map((x) => <li>{segs(unmark(x)).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}</li>)}</ul>}
+                {f.dopis && <span>{' ' + unmark(f.dopis)}</span>}
+                {f.zrodlo && <span class="wz-zrodlo">{' Źródło: '}<a href={f.zrodlo.url} target="_blank" rel="noopener">{f.zrodlo.t}</a></span>}
+              </figcaption>
+            </figure>
           )),
         ])}
       </section>
@@ -70,5 +83,18 @@ figs.forEach((f) => { if (!f.svg) throw new Error('Wpis ' + c.id + ': brak rycin
 .wz-po li{margin-bottom:8px}
 .wz-po a{color:var(--ink)}
 .wz-fig svg{max-width:100%}
+.wz-fig img{display:block;width:100%;max-width:560px;height:auto;border-radius:10px}
+.wz-fig img.wz-jasne{background:#ece6da;padding:10px}
+.wz-lista{margin:6px 0 4px;padding-left:18px}
+.wz-lista li{margin:2px 0}
+.wz-zrodlo{color:#7d7466}
+.wz-zrodlo a{color:#a09888}
+.wz-nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
+.wz-nav a{color:var(--ink);text-decoration:none}
+.wz-nav-l{justify-self:start}
+.wz-nav-r{justify-self:end}
+.wz-nav-c{justify-self:center;color:#e2ddd4 !important;font-size:13.5px}
+.wz-nav a.wz-nav-l,.wz-nav a.wz-nav-r{color:#a09888}
+.wz-nav a.wz-nav-l:hover,.wz-nav a.wz-nav-r:hover{color:var(--ink)}
 .wz-fig figcaption a{text-decoration:none}
 </style>

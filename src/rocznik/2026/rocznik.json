@@ -679,13 +679,13 @@
     },
     {
      "po": 6,
-     "plik": "pokoj",
-     "podpis": "Ten sam pokój i trzy przestrzenie możliwości: samo dziecko eksploruje, z rodzeństwem rozrabia i psoci, a przy rodzicu ściany wyznacza rodzic."
+     "plik": "przestrzen",
+     "podpis": "Przestrzeń możliwości: z chwili teraz rozchodzą się możliwe drogi, a grubsza droga jest bardziej prawdopodobna. Ściany wyznaczają ciało, otoczenie i inni ludzie, a próba czasem przesuwa ścianę."
     },
     {
      "po": 6,
      "plik": "drzwi",
-     "podpis": "Drzwi dwukierunkowe pozwalają wrócić, a za jednokierunkowymi skutki toczą się już w nowej przestrzeni możliwości."
+     "podpis": "Za drzwiami dwukierunkowymi rozglądasz się i możesz wrócić. Za jednokierunkowymi skutki toczą się już w nowej przestrzeni możliwości."
     }
    ]
   },
@@ -699,16 +699,16 @@
    "opis": [
     "Zajęcia były powtórką pierwszej prezentacji przed kolokwium 9 listopada, a za plan posłużyła lista tematów kolokwium. Szliśmy po niej od komórki do sieci mózgu, a ja dorzucałem po drodze nowe pomysły. Prowadziło nas pytanie, jak bioinformacja z receptorów staje się kubkiem kawy w Twojej dłoni i co się dzieje, gdy kubek okazuje się inny, niż zakładała Twoja predykcja.",
     "Układ nerwowy ma część ośrodkową, mózg i rdzeń kręgowy, oraz obwodową, nerwy, którymi bioinformacja płynie od ciała i do ciała. W obu częściach znajdziesz komórki nerwowe i komórki glejowe. [[Neuron i glej|Neuron]] dendrytami odbiera bioinformację, a aksonem prowadzi ją do zakończeń. Glej izoluje neurony, dostarcza im składników odżywczych i owija aksony osłonką mielinową.",
-    "W spoczynku wnętrze neuronu ma ujemne napięcie, około −70 mV: to potencjał spoczynkowy. Gdy napięcie dojdzie do progu, do komórki wpływają jony sodu i wnętrze na chwilę staje się dodatnie: to [[Potencjał czynnościowy|potencjał czynnościowy]], który przesuwa się wzdłuż aksonu. W zakończeniu aksonu do środka wpływają jony wapnia, a pęcherzyki wydzielają przekaźnik do [[Synapsa chemiczna i elektryczna|synapsy chemicznej]]. Przekaźnik przyłącza się do receptorów następnej komórki: jonotropowy sam jest kanałem i przepuszcza jony, a metabotropowy często otwiera albo zamyka kanały pośrednio, przez białko G. [[Kofeina i receptor adenozynowy|Kofeina]] blokuje receptor adenozyny, więc jest antagonistą, a cząsteczka, która w receptorze naśladuje przekaźnik, to agonista. Siła, z jaką cząsteczka wiąże się z receptorem, to jej powinowactwo.",
+    "W spoczynku wnętrze neuronu ma ujemne napięcie, około −70 mV: to potencjał spoczynkowy. Gdy napięcie dojdzie do progu, do komórki wpływają jony sodu i wnętrze na chwilę staje się dodatnie: to [[Potencjał czynnościowy|potencjał czynnościowy]], który przesuwa się wzdłuż aksonu. W zakończeniu aksonu do środka wpływają jony wapnia, a pęcherzyki wydzielają przekaźniki do [[Synapsa chemiczna i elektryczna|synapsy chemicznej]]. Przekaźniki przyłączają się do receptorów następnej komórki: jonotropowy sam jest kanałem i przepuszcza jony, a metabotropowy często otwiera albo zamyka kanały pośrednio, przez białko G. [[Kofeina i receptor adenozynowy|Kofeina]] blokuje receptor adenozyny, więc jest antagonistą, a cząsteczka, która w receptorze naśladuje przekaźnik, to agonista. Siła, z jaką cząsteczka wiąże się z receptorem, to jej powinowactwo.",
     "Kora mózgu dzieli się na płaty czołowy, skroniowy, ciemieniowy i potyliczny, a w głębi bruzdy bocznej ukryta jest wyspa. W 1848 roku żelazny pręt przeszedł przez płat czołowy [[Phineas Gage|Phineasa Gage'a]]. Przeżył, a przyjaciele mówili, że to „już nie Gage”, ale potem przez prawie osiem lat powoził dyliżansem w Chile, więc opowieść o trwałej przemianie jego osobowości jest sporna. Drugi przykład to [[Pacjent Elliot|pacjent Elliot]], któremu oponiak zabrał części obu płatów czołowych. Po operacji decydował impulsywnie i chłodno, a Damasio tłumaczy to hipotezą markerów somatycznych: sygnały ze stanu ciała wpływają na wybór.",
     "Wziąłem swój czerwony kubek i popatrzyłem na niego. Kubek odbija światło o długości fali, którą widzimy jako czerwień, bo w świetle widzialnym, mniej więcej od 400 do 700 nm, długość fali ustala barwę. To wąski wycinek [[Widmo elektromagnetyczne|widma elektromagnetycznego]]. Gdy patrzysz wprost na kubek, jego obraz powstaje w dołku środkowym, gdzie leżą same [[Pręciki, czopki i droga wzrokowa|czopki]]. Trzy rodzaje czopków umożliwiają widzenie barw, także czerwieni kubka, a pręciki, rozsiane dalej od dołka, działają w słabym świetle i dają Ci obrzeża pola widzenia.",
-    "Bioinformacja płynie z siatkówki przez ciało kolankowate boczne we wzgórzu do V1, pierwszorzędowej kory wzrokowej w płacie potylicznym. Kubek w lewym polu widzenia to aktywność prawej V1, bo włókna z nosowych połówek siatkówek krzyżują się w skrzyżowaniu wzrokowym. Pacjent P.S. po [[Rozszczepiony mózg|przecięciu spoidła wielkiego]] zobaczył lewą półkulą kurzą łapkę, a prawą zaśnieżoną scenę. Lewą ręką, którą porusza prawa półkula, wybrał łopatę, a prawą kurę: każda półkula widziała tylko swoją połowę pola.",
+    "Bioinformacja płynie z siatkówki przez ciało kolankowate boczne we wzgórzu do pierwszorzędowej kory wzrokowej (V1) w płacie potylicznym. Kubek w lewym polu widzenia to aktywność prawej V1, bo włókna z nosowych połówek siatkówek krzyżują się w skrzyżowaniu wzrokowym. Pacjent P.S. po [[Rozszczepiony mózg|przecięciu spoidła wielkiego]] zobaczył lewą półkulą kurzą łapkę, a prawą zaśnieżoną scenę. Lewą ręką, którą porusza prawa półkula, wybrał łopatę, a prawą kurę: każda półkula widziała tylko swoją połowę pola.",
     "Z V1 szlak brzuszny prowadzi do płata skroniowego, gdzie rozpoznajesz kubek, a szlak grzbietowy do płata ciemieniowego. Płat ciemieniowy niesie położenie kubka względem ciała i schemat ciała: gdzie są Twoje ręce i jak daleko sięgają. Pacjentka D.F. po niedotlenieniu z wielkim trudem mówi albo pokazuje obrotem dłoni, jak ustawiona jest szczelina, ale kartę wkłada w nią tak sprawnie jak osoby zdrowe, bo jej szlak grzbietowy działa. [[Trzeci szlak wzrokowy|Trzeci szlak]], boczny, niesie mimikę, spojrzenie i gest drugiej osoby.",
     "[[Bioinformacja|Bioinformację]] dzieliliśmy według tego, skąd płynie. Eksterocepcja to bioinformacja o tym, co jest wokół Ciebie, [[Propriocepcja|propriocepcja]] o tym, gdzie jest Twoje ciało i jak się rusza, a [[Interocepcja|interocepcja]] o tym, jak się masz w środku. [[Ian Waterman|Ian Waterman]] stracił propriocepcję i czucie delikatnego dotyku od szyi w dół. Prostą postawę utrzymuje, ale każdy nowy ruch prowadzi wzrokiem, a Ty sięgasz po kubek bez patrzenia na rękę, bo masz propriocepcję. Węch omija przełączenie we wzgórzu: z opuszki węchowej aksony prowadzą wprost do kory.",
     "[[Sieci wielkoskalowe|Sieci]] ułożyłem według [[Odległość od receptorów|odległości od receptorów]]. Najbliżej leżą [[Sieć wzrokowa|sieć wzrokowa]] z V1 oraz [[Sieć czuciowo-ruchowa|czuciowo-ruchowa]] wokół bruzdy środkowej, w zakręcie przedśrodkowym i zaśrodkowym. Dalej leży [[Sieć grzbietowa uwagi|sieć grzbietowa uwagi]] przy bruździe śródciemieniowej, potem [[Sieć kontroli|sieć kontroli]], a najdalej [[Sieć domyślna|sieć domyślna]] z hipokampem i korą oczodołowo-czołową. [[Sieć istotności|Sieć istotności]] z wyspą i [[Sieć brzuszna uwagi|sieć brzuszną uwagi]] ustawiłem w poprzek tej osi, z hipotezą, że niosą walencję: czy to, co się dzieje, przyciąga, czy odpycha. Według tej hipotezy walencję niosą też obszary limbiczne.",
     "Podnosisz kubek, a jest lżejszy, niż zakładały Twoje Modele Mentalne, bo ktoś wypił połowę. Siła mięśni była dobrana do pełnego kubka, więc ręka podskakuje, a kawa chlupocze. Twoje sieci cały czas tworzą [[Predykcja|predykcje]], a gdy bioinformacja z receptorów się z nimi rozmija, zaskoczenie płynie coraz dalej od receptorów. Sieć czuciowo-ruchowa dostraja chwyt, sieć kontroli zmienia plan i zaglądasz do kubka, a sieć domyślna aktualizuje model kubka, a może model współlokatora, który pije Twoją kawę.",
     "Jutro przypomnisz sobie, że ktoś rano wypił połowę Twojej kawy: to wspomnienie zdarzenia, a nowe wspomnienia zdarzeń powstają z udziałem hipokampa. [[Pacjent H.M.|Pacjent H.M.]] stracił przyśrodkowe struktury płatów skroniowych z hipokampem w operacji, która opanowała padaczkę. Od tej chwili zapominał codzienne zdarzenia niemal tak szybko, jak się działy: to niepamięć następcza, w której od chwili uszkodzenia nie powstają nowe wspomnienia. Niepamięć wsteczna zabiera wspomnienia sprzed uszkodzenia.",
-    "Z zewnątrz tę scenę z kubkiem mierzą przyrządy. Łączność strukturalna to połączenia istoty białej, aksonów owiniętych mieliną, między obszarami istoty szarej, ciał neuronów i dendrytów. Łączność funkcjonalna to zgodność w czasie aktywności odległych obszarów, a z niej wyodrębniono sieci wielkoskalowe. [[EEG|EEG]] zbiera elektrodami na skórze głowy zmiany napięcia z synaps wielkich populacji neuronów, a MEG mierzy pola magnetyczne nad głową, oba co do milisekundy. [[Skaner MRI|fMRI]] dokładniej wskazuje miejsce, ale mierzy aktywność pośrednio, przez krew.",
+    "Z zewnątrz tę scenę z kubkiem mierzą przyrządy. Łączność strukturalna to połączenia istoty białej, aksonów owiniętych mieliną, między obszarami istoty szarej, ciał neuronów i dendrytów. Łączność funkcjonalna to zgodność w czasie aktywności odległych obszarów, a z niej wyodrębniono sieci wielkoskalowe. [[EEG|Elektroencefalografia (EEG)]] zbiera elektrodami na skórze głowy zmiany napięcia z synaps wielkich populacji neuronów, a magnetoencefalografia (MEG) mierzy pola magnetyczne nad głową, obie co do milisekundy. [[Skaner MRI|Funkcjonalny rezonans magnetyczny (fMRI)]] dokładniej wskazuje miejsce, ale mierzy aktywność pośrednio, przez krew.",
     "Bioinformacja staje się kubkiem w Twojej dłoni na drodze od receptora przez wzgórze i V1 po sieci coraz dalsze od receptorów, a każda z nich tworzy predykcje. Gdy kubek okazuje się lżejszy, zaskoczenie płynie tą samą drogą i aktualizuje predykcje od chwytu po model kubka, a jutro odbudujesz tę chwilę z pomocą hipokampa."
    ],
    "karty": [
@@ -747,7 +747,7 @@
     },
     "Pomiar mózgu": {
      "h": "Łączność i pomiar",
-     "d": "Łączność strukturalna to połączenia istoty białej, a z łączności funkcjonalnej wyodrębniono [[Sieci wielkoskalowe|sieci wielkoskalowe]]. [[EEG|EEG]] i MEG mierzą co do milisekundy, a [[Skaner MRI|fMRI]] dokładniej wskazuje miejsce."
+     "d": "Łączność strukturalna to połączenia istoty białej, a z łączności funkcjonalnej wyodrębniono [[Sieci wielkoskalowe|sieci wielkoskalowe]]. [[EEG|Elektroencefalografia (EEG)]] i magnetoencefalografia (MEG) mierzą co do milisekundy, a [[Skaner MRI|funkcjonalny rezonans magnetyczny (fMRI)]] dokładniej wskazuje miejsce."
     },
     "Sieci mózgu i predykcja": {
      "h": "Sieci według odległości",
@@ -775,7 +775,7 @@
     },
     "Percepcja i uwaga": {
      "h": "Od siatkówki do V1",
-     "d": "Bioinformacja płynie z siatkówki przez ciało kolankowate boczne do V1, a lewe pole widzenia to aktywność prawej V1. Pacjentka D.F. wkłada kartę w szczelinę, choć nie umie pokazać jej ustawienia, bo jej szlak grzbietowy działa."
+     "d": "Bioinformacja płynie z siatkówki przez ciało kolankowate boczne do pierwszorzędowej kory wzrokowej (V1), a lewe pole widzenia to aktywność prawej V1. Pacjentka D.F. wkłada kartę w szczelinę, choć nie umie pokazać jej ustawienia, bo jej szlak grzbietowy działa."
     },
     "Umysł społeczny": {
      "h": "Szlak boczny",
@@ -794,27 +794,50 @@
     {
      "po": 2,
      "plik": "potencjal",
-     "podpis": "Potencjał czynnościowy: od napięcia spoczynkowego, około −70 mV, do progu, gdy do komórki wpływają jony sodu i wnętrze na chwilę staje się dodatnie. W zakończeniu aksonu wpływają jony wapnia, a pęcherzyki wydzielają przekaźnik do receptorów następnej komórki."
+     "podpis": "Potencjał czynnościowy: od napięcia spoczynkowego, około −70 mV, do progu, gdy do komórki wpływają jony sodu i wnętrze na chwilę staje się dodatnie. W zakończeniu aksonu wpływają jony wapnia, a pęcherzyki wydzielają przekaźniki do receptorów następnej komórki."
     },
     {
      "po": 3,
      "plik": "platy",
-     "podpis": "Płaty kory i wyspa w głębi bruzdy bocznej, tu rozchylonej."
+     "obraz": "/images/2026/platy-mozgu-pl.svg",
+     "jasne": true,
+     "alt": "Płaty mózgu z polskimi podpisami",
+     "podpis": "Płaty kory, bruzda środkowa i bruzda boczna (Sylwiusza).",
+     "zrodlo": {
+      "t": "Mysid i Skrzeczu, „Brain diagram pl.svg”, Wikimedia Commons, domena publiczna",
+      "url": "https://commons.wikimedia.org/wiki/File:Brain_diagram_pl.svg"
+     }
+    },
+    {
+     "po": 3,
+     "plik": "sobotta",
+     "podpis": "Wyspa leży w głębi bruzdy bocznej; tu płaty, które ją przykrywają, są odcięte, a podpisy przetłumaczone na polski.",
+     "zrodlo": {
+      "t": "Johannes Sobotta, „Atlas and Text-book of Human Anatomy”, 1909, Wikimedia Commons „Sobo 1909 633.png”, domena publiczna",
+      "url": "https://commons.wikimedia.org/wiki/File:Sobo_1909_633.png"
+     }
     },
     {
      "po": 5,
      "plik": "skrzyzowanie",
-     "podpis": "Lewe pole widzenia to aktywność prawej V1: włókna z nosowych połówek siatkówek krzyżują się w skrzyżowaniu wzrokowym, a z ciała kolankowatego bocznego bioinformacja płynie do V1 (Chapelle 2025)<!--[s:chapelle2025-rgc-lgn-v1]-->."
+     "podpis": "Lewe pole widzenia to aktywność prawej pierwszorzędowej kory wzrokowej (V1): włókna z nosowych połówek siatkówek krzyżują się w skrzyżowaniu wzrokowym, a z ciała kolankowatego bocznego bioinformacja płynie do kory (Chapelle 2025)<!--[s:chapelle2025-rgc-lgn-v1]-->."
     },
     {
      "po": 6,
      "plik": "szlaki",
-     "podpis": "Stacje na szlakach wzrokowych. Z siatkówki bioinformacja płynie przez ciało kolankowate boczne do V1 (Chapelle 2025)<!--[s:chapelle2025-rgc-lgn-v1]-->. Szlak brzuszny biegnie przez korę potyliczno-skroniową do dolnej kory skroniowej, TEO i TE, a grzbietowy przez korę potyliczno-ciemieniową do pola PG w płaciku ciemieniowym dolnym (Kravitz i in. 2011)<!--[s:kravitz2011-ventral-te-dorsal-pg]--><!--[s:kravitz2011-v1-to-mt-via-v2-v3-v4]-->. [[Trzeci szlak wzrokowy|Szlak boczny]] biegnie przez MT do bruzdy skroniowej górnej, STS (Pitcher i Ungerleider 2021)<!--[s:pitcher2021-three-visual-pathways]-->. Kolejność stacji to schemat, bo z V1 bioinformacja dociera do TEO także w dwóch krokach, przez V2, V4 albo MT (Kravitz i in. 2013)<!--[s:kravitz2013-v1-to-teo-via-v2-v4-mt]-->."
+     "podpis": "Stacje na szlakach wzrokowych:",
+     "lista": [
+      "z siatkówki przez ciało kolankowate boczne we wzgórzu do pierwszorzędowej kory wzrokowej (V1) (Chapelle 2025)<!--[s:chapelle2025-rgc-lgn-v1]-->;",
+      "szlak brzuszny, co to jest: druga okolica kory wzrokowej (V2), czwarta okolica kory wzrokowej (V4), tylna część dolnej kory skroniowej (TEO) i przednia część dolnej kory skroniowej (TE);",
+      "szlak grzbietowy, gdzie i jak sięgnąć: V2, trzecia okolica kory wzrokowej (V3) i pole PG w płaciku ciemieniowym dolnym (Kravitz i in. 2011)<!--[s:kravitz2011-ventral-te-dorsal-pg]--><!--[s:kravitz2011-v1-to-mt-via-v2-v3-v4]-->;",
+      "[[Trzeci szlak wzrokowy|szlak boczny]], mimika i gest: obszar środkowy skroniowy (MT) i bruzda skroniowa górna (STS) (Pitcher i Ungerleider 2021)<!--[s:pitcher2021-three-visual-pathways]-->."
+     ],
+     "dopis": "Kolejność stacji to schemat: z V1 bioinformacja dociera do TEO także na skróty, przez V2, V4 albo MT (Kravitz i in. 2013)<!--[s:kravitz2013-v1-to-teo-via-v2-v4-mt]-->."
     },
     {
      "po": 8,
-     "plik": "spirala",
-     "podpis": "Sieci na spirali odległości od receptorów: najbliżej sieć wzrokowa i czuciowo-ruchowa, dalej grzbietowa uwagi i kontroli, najdalej domyślna. W poprzek zwojów biegnie oś sieci istotności i sieci brzusznej uwagi, a obszary limbiczne leżą tam, gdzie zwój sieci domyślnej spotyka tę oś. Według mojej hipotezy ta oś niesie walencję."
+     "plik": "osie",
+     "podpis": "Dwie osie. Sieci leżą coraz dalej od receptorów: najbliżej wzrokowa i czuciowo-ruchowa, dalej grzbietowa uwagi i kontroli, najdalej domyślna. Prostopadle do tej osi biegnie oś walencji, na której razem leżą sieć istotności, sieć brzuszna uwagi i obszary limbiczne: czy to, co się dzieje, przyciąga, czy odpycha. To moja hipoteza."
     }
    ]
   }
