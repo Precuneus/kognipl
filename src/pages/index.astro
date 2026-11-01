@@ -194,6 +194,9 @@ body:has(.roj) .site-footer::before{display:none}
 @keyframes menuNudge{0%{color:#f0c060;text-shadow:0 0 0 rgba(240,192,96,0)}35%{color:#f0c060;text-shadow:0 0 14px rgba(240,192,96,.8)}100%{text-shadow:0 0 0 rgba(240,192,96,0)}}
 @keyframes storyNudge{0%{box-shadow:0 0 0 0 rgba(240,192,96,.7);transform:scale(1)}30%{transform:scale(1.045)}100%{box-shadow:0 0 0 22px rgba(240,192,96,0);transform:scale(1)}}
 html.roj-blok{overscroll-behavior:none}
+/* po kliknięciu Story logo zostaje na górze ekranu, a przy pierwszym przewinięciu znika (jego słowo, 2026-11-02) */
+.rocznik-logo.roj-logo-trzyma{position:fixed;z-index:20;transition:opacity .35s ease}
+.rocznik-logo.roj-logo-trzyma.znika{opacity:0}
 /* przełącznik animacji w prawym górnym rogu, na wysokości logo; stoi na ekranie przez całą historię (jego słowo, 2026-10-22) */
 .roj-anim{position:fixed;right:calc(8vw - 10px);top:32px;z-index:20;display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.55);border:0;border-radius:15px;cursor:pointer;font-family:Inter,sans-serif;font-weight:300;font-size:14px;letter-spacing:.04em;color:var(--mgla)}
 .roj-anim:hover{color:var(--kosc)}
@@ -2082,15 +2085,31 @@ addEventListener('scroll', () => {
 }, { passive: true });
 // Story w menu nagłówka (jego słowo, 2026-11-01: *Move stories to the menu on top*): na stronie startowej otwiera historię jak dawny przycisk
 const storyM = document.querySelector('.rocznik-menu a[href="/#czesc"]') as HTMLElement | null;
+// Po kliknięciu Story logo zostaje na górze ekranu, kiedy strona zjeżdża do Cześć, a znika przy pierwszym przewinięciu
+// (jego słowo, 2026-11-02: *after clicking story keep the logo for a moment on the top, when I scroll then hide it*).
+// Logo stoi w nagłówku absolutnie, więc przypięcie go do ekranu niczego w nagłówku nie przesuwa.
+let LOGO_T = false, LOGO_Z: any = 0;
+function logoTrzymaj() {
+  if (!logoA) return;
+  clearTimeout(LOGO_Z); logoA.classList.remove('znika'); logoA.classList.add('roj-logo-trzyma'); LOGO_T = true;
+}
+function logoPusc() {
+  if (!logoA || !LOGO_T) return;
+  LOGO_T = false; const l = logoA;
+  if (scrollY < 3) { l.classList.remove('roj-logo-trzyma', 'znika'); return; }
+  l.classList.add('znika');
+  LOGO_Z = setTimeout(() => l.classList.remove('roj-logo-trzyma', 'znika'), 380);
+}
+addEventListener('scroll', () => { if (LOGO_T && !SCR && Math.abs(scrollY - LAND_Y()) > 4) logoPusc(); }, { passive: true });
 storyM?.addEventListener('click', (ev) => {
   const e = ev as MouseEvent;
   if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-  e.preventDefault(); zaprzyj(false); jedzDo(LAND_Y());
+  e.preventDefault(); zaprzyj(false); logoTrzymaj(); jedzDo(LAND_Y());
 });
 storyB.addEventListener('click', (ev) => {
   const e = ev as MouseEvent;
   if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-  e.preventDefault(); zaprzyj(false); jedzDo(LAND_Y());
+  e.preventDefault(); zaprzyj(false); logoTrzymaj(); jedzDo(LAND_Y());
 });
 let tk = false;
 addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(() => { frame(); tk = false; }); } }, { passive: true });
