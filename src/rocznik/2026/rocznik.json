@@ -783,6 +783,22 @@
     "Energia i jej przemiany": {
      "h": "Światło w widmie",
      "d": "Światło, które widzimy, to fale mniej więcej od 400 do 700 nm, wąski wycinek [[Widmo elektromagnetyczne|widma elektromagnetycznego]]."
+    },
+    "Język": {
+     "h": "Mówiąca półkula P.S.",
+     "d": "Pacjent P.S. po [[Rozszczepiony mózg|przecięciu spoidła wielkiego]] wybrał lewą ręką łopatę. Zaśnieżoną scenę widziała tylko jego prawa półkula. Mówiąca lewa półkula widziała kurzą łapkę, a łopatę wybraną lewą ręką wytłumaczyła kurnikiem."
+    },
+    "Świadomość": {
+     "h": "Dwie połowy pola",
+     "d": "Gdy obraz błysnął z jednej strony punktu, w który P.S. patrzył, każda jego półkula widziała tylko swoją połowę pola. Przegląd badaczek i badaczy z obu stron sporu o [[Rozszczepiony mózg|rozszczepiony mózg]] zostawia otwarte, czy po przecięciu spoidła wielkiego działa jeden świadomy podmiot, czy dwa."
+    },
+    "Nawyk i automatyzacja": {
+     "h": "Wprawa bez wspomnienia",
+     "d": "[[Pacjent H.M.|Pacjent H.M.]] zapominał codzienne zdarzenia niemal tak szybko, jak się działy. Mimo to w obrysowywaniu gwiazdy widzianej tylko w lustrze nabrał wprawy w dziesięciu próbach i zachował ją przez trzy dni. Pod koniec badania nie pamiętał, że kiedykolwiek wykonywał to zadanie."
+    },
+    "Życie i umieranie": {
+     "h": "Adenozyna i energia komórki",
+     "d": "Jedna z dróg powstawania adenozyny w komórce wiedzie przez rozpad adenozynotrójfosforanu (ATP). Według Fredholma i współpracowników stężenie adenozyny poza komórkami powinno rosnąć, gdy ATP ubywa szybciej, niż komórka go odtwarza. [[Kofeina i receptor adenozynowy|Kofeina]] blokuje receptor adenozyny."
     }
    },
    "ryciny": [

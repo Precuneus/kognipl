@@ -13,6 +13,8 @@ export function slugify(t) {
 const unlink = (v) => String(v || '').replace(/^\[\[|\]\]$/g, '');
 const strip = (t) => String(t || '').replace(/<!--\[s:[^\]]*\]-->/g, '');
 
+// Indeks kart stoi na karcie kogni.pl (2026-11-02); tam prowadzą odnośniki do grup i osnów.
+export const INDEKS = '/wiki/' + slugify('kogni.pl') + '/';
 export const GRUPY = R.grupy.map((g) => g.nazwa);
 export const OSNOWY = R.grupy.flatMap((g, gi) => g.osnowy.map((o) => ({ ...o, g: gi })));
 const osOf = {};
@@ -85,7 +87,7 @@ export function segs(t) {
     if (m[3]) {
       const g = m[3].startsWith('#') ? GRUPY.indexOf(m[3].slice(1)) : -1, o = OSNOWY.find((x) => x.nazwa === m[3]);
       const gi = g >= 0 ? g : o ? o.g : -1;
-      out.push(gi >= 0 ? { t: m[4] || m[3].replace(/^#/, ''), url: '/wiki/#' + slugify(m[3].replace(/^#/, '')), color: INK[gi], label: m[3].replace(/^#/, '') } : { t: m[4] || m[3] });
+      out.push(gi >= 0 ? { t: m[4] || m[3].replace(/^#/, ''), url: INDEKS + '#' + slugify(m[3].replace(/^#/, '')), color: INK[gi], label: m[3].replace(/^#/, '') } : { t: m[4] || m[3] });
     } else {
       const k = byName[m[1]];
       out.push(k ? { t: m[2] || m[1], url: k.url, color: INK[k.g], label: k.h, def: k.def } : { t: m[2] || m[1] });

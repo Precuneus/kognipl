@@ -1,7 +1,7 @@
 ---
 // Karta wiki w jednym szablonie: strona karty i pierwszy artykuł na /wiki/ (2026-10-22).
 import { template } from '../rocznik/views/karta.js';
-import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, classesOf, slugify } from '../karty/data.js';
+import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, classesOf, slugify, INDEKS } from '../karty/data.js';
 import { KOLOR } from '../karty/mozg.js';
 import '../styles/wiki.css';
 import TerminDymek from './TerminDymek.astro';
@@ -62,7 +62,7 @@ const brain = svgSrc
         ? <Fragment><a href="/wiki/mapa-osnow/">Mapa osnów</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
         : <Fragment><a href={'/wiki/' + slugify(group) + '/'}>{group}</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
     ) : (
-      <Fragment><a href={'/wiki/#' + slugify(GRUPY[k.g])}>{group}</a><span aria-hidden="true"> › </span><a href={'/wiki/#' + slugify(k.o)}>{k.o}</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
+      <Fragment><a href={INDEKS + '#' + slugify(GRUPY[k.g])}>{group}</a><span aria-hidden="true"> › </span><a href={INDEKS + '#' + slugify(k.o)}>{k.o}</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
     )}
   </nav>
   <div class="wk-grid">
@@ -125,5 +125,6 @@ const brain = svgSrc
       )}
     </div>
   </div>
+  {Astro.slots.has('indeks') && <slot name="indeks" />}
 </article>
 <TerminDymek />

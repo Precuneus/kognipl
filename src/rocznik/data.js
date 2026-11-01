@@ -90,6 +90,11 @@ R['zajęcia'].forEach((z) => {
   Object.values(by).forEach((sp) => { sp.cards = sp.homed.length ? sp.homed : sp.family; delete sp.homed; delete sp.family; });
 });
 
+// Każdy splot ma nagłówek i opis według szablonu (jego decyzja 2026-11-02): splot bez tekstu zatrzymuje budowanie.
+for (const sp of NEW) {
+  if (!sp.txt) throw new Error('Zajęcia ' + sp.cls + ': splot na osnowie ' + sp.o + ' nie ma tekstu w rocznik.json (splot.h, splot.d)');
+}
+
 export const SP = OLD.concat(NEW).sort((a, b) => { const x = order(a), y = order(b); return x[0] - y[0] || x[1] - y[1]; });
 
 for (const s of SP) {
