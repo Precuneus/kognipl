@@ -1,7 +1,9 @@
 ---
 // Dymek terminu (jego słowo, 2026-11-01: *Where we have a term... clicking it should open a bubble with 1-2 sentences of explanations
-// and cta in the bottom right to open a card in the wiki*): kliknięcie terminu z definicją (data-def) otwiera dymek przy nim,
-// z nazwą karty, jej pierwszym zdaniem albo dwoma i przyciskiem do karty w prawym dolnym rogu. Ctrl, Cmd i Shift otwierają kartę od razu.
+// and cta in the bottom right to open a card in the wiki*): termin z definicją (data-def) pokazuje dymek przy sobie,
+// z nazwą karty, jej pierwszym zdaniem albo dwoma i przyciskiem do karty w prawym dolnym rogu.
+// Myszą: najechanie pokazuje dymek, kliknięcie prowadzi do karty. Dotykiem: pierwsze stuknięcie otwiera dymek, drugie prowadzi do karty
+// (jego słowo, 2026-11-02: *hovering over the text show the bubble and clicking on it move to the card ... On mobile, clicking opens the bubble and second click is needed*).
 ---
 <div class="td-w" hidden>
   <div class="td" role="dialog" aria-label="Termin">
@@ -39,13 +41,33 @@
     let top = r.bottom + 10; if (top + h > innerHeight - m) top = Math.max(m, r.top - h - 10);
     B.style.left = left + 'px'; B.style.top = top + 'px';
   };
+  const termin = (el: EventTarget | null) => { const a = (el as HTMLElement | null)?.closest?.('a[data-def]') as HTMLAnchorElement | null; return a && a.dataset.def ? a : null; };
+  const wDymku = (el: EventTarget | null) => !!(el as HTMLElement | null)?.closest?.('.td');
+  // mysz: dymek zostaje, póki kursor jest na terminie albo w dymku; po zejściu znika po chwili, żeby dało się do niego przejść
+  let zegar = 0;
+  const zostan = () => clearTimeout(zegar);
+  const zaChwile = () => { clearTimeout(zegar); zegar = window.setTimeout(zamknij, 220); };
+  document.addEventListener('pointerover', (ev) => {
+    if ((ev as PointerEvent).pointerType !== 'mouse') return;
+    const a = termin(ev.target);
+    if (a) { zostan(); if (OD !== a) pokaz(a); } else if (wDymku(ev.target)) zostan();
+  });
+  document.addEventListener('pointerout', (ev) => {
+    const e = ev as PointerEvent;
+    if (!OD || e.pointerType !== 'mouse') return;
+    if (termin(e.relatedTarget) === OD || wDymku(e.relatedTarget)) return;
+    if (termin(e.target) === OD || wDymku(e.target)) zaChwile();
+  });
+  let rodzaj = 'mouse';
+  document.addEventListener('pointerdown', (ev) => { rodzaj = (ev as PointerEvent).pointerType || 'mouse'; }, { capture: true });
   document.addEventListener('click', (ev) => {
     const e = ev as MouseEvent, el = e.target as HTMLElement;
-    const a = el.closest('a[data-def]') as HTMLAnchorElement | null;
-    if (a && a.dataset.def && e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
-      e.preventDefault(); if (OD === a) zamknij(); else pokaz(a); return;
+    const a = termin(el);
+    // mysz idzie od razu do karty; dotyk otwiera dymek, a drugie stuknięcie w ten sam termin prowadzi do karty
+    if (a && rodzaj !== 'mouse' && OD !== a && e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+      e.preventDefault(); pokaz(a); return;
     }
-    if (!el.closest('.td')) zamknij();
+    if (!a && !el.closest('.td')) zamknij();
   });
   B.querySelector('.td-x')!.addEventListener('click', zamknij);
   addEventListener('keydown', (e) => { if (e.key === 'Escape') zamknij(); });
