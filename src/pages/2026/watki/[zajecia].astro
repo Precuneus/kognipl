@@ -21,8 +21,11 @@ const RYC = import.meta.glob('../../../rocznik/2026/ryciny/wpisy/*.svg', { query
 const unmark = (t) => String(t || '').replace(/<!--\[s:[^\]]*\]-->/g, '');
 // rycina z otwartego źródła (jego słowo, 2026-11-01: *Find add, and cite open source images where possible*): pole `obraz` (adres w public),
 // `zrodlo` z autorem i licencją, `jasne` kładzie rysunek o ciemnych podpisach na jasnym tle; podpis może mieć listę `lista`
-const figs = (z.ryciny || []).slice().sort((x, y) => x.po - y.po).map((r, i) => ({ ...r, n: i + 1, svg: r.obraz ? '' : RYC['../../../rocznik/2026/ryciny/wpisy/' + r.plik + '.svg'] || '' }));
-figs.forEach((f) => { if (!f.svg && !f.obraz) throw new Error('Wpis ' + c.id + ': brak ryciny ' + f.plik); });
+// jedna rycina z kilku części (jego słowo, 2026-11-01: *ryc 2 and 3 should be a single rycina*): pole `czesci`, każda z `obraz` albo `plik`
+const svgOf = (plik) => RYC['../../../rocznik/2026/ryciny/wpisy/' + plik + '.svg'] || '';
+const figs = (z.ryciny || []).slice().sort((x, y) => x.po - y.po).map((r, i) => ({ ...r, n: i + 1,
+  czesci: (r.czesci || [r]).map((q) => ({ ...q, svg: q.obraz ? '' : svgOf(q.plik) })), zrodla: r.zrodla || (r.zrodlo ? [r.zrodlo] : []) }));
+figs.forEach((f) => f.czesci.forEach((q) => { if (!q.svg && !q.obraz) throw new Error('Wpis ' + c.id + ': brak ryciny ' + q.plik); }));
 // poprzednie i następne zajęcia (jego słowo, 2026-11-01: *I should see a menu on the top, to click right to the previous class and right to the next*)
 const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = held[hi + 1];
 ---
@@ -45,11 +48,11 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
           <p class="wk-p">{segs(p).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>,
           ...figs.filter((f) => f.po === i).map((f) => (
             <figure class="wk-fig wz-fig">
-              {f.obraz ? <img src={f.obraz} alt={unmark(f.alt || f.podpis)} loading="lazy" class={f.jasne ? 'wz-jasne' : ''} /> : <Fragment set:html={f.svg} />}
+              <div class={f.czesci.length > 1 ? 'wz-czesci' : ''}>{f.czesci.map((q) => q.obraz ? <img src={q.obraz} alt={unmark(q.alt || f.podpis)} loading="lazy" class={q.jasne ? 'wz-jasne' : ''} /> : <Fragment set:html={q.svg} />)}</div>
               <figcaption>{'Ryc. ' + f.n + '. '}{segs(unmark(f.podpis)).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}
                 {f.lista && <ul class="wz-lista">{f.lista.map((x) => <li>{segs(unmark(x)).map((s) => s.url ? <a href={s.url} title={s.label} style={'color:' + s.color}>{s.t}</a> : s.t)}</li>)}</ul>}
                 {f.dopis && <span>{' ' + unmark(f.dopis)}</span>}
-                {f.zrodlo && <span class="wz-zrodlo">{' Źródło: '}<a href={f.zrodlo.url} target="_blank" rel="noopener">{f.zrodlo.t}</a></span>}
+                {f.zrodla.length > 0 && <span class="wz-zrodlo">{f.zrodla.length > 1 ? ' Źródła: ' : ' Źródło: '}{f.zrodla.map((z2, i) => [i > 0 ? '; ' : '', <a href={z2.url} target="_blank" rel="noopener">{z2.t}</a>])}</span>}
               </figcaption>
             </figure>
           )),
@@ -85,6 +88,9 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
 .wz-fig svg{max-width:100%}
 .wz-fig img{display:block;width:100%;max-width:560px;height:auto;border-radius:10px}
 .wz-fig img.wz-jasne{background:#ece6da;padding:10px}
+.wz-czesci{display:grid;grid-template-columns:1fr;gap:10px;align-items:center}
+.wz-czesci img,.wz-czesci svg{max-width:100%}
+@media (max-width:720px){.wz-czesci{grid-template-columns:1fr}}
 .wz-lista{margin:6px 0 4px;padding-left:18px}
 .wz-lista li{margin:2px 0}
 .wz-zrodlo{color:#7d7466}

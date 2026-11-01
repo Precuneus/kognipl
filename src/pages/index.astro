@@ -847,7 +847,10 @@ function landIskra(now: number): any {
 // biegnie fala, bada sieć z bliska drobnymi krokami albo siada na mózgu i świeci w dół.
 // Kursor (jego słowo, 2026-11-01: *If I move a cursor we can make Iskra keep the distance?*): trzyma się 90 px od niego, odlatuje, gdy się zbliża,
 // patrzy na niego, a gdy kursor stoi, podlatuje ostrożnie na tę odległość; szybki ruch kursora obok niej ją płoszy.
-const STX: any = { pull: { k: 0, n: 0, x0: 0, y0: 0, dx: 0, dy: 0, R: 64 }, rip: [] as any[] };
+// więcej zabaw (jego słowo, 2026-11-01: *make the iskra play with the brain even more and in more ways*): krąży wokół sieci, robi wycieczkę
+// przez sieci od receptorów najdalej, zbiera punkty sieci w warkocz za sobą i je puszcza, dmucha w sieć, nurkuje przez mózg,
+// przeciąga świetlną nić między dwiema sieciami i czasem drzemie na mózgu
+const STX: any = { pull: { k: 0, n: 0, x0: 0, y0: 0, dx: 0, dy: 0, R: 64 }, rip: [] as any[], zb: { k: 0, set: new Map() }, wiatr: [] as any[], nic: { k: 0, ax: 0, ay: 0, bx: 0, by: 0, u: 0 } };
 const ST: any = { t0: 0, ph: 'spi', mode: '', mt: 0, m0: 0, n: 0, px: 0, py: 0, d0: 0, kat: 0, krok: 0, stuk: 0, strach: 0, ciek: 0, mrug: 0 };
 const MYSZ: any = { x: -1e4, y: -1e4, t: -1e9, v: 0, typ: '' };
 addEventListener('pointermove', (ev) => {
@@ -870,11 +873,19 @@ function startPkt(n: number, blisko = 0) {
 function startTryb(now: number) {
   const los = Math.random(), ns = SIECI_L.filter((n) => P.some((p) => p.net === n && !p.med));
   ST.n = ns[(Math.random() * ns.length) | 0] || SIECI_L[0];
-  ST.mode = los < .3 ? 'swieci' : los < .5 ? 'ciagnie' : los < .68 ? 'stuka' : los < .86 ? 'bada' : 'siada';
-  ST.m0 = now; ST.mt = now + ({ swieci: 2600, ciagnie: 3200, stuka: 2600, bada: 3400, siada: 3000 } as any)[ST.mode] + Math.random() * 1600;
+  const WAGI: [string, number][] = [['swieci', .13], ['ciagnie', .1], ['stuka', .09], ['bada', .09], ['siada', .05], ['krazy', .1], ['wycieczka', .09], ['zbiera', .1], ['dmucha', .08], ['nurkuje', .06], ['laczy', .08], ['drzemie', .03]];
+  let acc = 0; ST.mode = 'swieci'; for (const [m, w] of WAGI) { acc += w; if (los < acc) { ST.mode = m; break; } }
+  if (ST.mode === ST.poprz && Math.random() < .7) ST.mode = 'krazy'; ST.poprz = ST.mode;
+  ST.m0 = now; ST.mt = now + ({ swieci: 2600, ciagnie: 3200, stuka: 2600, bada: 3400, siada: 3000, krazy: 3600, wycieczka: 600 * ns.length + 500, zbiera: 3800, dmucha: 2700, nurkuje: 2300, laczy: 3000, drzemie: 3600 } as any)[ST.mode] + Math.random() * (ST.mode === 'wycieczka' ? 0 : 1400);
+  ST.ns = ns; ST.n2 = ns.filter((n) => n !== ST.n)[(Math.random() * Math.max(1, ns.length - 1)) | 0] || ST.n; ST.dmuch = 0;
   [ST.px, ST.py] = startPkt(ST.n);
   if (ST.mode === 'siada') { const L = P.filter((p) => p.net === ST.n && !p.med && !p.lonly); let top: any = L[0]; for (const p of L) if (p.v < top.v) top = p; if (top) [ST.px, ST.py] = brainS(top); }
   ST.d0 = 40 + Math.random() * 80; ST.kat = -Math.PI / 2 + (Math.random() - .5) * 1.4; ST.krok = now + 650; ST.stuk = now + 650;
+  if (ST.mode === 'zbiera') {
+    // najbliższe punkty sieci wokół miejsca, z którego Iskra je zbierze
+    const L = P.filter((p) => p.net === ST.n && !p.med && !p.lonly).map((p) => { const [x, y] = brainS(p); return [Math.hypot(x - ST.px, y - ST.py), p]; }).sort((a: any, b: any) => a[0] - b[0]).slice(0, 22);
+    STX.zb.set = new Map(L.map((e: any, i: number) => [e[1], i])); STX.zb.k = 0;
+  }
   setTimeout(kick, ST.mt - now + 20);
 }
 function startIskra(now: number): any {
@@ -903,6 +914,8 @@ function startIskra(now: number): any {
     if (now > ST.mt) startTryb(now);
     const u = cl((now - ST.m0) / (ST.mt - ST.m0));
     STX.pull.k += (0 - STX.pull.k) * .08;
+    if (ST.mode !== 'zbiera') STX.zb.k = Math.max(0, STX.zb.k - .05);
+    if (ST.mode !== 'laczy') STX.nic.k = Math.max(0, STX.nic.k - .03);
     if (ST.mode === 'swieci') {
       // mocno i wąsko z bliska, słabo i szeroko z daleka; odległość oddycha
       const d = ST.d0 * (.62 + .38 * Math.cos(u * Math.PI * 2)), x = ST.px + Math.cos(ST.kat) * d, y = ST.py + Math.sin(ST.kat) * d;
@@ -930,6 +943,47 @@ function startIskra(now: number): any {
       // z bliska, drobnymi krokami po sieci, oko zmrużone
       if (now > ST.krok) { [ST.px, ST.py] = startPkt(ST.n, 34); ST.krok = now + 560 + Math.random() * 300; IS.sq = -.12; }
       c = { id: 'start-bada', tryb: 'lot', x: ST.px, y: ST.py - 16, I: .95, ang: Math.PI / 2 + Math.sin(now / 500) * .3, len: 34, half: .3, mood: { pd: 1.3, lid: .6 } };
+    } else if (ST.mode === 'krazy') {
+      // krąży wokół środka sieci i świeci do środka
+      const [cx, cy] = brainS({ u: CENT[ST.n][0], v: CENT[ST.n][1] }), R = 46 + 22 * Math.sin(u * Math.PI), a = ST.kat + u * Math.PI * 2 * 1.3;
+      const x = cx + Math.cos(a) * R, y = cy + Math.sin(a) * R * .8;
+      c = { id: 'start-krazy', tryb: 'lot', x, y, I: .75, ang: Math.atan2(cy - y, cx - x), len: R + 24, half: .34, mood: { pd: 1.12, lid: 1, joy: .5 } };
+    } else if (ST.mode === 'wycieczka') {
+      // wycieczka przez sieci od najbliższej receptorom do najdalszej: przy każdej przystaje i świeci w dół
+      const k = Math.min(ST.ns.length - 1, Math.floor((now - ST.m0) / 600)), n = ST.ns[k];
+      if (k !== ST.wk) { ST.wk = k; IS.sq = -.2; }
+      const [cx, cy] = brainS({ u: CENT[n][0], v: CENT[n][1] });
+      c = { id: 'start-wycieczka' + k, tryb: 'lot', x: cx, y: cy - 22, I: .9, ang: Math.PI / 2, len: 46, half: .42, mood: { pd: 1.18, lid: 1, joy: .7 } };
+    } else if (ST.mode === 'zbiera') {
+      // zbiera punkty sieci w warkocz, robi z nimi pętlę i puszcza; wracają na swoje miejsca
+      STX.zb.k = u < .15 ? sm(u / .15) * .2 : u < .82 ? Math.min(1, STX.zb.k + .04) : Math.max(0, STX.zb.k - .05);
+      const a = u * Math.PI * 2, R = u < .15 ? 0 : 60 * Math.sin(Math.PI * cl((u - .15) / .67));
+      const x = ST.px + Math.cos(a) * R * 1.2, y = ST.py - 20 + Math.sin(a) * R * .7;
+      if (u > .82 && !ST.puscil) { ST.puscil = 1; IS.sq = .25; } if (u < .5) ST.puscil = 0;
+      c = { id: 'start-zbiera', tryb: 'lot', x, y, I: .6, ang: Math.atan2(IS.vy, IS.vx), len: 40, half: .4, mood: { pd: 1.2, lid: 1, joy: .9 } };
+    } else if (ST.mode === 'dmucha') {
+      // dmucha w sieć dwa razy: punkty w podmuchu odlatują i wracają
+      const d = 70, x = ST.px + Math.cos(ST.kat) * d, y = ST.py + Math.sin(ST.kat) * d, ang = Math.atan2(ST.py - y, ST.px - x);
+      for (const [m, i] of [[.35, 1], [.68, 2]] as number[][]) if (u > m && ST.dmuch < i) { ST.dmuch = i; STX.wiatr.push({ x: IS.x, y: IS.y, ang: Math.atan2(ST.py - IS.y, ST.px - IS.x), t0: now }); IS.sq = -.22; }
+      c = { id: 'start-dmucha', tryb: 'lot', x, y, I: .3, ang, len: 50, half: .4, gaze: ang, mood: { pd: .95, lid: 1, joy: .25 } };
+    } else if (ST.mode === 'nurkuje') {
+      // nurkuje przez mózg z góry na dół i wraca bokiem; punkty rozstępują się przed nią
+      const top = BS.cy - bw * .5, dol = BS.cy + bw * .42, x0 = ST.px;
+      const y = u < .55 ? top - 30 + (dol - top + 60) * sm(u / .55) : dol + 30 - (dol - top + 60) * sm((u - .55) / .45);
+      const x = u < .55 ? x0 : x0 + bw * .28 * Math.sin(Math.PI * (u - .55) / .45);
+      c = { id: 'start-nurkuje', tryb: 'lot', x, y, I: .45, ang: u < .55 ? Math.PI / 2 : -Math.PI / 2, len: 60, half: .3, mood: { pd: 1.3, lid: .85, joy: .8 } };
+    } else if (ST.mode === 'laczy') {
+      // przeciąga świetlną nić od jednej sieci do drugiej
+      const [ax, ay] = brainS({ u: CENT[ST.n][0], v: CENT[ST.n][1] }), [bx, by] = brainS({ u: CENT[ST.n2][0], v: CENT[ST.n2][1] });
+      const q = sm(cl((u - .1) / .7));
+      STX.nic.ax = ax; STX.nic.ay = ay; STX.nic.bx = bx; STX.nic.by = by; STX.nic.u = q; STX.nic.k = u < .9 ? 1 : 1 - (u - .9) / .1;
+      const x = ax + (bx - ax) * q, y = ay + (by - ay) * q - 14;
+      c = { id: 'start-laczy', tryb: 'lot', x, y, I: .7, ang: Math.atan2(by - ay, bx - ax), len: 50, half: .35, mood: { pd: 1.15, lid: 1, joy: .55 } };
+    } else if (ST.mode === 'drzemie') {
+      // drzemie chwilę na mózgu: oko się przymyka, potem mrugnięcie i przeciągnięcie
+      const lid = u < .2 ? 1 - .85 * sm(u / .2) : u < .85 ? .15 : .15 + .85 * sm((u - .85) / .15);
+      if (u > .85 && !ST.obudz) { ST.obudz = 1; IS.mrug = now; IS.sq = -.24; } if (u < .5) ST.obudz = 0;
+      c = { id: 'start-drzemie', tryb: 'lot', x: ST.px, y: ST.py - r - 3 + Math.sin(now / 700) * 1.5, I: 0, ang: Math.PI / 2, len: 20, half: .3, mood: { pd: .9, lid } };
     } else {
       // siada na mózgu i świeci w dół
       c = { id: 'start-siada', tryb: 'lot', x: ST.px, y: ST.py - r - 3, I: .6, ang: Math.PI / 2, len: bw * .34, half: .45, mood: { pd: 1.05, lid: .9, joy: .45 } };
@@ -1695,6 +1749,7 @@ function frame() {
   LD.w = A.k === 'start' ? 1 - t : B.k === 'start' ? t : 0;
   if (LD.w > .005) { geomS(); landKrok(now); landGeom(); }
   if (STX.rip.length) STX.rip = STX.rip.filter((rp: any) => now - rp.t0 < 2400);
+  if (STX.wiatr.length) STX.wiatr = STX.wiatr.filter((w: any) => now - w.t0 < 1400);
   if (STX.pull.puszcza && now - STX.pull.puszcza > 1200) { STX.pull.k = 0; STX.pull.puszcza = 0; }
   const mzk = (k: string) => k === 'start' || k === 'czesc' || k === 'pytanie' || k === 'naglowek';
   MOZG_AKT = t < .5 ? mzk(A.k) : mzk(B.k);
@@ -1722,7 +1777,7 @@ function frame() {
   const c = cel(A, B, t, lpA, lpB, now, lz);
   if (c) { krok(dt, c, now); wiazka(dt, c, now); oko(dt, c, now); }
   const wid = !!c && !IS.dom;
-  const PCH = wid && c.id !== 'dom' && c.id !== 'wiki' && !c.rail ? (MOB ? 22 : 30) : 0;
+  const PCH = wid && c.id !== 'dom' && c.id !== 'wiki' && !c.rail ? (c.id === 'start-nurkuje' ? (MOB ? 40 : 58) : MOB ? 22 : 30) : 0;
   if (knotLogo) knotLogo.style.opacity = wid ? '0' : '';
   g.setTransform(D, 0, 0, D, 0, 0); g.clearRect(0, 0, W, H); g2.setTransform(D, 0, 0, D, 0, 0); g2.clearRect(0, 0, W, H); g.globalCompositeOperation = 'lighter'; g.lineWidth = 1;
   const NICI = (k: string) => k === 'osnowy' || k === 'kogni' || k === 'wiki', KROPKI = !NICI(A.k) && !NICI(B.k);
@@ -1758,21 +1813,44 @@ function frame() {
         cr += (ZLOTO[0] - cr) * rel; cg += (ZLOTO[1] - cg) * rel; cb += (ZLOTO[2] - cb) * rel; lit = Math.max(lit, rel);
       }
     }
+    // GL: punkt, którego dotyka zabawa Iskry, świeci jak w jej snopie
+    let GL = 0;
     if (LD.w > .005 && p.net > 1 && !p.med) {
       // ekran startowy: kawałek sieci ciągnięty przez Iskrę i fala po stuknięciu
       const pu = STX.pull;
       if (pu.k > .01 && p.net === pu.n) {
         const d = Math.hypot(x - pu.x0, y - pu.y0);
-        if (d < pu.R) { let k = pu.k; if (pu.puszcza) { const tp = (now - pu.puszcza) / 1000; k = Math.cos(tp * 14) * Math.exp(-tp * 5); } const w = (1 - d / pu.R) * (1 - d / pu.R) * k * LD.w; x += pu.dx * w * .8; y += pu.dy * w * .8; al = Math.min(1, al + .45 * Math.abs(w)); sz *= 1 + .5 * Math.abs(w); }
+        if (d < pu.R) { let k = pu.k; if (pu.puszcza) { const tp = (now - pu.puszcza) / 1000; k = Math.cos(tp * 14) * Math.exp(-tp * 5); } const w = (1 - d / pu.R) * (1 - d / pu.R) * k * LD.w; x += pu.dx * w * .8; y += pu.dy * w * .8; al = Math.min(1, al + .45 * Math.abs(w)); sz *= 1 + .5 * Math.abs(w); GL = Math.max(GL, Math.abs(w)); }
+      }
+      const zb = STX.zb;
+      if (zb.k > .01 && p.net === ST.n) {
+        const i = zb.set.get(p);
+        if (i !== undefined) {
+          // warkocz za Iskrą: każdy punkt na swoim promieniu, kręci się wokół niej
+          const a = p.a + now / 300 + i * .5, rr = 7 + (i % 5) * 4, tx = IS.x - IS.vx * .02 * (1 + i % 4) + Math.cos(a) * rr, ty = IS.y - IS.vy * .02 * (1 + i % 4) + Math.sin(a) * rr;
+          const k = zb.k * LD.w; x += (tx - x) * k; y += (ty - y) * k; al = Math.min(1, al + .6 * k); sz *= 1 + .5 * k; GL = Math.max(GL, k);
+        }
+      }
+      for (const wv of STX.wiatr) {
+        const age = now - wv.t0, env = Math.sin(Math.PI * cl(age / 1300)), dx = x - wv.x, dy = y - wv.y, d = Math.hypot(dx, dy) || 1;
+        let da = Math.atan2(dy, dx) - wv.ang; da = Math.abs(Math.atan2(Math.sin(da), Math.cos(da)));
+        if (d < 170 && da < .5) { const f = env * (1 - d / 170) * (1 - da / .5) * 34 * LD.w; GL = Math.max(GL, f / 34); x += Math.cos(wv.ang + Math.sin(p.a * 7) * .4) * f; y += Math.sin(wv.ang + Math.sin(p.a * 7) * .4) * f; al = Math.min(1, al + .02 * f); }
+      }
+      const nc = STX.nic;
+      if (nc.k > .01) {
+        // świetlna nić od pierwszej sieci do miejsca, gdzie jest Iskra
+        const vx = nc.bx - nc.ax, vy = nc.by - nc.ay, L2 = vx * vx + vy * vy || 1, s = ((x - nc.ax) * vx + (y - nc.ay) * vy) / L2;
+        if (s >= 0 && s <= nc.u) { const px = nc.ax + vx * s, py = nc.ay + vy * s, dd = Math.hypot(x - px, y - py); if (dd < 16) { const w = (1 - dd / 16) * nc.k * LD.w; al = Math.min(1, al + .75 * w); sz *= 1 + .8 * w; GL = Math.max(GL, w); } }
       }
       for (const rp of STX.rip) {
         const age = now - rp.t0, front = age * .22, env = Math.exp(-age / 650) * (p.net === rp.n ? 1 : .25), dx = x - rp.x, dy = y - rp.y, d = Math.hypot(dx, dy) || 1;
         const band = Math.exp(-((d - front) / 13) * ((d - front) / 13)) * env * LD.w;
-        if (band > .02) { x += dx / d * 4.5 * band; y += dy / d * 4.5 * band; al = Math.min(1, al + .6 * band); sz *= 1 + .6 * band; }
+        if (band > .02) { x += dx / d * 4.5 * band; y += dy / d * 4.5 * band; al = Math.min(1, al + .6 * band); sz *= 1 + .6 * band; GL = Math.max(GL, band); }
       }
     }
     if (al < .02 || y < -20 || y > H + 20) continue;
     let sw = 0;
+    if (GL > .06) sw = GL;
     if (wid) {
       // rój reaguje na iskrę: punkty w snopie jaśnieją, bliskie się rozstępują
       const dx = x - IS.x, dy = y - IS.y, d = Math.hypot(dx, dy);

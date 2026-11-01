@@ -680,7 +680,7 @@
     {
      "po": 6,
      "plik": "przestrzen",
-     "podpis": "Przestrzeń możliwości: z chwili teraz rozchodzą się możliwe drogi, a grubsza droga jest bardziej prawdopodobna. Ściany wyznaczają ciało, otoczenie i inni ludzie, a próba czasem przesuwa ścianę."
+     "podpis": "Przestrzeń możliwości jako krajobraz: każda dolina to możliwość, a im głębsza, tym bardziej prawdopodobna według Twoich predykcji. Ściany wyznaczają ciało, otoczenie i inni ludzie. Próbując, przechodzisz do sąsiedniej doliny, a czasem przesuwasz ścianę i odsłaniasz dolinę, która dotąd była niemożliwa."
     },
     {
      "po": 6,
@@ -798,24 +798,29 @@
     },
     {
      "po": 3,
-     "plik": "platy",
-     "obraz": "/images/2026/platy-mozgu-pl.svg",
-     "jasne": true,
-     "alt": "Płaty mózgu z polskimi podpisami",
-     "podpis": "Płaty kory, bruzda środkowa i bruzda boczna (Sylwiusza).",
-     "zrodlo": {
-      "t": "Mysid i Skrzeczu, „Brain diagram pl.svg”, Wikimedia Commons, domena publiczna",
-      "url": "https://commons.wikimedia.org/wiki/File:Brain_diagram_pl.svg"
-     }
-    },
-    {
-     "po": 3,
-     "plik": "sobotta",
-     "podpis": "Wyspa leży w głębi bruzdy bocznej; tu płaty, które ją przykrywają, są odcięte, a podpisy przetłumaczone na polski.",
-     "zrodlo": {
-      "t": "Johannes Sobotta, „Atlas and Text-book of Human Anatomy”, 1909, Wikimedia Commons „Sobo 1909 633.png”, domena publiczna",
-      "url": "https://commons.wikimedia.org/wiki/File:Sobo_1909_633.png"
-     }
+     "plik": "platy-wyspa",
+     "czesci": [
+      {
+       "obraz": "/images/2026/platy-mozgu-pl.svg",
+       "jasne": true,
+       "alt": "Płaty mózgu z polskimi podpisami"
+      },
+      {
+       "plik": "sobotta",
+       "alt": "Wyspa odsłonięta w głębi bruzdy bocznej"
+      }
+     ],
+     "podpis": "Płaty kory i wyspa. U góry płaty z bruzdą środkową i bruzdą boczną (Sylwiusza); na dole wyspa w głębi bruzdy bocznej, gdy płaty, które ją przykrywają, są odcięte, a podpisy przetłumaczone na polski.",
+     "zrodla": [
+      {
+       "t": "Mysid i Skrzeczu, „Brain diagram pl.svg”, Wikimedia Commons, domena publiczna",
+       "url": "https://commons.wikimedia.org/wiki/File:Brain_diagram_pl.svg"
+      },
+      {
+       "t": "Johannes Sobotta, „Atlas and Text-book of Human Anatomy”, 1909, Wikimedia Commons „Sobo 1909 633.png”, domena publiczna",
+       "url": "https://commons.wikimedia.org/wiki/File:Sobo_1909_633.png"
+      }
+     ]
     },
     {
      "po": 5,
