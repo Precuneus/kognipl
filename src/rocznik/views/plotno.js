@@ -224,7 +224,7 @@ export class Component extends DCLogic {
         const at = x.t.lastIndexOf(" ", Math.max(0, n - used)); if (at > 0) out.push(Object.assign({}, x, { t: x.t.slice(0, at) })); break; }
       if (out.length) { const l = out[out.length - 1]; out[out.length - 1] = Object.assign({}, l, { t: l.t.replace(/[\s,;:]+$/, "") + "…" }); }
       return out; };
-    const cut = (ps) => ps.length > 2 ? ps.slice(0, 2).concat([half(ps[2])]) : ps;
+    const cut = (ps) => ps.length > 1 ? ps.slice(0, 1).concat([half(ps[1])]) : ps;
     let think = { open: false, close: () => this.setState({ cls: null }) };
     const selC = CL.find((c) => c.id === this.state.cls && c.held);
     if (selC) {
@@ -237,7 +237,7 @@ export class Component extends DCLogic {
         open: true, close: () => this.setState({ cls: null }),
         label: selC.course + " " + selC.short + ": " + selC.title,
         kicker: selC.course + " · " + selC.short, title: selC.title || selC.course + " " + selC.short,
-        // dymek otwiera dwa i pół akapitu i prowadzi do wpisu zajęć (jego słowo, 2026-11-01)
+        // dymek otwiera półtora akapitu i prowadzi do wpisu zajęć (jego słowo, 2026-11-01: *change it to 1,5 para from 2,5*)
         opis: cut(selC.opis || []).map((p) => ({ segs: SG(p) })), more: selC.url,
         moreStyle: "display:inline-flex;align-items:center;min-height:36px;padding:6px 16px;border-radius:999px;border:1px solid " + rgba(selC.c, 0.55) + ";color:" + COL[selC.c] + ";text-decoration:none;font-size:13.5px;letter-spacing:0.02em",
         kickStyle: "margin:0;font-size:11px;line-height:1.4;letter-spacing:0.12em;text-transform:uppercase;color:" + COL[selC.c],
