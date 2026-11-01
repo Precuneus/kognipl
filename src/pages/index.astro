@@ -88,7 +88,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   <!-- ekran startowy (jego słowo, 2026-10-23): nagłówek ten sam co na innych stronach, mózg pośrodku i klikalny; rój formuje z logo kreski do Story i od Story do Animacje, a do historii wchodzi się tylko nim -->
   <section class="roj-st start" data-k="start" aria-label="Start">
     <button type="button" class="roj-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="roj-anim-tor" aria-hidden="true"></span></button>
-    <a class="roj-btn roj-story on" href="#czesc">Story</a>
+    <a class="roj-btn roj-story" href="#czesc" tabindex="-1" aria-hidden="true">Story</a>
   </section>
   <section class="roj-st lewo pierwszy" data-k="czesc" id="czesc">
     <div class="roj-t"><h1 class="roj-czesc">Cześć!</h1></div>
@@ -190,6 +190,8 @@ body:has(.roj) .site-footer::before{display:none}
 @keyframes storyPuls{0%,100%{box-shadow:0 0 0 0 rgba(240,192,96,0)}50%{box-shadow:0 0 16px 1px rgba(240,192,96,.3)}}
 /* kółko, strzałka albo palec na zamkniętym ekranie startowym przypominają, którędy się wchodzi */
 .roj a.roj-story.nudge{animation:storyNudge .9s ease-out 1}
+.rocznik-menu a.nudge{animation:menuNudge .9s ease-out 1}
+@keyframes menuNudge{0%{color:#f0c060;text-shadow:0 0 0 rgba(240,192,96,0)}35%{color:#f0c060;text-shadow:0 0 14px rgba(240,192,96,.8)}100%{text-shadow:0 0 0 rgba(240,192,96,0)}}
 @keyframes storyNudge{0%{box-shadow:0 0 0 0 rgba(240,192,96,.7);transform:scale(1)}30%{transform:scale(1.045)}100%{box-shadow:0 0 0 22px rgba(240,192,96,0);transform:scale(1)}}
 html.roj-blok{overscroll-behavior:none}
 /* przełącznik animacji w prawym górnym rogu, na wysokości logo; stoi na ekranie przez całą historię (jego słowo, 2026-10-22) */
@@ -838,6 +840,119 @@ function landIskra(now: number): any {
   jet(wNorm() + rot, L.hop ? (L.hopT / L.hopTT < .5 ? .9 : .2) : 0);
   return jedzie(x, y, ang, .62, rot, 190, .32);
 }
+// Ekran startowy od nowa (jego słowo, 2026-11-01: *There is no line from iskra. She starts at dot in kogni and blink... Then wakes up and flies
+// to the brain. And it starts to explore the brain, including pulling some parts, lightening with different force, exploring, investigating*):
+// Iskra śpi jako kropka nad ı w logo, mruga, budzi się, przeciąga i leci do mózgu. Tam co kilka sekund losuje, co robi: świeci na sieć
+// z bliska mocno i wąsko albo z daleka słabo i szeroko, ciągnie kawałek sieci, który potem sprężyście wraca, stuka w sieć, a po sieci
+// biegnie fala, bada sieć z bliska drobnymi krokami albo siada na mózgu i świeci w dół.
+// Kursor (jego słowo, 2026-11-01: *If I move a cursor we can make Iskra keep the distance?*): trzyma się 90 px od niego, odlatuje, gdy się zbliża,
+// patrzy na niego, a gdy kursor stoi, podlatuje ostrożnie na tę odległość; szybki ruch kursora obok niej ją płoszy.
+const STX: any = { pull: { k: 0, n: 0, x0: 0, y0: 0, dx: 0, dy: 0, R: 64 }, rip: [] as any[] };
+const ST: any = { t0: 0, ph: 'spi', mode: '', mt: 0, m0: 0, n: 0, px: 0, py: 0, d0: 0, kat: 0, krok: 0, stuk: 0, strach: 0, ciek: 0, mrug: 0 };
+const MYSZ: any = { x: -1e4, y: -1e4, t: -1e9, v: 0, typ: '' };
+addEventListener('pointermove', (ev) => {
+  const n = performance.now(), dtm = Math.max(1, n - MYSZ.t);
+  MYSZ.v = MYSZ.t > 0 ? Math.hypot(ev.clientX - MYSZ.x, ev.clientY - MYSZ.y) / dtm * 1000 : 0;
+  MYSZ.x = ev.clientX; MYSZ.y = ev.clientY; MYSZ.t = n; MYSZ.typ = ev.pointerType; kick();
+}, { passive: true });
+addEventListener('pointerleave', () => { MYSZ.t = -1e9; }, { passive: true });
+// punkt sieci n na mózgu ekranu startowego; blisko poprzedniego, gdy blisko > 0
+function startPkt(n: number, blisko = 0) {
+  const L = P.filter((p) => p.net === n && !p.med && !p.lonly);
+  let best: number[] | null = null;
+  for (let i = 0; i < 30 && L.length; i++) {
+    const [x, y] = brainS(L[(Math.random() * L.length) | 0]), d = Math.hypot(x - ST.px, y - ST.py);
+    if (!blisko || (d > blisko * .5 && d < blisko * 1.6)) { best = [x, y]; break; }
+    if (!best) best = [x, y];
+  }
+  return best || [BS.cx, BS.cy];
+}
+function startTryb(now: number) {
+  const los = Math.random(), ns = SIECI_L.filter((n) => P.some((p) => p.net === n && !p.med));
+  ST.n = ns[(Math.random() * ns.length) | 0] || SIECI_L[0];
+  ST.mode = los < .3 ? 'swieci' : los < .5 ? 'ciagnie' : los < .68 ? 'stuka' : los < .86 ? 'bada' : 'siada';
+  ST.m0 = now; ST.mt = now + ({ swieci: 2600, ciagnie: 3200, stuka: 2600, bada: 3400, siada: 3000 } as any)[ST.mode] + Math.random() * 1600;
+  [ST.px, ST.py] = startPkt(ST.n);
+  if (ST.mode === 'siada') { const L = P.filter((p) => p.net === ST.n && !p.med && !p.lonly); let top: any = L[0]; for (const p of L) if (p.v < top.v) top = p; if (top) [ST.px, ST.py] = brainS(top); }
+  ST.d0 = 40 + Math.random() * 80; ST.kat = -Math.PI / 2 + (Math.random() - .5) * 1.4; ST.krok = now + 650; ST.stuk = now + 650;
+  setTimeout(kick, ST.mt - now + 20);
+}
+function startIskra(now: number): any {
+  const r = IS.r * 1.95, bw = BS.bw;
+  IS.jVis = 0; IS.jThr = 0;
+  if (!ST.t0) ST.t0 = now;
+  if (CICHO) return { id: 'start-cicho', tryb: 'lot', x: BS.cx, y: BS.cy - bw * .42, I: .5, ang: Math.PI / 2, len: bw * .4, half: .5, mood: { pd: 1, lid: 1 } };
+  const tl = now - ST.t0, [kx, ky] = knotXY();
+  let c: any;
+  if (ST.ph === 'spi') {
+    // śpi w kropce nad ı; dwa mrugnięcia, oko się otwiera, przeciąga się, snop rozwija się ku mózgowi
+    let lid = .08, I = 0;
+    for (const m of [1050, 1450]) if (tl >= m && ST.mrug < m) { ST.mrug = m; IS.mrug = now; }
+    if (tl > 1600) lid = .08 + .92 * sm(cl((tl - 1600) / 400));
+    if (tl > 2050 && tl < 2120 && IS.sq > -.1) IS.sq = -.26;
+    const ang = Math.atan2(BS.cy - ky, BS.cx - kx);
+    if (tl > 2200) I = .55 * sm(cl((tl - 2200) / 500));
+    if (tl > 2900) ST.ph = 'leci';
+    c = { id: 'spi', tryb: 'lot', x: kx, y: ky, I, ang, len: 60 + 200 * I, half: .3, gaze: ang, mood: { pd: 1, lid } };
+  } else if (ST.ph === 'leci') {
+    const x = BS.cx, y = BS.cy - bw * .45;
+    if (Math.hypot(IS.x - x, IS.y - y) < 40) { ST.ph = 'bada'; startTryb(now); }
+    c = { id: 'leci', tryb: 'lot', x, y, I: .35, ang: Math.PI / 2, len: bw * .35, half: .45, mood: { pd: 1.15, lid: 1, joy: .3 } };
+  }
+  if (!c) {
+    if (now > ST.mt) startTryb(now);
+    const u = cl((now - ST.m0) / (ST.mt - ST.m0));
+    STX.pull.k += (0 - STX.pull.k) * .08;
+    if (ST.mode === 'swieci') {
+      // mocno i wąsko z bliska, słabo i szeroko z daleka; odległość oddycha
+      const d = ST.d0 * (.62 + .38 * Math.cos(u * Math.PI * 2)), x = ST.px + Math.cos(ST.kat) * d, y = ST.py + Math.sin(ST.kat) * d;
+      const blisko = cl(1 - (d - 25) / 110);
+      c = { id: 'start-swieci', tryb: 'lot', x, y, I: .4 + .6 * blisko, ang: Math.atan2(ST.py - y, ST.px - x), len: d + 34, half: .62 - .38 * blisko, mood: { pd: 1.05 + .2 * blisko, lid: 1 } };
+    } else if (ST.mode === 'ciagnie') {
+      // podlatuje, chwyta, odciąga kawałek sieci na zewnątrz mózgu i puszcza; kawałek wraca sprężyście
+      const nx = ST.px - BS.cx, ny = ST.py - BS.cy, nm = Math.hypot(nx, ny) || 1, ux = nx / nm, uy = ny / nm;
+      const ciag = u < .3 ? 0 : u < .78 ? sm((u - .3) / .48) : 1, odl = 14 + 50 * ciag;
+      const x = ST.px + ux * odl, y = ST.py + uy * odl;
+      if (u > .3 && u < .8) {
+        STX.pull.n = ST.n; STX.pull.x0 = ST.px; STX.pull.y0 = ST.py; STX.pull.k = 1;
+        STX.pull.dx = Math.max(-46, Math.min(46, IS.x - ST.px)); STX.pull.dy = Math.max(-46, Math.min(46, IS.y - ST.py)); STX.pull.puszcza = 0;
+      } else if (u >= .8 && !STX.pull.puszcza) { STX.pull.puszcza = now; IS.sq = .3; }
+      c = { id: 'start-ciagnie', tryb: 'lot', x, y, I: .85, ang: Math.atan2(ST.py - y, ST.px - x), len: odl + 26, half: .3, mood: { pd: 1.22, lid: 1, joy: .6 } };
+    } else if (ST.mode === 'stuka') {
+      // stuka w sieć kilka razy obok siebie; od każdego stuknięcia po sieci biegnie fala
+      const faza = (now - ST.stuk) / 700;
+      if (faza >= 1) { [ST.px, ST.py] = startPkt(ST.n, 40); ST.stuk = now; }
+      const w = Math.sin(Math.PI * cl(faza)), y = ST.py - 24 + 20 * Math.pow(w, 3), x = ST.px;
+      if (faza > .48 && faza < .56 && !ST.uderz) { ST.uderz = 1; STX.rip.push({ x: ST.px, y: ST.py, n: ST.n, t0: now }); IS.sq = .32; }
+      if (faza < .3) ST.uderz = 0;
+      c = { id: 'start-stuka', tryb: 'lot', x, y, I: .7, ang: Math.PI / 2, len: 40, half: .4, mood: { pd: 1.15, lid: 1, joy: .35 } };
+    } else if (ST.mode === 'bada') {
+      // z bliska, drobnymi krokami po sieci, oko zmrużone
+      if (now > ST.krok) { [ST.px, ST.py] = startPkt(ST.n, 34); ST.krok = now + 560 + Math.random() * 300; IS.sq = -.12; }
+      c = { id: 'start-bada', tryb: 'lot', x: ST.px, y: ST.py - 16, I: .95, ang: Math.PI / 2 + Math.sin(now / 500) * .3, len: 34, half: .3, mood: { pd: 1.3, lid: .6 } };
+    } else {
+      // siada na mózgu i świeci w dół
+      c = { id: 'start-siada', tryb: 'lot', x: ST.px, y: ST.py - r - 3, I: .6, ang: Math.PI / 2, len: bw * .34, half: .45, mood: { pd: 1.05, lid: .9, joy: .45 } };
+    }
+  }
+  // kursor: trzyma odległość, ucieka, patrzy na niego, podlatuje do stojącego kursora
+  const KEEP = 90, mysz = MYSZ.typ === 'mouse' && now - MYSZ.t < 8000;
+  if (mysz && ST.ph !== 'spi') {
+    const dx = IS.x - MYSZ.x, dy = IS.y - MYSZ.y, d = Math.hypot(dx, dy) || 1, ka = Math.atan2(-dy, -dx);
+    if (MYSZ.v > 1500 && d < 170 && now - MYSZ.t < 60 && now > ST.strach) { ST.strach = now + 900; IS.sq = -.3; IS.zdz = .9; }
+    const strach = now < ST.strach, daleko = strach ? KEEP + 90 : KEEP;
+    const tdx = c.x - MYSZ.x, tdy = c.y - MYSZ.y, td = Math.hypot(tdx, tdy) || 1;
+    if (d < daleko) { c.x = MYSZ.x + dx / d * (daleko + 30); c.y = MYSZ.y + dy / d * (daleko + 30); c.id = 'start-ucieka'; c.I = .25; c.ang = ka; c.len = 40; c.half = .4; c.gaze = ka; c.mood = { pd: 1.35, lid: 1 }; }
+    else if (td < KEEP) { c.x = MYSZ.x + tdx / td * KEEP; c.y = MYSZ.y + tdy / td * KEEP; }
+    else if (now - MYSZ.t > 1400 && d < 320 && d > KEEP + 10 && ST.ph === 'bada') {
+      // kursor stoi: ciekawość, ostrożny podlot na odległość KEEP, snop przygaszony ku kursorowi
+      c.x = MYSZ.x + dx / d * KEEP; c.y = MYSZ.y + dy / d * KEEP; c.id = 'start-ciekawi'; c.I = .3; c.ang = ka; c.len = KEEP * .8; c.half = .35; c.gaze = ka; c.mood = { pd: 1.25, lid: .85, joy: .2 };
+    }
+    if (d < 260 && c.id !== 'start-ucieka' && c.id !== 'start-ciekawi') c.gaze = ka;
+  }
+  c.y = Math.max(H * .06, c.y);
+  return c;
+}
 // Solipsysta: iskra stoi na „zombie” i świeci na niego; postać wyłania się z ciemności, sama zapala świecę,
 // a snop jej świecy odsłania i oświetla słowa wokół; potem postać obraca się z płonącą świecą.
 const SOL: any = { t0: 0, done: false };
@@ -1064,7 +1179,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
   if (ZD.biegnie && scrollY >= 4) c = zdIskra();
   if (!c && KLv > .01 && MOZG_AKT) c = klikCel(now);
   if (!c) {
-    if (S.k === 'start') c = landIskra(now);
+    if (S.k === 'start') c = startIskra(now);
     else if (S.k === 'czesc') {
       // unosi się nad słowem i świeci na nie z góry
       const rr = czesc.getBoundingClientRect(), wx = rr.left + rr.width * .5, wy = rr.top + rr.height * .55;
@@ -1100,7 +1215,7 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
   if (c && c.tryb === 'stoj' && !c.rail && (c.y < H * .06 || c.y > H * .94)) { c.tryb = 'lot'; c.y = Math.max(H * .06, Math.min(H * .94, c.y)); }
   if (c) {
     c.x = Math.max(14, Math.min(W - 14, c.x));
-    c.mood = c.id === 'czesc' ? { pd: 1.15, lid: 1 }
+    c.mood = c.mood ? c.mood : c.id === 'czesc' ? { pd: 1.15, lid: 1 }
       : c.id === 'osnowy' ? { pd: 1.08 + .14 * (c.czeka || 0), lid: 1, joy: c.czeka ? .8 : 1 }
       : c.id === 'hura' ? { pd: 1.2, lid: 1, joy: 1 }
       : c.id === 'zombie' && c.I > .1 ? { pd: 1.2, lid: 1 }
@@ -1579,6 +1694,8 @@ function frame() {
   // kreski ekranu startowego: ważą tyle, ile ekran startowy jeszcze trwa na ekranie
   LD.w = A.k === 'start' ? 1 - t : B.k === 'start' ? t : 0;
   if (LD.w > .005) { geomS(); landKrok(now); landGeom(); }
+  if (STX.rip.length) STX.rip = STX.rip.filter((rp: any) => now - rp.t0 < 2400);
+  if (STX.pull.puszcza && now - STX.pull.puszcza > 1200) { STX.pull.k = 0; STX.pull.puszcza = 0; }
   const mzk = (k: string) => k === 'start' || k === 'czesc' || k === 'pytanie' || k === 'naglowek';
   MOZG_AKT = t < .5 ? mzk(A.k) : mzk(B.k);
   if (DYM_N && now - KL.t > KL_T - 1300) KL.t = now - (KL_T - 1300);
@@ -1639,6 +1756,19 @@ function frame() {
         x += (lx - x) * rel; y += (ly - y) * rel;
         al += (.9 * (1 - .3 * (.5 + .5 * Math.sin(p.ls * 24 - SEK * 2.4))) - al) * rel;
         cr += (ZLOTO[0] - cr) * rel; cg += (ZLOTO[1] - cg) * rel; cb += (ZLOTO[2] - cb) * rel; lit = Math.max(lit, rel);
+      }
+    }
+    if (LD.w > .005 && p.net > 1 && !p.med) {
+      // ekran startowy: kawałek sieci ciągnięty przez Iskrę i fala po stuknięciu
+      const pu = STX.pull;
+      if (pu.k > .01 && p.net === pu.n) {
+        const d = Math.hypot(x - pu.x0, y - pu.y0);
+        if (d < pu.R) { let k = pu.k; if (pu.puszcza) { const tp = (now - pu.puszcza) / 1000; k = Math.cos(tp * 14) * Math.exp(-tp * 5); } const w = (1 - d / pu.R) * (1 - d / pu.R) * k * LD.w; x += pu.dx * w * .8; y += pu.dy * w * .8; al = Math.min(1, al + .45 * Math.abs(w)); sz *= 1 + .5 * Math.abs(w); }
+      }
+      for (const rp of STX.rip) {
+        const age = now - rp.t0, front = age * .22, env = Math.exp(-age / 650) * (p.net === rp.n ? 1 : .25), dx = x - rp.x, dy = y - rp.y, d = Math.hypot(dx, dy) || 1;
+        const band = Math.exp(-((d - front) / 13) * ((d - front) / 13)) * env * LD.w;
+        if (band > .02) { x += dx / d * 4.5 * band; y += dy / d * 4.5 * band; al = Math.min(1, al + .6 * band); sz *= 1 + .6 * band; }
       }
     }
     if (al < .02 || y < -20 || y > H + 20) continue;
@@ -1779,7 +1909,7 @@ function frame() {
   // kreski ekranu startowego: osobne punkty, które czekają niewidoczne w mózgu z boku i lecą na kreski, gdy ich czoło je minie;
   // ls to miejsce wzdłuż kreski (od 0 do 1)
   {
-    const NL = innerWidth < 760 ? [0, 0, 0, 460] : [0, 0, 0, 1040], bok = P.filter((p) => !p.med), rl = rnd(23);
+    const NL = [0, 0, 0, 0], bok = P.filter((p) => !p.med), rl = rnd(23);
     const dodaj = (k: number, ls: number, lv: number) => {
       const q = bok[(rl() * bok.length) | 0];
       P.push({ lonly: 1, u: q.u, v: q.v, net: 0, col: GREY, a: rl() * 6.28, s: 1, sx: rl(), sy: rl(), d: rl(), cr: rl(), ln: 0, lx: 0, ld: k, ls, lo: (rl() - .5) * 5.4, lv });
@@ -1813,7 +1943,7 @@ if (scrollY < 3 && !location.hash) zaprzyj(true);
 function nudgeStory() {
   const n = performance.now();
   if (CICHO || n - NUDGE_T < 1500) return;
-  NUDGE_T = n; storyB.classList.remove('nudge'); void storyB.offsetWidth; storyB.classList.add('nudge');
+  NUDGE_T = n; const sb = storyM || storyB; sb.classList.remove('nudge'); void sb.offsetWidth; sb.classList.add('nudge');
 }
 // próba przewinięcia zamkniętego ekranu: Story drga; Iskra i tak jeździ obok niego po rampie
 function przypomnij() { nudgeStory(); }
@@ -1872,6 +2002,13 @@ addEventListener('scroll', () => {
     jedzDo(KIER > 0 || scrollY > LAND_Y() * .5 ? LAND_Y() : 0);
   }, 140);
 }, { passive: true });
+// Story w menu nagłówka (jego słowo, 2026-11-01: *Move stories to the menu on top*): na stronie startowej otwiera historię jak dawny przycisk
+const storyM = document.querySelector('.rocznik-menu a[href="/#czesc"]') as HTMLElement | null;
+storyM?.addEventListener('click', (ev) => {
+  const e = ev as MouseEvent;
+  if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  e.preventDefault(); zaprzyj(false); jedzDo(LAND_Y());
+});
 storyB.addEventListener('click', (ev) => {
   const e = ev as MouseEvent;
   if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;

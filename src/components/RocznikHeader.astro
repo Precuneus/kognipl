@@ -9,13 +9,15 @@ const NAV: Record<string, string[][]> = {
   '2026': [['plotno', 'Rocznik 2026', '/2026/'], ['lista', 'Lista zajęć', '/2026/zajecia/'], ['studiowanie', 'Studiowanie 101', '/2026/studiowanie/']],
   '2025': [['start', 'Start', '/2025/'], ['wstep-2', 'Wstęp II', '/2025/wstep-2/'], ['mip', 'Mózg i poznanie', '/2025/mip/'], ['design', 'Design Thinking', '/2025/design/'], ['drugi-mozg', 'Drugi mózg', '/2025/drugi-mozg/']],
 };
-// Menu obok logo, tymi samymi słowami co przyciski strony głównej (jego słowo, 2026-10-22): Wiki, Kursy (prosto na Rocznik 2026), Kontakt.
+// Menu obok logo, tymi samymi słowami co przyciski strony głównej (jego słowo, 2026-10-22): Wiki, Kursy (prosto na Rocznik 2026), Story, Kontakt.
 // Wiki linkuje, gdy choć jedna karta jest gotowa (stan: gotowa); do tego czasu stoi jako sama nazwa.
 const WIKI = WIKI_ON;
 const kikOn = rocznik !== '' || current === 'uwb' || current === 'kik';
 const MENU = [
   { label: 'Wiki', href: WIKI ? '/wiki/' : '', on: current === 'wiki', here: current === 'wiki' },
   { label: 'Kursy', href: '/2026/', on: kikOn, here: rocznik === '2026' && current === 'plotno' },
+  // Story w menu (jego słowo, 2026-11-01: *Move stories to the menu on top*): historia ze strony startowej
+  { label: 'Story', href: '/#czesc', on: false, here: false },
   { label: 'Kontakt', href: '/kontakt', on: current === 'kontakt', here: current === 'kontakt' },
 ];
 const own = (NAV[rocznik] || []).map(([k, label, href]) => ({ label, href, on: current === k }));
