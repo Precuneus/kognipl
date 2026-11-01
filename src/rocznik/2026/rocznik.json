@@ -680,12 +680,7 @@
     {
      "po": 6,
      "plik": "przestrzen",
-     "podpis": "Przestrzeń możliwości jako krajobraz: każda dolina to możliwość, a im głębsza, tym bardziej prawdopodobna według Twoich predykcji. Ściany wyznaczają ciało, otoczenie i inni ludzie. Próbując, przechodzisz do sąsiedniej doliny, a czasem przesuwasz ścianę i odsłaniasz dolinę, która dotąd była niemożliwa."
-    },
-    {
-     "po": 6,
-     "plik": "drzwi",
-     "podpis": "Za drzwiami dwukierunkowymi rozglądasz się i możesz wrócić. Za jednokierunkowymi skutki toczą się już w nowej przestrzeni możliwości."
+     "podpis": "Przestrzeń możliwości jako mapa. Ze wzgórza widzisz okolicę: ten teren jest odkryty i możesz tam pójść, a jaśniejsza droga jest bardziej prawdopodobna. Dalej leży mgła, czyli to, czego jeszcze nie znasz. Ściany wyznaczają ciało, otoczenie i inni ludzie. Przełęcz to drzwi dwukierunkowe: przejdziesz i możesz wrócić. Urwisko to drzwi jednokierunkowe: zeskoczysz, ale z powrotem nie wejdziesz. Próbując, schodzisz ze wzgórza w mgłę i ją rozwiewasz."
     }
    ]
   },
@@ -829,17 +824,18 @@
     {
      "po": 6,
      "plik": "szlaki",
-     "podpis": "Stacje na szlakach wzrokowych, od siatkówki do kory:",
+     "podpis": "Trzy szlaki wzrokowe zaczynają się w V1. Stacje, od siatkówki do kory:",
      "lista": [
       "V1, pierwszorzędowa kora wzrokowa: pierwsza stacja w korze, do której z siatkówki przez ciało kolankowate boczne we wzgórzu dociera bioinformacja (Chapelle 2025)<!--[s:chapelle2025-rgc-lgn-v1]-->.",
-      "V2, druga okolica kory wzrokowej: stacja tuż za V1, przez którą bioinformacja płynie dalej, ku kolejnym stacjom szlaków (Kravitz i in. 2013)<!--[s:kravitz2013-v1-to-teo-via-v2-v4-mt]-->.",
+      "V2, druga okolica kory wzrokowej: ma część brzuszną i grzbietową (Kravitz i in. 2013)<!--[s:kravitz2013-dorsal-ventral-parts-v2-v3-v4]-->; przez brzuszną biegnie szlak brzuszny, przez grzbietową szlak grzbietowy.",
       "V4, czwarta okolica kory wzrokowej: stacja szlaku brzusznego; jej neuron odpowiada na wycinek pola widzenia około pięć razy większy niż neuron V1 (Kravitz i in. 2013)<!--[s:kravitz2013-rf-size-and-complexity-grow]-->.",
       "TEO, tylna część dolnej kory skroniowej: kolejna stacja szlaku brzusznego, w której wycinek pola widzenia neuronu jest jeszcze większy (Kravitz i in. 2013)<!--[s:kravitz2013-rf-size-and-complexity-grow]-->.",
       "TE, przednia część dolnej kory skroniowej: koniec szlaku brzusznego, gdzie rozpoznajesz przedmiot; wycinek pola sięga około 12°, a odpowiedź neuronu najmniej zależy od tego, gdzie i jak widzisz przedmiot (Kravitz i in. 2011; 2013)<!--[s:kravitz2011-ventral-te-dorsal-pg]--><!--[s:kravitz2013-rf-size-and-complexity-grow]-->.",
-      "V3, trzecia okolica kory wzrokowej: stacja, przez którą V1 łączy się z obszarem MT (Kravitz i in. 2011)<!--[s:kravitz2011-v1-to-mt-via-v2-v3-v4]-->.",
+      "V3, trzecia okolica kory wzrokowej: stacja szlaku grzbietowego; jej część grzbietowa, tak jak V1, prowadzi wprost do obszaru MT (Kravitz i in. 2013)<!--[s:kravitz2013-v1-v3d-project-to-mt]-->.",
       "PG, pole w tylnej części płacika ciemieniowego dolnego: cel szlaku grzbietowego, który ustala, gdzie jest przedmiot i jak po niego sięgnąć (Kravitz i in. 2011; Pitcher i Ungerleider 2021)<!--[s:kravitz2011-ventral-te-dorsal-pg]--><!--[s:pitcher2021-three-visual-pathways]-->.",
-      "MT, obszar środkowy skroniowy: obszar wybiórczy dla ruchu, od którego zaczyna się droga szlaku bocznego do bruzdy skroniowej górnej (Pitcher i Ungerleider 2021)<!--[s:pitcher2021-mt-proposal-ffa-ventral]-->.",
-      "STS, bruzda skroniowa górna: struktura, w której [[Trzeci szlak wzrokowy|szlak boczny]] przetwarza ruch twarzy i ciała drugiej osoby: mimikę, spojrzenie, intencję i nastrój (Pitcher i Ungerleider 2021)<!--[s:pitcher2021-sts-moving-faces-bodies]-->."
+      "MT, obszar środkowy skroniowy: obszar wybiórczy dla ruchu, do którego V1 prowadzi bezpośrednio, więc szlak boczny zaczyna się już w V1 i biegnie stąd do bruzdy skroniowej górnej (Kravitz i in. 2013; Pitcher i Ungerleider 2021)<!--[s:kravitz2013-v1-v3d-project-to-mt]--><!--[s:pitcher2021-mt-proposal-ffa-ventral]-->.",
+      "STS, bruzda skroniowa górna: struktura, w której [[Trzeci szlak wzrokowy|szlak boczny]] przetwarza ruch twarzy i ciała drugiej osoby: mimikę, spojrzenie, intencję i nastrój (Pitcher i Ungerleider 2021)<!--[s:pitcher2021-sts-moving-faces-bodies]-->.",
+      "Pacjentka D.F.: uszkodzenie objęło głównie obszary 18 i 19, korę tuż za V1, a samo V1 zostało prawie nietknięte (Goodale i Milner 1992)<!--[s:goodale1992-df-slot-card-areas-18-19]-->; po stronie szlaku brzusznego objęło obszary rozpoznawania przedmiotów (Milner i Goodale 2008)<!--[s:milner2008-df-ventral-lo-lesion]-->."
      ],
      "dopis": "Kolejność stacji to schemat: z V1 bioinformacja dociera do TEO także na skróty, przez V2, V4 albo MT (Kravitz i in. 2013)<!--[s:kravitz2013-v1-to-teo-via-v2-v4-mt]-->."
     },
