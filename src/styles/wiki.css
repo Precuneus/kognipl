@@ -33,3 +33,11 @@
 .wk-wstep{margin:0;padding:0 0 32px}
 @media (max-width:960px){.wk-grid{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:720px){.wk{margin:0 20px;padding:28px 0 64px;max-width:none}.wk.wk-wstep{margin:0;padding:0 0 24px}.wk-mysl h1{font-size:34px}.wk-box{padding:18px 18px}}
+/* żywa rycina, wspólna dla wpisów i kart (jego słowo, 2026-11-02: *updating one animation updates the other one also*); przycisk zaskoczenia
+   na środku pod ryciną, jako wezwanie do działania (*Move the zaskoczenie button to the center bottom, make it more CTA*) */
+.wz-zywa{position:relative;width:100%}
+.wz-zywa canvas{display:block;width:100%;touch-action:pan-y;cursor:grab}
+.wz-zywa button{display:block;margin:12px auto 4px;font:600 15px var(--font-body);letter-spacing:.02em;color:#10130f;background:#6fb3a8;border:0;border-radius:999px;padding:11px 30px;cursor:pointer;box-shadow:0 0 0 5px rgba(111,179,168,.16),0 6px 22px rgba(111,179,168,.22);transition:transform .15s ease,box-shadow .2s ease,background .2s ease}
+.wz-zywa button:hover{background:#86c6bb;box-shadow:0 0 0 7px rgba(111,179,168,.22),0 8px 28px rgba(111,179,168,.3)}
+.wz-zywa button:active{transform:scale(.96)}
+.wz-zywa button:focus-visible{outline:2px solid #ebe3d3;outline-offset:3px}

@@ -5,7 +5,8 @@ rodziny:
 - '[[Predykcja]]'
 sieci: []
 bez_sieci: 'Predykcja zachodzi w każdej komórce mózgu, więc dotyczy wszystkich sieci naraz.'
-ryciny: []
+ryciny:
+- mozg.svg
 materiały:
 - tytuł: 'Michael Levin, Patterns of Form and Behavior Beyond Emergence'
   url: https://youtu.be/2RcW65tBxRA?t=479
@@ -25,5 +26,7 @@ W ujęciu kursu wszystko, czym jest i co robi żywa komórka, to predykcja (ang.
 Gdy nadchodzi coś innego, niż zakłada predykcja, w komórce pojawia się zaskoczenie (ang. prediction error), a zaskoczenie aktualizuje predykcję. Gina Turrigiano i współpracownicy zablokowali hamowanie w hodowli neuronów kory: częstość [[Potencjał czynnościowy|potencjałów czynnościowych]] najpierw wzrosła, ale w ciągu 48 godzin neurony osłabiły odpowiedź na pojedyncze porcje przekaźnika, a częstość wróciła blisko wartości kontrolnych (Turrigiano i in. 1998)<!--[s:turrigiano1998-synaptic-scaling]-->.
 
 Tę samą zasadę między obszarami kory wzrokowej opisuje model [[Kodowanie predykcyjne|kodowania predykcyjnego]]: obszar dalszy od receptorów wysyła połączeniami zwrotnymi predykcję aktywności obszaru bliższego, a połączenia wstępujące odsyłają zaskoczenie (Rao i Ballard 1999)<!--[s:rao1999-feedback-predictions-feedforward-errors]-->.
+
+![[mozg.svg]]
 
 Kiedy sięgasz po kubek, Twoja dłoń jest gotowa na jego ciężar, zanim go podniesiesz. Ta gotowość to predykcja wielu komórek naraz, a gdy kubek okazuje się lżejszy, zaskoczenie aktualizuje ją, zanim zdążysz o tym pomyśleć.
