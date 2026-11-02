@@ -1,40 +1,28 @@
 ---
 // Indeks wiki: grupa › osnowa › rodzina › karty. Stoi na karcie kogni.pl, pod jej opisem; z /wiki/ zniknął
 // (jego słowo, 2026-11-02: *fold whatever is in this list into a card and remove the list*).
-import { INDEX, INK, BASE } from '../karty/data.js';
+// Indeks jest częścią opisu karty: akapity jak mapa, nie panel (jego słowo, 2026-11-02: *wrap this entire panel into the card. All the
+// keywords should be in the card, in paragraphs listing them like a readme/ map but in the card*). Każda osnowa to akapit, rodziny
+// stoją w nim z kartami po dwukropku; osnowy bez kart zamykają grupę jednym zdaniem.
+import { INDEX, INK, segs, slugify } from '../karty/data.js';
+const grupy = INDEX.map((g) => ({ ...g, id: slugify(g.nazwa), pelne: g.osnowy.filter((o) => o.n), puste: g.osnowy.filter((o) => !o.n) }));
 ---
-<section class="wk-indeks" aria-label="Indeks kart">
-  {INDEX.map((g) => (
-    <section class="wi-group" id={g.nazwa.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase()} style={'--ink:' + INK[g.g] + ';--base:' + BASE[g.g]}>
-      <h2 class="wi-gname">{g.nazwa}</h2>
-      {g.osnowy.map((o) => (
-        <div class={'wi-os' + (o.n ? '' : ' wi-empty')} id={o.id}>
-          <h3>{o.nazwa}</h3>
-          {o.rodziny.map((r) => (
-            <div class="wi-fam">
-              <span class="wi-fname">{r.nazwa}</span>
-              <span class="wi-cards">{r.karty.map((k) => <a href={k.url} style={'--c:' + INK[k.g]}>{k.h}</a>)}</span>
-            </div>
-          ))}
-        </div>
-      ))}
-    </section>
-  ))}
-</section>
+{grupy.map((g) => (
+  <Fragment>
+    <h3 class="wi-g" id={g.id} style={'color:' + INK[g.g]}>{g.nazwa}</h3>
+    {g.pelne.map((o) => (
+      <p class="wk-p wi-os" id={o.id}><span class="wi-on">{o.nazwa}.</span>{' '}{o.rodziny.map((r, i) => [
+        i ? ' ' : '', r.nazwa + ': ', ...segs(r.karty.map((k) => '[[' + k.h + ']]').join(', ') + '.').map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t),
+      ])}</p>
+    ))}
+    {g.puste.length > 0 && <p class="wk-p wi-puste">{g.puste.length > 1 ? 'Na pierwszą kartę czekają osnowy ' : 'Na pierwszą kartę czeka osnowa '}{g.puste.map((o, i) => [i ? (i === g.puste.length - 1 ? ' i ' : ', ') : '', <span id={o.id}>{o.nazwa}</span>])}.</p>}
+  </Fragment>
+))}
 
 <style is:global>
-.wk-indeks{margin-top:8px}
-.wi-intro{max-width:720px;margin:0 0 8px}
-.wi-intro p{margin:0 0 14px;font-size:16.5px;line-height:1.75;color:#cfc8bb}
-.wi-intro a{color:#f0c060;text-decoration:underline dotted 1px;text-underline-offset:4px}
-.wi-group{margin-top:32px}
-.wi-gname{margin:0 0 14px;font-size:12.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);border-left:3px solid var(--base);padding-left:10px}
-.wi-os{padding:16px 0;border-top:1px solid rgba(180,155,100,.12)}
-.wi-os h3{margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:#e2ddd4}
-.wi-empty h3{color:#5f584d}
-.wi-fam{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px;padding:6px 0;align-items:baseline}
-.wi-fname{font-size:13.5px;color:var(--ink)}
-.wi-cards{display:flex;flex-wrap:wrap;gap:6px 8px}
-.wi-cards a{display:inline-flex;align-items:center;text-decoration:none;font-size:13.5px;min-height:32px;padding:4px 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);color:var(--c)}
-@media (max-width:720px){.wi-fam{grid-template-columns:minmax(0,1fr);gap:6px}}
+.wi-g{margin:30px 0 0;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;scroll-margin-top:90px}
+.wi-g::first-letter{text-transform:uppercase}
+.wi-os{scroll-margin-top:90px}
+.wi-on{color:#f3eee5;font-weight:500}
+.wi-puste{color:#8a8274}
 </style>

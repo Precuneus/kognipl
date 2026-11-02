@@ -13,7 +13,7 @@ stan: gotowa
 ---
 kogni.pl to strona kognitywistyki na Uniwersytecie w Białymstoku. Jej wiki to zbiór kart, do których prowadzi cała strona, a każda karta wyjaśnia jedno pojęcie. Adres kogni.pl/wiki otwiera pierwszy artykuł, kartę [[Kognitywistyka]]. W prawym panelu pierwszego artykułu schemat mózgu pokazuje sieci mózgu. Kliknięta sieć wylicza karty, które wskazują ją w części Sieć mózgowa.
 
-Pod tym opisem biegnie indeks gotowych kart. Dzieli je na socjologię, psychologię, biologię i fizykę, a każdą z tych grup na osnowy, czyli tematy zajęć rozpisane na [[Mapa osnów|mapie osnów]]. W osnowie karty skupiają się w rodzinach, węższych tematach. Osnowa Percepcja i uwaga obejmuje na przykład rodziny Oko i barwa, Kora wzrokowa i szlaki oraz Zaburzenia widzenia. Karta ma w indeksie kolor swojej grupy, a karty opisujące samą wiki, jak ta, są złote.
+Na końcu tego opisu biegnie indeks gotowych kart. Dzieli je na socjologię, psychologię, biologię i fizykę, a każdą z tych grup na osnowy, czyli tematy zajęć rozpisane na [[Mapa osnów|mapie osnów]]. W osnowie karty skupiają się w rodzinach, węższych tematach. Osnowa Percepcja i uwaga obejmuje na przykład rodziny Oko i barwa, Kora wzrokowa i szlaki oraz Zaburzenia widzenia. Karta ma w indeksie kolor swojej grupy, a karty opisujące samą wiki, jak ta, są złote.
 
 Karta pojawia się przy każdej rodzinie, do której należy, także w innej osnowie i innej grupie. Karta [[Agenci AI]] opisuje programy sztucznej inteligencji (AI). Należy w socjologii do rodzin Agenci AI i Modele językowe, a w psychologii do rodziny Uczenie ze wzmocnieniem. [[Ślepowidzenie]] łączy rodzinę Zaburzenia widzenia z rodziną Oznaki świadomości.
 

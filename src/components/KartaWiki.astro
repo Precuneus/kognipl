@@ -79,6 +79,7 @@ const brain = svgSrc
         ) : (
           <figure class="wk-fig"><Fragment set:html={b.fig} /><figcaption>{b.cap}</figcaption></figure>
         ))}
+        {Astro.slots.has('indeks') && <slot name="indeks" />}
       </section>
     </div>
     <div class="wk-col">
@@ -125,6 +126,5 @@ const brain = svgSrc
       )}
     </div>
   </div>
-  {Astro.slots.has('indeks') && <slot name="indeks" />}
 </article>
 <TerminDymek />
