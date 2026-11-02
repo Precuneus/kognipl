@@ -219,6 +219,11 @@ html.roj-cicho .roj *{animation:none!important}
 .roj-dymek-a[hidden]{display:none}
 .roj-dymek-x{position:absolute;top:8px;right:10px;padding:2px 6px;background:none;border:0;color:#8f877a;font-size:20px;line-height:1;cursor:pointer}
 .roj-dymek-x:hover{color:#e2ddd4}
+/* dymek chwyta się i przesuwa (2026-11-02) */
+.roj-dymek{cursor:grab;touch-action:none}
+.roj-dymek.chwycony{cursor:grabbing;user-select:none}
+.roj-dymek a,.roj-dymek button{cursor:pointer}
+.roj-dymek-b[hidden]{display:none}
 .roj-dymek-x:focus-visible,.roj-dymek-a:focus-visible{outline:1px solid #f0c060;outline-offset:3px}
 @keyframes dymekIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 html.roj-cicho .roj-dymek,html.roj-cicho .roj-dymek-b{animation:none}
@@ -2209,7 +2214,7 @@ const DYM_W = $('.roj-dymek-w'), DYM = $('.roj-dymek'), DYM_B = $$('.roj-dymek-b
 const DYM_D: any[] = JSON.parse(($('#roj-dymki') || { textContent: '[]' }).textContent || '[]');
 function dymekPokaz(n: number, x: number, y: number) {
   const d = DYM_D.find((q) => q.n === n); if (!d || !d.txt) { dymekZamknij(); return; }
-  DYM_N = n; DYM_Y = scrollY;
+  DYM_N = n; DYM_Y = scrollY; DYM_PX = x; DYM_PY = y;
   DYM_W.style.setProperty('--c', d.kolor);
   DYM.querySelector('.roj-dymek-kod')!.textContent = d.kod;
   DYM.querySelector('.roj-dymek-t')!.textContent = d.nazwa;
@@ -2223,13 +2228,39 @@ function dymekPokaz(n: number, x: number, y: number) {
   if (!MOB) { left = x + 52; if (left + w > vw - m) { left = x - 52 - w; dir = -1; } left = Math.max(m, left); }
   DYM.style.left = left + 'px'; DYM.style.top = top + 'px';
   const sy = gora ? -1 : 1;
-  [[20, 7], [38, 12]].forEach(([o, r], i) => { const b = DYM_B[i]; b.style.width = b.style.height = r + 'px'; b.style.left = (x + dir * o - r / 2) + 'px'; b.style.top = (y + sy * o - r / 2) + 'px'; });
+  [[20, 7], [38, 12]].forEach(([o, r], i) => { const b = DYM_B[i]; b.hidden = false; b.style.width = b.style.height = r + 'px'; b.style.left = (x + dir * o - r / 2) + 'px'; b.style.top = (y + sy * o - r / 2) + 'px'; });
 }
 function dymekZamknij() {
   if (DYM_W.hidden) return;
   DYM_W.hidden = true; DYM_N = 0; KL.t = Math.min(KL.t, performance.now() - KL_T + 1200); kick();
 }
 DYM.querySelector('.roj-dymek-x')!.addEventListener('click', dymekZamknij);
+// Dymek da się chwycić i odsunąć na bok (jego słowo, 2026-11-02: *the box that opens after clicking a network... it should be possible
+// to move to the side. grab and move with the cursor*): myszą i palcem, w granicach okna; kółka biegną od klikniętego miejsca ku dymkowi.
+let DYM_PX = 0, DYM_PY = 0, CHWYT: any = null;
+function dymekKolka() {
+  const r = DYM.getBoundingClientRect(), cx = Math.max(r.left, Math.min(r.right, DYM_PX)), cy = Math.max(r.top, Math.min(r.bottom, DYM_PY));
+  const dx = cx - DYM_PX, dy = cy - DYM_PY, d = Math.hypot(dx, dy) || 1;
+  [[20, 7], [38, 12]].forEach(([o, rr], i) => {
+    const b = DYM_B[i], s = Math.min(o, d * o / 58); b.hidden = d < 26;
+    b.style.left = (DYM_PX + dx / d * s - rr / 2) + 'px'; b.style.top = (DYM_PY + dy / d * s - rr / 2) + 'px';
+  });
+}
+DYM.addEventListener('pointerdown', (ev) => {
+  const e = ev as PointerEvent;
+  if (e.button !== 0 || (e.target as HTMLElement).closest('a,button')) return;
+  const r = DYM.getBoundingClientRect();
+  CHWYT = { id: e.pointerId, dx: e.clientX - r.left, dy: e.clientY - r.top };
+  DYM.setPointerCapture(e.pointerId); DYM.classList.add('chwycony'); e.preventDefault();
+});
+DYM.addEventListener('pointermove', (ev) => {
+  const e = ev as PointerEvent; if (!CHWYT || e.pointerId !== CHWYT.id) return;
+  const m = 8, left = Math.max(m, Math.min(innerWidth - DYM.offsetWidth - m, e.clientX - CHWYT.dx)), top = Math.max(m, Math.min(innerHeight - DYM.offsetHeight - m, e.clientY - CHWYT.dy));
+  DYM.style.left = left + 'px'; DYM.style.top = top + 'px'; dymekKolka();
+});
+const puscChwyt = (ev: Event) => { const e = ev as PointerEvent; if (!CHWYT || e.pointerId !== CHWYT.id) return; CHWYT = null; DYM.classList.remove('chwycony'); };
+DYM.addEventListener('pointerup', puscChwyt);
+DYM.addEventListener('pointercancel', puscChwyt);
 addEventListener('keydown', (ev) => { if (ev.key === 'Escape') dymekZamknij(); });
 addEventListener('scroll', () => { if (DYM_N && Math.abs(scrollY - DYM_Y) > 40) dymekZamknij(); }, { passive: true });
 addEventListener('resize', dymekZamknij);
