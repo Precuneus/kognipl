@@ -1050,7 +1050,7 @@ function snopStart() {
 new IntersectionObserver((es) => { SOL_WID = es[0].isIntersecting; snopStart(); }).observe(sol);
 function zakonczSol() { SOL.t0 = performance.now() - 10000; solKlasy(performance.now()); }
 // Klik w sieć mózgu (jego słowo, 2026-10-20): sieć się zapala, iskra leci szybko w miejsce kliknięcia, potem bada tę sieć.
-const SIATKA = new Uint8Array(240 * 180), SIATKA_M = new Uint8Array(240 * 180), KL: any = { med: false, n: 0, t: -1e9, x: 0, y: 0, pt: 0, px: 0, py: 0 }, KL_T = 7000;
+const SIATKA = new Uint8Array(240 * 180), SIATKA_M = new Uint8Array(240 * 180), KL: any = { med: false, n: 0, t: -1e9, x: 0, y: 0, pt: 0, px: 0, py: 0, sx: null, sy: 0, gx: 0, gy: 0, doszla: false, mrugN: 0, zm: '', z0: 0, zt: 0, kat: 0, stuk: 0, uderz: 0, wyjrz: 0, krok: 0 }, KL_T = 11000;
 let KLv = 0, MOZG_AKT = false, NA_MED = false, DYM_N = 0, DYM_Y = 0;
 const naSieci = (x: number, y: number) => {
   if (!MOZG_AKT || !P.length) return 0;
@@ -1071,19 +1071,94 @@ function klikCel(now: number): any {
   const tt = now - KL.t;
   // najpierw płynny lot w miejsce kliknięcia, potem spokojne badanie sieci: od punktu do pobliskiego punktu, snop z bliska
   // (jego słowo, 2026-10-23: ruchy były chaotyczne; punkty losowane przez cały mózg co pół sekundy rzucały iskrą, a snop drgał)
-  if (tt < 700 && Math.hypot(IS.x - KL.x, IS.y - (KL.y - 14)) > 10) return { id: 'klik', tryb: 'lot', x: KL.x, y: KL.y - 14, I: .9, ang: Math.PI / 2, len: 60, half: .5 };
-  if (now > KL.pt) {
-    const L = P.filter((p) => p.net === KL.n && !!p.med === KL.med);
-    let best: number[] | null = null;
-    for (let i = 0; i < 24 && L.length; i++) {
-      const [x, y] = KL.med ? brainM(L[(Math.random() * L.length) | 0]) : brainB(L[(Math.random() * L.length) | 0]), d = Math.hypot(x - KL.px, y - KL.py);
-      if (d > 30 && d < 110) { best = [x, y]; break; }
-      if (!best) best = [x, y];
+  // Po kliknięciu iskra nie skacze w kliknięte miejsce: najpierw zwraca tam uwagę, oko i snop obracają się ku niemu, potem płynie
+  // spokojnie z miejsca, w którym jest, i zatrzymuje się w odległości, z której patrzy; po drodze i przy badaniu czasem mruga
+  // (jego słowo, 2026-11-02: *iskra should not jump at the place of clicking the brain netwok... it should move its attention there
+  // smoothly, from where it is, blink sometimes also*).
+  if (now > KL.mrugN) { IS.mrug = now; KL.mrugN = now + 2600 + Math.random() * 2800; }
+  if (!KL.doszla) {
+    if (KL.sx === null) {
+      KL.sx = IS.x; KL.sy = IS.y;
+      const dx = KL.x - IS.x, dy = KL.y - 14 - IS.y, d = Math.hypot(dx, dy), zostaw = Math.min(d, 70);
+      KL.gx = KL.x - (d > 1 ? dx / d : 0) * zostaw; KL.gy = KL.y - 14 - (d > 1 ? dy / d : 0) * zostaw;
     }
-    if (best) { KL.px = best[0]; KL.py = best[1]; }
-    const d = 1300 + Math.random() * 900; KL.pt = now + d; setTimeout(kick, d + 20);
+    const wx = KL.x - IS.x, wy = KL.y - IS.y, dw = Math.hypot(wx, wy), ang = Math.atan2(wy, wx);
+    if (tt < 420) return { id: 'klik-uwaga', tryb: 'lot', x: KL.sx, y: KL.sy, I: .9, ang, len: dw + 24, half: .32 };
+    if (tt < 4200 && Math.hypot(IS.x - KL.gx, IS.y - KL.gy) > 12) return { id: 'klik', tryb: 'lot', x: KL.gx, y: KL.gy, I: .9, ang, len: dw + 24, half: .36 };
+    KL.doszla = true; KL.pt = 0; KL.zt = 0;
   }
-  return { id: 'bada' + KL.n, tryb: 'lot', x: KL.px, y: KL.py - 30, I: .9, ang: Math.PI / 2 + Math.sin(now / 900) * .25, len: 70, half: .55 };
+  // Na miejscu bawi się wybraną siecią (jego słowo, 2026-11-02: *make it play with the selected network. pull it, cover under it,
+  // make it playfull*): na zmianę ciągnie kawałek sieci, który sprężyście wraca, chowa się pod nią i wygląda spod niej,
+  // stuka w nią, aż biegnie fala, krąży wokół niej i bada ją z bliska.
+  return klikZabawa(now);
+}
+function klikPkt(blisko = 0) {
+  const L = P.filter((p) => p.net === KL.n && !!p.med === KL.med && !p.lonly);
+  let best: number[] | null = null;
+  for (let i = 0; i < 30 && L.length; i++) {
+    const [x, y] = KL.med ? brainM(L[(Math.random() * L.length) | 0]) : brainB(L[(Math.random() * L.length) | 0]), d = Math.hypot(x - KL.px, y - KL.py);
+    if (!blisko || (d > blisko * .5 && d < blisko * 1.6)) { best = [x, y]; break; }
+    if (!best) best = [x, y];
+  }
+  return best || [KL.x, KL.y];
+}
+function klikNowa(now: number) {
+  const TRYBY = ['ciagnie', 'chowa', 'stuka', 'krazy', 'bada'].filter((m) => m !== KL.zm);
+  KL.zm = TRYBY[(Math.random() * TRYBY.length) | 0];
+  KL.z0 = now; KL.zt = now + ({ ciagnie: 2800, chowa: 3200, stuka: 2400, krazy: 3000, bada: 2600 } as any)[KL.zm] + Math.random() * 600;
+  // następna zabawa zaczyna się blisko miejsca, w którym Iskra jest, więc nie przeskakuje przez sieć
+  KL.px = IS.x; KL.py = IS.y; [KL.px, KL.py] = klikPkt(70); KL.kat = -Math.PI / 2 + (Math.random() - .5) * 1.2; KL.stuk = now; KL.uderz = 0; KL.wyjrz = 0; KL.krok = now + 500;
+  if (KL.zm === 'chowa') {
+    // punkty sieci najbliżej środka, które przykryją Iskrę
+    const [cx, cy] = KL.med ? brainM({ u: CENT[KL.n][0], v: CENT[KL.n][1] }) : brainB({ u: CENT[KL.n][0], v: CENT[KL.n][1] });
+    KL.px = cx; KL.py = cy;
+    const L = P.filter((p) => p.net === KL.n && !p.med && !p.lonly).map((p) => { const [x, y] = brainB(p); return [Math.hypot(x - cx, y - cy), p]; }).sort((a: any, b: any) => a[0] - b[0]).slice(0, 26);
+    ST.n = KL.n; STX.zb.set = new Map(L.map((e: any, i: number) => [e[1], i])); STX.zb.k = 0;
+  }
+  setTimeout(kick, KL.zt - now + 20);
+}
+function klikZabawa(now: number): any {
+  if (now > KL.zt) klikNowa(now);
+  const u = cl((now - KL.z0) / (KL.zt - KL.z0)), r = IS.r * 1.95;
+  if (KL.zm !== 'chowa') STX.zb.k = Math.max(0, STX.zb.k - .05);
+  if (KL.zm === 'ciagnie') {
+    // chwyta kawałek sieci, odciąga go na zewnątrz mózgu i puszcza; kawałek wraca sprężyście, a Iskra podskakuje z radości
+    const [bx, by] = [BS.cx, BS.cy], nx = KL.px - bx, ny = KL.py - by, nm = Math.hypot(nx, ny) || 1, ux = nx / nm, uy = ny / nm;
+    const ciag = u < .25 ? 0 : u < .75 ? sm((u - .25) / .5) : 1, odl = 14 + 56 * ciag;
+    const x = KL.px + ux * odl, y = KL.py + uy * odl - (u > .78 ? 18 * Math.sin(Math.PI * cl((u - .78) / .22)) : 0);
+    if (u > .25 && u < .78) {
+      STX.pull.n = KL.n; STX.pull.x0 = KL.px; STX.pull.y0 = KL.py; STX.pull.k = 1;
+      STX.pull.dx = Math.max(-50, Math.min(50, IS.x - KL.px)); STX.pull.dy = Math.max(-50, Math.min(50, IS.y - KL.py)); STX.pull.puszcza = 0;
+    } else if (u >= .78 && !STX.pull.puszcza && STX.pull.k > .5) { STX.pull.puszcza = now; IS.sq = .3; }
+    return { id: 'klik-ciagnie', tryb: 'lot', x, y, I: .85, ang: Math.atan2(KL.py - y, KL.px - x), len: odl + 26, half: .3, mood: { pd: 1.25, lid: 1, joy: u > .78 ? 1 : .6 } };
+  }
+  if (KL.zm === 'chowa') {
+    // wlatuje pod sieć, przygasa, a punkty sieci zbierają się nad nią; potem wygląda spod nich, mruga i wyskakuje
+    STX.zb.k = u < .2 ? 0 : u < .7 ? Math.min(1, STX.zb.k + .05) : Math.max(0, STX.zb.k - .06);
+    if (u > .7 && !KL.wyjrz) { KL.wyjrz = 1; IS.mrug = now; IS.sq = -.28; }
+    const hop = u > .7 ? 26 * Math.sin(Math.PI * cl((u - .7) / .3)) : 0;
+    const schowana = u > .2 && u < .7;
+    return { id: 'klik-chowa', tryb: 'lot', x: KL.px + Math.sin(now / 500) * (schowana ? 2 : 0), y: KL.py - hop, I: schowana ? .08 : .6, ang: -Math.PI / 2, len: 30, half: .4,
+      mood: schowana ? { pd: .9, lid: .35 } : { pd: 1.4, lid: 1, joy: .9 } };
+  }
+  if (KL.zm === 'stuka') {
+    // stuka w sieć kilka razy obok siebie; od każdego stuknięcia po sieci biegnie fala
+    const faza = (now - KL.stuk) / 650;
+    if (faza >= 1) { [KL.px, KL.py] = klikPkt(40); KL.stuk = now; }
+    const w = Math.sin(Math.PI * cl(faza)), y = KL.py - 24 + 20 * Math.pow(w, 3);
+    if (faza > .48 && faza < .56 && !KL.uderz) { KL.uderz = 1; STX.rip.push({ x: KL.px, y: KL.py, n: KL.n, t0: now }); IS.sq = .32; }
+    if (faza < .3) KL.uderz = 0;
+    return { id: 'klik-stuka', tryb: 'lot', x: KL.px, y, I: .7, ang: Math.PI / 2, len: 40, half: .4, mood: { pd: 1.15, lid: 1, joy: .5 } };
+  }
+  if (KL.zm === 'krazy') {
+    // krąży wokół środka sieci i świeci do środka
+    const [cx, cy] = KL.med ? brainM({ u: CENT[KL.n][0], v: CENT[KL.n][1] }) : brainB({ u: CENT[KL.n][0], v: CENT[KL.n][1] });
+    const R = 44 + 20 * Math.sin(u * Math.PI), a = KL.kat + u * Math.PI * 2 * 1.2, x = cx + Math.cos(a) * R, y = cy + Math.sin(a) * R * .8;
+    return { id: 'klik-krazy', tryb: 'lot', x, y, I: .75, ang: Math.atan2(cy - y, cx - x), len: R + 24, half: .34, mood: { pd: 1.12, lid: 1, joy: .55 } };
+  }
+  // bada z bliska drobnymi krokami, oko zmrużone
+  if (now > KL.krok) { [KL.px, KL.py] = klikPkt(34); KL.krok = now + 560 + Math.random() * 300; IS.sq = -.12; }
+  return { id: 'klik-bada', tryb: 'lot', x: KL.px, y: KL.py - r - 12, I: .95, ang: Math.PI / 2 + Math.sin(now / 500) * .3, len: 34, half: .3, mood: { pd: 1.3, lid: .6 } };
 }
 // Wędrówka iskry przy mózgu: co chwilę losuje, co robi dalej. Ogląda wybraną sieć snopem z bliska,
 // siada na nazwie sieci i świeci na nią albo krąży nad mózgiem i świeci na boki. Mózg świeci tylko w jej snopie.
@@ -1460,9 +1535,9 @@ function krok(dt: number, c: any, now: number) {
     IS.kontakt = false; IS.lot = false; IS.kuc = 0;
     // sprężyna prawie krytycznie tłumiona: iskra dolatuje bez przestrzeliwania; lot do klikniętej sieci i jej badanie mają też
     // górną granicę prędkości, a przelotów w historii, które gonią tekst w swoim czasie, granica nie dotyczy
-    const k = c.id === 'dom' ? 110 : c.id === 'wiki' ? 80 : c.id === 'klik' ? 120 : c.id.startsWith('bada') ? 36 : 60, d = 2 * Math.sqrt(k) * .96;
+    const k = c.id === 'dom' ? 110 : c.id === 'wiki' ? 80 : c.id === 'klik' || c.id === 'klik-uwaga' ? 22 : c.id.startsWith('bada') ? 36 : 60, d = 2 * Math.sqrt(k) * .96;
     IS.vx += ((c.x - IS.x) * k - IS.vx * d) * dt; IS.vy += ((c.y - IS.y) * k - IS.vy * d) * dt;
-    if (c.id === 'klik' || c.id.startsWith('bada') || c.id === 'rampa-lot') { const v = Math.hypot(IS.vx, IS.vy), VM = c.id === 'rampa-lot' ? 420 : 1300; if (v > VM) { IS.vx *= VM / v; IS.vy *= VM / v; } }
+    if (c.id === 'klik' || c.id === 'klik-uwaga' || c.id.startsWith('bada') || c.id === 'rampa-lot') { const v = Math.hypot(IS.vx, IS.vy), VM = c.id === 'rampa-lot' || c.id === 'klik' ? 420 : c.id === 'klik-uwaga' ? 60 : 1300; if (v > VM) { IS.vx *= VM / v; IS.vy *= VM / v; } }
     IS.x += IS.vx * dt; IS.y += IS.vy * dt;
   } else if (IS.kuc > 0) {
     // przysiad przed skokiem
@@ -2124,7 +2199,8 @@ addEventListener('click', (ev) => {
   const el = ev.target as HTMLElement;
   if (el.closest('a,button,.roj-dymek')) return;
   const n = naSieci(ev.clientX, ev.clientY); if (!n) { dymekZamknij(); return; }
-  KL.n = n; KL.med = NA_MED; KL.t = performance.now(); KL.x = KL.px = ev.clientX; KL.y = KL.py = ev.clientY; KL.pt = 0; kick();
+  KL.n = n; KL.med = NA_MED; KL.t = performance.now(); KL.x = KL.px = ev.clientX; KL.y = KL.py = ev.clientY; KL.pt = 0;
+  KL.sx = null; KL.doszla = false; KL.mrugN = KL.t + 140; kick();
   dymekPokaz(n, ev.clientX, ev.clientY);
 });
 // Dymek sieci (jego słowo, 2026-10-23): po kliknięciu sieci staje przy klikniętym miejscu, jak dymek splotu na Płótnie; sieć świeci,
