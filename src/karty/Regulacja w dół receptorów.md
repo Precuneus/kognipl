@@ -24,6 +24,6 @@ U myszy, które do 40 dni jadły karmę z [[Kofeina i receptor adenozynowy|kofei
 
 Siegel i współpracownicy (1982)<!--[s:siegel1982-conditioned-anticipatory-mortality]--> zaproponowali model zgonów z „przedawkowania” heroiny, w którym do tolerancji na lek przyczyniają się bodźce z otoczenia kojarzone z lekiem. Według autorów eksperymenty na zwierzętach sugerują, że na śmiertelność po heroinie wpływają czynniki farmakologiczne oraz wyuczone odpowiedzi, którymi organizm wyprzedza lek (ang. conditioned drug-anticipatory responses).
 
-W ujęciu kursu zestaw receptorów błonowych to [[Receptory jako predykcja komórki|predykcja komórki]]. Regulacja w dół aktualizuje tę predykcję: gdy pobudzenie stale nadchodzi, komórka ma mniej receptorów. Wyuczone odpowiedzi, które w eksperymentach Siegla i współpracowników wyprzedzały lek, są w tym ujęciu predykcją całego organizmu.
+W ujęciu kursu zestaw receptorów błonowych to [[Receptory jako predykcja komórki|predykcja komórki]]. Regulacja w dół aktualizuje tę [[Predykcja|predykcję]]: gdy pobudzenie stale nadchodzi, komórka ma mniej receptorów. Wyuczone odpowiedzi, które w eksperymentach Siegla i współpracowników wyprzedzały lek, są w tym ujęciu predykcją całego organizmu.
 
 Jeśli pijesz kawę codziennie, możesz zapytać, czy Twoich receptorów adenozynowych przybywa tak jak u tych myszy. Badanie objęło tylko myszy, więc ta odpowiedź jest jeszcze otwarta.

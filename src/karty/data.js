@@ -74,6 +74,8 @@ export const WIKI_ON = KARTY.length > 0;
 const byName = {};
 KARTY.forEach((k) => { byName[k.h] = k; byName[k.stem] = k; });
 export const card = (name) => byName[name];
+// Rodzina na karcie prowadzi do karty o tej nazwie, gdy taka jest (Predykcja, Interocepcja), a inaczej do akapitu jej osnowy w indeksie.
+export const rodzinaUrl = (r, k) => (byName[r] && byName[r] !== k ? byName[r].url : osOf[r] && !byName[r] ? INDEKS + '#' + slugify(osOf[r]) : '');
 export const netCard = (kod) => byName[NETCARD[kod]];
 
 // Tekst z [[linkami]] na odcinki: link do karty gotowej, reszta zostaje słowami.

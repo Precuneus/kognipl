@@ -12,6 +12,7 @@
 .wk-mysl h2{color:var(--ink)}
 .wk-mysl h1{margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:44px;line-height:1.12;color:#e2ddd4}
 .wk-rodziny{margin:10px 0 0;font-size:14px;color:var(--ink)}
+.wk-rodziny a{color:inherit;text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wk-p{margin:14px 0 0;font-size:16.5px;line-height:1.75;color:#e2ddd4}
 .wk-box h2+.wk-p{margin-top:0}
 .wk-p a,.wk-net dd a{text-decoration:underline dotted 1px;text-underline-offset:4px}

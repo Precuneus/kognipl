@@ -1,7 +1,7 @@
 ---
 // Karta wiki w jednym szablonie: strona karty i pierwszy artykuł na /wiki/ (2026-10-22).
 import { template } from '../rocznik/views/karta.js';
-import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, classesOf, slugify, INDEKS } from '../karty/data.js';
+import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, classesOf, slugify, INDEKS, rodzinaUrl } from '../karty/data.js';
 import { KOLOR } from '../karty/mozg.js';
 import '../styles/wiki.css';
 import TerminDymek from './TerminDymek.astro';
@@ -76,7 +76,7 @@ const brain = svgSrc
       <section aria-label="Termin" class="wk-box wk-mysl">
         <h2>Termin</h2>
         <h1>{k.h}</h1>
-        {k.r2.length > 0 && <p class="wk-rodziny">{k.r2.join(' · ')}</p>}
+        {k.r2.length > 0 && <p class="wk-rodziny">{k.r2.map((r, i) => [i ? ' · ' : '', rodzinaUrl(r, k) ? <a href={rodzinaUrl(r, k)}>{r}</a> : r])}</p>}
       </section>
       <section aria-label="Opis" class="wk-box">
         <h2>Opis</h2>
