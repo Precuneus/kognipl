@@ -2222,14 +2222,20 @@ function dymekPokaz(n: number, x: number, y: number) {
   const a = DYM.querySelector('.roj-dymek-a') as HTMLAnchorElement; a.hidden = !d.url; if (d.url) a.href = d.url;
   DYM_W.hidden = false;
   const w = DYM.offsetWidth, h = DYM.offsetHeight, m = 12, vw = innerWidth, vh = innerHeight;
-  // nad klikniętym miejscem, gdy jest tam miejsce, inaczej pod nim; na szerokim ekranie w prawo od niego, przy prawej krawędzi w lewo
-  const gora = y - h - 52 >= 64, top = Math.max(m, Math.min(vh - h - m, gora ? y - h - 52 : y + 52));
-  let left = m, dir = 1;
-  if (!MOB) { left = x + 52; if (left + w > vw - m) { left = x - 52 - w; dir = -1; } left = Math.max(m, left); }
-  DYM.style.left = left + 'px'; DYM.style.top = top + 'px';
-  const sy = gora ? -1 : 1;
-  [[20, 7], [38, 12]].forEach(([o, r], i) => { const b = DYM_B[i]; b.hidden = false; b.style.width = b.style.height = r + 'px'; b.style.left = (x + dir * o - r / 2) + 'px'; b.style.top = (y + sy * o - r / 2) + 'px'; });
+  // Dymek staje w prawym górnym rogu, pod przełącznikiem animacji (jego słowo, 2026-11-02: *make the boxes display by default in the
+  // top right, below the animation switch*); odsunięty raz otwiera się potem tam, gdzie go zostawiono, także dla innej sieci
+  // (jego słowo, 2026-11-02: *if I move it and click another network, the card of this network should open in the same place*).
+  const an = (document.querySelector('.roj-anim') as HTMLElement | null)?.getBoundingClientRect();
+  let left = an && an.width ? an.right - w : vw - w - m, top = an && an.height ? an.bottom + 12 : 64;
+  // na telefonie menu stoi pod przełącznikiem: dymek schodzi pod menu, żeby go nie zasłaniać
+  const mn = (document.querySelector('.rocznik-menu') as HTMLElement | null)?.getBoundingClientRect();
+  if (mn && mn.height && left < mn.right && left + w > mn.left && mn.bottom + 12 > top) top = mn.bottom + 12;
+  if (DYM_POS) [left, top] = DYM_POS;
+  DYM.style.left = Math.max(m, Math.min(vw - w - m, left)) + 'px'; DYM.style.top = Math.max(m, Math.min(vh - h - m, top)) + 'px';
+  [[20, 7], [38, 12]].forEach(([, r], i) => { const b = DYM_B[i]; b.hidden = false; b.style.width = b.style.height = r + 'px'; });
+  dymekKolka();
 }
+
 function dymekZamknij() {
   if (DYM_W.hidden) return;
   DYM_W.hidden = true; DYM_N = 0; KL.t = Math.min(KL.t, performance.now() - KL_T + 1200); kick();
@@ -2237,7 +2243,7 @@ function dymekZamknij() {
 DYM.querySelector('.roj-dymek-x')!.addEventListener('click', dymekZamknij);
 // Dymek da się chwycić i odsunąć na bok (jego słowo, 2026-11-02: *the box that opens after clicking a network... it should be possible
 // to move to the side. grab and move with the cursor*): myszą i palcem, w granicach okna; kółka biegną od klikniętego miejsca ku dymkowi.
-let DYM_PX = 0, DYM_PY = 0, CHWYT: any = null;
+let DYM_PX = 0, DYM_PY = 0, CHWYT: any = null, DYM_POS: number[] | null = null;
 function dymekKolka() {
   const r = DYM.getBoundingClientRect(), cx = Math.max(r.left, Math.min(r.right, DYM_PX)), cy = Math.max(r.top, Math.min(r.bottom, DYM_PY));
   const dx = cx - DYM_PX, dy = cy - DYM_PY, d = Math.hypot(dx, dy) || 1;
@@ -2256,9 +2262,9 @@ DYM.addEventListener('pointerdown', (ev) => {
 DYM.addEventListener('pointermove', (ev) => {
   const e = ev as PointerEvent; if (!CHWYT || e.pointerId !== CHWYT.id) return;
   const m = 8, left = Math.max(m, Math.min(innerWidth - DYM.offsetWidth - m, e.clientX - CHWYT.dx)), top = Math.max(m, Math.min(innerHeight - DYM.offsetHeight - m, e.clientY - CHWYT.dy));
-  DYM.style.left = left + 'px'; DYM.style.top = top + 'px'; dymekKolka();
+  DYM.style.left = left + 'px'; DYM.style.top = top + 'px'; CHWYT.ruszyl = true; dymekKolka();
 });
-const puscChwyt = (ev: Event) => { const e = ev as PointerEvent; if (!CHWYT || e.pointerId !== CHWYT.id) return; CHWYT = null; DYM.classList.remove('chwycony'); };
+const puscChwyt = (ev: Event) => { const e = ev as PointerEvent; if (!CHWYT || e.pointerId !== CHWYT.id) return; if (CHWYT.ruszyl) DYM_POS = [DYM.offsetLeft, DYM.offsetTop]; CHWYT = null; DYM.classList.remove('chwycony'); };
 DYM.addEventListener('pointerup', puscChwyt);
 DYM.addEventListener('pointercancel', puscChwyt);
 addEventListener('keydown', (ev) => { if (ev.key === 'Escape') dymekZamknij(); });
