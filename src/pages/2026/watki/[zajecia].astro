@@ -25,8 +25,9 @@ const unmark = (t) => String(t || '').replace(/<!--\[s:[^\]]*\]-->/g, '');
 // jedna rycina z kilku części (jego słowo, 2026-11-01: *ryc 2 and 3 should be a single rycina*): pole `czesci`, każda z `obraz` albo `plik`
 const svgOf = (plik) => RYC['../../../rocznik/2026/ryciny/wpisy/' + plik + '.svg'] || '';
 const figs = (z.ryciny || []).slice().sort((x, y) => x.po - y.po).map((r, i) => ({ ...r, n: i + 1,
-  czesci: (r.czesci || [r]).map((q) => ({ ...q, svg: q.obraz ? '' : svgOf(q.plik) })), zrodla: r.zrodla || (r.zrodlo ? [r.zrodlo] : []) }));
-figs.forEach((f) => f.czesci.forEach((q) => { if (!q.svg && !q.obraz) throw new Error('Wpis ' + c.id + ': brak ryciny ' + q.plik); }));
+  czesci: (r.czesci || [r]).map((q) => ({ ...q, svg: q.obraz || q.zywa ? '' : svgOf(q.plik) })), zrodla: r.zrodla || (r.zrodlo ? [r.zrodlo] : []) }));
+// rycina żywa (jego słowo, 2026-11-02: *I like the cube and 3d view - we will be using it*): pole `zywa` nazywa moduł w src/rocznik/2026/ryciny/zywe/
+figs.forEach((f) => f.czesci.forEach((q) => { if (!q.svg && !q.obraz && !q.zywa) throw new Error('Wpis ' + c.id + ': brak ryciny ' + q.plik); }));
 // poprzednie i następne zajęcia (jego słowo, 2026-11-01: *I should see a menu on the top, to click right to the previous class and right to the next*)
 const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = held[hi + 1];
 ---
@@ -49,7 +50,7 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
           <p class="wk-p">{segs(p).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>,
           ...figs.filter((f) => f.po === i).map((f) => (
             <figure class="wk-fig wz-fig">
-              <div class={f.czesci.length > 1 ? 'wz-czesci' : ''}>{f.czesci.map((q) => q.obraz ? <img src={q.obraz} alt={unmark(q.alt || f.podpis)} loading="lazy" class={q.jasne ? 'wz-jasne' : ''} /> : <Fragment set:html={q.svg} />)}</div>
+              <div class={f.czesci.length > 1 ? 'wz-czesci' : ''}>{f.czesci.map((q) => q.obraz ? <img src={q.obraz} alt={unmark(q.alt || f.podpis)} loading="lazy" class={q.jasne ? 'wz-jasne' : ''} /> : q.zywa ? <div class="wz-zywa" data-zywa={q.zywa}><canvas role="img" aria-label={unmark(q.alt || f.podpis)}></canvas><button type="button">zaskoczenie</button></div> : <Fragment set:html={q.svg} />)}</div>
               <figcaption>{'Ryc. ' + f.n + '. '}{segs(unmark(f.podpis)).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}
                 {f.lista && <ul class="wz-lista">{f.lista.map((x) => <li>{segs(unmark(x)).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</li>)}</ul>}
                 {f.dopis && <span>{' ' + unmark(f.dopis)}</span>}
@@ -80,6 +81,8 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
 </article>
 <TerminDymek />
 <script>
+  import { mozg } from '../../../rocznik/2026/ryciny/zywe/mozg.js';
+  document.querySelectorAll('.wz-zywa[data-zywa="mozg"]').forEach((el) => mozg(el as HTMLElement));
   // Etykiety rycin (jego słowo, 2026-11-01: *When you draw something you use a label, a podpis, etykieta. And you use a regular font with
   // white bold letters. I want this to look better*): każdy podpis na rycinie (text.et) dostaje plakietkę na swoją miarę, ciemną,
   // z cienką ciepłą obwódką; podpisy w kilku wierszach o tym samym wyrównaniu dzielą jedną plakietkę
@@ -114,6 +117,10 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
 .wz-fig svg{max-width:100%}
 .wz-fig svg text.et{font-family:var(--font-body);font-weight:500;letter-spacing:.015em;fill:#ebe3d3}
 .wz-fig svg .et-tlo{fill:rgba(18,17,13,.9);stroke:rgba(214,198,166,.42);stroke-width:1;vector-effect:non-scaling-stroke}
+.wz-zywa{position:relative;width:100%}
+.wz-zywa canvas{display:block;width:100%;touch-action:pan-y;cursor:grab}
+.wz-zywa button{margin:6px 0 2px;font:500 13px var(--font-body);color:#ebe3d3;background:rgba(18,17,13,.9);border:1px solid rgba(214,198,166,.42);border-radius:999px;padding:5px 14px;cursor:pointer}
+.wz-zywa button:hover{border-color:#ebe3d3}
 .wz-fig img{display:block;width:100%;max-width:560px;height:auto;border-radius:10px}
 .wz-fig img.wz-jasne{background:#ece6da;padding:10px}
 .wz-czesci{display:grid;grid-template-columns:1fr;gap:10px;align-items:center}
