@@ -805,7 +805,7 @@
     {
      "po": 2,
      "plik": "potencjal",
-     "podpis": "Potencjał czynnościowy: od napięcia spoczynkowego, około −70 mV, do progu, gdy do komórki wpływają jony sodu i wnętrze na chwilę staje się dodatnie. W zakończeniu aksonu wpływają jony wapnia, a pęcherzyki wydzielają przekaźniki do receptorów następnej komórki."
+     "podpis": "Potencjał czynnościowy biegnie wzdłuż aksonu do synapsy. U góry neuron i następna komórka. Na dole po lewej napięcie w jednym miejscu aksonu: od spoczynku, około −70 mV, do progu, gdy do komórki wpływają jony sodu i wnętrze na chwilę staje się dodatnie, a potem z powrotem do spoczynku. Na dole po prawej powiększone zakończenie aksonu: wpływają jony wapnia, które pomagają pęcherzykom połączyć się z błoną (Betts i in. 2013)<!--[s:betts2013-synapse-calcium-vesicles]-->, a pęcherzyki wydzielają przekaźniki do receptorów następnej komórki."
     },
     {
      "po": 3,
