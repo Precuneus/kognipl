@@ -94,6 +94,13 @@ R['zajęcia'].forEach((z) => {
 for (const sp of NEW) {
   if (!sp.txt) throw new Error('Zajęcia ' + sp.cls + ': splot na osnowie ' + sp.o + ' nie ma tekstu w rocznik.json (splot.h, splot.d)');
 }
+// Karty splotu mieszkają w jego zdaniach, nie w liście (jego, 2026-10-22: rzędy chipów zniknęły); karta zajęć, której nie linkuje
+// żadne zdanie splotu, jest z niego nieosiągalna, więc budowanie ją wypisuje (2026-11-05), a zdanie dopisuje się w splot.d
+for (const sp of NEW) {
+  const linked = new Set([...String(sp.d || '').matchAll(/\[\[([^\]|]+)/g)].map((m) => m[1]));
+  const brak = sp.cards.map((c) => c.h).filter((h) => h && !linked.has(h));
+  if (brak.length) console.warn('Zajęcia ' + sp.cls + ', splot ' + sp.o + ': bez zdania dla kart ' + brak.join(', '));
+}
 
 export const SP = OLD.concat(NEW).sort((a, b) => { const x = order(a), y = order(b); return x[0] - y[0] || x[1] - y[1]; });
 
