@@ -31,7 +31,7 @@ export function getStaticPaths() {
   return WIKI_ON ? [{ params: { indeks: undefined } }] : [];
 }
 ---
-<Base title="wiki · kogni.pl" activePage="wiki">
+<Base title="wiki · kogni.pl" activePage="wiki" description={String((pierwsza && pierwsza.def) || '').replace(/<!--\[[so]:[^\]]*\]-->/g, '').trim()}>
   <div class="wi">
     {/* mapa sieci w prawym panelu pierwszego artykułu, w miejscu jego części Sieć mózgowa (jego słowo, 2026-10-23: *embed the sieci mozgowe in the wiki main page to the panel to the right*) */}
     {pierwsza ? (

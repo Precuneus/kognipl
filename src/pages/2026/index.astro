@@ -10,4 +10,10 @@ import Board from '../../components/Board.astro';
   <h2 class="sr-only" id="plotno">Płótno: cały rok, zajęcia na osnowach</h2>
   <div class="start-plotno"><Board view="plotno" /></div>
 </section>
+<script>
+  const koniec = (s) => s.parentElement?.classList.toggle('pl-koniec', s.scrollLeft + s.clientWidth >= s.scrollWidth - 4);
+  const wszystkie = () => document.querySelectorAll('.pl-scroll').forEach(koniec);
+  document.addEventListener('scroll', (e) => { if (e.target instanceof Element && e.target.classList.contains('pl-scroll')) koniec(e.target); }, true);
+  addEventListener('load', wszystkie); addEventListener('resize', wszystkie); setTimeout(wszystkie, 600);
+</script>
 </Base>

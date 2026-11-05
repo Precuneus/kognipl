@@ -11,6 +11,8 @@ interface Props {
 }
 
 const { title = 'kogni.pl', activePage = '', rocznik = '', description = '' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og.png', Astro.site).href;
 ---
 <!DOCTYPE html>
 <html lang="pl">
@@ -19,12 +21,21 @@ const { title = 'kogni.pl', activePage = '', rocznik = '', description = '' } = 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   {description && <meta name="description" content={description}>}
+  <link rel="canonical" href={canonical}>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="kogni.pl">
+  <meta property="og:locale" content="pl_PL">
+  <meta property="og:url" content={canonical}>
+  <meta property="og:title" content={title}>
+  {description && <meta property="og:description" content={description}>}
+  <meta property="og:image" content={ogImage}>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/fonts/fonts.css">
 </head>
 <body>
 
@@ -48,13 +59,13 @@ const { title = 'kogni.pl', activePage = '', rocznik = '', description = '' } = 
   <p class="footer-info">
     Uniwersytet w Białymstoku &ensp;·&ensp; <a href="mailto:o.borowiecki@uwb.edu.pl">o.borowiecki@uwb.edu.pl</a>
   </p>
-  <!-- ujawnienie procesu na każdej stronie, jego zdanie (jego słowo, 2026-10-23: *add this to the footer*) -->
+  {/* ujawnienie procesu na każdej stronie, jego zdanie (jego słowo, 2026-10-23: *add this to the footer*) */}
   <p class="footer-ai">
-    Strona i jej treści wyłaniają się z procesu: pętli sprzężenia zwrotnego między inteligencją biologiczną a sztuczną. <a href="/o-stronie/">O stronie</a>
+    Strona i jej treści wyłaniają się z procesu: pętli sprzężenia zwrotnego między inteligencją biologiczną a sztuczną. <span style="white-space:nowrap"><a href="/o-stronie/">O stronie</a> &ensp;·&ensp; <a href="/prywatnosc/">Prywatność</a></span>
   </p>
 </footer>
 
-<!-- Candlelight card tracking (shared) -->
+{/* Candlelight card tracking (shared) */}
 <script>
   document.querySelectorAll('.glow-card').forEach(card => {
     const light = card.querySelector('.card-light');

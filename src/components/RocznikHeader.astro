@@ -27,7 +27,7 @@ const named = own.length > 1 && !self;
 ---
 <header class={'rocznik-head' + (rocznik ? '' : ' rocznik-head-start')}>
   <div class="rocznik-title">
-    <a href="/" aria-label="kogni.pl, strona główna" class="rocznik-logo">kogn<span class="rocznik-i">ı<span class="rocznik-knot"></span></span>.pl</a>
+    <a href="/" class="rocznik-logo">kogn<span class="rocznik-i" aria-hidden="true">ı<span class="rocznik-knot"></span></span><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">i</span>.pl</a>
     <span aria-hidden="true" class="rocznik-bar">|</span>
     <nav aria-label="Menu" class="rocznik-menu">
       {MENU.map((x) => x.href

@@ -14,6 +14,7 @@
   --text-primary: #e2ddd4;
   --text-secondary: #a09888;
   --text-dim: #6b6358;
+  --text-quiet: #8a8275;
 
   --warm-glow: #e8a84c;
   --warm-glow-soft: rgba(232, 168, 76, 0.08);
@@ -190,16 +191,15 @@ a { color: inherit; }
   font-weight: 400;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--text-quiet);
   margin-bottom: 4px;
-  opacity: 0.7;
 }
 
 .footer-faculty {
   font-family: var(--font-display);
   font-style: italic;
   font-size: 14px;
-  color: var(--text-dim);
+  color: var(--text-quiet);
   margin-bottom: 4px;
 }
 
@@ -207,7 +207,7 @@ a { color: inherit; }
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 300;
-  color: var(--text-dim);
+  color: var(--text-quiet);
   line-height: 2;
 }
 
@@ -230,7 +230,7 @@ a { color: inherit; }
   font-size: 12px;
   font-weight: 300;
   line-height: 1.8;
-  color: var(--text-dim);
+  color: var(--text-quiet);
 }
 
 .footer-ai a {

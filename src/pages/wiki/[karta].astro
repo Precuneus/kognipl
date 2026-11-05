@@ -8,6 +8,6 @@ export function getStaticPaths() {
 }
 const { k } = Astro.props;
 ---
-<Base title={k.h + ' · wiki · kogni.pl'} activePage="wiki">
+<Base title={k.h + ' · wiki · kogni.pl'} activePage="wiki" description={String(k.def || '').replace(/<!--\[[so]:[^\]]*\]-->/g, '').trim()}>
   <KartaWiki k={k}>{k.h === 'kogni.pl' && <IndeksWiki slot="indeks" />}</KartaWiki>
 </Base>
