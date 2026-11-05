@@ -33,6 +33,7 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
 ---
 <Base title={c.title + ' · ' + c.course + ' ' + c.short + ' · kogni.pl'} activePage="plotno" rocznik="2026" description={first}>
 <article class="wk wz" style={'--ink:' + ink}>
+  <nav aria-label="Powrót"><a href={'/2026/?z=' + c.id} class="wz-wstecz"><span aria-hidden="true">←</span> Płótno</a></nav>
   <nav aria-label="Zajęcia" class="wz-nav">
     {prev ? <a href={prev.url} class="wz-nav-l" title={prev.title}><span aria-hidden="true">‹</span> {prev.course} {prev.short}</a> : <span class="wz-nav-l"></span>}
     <a href={'/2026/?z=' + c.id} class="wz-nav-c" aria-current="page">{c.course} {c.short}</a>
@@ -95,6 +96,18 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
         return l.getAttribute('text-anchor') === t.getAttribute('text-anchor') && Math.abs(+l.getAttribute('x')! - +t.getAttribute('x')!) < 1 && +t.getAttribute('y')! - +l.getAttribute('y')! > 0 && +t.getAttribute('y')! - +l.getAttribute('y')! <= fs * 1.6; });
       if (g) g.push(t); else grupy.push([t]);
     }
+    const vbw = svg.viewBox.baseVal ? svg.viewBox.baseVal.width : 0;
+    const fsMin = ts.length ? Math.min(...ts.map((t) => parseFloat(t.getAttribute('font-size') || '12'))) : 0;
+    if (vbw && fsMin && fsMin * svg.getBoundingClientRect().width / vbw < 10) {
+      const wrap = document.createElement('div'), sc = document.createElement('div');
+      wrap.className = 'pl-wrap'; sc.className = 'pl-scroll'; sc.style.overflowX = 'auto';
+      // Inaczej niż Płótno: w rysunku nie ma przycisku ani linku, więc pole przewijane samo przyjmuje fokus, żeby klawiatura je przesunęła.
+      const nr = svg.closest('figure')?.querySelector('figcaption')?.textContent?.match(/Ryc\. \d+/)?.[0] || 'Rycina';
+      sc.tabIndex = 0; sc.setAttribute('role', 'region'); sc.setAttribute('aria-label', nr + ', przewiń w bok');
+      svg.parentNode!.insertBefore(wrap, svg); wrap.appendChild(sc); sc.appendChild(svg);
+      const w = Math.ceil(vbw * 10 / fsMin) + 'px';
+      svg.style.width = w; svg.style.minWidth = w; svg.style.maxWidth = 'none';
+    }
     for (const gr of grupy) {
       let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
       for (const t of gr) { const b = t.getBBox(); x0 = Math.min(x0, b.x); y0 = Math.min(y0, b.y); x1 = Math.max(x1, b.x + b.width); y1 = Math.max(y1, b.y + b.height); }
@@ -105,6 +118,9 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
       gr[0].parentNode!.insertBefore(r, gr[0]);
     }
   });
+  const koniec = (s: Element) => s.parentElement?.classList.toggle('pl-koniec', s.scrollLeft + s.clientWidth >= s.scrollWidth - 4);
+  document.querySelectorAll('.pl-scroll').forEach(koniec);
+  document.addEventListener('scroll', (e) => { if (e.target instanceof Element && e.target.classList.contains('pl-scroll')) koniec(e.target); }, true);
 </script>
 </Base>
 
@@ -126,6 +142,8 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
 .wz-lista li{margin:2px 0}
 .wz-zrodlo{color:var(--text-quiet)}
 .wz-zrodlo a{color:#a09888}
+.wz-wstecz{display:inline-block;margin-bottom:12px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:#a09888;text-decoration:none}
+.wz-wstecz:hover{color:var(--ink)}
 .wz-nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
 .wz-nav a{color:var(--ink);text-decoration:none}
 .wz-nav-l{justify-self:start}
@@ -133,5 +151,5 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
 .wz-nav-c{justify-self:center;color:#e2ddd4 !important;font-size:13.5px}
 .wz-nav a.wz-nav-l,.wz-nav a.wz-nav-r{color:#a09888}
 .wz-nav a.wz-nav-l:hover,.wz-nav a.wz-nav-r:hover{color:var(--ink)}
-.wz-fig figcaption a{text-decoration:none}
+.wz-fig figcaption a{text-decoration:underline dotted 1px;text-underline-offset:4px}
 </style>

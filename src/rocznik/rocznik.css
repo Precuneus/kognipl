@@ -140,4 +140,4 @@ body:has(.rocznik),body:has(.sieci),body:has(.wi),body:has(.wk){background:#0e0d
   .drzwi-card h2{font-size:34px}
 }
 
-@media (max-width:720px){.pl-wrap{position:relative}.pl-wrap::after{content:'';position:absolute;top:0;right:0;bottom:8px;width:36px;pointer-events:none;z-index:4;background:linear-gradient(to right,rgba(14,13,11,0),var(--bg-deep))}.pl-wrap.pl-koniec::after{display:none}}
+@media (max-width:720px){.pl-wrap{position:relative}.pl-wrap::after{content:'';position:absolute;top:0;right:0;bottom:8px;width:36px;pointer-events:none;z-index:4;background:linear-gradient(to right,transparent,var(--fade,var(--bg-deep)))}.pl-wrap.pl-koniec::after{display:none}}
