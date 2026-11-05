@@ -2089,17 +2089,19 @@ function frame() {
 }
 // Do historii wchodzi się tylko kliknięciem Story (jego słowo, 2026-10-22): ekran startowy trzyma przewijanie, kółko, strzałki, spacja
 // i palec go nie ruszają, a Story, gdy ma się pokazać, przypomina, którędy się wchodzi: drga, a Iskra schodzi do niego po kresce. Kliknięcie otwiera przewijanie i jedzie
-// do Cześć; w górę z Cześć wraca na ekran startowy i znów go zamyka. Reszta strony jest wtedy nieaktywna (inert), więc Tab nie wchodzi
-// w tekst poza ekranem. Odświeżenie w środku strony i adres z # otwierają stronę bez blokady.
+// do Cześć; w górę z Cześć wraca na ekran startowy. Blokada trzyma tylko pierwsze wejście: kto raz wszedł, wraca w dół tym samym ruchem,
+// którym wyszedł w górę, a ekran jedzie do Cześć jak po kliknięciu (jego, 2026-11-05: *I go back to the starting page and cannot scroll down*).
+// Póki nikt nie wszedł, reszta strony jest nieaktywna (inert), więc Tab nie wchodzi w tekst poza ekranem. Odświeżenie w środku strony i adres z # otwierają stronę bez blokady.
 const LAND_Y = () => SEKCJE.start.offsetHeight;
 const OSLONA = [...$('.roj').children, ...$$('.site-footer')].filter((e) => e !== SEKCJE.start) as HTMLElement[];
-let BLOK = false, SCR: any = null, SCR_END = -1e9, NUDGE_T = -1e9;
+let BLOK = false, WSZEDL = false, SCR: any = null, SCR_END = -1e9, NUDGE_T = -1e9;
 const T_START = performance.now();
 function zaprzyj(on: boolean) {
   BLOK = on; document.documentElement.classList.toggle('roj-blok', on);
   for (const e of OSLONA) (e as any).inert = on;
 }
-{ let y = 0; try { y = +(sessionStorage.getItem('kogni-anim-y') || 0); sessionStorage.removeItem('kogni-anim-y'); } catch (e) {} if (y > 2) scrollTo(0, y); }
+{ let y = 0; try { y = +(sessionStorage.getItem('kogni-anim-y') || 0); sessionStorage.removeItem('kogni-anim-y'); } catch (e) {} if (y > 2) { scrollTo(0, y); WSZEDL = true; } }
+if (location.hash) WSZEDL = true;
 if (scrollY < 3 && !location.hash) zaprzyj(true);
 function nudgeStory() {
   const n = performance.now();
@@ -2110,7 +2112,7 @@ function nudgeStory() {
 function przypomnij() { nudgeStory(); }
 function jedzDo(y: number) {
   const koniec = () => {
-    if (y < 3) zaprzyj(true);
+    if (y < 3) zaprzyj(!WSZEDL);
     else { const c = document.getElementById('czesc'); if (c) { c.setAttribute('tabindex', '-1'); c.focus({ preventScroll: true }); } }
   };
   if (CICHO) { scrollTo(0, y); koniec(); frame(); return; }
@@ -2129,7 +2131,7 @@ addEventListener('wheel', (ev) => {
   if (ev.ctrlKey || Math.abs(ev.deltaX) > Math.abs(ev.deltaY)) return;
   if (BLOK) { ev.preventDefault(); if (ev.deltaY > 4) przypomnij(); return; }
   if (!wolne()) { ev.preventDefault(); return; }
-  if (ev.deltaY < -4 && wGore()) { ev.preventDefault(); jedzDo(0); }
+  if (ev.deltaY < -4 && wGore()) { ev.preventDefault(); jedzDo(0); } else if (ev.deltaY > 4 && scrollY < 3) { ev.preventDefault(); logoTrzymaj(); jedzDo(LAND_Y()); }
 }, { passive: false });
 addEventListener('keydown', (ev) => {
   if (ev.ctrlKey || ev.metaKey || ev.altKey || (ev.target as HTMLElement).closest('input,textarea,select,[contenteditable]')) return;
@@ -2138,7 +2140,7 @@ addEventListener('keydown', (ev) => {
   if (!dol && !gora) return;
   if (BLOK) { ev.preventDefault(); if (dol) przypomnij(); return; }
   if (!wolne()) { ev.preventDefault(); return; }
-  if (gora && wGore()) { ev.preventDefault(); jedzDo(0); }
+  if (gora && wGore()) { ev.preventDefault(); jedzDo(0); } else if (dol && scrollY < 3) { ev.preventDefault(); logoTrzymaj(); jedzDo(LAND_Y()); }
 });
 let TY0 = 0, TGEST = false;
 addEventListener('touchstart', (ev) => { TY0 = ev.touches[0].clientY; TGEST = false; }, { passive: true });
@@ -2148,6 +2150,7 @@ addEventListener('touchmove', (ev) => {
   if (BLOK) { ev.preventDefault(); if (dy > 6) przypomnij(); return; }
   if (SCR || TGEST) { ev.preventDefault(); return; }
   if (Math.abs(dy) < 4 || !wolne()) return;
+  if (dy > 0 && scrollY < 3) { ev.preventDefault(); TGEST = true; logoTrzymaj(); jedzDo(LAND_Y()); return; }
   if (dy < 0 && wGore()) { ev.preventDefault(); TGEST = true; jedzDo(0); }
 }, { passive: false });
 // przesunięcie spoza kółka, klawiszy i palca (pasek przewijania, pozycja przywrócona po odświeżeniu): w pierwszej chwili otwiera stronę,
@@ -2156,7 +2159,7 @@ let CISZA: any = 0;
 addEventListener('scroll', () => {
   if (SCR) return;
   if (BLOK) { if (scrollY > 3) { if (performance.now() - T_START < 1500) zaprzyj(false); else scrollTo(0, 0); } return; }
-  if (scrollY < 3) { zaprzyj(true); return; }
+  if (scrollY < 3) { zaprzyj(!WSZEDL); return; }
   clearTimeout(CISZA);
   CISZA = setTimeout(() => {
     if (SCR || !wolne() || scrollY < 3 || scrollY > LAND_Y() - 3) return;
@@ -2184,12 +2187,12 @@ addEventListener('scroll', () => { if (LOGO_T && !SCR && Math.abs(scrollY - LAND
 storyM?.addEventListener('click', (ev) => {
   const e = ev as MouseEvent;
   if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-  e.preventDefault(); zaprzyj(false); logoTrzymaj(); jedzDo(LAND_Y());
+  e.preventDefault(); WSZEDL = true; zaprzyj(false); logoTrzymaj(); jedzDo(LAND_Y());
 });
 storyB.addEventListener('click', (ev) => {
   const e = ev as MouseEvent;
   if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-  e.preventDefault(); zaprzyj(false); logoTrzymaj(); jedzDo(LAND_Y());
+  e.preventDefault(); WSZEDL = true; zaprzyj(false); logoTrzymaj(); jedzDo(LAND_Y());
 });
 let tk = false;
 addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame(() => { frame(); tk = false; }); } }, { passive: true });
