@@ -33,10 +33,11 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
 ---
 <Base title={c.title + ' · ' + c.course + ' ' + c.short + ' · kogni.pl'} activePage="plotno" rocznik="2026" description={first}>
 <article class="wk wz" style={'--ink:' + ink}>
-  <nav aria-label="Powrót"><a href={'/2026/?z=' + c.id} class="wz-wstecz"><span aria-hidden="true">←</span> Płótno</a></nav>
+  {/* powrót jak na stronach kursów: ← Kursy do /2026/ (jego słowo, 2026-10-22), tu z ?z=, który otwiera dymek tych zajęć; w nav, bo wpis nie ma landmarku main, a link poza landmarkiem łamie regułę region */}
+  <nav aria-label="Powrót"><a href={'/2026/?z=' + c.id} class="back-link">&larr; Kursy</a></nav>
   <nav aria-label="Zajęcia" class="wz-nav">
     {prev ? <a href={prev.url} class="wz-nav-l" title={prev.title}><span aria-hidden="true">‹</span> {prev.course} {prev.short}</a> : <span class="wz-nav-l"></span>}
-    <a href={'/2026/?z=' + c.id} class="wz-nav-c" aria-current="page">{c.course} {c.short}</a>
+    <span class="wz-nav-c" aria-current="page">{c.course} {c.short}</span>
     {next ? <a href={next.url} class="wz-nav-r" title={next.title}>{next.course} {next.short} <span aria-hidden="true">›</span></a> : <span class="wz-nav-r"></span>}
   </nav>
   <div class="wk-grid">
@@ -142,10 +143,11 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
 .wz-lista li{margin:2px 0}
 .wz-zrodlo{color:var(--text-quiet)}
 .wz-zrodlo a{color:#a09888}
-.wz-wstecz{display:inline-block;margin-bottom:12px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:#a09888;text-decoration:none}
-.wz-wstecz:hover{color:var(--ink)}
+/* .back-link jak na stronach kursów; kolor --text-quiet zamiast --text-dim, bo przy 12 px --text-dim ma kontrast 3,3:1; padding powiększa pole dotyku, ujemny margines trzyma układ */
+.back-link{display:inline-block;font-family:var(--font-body);font-size:12px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-quiet);text-decoration:none;padding:10px 0;margin:-10px 0 14px;transition:color .3s}
+.back-link:hover{color:var(--warm-glow)}
 .wz-nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
-.wz-nav a{color:var(--ink);text-decoration:none}
+.wz-nav a{color:var(--ink);text-decoration:none;padding:12px 0;margin:-12px 0}
 .wz-nav-l{justify-self:start}
 .wz-nav-r{justify-self:end}
 .wz-nav-c{justify-self:center;color:#e2ddd4 !important;font-size:13.5px}

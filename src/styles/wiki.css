@@ -2,7 +2,7 @@
 /* kolumna na linii logo, jak w indeksie wiki (2026-10-22) */
 .wk{max-width:1168px;margin:0 auto;padding:56px 24px 80px}
 .wk-path{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:#6f685d}
-.wk-path a{color:var(--ink);text-decoration:none}
+.wk-path a{color:var(--ink);text-decoration:none;display:inline-block;padding:12px 0;margin:-12px 0}
 .wk-path [aria-current]{color:#e2ddd4}
 .wk-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start;margin-top:28px}
 .wk-col{display:flex;flex-direction:column;gap:24px;min-width:0}

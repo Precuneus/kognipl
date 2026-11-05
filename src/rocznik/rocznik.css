@@ -140,4 +140,5 @@ body:has(.rocznik),body:has(.sieci),body:has(.wi),body:has(.wk){background:#0e0d
   .drzwi-card h2{font-size:34px}
 }
 
-@media (max-width:720px){.pl-wrap{position:relative}.pl-wrap::after{content:'';position:absolute;top:0;right:0;bottom:8px;width:36px;pointer-events:none;z-index:4;background:linear-gradient(to right,transparent,var(--fade,var(--bg-deep)))}.pl-wrap.pl-koniec::after{display:none}}
+/* przewijanie w bok na telefonie: ciemniejący brzeg i strzałka mówią, że dalej jest więcej; znikają na końcu */
+@media (max-width:720px){.pl-wrap{position:relative}.pl-wrap::after{content:'\203A';position:absolute;top:0;right:0;bottom:8px;width:64px;box-sizing:border-box;display:flex;align-items:var(--pl-y,center);justify-content:flex-end;padding:var(--pl-pad,0) 6px 0 0;font:400 30px/1 var(--font-body);color:#e2ddd4;pointer-events:none;z-index:4;background:linear-gradient(to right,transparent,var(--fade,var(--bg-deep)) 70%)}.pl-wrap.pl-koniec::after{display:none}.start-plotno .pl-wrap{--pl-y:flex-start;--pl-pad:14px}}

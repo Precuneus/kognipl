@@ -1,28 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
+import '../styles/karta-strony.css';
 ---
 <Base title="Prywatność · kogni.pl" activePage="prywatnosc" description="Jakie dane zostają po wizycie na kogni.pl: dzienniki odwiedzin GitHuba i to, o co prosisz w przeglądarce.">
 
-<style is:global>
-  body:has(.ostronie){background:#0e0d0b}
-  .ostronie{max-width:680px;margin:0 auto;padding:72px 24px 96px}
-  .ostronie h1{font-family:var(--font-display);font-size:40px;font-weight:400;line-height:1.2;color:#f0c060;text-shadow:0 0 14px rgba(240,192,96,.25);margin:0 0 36px;text-align:center;animation:fadeUp .8s ease-out both}
-  .ostronie-card{background:#16140f;border:1px solid rgba(180,155,100,.2);border-radius:14px;padding:36px 36px 32px;animation:fadeUp .8s ease-out .15s both}
-  .ostronie-card p + p{margin-top:14px}
-  .ostronie-txt{font-family:var(--font-body);font-size:16px;font-weight:300;line-height:1.8;color:#cfc8bb;margin:0}
-  .ostronie-txt a{color:#e8a84c;text-decoration:none;border-bottom:1px solid rgba(232,168,76,.35)}
-  .ostronie-txt a:hover{color:#f0c060;border-color:#f0c060}
-  @media (max-width:720px){.ostronie{padding:48px 16px 72px}.ostronie h1{font-size:32px}.ostronie-card{padding:28px 22px 24px}}
-</style>
-
-<main class="ostronie">
+<div class="ostronie">
   <h1>Prywatność</h1>
 
   <div class="ostronie-card">
-    <p class="ostronie-txt">kogni.pl prowadzę sam. Strona nie zapisuje ciasteczek, a czcionki, skrypty i obrazy ładuje z własnego adresu. W przeglądarce zostaje tylko to, o co prosisz: otwarty kurs do końca wizyty i wyłączone animacje.</p>
+    <p class="ostronie-lead">Strona nie zapisuje ciasteczek, a czcionki, skrypty i obrazy ładuje z własnego adresu.</p>
+    <div class="ostronie-line" aria-hidden="true"></div>
+    <p class="ostronie-txt">Prowadzę ją sam. W przeglądarce zostaje tylko to, o co prosisz: kurs otwarty hasłem do końca wizyty i wyłączone animacje.</p>
     <p class="ostronie-txt">Stronę udostępnia GitHub. Dla bezpieczeństwa zapisuje adres IP każdej wizyty, jak opisuje to jego <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">oświadczenie o prywatności</a>.</p>
     <p class="ostronie-txt">Filmy na stronach kursów z 2025 roku odtwarza YouTube, który zapisuje własne ciasteczka według <a href="https://policies.google.com/privacy?hl=pl">zasad Google</a>.</p>
   </div>
-</main>
+</div>
 
 </Base>

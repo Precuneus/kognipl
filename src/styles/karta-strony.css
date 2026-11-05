@@ -1,0 +1,12 @@
+/* strony w stylu Kontaktu, O stronie i Prywatność: ciemne tło, złoty tytuł, karta jak na Płótnie, prowadzący akapit i złota kropka (jego słowo, 2026-10-23: *build o stronie page*); jeden plik dla obu, żeby kopie się nie rozjechały */
+body:has(.ostronie){background:#0e0d0b}
+  .ostronie{max-width:680px;margin:0 auto;padding:72px 24px 96px}
+  .ostronie h1{font-family:var(--font-display);font-size:40px;font-weight:400;line-height:1.2;color:#f0c060;text-shadow:0 0 14px rgba(240,192,96,.25);margin:0 0 36px;text-align:center;animation:fadeUp .8s ease-out both}
+  .ostronie-card{background:#16140f;border:1px solid rgba(180,155,100,.2);border-radius:14px;padding:36px 36px 32px;animation:fadeUp .8s ease-out .15s both}
+  .ostronie-lead{font-family:var(--font-display);font-size:26px;font-weight:400;line-height:1.4;color:#e2ddd4;margin:0}
+  .ostronie-line{width:9px;height:9px;border-radius:50%;background:#f0c060;margin:26px auto;box-shadow:0 0 0 3px #16140f,0 0 0 4.5px rgba(240,192,96,.9),0 0 14px 4px rgba(240,192,96,.4)}
+  .ostronie-card p + p{margin-top:14px}
+  .ostronie-txt{font-family:var(--font-body);font-size:16px;font-weight:300;line-height:1.8;color:#cfc8bb;margin:0}
+  @media (max-width:720px){.ostronie{padding:48px 16px 72px}.ostronie h1{font-size:32px}.ostronie-card{padding:28px 22px 24px}.ostronie-lead{font-size:22px}}
+  .ostronie-txt a{color:#e8a84c;text-decoration:none;border-bottom:1px solid rgba(232,168,76,.35)}
+  .ostronie-txt a:hover{color:#f0c060;border-color:#f0c060}
