@@ -89,6 +89,8 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   <section class="roj-st start" data-k="start" aria-label="Start">
     <button type="button" class="roj-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="roj-anim-tor" aria-hidden="true"></span></button>
     <a class="roj-btn roj-story" href="#czesc" tabindex="-1" aria-hidden="true">Story</a>
+    {/* na telefonie sieci są za małe, by trafić je palcem, więc pod mózgiem stoją ich nazwy; dotknięcie robi to samo co kliknięcie sieci (jego, 2026-11-05: *build ... the start screen on phone*) */}
+    <nav class="roj-sieci-lista" aria-label="Sieci mózgu">{SIECI.map(([n, nazwa]) => <button type="button" data-n={n} style={'--c:' + KOLOR[n]}>{String(nazwa).replace(/^Sieć /, '')}</button>)}</nav>
   </section>
   <section class="roj-st lewo pierwszy" data-k="czesc" id="czesc">
     <div class="roj-t"><h1 class="roj-czesc">Cześć!</h1></div>
@@ -182,6 +184,7 @@ body:has(.roj) .site-footer::before{display:none}
 .roj-st.pierwszy{min-height:calc(100vh - 120px);align-items:flex-end;padding-top:0;padding-bottom:14vh}
 /* ekran startowy: pusty ekran na wysokość okna z mózgiem pośrodku; Story niżej i dopiero po czasie */
 .roj-st.start{display:block;min-height:0;height:100vh;padding:0}
+.roj-sieci-lista{display:none}
 .roj a.roj-btn,.roj span.roj-btn{display:block;box-sizing:border-box;min-width:6.6em;padding:.5em 1.05em;border:1px solid rgba(240,192,96,.55);background:rgba(0,0,0,.62);font-family:var(--font-display);font-weight:400;font-size:27px;line-height:1.2;letter-spacing:.02em;color:var(--kosc);text-decoration:underline;text-decoration-color:rgba(240,192,96,.75);text-decoration-thickness:1px;text-underline-offset:.26em;transition:border-color .2s ease,background .2s ease,color .2s ease,opacity .9s ease}
 .roj a.roj-btn:hover{border-color:var(--zloto);background:rgba(240,192,96,.1);color:var(--zloto)}
 .roj span.roj-btn.wkrotce{color:#6e675c;border-color:rgba(240,192,96,.22);text-decoration-color:rgba(240,192,96,.3)}
@@ -343,6 +346,9 @@ html.roj-cicho .roj-dymek,html.roj-cicho .roj-dymek-b{animation:none}
 @media (max-width:760px){
   .roj-st{padding:52vh 20px 8vh 20px!important;align-items:flex-start;justify-content:flex-start!important}
   .roj-st.start{padding:0!important}
+.roj-sieci-lista{position:absolute;left:16px;right:16px;top:66vh;z-index:3;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.roj-sieci-lista button{font:500 13px/1 'Inter',sans-serif;color:#ebe3d3;background:rgba(18,17,13,.9);border:1px solid var(--c);border-radius:999px;padding:10px 14px;min-height:40px;cursor:pointer}
+.roj-sieci-lista button:focus-visible{outline:2px solid #f0c060;outline-offset:3px}
   .roj a.roj-btn,.roj span.roj-btn{font-size:22px}
   .roj a.roj-story{top:calc(86vh - var(--hh,96px))}
   .roj-anim{right:10px;top:18px;font-size:13px}
@@ -2244,6 +2250,19 @@ function dymekZamknij() {
   DYM_W.hidden = true; DYM_N = 0; KL.t = Math.min(KL.t, performance.now() - KL_T + 1200); kick();
 }
 DYM.querySelector('.roj-dymek-x')!.addEventListener('click', dymekZamknij);
+// Nazwy sieci pod mózgiem na telefonie: dotknięcie nazwy idzie tą samą drogą co kliknięcie sieci, w środek jej obszaru na rysunku
+const SRODEK: Record<number, number[]> = {};
+function srodekSieci(n: number) {
+  if (!MOZG_AKT || !P.length) return null;
+  if (!SRODEK[n]) { let su = 0, sv = 0, k = 0; for (let i = 0; i < SIATKA.length; i++) if (SIATKA[i] === n) { su += i % 240; sv += Math.floor(i / 240); k++; } if (!k) return null; SRODEK[n] = [su / k, sv / k]; }
+  const [cx, cy, bw] = brainB({ u: 120, v: 90 }), [u, v] = SRODEK[n];
+  return [cx + (u - 120) * bw / 240, cy + (v - 90) * bw * .75 / 180];
+}
+$$('.roj-sieci-lista button').forEach((b) => b.addEventListener('click', () => {
+  const n = +(b as HTMLElement).dataset.n!, pt = srodekSieci(n); if (!pt) return;
+  KL.n = n; KL.med = false; KL.t = performance.now(); KL.x = KL.px = pt[0]; KL.y = KL.py = pt[1]; KL.pt = 0; KL.sx = null; KL.doszla = false; KL.mrugN = KL.t + 140;
+  kick(); dymekPokaz(n, pt[0], pt[1]);
+}));
 // Dymek da się chwycić i odsunąć na bok (jego słowo, 2026-11-02: *the box that opens after clicking a network... it should be possible
 // to move to the side. grab and move with the cursor*): myszą i palcem, w granicach okna; kółka biegną od klikniętego miejsca ku dymkowi.
 let DYM_PX = 0, DYM_PY = 0, CHWYT: any = null, DYM_POS: number[] | null = null;

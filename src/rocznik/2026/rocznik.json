@@ -399,7 +399,7 @@
     },
     "Nawyk i automatyzacja": {
      "h": "Reguły nagrody",
-     "d": "Rozmawialiśmy o obchodzeniu reguł nagrody przez [[Agenci AI|agentów AI]] OpenAI."
+     "d": "Rozmawialiśmy o obchodzeniu reguł nagrody przez [[Agenci AI|agentów AI]] OpenAI. Reguła nagrody to mechanika gry, a znana mechanika otwiera drogę do [[Makro - strategia z modeli|strategii prowadzonej modelami]]."
     },
     "Świadomość": {
      "h": "Westworld",
@@ -454,7 +454,7 @@
     },
     "Sieci mózgu i predykcja": {
      "h": "Predykcje i zaskoczenie",
-     "d": "Rozmawialiśmy o predykcjach w mózgu i między [[Sieci wielkoskalowe|sieciami]] oraz o ich aktualizacji przez zaskoczenie, czyli o [[Kodowanie predykcyjne|kodowaniu predykcyjnym]]. Przykładami były zespół Charlesa Bonneta u Olivera Sacksa, [[Kontrolowane halucynacje|halucynacja kontrolowana]] Anila Setha i dzieci niewidome od urodzenia, które po operacji oczu nie rozpoznawały wzrokiem przedmiotów znanych z dotyku."
+     "d": "Rozmawialiśmy o predykcjach w mózgu i między [[Sieci wielkoskalowe|sieciami]] oraz o ich aktualizacji przez zaskoczenie, czyli o [[Kodowanie predykcyjne|kodowaniu predykcyjnym]]. Przykładami były zespół Charlesa Bonneta u Olivera Sacksa, [[Kontrolowane halucynacje|halucynacja kontrolowana]] Anila Setha i dzieci niewidome od urodzenia, które po operacji oczu nie rozpoznawały wzrokiem przedmiotów znanych z dotyku. Sieci, między którymi płyną predykcje, leżą w różnej [[Odległość od receptorów|odległości od receptorów]]."
     },
     "Pomiar mózgu": {
      "h": "Sieci z pierwszych zajęć",
@@ -519,7 +519,7 @@
     },
     "Nawyk i automatyzacja": {
      "h": "Umiejętności w parach",
-     "d": "Podzieliłem losowo studentów na pary, żeby ze sobą rozmawiały nowe osoby. Każda para szukała swoich realnych umiejętności i sprawdzała, czy są świadectwem [[Mikro - wykonanie|mikro]], [[Mezo - aktualizowanie modeli|mezo]] czy [[Makro - strategia z modeli|makro]]."
+     "d": "Podzieliłem losowo studentów na pary, żeby ze sobą rozmawiały nowe osoby. Każda para szukała swoich realnych umiejętności i sprawdzała, czy są świadectwem [[Mikro - wykonanie|mikro]], [[Mezo - aktualizowanie modeli|mezo]] czy [[Makro - strategia z modeli|makro]]. Zajęcia otworzyły możliwości [[Agenci AI|agentów AI]] i zmiany ekonomiczne, które przynoszą."
     },
     "Umysł społeczny": {
      "h": "Kłamstwo i manipulacja",
@@ -527,7 +527,7 @@
     },
     "Sieci mózgu i predykcja": {
      "h": "Warstwa mezo",
-     "d": "[[Mezo - aktualizowanie modeli|Mezo]] to reagowanie na zmianę: bioinformacja z tła, o ludziach, losowości i mechanice gry, aktualizuje Modele Mentalne, jak eksplorowanie mapy. Ujęliśmy to w ramach [[Kodowanie predykcyjne|kodowania predykcyjnego]] i zastanawialiśmy się, z jaką częstotliwością Modele Mentalne się aktualizują."
+     "d": "[[Mezo - aktualizowanie modeli|Mezo]] to reagowanie na zmianę: bioinformacja z tła, o ludziach, losowości i mechanice gry, aktualizuje Modele Mentalne, jak eksplorowanie mapy. Ujęliśmy to w ramach [[Kodowanie predykcyjne|kodowania predykcyjnego]] i zastanawialiśmy się, z jaką częstotliwością Modele Mentalne się aktualizują. Pod warstwą mezo leży mikro, którą przypisaliśmy [[Sieć czuciowo-ruchowa|sieci czuciowo-ruchowej]] i [[Sieć grzbietowa uwagi|sieci grzbietowej uwagi]]."
     },
     "Myślenie": {
      "h": "Warstwa makro",
@@ -575,15 +575,15 @@
    "splot": {
     "Neuron i synapsa": {
      "h": "Waluta bioinformacji",
-     "d": "Od receptora błonowego przeszliśmy przez gradient jonów i potencjał błonowy do [[Potencjał czynnościowy|potencjału czynnościowego]], waluty bioinformacji, oraz do [[Synapsa chemiczna i elektryczna|synapsy chemicznej i elektrycznej]]. Agonistę i antagonistę pokazała [[Kofeina i receptor adenozynowy|kofeina]]: adenozyna uruchamia swój receptor, a kofeina, podobna do niej kształtem, go blokuje."
+     "d": "Od receptora w błonie [[Neuron i glej|neuronu]] przeszliśmy przez gradient jonów, potencjał błonowy i [[Potencjał stopniowany|potencjały stopniowane]] do [[Potencjał czynnościowy|potencjału czynnościowego]], waluty [[Bioinformacja|bioinformacji]], oraz do [[Synapsa chemiczna i elektryczna|synapsy chemicznej i elektrycznej]]. Agonistę i antagonistę pokazała [[Kofeina i receptor adenozynowy|kofeina]]: adenozyna uruchamia swój receptor, a kofeina, podobna do niej kształtem, go blokuje. Zestaw receptorów w błonie to [[Receptory jako predykcja komórki|predykcja komórki]]. Gdy przekaźnika przybywa, komórka [[Regulacja w dół receptorów|usuwa część receptorów]]."
     },
     "Percepcja i uwaga": {
      "h": "Od czopka do V1",
-     "d": "Odpowiedź na pytanie z poprzednich zajęć: od [[Pręciki, czopki i droga wzrokowa|czopka]] do V1 bioinformacja przechodzi przez cztery synapsy chemiczne, więc [[Odległość od receptorów|odległość od receptorów]] V1 wynosi 4."
+     "d": "Odpowiedź na pytanie z poprzednich zajęć: od [[Pręciki, czopki i droga wzrokowa|czopka]] do V1 bioinformacja przechodzi przez cztery synapsy chemiczne, więc [[Odległość od receptorów|odległość od receptorów]] V1 wynosi 4. Wróciliśmy przy tym do [[Ślepowidzenie|ślepowidzenia]]: po zniszczeniu V1 pacjent wymija przeszkody, bo część dróg wzrokowych prowadzi z pominięciem V1."
     },
     "Sieci mózgu i predykcja": {
      "h": "Predykcja komórki",
-     "d": "Zestaw receptorów w błonie to [[Receptory jako predykcja komórki|predykcja komórki]], gotowa, zanim przekaźnik nadejdzie. Gdy nadchodzi więcej przekaźnika, odpowiedź przekracza docelową: to zaskoczenie. Komórka usuwa wtedy część receptorów, czyli aktualizuje predykcję, a odpowiedź wraca do docelowej. Tak działa też śluzowiec Physarum polycephalum, jedna komórka bez neuronów. Z ugięcia podłoża pod sobą tworzy predykcję, gdzie leży większa masa. Rośnie w tę stronę przed dotknięciem krążków."
+     "d": "Zestaw receptorów w błonie to [[Receptory jako predykcja komórki|predykcja komórki]], gotowa, zanim przekaźnik nadejdzie. Gdy nadchodzi więcej przekaźnika, odpowiedź przekracza docelową: to zaskoczenie. Komórka usuwa wtedy część receptorów, czyli aktualizuje predykcję, a odpowiedź wraca do docelowej. Tak działa też śluzowiec Physarum polycephalum, jedna komórka bez neuronów. Z ugięcia podłoża pod sobą tworzy predykcję, gdzie leży większa masa. Rośnie w tę stronę przed dotknięciem krążków. Ta sama miara, liczba synaps od receptora, porządkuje sieci według [[Odległość od receptorów|odległości od receptorów]]. Zapis EEG rozkłada się na fale o różnych częstotliwościach, wśród nich [[Rytmy alfa i gamma|rytmy alfa i gamma]]."
     },
     "Pomiar mózgu": {
      "h": "Przyrządy jak receptory",
@@ -640,11 +640,11 @@
    "splot": {
     "Emocje": {
      "h": "Chcenie i słowa dla emocji",
-     "d": "Mówiliśmy o dopaminie jako [[Chcenie i lubienie|chceniu]], motywacji i ruchu oraz o tym, jak emocje kierują decyzją ku zbliżaniu albo unikaniu. Słowa współtworzą to, jak rozpoznajemy emocje, jak ujmuje to [[Teoria emocji konstruowanych|teoria emocji konstruowanych]] Lisy Feldman Barrett, a dziecku brakuje jeszcze słów na żałobę czy zażenowanie."
+     "d": "Mówiliśmy o dopaminie jako [[Chcenie i lubienie|chceniu]], motywacji i ruchu oraz o tym, jak emocje kierują decyzją ku zbliżaniu albo unikaniu. Słowa współtworzą to, jak rozpoznajemy emocje, jak ujmuje to [[Teoria emocji konstruowanych|teoria emocji konstruowanych]] Lisy Feldman Barrett, a dziecku brakuje jeszcze [[Słowa dla emocji|słów]] na żałobę czy zażenowanie."
     },
     "Decyzja i działanie": {
      "h": "Kompas decyzji",
-     "d": "Szukaliśmy kompasu dla decyzji, od przypadku [[Pacjent Elliot|Elliota]] po pytanie, czy wolną wolę można ująć jako rozszerzenie przestrzeni prawdopodobieństwa w chwili wyboru. [[Eksploracja i eksploatacja|Próbowanie]] to eksplorowanie, a czasem samo próbowanie wystarczy."
+     "d": "Szukaliśmy kompasu dla decyzji, od przypadku [[Pacjent Elliot|Elliota]] po pytanie, czy wolną wolę można ująć jako rozszerzenie przestrzeni prawdopodobieństwa w chwili wyboru. [[Eksploracja i eksploatacja|Próbowanie]] to eksplorowanie, a czasem samo próbowanie wystarczy. Niektóre chwile zamykają [[Przestrzeń możliwości|przestrzeń możliwości]]: to drzwi jednokierunkowe."
     },
     "Nawyk i automatyzacja": {
      "h": "Próbowanie jako trening",
@@ -652,7 +652,7 @@
     },
     "Sieci mózgu i predykcja": {
      "h": "Predykcje i schematy",
-     "d": "Doszliśmy do [[Predykcja|predykcji]], schematów i rozwiniętych Modeli Mentalnych."
+     "d": "Doszliśmy do [[Predykcja|predykcji]], schematów i rozwiniętych Modeli Mentalnych. Predykcje i ich aktualizację przez zaskoczenie opisuje [[Kodowanie predykcyjne|kodowanie predykcyjne]]."
     },
     "Pamięć i przestrzeń": {
      "h": "Komórki miejsca i ściany modeli",
@@ -738,7 +738,7 @@
    "splot": {
     "Neuron i synapsa": {
      "h": "Od neuronu do synapsy",
-     "d": "Powtórka zaczęła się od [[Neuron i glej|neuronu i komórek glejowych]], od [[Potencjał czynnościowy|potencjału czynnościowego]] i jego drogi do [[Synapsa chemiczna i elektryczna|synapsy]], a [[Kofeina i receptor adenozynowy|kofeina]] posłużyła za przykład antagonisty."
+     "d": "Prowadziło nas pytanie, jak [[Bioinformacja|bioinformacja]] z receptorów staje się kubkiem kawy w dłoni. Powtórka zaczęła się od [[Neuron i glej|neuronu i komórek glejowych]], od [[Potencjał czynnościowy|potencjału czynnościowego]] i jego drogi do [[Synapsa chemiczna i elektryczna|synapsy]], a [[Kofeina i receptor adenozynowy|kofeina]] posłużyła za przykład antagonisty."
     },
     "Pomiar mózgu": {
      "h": "Łączność i pomiar",
@@ -746,7 +746,7 @@
     },
     "Sieci mózgu i predykcja": {
      "h": "Sieci według odległości",
-     "d": "Sieci ułożyłem według [[Odległość od receptorów|odległości od receptorów]], od [[Sieć wzrokowa|wzrokowej]] i [[Sieć czuciowo-ruchowa|czuciowo-ruchowej]] po [[Sieć domyślna|domyślną]]. Gdy podniesiony kubek okazuje się lżejszy, niż zakładasz, zaskoczenie aktualizuje [[Predykcja|predykcje]] coraz dalej od receptorów."
+     "d": "[[Sieci wielkoskalowe|Sieci]] ułożyłem według [[Odległość od receptorów|odległości od receptorów]]: od [[Sieć wzrokowa|wzrokowej]] i [[Sieć czuciowo-ruchowa|czuciowo-ruchowej]] przez [[Sieć grzbietowa uwagi|grzbietową uwagi]] i [[Sieć kontroli|kontroli]] po [[Sieć domyślna|domyślną]]. [[Sieć istotności|Sieć istotności]] i [[Sieć brzuszna uwagi|sieć brzuszna uwagi]] leżą w poprzek tej osi. Gdy podniesiony kubek okazuje się lżejszy, niż zakładasz, zaskoczenie aktualizuje [[Predykcja|predykcje]] coraz dalej od receptorów."
     },
     "Pamięć i przestrzeń": {
      "h": "Hipokamp i niepamięć",
@@ -758,7 +758,7 @@
     },
     "Emocje": {
      "h": "Walencja w poprzek sieci",
-     "d": "[[Sieć istotności|Sieć istotności]] z wyspą i [[Sieć brzuszna uwagi|sieć brzuszną uwagi]] ustawiłem w poprzek osi odległości od receptorów, z hipotezą, że niosą walencję: czy to, co się dzieje, przyciąga, czy odpycha."
+     "d": "[[Sieć istotności|Sieć istotności]] z wyspą i [[Sieć brzuszna uwagi|sieć brzuszną uwagi]] ustawiłem w poprzek osi odległości od receptorów, z hipotezą, że niosą walencję: czy to, co się dzieje, przyciąga, czy odpycha. Bioinformację z wnętrza ciała nazwaliśmy [[Interocepcja|interocepcją]]."
     },
     "Osobowość i zdrowie psychiczne": {
      "h": "Phineas Gage",
@@ -770,7 +770,7 @@
     },
     "Percepcja i uwaga": {
      "h": "Od siatkówki do V1",
-     "d": "Bioinformacja płynie z siatkówki przez ciało kolankowate boczne do pierwszorzędowej kory wzrokowej (V1), a lewe pole widzenia to aktywność prawej V1. Pacjentka D.F. wkłada kartę w szczelinę, choć nie umie pokazać jej ustawienia, bo jej szlak grzbietowy działa."
+     "d": "Bioinformacja płynie z siatkówki przez ciało kolankowate boczne do pierwszorzędowej kory wzrokowej (V1), a lewe pole widzenia to aktywność prawej V1. Pacjentka D.F. wkłada kartę w szczelinę, choć nie umie pokazać jej ustawienia, bo jej szlak grzbietowy działa. Barwę kubka widzisz dzięki trzem rodzajom [[Pręciki, czopki i droga wzrokowa|czopków]]. [[Trzeci szlak wzrokowy|Trzeci szlak]], boczny, niesie mimikę, spojrzenie i gest drugiej osoby."
     },
     "Umysł społeczny": {
      "h": "Szlak boczny",

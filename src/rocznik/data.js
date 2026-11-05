@@ -98,7 +98,7 @@ for (const sp of NEW) {
 // żadne zdanie splotu, jest z niego nieosiągalna, więc budowanie ją wypisuje (2026-11-05), a zdanie dopisuje się w splot.d
 for (const sp of NEW) {
   const linked = new Set([...String(sp.d || '').matchAll(/\[\[([^\]|]+)/g)].map((m) => m[1]));
-  const brak = sp.cards.map((c) => c.h).filter((h) => h && !linked.has(h));
+  const brak = sp.cards.map((c) => c.h).filter((h) => { const k = ALL.find((x) => x.h === h); return h && !linked.has(h) && !(k && linked.has(k.stem)); });
   if (brak.length) console.warn('Zajęcia ' + sp.cls + ', splot ' + sp.o + ': bez zdania dla kart ' + brak.join(', '));
 }
 
