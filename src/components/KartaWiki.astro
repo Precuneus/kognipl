@@ -44,6 +44,8 @@ const kindOf = (u) => (/youtu\.?be/.test(u) ? 0 : (/doi\.org|frontiersin|journal
 const kinds = ['Filmy', 'Artykuły', 'Inne'].map((name, q) => ({ name, items: k.l.filter((l) => kindOf(l[1]) === q) })).filter((x) => x.items.length);
 const back = backlinks(k);
 const zaj = classesOf(k);
+// rodzina o nazwie tej karty powtarzałaby tytuł nad sobą, więc wiersz rodzin pomija kartę samą (przegląd 2026-11-05: Predykcja, Interocepcja i cztery inne)
+const rodz = k.r2.filter((r) => card(r) !== k);
 // wiersz limbiczny stoi pod siecią domyślną, po jej własnym wierszu, i prowadzi do karty Sieć limbiczna, która to wyjaśnia
 const nets = k.nets.map(([kod, why, lim]) => ({ kod, name: lim ? NETN[kod] + ', obszary limbiczne' : NETN[kod] || kod, why, to: lim ? card('Sieć limbiczna') : netCard(kod), lim: !!lim }))
   .filter((n) => !own || (n.kod === ownKey && n.lim === (own === 'LIM')))
@@ -76,7 +78,7 @@ const brain = svgSrc
       <section aria-label="Termin" class="wk-box wk-mysl">
         <h2>Termin</h2>
         <h1>{k.h}</h1>
-        {k.r2.length > 0 && <p class="wk-rodziny">{k.r2.map((r, i) => [i ? ' · ' : '', rodzinaUrl(r, k) ? <a href={rodzinaUrl(r, k)}>{r}</a> : r])}</p>}
+        {rodz.length > 0 && <p class="wk-rodziny">{rodz.map((r, i) => [i ? ' · ' : '', rodzinaUrl(r, k) ? <a href={rodzinaUrl(r, k)}>{r}</a> : r])}</p>}
         {zaj.length > 0 && <p class="wk-zaj">Na zajęciach {zaj.map((z, i) => [i ? ' · ' : '', <a href={z.url} style={'color:' + (z.kurs === 'Intro' ? '#f0c060' : '#edbbc5')}>{z.label.split(':')[0]}</a>])}</p>}
       </section>
       <section aria-label="Opis" class="wk-box">

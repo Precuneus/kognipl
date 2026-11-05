@@ -18,7 +18,7 @@ const MENU = [
   { label: 'Kursy', href: '/2026/', on: kikOn, here: rocznik === '2026' && current === 'plotno' },
   // Story w menu (jego słowo, 2026-11-01: *Move stories to the menu on top*): historia ze strony startowej
   { label: 'Story', href: '/#czesc', on: false, here: false },
-  { label: 'Kontakt', href: '/kontakt', on: current === 'kontakt', here: current === 'kontakt' },
+  { label: 'Kontakt', href: '/kontakt/', on: current === 'kontakt', here: current === 'kontakt' },
 ];
 const own = (NAV[rocznik] || []).map(([k, label, href]) => ({ label, href, on: current === k }));
 // pierwszy widok, który sam nosi nazwę Rocznika, zastępuje nazwę prowadzącą do /uwb/

@@ -30,6 +30,7 @@
 .wk-kind h3{margin:0 0 6px;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;line-height:1.2;color:#e2ddd4}
 .wk-kind ul{margin:0;padding:0 0 0 18px;font-size:14.5px;line-height:1.6}
 .wk-kind li{margin-bottom:8px}
+.wk-kind li a{color:var(--ink);text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wk-meta{color:#a09888}
 .wk-chips{display:flex;flex-wrap:wrap;gap:8px}
 .wk-chip{display:inline-flex;align-items:center;text-decoration:none;font-size:13px;min-height:36px;padding:6px 14px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);color:var(--c)}

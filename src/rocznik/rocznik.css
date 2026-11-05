@@ -37,7 +37,8 @@
 .rocznik-head{max-width:none}
 .rocznik-logo{position:absolute;left:8vw;top:34px}
 .rocznik-bar{display:none}
-@media (max-width:720px){
+/* logo nad menu, jak na telefonie, do 860 px: niżej menu w 34 px sięga logo stojącego 8vw od brzegu (przegląd 2026-11-05: zderzenie przy około 760 px) */
+@media (max-width:860px){
   .rocznik-head{padding-top:58px}
   .rocznik-logo{left:20px;top:22px}
 }

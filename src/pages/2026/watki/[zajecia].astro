@@ -126,11 +126,12 @@ const hi = held.findIndex((x) => x.id === c.id), prev = held[hi - 1], next = hel
 </Base>
 
 <style is:global>
+/* tytuł wpisu prosto, a karty kursywą: kursywa znaczy termin (Termin na karcie), a wpis nosi tytuł zajęć, zdanie */
 .wz .wk-mysl h1{font-style:normal}
 .wz-szkic{--c:#6f685d;color:#a09888}
 .wz-po{margin:0;padding:0 0 0 18px;font-size:14.5px;line-height:1.6}
 .wz-po li{margin-bottom:8px}
-.wz-po a{color:var(--ink)}
+.wz-po a{color:var(--ink);text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wz-fig svg{max-width:100%;overflow:visible}
 .wz-fig svg text.et{font-family:var(--font-body);font-weight:500;letter-spacing:.015em;fill:#ebe3d3}
 .wz-fig svg .et-tlo{fill:rgba(18,17,13,.9);stroke:rgba(214,198,166,.42);stroke-width:1;vector-effect:non-scaling-stroke}
