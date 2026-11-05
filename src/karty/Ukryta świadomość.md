@@ -7,7 +7,7 @@ głębokość:
 - organizm
 - sieć mózgowa
 opis: Pacjentka spełniająca kryteria stanu wegetatywnego, poproszona w skanerze o wyobrażenie sobie gry w tenisa, aktywowała obszary kory tak samo jak zdrowe osoby. W badaniu sześciu ośrodków ślad wykonanego zadania w aktywności mózgu znaleziono u co czwartej osoby bez ruchowej reakcji na polecenia. Ruch ręki i aktywność mózgu to dwa przyrządy do odczytu tego samego doświadczenia, każdy z własnymi pudłami.
-myśl: 'Kiedy uszkodzenie mózgu odbiera ciału ruch, [[Raport jako pomiar|raport]] przenosi się z ręki do aktywności mózgu, a ten przyrząd ma własne trafienia i pudła.'
+myśl: 'Kiedy uszkodzenie mózgu odbiera ciału ruch, [[Raport jako pomiar|raport]] przenosi się z ręki do aktywności mózgu, a ten przyrząd też się myli.'
 sieci: []
 bez_sieci: 'Ukrytą świadomość rozpoznaje się porównaniem aktywności mózgu pacjentki przy poleceniu z aktywnością zdrowych osób przy tym samym poleceniu, więc rozpoznanie obejmuje każdą sieć, którą angażuje zadanie.'
 ryciny: []

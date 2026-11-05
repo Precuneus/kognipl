@@ -27,7 +27,7 @@ rekordy:
 - understood_adhd-explained_ouZrZa5pLXk
 - Miller_2001
 ---
-Nauczycielka zadaje pytanie, podnosisz rękę i znasz odpowiedź. Nauczycielka pyta najpierw kogoś innego, a kiedy wraca do Ciebie, nie pamiętasz ani swojej odpowiedzi, ani pytania. Thomas E. Brown, psycholog kliniczny, opisuje tak skargi uczniów z ADHD i umieszcza ich kłopot w pamięci roboczej, tej, której używasz, kiedy masz trzymać w głowie jedno, robiąc coś innego (Brown 2016)<!--[s:brown2016-working-memory-hand-raised]-->.
+Nauczycielka zadaje pytanie, podnosisz rękę i znasz odpowiedź. Nauczycielka pyta najpierw kogoś innego, a kiedy wraca do Ciebie, nie pamiętasz ani swojej odpowiedzi, ani pytania. Thomas E. Brown, psycholog kliniczny, opisuje tak skargi uczniów z ADHD i umieszcza ich kłopot w pamięci roboczej, tej, której używasz, kiedy masz utrzymać w głowie jedno, robiąc coś innego (Brown 2016)<!--[s:brown2016-working-memory-hand-raised]-->.
 
 Alan Baddeley ujmuje pamięć roboczą (working memory) jako osobny system, który przez krótki czas podtrzymuje to, czego potrzebujesz do myślenia. W jego modelu składa się z centralnego systemu wykonawczego (central executive), pętli fonologicznej (phonological loop) i szkicownika wzrokowo-przestrzennego (visuospatial sketchpad) (Baddeley 2003)<!--[s:baddeley2003-dedicated-system-thought]-->. Każda z jej definicji opiera się na pamięci krótkotrwałej (Cowan 2008)<!--[s:cowan2008-working-memory-three-definitions]-->, a pojemność pamięci krótkotrwałej to średnio około czterech porcji (chunks), czyli jednostek, w które łączysz pojedyncze elementy (Cowan 2001)<!--[s:cowan2001-capacity-about-four-chunks]-->.
 

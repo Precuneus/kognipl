@@ -71,7 +71,7 @@
     {
      "nazwa": "Myślenie",
      "opis": "Rozumowanie, rozwiązywanie problemów i planowanie, odkrywanie reguł, funkcje wykonawcze, inteligencję i twórczość.",
-     "tekst": "Myślisz, przeszukując [[Przestrzeń problemu|przestrzeń problemu]] i trzymając jej części w [[Pamięć robocza|pamięci roboczej]]. Wnioskujesz przez [[Dedukcja, indukcja, abdukcja|dedukcję, indukcję i abdukcję]], a reguły odkrywasz z kolejnych prób, jak w [[Test sortowania kart|teście sortowania kart]]. Gdy reguły znasz, prowadzi Cię strategia z nabytych modeli, czyli warstwa [[Makro - strategia z modeli|makro]].",
+     "tekst": "Myślisz, przeszukując [[Przestrzeń problemu|przestrzeń problemu]] i utrzymując jej części w [[Pamięć robocza|pamięci roboczej]]. Wnioskujesz przez [[Dedukcja, indukcja, abdukcja|dedukcję, indukcję i abdukcję]], a reguły odkrywasz z kolejnych prób, jak w [[Test sortowania kart|teście sortowania kart]]. Gdy reguły znasz, prowadzi Cię strategia z nabytych modeli, czyli warstwa [[Makro - strategia z modeli|makro]].",
      "rodziny": [
       "Rozumowanie i wnioskowanie",
       "Rozwiązywanie problemów i planowanie",
@@ -253,7 +253,7 @@
    "po_zajęciach": [],
    "opis": [
     "Zaczęliśmy od budowy układu nerwowego, od [[Neuron i glej|neuronu i komórek glejowych]], od płatów kory i łączności między obszarami, a potem przeszliśmy do [[Sieci wielkoskalowe|sieci wielkoskalowych]], zespołów obszarów aktywnych razem.",
-    "Każdą sieć przedstawiłem jej rolą, jednym zdaniem w pierwszej osobie. [[Sieć wzrokowa|Sieć wzrokowa]]: „Widzę.” [[Sieć czuciowo-ruchowa|Sieć czuciowo-ruchowa]]: „Czuję ciało i się ruszam.” [[Sieć grzbietowa uwagi|Sieć grzbietowa uwagi]]: „Koordynuję oko i rękę.” [[Sieć brzuszna uwagi|Sieć brzuszna uwagi]]: „Coś przerywa plan.” [[Sieć istotności|Sieć istotności]]: „Coś zagraża schematowi ciała.” [[Sieć kontroli|Sieć kontroli]]: „Trzymam zadanie.” [[Sieć domyślna|Sieć domyślna]]: „Ja, przeszłość i przyszłość, inni ludzie.”",
+    "Każdą sieć przedstawiłem jej rolą, jednym zdaniem w pierwszej osobie. [[Sieć wzrokowa|Sieć wzrokowa]]: „Widzę.” [[Sieć czuciowo-ruchowa|Sieć czuciowo-ruchowa]]: „Czuję ciało i się ruszam.” [[Sieć grzbietowa uwagi|Sieć grzbietowa uwagi]]: „Koordynuję oko i rękę.” [[Sieć brzuszna uwagi|Sieć brzuszna uwagi]]: „Coś przerywa plan.” [[Sieć istotności|Sieć istotności]]: „Coś zagraża schematowi ciała.” [[Sieć kontroli|Sieć kontroli]]: „Pilnuję zadania.” [[Sieć domyślna|Sieć domyślna]]: „Ja, przeszłość i przyszłość, inni ludzie.”",
     "Obok roli każdej sieci pokazałem przypadki jej uszkodzeń, bo uszkodzenie odsłania, jakim doświadczeniem jest aktywność tej sieci. Przy sieci wzrokowej omówiłem [[Ślepowidzenie|ślepowidzenie]], pacjentkę D.F. i [[Prozopagnozja|prozopagnozję]], przy czuciowo-ruchowej [[Ian Waterman|Iana Watermana]], przy grzbietowej uwagi [[Zespół Bálinta|zespół Bálinta]], przy brzusznej [[Zaniedbywanie stronne|zaniedbywanie stronne]], przy sieci kontroli [[Test sortowania kart|test sortowania kart]], a przy sieci istotności otępienie czołowo-skroniowe. [[Pacjent H.M.|Pacjent H.M.]] posłużył za przykład pamięci, [[Phineas Gage|Phineas Gage]] za przykład decyzji, a [[Język w sieciach mózgu|obszary Broki i Wernickego]] za przykład mowy.",
     "Zajęcia zamknęły trzy szlaki wzrokowe: brzuszny, grzbietowy i [[Trzeci szlak wzrokowy|boczny]], którym płynie mimika, spojrzenie i gest drugiej osoby."
    ],
@@ -317,7 +317,7 @@
     },
     "Myślenie": {
      "h": "Zmieniająca się reguła",
-     "d": "[[Sieć kontroli|Sieć kontroli]] dostała rolę „Trzymam zadanie”. Jej uszkodzenie omówiłem na [[Test sortowania kart|teście sortowania kart]], w którym reguła zmienia się bez zapowiedzi."
+     "d": "[[Sieć kontroli|Sieć kontroli]] dostała rolę „Pilnuję zadania”. Jej uszkodzenie omówiłem na [[Test sortowania kart|teście sortowania kart]], w którym reguła zmienia się bez zapowiedzi."
     },
     "Nawyk i automatyzacja": {
      "h": "Wprawa w lustrze",

@@ -11,7 +11,7 @@ sieci:
 - kod: DMN
   powód: 'Twój mózg reguluje ciało z wyprzedzeniem, a sieć istotności i sieć domyślna tworzą jeden układ allostazy i interocepcji (Kleckner i in. 2017)<!--[s:kleckner2017-salience-default-system]-->.'
 - kod: SMN
-  powód: 'W spoczynkowym funkcjonalnym rezonansie magnetycznym (ang. resting-state fMRI) tylna wyspa, do której dociera bioinformacja z narządów, trafia do jednej sieci z korą sieci czuciowo-ruchowej, choć autorzy zastrzegają możliwe rozmycie sygnału między sąsiednimi zakrętami (Yeo i in. 2011)<!--[s:yeo2011-somatomotor-auditory-insula]-->.'
+  powód: 'W spoczynkowym funkcjonalnym rezonansie magnetycznym (ang. resting-state fMRI) tylna wyspa, do której dociera bioinformacja z narządów, należy do jednej sieci z korą sieci czuciowo-ruchowej, choć autorzy zastrzegają możliwe rozmycie sygnału między sąsiednimi zakrętami (Yeo i in. 2011)<!--[s:yeo2011-somatomotor-auditory-insula]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:

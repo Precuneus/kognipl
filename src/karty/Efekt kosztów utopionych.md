@@ -6,7 +6,7 @@ rodziny:
 głębokość:
 - organizm
 opis: 'Efekt kosztów utopionych (ang. sunk cost effect) to skłonność do kontynuowania przedsięwzięcia, w które włożono już pieniądze, wysiłek albo czas. Widzowie, którym losowo sprzedano karnet teatralny po pełnej cenie, w pierwszej połowie sezonu wykorzystali więcej biletów niż ci z rabatem, choć zapłacone pieniądze przepadły w obu grupach tak samo.'
-myśl: 'Pieniądze, wysiłek i czas już wydane przepadają bez względu na to, co zrobisz dalej, a mimo to trzymają Cię na drodze, którą da się porzucić.'
+myśl: 'Pieniądze, wysiłek i czas już wydane przepadają bez względu na to, co zrobisz dalej, a mimo to utrzymują Cię na drodze, którą da się porzucić.'
 sieci: []
 bez_sieci: 'Efekt opisują pomiary zachowania: bilety teatralne wykorzystane przez widzów i czas czekania na nagrodę u myszy, szczurów i ludzi.'
 ryciny: []
