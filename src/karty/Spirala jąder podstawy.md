@@ -11,7 +11,7 @@ sieci:
 - kod: DMN
   powód: 'Przyśrodkowa i oczodołowa kora przedczołowa rzutuje do brzuszno-przyśrodkowej części prążkowia, od której zaczyna się spirala (Haber 2003)<!--[s:haber2003-frontal-gradient-into-striatum]-->, a przyśrodkowa kora przedczołowa to rdzeń sieci domyślnej (Uddin i in. 2019)<!--[s:uddin2019-mfpn-core-and-limbic]-->.'
 - kod: LIM
-  powód: 'Kora oczodołowo-czołowa, rzutująca do brzuszno-przyśrodkowej części prążkowia (Haber 2003)<!--[s:haber2003-frontal-gradient-into-striatum]-->, należy do sieci limbicznej z podziału Yeo i in. (Uddin i in. 2019)<!--[s:uddin2019-mfpn-core-and-limbic]-->.'
+  powód: 'Kora okołooczodołowa, rzutująca do brzuszno-przyśrodkowej części prążkowia (Haber 2003)<!--[s:haber2003-frontal-gradient-into-striatum]-->, należy do sieci limbicznej z podziału Yeo i in. (Uddin i in. 2019)<!--[s:uddin2019-mfpn-core-and-limbic]-->.'
 - kod: CN
   powód: 'Grzbietowo-boczna kora przedczołowa, związana z funkcjami wykonawczymi, rzutuje głównie do przedniej części jądra ogoniastego i skorupy (Haber 2003)<!--[s:haber2003-frontal-gradient-into-striatum]-->, a należy do rdzenia sieci kontroli (Uddin i in. 2019)<!--[s:uddin2019-lfpn-core-lateral-pfc]-->.'
 - kod: SMN
