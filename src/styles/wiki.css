@@ -67,3 +67,6 @@ html.roj-cicho .wk-kurs::before{transition:none}
 @media (max-width:720px){.wk-anim{right:16px;top:14px;font-size:13px}}
 /* palec trafia w 44 px: niewidoczne pole wokół przełącznika, rysunek bez zmian (audyt 2026-11-09) */
 .wk-anim::before{content:'';position:absolute;inset:-7px -4px}
+/* scena zamykająca jako przykład, głosem opowieści: krój nagłówków kursywą, lekko wcięta (jego wybór B, 2026-11-09) */
+.wk-p.wk-przyklad{margin:22px 0 0 20px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;line-height:1.6;color:#e2ddd4}
+@media (max-width:720px){.wk-p.wk-przyklad{margin-left:12px;font-size:19px}}

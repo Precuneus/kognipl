@@ -88,7 +88,9 @@ const brain = svgSrc
       </section>
       <section aria-label="Opis" class="wk-box">
         <h2>Opis</h2>
-        {items.map((b) => b.t ? (b.kurs ? (
+        {items.map((b) => b.t ? (b.przyklad ? (
+          <p class="wk-p wk-przyklad">{segs(b.t).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>
+        ) : b.kurs ? (
           <div class="wk-kurs"><p class="wk-p">{segs(b.t).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p></div>
         ) : (
           <p class="wk-p">{segs(b.t).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>

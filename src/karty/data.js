@@ -35,6 +35,9 @@ const blocks = (body) => strip(body).trim().split(/\n\s*\n/).map((b) => b.trim()
     // akapit kursu: wywołanie Obsidiana > [!kurs], na stronie oświetlony snopem Iskry (jego wybór A, 2026-11-09)
     const ku = /^>\s*\[!kurs\][^\n]*\n?/.exec(b);
     if (ku) return { t: b.slice(ku[0].length).replace(/^>\s?/gm, '').replace(/\s*\n\s*/g, ' ').trim(), kurs: true };
+    // scena zamykająca jako przykład: wywołanie > [!przykład], na stronie głosem opowieści (jego wybór B, 2026-11-09)
+    const pr = /^>\s*\[!przyk(?:ł|l)ad\][^\n]*\n?/.exec(b);
+    if (pr) return { t: b.slice(pr[0].length).replace(/^>\s?/gm, '').replace(/\s*\n\s*/g, ' ').trim(), przyklad: true };
     return { t: b.replace(/\s*\n\s*/g, ' ') };
   });
 
