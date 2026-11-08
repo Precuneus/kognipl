@@ -11,7 +11,7 @@ const pierwsza = card('Kognitywistyka');
 // które wskazują tę sieć w części Sieć mózgowa (jego, 2026-10-23: *Build the brain index first*).
 // siedem sieci modelu strony; sieć limbiczna wchodzi do domyślnej (data.js, 2026-10-23)
 // kolory sieci ze strony startowej (mozg.js, 2026-10-23)
-const ROLA = { VIS: '„Widzę.”', SMN: '„Czuję ciało i się ruszam.”', DAN: '„Koordynuję oko i rękę.”', VAN: '„Coś przerywa plan.”', SN: '„Coś zagraża schematowi ciała.”', CN: '„Pilnuję zadania.”', DMN: '„Ja, przeszłość i przyszłość, inni ludzie.”' };
+const ROLA = { VIS: '„Widzę.”', SMN: '„Czuję ciało i się ruszam.”', DAN: '„Koordynuję oko i rękę.”', VAN: '„Coś przerywa plan.”', SN: '„Coś zagraża schematowi ciała.”', CN: '„Dążę do celu.”', DMN: '„Ja, przeszłość i przyszłość, inni ludzie.”' };
 const plain = (t) => segs(t).map((s) => s.t).join('');
 const ile = (n) => n + ' ' + (n === 1 ? 'karta' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 'karty' : 'kart');
 const SIECI = Object.keys(KOLOR).map((kod) => {

@@ -7,7 +7,7 @@ głębokość:
 - komórka
 - organizm
 opis: 'Neurony dopaminowe małpy odpowiadają na sok, który przychodzi niezapowiedziany, a po treningu odpowiadają na światło, które ten sok zapowiada; gdy zapowiedziany sok nie nadchodzi, ich aktywność spada. Wolfram Schultz, Peter Dayan i Read Montague czytają ten wzorzec jako zaskoczenie nagrodą (ang. reward prediction error), czyli różnicę między nagrodą a jej predykcją, a według nowszych badań to zaskoczenie napędza uczenie się o nagrodach.'
-myśl: 'Aktywność neuronów dopaminowych rośnie, gdy nagroda przewyższa predykcję, a spada, gdy jest od niej gorsza, więc niesie zaskoczenie nagrodą, z którego uczysz się, co zapowiada nagrodę.'
+myśl: 'Aktywność neuronów dopaminowych rośnie, gdy nagroda przewyższa predykcję, a spada, gdy jest od niej gorsza, więc ta aktywność to zaskoczenie nagrodą, z którego uczysz się, co zapowiada nagrodę.'
 sieci: []
 bez_sieci: 'Neurony dopaminowe leżą w śródmózgowiu (Keiflin i Janak 2015)<!--[s:keiflin2015-causal-rpe-natural-reward]-->, poza korowymi mapami sieci; ta karta schodzi do pojedynczych neuronów.'
 ryciny: []

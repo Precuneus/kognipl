@@ -6,7 +6,7 @@ rodziny:
 - '[[Intencja i sprawczość]]'
 - '[[Przestrzenie pojęć]]'
 sieci: []
-bez_sieci: 'Przestrzeń możliwości kształtują predykcje, które niesie każda sieć mózgu; komórki miejsca i komórki siatki zmierzono w hipokampie i w przyśrodkowej korze śródwęchowej.'
+bez_sieci: 'Przestrzeń możliwości kształtują predykcje, a predykcja to aktywność każdej sieci mózgu; komórki miejsca i komórki siatki zmierzono w hipokampie i w przyśrodkowej korze śródwęchowej.'
 ryciny: []
 materiały:
 - tytuł: 'exurb1a, Then Next Comes'

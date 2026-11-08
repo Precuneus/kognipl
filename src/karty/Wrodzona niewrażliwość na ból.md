@@ -6,7 +6,7 @@ rodziny:
 głębokość:
 - organizm
 - komórka
-opis: 'Osoby z mutacjami genu SCN9A, który niesie przepis na kanał sodowy Nav1.7 w nocyceptorach, od urodzenia nie czują bólu albo czują go znacznie słabiej. Skaleczenia, siniaki i pogryzione wargi i języki w tych rodzinach pokazują ból jako ostrzeżenie, które chroni ciało.'
+opis: 'Osoby z mutacjami genu SCN9A, zawierającego przepis na kanał sodowy Nav1.7 w nocyceptorach, od urodzenia nie czują bólu albo czują go znacznie słabiej. Skaleczenia, siniaki i pogryzione wargi i języki w tych rodzinach pokazują ból jako ostrzeżenie, które chroni ciało.'
 myśl: 'Ból to ostrzeżenie chroniące ciało, a mutacje genu SCN9A wyłączają je w nocyceptorach, więc w rodzinach z tymi mutacjami zostają skaleczenia, siniaki i pogryzione języki.'
 sieci: []
 bez_sieci: 'Ta niewrażliwość zaczyna się w nocyceptorach, receptorach zmysłowych uszkodzenia tkanki, w których silnie występuje kanał sodowy Nav1.7 (Cox i in. 2006)<!--[s:cox2006-scn9a-nav17-nociception]-->.'
@@ -25,7 +25,7 @@ rekordy:
 - crashcourse_peripheral-nervous-system_QY9NTVh-Awo
 - ted-ed_ian-waterman-touch_X7xOEez75B0
 ---
-W Pakistanie chłopiec znany z ulicznych występów chodził po rozżarzonych węglach i przebijał sobie ramiona nożami. Wszyscy chorzy w jego rodzinach mieli liczne skaleczenia, siniaki i rany warg i języka od własnych zębów (Hopkin 2006)<!--[s:hopkin2006-street-performer-injuries]-->. U osób poza tym zdrowych z trzech rodzin z północnego Pakistanu całkowitą niezdolność do odczuwania bólu wiąże się z genem SCN9A, który niesie przepis na podjednostkę alfa kanału sodowego Nav1.7, silnie obecnego w nocyceptorach (ang. nociceptors), receptorach zmysłowych uszkodzenia tkanki. Mutacje wyłączały działanie tego kanału, więc SCN9A to według autorów niezbędny i niezastąpiony warunek nocycepcji (ang. nociception), odbioru bodźców uszkadzających, u człowieka (Cox i in. 2006)<!--[s:cox2006-scn9a-nav17-nociception]-->.
+W Pakistanie chłopiec znany z ulicznych występów chodził po rozżarzonych węglach i przebijał sobie ramiona nożami. Wszyscy chorzy w jego rodzinach mieli liczne skaleczenia, siniaki i rany warg i języka od własnych zębów (Hopkin 2006)<!--[s:hopkin2006-street-performer-injuries]-->. U osób poza tym zdrowych z trzech rodzin z północnego Pakistanu całkowitą niezdolność do odczuwania bólu wiąże się z genem SCN9A, zawierającym przepis na podjednostkę alfa kanału sodowego Nav1.7, silnie obecnego w nocyceptorach (ang. nociceptors), receptorach zmysłowych uszkodzenia tkanki. Mutacje wyłączały działanie tego kanału, więc SCN9A to według autorów niezbędny i niezastąpiony warunek nocycepcji (ang. nociception), odbioru bodźców uszkadzających, u człowieka (Cox i in. 2006)<!--[s:cox2006-scn9a-nav17-nociception]-->.
 
 Dziewczynka z dwiema nowymi mutacjami SCN9A czuła dotyk i ciepło tak jak jej rodzina i grupa kontrolna, słabiej wykrywała chłód, a nocycepcję gorąca i ucisku miała głęboko upośledzoną. Jej niewrażliwość na ból była więc względna. Zdolność wyczuwania choćby części ostrzeżeń o zagrożeniu może według autorów być korzystna i zmniejszać podwyższoną chorobowość i śmiertelność części osób z wrodzoną niewrażliwością na ból (Staud i in. 2011)<!--[s:staud2011-partial-insensitivity-touch-warmth]-->.
 

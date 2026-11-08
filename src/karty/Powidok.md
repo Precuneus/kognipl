@@ -7,7 +7,7 @@ głębokość:
 - komórka
 - organizm
 opis: Powidok barwny (ang. color afterimage) to plama, która pojawia się w miejscu barwnego bodźca oglądanego przez dłuższą chwilę, kiedy bodziec znika. Powstaje w siatkówce, w komórkach zwojowych, a jego odcień zmierzony na ekranie odbiega od barwy dopełniającej, na przykład zielony kwadrat zostawia purpurową plamę.
-myśl: 'Powidok zaczyna się od odpowiedzi odbicia komórek zwojowych [[Pręciki, czopki i droga wzrokowa|siatkówki]] po długim bodźcu, więc barwa, której doświadczasz, niesie historię ostatnich sekund patrzenia.'
+myśl: 'Powidok zaczyna się od odpowiedzi odbicia komórek zwojowych [[Pręciki, czopki i droga wzrokowa|siatkówki]] po długim bodźcu, więc barwa, której doświadczasz, zależy od ostatnich sekund patrzenia.'
 sieci:
 - kod: VIS
   powód: 'Odpowiedź odbicia komórek zwojowych dociera do wzgórza i kory jak każda inna seria potencjałów czynnościowych z siatkówki, więc procesy kory wzrokowej, na przykład uwaga wybiórcza, mogą zmieniać powidok (Zaidi i in. 2012)<!--[s:zaidi2012-rebound-spikes-reach-cortex]-->.'
@@ -30,8 +30,8 @@ rekordy:
 ---
 Na pustym ekranie patrzysz w punkt obok zielonego kwadratu przez co najmniej 20 sekund. Kwadrat znika, a w jego miejscu widzisz purpurową plamę. W badaniu Koenderinka i współpracowników zielony bodziec dawał purpurowy powidok barwny (ang. color afterimage), czerwony niebieski, niebieski czerwonopomarańczowy, a żółty niebieskofioletowy (Koenderink i in. 2020)<!--[s:koenderink2020-hering-pairs-fail]--><!--[s:koenderink2020-afterimage-hues-not-complementary]-->.
 
-Powidok powstaje w siatkówce. U naczelnych komórki zwojowe siatkówki (ang. retinal ganglion cells) każdej klasy adaptują się do długiego bodźca znacznie wolniej, niż adaptują się pręciki i czopki, a po zniknięciu bodźca dają odpowiedź odbicia (ang. rebound response), która może nieść powidok do dalszych neuronów (Zaidi i in. 2012)<!--[s:zaidi2012-ganglion-rebound-afterimage]-->.
+Powidok powstaje w siatkówce. U naczelnych komórki zwojowe siatkówki (ang. retinal ganglion cells) każdej klasy adaptują się do długiego bodźca znacznie wolniej, niż adaptują się pręciki i czopki, a po zniknięciu bodźca dają odpowiedź odbicia (ang. rebound response), która może przekazać powidok dalszym neuronom (Zaidi i in. 2012)<!--[s:zaidi2012-ganglion-rebound-afterimage]-->.
 
 Odcień powidoku odbiega od barwy dopełniającej (ang. complementary color). Prawie połowa koła barw, od pomarańczu po żółtozieleń, daje powidoki w wąskim zakresie purpur (Koenderink i in. 2020)<!--[s:koenderink2020-afterimage-hues-not-complementary]-->. Gdyby powidoki szły za schematem barw przeciwstawnych Heringa (ang. opponent colors), czerwień i zieleń, a także żółć i błękit, wywoływałyby się nawzajem, tymczasem pomiar daje purpurę po zieleni i błękit po czerwieni (Koenderink i in. 2020)<!--[s:koenderink2020-hering-pairs-fail]-->.
 
-Świadome doświadczenie barwy jest identyczne z aktywnością, która zaczyna się [[Odległość od receptorów|blisko receptorów]], w siatkówce, więc niesie historię ostatnich sekund patrzenia. Purpurowa plama na pustym ekranie to doświadczenie odbiegające od bodźca, podobnie jak [[Kontrolowane halucynacje|halucynacja]] czy przeskok w [[Percepcja bistabilna|percepcji bistabilnej]], a źródło tej różnicy leży w siatkówce.
+Świadome doświadczenie barwy jest identyczne z aktywnością, która zaczyna się [[Odległość od receptorów|blisko receptorów]], w siatkówce, więc zależy od ostatnich sekund patrzenia. Purpurowa plama na pustym ekranie to doświadczenie odbiegające od bodźca, podobnie jak [[Kontrolowane halucynacje|halucynacja]] czy przeskok w [[Percepcja bistabilna|percepcji bistabilnej]], a źródło tej różnicy leży w siatkówce.

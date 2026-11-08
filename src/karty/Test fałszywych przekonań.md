@@ -7,7 +7,7 @@ rodziny:
 głębokość:
 - organizm
 - sieć mózgowa
-opis: 'Test fałszywych przekonań (ang. false-belief test) sprawdza, czy dziecko odpowie z cudzego przekonania, które rozmija się ze stanem świata. Sally chowa kulkę i wychodzi, Anne przekłada kulkę w inne miejsce, a dziecko mówi, gdzie Sally będzie jej szukać. Od około czwartego roku życia dzieci coraz częściej wskazują miejsce, w którym Sally kulkę zostawiła, a trzylatki i czterolatki zdają test częściej, kiedy dorosły ogląda historię razem z nimi.'
+opis: 'Test fałszywych przekonań (ang. false-belief test) sprawdza, czy dziecko odpowie z cudzego przekonania, niezgodnego ze stanem świata. Sally chowa kulkę i wychodzi, Anne przekłada kulkę w inne miejsce, a dziecko mówi, gdzie Sally będzie jej szukać. Od około czwartego roku życia dzieci coraz częściej wskazują miejsce, w którym Sally kulkę zostawiła, a trzylatki i czterolatki zdają test częściej, kiedy dorosły ogląda historię razem z nimi.'
 myśl: 'Odpowiedź z cudzego przekonania dojrzewa około czwartego roku życia, a [[Wspólna intencjonalność|wspólna uwaga]] z dorosłym pomaga ją dać trzylatkom i czterolatkom.'
 sieci:
 - kod: DMN
