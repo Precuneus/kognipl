@@ -4,7 +4,7 @@ osnowa: '[[Sieci mózgu i predykcja]]'
 rodziny:
 - '[[Sieci wielkoskalowe]]'
 sieci: []
-bez_sieci: 'Łączność funkcjonalna łączy dowolne dwa obszary kory, więc dotyczy wszystkich sieci naraz.'
+bez_sieci: 'Badacze mierzą łączność funkcjonalną między dowolnymi dwoma obszarami kory, więc dotyczy ona wszystkich sieci naraz. Biswal i współpracownicy zmierzyli ją w obszarach kory ruchowej i somatosensorycznej aktywnych przy ruchu dłoni (Biswal i in. 1995)<!--[s:biswal1995-resting-motor-correlation]-->.'
 ryciny: []
 materiały:
 - tytuł: 'Biswal i in. 1995: skorelowane wahania spoczynkowej kory czuciowo-ruchowej'
@@ -24,6 +24,6 @@ stan: gotowa
 
 Łączność strukturalna (ang. structural connectivity) to włókna [[Istota szara i istota biała|istoty białej]] biegnące między obszarami. Honey i współpracownicy zmierzyli u każdej osoby obie łączności: funkcjonalną w spoczynku i strukturalną traktografią dyfuzyjną. Łączność funkcjonalna często występuje między obszarami bez bezpośredniego połączenia strukturalnego, ale jej siłę, trwałość i rozkład ogranicza anatomiczna struktura kory (Honey i in. 2009)<!--[s:honey2009-fc-without-direct-sc]-->.
 
-Z łączności funkcjonalnej wyprowadza się podział kory na [[Sieci wielkoskalowe|sieci wielkoskalowe]]. Yeo i współpracownicy pogrupowali obszary kory 1000 zdrowych dorosłych według spoczynkowej łączności funkcjonalnej: na 7 sieci w podziale zgrubnym i na 17 w dokładniejszym (Yeo i in. 2011)<!--[s:yeo2011-seven-network-parcellation]-->. Margulies i współpracownicy szukali w spoczynkowej łączności funkcjonalnej 820 zdrowych dorosłych osi, wzdłuż której wzorzec połączeń zmienia się najsilniej. Ta oś, [[Gradient główny kory|główny gradient]], zaczyna się w systemach percepcji i działania, a kończy w transmodalnych obszarach kojarzeniowych, które odpowiadają [[Sieć domyślna|sieci domyślnej]] (Margulies i in. 2016)<!--[s:margulies2016-principal-gradient-abstraction]-->.
+Z łączności funkcjonalnej badacze wyprowadzają podział kory na [[Sieci wielkoskalowe|sieci wielkoskalowe]]. Yeo i współpracownicy pogrupowali obszary kory 1000 zdrowych dorosłych według spoczynkowej łączności funkcjonalnej: na 7 sieci w podziale zgrubnym i na 17 w dokładniejszym (Yeo i in. 2011)<!--[s:yeo2011-seven-network-parcellation]-->. Margulies i współpracownicy szukali w spoczynkowej łączności funkcjonalnej 820 zdrowych dorosłych osi, wzdłuż której wzorzec połączeń zmienia się najsilniej. Ta oś, [[Gradient główny kory|główny gradient]], zaczyna się w systemach percepcji i działania, a kończy w transmodalnych obszarach kojarzeniowych, łączących [[Bioinformacja|bioinformację]] z wielu zmysłów i odpowiadających [[Sieć domyślna|sieci domyślnej]] (Margulies i in. 2016)<!--[s:margulies2016-principal-gradient-abstraction]-->.
 
 Kiedy odpoczywasz w skanerze, a Twoja dłoń spoczywa nieruchomo, wolne wahania sygnału z obszarów Twojej kory somatosensorycznej i ruchowej, które przed chwilą ją czuły i nią poruszały, zapewne zmieniają się zgodnie. Aktywność tych obszarów to część Twoich [[Modele Mentalne|Modeli Mentalnych]] dłoni, na których polegasz, gdy znów po coś sięgasz.

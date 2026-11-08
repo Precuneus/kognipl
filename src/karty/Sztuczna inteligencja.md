@@ -5,7 +5,7 @@ rodziny:
 - '[[Nauka jako zbiorowość]]'
 grupa: socjologia
 sieci: []
-bez_sieci: 'Ta karta opisuje dyscyplinę naukową; sieci mózgu opisują karty, do których prowadzi.'
+bez_sieci: 'Sztuczna inteligencja to dyscyplina naukowa, więc sieci mózgu znajdziesz na kartach, do których prowadzi.'
 ryciny: []
 materiały:
 - tytuł: 'Thagard 2023: Cognitive Science, Stanford Encyclopedia of Philosophy'

@@ -5,7 +5,7 @@ rodziny:
 - '[[Nauka jako zbiorowość]]'
 grupa: wiki
 sieci: []
-bez_sieci: 'Strona kogni.pl to układ kart i wątków; sieci mózgu opisują karty, do których prowadzi jej indeks.'
+bez_sieci: 'Strona kogni.pl to układ kart i wątków, więc sieci mózgu znajdziesz na kartach, do których prowadzi jej indeks.'
 ryciny: []
 materiały: []
 rekordy: []

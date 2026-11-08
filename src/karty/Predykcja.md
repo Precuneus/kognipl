@@ -4,7 +4,7 @@ osnowa: '[[Sieci mózgu i predykcja]]'
 rodziny:
 - '[[Predykcja]]'
 sieci: []
-bez_sieci: 'Predykcja zachodzi w każdej komórce mózgu, więc dotyczy wszystkich sieci naraz.'
+bez_sieci: 'W ujęciu kursu predykcja zachodzi w każdej komórce mózgu, więc dotyczy wszystkich sieci naraz.'
 ryciny:
 - mozg.svg
 materiały:
@@ -29,4 +29,4 @@ Gdy nadchodzi coś innego, niż zakłada predykcja, w komórce pojawia się [[Za
 
 Tę samą zasadę opisuje model [[Kodowanie predykcyjne|kodowania predykcyjnego]], sprawdzony w symulacji dla obszarów kory wzrokowej: obszar [[Odległość od receptorów|dalszy od receptorów]] wysyła [[Połączenia wstępujące i zwrotne|połączeniami zwrotnymi]] predykcję aktywności obszaru bliższego, a połączenia wstępujące odsyłają zaskoczenie (Rao i Ballard 1999)<!--[s:rao1999-feedback-predictions-feedforward-errors]-->.
 
-Kiedy sięgasz po kubek, Twoja dłoń jest gotowa na jego ciężar, zanim go podniesiesz. Ta gotowość to predykcja wielu komórek naraz, składająca się na Twoje [[Modele Mentalne|Modele Mentalne]] kubka, a gdy kubek okazuje się lżejszy, zaskoczenie aktualizuje je, zanim zdążysz o tym pomyśleć.
+Kiedy sięgasz po kubek, Twoja dłoń jest gotowa na jego ciężar, zanim go podniesiesz. Ta gotowość to predykcja wielu komórek naraz, składająca się na Twoje [[Modele Mentalne|Modele Mentalne]] kubka. Gdy kubek okazuje się lżejszy, zaskoczenie aktualizuje je, zanim zdążysz o tym pomyśleć.

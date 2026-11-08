@@ -4,7 +4,7 @@ osnowa: '[[Język]]'
 rodziny:
 - '[[Język a myślenie]]'
 sieci: []
-bez_sieci: 'Rozbudowa słownictwa to cecha języka całej wspólnoty, mierzona w słownikach, a wpływ nazw barw mierzą czas rozróżniania odcieni (Winawer i in. 2007)<!--[s:winawer2007-category-advantage-verbal-interference]--> i fala w zapisie EEG (Martinovic i in. 2026)<!--[s:martinovic2026-no-early-category-effect]-->.'
+bez_sieci: 'Rozbudowa słownictwa to cecha języka całej wspólnoty, mierzona w słownikach. Wpływ nazw barw badaczki i badacze mierzą czasem rozróżniania odcieni (Winawer i in. 2007)<!--[s:winawer2007-category-advantage-verbal-interference]--> i falą w zapisie EEG (Martinovic i in. 2026)<!--[s:martinovic2026-no-early-category-effect]-->.'
 ryciny: []
 materiały:
 - tytuł: 'Anton Petrov, How Many Words Does Your Language Really Have for Snow?'

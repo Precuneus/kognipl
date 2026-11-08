@@ -5,7 +5,7 @@ rodziny:
 - '[[Nauka jako zbiorowość]]'
 grupa: biologia
 sieci: []
-bez_sieci: 'Ta karta opisuje grupę wyjaśnień; sieci mózgu opisują karty, do których prowadzi.'
+bez_sieci: 'Biologia to grupa wyjaśnień, więc sieci mózgu znajdziesz na kartach, do których prowadzi.'
 ryciny: []
 materiały: []
 rekordy: []

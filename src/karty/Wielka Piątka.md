@@ -4,7 +4,7 @@ osnowa: '[[Osobowość i zdrowie psychiczne]]'
 rodziny:
 - '[[Osobowość]]'
 sieci: []
-bez_sieci: 'Cecha osobowości to wzorzec zachowania i doświadczeń mierzony kwestionariuszem, a w próbie 1107 studentek i studentów, największej do 2020 roku, jej związki ze strukturą istoty szarej i białej są, jeśli w ogóle istnieją, najpewniej bardzo małe (Avinun i in. 2020)<!--[s:avinun2020-little-brain-structure-evidence]-->.'
+bez_sieci: 'Cecha osobowości to wzorzec zachowania i doświadczeń mierzony kwestionariuszem, a w próbie 1107 studentek i studentów, największej do 2020 roku, jej związki ze strukturą istoty szarej i białej są, jeśli w ogóle istnieją, prawdopodobnie bardzo małe (Avinun i in. 2020)<!--[s:avinun2020-little-brain-structure-evidence]-->.'
 ryciny: []
 materiały:
 - tytuł: 'Vukasović i Bratko 2015: Heritability of personality, a meta-analysis of behavior genetic studies'
@@ -30,4 +30,4 @@ Metaanaliza 62 niezależnych oszacowań z udziałem ponad 100 000 osób w każdy
 
 Średnie wartości cech zmieniają się przez całe życie. W metaanalizie 92 prób podłużnych sumienność i dominacja społeczna, aspekt ekstrawersji, rosną zwłaszcza między 20. a 40. rokiem życia, a neurotyczność w tym samym czasie spada. Otwartość i żywość społeczna, drugi aspekt ekstrawersji, rosną w okresie dorastania i spadają w starości, a ugodowość zmienia się dopiero w starości (Roberts i in. 2006)<!--[s:roberts2006-change-young-adulthood]-->.
 
-Kiedy w kwestionariuszu odpowiadasz, czy jesteś osobą staranną, polegasz na [[Modele Mentalne|Modelach Mentalnych]] siebie, ukształtowanych przez to, jak działasz od lat i jak inni na to odpowiadają. Kolejne lata dalej je kształtują, więc Twój wynik to odczyt jednego okresu Twojego życia, który czas może przesunąć.
+Kiedy w kwestionariuszu odpowiadasz, czy jesteś osobą staranną, polegasz na [[Modele Mentalne|Modelach Mentalnych]] siebie, ukształtowanych przez to, jak działasz od lat i jak inni na to odpowiadają. Kolejne lata dalej je kształtują. Średnie cech w grupach zmieniają się z wiekiem, więc i Twój wynik może się z czasem przesunąć.
