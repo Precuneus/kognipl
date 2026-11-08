@@ -45,3 +45,25 @@
 .wz-zywa button:hover{background:#86c6bb;box-shadow:0 0 0 7px rgba(111,179,168,.22),0 8px 28px rgba(111,179,168,.3)}
 .wz-zywa button:active{transform:scale(.96)}
 .wz-zywa button:focus-visible{outline:2px solid #ebe3d3;outline-offset:3px}
+/* Akapit kursu w snopie Iskry (jego wybór A, 2026-11-09): ciepła plama, w której stoi akapit; Iskra to kropka nad ı w logo, ten sam
+   rysunek co .rocznik-knot */
+.wk-kurs{position:relative;margin:14px -12px 0;padding:12px 12px 14px;border-radius:12px}
+.wk-kurs::before{content:'';position:absolute;inset:0;border-radius:12px;background:rgba(240,192,96,.075);box-shadow:inset 0 0 0 1px rgba(240,192,96,.12);opacity:0;transition:opacity 1.2s ease}
+.wk-kurs.lit::before{opacity:1}
+.wk-kurs .wk-p{position:relative;margin:0}
+.wk-iskra{position:absolute;z-index:30;border-radius:50%;background:#f0c060;box-shadow:0 0 0 1.5px #0e0d0b,0 0 0 2.5px rgba(240,192,96,.9),0 0 9px 3px rgba(240,192,96,.45);pointer-events:none;opacity:0;transition:transform .12s ease}
+.wk-iskra.widac{opacity:1}
+.wk-iskra.mruga{transform:scaleY(.15)}
+html.roj-cicho .wk-kurs::before{transition:none}
+/* przełącznik animacji jak na stronie startowej, w tym samym rogu na wysokości logo; tu stoi w dokumencie, nie na ekranie, bo karta
+   przewija się pod nagłówkiem, a przełącznik należy do niego */
+.wk-anim{position:absolute;right:calc(8vw - 10px);top:32px;z-index:20;display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.55);border:0;border-radius:15px;cursor:pointer;font-family:Inter,sans-serif;font-weight:300;font-size:14px;letter-spacing:.04em;color:#b3aa9b}
+.wk-anim:hover{color:#ece6da}
+.wk-anim-tor{position:relative;width:34px;height:18px;box-sizing:border-box;border:1px solid rgba(240,192,96,.55);border-radius:9px;transition:background .2s ease}
+.wk-anim-tor::after{content:'';position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#6e675c;transition:transform .2s ease,background .2s ease}
+.wk-anim[aria-checked="true"] .wk-anim-tor{background:rgba(240,192,96,.16)}
+.wk-anim[aria-checked="true"] .wk-anim-tor::after{transform:translateX(16px);background:#f0c060}
+.wk-anim:focus-visible{outline:1px solid #f0c060;outline-offset:4px}
+@media (max-width:720px){.wk-anim{right:16px;top:14px;font-size:13px}}
+/* palec trafia w 44 px: niewidoczne pole wokół przełącznika, rysunek bez zmian (audyt 2026-11-09) */
+.wk-anim::before{content:'';position:absolute;inset:-7px -4px}

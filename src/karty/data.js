@@ -30,7 +30,13 @@ export const NETN = { VIS: 'sieć wzrokowa', SMN: 'sieć czuciowo-ruchowa', DAN:
 const NETCARD = Object.fromEntries(Object.entries(NETN).map(([k, v]) => [k, v.charAt(0).toUpperCase() + v.slice(1)]));
 
 const blocks = (body) => strip(body).trim().split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean)
-  .map((b) => { const f = /^!\[\[([^\]]+?)\.svg\]\]$/.exec(b); return f ? { fig: f[1] } : { t: b.replace(/\s*\n\s*/g, ' ') }; });
+  .map((b) => {
+    const f = /^!\[\[([^\]]+?)\.svg\]\]$/.exec(b); if (f) return { fig: f[1] };
+    // akapit kursu: wywołanie Obsidiana > [!kurs], na stronie oświetlony snopem Iskry (jego wybór A, 2026-11-09)
+    const ku = /^>\s*\[!kurs\][^\n]*\n?/.exec(b);
+    if (ku) return { t: b.slice(ku[0].length).replace(/^>\s?/gm, '').replace(/\s*\n\s*/g, ' ').trim(), kurs: true };
+    return { t: b.replace(/\s*\n\s*/g, ' ') };
+  });
 
 export const ALL = Object.entries(notes).map(([file, mod]) => {
   const f = mod.frontmatter;

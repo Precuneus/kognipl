@@ -43,6 +43,9 @@ const items = blocksOut.map((b) => b.fig ? (ZYWE[b.fig] ? { zywa: b.fig, fig: 'z
 const kindOf = (u) => (/youtu\.?be/.test(u) ? 0 : (/doi\.org|frontiersin|journals|\.pdf|pubmed|ncbi/.test(u) ? 1 : 2));
 const kinds = ['Filmy', 'Artykuły', 'Inne'].map((name, q) => ({ name, items: k.l.filter((l) => kindOf(l[1]) === q) })).filter((x) => x.items.length);
 const back = backlinks(k);
+// karta z akapitem kursu dostaje Iskrę i przełącznik animacji ze strony startowej (jego słowa, 2026-11-09: *if we add iskra, we need to
+// add on/off animation there also*); karty bez tego akapitu nie mają czego wyłączać poza ryciną żywą, która ma własny przycisk
+const kurs = items.some((b) => b.kurs);
 const zaj = classesOf(k);
 // rodzina o nazwie tej karty powtarzałaby tytuł nad sobą, więc wiersz rodzin pomija kartę samą (przegląd 2026-11-05: Predykcja, Interocepcja i cztery inne)
 const rodz = k.r2.filter((r) => card(r) !== k);
@@ -60,6 +63,8 @@ const brain = svgSrc
   .replace(/\{\{bn\.(\w+)\}\}/g, (_, n) => (lit(n) ? 'fill:' + kolor(n) + ';fill-opacity:0.92;filter:drop-shadow(0 0 2.5px ' + kolor(n) + ')' : 'fill:rgba(180,155,100,0.035)'))
   .replace(/\{\{bl\.(\w+)\}\}/g, (_, n) => (lit(n) && n !== 'LIM' ? 'display:inline' : 'display:none'));
 ---
+  {kurs && <script is:inline>(function(){var z=null;try{z=localStorage.getItem('kogni-animacje')}catch(e){}var c=z?z==='off':matchMedia('(prefers-reduced-motion: reduce)').matches;if(c)document.documentElement.classList.add('roj-cicho')})();</script>}
+  {kurs && <aside aria-label="Animacje"><button type="button" class="wk-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="wk-anim-tor" aria-hidden="true"></span></button></aside>}
   <article class={'wk' + (wstep ? ' wk-wstep' : '')} style={'--ink:' + ink + ';--base:' + base}>
   <nav aria-label="Ścieżka" class="wk-path">
     {k.grupa ? (
@@ -83,9 +88,11 @@ const brain = svgSrc
       </section>
       <section aria-label="Opis" class="wk-box">
         <h2>Opis</h2>
-        {items.map((b) => b.t ? (
-          <p class="wk-p">{segs(b.t).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>
+        {items.map((b) => b.t ? (b.kurs ? (
+          <div class="wk-kurs"><p class="wk-p">{segs(b.t).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p></div>
         ) : (
+          <p class="wk-p">{segs(b.t).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>
+        )) : (
           b.zywa ? <figure class="wk-fig"><div class="wz-zywa" data-zywa={b.zywa}><canvas role="img" aria-label={b.cap}></canvas><button type="button">zaskoczenie</button></div><figcaption>{b.cap}</figcaption></figure>
           : <figure class="wk-fig"><Fragment set:html={b.fig} /><figcaption>{b.cap}</figcaption></figure>
         ))}
@@ -141,4 +148,6 @@ const brain = svgSrc
 <script>
   import { mozg } from '../rocznik/2026/ryciny/zywe/mozg.js';
   document.querySelectorAll('.wz-zywa[data-zywa="mozg"]').forEach((el) => mozg(el as HTMLElement));
+  import { iskraKursu } from '../karty/iskra.js';
+  iskraKursu();
 </script>

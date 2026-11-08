@@ -208,6 +208,8 @@ html.roj-blok{overscroll-behavior:none}
 .roj-anim[aria-checked="true"] .roj-anim-tor{background:rgba(240,192,96,.16)}
 .roj-anim[aria-checked="true"] .roj-anim-tor::after{transform:translateX(16px);background:var(--zloto)}
 .roj-anim:focus-visible{outline:1px solid var(--zloto);outline-offset:4px}
+/* palec trafia w 44 px: niewidoczne pole wokół przełącznika, rysunek bez zmian (audyt karty 2026-11-09) */
+.roj-anim::before{content:'';position:absolute;inset:-7px -4px}
 html.roj-cicho .roj *{animation:none!important}
 /* dymek sieci: jak dymek splotu na Płótnie, dwa kółka od klikniętego miejsca do ramki w kolorze sieci (2026-10-23) */
 .roj-dymek-w{position:fixed;inset:0;z-index:15;pointer-events:none}
