@@ -9,9 +9,9 @@ const pierwsza = card('Kognitywistyka');
 
 // Mapa sieci: mózg z karty, każda sieć w kolorze ze strony startowej; klik pokazuje karty,
 // które wskazują tę sieć w części Sieć mózgowa (jego, 2026-10-23: *Build the brain index first*).
-// siedem sieci modelu strony; sieć limbiczna wchodzi do domyślnej (data.js, 2026-10-23)
+// osiem sieci modelu strony; sieć limbiczna osobno od domyślnej (jego słowo, 2026-11-09)
 // kolory sieci ze strony startowej (mozg.js, 2026-10-23)
-const ROLA = { VIS: '„Widzę.”', SMN: '„Czuję ciało i się ruszam.”', DAN: '„Koordynuję oko i rękę.”', VAN: '„Coś przerywa plan.”', SN: '„Coś zagraża schematowi ciała.”', CN: '„Dążę do celu.”', DMN: '„Ja, przeszłość i przyszłość, inni ludzie.”' };
+const ROLA = { VIS: '„Widzę.”', SMN: '„Czuję ciało i się ruszam.”', DAN: '„Koordynuję oko i rękę.”', VAN: '„Coś przerywa plan.”', SN: '„Coś zagraża schematowi ciała.”', CN: '„Dążę do celu.”', LIM: '„Coś mnie przyciąga albo odpycha.”', DMN: '„Ja, przeszłość i przyszłość, inni ludzie.”' };
 const plain = (t) => segs(t).map((s) => s.t).join('');
 const ile = (n) => n + ' ' + (n === 1 ? 'karta' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 'karty' : 'kart');
 const SIECI = Object.keys(KOLOR).map((kod) => {
@@ -23,8 +23,7 @@ const SIECI = Object.keys(KOLOR).map((kod) => {
 const shown = new Set(SIECI.map((s) => s.kod));
 const mapa = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)[0]
   .replace(/<svg [^>]*>/, '<svg viewBox="10 4 236 340" class="sieci-svg wn-svg" data-wn role="img" aria-label="Sieci mózgu z boku i od środka">')
-  // obszary limbiczne rysunku należą do sieci domyślnej i świecą razem z nią
-  .replace(/style="\{\{bn\.(\w+)\}\}"/g, (_, n0) => { const n = n0 === 'LIM' ? 'DMN' : n0; return shown.has(n) ? 'class="nb" data-k="' + n + '" style="fill:' + KOLOR[n] + '"' : 'style="display:none"'; })
+  .replace(/style="\{\{bn\.(\w+)\}\}"/g, (_, n) => { return shown.has(n) ? 'class="nb" data-k="' + n + '" style="fill:' + KOLOR[n] + '"' : 'style="display:none"'; })
   .replace(/style="\{\{bl\.(\w+)\}\}"/g, (_, n) => (shown.has(n) ? 'class="nl" data-k="' + n + '"' : 'style="display:none"'));
 // Indeks powstaje dopiero, gdy choć jedna karta jest gotowa.
 export function getStaticPaths() {

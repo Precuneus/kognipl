@@ -57,10 +57,9 @@ export const ALL = Object.entries(notes).map(([file, mod]) => {
     // od grupy, jak na mapie osnów (jego słowo, 2026-10-23: *Review all the connections and make them proper*)
     o, g: f.grupa === 'wiki' ? 4 : f.grupa && GRUPY.indexOf(f.grupa) >= 0 ? GRUPY.indexOf(f.grupa) : home.g, grupa: f.grupa || '', r2, osnowy,
     body: blocks(mod.rawContent()),
-    // sieć limbiczna z podziału Yeo i in. wchodzi do sieci domyślnej: model strony ma siedem sieci, a w jednym badaniu fMRI
-    // wieloechowym jej obszary łączyły się w większości z siecią domyślną (Girn i in. 2024); trzeci element znaczy wiersz limbiczny
-    // (jego słowo, 2026-10-23: *it should go to the dmn*)
-    nets: (f.sieci || []).map((x) => (x.kod === 'LIM' ? ['DMN', strip(x['powód']), 'LIM'] : [x.kod, strip(x['powód'])])),
+    // sieć limbiczna jest ósmą siecią modelu, osobno od domyślnej (jego słowo, 2026-11-09: *i do not add the limbiczna network to the
+    // domyslna anymore*; w soczewce z 2026-11-01 leży na osi wartości, w poprzek osi odległości od receptorów)
+    nets: (f.sieci || []).map((x) => [x.kod, strip(x['powód'])]),
     nw: strip(f.bez_sieci || ''),
     l: (f['materiały'] || []).map((x) => [x['tytuł'], x.url, x.czas ? String(x.czas) : '']),
     fig: (f.ryciny || []).map((x) => x.replace(/\.svg$/, '')),

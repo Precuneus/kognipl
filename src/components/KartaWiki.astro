@@ -11,9 +11,9 @@ const ink = INK[k.g], base = BASE[k.g];
 const group = GRUPY[k.g] ? GRUPY[k.g].charAt(0).toUpperCase() + GRUPY[k.g].slice(1) : 'Wiki';
 
 // Karta sieci pokazuje tylko swoją sieć (jego słowo, 2026-10-23: *the page is about dan so for the networks we use a single network*);
-// sieć limbiczna należy do domyślnej.
+// sieć limbiczna jest osobną siecią (jego słowo, 2026-11-09).
 const own = Object.keys(NETN).find((kod) => netCard(kod) === k);
-const ownKey = own === 'LIM' ? 'DMN' : own;
+const ownKey = own;
 
 // Ryciny: te same rysunki co na karcie Rocznika (szablon karta.js), w kolorze karty.
 const CAPT = {
@@ -49,19 +49,17 @@ const kurs = items.some((b) => b.kurs);
 const zaj = classesOf(k);
 // rodzina o nazwie tej karty powtarzałaby tytuł nad sobą, więc wiersz rodzin pomija kartę samą (przegląd 2026-11-05: Predykcja, Interocepcja i cztery inne)
 const rodz = k.r2.filter((r) => card(r) !== k);
-// wiersz limbiczny stoi pod siecią domyślną, po jej własnym wierszu, i prowadzi do karty Sieć limbiczna, która to wyjaśnia
-const nets = k.nets.map(([kod, why, lim]) => ({ kod, name: lim ? NETN[kod] + ', obszary limbiczne' : NETN[kod] || kod, why, to: lim ? card('Sieć limbiczna') : netCard(kod), lim: !!lim }))
-  .filter((n) => !own || (n.kod === ownKey && n.lim === (own === 'LIM')))
-  .sort((a, b) => Number(a.lim) - Number(b.lim));
+const nets = k.nets.map(([kod, why]) => ({ kod, name: NETN[kod] || kod, why, to: netCard(kod) }))
+  .filter((n) => !own || n.kod === ownKey);
 // Mózg z boku i od środka jako schemat (jego słowo, 2026-10-23: *this has to be a diagram*); sieci tej karty w kolorach
-// strony startowej z delikatną poświatą, obszary limbiczne świecą razem z siecią domyślną.
+// strony startowej z delikatną poświatą; sieć limbiczna świeci własnym kolorem.
 const svgSrc = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)[0];
 const on = new Set(own ? [ownKey] : nets.map((n) => n.kod));
-const lit = (n) => on.has(n) || (n === 'LIM' && on.has('DMN'));
-const kolor = (n) => KOLOR[n === 'LIM' ? 'DMN' : n] || base;
+const lit = (n) => on.has(n);
+const kolor = (n) => KOLOR[n] || base;
 const brain = svgSrc
   .replace(/\{\{bn\.(\w+)\}\}/g, (_, n) => (lit(n) ? 'fill:' + kolor(n) + ';fill-opacity:0.92;filter:drop-shadow(0 0 2.5px ' + kolor(n) + ')' : 'fill:rgba(180,155,100,0.035)'))
-  .replace(/\{\{bl\.(\w+)\}\}/g, (_, n) => (lit(n) && n !== 'LIM' ? 'display:inline' : 'display:none'));
+  .replace(/\{\{bl\.(\w+)\}\}/g, (_, n) => (lit(n) ? 'display:inline' : 'display:none'));
 ---
   {kurs && <script is:inline>(function(){var z=null;try{z=localStorage.getItem('kogni-animacje')}catch(e){}var c=z?z==='off':matchMedia('(prefers-reduced-motion: reduce)').matches;if(c)document.documentElement.classList.add('roj-cicho')})();</script>}
   {kurs && <aside aria-label="Animacje"><button type="button" class="wk-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="wk-anim-tor" aria-hidden="true"></span></button></aside>}
