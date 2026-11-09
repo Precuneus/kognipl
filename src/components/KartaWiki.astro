@@ -57,9 +57,16 @@ const svgSrc = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)
 const on = new Set(own ? [ownKey] : nets.map((n) => n.kod));
 const lit = (n) => on.has(n);
 const kolor = (n) => KOLOR[n] || base;
+// Każda sieć na mózgu karty prowadzi do swojej karty (jego słowo, 2026-11-09: *make the all networks clickable on every wiki card*);
+// najechana sieć poza kartą zapala się swoim kolorem i pokazuje kod, klik otwiera jej kartę.
 const brain = svgSrc
-  .replace(/\{\{bn\.(\w+)\}\}/g, (_, n) => (lit(n) ? 'fill:' + kolor(n) + ';fill-opacity:0.92;filter:drop-shadow(0 0 2.5px ' + kolor(n) + ')' : 'fill:rgba(180,155,100,0.035)'))
-  .replace(/\{\{bl\.(\w+)\}\}/g, (_, n) => (lit(n) ? 'display:inline' : 'display:none'));
+  .replace(/<(ellipse|circle)([^>]*?)style="\{\{bn\.(\w+)\}\}"([^>]*)\/>/g, (_, tag, a, n, b) => {
+    const to = netCard(n);
+    const fill = lit(n) ? 'fill:' + kolor(n) + ';fill-opacity:0.92;filter:drop-shadow(0 0 2.5px ' + kolor(n) + ')' : 'fill:rgba(180,155,100,0.035)';
+    const shape = '<' + tag + a + 'class="wk-nbf" style="' + fill + '"' + b + '/>';
+    return to ? '<a href="' + to.url + '" class="wk-nb" data-k="' + n + '" style="--nc:' + kolor(n) + '"><title>' + NETN[n] + '</title>' + shape + '</a>' : shape;
+  })
+  .replace(/style="\{\{bl\.(\w+)\}\}"/g, (_, n) => 'class="wk-nl" data-k="' + n + '" style="' + (lit(n) ? 'display:inline' : 'display:none') + '"');
 ---
   {kurs && <script is:inline>(function(){var z=null;try{z=localStorage.getItem('kogni-animacje')}catch(e){}var c=z?z==='off':matchMedia('(prefers-reduced-motion: reduce)').matches;if(c)document.documentElement.classList.add('roj-cicho')})();</script>}
   {kurs && <aside aria-label="Animacje"><button type="button" class="wk-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="wk-anim-tor" aria-hidden="true"></span></button></aside>}
@@ -103,9 +110,10 @@ const brain = svgSrc
       {Astro.slots.has('siec') ? <slot name="siec" /> : (
       <section aria-label="Sieć mózgowa" class="wk-box">
         <h2>Sieć mózgowa</h2>
+        {/* mózg stoi na każdej karcie, także bez sieci, żeby każda sieć prowadziła do swojej karty (jego słowo, 2026-11-09) */}
+        <div class="wk-brain"><Fragment set:html={brain} /></div>
         {nets.length > 0 ? (
           <Fragment>
-            <div class="wk-brain"><Fragment set:html={brain} /></div>
             <dl>
               {nets.map((n) => (
                 <div class="wk-net">
