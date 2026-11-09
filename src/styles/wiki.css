@@ -20,21 +20,28 @@
 .wk-p a,.wk-net dd a{text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wk-fig{margin:22px 0 24px}.wk-fig svg{display:block;width:100%;max-width:560px}.wk-fig figcaption{margin:10px 0 0;font-size:13px;line-height:1.55;color:#a09888}
 /* karta: pasmo widoków z boku i od środka nad hasłem, na całą szerokość, pod nim dwie kolumny (jego słowa, 2026-11-09: *can we make
-   the brain images above the haslo?*); każdy widok bierze szerokość w proporcji swojego rysunku, więc oba mają jedną wysokość */
-.wk-pasmo{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:flex-start;gap:0 16px;margin:0;border-bottom-right-radius:0}
+   the brain images above the haslo?*) */
+/* w jednej skali widok z boku jest o 10 px wyższy od widoku od środka, więc oba stoją na wspólnej linii dołu i ich podpisy są równo */
+.wk-pasmo{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:flex-end;gap:0 16px;margin:0;border-bottom-right-radius:0}
 .wk-pasmo h2{flex:0 0 100%}
 /* tekst o sieci zwisa z pudełka mózgu pod widokiem od dołu: wchodzi w odstęp siatki i zakrywa dolną krawędź pasma nad prawą kolumną,
    więc pasmo i tekst to jedno pudełko w kształcie odwróconej litery L (jego słowa, 2026-11-10: *embed the figures more*) */
 .wk-grid-karta .wk-siec{position:relative;z-index:1;margin-top:-25px;border-top:0;border-top-left-radius:0;border-top-right-radius:0;padding-top:18px}
 .wk-siec>.wk-p:first-child{margin-top:0}
 .wk-widok{margin:0;min-width:0}
-.wk-pasmo .wk-widok-boczny{flex:1.7307 1 0}
-.wk-pasmo .wk-widok-przysrodkowy{flex:1.7144 1 0}
-/* widok od dołu stoi pod pasmem w prawej kolumnie, nad tekstem o sieci (jego słowa, 2026-11-10: *make the ventral view BELOW the row*) */
-.wk-siec .wk-widok-brzuszny{max-width:240px;margin:0 auto 18px}
-.wk-pasmo .wk-zrodlo{flex:0 0 100%;margin-top:8px}
-/* na wąskim ekranie hasło, pod nim pasmo i tekst o sieci, potem opis i reszta (przegląd 2026-11-09); widoki jeden pod drugim */
-@media (max-width:960px){.wk-grid-karta .wk-col{display:contents}.wk-grid-karta .wk-col>*{order:5}.wk-grid-karta .wk-mysl{order:1}.wk-grid-karta .wk-pasmo{order:2;display:block}.wk-grid-karta .wk-siec{order:3}.wk-grid-karta .wk-opis{order:4}.wk-pasmo .wk-widok{margin:0 auto 12px;max-width:340px}.wk-pasmo{border-bottom-left-radius:0}}
+/* trzy widoki w jednej skali (jego słowa, 2026-11-10: *make the ventral to scale of the lateral and medial*): obrys mózgu od przodu
+   do tyłu ma na ekranie tę samą długość L; na rysunkach to 926, 998 i 504 jednostki (widok od dołu z móżdżkiem, bo oko porównuje cały
+   obrys; skala samej kory dawała widok od dołu o 8 % za duży, jego słowa: *the ventral looks bigger than lateral and medial now*), więc widok z boku ma szerokość 1,0712 L, od środka 1,0281 L, od dołu 0,8407 L. Obok siebie
+   dwa pierwsze dzielą pasmo w proporcji 1,0712 do 1,0281; prawa kolumna ma szerokość, przy której widok od dołu wypełnia ją w tej
+   samej skali: 0,8407 · (szerokość siatki − 64 px) / 2,0993 plus 48 px wcięć */
+.wk-pasmo .wk-widok-boczny{flex:1.0712 1 0}
+.wk-pasmo .wk-widok-przysrodkowy{flex:1.0281 1 0}
+.wk-siec .wk-widok-brzuszny{margin:0 auto 18px}
+@media (min-width:1081px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr) calc(40.05% + 22.4px)}}
+/* węższy ekran: jedna kolumna, hasło, pod nim pasmo i widok od dołu z tekstem o sieci, potem opis i reszta (przegląd 2026-11-09);
+   widok od dołu ma szerokość pudełka pomniejszoną tak jak w paśmie; od 720 px w dół widoki stoją jeden pod drugim */
+@media (max-width:1080px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr)}.wk-brain .wk-col{display:contents}.wk-brain .wk-col>*{order:5}.wk-brain .wk-mysl{order:1}.wk-brain .wk-pasmo{order:2;border-bottom-left-radius:0}.wk-brain .wk-siec{order:3}.wk-brain .wk-opis{order:4}.wk-siec .wk-widok-brzuszny{width:calc(40.05% - 6.4px)}}
+@media (max-width:720px){.wk-pasmo{display:block}.wk-pasmo .wk-widok{margin:0 auto 12px}.wk-pasmo .wk-widok-przysrodkowy{width:95.98%}.wk-siec .wk-widok-brzuszny{width:78.48%}}
 .wk-pole{position:relative}
 .wk-widok svg{position:relative;display:block;width:100%;height:auto;overflow:visible}
 /* ziarno leży pod liniami rysunku; płótno nie łapie wskaźnika, łapią go obszary sieci i pole widoku */
@@ -56,6 +63,9 @@
 .wk-widok-brzuszny .wk-linie{opacity:.45}
 .wk-widok .wk-hit{fill:transparent}
 .wk-zrodlo{margin:2px 0 0;text-align:center;font-size:11.5px;line-height:1.5;color:#8f877a}
+/* źródło rysunków mózgu stoi na końcu karty, pod wszystkimi pudełkami (jego słowa, 2026-11-10: *Move the text describing the images
+   somewhere*) */
+.wk-zrodlo-mozg{margin:28px 0 0}
 .wk-zrodlo a{color:inherit;text-decoration:underline dotted 1px;text-underline-offset:3px}
 .wk dl{margin:0}
 .wk-net+.wk-net{margin-top:12px;padding-top:12px;border-top:1px solid rgba(180,155,100,.12)}

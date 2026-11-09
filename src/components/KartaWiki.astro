@@ -123,7 +123,7 @@ const brainData = { kolory: JSON.stringify(KOLOR), kolejnosc: JSON.stringify(WID
       opisem (przegląd 2026-11-09: na telefonie mózg zaczynał się po sześciu ekranach opisu); ziarno czyta wszystkie trzy widoki z
       siatki karty, która nosi dane sieci */}
   <div class={'wk-grid wk-grid-karta' + (Astro.slots.has('siec') ? '' : ' wk-brain')} data-ziarno={Astro.slots.has('siec') ? undefined : ''} data-kolory={brainData.kolory} data-kolejnosc={brainData.kolejnosc} data-lit={brainData.lit} data-karty={brainData.karty} data-nazwy={brainData.nazwy} data-wspolne={brainData.wspolne}>
-    {!Astro.slots.has('siec') && <div class="wk-box wk-pasmo"><h2>Sieć mózgowa</h2><Fragment set:html={widok.lateral + widok.medial} /><p class="wk-zrodlo">Rysunki: z boku i od środka Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918, domena publiczna; od dołu <a href="https://commons.wikimedia.org/wiki/File:Brain_human_normal_inferior_view_with_labels_en.svg">Patrick J. Lynch i Bea</a>, <a href="https://creativecommons.org/licenses/by/2.5/deed.pl">CC BY 2.5</a>, ze zmianami.</p></div>}
+    {!Astro.slots.has('siec') && <div class="wk-box wk-pasmo"><h2>Sieć mózgowa</h2><Fragment set:html={widok.lateral + widok.medial} /></div>}
     <div class="wk-col wk-lewa">
       <section aria-label="Termin" class="wk-box wk-mysl">
         <h2>Termin</h2>
@@ -191,6 +191,7 @@ const brainData = { kolory: JSON.stringify(KOLOR), kolejnosc: JSON.stringify(WID
       )}
     </div>
   </div>
+  {!Astro.slots.has('siec') && <p class="wk-zrodlo wk-zrodlo-mozg">Rysunki mózgu: z boku i od środka Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918, domena publiczna; od dołu <a href="https://commons.wikimedia.org/wiki/File:Brain_human_normal_inferior_view_with_labels_en.svg">Patrick J. Lynch i Bea</a>, <a href="https://creativecommons.org/licenses/by/2.5/deed.pl">CC BY 2.5</a>, ze zmianami.</p>}
 </article>
 <TerminDymek />
 <script>
