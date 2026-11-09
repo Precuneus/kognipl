@@ -3,6 +3,7 @@
 import { template } from '../rocznik/views/karta.js';
 import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, classesOf, slugify, INDEKS, rodzinaUrl } from '../karty/data.js';
 import { KOLOR } from '../karty/mozg.js';
+import WIDOKI_DANE from '../karty/mozg-widoki.json';
 import '../styles/wiki.css';
 import TerminDymek from './TerminDymek.astro';
 interface Props { k: any; wstep?: boolean }
@@ -44,32 +45,59 @@ const kindOf = (u) => (/youtu\.?be/.test(u) ? 0 : (/doi\.org|frontiersin|journal
 const kinds = ['Filmy', 'Artykuły', 'Inne'].map((name, q) => ({ name, items: k.l.filter((l) => kindOf(l[1]) === q) })).filter((x) => x.items.length);
 const back = backlinks(k);
 // karta z akapitem kursu dostaje Iskrę i przełącznik animacji ze strony startowej (jego słowa, 2026-11-09: *if we add iskra, we need to
-// add on/off animation there also*); karty bez tego akapitu nie mają czego wyłączać poza ryciną żywą, która ma własny przycisk
+// add on/off animation there also*); przełącznik stoi też na każdej karcie, której sieć świeci w ziarnie mózgu, bo to ziarno się rusza
+// (audyt 2026-11-09, WCAG 2.2.2); karta bez sieci i bez akapitu kursu ma tylko szare ziarno, które nie zmienia obrazu
 const kurs = items.some((b) => b.kurs);
 const zaj = classesOf(k);
 // rodzina o nazwie tej karty powtarzałaby tytuł nad sobą, więc wiersz rodzin pomija kartę samą (przegląd 2026-11-05: Predykcja, Interocepcja i cztery inne)
 const rodz = k.r2.filter((r) => card(r) !== k);
 const nets = k.nets.map(([kod, why]) => ({ kod, name: NETN[kod] || kod, why, to: netCard(kod) }))
   .filter((n) => !own || n.kod === ownKey);
-// Mózg z boku i od środka jako schemat (jego słowo, 2026-10-23: *this has to be a diagram*); sieci tej karty w kolorach
-// strony startowej z delikatną poświatą; sieć limbiczna świeci własnym kolorem.
-const svgSrc = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)[0];
+// Sieci tej karty w kolorach strony startowej; sieć limbiczna świeci własnym kolorem.
 const on = new Set(own ? [ownKey] : nets.map((n) => n.kod));
 const lit = (n) => on.has(n);
-const kolor = (n) => KOLOR[n] || base;
-// Każda sieć na mózgu karty prowadzi do swojej karty (jego słowo, 2026-11-09: *make the all networks clickable on every wiki card*);
-// najechana sieć poza kartą zapala się swoim kolorem i pokazuje kod, klik otwiera jej kartę.
-const brain = svgSrc
-  .replace(/<(ellipse|circle)([^>]*?)style="\{\{bn\.(\w+)\}\}"([^>]*)\/>/g, (_, tag, a, n, b) => {
+const ruch = kurs || on.size > 0;
+// Każda sieć na mózgu karty prowadzi do swojej karty (jego słowo, 2026-11-09: *make the all networks clickable on every wiki card*).
+// Trzy widoki z kolokwium Neurokogni, boczny, przyśrodkowy i brzuszny (jego słowo, 2026-11-09: *We have the 3 views of the brain
+// from the exam (lateral, ventral, medial), can we adapt these pictures to be visible in the wiki cards?*). Sieci pokrywają korę
+// zakręt po zakręcie według Yeo i in. 2011 i Uddin, Yeo i Spreng 2019 (*detaailed marking*) i nakładają się: ośrodek należy do kilku
+// sieci naraz, a jego przynależność zmienia się w czasie (*real multi-membership and the time*), rysowane ziarnem (*ziarno, I love it*).
+// Ziarno rysuje `src/karty/ziarno.js` na płótnie pod liniami, z mapy sieci `<plik>-sieci.png` i ośrodków `huby` z `mozg-widoki.json`;
+// wielokąty obszarów zostają linkami dla klawiatury i czytnika ekranu.
+const WIDOKI = [['lateral', 'z boku'], ['medial', 'od środka'], ['ventral', 'od dołu']];
+const IMG = '/images/mozg-widoki/';
+const esc = (t) => t.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+const brainViews = WIDOKI.map(([v, cap]) => {
+  const d = WIDOKI_DANE[v], [W, H] = d.vb, f = d.plik;
+  const fs = v === 'ventral' ? 24 : 32; // etykieta około 11 px na ekranie, w jednostkach rysunku
+  const sieci = d.sieci.map((n) => {
+    const polys = d.obszary.filter(([m]) => m === n).map(([, p]) => p);
+    // etykieta stoi w najgłębszym punkcie największego obszaru sieci, policzonym przy generowaniu rysunków
+    const [cx, cy] = d.etykiety[n];
     const to = netCard(n);
-    const fill = lit(n) ? 'fill:' + kolor(n) + ';fill-opacity:0.92;filter:drop-shadow(0 0 2.5px ' + kolor(n) + ')' : 'fill:rgba(180,155,100,0.035)';
-    const shape = '<' + tag + a + 'class="wk-nbf" style="' + fill + '"' + b + '/>';
-    return to ? '<a href="' + to.url + '" class="wk-nb" data-k="' + n + '" style="--nc:' + kolor(n) + '"><title>' + NETN[n] + '</title>' + shape + '</a>' : shape;
-  })
-  .replace(/style="\{\{bl\.(\w+)\}\}"/g, (_, n) => 'class="wk-nl" data-k="' + n + '" style="' + (lit(n) ? 'display:inline' : 'display:none') + '"');
+    const body = polys.map((p) => '<polygon class="wk-hit" points="' + p.map((q) => q.join(',')).join(' ') + '"/>').join('');
+    const tw = n.length * fs * 0.66 + fs * 0.9, th = fs * 1.45;
+    const tag = '<g class="wk-nl" aria-hidden="true" data-k="' + n + '" style="' + (lit(n) ? 'display:inline' : 'display:none') + '">'
+      + '<rect x="' + (cx - tw / 2) + '" y="' + (cy - th / 2) + '" width="' + tw + '" height="' + th + '" rx="' + th / 4 + '" class="wk-tag"/>'
+      + '<text x="' + cx + '" y="' + (cy + fs * 0.36) + '" font-size="' + fs + '" text-anchor="middle" class="wk-tagt">' + n + '</text></g>';
+    return {
+      shape: to ? '<a href="' + to.url + '" class="wk-nb" data-k="' + n + '"><title>' + NETN[n] + '</title>' + body + '</a>' : '<g>' + body + '</g>',
+      tag,
+    };
+  });
+  return '<figure class="wk-widok wk-widok-' + f + '" data-pole="' + IMG + f + '-sieci.png" data-k="' + d.pole.k + '" data-vb="' + W + ' ' + H + '" data-huby="' + esc(JSON.stringify(d.huby)) + '">'
+    + '<div class="wk-pole"><canvas class="wk-ziarno" aria-hidden="true"></canvas>'
+    + '<svg viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="Sieci mózgowe na mózgu ' + cap + '">'
+    + sieci.map((s) => s.shape).join('')
+    + '<image href="' + IMG + f + '.webp" width="' + W + '" height="' + H + '" class="wk-linie"/>'
+    + sieci.map((s) => s.tag).join('')
+    + '</svg><div class="wk-kody" aria-hidden="true" hidden></div></div><figcaption>' + cap + '</figcaption></figure>';
+}).join('');
+const brain = brainViews;
+const brainData = { kolory: JSON.stringify(KOLOR), kolejnosc: JSON.stringify(WIDOKI_DANE.kolejnosc), lit: [...on].join(',') };
 ---
-  {kurs && <script is:inline>(function(){var z=null;try{z=localStorage.getItem('kogni-animacje')}catch(e){}var c=z?z==='off':matchMedia('(prefers-reduced-motion: reduce)').matches;if(c)document.documentElement.classList.add('roj-cicho')})();</script>}
-  {kurs && <aside aria-label="Animacje"><button type="button" class="wk-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="wk-anim-tor" aria-hidden="true"></span></button></aside>}
+  {ruch && <script is:inline>(function(){var z=null;try{z=localStorage.getItem('kogni-animacje')}catch(e){}var c=z?z==='off':matchMedia('(prefers-reduced-motion: reduce)').matches;if(c)document.documentElement.classList.add('roj-cicho')})();</script>}
+  {ruch && <aside aria-label="Animacje"><button type="button" class="wk-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="wk-anim-tor" aria-hidden="true"></span></button></aside>}
   <article class={'wk' + (wstep ? ' wk-wstep' : '')} style={'--ink:' + ink + ';--base:' + base}>
   <nav aria-label="Ścieżka" class="wk-path">
     {k.grupa ? (
@@ -111,7 +139,7 @@ const brain = svgSrc
       <section aria-label="Sieć mózgowa" class="wk-box">
         <h2>Sieć mózgowa</h2>
         {/* mózg stoi na każdej karcie, także bez sieci, żeby każda sieć prowadziła do swojej karty (jego słowo, 2026-11-09) */}
-        <div class="wk-brain"><Fragment set:html={brain} /></div>
+        <div class="wk-brain" data-ziarno data-kolory={brainData.kolory} data-kolejnosc={brainData.kolejnosc} data-lit={brainData.lit}><Fragment set:html={brain} /><p class="wk-zrodlo">Rysunki: z boku i od środka Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918, domena publiczna; od dołu <a href="https://commons.wikimedia.org/wiki/File:Brain_human_normal_inferior_view_with_labels_en.svg">Patrick J. Lynch i Bea</a>, <a href="https://creativecommons.org/licenses/by/2.5/deed.pl">CC BY 2.5</a>, ze zmianami.</p></div>
         {nets.length > 0 ? (
           <Fragment>
             <dl>
@@ -158,4 +186,6 @@ const brain = svgSrc
   document.querySelectorAll('.wz-zywa[data-zywa="mozg"]').forEach((el) => mozg(el as HTMLElement));
   import { iskraKursu } from '../karty/iskra.js';
   iskraKursu();
+  import { ziarno } from '../karty/ziarno.js';
+  ziarno();
 </script>

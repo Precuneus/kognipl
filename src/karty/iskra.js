@@ -3,11 +3,8 @@
 // the page is at the top, Iskra should be in the logo*). Bez ruchu (przełącznik albo ustawienie systemu) siedzi od razu przy akapicie,
 // a plama świeci od początku.
 export function iskraKursu() {
-  const kurs = document.querySelector('.wk-kurs');
-  if (!kurs) return;
-  const knot = document.querySelector('.rocznik-knot');
   const cicho = document.documentElement.classList.contains('roj-cicho');
-
+  // przełącznik działa także na kartach bez akapitu kursu, gdzie rusza się tylko ziarno mózgu
   const btn = document.querySelector('.wk-anim');
   if (btn) {
     btn.setAttribute('aria-checked', String(!cicho));
@@ -16,6 +13,9 @@ export function iskraKursu() {
       location.reload();
     });
   }
+  const kurs = document.querySelector('.wk-kurs');
+  if (!kurs) return;
+  const knot = document.querySelector('.rocznik-knot');
 
   const is = document.createElement('span');
   is.className = 'wk-iskra';

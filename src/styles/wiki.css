@@ -19,7 +19,27 @@
 .wk-box h2+.wk-p{margin-top:0}
 .wk-p a,.wk-net dd a{text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wk-fig{margin:22px 0 24px}.wk-fig svg{display:block;width:100%;max-width:560px}.wk-fig figcaption{margin:10px 0 0;font-size:13px;line-height:1.55;color:#a09888}
-.wk-brain svg{display:block;width:100%;max-width:340px;margin:0 auto 14px}
+.wk-brain{margin:0 0 14px}
+.wk-widok{margin:0 auto 12px;max-width:340px}
+/* widok od dołu jest wyższy niż szeroki, więc węższy, żeby trzy widoki miały podobną wysokość */
+.wk-widok-brzuszny{max-width:210px}
+.wk-pole{position:relative}
+.wk-widok svg{position:relative;display:block;width:100%;height:auto;overflow:visible}
+/* ziarno leży pod liniami rysunku; płótno nie łapie wskaźnika, łapią go obszary sieci i pole widoku */
+.wk-ziarno{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+/* kody sieci pod wskaźnikiem, najsilniejsza pierwsza; podpisane jak każda etykieta rysunku */
+.wk-kody{position:absolute;z-index:2;display:flex;gap:4px;pointer-events:none;white-space:nowrap}
+.wk-kody[hidden]{display:none}
+.wk-kody span{font:500 12px/1 Inter,sans-serif;color:#e2ddd4;background:rgba(14,13,11,.9);border:1px solid rgba(226,200,150,.45);border-radius:5px;padding:4px 7px}
+.wk-kody .wk-kod-dalej{color:#b3ab9e}
+.wk-widok figcaption{margin:4px 0 0;text-align:center;font-size:13px;color:#8f877a}
+.wk-widok .wk-linie{opacity:.62;pointer-events:none}
+.wk-widok-brzuszny .wk-linie{opacity:.45}
+.wk-widok .wk-hit{fill:transparent}
+.wk-tag{fill:rgba(14,13,11,.9);stroke:rgba(226,200,150,.45);stroke-width:1.5px;vector-effect:non-scaling-stroke}
+.wk-tagt{font-family:Inter,sans-serif;font-weight:500;fill:#e2ddd4}
+.wk-zrodlo{margin:2px 0 0;text-align:center;font-size:11.5px;line-height:1.5;color:#8f877a}
+.wk-zrodlo a{color:inherit;text-decoration:underline dotted 1px;text-underline-offset:3px}
 .wk dl{margin:0}
 .wk-net+.wk-net{margin-top:12px;padding-top:12px;border-top:1px solid rgba(180,155,100,.12)}
 .wk-net dt{display:flex;align-items:baseline;gap:10px;margin:0}
@@ -71,23 +91,17 @@ html.roj-cicho .wk-kurs::before{transition:none}
 .wk-p.wk-przyklad{margin:22px 0 0 20px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;line-height:1.6;color:#e2ddd4}
 @media (max-width:720px){.wk-p.wk-przyklad{margin-left:12px;font-size:19px}}
 
-/* mózg karty: każda sieć to link do jej karty; najechana zapala się swoim kolorem i pokazuje kod (jego słowo, 2026-11-09) */
+/* mózg karty: każda sieć to link do jej karty; ziarno zapala sieci pod wskaźnikiem (`src/karty/ziarno.js`), fokus z klawiatury pokazuje kod i obrys obszaru (jego słowo, 2026-11-09) */
 .wk-nb{cursor:pointer}
-.wk-brain:has(.wk-nb[data-k="VIS"]:hover) .wk-nb[data-k="VIS"] .wk-nbf,.wk-brain:has(.wk-nb[data-k="VIS"]:focus-visible) .wk-nb[data-k="VIS"] .wk-nbf{fill:var(--nc)!important;fill-opacity:.92!important;filter:drop-shadow(0 0 2.5px var(--nc))!important}
-.wk-brain:has(.wk-nb[data-k="SMN"]:hover) .wk-nb[data-k="SMN"] .wk-nbf,.wk-brain:has(.wk-nb[data-k="SMN"]:focus-visible) .wk-nb[data-k="SMN"] .wk-nbf{fill:var(--nc)!important;fill-opacity:.92!important;filter:drop-shadow(0 0 2.5px var(--nc))!important}
-.wk-brain:has(.wk-nb[data-k="DAN"]:hover) .wk-nb[data-k="DAN"] .wk-nbf,.wk-brain:has(.wk-nb[data-k="DAN"]:focus-visible) .wk-nb[data-k="DAN"] .wk-nbf{fill:var(--nc)!important;fill-opacity:.92!important;filter:drop-shadow(0 0 2.5px var(--nc))!important}
-.wk-brain:has(.wk-nb[data-k="VAN"]:hover) .wk-nb[data-k="VAN"] .wk-nbf,.wk-brain:has(.wk-nb[data-k="VAN"]:focus-visible) .wk-nb[data-k="VAN"] .wk-nbf{fill:var(--nc)!important;fill-opacity:.92!important;filter:drop-shadow(0 0 2.5px var(--nc))!important}
-.wk-brain:has(.wk-nb[data-k="SN"]:hover) .wk-nb[data-k="SN"] .wk-nbf,.wk-brain:has(.wk-nb[data-k="SN"]:focus-visible) .wk-nb[data-k="SN"] .wk-nbf{fill:var(--nc)!important;fill-opacity:.92!important;filter:drop-shadow(0 0 2.5px var(--nc))!important}
-.wk-brain:has(.wk-nb[data-k="CN"]:hover) .wk-nb[data-k="CN"] .wk-nbf,.wk-brain:has(.wk-nb[data-k="CN"]:focus-visible) .wk-nb[data-k="CN"] .wk-nbf{fill:var(--nc)!important;fill-opacity:.92!important;filter:drop-shadow(0 0 2.5px var(--nc))!important}
-.wk-brain:has(.wk-nb[data-k="DMN"]:hover) .wk-nb[data-k="DMN"] .wk-nbf,.wk-brain:has(.wk-nb[data-k="DMN"]:focus-visible) .wk-nb[data-k="DMN"] .wk-nbf{fill:var(--nc)!important;fill-opacity:.92!important;filter:drop-shadow(0 0 2.5px var(--nc))!important}
-.wk-brain:has(.wk-nb[data-k="LIM"]:hover) .wk-nb[data-k="LIM"] .wk-nbf,.wk-brain:has(.wk-nb[data-k="LIM"]:focus-visible) .wk-nb[data-k="LIM"] .wk-nbf{fill:var(--nc)!important;fill-opacity:.92!important;filter:drop-shadow(0 0 2.5px var(--nc))!important}
 .wk-nb:focus-visible{outline:none}
-.wk-brain:has(.wk-nb[data-k="VIS"]:hover) .wk-nl[data-k="VIS"],.wk-brain:has(.wk-nb[data-k="VIS"]:focus-visible) .wk-nl[data-k="VIS"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="SMN"]:hover) .wk-nl[data-k="SMN"],.wk-brain:has(.wk-nb[data-k="SMN"]:focus-visible) .wk-nl[data-k="SMN"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="DAN"]:hover) .wk-nl[data-k="DAN"],.wk-brain:has(.wk-nb[data-k="DAN"]:focus-visible) .wk-nl[data-k="DAN"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="VAN"]:hover) .wk-nl[data-k="VAN"],.wk-brain:has(.wk-nb[data-k="VAN"]:focus-visible) .wk-nl[data-k="VAN"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="SN"]:hover) .wk-nl[data-k="SN"],.wk-brain:has(.wk-nb[data-k="SN"]:focus-visible) .wk-nl[data-k="SN"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="CN"]:hover) .wk-nl[data-k="CN"],.wk-brain:has(.wk-nb[data-k="CN"]:focus-visible) .wk-nl[data-k="CN"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="DMN"]:hover) .wk-nl[data-k="DMN"],.wk-brain:has(.wk-nb[data-k="DMN"]:focus-visible) .wk-nl[data-k="DMN"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="LIM"]:hover) .wk-nl[data-k="LIM"],.wk-brain:has(.wk-nb[data-k="LIM"]:focus-visible) .wk-nl[data-k="LIM"]{display:inline!important}
+/* sieć już zapalona na karcie nie zmienia się pod fokusem, więc fokus rysuje obrys tego jednego obszaru (audyt 2026-11-09) */
+.wk-nb:focus-visible .wk-hit{stroke:#f0c060;stroke-width:2px;vector-effect:non-scaling-stroke}
+.wk-brain:has(.wk-nb[data-k="VIS"]:focus-visible) .wk-nl[data-k="VIS"]{display:inline!important}
+.wk-brain:has(.wk-nb[data-k="SMN"]:focus-visible) .wk-nl[data-k="SMN"]{display:inline!important}
+.wk-brain:has(.wk-nb[data-k="DAN"]:focus-visible) .wk-nl[data-k="DAN"]{display:inline!important}
+.wk-brain:has(.wk-nb[data-k="VAN"]:focus-visible) .wk-nl[data-k="VAN"]{display:inline!important}
+.wk-brain:has(.wk-nb[data-k="SN"]:focus-visible) .wk-nl[data-k="SN"]{display:inline!important}
+.wk-brain:has(.wk-nb[data-k="CN"]:focus-visible) .wk-nl[data-k="CN"]{display:inline!important}
+.wk-brain:has(.wk-nb[data-k="DMN"]:focus-visible) .wk-nl[data-k="DMN"]{display:inline!important}
+.wk-brain:has(.wk-nb[data-k="LIM"]:focus-visible) .wk-nl[data-k="LIM"]{display:inline!important}
 .wk-nl{pointer-events:none}
