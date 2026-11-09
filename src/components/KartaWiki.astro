@@ -69,7 +69,7 @@ const WIDOKI = [['lateral', 'z boku, lewa półkula', 'lewej półkuli z boku'],
 const swieci = [...on].map((n) => NETN[n]).filter(Boolean);
 const IMG = '/images/mozg-widoki/';
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
-const brainViews = WIDOKI.map(([v, cap, gdzie]) => {
+const widok = Object.fromEntries(WIDOKI.map(([v, cap, gdzie]) => {
   const d = WIDOKI_DANE[v], [W, H] = d.vb, f = d.plik;
   const sieci = d.sieci.map((n) => {
     const polys = d.obszary.filter(([m]) => m === n).map(([, p]) => p);
@@ -89,14 +89,13 @@ const brainViews = WIDOKI.map(([v, cap, gdzie]) => {
     };
   });
   // widoki nie są rycinami opisu, tylko mapą sieci karty, więc nie noszą numeru „Ryc.”, jak lista sieci obok nich
-  return '<figure class="wk-widok wk-widok-' + f + '" data-pole="' + IMG + f + '-sieci.png" data-k="' + d.pole.k + '" data-vb="' + W + ' ' + H + '" data-huby="' + esc(JSON.stringify(d.huby)) + '">'
+  return [v, '<figure class="wk-widok wk-widok-' + f + '" data-pole="' + IMG + f + '-sieci.png" data-k="' + d.pole.k + '" data-vb="' + W + ' ' + H + '" data-huby="' + esc(JSON.stringify(d.huby)) + '">'
     + '<div class="wk-pole"><canvas class="wk-ziarno" aria-hidden="true"></canvas>'
     + '<svg viewBox="0 0 ' + W + ' ' + H + '"' + (v === 'lateral' ? ' role="group" aria-label="Sieci mózgowe na ' + gdzie + (swieci.length ? ', zaznaczona: ' + swieci.join(', ') : '') + '"' : ' aria-hidden="true"') + '>'
     + sieci.map((s) => s.shape).join('')
     + '<image href="' + IMG + f + '.webp" width="' + W + '" height="' + H + '" class="wk-linie"/>'
-    + '</svg>' + sieci.map((s) => s.tag).join('') + '<div class="wk-kody" aria-hidden="true" hidden></div></div><figcaption>' + cap + '</figcaption></figure>';
-}).join('');
-const brain = brainViews;
+    + '</svg>' + sieci.map((s) => s.tag).join('') + '<div class="wk-kody" aria-hidden="true" hidden></div></div><figcaption>' + cap + '</figcaption></figure>'];
+}));
 const karty = Object.fromEntries(Object.keys(NETN).map((n) => [n, netCard(n)]).filter(([, c]) => c && c !== k).map(([n, c]) => [n, c.url]));
 const brainData = { kolory: JSON.stringify(KOLOR), kolejnosc: JSON.stringify(WIDOKI_DANE.kolejnosc), lit: [...on].join(','), karty: JSON.stringify(karty), nazwy: JSON.stringify(NETN), wspolne: JSON.stringify(WIDOKI_DANE.wspolne || []) };
 ---
@@ -115,13 +114,16 @@ const brainData = { kolory: JSON.stringify(KOLOR), kolejnosc: JSON.stringify(WID
       <Fragment><a href={INDEKS + '#' + slugify(GRUPY[k.g])}>{group}</a><span aria-hidden="true"> › </span><a href={INDEKS + '#' + slugify(k.o)}>{k.o}</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
     )}
   </nav>
-  <div class="wk-grid wk-grid-karta">
-    {/* widoki z boku i od środka leżą poziomo nad hasłem, widok od dołu po prawej, a pod nim tekst o sieci (jego słowa, 2026-11-09:
-        *can we make the brain images above the haslo? ... horizontally we can have the lateral and medial view... and the ventral view
-        can be on the right... and below the ventral view we can have text about the network*); pasmo nie ma ramki ani nagłówka, bo
-        nagłówek „Sieć mózgowa” zostaje przy tekście, który nazywał; na wąskim ekranie pasmo i tekst o sieci stoją zaraz pod hasłem,
-        przed opisem (przegląd 2026-11-09: na telefonie mózg zaczynał się po sześciu ekranach opisu) */}
-    {!Astro.slots.has('siec') && <div class="wk-brain wk-pasmo" data-ziarno data-kolory={brainData.kolory} data-kolejnosc={brainData.kolejnosc} data-lit={brainData.lit} data-karty={brainData.karty} data-nazwy={brainData.nazwy} data-wspolne={brainData.wspolne}><Fragment set:html={brain} /><p class="wk-zrodlo">Rysunki: z boku i od środka Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918, domena publiczna; od dołu <a href="https://commons.wikimedia.org/wiki/File:Brain_human_normal_inferior_view_with_labels_en.svg">Patrick J. Lynch i Bea</a>, <a href="https://creativecommons.org/licenses/by/2.5/deed.pl">CC BY 2.5</a>, ze zmianami.</p></div>}
+  {/* widoki z boku i od środka leżą poziomo nad hasłem (jego słowa, 2026-11-09: *can we make the brain images above the haslo? ...
+      horizontally we can have the lateral and medial view*), widok od dołu pod nimi po prawej (2026-11-10: *can you perhaps make the
+      ventral view BELOW the row of lateral and medial views?*), a pod nim tekst o sieci (2026-11-09: *below the ventral view we can
+      have text about the network*); pasmo jest pudełkiem karty z nagłówkiem „Sieć mózgowa”, a widok od dołu z tekstem o sieci zwisa
+      z niego w prawej kolumnie jako jedna całość (2026-11-10: *can you embed the figures more into the page layout? Now they are
+      slightly disonnected from the content of the card*); na wąskim ekranie pasmo i tekst o sieci stoją zaraz pod hasłem, przed
+      opisem (przegląd 2026-11-09: na telefonie mózg zaczynał się po sześciu ekranach opisu); ziarno czyta wszystkie trzy widoki z
+      siatki karty, która nosi dane sieci */}
+  <div class={'wk-grid wk-grid-karta' + (Astro.slots.has('siec') ? '' : ' wk-brain')} data-ziarno={Astro.slots.has('siec') ? undefined : ''} data-kolory={brainData.kolory} data-kolejnosc={brainData.kolejnosc} data-lit={brainData.lit} data-karty={brainData.karty} data-nazwy={brainData.nazwy} data-wspolne={brainData.wspolne}>
+    {!Astro.slots.has('siec') && <div class="wk-box wk-pasmo"><h2>Sieć mózgowa</h2><Fragment set:html={widok.lateral + widok.medial} /><p class="wk-zrodlo">Rysunki: z boku i od środka Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918, domena publiczna; od dołu <a href="https://commons.wikimedia.org/wiki/File:Brain_human_normal_inferior_view_with_labels_en.svg">Patrick J. Lynch i Bea</a>, <a href="https://creativecommons.org/licenses/by/2.5/deed.pl">CC BY 2.5</a>, ze zmianami.</p></div>}
     <div class="wk-col wk-lewa">
       <section aria-label="Termin" class="wk-box wk-mysl">
         <h2>Termin</h2>
@@ -147,7 +149,8 @@ const brainData = { kolory: JSON.stringify(KOLOR), kolejnosc: JSON.stringify(WID
     <div class="wk-col wk-prawa">
       {Astro.slots.has('siec') ? <slot name="siec" /> : (
       <section aria-label="Sieć mózgowa" class="wk-box wk-siec">
-        <h2>Sieć mózgowa</h2>
+        {/* bez nagłówka: pudełko jest dalszym ciągiem pasma z mózgiem, nad którym stoi „Sieć mózgowa” */}
+        <Fragment set:html={widok.ventral} />
         {/* mózg stoi na każdej karcie, także bez sieci, żeby każda sieć prowadziła do swojej karty (jego słowo, 2026-11-09) */}
         {nets.length > 0 ? (
           <Fragment>

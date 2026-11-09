@@ -280,7 +280,12 @@ export async function ziarno() {
 
   if (stoi) return;
   let widac = true;
-  if ('IntersectionObserver' in window) new IntersectionObserver((es) => { widac = es.some((x) => x.isIntersecting); }).observe(mozg);
+  // timer stoi, kiedy żaden widok nie jest na ekranie; widoki stoją w dwóch pudełkach karty
+  const naEkranie = new Set();
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => { es.forEach((x) => (x.isIntersecting ? naEkranie.add(x.target) : naEkranie.delete(x.target))); widac = naEkranie.size > 0; });
+    widoki.forEach((v) => io.observe(v.fig));
+  }
   const r3 = los(11);
   setInterval(() => {
     if (!widac || document.hidden) return;

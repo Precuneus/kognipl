@@ -19,17 +19,22 @@
 .wk-box h2+.wk-p{margin-top:0}
 .wk-p a,.wk-net dd a{text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wk-fig{margin:22px 0 24px}.wk-fig svg{display:block;width:100%;max-width:560px}.wk-fig figcaption{margin:10px 0 0;font-size:13px;line-height:1.55;color:#a09888}
-/* karta: pasmo trzech widoków mózgu nad hasłem, na całą szerokość, pod nim dwie kolumny (jego słowa, 2026-11-09: *can we make the
-   brain images above the haslo?*); każdy widok bierze szerokość w proporcji swojego rysunku, więc trzy mają jedną wysokość */
-.wk-pasmo{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:flex-start;gap:0 16px;margin:0}
+/* karta: pasmo widoków z boku i od środka nad hasłem, na całą szerokość, pod nim dwie kolumny (jego słowa, 2026-11-09: *can we make
+   the brain images above the haslo?*); każdy widok bierze szerokość w proporcji swojego rysunku, więc oba mają jedną wysokość */
+.wk-pasmo{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:flex-start;gap:0 16px;margin:0;border-bottom-right-radius:0}
+.wk-pasmo h2{flex:0 0 100%}
+/* tekst o sieci zwisa z pudełka mózgu pod widokiem od dołu: wchodzi w odstęp siatki i zakrywa dolną krawędź pasma nad prawą kolumną,
+   więc pasmo i tekst to jedno pudełko w kształcie odwróconej litery L (jego słowa, 2026-11-10: *embed the figures more*) */
+.wk-grid-karta .wk-siec{position:relative;z-index:1;margin-top:-25px;border-top:0;border-top-left-radius:0;border-top-right-radius:0;padding-top:18px}
+.wk-siec>.wk-p:first-child{margin-top:0}
 .wk-widok{margin:0;min-width:0}
 .wk-pasmo .wk-widok-boczny{flex:1.7307 1 0}
 .wk-pasmo .wk-widok-przysrodkowy{flex:1.7144 1 0}
-.wk-pasmo .wk-widok-brzuszny{flex:.8396 1 0}
+/* widok od dołu stoi pod pasmem w prawej kolumnie, nad tekstem o sieci (jego słowa, 2026-11-10: *make the ventral view BELOW the row*) */
+.wk-siec .wk-widok-brzuszny{max-width:240px;margin:0 auto 18px}
 .wk-pasmo .wk-zrodlo{flex:0 0 100%;margin-top:8px}
-/* na wąskim ekranie hasło, pod nim pasmo i tekst o sieci, potem opis i reszta (przegląd 2026-11-09); widoki jeden pod drugim, widok od
-   dołu jest wyższy niż szeroki, więc węższy, żeby trzy widoki miały podobną wysokość */
-@media (max-width:960px){.wk-grid-karta .wk-col{display:contents}.wk-grid-karta .wk-col>*{order:5}.wk-grid-karta .wk-mysl{order:1}.wk-grid-karta .wk-pasmo{order:2;display:block}.wk-grid-karta .wk-siec{order:3}.wk-grid-karta .wk-opis{order:4}.wk-pasmo .wk-widok{margin:0 auto 12px;max-width:340px}.wk-pasmo .wk-widok-brzuszny{max-width:210px}}
+/* na wąskim ekranie hasło, pod nim pasmo i tekst o sieci, potem opis i reszta (przegląd 2026-11-09); widoki jeden pod drugim */
+@media (max-width:960px){.wk-grid-karta .wk-col{display:contents}.wk-grid-karta .wk-col>*{order:5}.wk-grid-karta .wk-mysl{order:1}.wk-grid-karta .wk-pasmo{order:2;display:block}.wk-grid-karta .wk-siec{order:3}.wk-grid-karta .wk-opis{order:4}.wk-pasmo .wk-widok{margin:0 auto 12px;max-width:340px}.wk-pasmo{border-bottom-left-radius:0}}
 .wk-pole{position:relative}
 .wk-widok svg{position:relative;display:block;width:100%;height:auto;overflow:visible}
 /* ziarno leży pod liniami rysunku; płótno nie łapie wskaźnika, łapią go obszary sieci i pole widoku */
