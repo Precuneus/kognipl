@@ -19,25 +19,37 @@
 .wk-box h2+.wk-p{margin-top:0}
 .wk-p a,.wk-net dd a{text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wk-fig{margin:22px 0 24px}.wk-fig svg{display:block;width:100%;max-width:560px}.wk-fig figcaption{margin:10px 0 0;font-size:13px;line-height:1.55;color:#a09888}
-.wk-brain{margin:0 0 14px}
-.wk-widok{margin:0 auto 12px;max-width:340px}
-/* widok od dołu jest wyższy niż szeroki, więc węższy, żeby trzy widoki miały podobną wysokość */
-.wk-widok-brzuszny{max-width:210px}
+/* karta: pasmo trzech widoków mózgu nad hasłem, na całą szerokość, pod nim dwie kolumny (jego słowa, 2026-11-09: *can we make the
+   brain images above the haslo?*); każdy widok bierze szerokość w proporcji swojego rysunku, więc trzy mają jedną wysokość */
+.wk-pasmo{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:flex-start;gap:0 16px;margin:0}
+.wk-widok{margin:0;min-width:0}
+.wk-pasmo .wk-widok-boczny{flex:1.7307 1 0}
+.wk-pasmo .wk-widok-przysrodkowy{flex:1.7144 1 0}
+.wk-pasmo .wk-widok-brzuszny{flex:.8396 1 0}
+.wk-pasmo .wk-zrodlo{flex:0 0 100%;margin-top:8px}
+/* na wąskim ekranie hasło, pod nim pasmo i tekst o sieci, potem opis i reszta (przegląd 2026-11-09); widoki jeden pod drugim, widok od
+   dołu jest wyższy niż szeroki, więc węższy, żeby trzy widoki miały podobną wysokość */
+@media (max-width:960px){.wk-grid-karta .wk-col{display:contents}.wk-grid-karta .wk-col>*{order:5}.wk-grid-karta .wk-mysl{order:1}.wk-grid-karta .wk-pasmo{order:2;display:block}.wk-grid-karta .wk-siec{order:3}.wk-grid-karta .wk-opis{order:4}.wk-pasmo .wk-widok{margin:0 auto 12px;max-width:340px}.wk-pasmo .wk-widok-brzuszny{max-width:210px}}
 .wk-pole{position:relative}
 .wk-widok svg{position:relative;display:block;width:100%;height:auto;overflow:visible}
 /* ziarno leży pod liniami rysunku; płótno nie łapie wskaźnika, łapią go obszary sieci i pole widoku */
 .wk-ziarno{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 /* kody sieci pod wskaźnikiem, najsilniejsza pierwsza; podpisane jak każda etykieta rysunku */
-.wk-kody{position:absolute;z-index:2;display:flex;gap:4px;pointer-events:none;white-space:nowrap}
+.wk-kody{position:absolute;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:4px;pointer-events:none;white-space:nowrap}
 .wk-kody[hidden]{display:none}
-.wk-kody span{font:500 12px/1 Inter,sans-serif;color:#e2ddd4;background:rgba(14,13,11,.9);border:1px solid rgba(226,200,150,.45);border-radius:5px;padding:4px 7px}
+.wk-kody b{font-weight:600;letter-spacing:.04em}
+/* po stuknięciu kody są linkami; palec trafia w 44 px, rysunek znacznika bez zmian */
+.wk-kody-palec{pointer-events:auto;gap:14px}
+.wk-kody.wk-kody-palec a{position:relative;text-decoration:none;padding:8px 10px}
+.wk-kody.wk-kody-palec a::before{content:'';position:absolute;inset:-7px -2px}
+/* etykieta sieci i kod pod wskaźnikiem to jeden znacznik: 12 px w każdym widoku i na każdym ekranie (przegląd 2026-11-09) */
+.wk-kody span,.wk-kody a,.wk-nl{font:500 12px/1 Inter,sans-serif;color:#e2ddd4;background:rgba(14,13,11,.9);border:1px solid rgba(226,200,150,.45);border-radius:5px;padding:4px 7px}
+.wk-nl{position:absolute;z-index:1;transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap}
 .wk-kody .wk-kod-dalej{color:#b3ab9e}
 .wk-widok figcaption{margin:4px 0 0;text-align:center;font-size:13px;color:#8f877a}
 .wk-widok .wk-linie{opacity:.62;pointer-events:none}
 .wk-widok-brzuszny .wk-linie{opacity:.45}
 .wk-widok .wk-hit{fill:transparent}
-.wk-tag{fill:rgba(14,13,11,.9);stroke:rgba(226,200,150,.45);stroke-width:1.5px;vector-effect:non-scaling-stroke}
-.wk-tagt{font-family:Inter,sans-serif;font-weight:500;fill:#e2ddd4}
 .wk-zrodlo{margin:2px 0 0;text-align:center;font-size:11.5px;line-height:1.5;color:#8f877a}
 .wk-zrodlo a{color:inherit;text-decoration:underline dotted 1px;text-underline-offset:3px}
 .wk dl{margin:0}
@@ -104,4 +116,3 @@ html.roj-cicho .wk-kurs::before{transition:none}
 .wk-brain:has(.wk-nb[data-k="CN"]:focus-visible) .wk-nl[data-k="CN"]{display:inline!important}
 .wk-brain:has(.wk-nb[data-k="DMN"]:focus-visible) .wk-nl[data-k="DMN"]{display:inline!important}
 .wk-brain:has(.wk-nb[data-k="LIM"]:focus-visible) .wk-nl[data-k="LIM"]{display:inline!important}
-.wk-nl{pointer-events:none}

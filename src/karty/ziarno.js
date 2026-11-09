@@ -4,11 +4,16 @@
 // ziaren to ciepła szarość. Wskazane miejsce pokazuje kody wszystkich sieci, które tam są, najsilniejsza pierwsza, i zapala je
 // we wszystkich trzech widokach; klik otwiera kartę najsilniejszej (jego *ok*, 2026-11-09). Bez ruchu (przełącznik animacji albo
 // ustawienie systemu) ziarno losuje się raz i stoi.
+// Przegląd 2026-11-09: wspólne są tylko miejsca, których sieci nazywa span (`huby` i `wspolne` w `mozg-widoki.json`), sieci dzielą
+// je po równo, bo żaden span nie podaje wag, a w czasie zmienia się tylko ośrodek, którego span mówi o zmianie z zadaniem
+// (`czas`); rdzenie stoją. Na karcie świecą też sieci, z którymi jej sieć dzieli miejsce, w tym miejscu.
 const ODSTEP = 3.5; // odstęp ziaren w pikselach ekranu
 const PROMIEN = 1.4;
 const ZMIANA = 0.1; // część ziaren losowana na nowo w każdym takcie, więc ziarno zmienia się mniej więcej raz na sekundę
 const TAKT = 100; // ms
-const OMEGA = (2 * Math.PI) / 15; // wagi dryfują w okresie około 15 s
+const OMEGA = (2 * Math.PI) / 15; // ośrodek ze zmianą w czasie przechodzi między sieciami w okresie około 15 s; tempa nie podaje żaden span
+// sieć jest w miejscu, kiedy jej udział przekracza 1/7, jak u Yeo i in. 2014 (s:yeo2014-association-multi-network-sensorimotor-isolated)
+const PROG = 1 / 7;
 const SZARE = 'rgba(226,221,212,0.13)';
 
 function cicho() {
@@ -62,8 +67,9 @@ export async function ziarno() {
   const NETS = JSON.parse(mozg.dataset.kolejnosc); // numer w mapie − 1, ostatni to kora bez sieci
   const LIT = new Set((mozg.dataset.lit || '').split(',').filter(Boolean));
   const N = NETS.length - 1;
-  const URL = {};
-  mozg.querySelectorAll('.wk-nb').forEach((a) => { URL[a.dataset.k] = a.getAttribute('href'); });
+  const URL = JSON.parse(mozg.dataset.karty || '{}'); // karta własnej sieci nie prowadzi do siebie
+  const NAZWA = JSON.parse(mozg.dataset.nazwy || '{}');
+  const WSP = JSON.parse(mozg.dataset.wspolne || '[]');
   const stoi = cicho();
   const hot = new Set();
   const widoki = [];
@@ -91,19 +97,21 @@ export async function ziarno() {
       for (let i = 0; i < b.length; i++) b[i] *= kora[i];
       rdzen.push(b);
     }
-    // ośrodki wspólne kilku sieciom: [x, y, promień] w jednostkach rysunku i waga każdej sieci
-    const osr = [];
-    huby.forEach(([hx, hy, hr, wagi], h) => {
-      const sieci = Object.entries(wagi);
-      sieci.forEach(([n, w], j) => {
-        const a = new Float32Array(FW * FH);
-        const X = hx / k, Y = hy / k, R = hr / k;
-        for (let y = 0; y < FH; y++) for (let x = 0; x < FW; x++) {
-          const d = ((x - X) ** 2 + (y - Y) ** 2) / (R * R);
-          a[y * FW + x] = d < 9 ? w * Math.exp(-d * 1.4) * kora[y * FW + x] : 0;
-        }
-        osr.push({ n: NETS.indexOf(n), a, faza: h * 1.7 + (j * 2 * Math.PI) / sieci.length });
-      });
+    // obszar wspólny całej sieci: obszar pierwszej sieci należy też do drugiej, po równo (Girn i in. 2024: kora oczodołowo-czołowa
+    // i przednia skroniowa to część rozszerzonej sieci domyślnej)
+    for (const { sieci: [a, b] } of WSP) {
+      const A = rdzen[NETS.indexOf(a)], B = rdzen[NETS.indexOf(b)];
+      for (let i = 0; i < A.length; i++) B[i] = Math.max(B[i], A[i]);
+    }
+    // ośrodki wspólne kilku sieciom: w środku ośrodka każda jego sieć ma ten sam udział, ku brzegowi wraca rdzeń
+    const osr = huby.map(({ xy: [hx, hy], r: hr, sieci, czas }, h) => {
+      const g = new Float32Array(FW * FH);
+      const X = hx / k, Y = hy / k, R = hr / k;
+      for (let y = 0; y < FH; y++) for (let x = 0; x < FW; x++) {
+        const d = ((x - X) ** 2 + (y - Y) ** 2) / (R * R);
+        g[y * FW + x] = d < 9 ? Math.exp(-d * 1.4) * kora[y * FW + x] : 0;
+      }
+      return { g, sieci: sieci.map((n) => NETS.indexOf(n)), czas: !!czas, faza: h * 1.7 };
     });
 
     const pole = fig.querySelector('.wk-pole');
@@ -114,10 +122,30 @@ export async function ziarno() {
   if (!widoki.length) return;
 
   const Wg = new Float32Array(N);
+  // t === null: udziały bez ruchu, średnie w czasie
   function wagi(v, i, t) {
-    for (let n = 0; n < N; n++) Wg[n] = v.rdzen[n][i] * (stoi ? 1 : 0.72 + 0.28 * Math.sin(OMEGA * t + n * 1.3));
-    for (const o of v.osr) Wg[o.n] += o.a[i] * (stoi ? 0.8 : 0.5 + 0.5 * Math.sin(OMEGA * t + o.faza));
+    for (let n = 0; n < N; n++) Wg[n] = v.rdzen[n][i];
+    for (const o of v.osr) {
+      const g = o.g[i];
+      if (!g) continue;
+      for (let n = 0; n < N; n++) Wg[n] *= 1 - g;
+      const m = o.sieci.length;
+      o.sieci.forEach((n, j) => {
+        const fala = o.czas && t !== null && !stoi ? 1 + 0.6 * Math.sin(OMEGA * t + o.faza + (j * 2 * Math.PI) / m) : 1;
+        Wg[n] += (g / m) * fala;
+      });
+    }
     return Wg;
+  }
+  // sieci, które są w miejscu (udział ponad PROG), najsilniejsza pierwsza
+  function wMiejscu(v, i, t) {
+    const w = wagi(v, i, t);
+    let tot = 0;
+    for (let n = 0; n < N; n++) tot += w[n];
+    if (tot < 0.05) return [];
+    const out = [];
+    for (let n = 0; n < N; n++) if (w[n] / tot > PROG) out.push([n, w[n] / tot]);
+    return out.sort((a, b) => b[1] - a[1]).map(([n]) => n);
   }
   function losuj(v, z, t, r) {
     const w = wagi(v, z.i, t);
@@ -145,6 +173,9 @@ export async function ziarno() {
       const i = fy * v.FW + fx;
       if (!v.kora[i]) continue;
       const z = { x: jx * v.skala, y: jy * v.skala, i, n: -1 };
+      // ziarno w miejscu, które sieć karty dzieli z inną, świeci kolorem każdej sieci tego miejsca
+      const tu = wMiejscu(v, i, null);
+      z.wsp = tu.some((n) => LIT.has(NETS[n])) ? new Set(tu) : null;
       losuj(v, z, 0, r2);
       v.ziarna.push(z);
     }
@@ -157,7 +188,7 @@ export async function ziarno() {
     const grupy = new Map();
     for (const z of v.ziarna) {
       const kod = z.n >= 0 ? NETS[z.n] : null;
-      const kolor = kod && (LIT.has(kod) || hot.has(kod)) ? KOL[kod] : SZARE;
+      const kolor = kod && (LIT.has(kod) || hot.has(kod) || (z.wsp && z.wsp.has(z.n))) ? KOL[kod] : SZARE;
       if (!grupy.has(kolor)) grupy.set(kolor, []);
       grupy.get(kolor).push(z);
     }
@@ -179,30 +210,35 @@ export async function ziarno() {
     widoki.forEach((v) => ro.observe(v.pole));
   }
 
-  // co jest pod wskaźnikiem: sieci z udziałem powyżej 12 %, najsilniejsza pierwsza
+  // co jest pod wskaźnikiem; bruzda, linia rysunku, bierze najbliższą korę w promieniu trzech pól mapy (przegląd 2026-11-09: co
+  // dziewiąty punkt na korze nie trafiał w nic)
   function podWskaznikiem(v, e, t) {
     const r = v.pole.getBoundingClientRect();
     const fx = Math.floor(((e.clientX - r.left) / r.width) * v.VW / v.k), fy = Math.floor(((e.clientY - r.top) / r.height) * v.VH / v.k);
-    if (fx < 0 || fy < 0 || fx >= v.FW || fy >= v.FH) return [];
-    const i = fy * v.FW + fx;
-    if (!v.kora[i]) return [];
-    const w = wagi(v, i, t);
-    let tot = 0;
-    for (let n = 0; n < N; n++) tot += w[n];
-    if (tot < 0.05) return [];
-    const out = [];
-    for (let n = 0; n < N; n++) if (w[n] / tot > 0.12) out.push([NETS[n], w[n] / tot]);
-    return out.sort((a, b) => b[1] - a[1]).map(([n]) => n);
+    let best = -1, bd = 99;
+    for (let dy = -3; dy <= 3; dy++) for (let dx = -3; dx <= 3; dx++) {
+      const x = fx + dx, y = fy + dy, d = dx * dx + dy * dy;
+      if (x < 0 || y < 0 || x >= v.FW || y >= v.FH || d > 9 || d >= bd) continue;
+      if (v.kora[y * v.FW + x]) { best = y * v.FW + x; bd = d; }
+    }
+    if (best < 0) return [];
+    return wMiejscu(v, best, t).map((n) => NETS[n]);
   }
   let ostatni = null;
-  function pokaz(v, e) {
+  // kod i nazwa każdej sieci w miejscu; po stuknięciu palcem kody są linkami do kart, bo palec nie ma wskazania
+  function pokaz(v, e, palec) {
     const t = performance.now() / 1000;
     const lista = podWskaznikiem(v, e, t);
-    ostatni = { v, e: { clientX: e.clientX, clientY: e.clientY }, lista };
+    ostatni = { v, e: { clientX: e.clientX, clientY: e.clientY }, lista, palec };
     hot.clear(); lista.forEach((n) => hot.add(n));
     rysujWszystko();
     if (!lista.length) { v.kody.hidden = true; v.pole.style.cursor = ''; return; }
-    v.kody.innerHTML = lista.map((n, j) => '<span' + (j ? ' class="wk-kod-dalej"' : '') + '>' + n + '</span>').join('');
+    v.kody.classList.toggle('wk-kody-palec', !!palec);
+    v.kody.innerHTML = lista.map((n, j) => {
+      const tresc = '<b>' + n + '</b> ' + (NAZWA[n] || '');
+      const kl = j ? ' class="wk-kod-dalej"' : '';
+      return palec && URL[n] ? '<a href="' + URL[n] + '"' + kl + '>' + tresc + '</a>' : '<span' + kl + '>' + tresc + '</span>';
+    }).join('');
     v.kody.hidden = false;
     const r = v.pole.getBoundingClientRect();
     const x = e.clientX - r.left, y = e.clientY - r.top;
@@ -210,23 +246,31 @@ export async function ziarno() {
     const lewo = x + 14 + v.kody.offsetWidth > r.width; // kody mierzone po wypełnieniu, żeby nie wychodziły za widok
     if (lewo) v.kody.style.right = r.width - x + 14 + 'px'; else v.kody.style.left = x + 14 + 'px';
     v.kody.style.top = Math.max(0, y - 10) + 'px';
-    v.pole.style.cursor = URL[lista[0]] ? 'pointer' : '';
+    v.pole.style.cursor = lista.some((n) => URL[n]) ? 'pointer' : '';
   }
   function schowaj(v) { ostatni = null; hot.clear(); v.kody.hidden = true; rysujWszystko(); }
+  let palec = false;
   widoki.forEach((v) => {
+    v.pole.addEventListener('pointerdown', (e) => { palec = e.pointerType === 'touch'; });
     v.pole.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse' || e.pointerType === 'pen') pokaz(v, e); });
-    v.pole.addEventListener('pointerleave', () => schowaj(v));
-    // klik otwiera kartę najsilniejszej sieci w tej chwili; klawiatura zostaje przy linkach obszarów
-    // klik myszą otwiera kartę pierwszego kodu, który pokazują znaczniki; dotyk, czytnik ekranu i Enter idą za linkiem obszaru
-    // (audyt 2026-11-09: stuknięcie w środek obszaru trafiało w silniejszą sieć obok)
+    v.pole.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch' && !(ostatni && ostatni.palec)) schowaj(v); });
+    // klik myszą otwiera kartę pierwszego kodu, który prowadzi do innej karty; stuknięcie palcem pokazuje kody sieci w miejscu jako
+    // linki (przegląd 2026-11-09: stuknięcie przenosiło od razu, a na karcie własnej sieci przeładowywało ją); Enter idzie za linkiem
     v.pole.addEventListener('click', (e) => {
-      if (e.detail === 0 || !ostatni || ostatni.v !== v) return;
-      const url = ostatni.lista.length && URL[ostatni.lista[0]];
-      if (!url) return;
+      if (e.detail === 0 || e.target.closest('.wk-kody')) return;
+      if (palec) { e.preventDefault(); pokaz(v, e, true); return; }
+      if (!ostatni || ostatni.v !== v) return;
+      const pierwsza = ostatni.lista.find((n) => URL[n]);
       e.preventDefault();
+      if (!pierwsza) return;
+      const url = URL[pierwsza];
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) window.open(url, '_blank', 'noopener');
       else location.href = url;
     });
+  });
+  // stuknięcie poza mózgiem chowa kody
+  document.addEventListener('click', (e) => {
+    if (ostatni && ostatni.palec && !e.target.closest('.wk-pole')) schowaj(ostatni.v);
   });
   // fokus z klawiatury zapala sieć swojego linku
   mozg.querySelectorAll('.wk-nb').forEach((a) => {
@@ -242,10 +286,10 @@ export async function ziarno() {
     if (!widac || document.hidden) return;
     const t = performance.now() / 1000;
     for (const v of widoki) for (const z of v.ziarna) if (r3() < ZMIANA) losuj(v, z, t, r3);
-    if (ostatni) {
-      // lista pod nieruchomym wskaźnikiem nadąża za wagami
+    if (ostatni && !ostatni.palec) {
+      // lista pod nieruchomym wskaźnikiem nadąża za wagami; po stuknięciu stoi, żeby linki nie uciekały spod palca
       const { v, e } = ostatni;
       pokaz(v, e);
-    } else if (LIT.size) rysujWszystko(); // bez świecącej sieci szare ziarno daje ten sam obraz, więc płótno stoi
+    } else if (LIT.size || hot.size) rysujWszystko(); // bez świecącej sieci szare ziarno daje ten sam obraz, więc płótno stoi
   }, TAKT);
 }
