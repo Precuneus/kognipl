@@ -30,18 +30,20 @@
 .wk-siec>.wk-p:first-child{margin-top:0}
 .wk-widok{margin:0;min-width:0}
 /* trzy widoki w jednej skali (jego słowa, 2026-11-10: *make the ventral to scale of the lateral and medial*): obrys mózgu od przodu
-   do tyłu ma na ekranie tę samą długość L; na rysunkach to 926, 998 i 504 jednostki (widok od dołu z móżdżkiem, bo oko porównuje cały
-   obrys; skala samej kory dawała widok od dołu o 8 % za duży, jego słowa: *the ventral looks bigger than lateral and medial now*), więc widok z boku ma szerokość 1,0712 L, od środka 1,0281 L, od dołu 0,8407 L. Obok siebie
-   dwa pierwsze dzielą pasmo w proporcji 1,0712 do 1,0281; prawa kolumna ma szerokość, przy której widok od dołu wypełnia ją w tej
-   samej skali: 0,8407 · (szerokość siatki − 64 px) / 2,0993 plus 48 px wcięć */
+   do tyłu ma na ekranie tę samą długość L; na rysunkach to 926, 998 i 551 jednostek. Widok od dołu to Sobotta 1909 ryc. 630, sam
+   kresomózg bez móżdżku i pnia (jego słowa: *can we remove the cerebellum so that the ventral cerebrum will be visible?*), więc
+   jego obrys jest długością mózgu. Widok z boku ma szerokość 1,0712 L, od środka 1,0281 L. Widok od dołu stoi w 90 % tej skali,
+   0,7178 L, bo obie półkule naraz wyglądają na większe (jego słowa: *the ventral looks bigger than lateral and medial now*, potem
+   *still a bit too big*). Obok siebie dwa pierwsze dzielą pasmo w proporcji 1,0712 do 1,0281; prawa kolumna ma szerokość, przy
+   której widok od dołu ją wypełnia: 0,7178 · (szerokość siatki − 64 px) / 2,0993 plus 48 px wcięć */
 .wk-pasmo .wk-widok-boczny{flex:1.0712 1 0}
 .wk-pasmo .wk-widok-przysrodkowy{flex:1.0281 1 0}
 .wk-siec .wk-widok-brzuszny{margin:0 auto 18px}
-@media (min-width:1081px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr) calc(40.05% + 22.4px)}}
+@media (min-width:1081px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr) calc(34.19% + 26.1px)}}
 /* węższy ekran: jedna kolumna, hasło, pod nim pasmo i widok od dołu z tekstem o sieci, potem opis i reszta (przegląd 2026-11-09);
    widok od dołu ma szerokość pudełka pomniejszoną tak jak w paśmie; od 720 px w dół widoki stoją jeden pod drugim */
-@media (max-width:1080px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr)}.wk-brain .wk-col{display:contents}.wk-brain .wk-col>*{order:5}.wk-brain .wk-mysl{order:1}.wk-brain .wk-pasmo{order:2;border-bottom-left-radius:0}.wk-brain .wk-siec{order:3}.wk-brain .wk-opis{order:4}.wk-siec .wk-widok-brzuszny{width:calc(40.05% - 6.4px)}}
-@media (max-width:720px){.wk-pasmo{display:block}.wk-pasmo .wk-widok{margin:0 auto 12px}.wk-pasmo .wk-widok-przysrodkowy{width:95.98%}.wk-siec .wk-widok-brzuszny{width:78.48%}}
+@media (max-width:1080px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr)}.wk-brain .wk-col{display:contents}.wk-brain .wk-col>*{order:5}.wk-brain .wk-mysl{order:1}.wk-brain .wk-pasmo{order:2;border-bottom-left-radius:0}.wk-brain .wk-siec{order:3}.wk-brain .wk-opis{order:4}.wk-siec .wk-widok-brzuszny{width:calc(34.19% - 5.5px)}}
+@media (max-width:720px){.wk-pasmo{display:block}.wk-pasmo .wk-widok{margin:0 auto 12px}.wk-pasmo .wk-widok-przysrodkowy{width:95.98%}.wk-siec .wk-widok-brzuszny{width:67.01%}}
 .wk-pole{position:relative}
 .wk-widok svg{position:relative;display:block;width:100%;height:auto;overflow:visible}
 /* ziarno leży pod liniami rysunku; płótno nie łapie wskaźnika, łapią go obszary sieci i pole widoku */

@@ -64,7 +64,9 @@ const ruch = kurs || on.size > 0;
 // sieci naraz, a jego przynależność zmienia się w czasie (*real multi-membership and the time*), rysowane ziarnem (*ziarno, I love it*).
 // Ziarno rysuje `src/karty/ziarno.js` na płótnie pod liniami, z mapy sieci `<plik>-sieci.png` i ośrodków `huby` z `mozg-widoki.json`;
 // wielokąty obszarów zostają linkami dla klawiatury i czytnika ekranu.
-// oba rysunki Cartera pokazują lewą półkulę, więc podpis ją nazywa (przegląd 2026-11-09: karta sieci brzusznej mówi o prawej)
+// oba rysunki Cartera pokazują lewą półkulę, więc podpis ją nazywa (przegląd 2026-11-09: karta sieci brzusznej mówi o prawej);
+// widok od dołu to kresomózg z ryciny 630 Sobotty, bez móżdżku i pnia (jego słowa, 2026-11-10: *can we remove the cerebellum so that
+// the ventral cerebrum will be visible?*), z obiema półkulami
 const WIDOKI = [['lateral', 'z boku, lewa półkula', 'lewej półkuli z boku'], ['medial', 'od środka, lewa półkula', 'lewej półkuli od środka'], ['ventral', 'od dołu', 'mózgu od dołu']];
 const swieci = [...on].map((n) => NETN[n]).filter(Boolean);
 const IMG = '/images/mozg-widoki/';
@@ -191,7 +193,7 @@ const brainData = { kolory: JSON.stringify(KOLOR), kolejnosc: JSON.stringify(WID
       )}
     </div>
   </div>
-  {!Astro.slots.has('siec') && <p class="wk-zrodlo wk-zrodlo-mozg">Rysunki mózgu: z boku i od środka Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918, domena publiczna; od dołu <a href="https://commons.wikimedia.org/wiki/File:Brain_human_normal_inferior_view_with_labels_en.svg">Patrick J. Lynch i Bea</a>, <a href="https://creativecommons.org/licenses/by/2.5/deed.pl">CC BY 2.5</a>, ze zmianami.</p>}
+  {!Astro.slots.has('siec') && <p class="wk-zrodlo wk-zrodlo-mozg">Rysunki mózgu: z boku i od środka Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918; od dołu K. Hajek, <a href="https://commons.wikimedia.org/wiki/File:Sobo_1909_630.png">ryc. 630</a> w <i>Atlas and Text-book of Human Anatomy</i> Sobotty, 1909, przerysowana liniami; wszystkie w domenie publicznej.</p>}
 </article>
 <TerminDymek />
 <script>
