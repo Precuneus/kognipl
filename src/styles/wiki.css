@@ -15,6 +15,11 @@
 .wk-rodziny a{color:inherit;text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wk-zaj{margin:6px 0 0;font-size:14px;color:#a09888}
 .wk-zaj a{text-decoration:underline dotted 1px;text-underline-offset:4px;white-space:nowrap}
+/* nad tytułem: obszar i sieci miejsca klikniętego na mózgu, jak wiersz rodzin pod tytułem (jego słowa, 2026-11-10: *let me click this
+   and then list a region/network above the title*) */
+.wk-tu{margin:0 0 8px;font-size:14px;line-height:1.6;color:#cfc8bb}
+.wk-tu a{color:inherit;text-decoration:underline dotted 1px;text-underline-offset:4px}
+.wk-tu b{font-weight:600;letter-spacing:.04em}
 .wk-p{margin:14px 0 0;font-size:16.5px;line-height:1.75;color:#e2ddd4}
 .wk-box h2+.wk-p{margin-top:0}
 .wk-p a,.wk-net dd a{text-decoration:underline dotted 1px;text-underline-offset:4px}
@@ -43,20 +48,25 @@
    the brain?*): w tej samej skali co widok z boku, bo jego wysokość od szczytu do podstawy płata skroniowego, 482,5 jednostki, równa
    się wysokości widoku z boku w kolumnie cięcia, 544,5 jednostki przy szerokości 991,9 = 1,0712 L; stąd szerokość 407 jednostek
    przekroju to 0,4961 L, czyli 69,11 % szerokości widoku od dołu */
-.wk-siec .wk-widok-przekroj{width:69.11%;margin:0 auto 18px}
-.wk-widok-przekroj .wk-linie{opacity:.5}
+.wk-siec .wk-widok-czolowy{width:69.11%;margin:0 auto 18px}
+/* przekrój poziomy pod czołowym (jego słowa, 2026-11-10: *the one when you see parietal to frontal through basal ganglia*): jego długość
+   od bieguna czołowego do potylicznego, 561,5 jednostki, to długość mózgu L, więc szerokość 234 jednostek to 0,4167 L, czyli 58,06 %
+   szerokości widoku od dołu */
+.wk-siec .wk-widok-poziomy{width:58.06%;margin:0 auto 18px}
+.wk-widok-czolowy .wk-linie,.wk-widok-poziomy .wk-linie{opacity:.5}
 /* płaszczyzna przekroju na widoku z boku; przerywana, żeby nie udawała bruzdy */
 .wk-ciecie{stroke:#e2ddd4;stroke-width:1.5;stroke-dasharray:5 4;vector-effect:non-scaling-stroke;opacity:.4;pointer-events:none;transition:opacity .15s}
-.wk-brain:has(.wk-widok-przekroj .wk-pole:hover) .wk-ciecie{opacity:.9}
+.wk-brain:has(.wk-widok-czolowy .wk-pole:hover) .wk-ciecie-czolowy,.wk-brain:has(.wk-widok-poziomy .wk-pole:hover) .wk-ciecie-poziomy{opacity:.9}
 @media (min-width:1081px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr) calc(34.19% + 26.1px)}}
 /* węższy ekran: jedna kolumna, hasło, pod nim pasmo i widok od dołu z tekstem o sieci, potem opis i reszta (przegląd 2026-11-09);
    widok od dołu ma szerokość pudełka pomniejszoną tak jak w paśmie; od 720 px w dół widoki stoją jeden pod drugim */
-@media (max-width:1080px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr)}.wk-brain .wk-col{display:contents}.wk-brain .wk-col>*{order:5}.wk-brain .wk-mysl{order:1}.wk-brain .wk-pasmo{order:2;border-bottom-left-radius:0}.wk-brain .wk-siec{order:3}.wk-brain .wk-opis{order:4}.wk-siec .wk-widok-brzuszny{width:calc(34.19% - 5.5px)}.wk-siec .wk-widok-przekroj{width:calc(23.63% - 3.8px)}}
-@media (max-width:720px){.wk-pasmo{display:block}.wk-pasmo .wk-widok{margin:0 auto 12px}.wk-pasmo .wk-widok-przysrodkowy{width:95.98%}.wk-siec .wk-widok-brzuszny{width:67.01%}.wk-siec .wk-widok-przekroj{width:46.31%}}
-/* znaczniki przekroju ustawiono dla jego szerokości 144 px; na ekranie węższym niż 390 px przekrój ma mniej (112 px przy 320), a jego
+@media (max-width:1080px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr)}.wk-brain .wk-col{display:contents}.wk-brain .wk-col>*{order:5}.wk-brain .wk-mysl{order:1}.wk-brain .wk-pasmo{order:2;border-bottom-left-radius:0}.wk-brain .wk-siec{order:3}.wk-brain .wk-opis{order:4}.wk-siec .wk-widok-brzuszny{width:calc(34.19% - 5.5px)}.wk-siec .wk-widok-czolowy{width:calc(23.63% - 3.8px)}.wk-siec .wk-widok-poziomy{width:calc(19.85% - 3.19px)}}
+@media (max-width:720px){.wk-pasmo{display:block}.wk-pasmo .wk-widok{margin:0 auto 12px}.wk-pasmo .wk-widok-przysrodkowy{width:95.98%}.wk-siec .wk-widok-brzuszny{width:67.01%}.wk-siec .wk-widok-czolowy{width:46.31%}.wk-siec .wk-widok-poziomy{width:38.91%}}
+/* znaczniki przekrojów ustawiono dla ich szerokości przy 390 px ekranu, 144 i 121 px; na ekranie węższym przekroje są węższe (112 i 94 px
+   przy 320), a ich
    kora około 3 px grubości, więc znacznik 12 px zakrywałby sieć, którą nazywa, i sąsiednie znaczniki: tam sieci przekroju nazywają
    kolor i kody pod palcem */
-@media (max-width:389px){.wk-widok-przekroj .wk-nl{display:none}}
+@media (max-width:389px){.wk-widok-czolowy .wk-nl,.wk-widok-poziomy .wk-nl{display:none}}
 .wk-pole{position:relative}
 .wk-widok svg{position:relative;display:block;width:100%;height:auto;overflow:visible}
 /* ziarno leży pod liniami rysunku; płótno nie łapie wskaźnika, łapią go obszary sieci i pole widoku */
@@ -65,10 +75,6 @@
 .wk-kody{position:absolute;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:4px;pointer-events:none;white-space:nowrap}
 .wk-kody[hidden]{display:none}
 .wk-kody b{font-weight:600;letter-spacing:.04em}
-/* po stuknięciu kody są linkami; palec trafia w 44 px, rysunek znacznika bez zmian */
-.wk-kody-palec{pointer-events:auto;gap:14px}
-.wk-kody.wk-kody-palec a{position:relative;text-decoration:none;padding:8px 10px}
-.wk-kody.wk-kody-palec a::before{content:'';position:absolute;inset:-7px -2px}
 /* etykieta sieci i kod pod wskaźnikiem to jeden znacznik: 12 px w każdym widoku i na każdym ekranie (przegląd 2026-11-09) */
 .wk-kody span,.wk-kody a,.wk-nl{font:500 12px/1 Inter,sans-serif;color:#e2ddd4;background:rgba(14,13,11,.9);border:1px solid rgba(226,200,150,.45);border-radius:5px;padding:4px 7px}
 .wk-nl{position:absolute;z-index:1;transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap}

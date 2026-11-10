@@ -2,7 +2,7 @@
 // do jednej sieci i co jakiś czas przechodzi do innej, z wagami sieci w swoim miejscu. Rdzeń sieci trzyma kolor, ośrodek wspólny
 // kilku sieciom migocze między nimi (jego słowa: *real multi-membership and the time*). Sieci karty świecą swoim kolorem, reszta
 // ziaren to ciepła szarość. Wskazane miejsce pokazuje kody wszystkich sieci, które tam są, najsilniejsza pierwsza, i zapala je
-// we wszystkich widokach; klik otwiera kartę najsilniejszej (jego *ok*, 2026-11-09). Bez ruchu (przełącznik animacji albo
+// we wszystkich widokach; klik wpisuje obszar i sieci miejsca nad tytuł karty i nie przenosi (2026-11-10). Bez ruchu (przełącznik animacji albo
 // ustawienie systemu) ziarno losuje się raz i stoi.
 // Przegląd 2026-11-09: wspólne są tylko miejsca, których sieci nazywa span (`huby` i `wspolne` w `mozg-widoki.json`), sieci dzielą
 // je po równo, bo żaden span nie podaje wag, a w czasie zmienia się tylko ośrodek, którego span mówi o zmianie z zadaniem
@@ -70,6 +70,8 @@ export async function ziarno() {
   const URL = JSON.parse(mozg.dataset.karty || '{}'); // karta własnej sieci nie prowadzi do siebie
   const NAZWA = JSON.parse(mozg.dataset.nazwy || '{}');
   const WSP = JSON.parse(mozg.dataset.wspolne || '[]');
+  const REG = JSON.parse(mozg.dataset.regiony || '[]'); // [nazwa, karta obszaru, płat, karta płatów]; numer w mapie obszarów − 1
+  const tu = document.querySelector('.wk-tu');
   const stoi = cicho();
   const hot = new Set();
   const widoki = [];
@@ -114,10 +116,20 @@ export async function ziarno() {
       return { g, sieci: sieci.map((n) => NETS.indexOf(n)), czas: !!czas, faza: h * 1.7 };
     });
 
+    // mapa obszarów anatomicznych tej samej siatki co mapa sieci: wartość piksela to numer obszaru
+    let reg = null;
+    try {
+      const ri = await wczytaj(fig.dataset.obszary);
+      const rc = document.createElement('canvas'); rc.width = ri.width; rc.height = ri.height;
+      const rx = rc.getContext('2d'); rx.drawImage(ri, 0, 0);
+      const rp = rx.getImageData(0, 0, ri.width, ri.height).data;
+      reg = { W: ri.width, H: ri.height, v: new Uint8Array(ri.width * ri.height) };
+      for (let i = 0; i < reg.v.length; i++) reg.v[i] = rp[i * 4];
+    } catch (e) {}
     const pole = fig.querySelector('.wk-pole');
     const cv = pole.querySelector('.wk-ziarno');
     const kody = pole.querySelector('.wk-kody');
-    widoki.push({ fig, pole, cv, kody, FW, FH, VW, VH, k, lab, kora, rdzen, osr, ziarna: [] });
+    widoki.push({ fig, pole, cv, kody, FW, FH, VW, VH, k, lab, kora, rdzen, osr, reg, ziarna: [] });
   }
   if (!widoki.length) return;
 
@@ -225,7 +237,8 @@ export async function ziarno() {
     return wMiejscu(v, best, t).map((n) => NETS[n]);
   }
   let ostatni = null;
-  // kod i nazwa każdej sieci w miejscu; po stuknięciu palcem kody są linkami do kart, bo palec nie ma wskazania
+  // kod i nazwa każdej sieci w miejscu, zawsze jako tekst: linki stoją nad tytułem karty, więc stuknięcie obok nie trafia w link i nie
+  // przenosi (jego słowa, 2026-11-10: *clicking itself should not redirect*); po stuknięciu kody stoją przy palcu, aż palec stuknie gdzie indziej
   function pokaz(v, e, palec) {
     const t = performance.now() / 1000;
     const lista = podWskaznikiem(v, e, t);
@@ -233,12 +246,7 @@ export async function ziarno() {
     hot.clear(); lista.forEach((n) => hot.add(n));
     rysujWszystko();
     if (!lista.length) { v.kody.hidden = true; v.pole.style.cursor = ''; return; }
-    v.kody.classList.toggle('wk-kody-palec', !!palec);
-    v.kody.innerHTML = lista.map((n, j) => {
-      const tresc = '<b>' + n + '</b> ' + (NAZWA[n] || '');
-      const kl = j ? ' class="wk-kod-dalej"' : '';
-      return palec && URL[n] ? '<a href="' + URL[n] + '"' + kl + '>' + tresc + '</a>' : '<span' + kl + '>' + tresc + '</span>';
-    }).join('');
+    v.kody.innerHTML = lista.map((n, j) => '<span' + (j ? ' class="wk-kod-dalej"' : '') + '><b>' + n + '</b> ' + (NAZWA[n] || '') + '</span>').join('');
     v.kody.hidden = false;
     const r = v.pole.getBoundingClientRect();
     const x = e.clientX - r.left, y = e.clientY - r.top;
@@ -249,23 +257,47 @@ export async function ziarno() {
     v.pole.style.cursor = lista.some((n) => URL[n]) ? 'pointer' : '';
   }
   function schowaj(v) { ostatni = null; hot.clear(); v.kody.hidden = true; rysujWszystko(); }
+  // obszar anatomiczny pod wskaźnikiem; linia rysunku bierze najbliższy obszar w promieniu trzech pól mapy
+  function obszarPod(v, e) {
+    if (!v.reg) return null;
+    const r = v.pole.getBoundingClientRect();
+    const fx = Math.floor(((e.clientX - r.left) / r.width) * v.reg.W), fy = Math.floor(((e.clientY - r.top) / r.height) * v.reg.H);
+    let best = 0, bd = 99;
+    for (let dy = -3; dy <= 3; dy++) for (let dx = -3; dx <= 3; dx++) {
+      const x = fx + dx, y = fy + dy, d = dx * dx + dy * dy;
+      if (x < 0 || y < 0 || x >= v.reg.W || y >= v.reg.H || d > 9 || d >= bd) continue;
+      const n = v.reg.v[y * v.reg.W + x];
+      if (n && REG[n - 1]) { best = n; bd = d; }
+    }
+    return best ? REG[best - 1] : null;
+  }
+  const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  const link = (url, html) => (url ? '<a href="' + esc(url) + '">' + html + '</a>' : '<span>' + html + '</span>');
+  // klik na mózgu nie przenosi: nad tytułem karty staje obszar, jego płat i sieci miejsca, każde jako link do swojej karty (jego słowa,
+  // 2026-11-10: *let me click this and then list a region/network above the title ... but clicking itself should not redirect*)
+  function tutaj(v, e) {
+    if (!tu) return;
+    const o = obszarPod(v, e);
+    const sieci = podWskaznikiem(v, e, performance.now() / 1000);
+    const czesci = [];
+    if (o) { czesci.push(link(o[1], esc(o[0]))); if (o[2]) czesci.push(link(o[3], esc(o[2]))); }
+    sieci.forEach((n) => czesci.push(link(URL[n], '<b style="color:' + KOL[n] + '">' + n + '</b> ' + esc(NAZWA[n] || ''))));
+    if (!czesci.length) return;
+    tu.innerHTML = czesci.join(' · ');
+    tu.hidden = false;
+  }
   let palec = false;
   widoki.forEach((v) => {
     v.pole.addEventListener('pointerdown', (e) => { palec = e.pointerType === 'touch'; });
     v.pole.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse' || e.pointerType === 'pen') pokaz(v, e); });
     v.pole.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch' && !(ostatni && ostatni.palec)) schowaj(v); });
-    // klik myszą otwiera kartę pierwszego kodu, który prowadzi do innej karty; stuknięcie palcem pokazuje kody sieci w miejscu jako
-    // linki (przegląd 2026-11-09: stuknięcie przenosiło od razu, a na karcie własnej sieci przeładowywało ją); Enter idzie za linkiem
+    // klik myszą i stuknięcie palcem nie przenoszą, tylko wpisują miejsce nad tytuł; po stuknięciu kody przy palcu są też linkami
+    // (przegląd 2026-11-09: stuknięcie przenosiło od razu); Enter z klawiatury idzie za linkiem obszaru sieci
     v.pole.addEventListener('click', (e) => {
       if (e.detail === 0 || e.target.closest('.wk-kody')) return;
-      if (palec) { e.preventDefault(); pokaz(v, e, true); return; }
-      if (!ostatni || ostatni.v !== v) return;
-      const pierwsza = ostatni.lista.find((n) => URL[n]);
       e.preventDefault();
-      if (!pierwsza) return;
-      const url = URL[pierwsza];
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) window.open(url, '_blank', 'noopener');
-      else location.href = url;
+      if (palec) pokaz(v, e, true);
+      tutaj(v, e);
     });
   });
   // stuknięcie poza mózgiem chowa kody
