@@ -141,7 +141,9 @@ html.roj-cicho .wk-kurs::before{transition:none}
 
 /* mózg karty: każda sieć to link do jej karty; ziarno zapala sieci pod wskaźnikiem (`src/karty/ziarno.js`), fokus z klawiatury pokazuje kod i obrys obszaru (jego słowo, 2026-11-09) */
 .wk-nb{cursor:pointer}
-.wk-nb:focus-visible{outline:none}
+/* bez prostokąta przeglądarki wokół obszaru: Chrome rysuje go na linku w SVG także po kliknięciu myszą, kiedy klik nie przenosi
+   (jego zrzut, 2026-11-10: *there is this blue square after clicking*); fokus z klawiatury pokazuje złoty obrys obszaru niżej */
+.wk-nb:focus,.wk-nb:focus-visible{outline:none}
 /* sieć już zapalona na karcie nie zmienia się pod fokusem, więc fokus rysuje obrys tego jednego obszaru (audyt 2026-11-09) */
 .wk-nb:focus-visible .wk-hit{stroke:#f0c060;stroke-width:2px;vector-effect:non-scaling-stroke}
 .wk-brain:has(.wk-nb[data-k="VIS"]:focus-visible) .wk-nl[data-k="VIS"]{display:inline!important}

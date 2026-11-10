@@ -296,6 +296,9 @@ export async function ziarno() {
     v.pole.addEventListener('click', (e) => {
       if (e.detail === 0 || e.target.closest('.wk-kody')) return;
       e.preventDefault();
+      // link obszaru kliknięty myszą nie trzyma fokusu: fokus jest dla klawiatury i zapalałby sieć linku do następnego kliknięcia
+      const a = document.activeElement;
+      if (a && a.classList && a.classList.contains('wk-nb') && v.pole.contains(a)) a.blur();
       if (palec) pokaz(v, e, true);
       tutaj(v, e);
     });
