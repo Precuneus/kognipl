@@ -7,6 +7,8 @@ rodziny:
 - '[[Propriocepcja i dotyk]]'
 sieci: []
 bez_sieci: 'Rozwój integracji wielozmysłowej badano w neuronach wzgórków górnych w śródmózgowiu zwierząt, poza sieciami kory, a u ludzi w zachowaniu, w zadaniach słuchowo-wzrokowych i wzrokowo-dotykowych.'
+obszary:
+- śródmózgowie
 ryciny: []
 materiały:
 - tytuł: 'Wallace i Stein 1997: rozwój neuronów wielozmysłowych we wzgórkach górnych kota'

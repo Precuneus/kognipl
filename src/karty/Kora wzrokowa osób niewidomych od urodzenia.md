@@ -9,6 +9,8 @@ sieci:
 - kod: VIS
   powód: 'Rozróżniasz palcami bodźce dotykowe po latach ślepoty od wczesnego dzieciństwa: to aktywność także Twojej pierwszorzędowej i drugorzędowej kory wzrokowej (Sadato i in. 1996)<!--[s:sadato1996-braille-v1-activation-blind]-->, rdzenia sieci wzrokowej w płacie potylicznym (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-on-core-occipital]-->.'
 bez_sieci: ''
+obszary:
+- kora wzrokowa pierwszorzędowa
 ryciny: []
 materiały:
 - tytuł: 'Sadato i in. 1996: kora wzrokowa w czytaniu Braille''a u osób niewidomych'

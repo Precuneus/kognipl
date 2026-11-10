@@ -13,6 +13,13 @@ sieci:
 - kod: SMN
   powód: 'W spoczynkowym funkcjonalnym rezonansie magnetycznym (ang. resting-state fMRI) tylna wyspa, do której dociera bioinformacja z narządów, należy do jednej sieci z korą sieci czuciowo-ruchowej, choć autorzy zastrzegają możliwe rozmycie sygnału między sąsiednimi zakrętami (Yeo i in. 2011)<!--[s:yeo2011-somatomotor-auditory-insula]-->.'
 bez_sieci: ''
+obszary:
+- wyspa
+- zakręt obręczy
+- wzgórze
+- podwzgórze
+- hipokamp
+- ciało migdałowate
 ryciny: []
 materiały:
 - tytuł: 'The Braining Club, Systems Neuroscience Through the Lens of Evolutionary Theory Workshop: Lisa Feldman Barrett o allostazie'

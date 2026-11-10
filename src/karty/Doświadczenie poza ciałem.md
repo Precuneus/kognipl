@@ -8,6 +8,10 @@ sieci:
 - kod: DMN
   powód: 'Wyobrażasz sobie siebie w położeniu i z perspektywy, które opisują osoby po doświadczeniu poza ciałem: to aktywność skrzyżowania skroniowo-ciemieniowego 330–400 milisekund po bodźcu (Blanke i in. 2005)<!--[s:blanke2005-tpj-own-body-imagery-tms]-->, obszaru wspólnego dla pamięci autobiograficznej, teorii umysłu i sieci domyślnej (Spreng, Mar i Kim 2009)<!--[s:spreng2009-core-network-memory-prospection-navigation]-->.'
 bez_sieci: ''
+obszary:
+- zakręt kątowy
+- zakręt nadbrzeżny
+- zakręt skroniowy górny
 ryciny: []
 materiały:
 - tytuł: 'Blanke i in. 2002: Stimulating illusory own-body perceptions'

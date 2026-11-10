@@ -2,7 +2,7 @@
 // *lets remove the graphics of the sieci mozgowe from the wiki*). Ziarno rysuje `src/karty/ziarno.js` na płótnie pod liniami, z mapy sieci `<plik>-sieci.png`, mapy obszarów `<plik>-obszary.png`
 // i ośrodków `huby` z `mozg-widoki.json`; wielokąty obszarów sieci zostają linkami dla klawiatury i czytnika ekranu.
 import D from './mozg-widoki.json';
-import { NETN, netCard, card, slugify } from './data.js';
+import { NETN, netCard, card, slugify, kartaObszaru } from './data.js';
 
 export const DANE = D;
 // oba rysunki Cartera pokazują lewą półkulę, więc podpis ją nazywa (przegląd 2026-11-09); przekroje pokazują obie półkule, druga to
@@ -49,11 +49,10 @@ export function widok(v, { k = null, lit = new Set(), tab = false, ciecia = fals
 }
 
 // Obszary anatomiczne atlasu: nazwa prowadzi do swojej karty, jeśli taka jest, płat do karty Płaty mózgu, istota biała do karty
-// Istota szara i istota biała; adres #obszar-<nazwa> otwiera atlas z tym obszarem
-const KARTA_OBSZARU = { 'istota biała': 'Istota szara i istota biała' };
+// Istota szara i istota biała; adres #obszar-<nazwa> otwiera atlas z obszarem bez karty
 export function regiony(k = null) {
   const platy = card('Płaty mózgu');
-  const url = (n) => { const c = card(KARTA_OBSZARU[n] || n.charAt(0).toUpperCase() + n.slice(1)); return c && c !== k ? c.url : ''; };
+  const url = (n) => { const c = kartaObszaru(n); return c && c !== k ? c.url : ''; };
   return (D.regiony || []).map(([n, plat]) => [n, url(n), plat, plat && platy && platy !== k ? platy.url : '', slugify(n)]);
 }
 // karty każdej sieci, w kolejności alfabetu, bez karty samej sieci

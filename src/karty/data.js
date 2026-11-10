@@ -2,6 +2,7 @@
 // Karta jest publiczna, gdy ma `stan: gotowa`; link do karty jeszcze niegotowej zostaje samą nazwą.
 // WIKI_SZKICE=1 buduje także szkice, tylko do podglądu przed wypchnięciem.
 import R from '../rocznik/2026/rocznik.json';
+import D from './mozg-widoki.json';
 
 const notes = import.meta.glob('./*.md', { eager: true });
 const SZKICE = typeof process !== 'undefined' && process.env.WIKI_SZKICE === '1';
@@ -63,6 +64,9 @@ export const ALL = Object.entries(notes).map(([file, mod]) => {
     nw: strip(f.bez_sieci || ''),
     l: (f['materiały'] || []).map((x) => [x['tytuł'], x.url, x.czas ? String(x.czas) : '']),
     fig: (f.ryciny || []).map((x) => x.replace(/\.svg$/, '')),
+    // obszary Atlasu, w których leży miejsce karty (zmiana, bodziec, aktywność), każdy oparty na zdaniu karty; Atlas wymienia kartę przy
+    // zaznaczonym obszarze (2026-11-11)
+    obszary: (f.obszary || []).map((n) => { const i = (D.regiony || []).findIndex((r) => r[0] === n); if (i < 0) throw new Error('Karta ' + stem + ': nieznany obszar ' + n); return i + 1; }),
     ready: f.stan === 'gotowa',
   };
 });
@@ -85,6 +89,26 @@ export const card = (name) => byName[name];
 // Rodzina na karcie prowadzi do karty o tej nazwie, gdy taka jest (Predykcja, Interocepcja), a inaczej do akapitu jej osnowy w indeksie.
 export const rodzinaUrl = (r, k) => (byName[r] && byName[r] !== k ? byName[r].url : osOf[r] && !byName[r] ? INDEKS + '#' + slugify(osOf[r]) : '');
 export const netCard = (kod) => byName[NETCARD[kod]];
+
+// Anatomia stoi w Atlasie, wiki zostaje dla pojęć i przypadków (jego słowa, 2026-11-10: *I want to move the anatomy (networks/regions)
+// to the atlas page, and keep wiki for the conceptual things / cases etc... linking back and forth*, potem 2026-11-11: *ok, execute*).
+// Do Atlasu idą karty, które Atlas zaznacza: karta każdej sieci, karta obszaru z listy obszarów i dwa przeglądy, Sieci wielkoskalowe
+// bez zaznaczenia w trybie Sieci i Płaty mózgu bez zaznaczenia w trybie Obszary. Każda ma w Atlasie własną stronę z tym zaznaczeniem i
+// kartą pod widokami, a jej adres w wiki przekierowuje tam; `url` karty prowadzi już do Atlasu, więc każdy link do niej też.
+export const KARTA_OBSZARU = { 'istota biała': 'Istota szara i istota biała' };
+export const kartaObszaru = (n) => byName[KARTA_OBSZARU[n] || n.charAt(0).toUpperCase() + n.slice(1)];
+export const ATLAS = [];
+const doAtlasu = (k, s) => { if (k) { k.wiki = k.url; k.url = s.sciezka; k.atlas = s; } ATLAS.push({ k: k || null, ...s }); };
+doAtlasu(byName['Sieci wielkoskalowe'], { sciezka: '/atlas/', tryb: 'sieci' });
+doAtlasu(byName['Płaty mózgu'], { sciezka: '/atlas/' + slugify('Płaty mózgu') + '/', tryb: 'obszary' });
+Object.keys(NETN).forEach((kod) => { const k = netCard(kod); if (k) doAtlasu(k, { sciezka: '/atlas/' + k.id + '/', tryb: 'sieci', siec: kod }); });
+(D.regiony || []).forEach(([n], i) => { const k = kartaObszaru(n); if (k && !k.atlas) doAtlasu(k, { sciezka: '/atlas/' + k.id + '/', tryb: 'obszary', obszar: i + 1 }); });
+// adresy Atlasu dla skryptu: sieć i obszar ze swoją kartą, oba przeglądy
+export const STRONY = {
+  sieci: '/atlas/', obszary: ATLAS[1].sciezka,
+  siec: Object.fromEntries(ATLAS.filter((s) => s.siec).map((s) => [s.siec, s.sciezka])),
+  obszar: Object.fromEntries(ATLAS.filter((s) => s.obszar).map((s) => [s.obszar, s.sciezka])),
+};
 
 // Tekst z [[linkami]] na odcinki: link do karty gotowej, reszta zostaje słowami.
 // [[Karta|słowa]] linkuje kartę; {{Osnowa|słowa}} i {{#dyscyplina|słowa}} linkują jej miejsce w indeksie wiki (2026-10-22).

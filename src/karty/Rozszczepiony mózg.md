@@ -6,6 +6,8 @@ rodziny:
 - '[[Mózg języka]]'
 sieci: []
 bez_sieci: 'Przecięcie ciała modzelowatego rozdziela korę obu półkul, więc dotyczy wszystkich sieci naraz. Gazzaniga badał to rozdzielenie przez wzrok: kiedy obraz błyśnie na ułamek sekundy, bioinformacja z prawej połówki pola widzenia płynie wyłącznie do lewej półkuli, a z lewej połówki wyłącznie do prawej, poza pasem szerokim na 1–2 stopnie kąta widzenia wzdłuż środka pola (Gazzaniga 2000)<!--[s:gazzaniga2000-visual-field-to-opposite-hemisphere]-->.'
+obszary:
+- ciało modzelowate
 ryciny: []
 materiały:
 - tytuł: 'Joe Scott, The Surgery That Proved There Is No Free Will: kalozotomia i dwie półkule'

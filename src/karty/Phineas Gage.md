@@ -10,6 +10,10 @@ sieci:
 - kod: DMN
   powód: 'Wybierasz z myślą o skutkach za rok i polegasz przy tym na Modelach Mentalnych przyszłości: współcześni pacjenci z uszkodzeniem brzuszno-przyśrodkowej kory przedczołowej wybierali w grze kartami tak, jakby kierowały nimi tylko natychmiastowe korzyści (Bechara i in. 1994)<!--[s:bechara1994-oblivious-to-future-consequences]-->, a przyśrodkowa kora przedczołowa to rdzeń sieci domyślnej (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-mfpn-core-and-limbic]-->.'
 bez_sieci: ''
+obszary:
+- kora okołooczodołowa
+- biegun skroniowy
+- wyspa
 ryciny: []
 materiały:
 - tytuł: 'The Royal Society, The strange story of Phineas Gage'

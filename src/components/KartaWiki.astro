@@ -3,11 +3,12 @@
 import { template } from '../rocznik/views/karta.js';
 import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, classesOf, slugify, INDEKS, rodzinaUrl } from '../karty/data.js';
 import { KOLOR } from '../karty/mozg.js';
-import { regiony } from '../karty/widoki.js';
 import '../styles/wiki.css';
 import TerminDymek from './TerminDymek.astro';
-interface Props { k: any; wstep?: boolean }
-const { k, wstep = false } = Astro.props;
+// wAtlasie: ta sama karta pod widokami Atlasu, bez ścieżki, bez przełącznika animacji i dymka (Atlas ma własne), z tytułem jako h2 pod
+// tytułem Atlasu i bez linku do Atlasu
+interface Props { k: any; wstep?: boolean; wAtlasie?: boolean }
+const { k, wstep = false, wAtlasie = false } = Astro.props;
 const ink = INK[k.g], base = BASE[k.g];
 const group = GRUPY[k.g] ? GRUPY[k.g].charAt(0).toUpperCase() + GRUPY[k.g].slice(1) : 'Wiki';
 
@@ -56,15 +57,15 @@ const nets = k.nets.map(([kod, why]) => ({ kod, name: NETN[kod] || kod, why, to:
 // (jego słowa, 2026-11-10: *lets remove the graphics of the sieci mozgowe from the wiki. We will link them to the atlas, and link back
 // from atlas to the wiki*). Rycina żywa się rusza, więc jej karta ma przełącznik animacji (2026-11-10: *Animations off should switch
 // off all animations*).
-const ruch = kurs || items.some((b) => b.zywa);
-// sieci karty w Atlasie: adres #siec-sn+dmn otwiera Atlas z nimi zaznaczonymi; karta obszaru z Atlasu otwiera go na swoim obszarze
-const obszar = regiony().find((r) => r[1] === k.url);
-const doAtlasu = '/atlas/' + (obszar ? '#obszar-' + obszar[4] : nets.length ? '#siec-' + nets.map((n) => n.kod.toLowerCase()).join('+') : '');
+const ruch = !wAtlasie && (kurs || items.some((b) => b.zywa));
+// sieci karty w Atlasie: jedna sieć otwiera stronę swojej karty w Atlasie, kilka sieci adres #siec-sn+dmn z nimi zaznaczonymi
+const doAtlasu = nets.length === 1 && nets[0].to ? nets[0].to.url : '/atlas/' + (nets.length ? '#siec-' + nets.map((n) => n.kod.toLowerCase()).join('+') : '');
+const Owijka = wAtlasie ? 'section' : 'article';
 ---
   {ruch && <script is:inline>(function(){var z=null;try{z=localStorage.getItem('kogni-animacje')}catch(e){}var c=z?z==='off':matchMedia('(prefers-reduced-motion: reduce)').matches;if(c)document.documentElement.classList.add('roj-cicho')})();</script>}
   {ruch && <aside aria-label="Animacje"><button type="button" class="wk-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="wk-anim-tor" aria-hidden="true"></span></button></aside>}
-  <article class={'wk' + (wstep ? ' wk-wstep' : '')} style={'--ink:' + ink + ';--base:' + base}>
-  <nav aria-label="Ścieżka" class="wk-path">
+  <Owijka class={'wk' + (wstep ? ' wk-wstep' : '') + (wAtlasie ? ' at-karta' : '')} style={'--ink:' + ink + ';--base:' + base} data-strona={wAtlasie ? k.url : undefined} aria-label={wAtlasie ? k.h : undefined}>
+  {!wAtlasie && <nav aria-label="Ścieżka" class="wk-path">
     {k.grupa ? (
       // karta dyscypliny: ścieżka od jej grupy na mapie osnów; karta grupy stoi sama (2026-10-23)
       k.grupa === 'wiki'
@@ -75,12 +76,12 @@ const doAtlasu = '/atlas/' + (obszar ? '#obszar-' + obszar[4] : nets.length ? '#
     ) : (
       <Fragment><a href={INDEKS + '#' + slugify(GRUPY[k.g])}>{group}</a><span aria-hidden="true"> › </span><a href={INDEKS + '#' + slugify(k.o)}>{k.o}</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
     )}
-  </nav>
+  </nav>}
   <div class="wk-grid wk-grid-karta">
     <div class="wk-col wk-lewa">
       <section aria-label="Termin" class="wk-box wk-mysl">
         <h2>Termin</h2>
-        <h1>{k.h}</h1>
+        {wAtlasie ? <h2 class="wk-h1">{k.h}</h2> : <h1>{k.h}</h1>}
         {rodz.length > 0 && <p class="wk-rodziny">{rodz.map((r, i) => [i ? ' · ' : '', rodzinaUrl(r, k) ? <a href={rodzinaUrl(r, k)}>{r}</a> : r])}</p>}
         {zaj.length > 0 && <p class="wk-zaj">Na zajęciach {zaj.map((z, i) => [i ? ' · ' : '', <a href={z.url} style={'color:' + (z.kurs === 'Intro' ? '#f0c060' : '#edbbc5')}>{z.label.split(':')[0]}</a>])}</p>}
       </section>
@@ -115,7 +116,7 @@ const doAtlasu = '/atlas/' + (obszar ? '#obszar-' + obszar[4] : nets.length ? '#
             </dl>
           </Fragment>
         ) : <p class="wk-p">{k.nw}</p>}
-        <p class="wk-do-atlasu"><a href={doAtlasu}>{nets.length || obszar ? 'Zobacz w atlasie' : 'Atlas mózgu'}</a></p>
+        {!wAtlasie && <p class="wk-do-atlasu"><a href={doAtlasu}>{nets.length ? 'Zobacz w atlasie' : 'Atlas mózgu'}</a></p>}
       </section>
       )}
       {kinds.length > 0 && (
@@ -143,11 +144,6 @@ const doAtlasu = '/atlas/' + (obszar ? '#obszar-' + obszar[4] : nets.length ? '#
       )}
     </div>
   </div>
-</article>
-<TerminDymek />
-<script>
-  import { mozg } from '../rocznik/2026/ryciny/zywe/mozg.js';
-  document.querySelectorAll('.wz-zywa[data-zywa="mozg"]').forEach((el) => mozg(el as HTMLElement));
-  import { iskraKursu } from '../karty/iskra.js';
-  iskraKursu();
-</script>
+</Owijka>
+{/* skrypty karty (rycina żywa, Iskra) wołają strony wiki, bo Atlas woła je inaczej: karta zmienia się w nim bez przeładowania */}
+{!wAtlasie && <TerminDymek />}

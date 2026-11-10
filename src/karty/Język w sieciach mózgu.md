@@ -17,6 +17,13 @@ sieci:
 - kod: DMN
   powód: 'Słuchasz rozmówczyni: bruzda skroniowa górna reaguje na ludzki głos i język (Pitcher i Ungerleider 2021)<!--[s:pitcher2021-sts-voice-language]-->, a razem z dolnym zakrętem czołowym i środkowym zakrętem skroniowym należy do sieci domyślnej poza jej rdzeniem (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-mfpn-includes-ifg]-->.'
 bez_sieci: ''
+obszary:
+- zakręt czołowy dolny
+- zakręt skroniowy górny
+- zakręt skroniowy środkowy
+- zakręt przedśrodkowy
+- wyspa
+- płacik ciemieniowy górny
 ryciny: []
 materiały:
 - tytuł: 'SciShow Psych, What We Often Get Wrong About the Brain''s "Language Centers"'

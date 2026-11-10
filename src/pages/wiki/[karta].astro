@@ -7,7 +7,30 @@ export function getStaticPaths() {
   return KARTY.map((k) => ({ params: { karta: k.id }, props: { k } }));
 }
 const { k } = Astro.props;
+// karta anatomii stoi w Atlasie (2026-11-11), więc jej stary adres w wiki przekierowuje tam, z ?zapytaniem i #kotwicą, jak stare adresy
+// strony; strona przekierowania nie trafia do mapy witryny
+const to = k.atlas ? k.url : '';
 ---
-<Base title={k.h + ' · wiki · kogni.pl'} activePage="wiki" description={String(k.def || '').replace(/<!--\[[so]:[^\]]*\]-->/g, '').trim()}>
-  <KartaWiki k={k}>{k.h === 'kogni.pl' && <IndeksWiki slot="indeks" />}</KartaWiki>
-</Base>
+{to ? (
+  <html lang="pl">
+  <head>
+  <meta charset="utf-8">
+  <title>kogni.pl</title>
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href={'https://kogni.pl' + to}>
+  <meta http-equiv="refresh" content={'0; url=' + to}>
+  <script is:inline define:vars={{ to }}>location.replace(to + location.search + location.hash);</script>
+  </head>
+  <body><p><a href={to}>{'kogni.pl' + to}</a></p></body>
+  </html>
+) : (
+  <Base title={k.h + ' · wiki · kogni.pl'} activePage="wiki" description={String(k.def || '').replace(/<!--\[[so]:[^\]]*\]-->/g, '').trim()}>
+    <KartaWiki k={k}>{k.h === 'kogni.pl' && <IndeksWiki slot="indeks" />}</KartaWiki>
+  </Base>
+)}
+<script>
+  import { mozg } from '../../rocznik/2026/ryciny/zywe/mozg.js';
+  document.querySelectorAll('.wz-zywa[data-zywa="mozg"]').forEach((el) => mozg(el as HTMLElement));
+  import { iskraKursu } from '../../karty/iskra.js';
+  iskraKursu();
+</script>

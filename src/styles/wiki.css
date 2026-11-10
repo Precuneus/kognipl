@@ -10,7 +10,9 @@
 .wk-box h2{margin:0 0 10px;font-size:11.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#a09888}
 .wk-mysl{border-color:color-mix(in srgb,var(--ink) 50%,transparent);padding:26px 30px 28px;box-shadow:0 18px 40px rgba(0,0,0,.45)}
 .wk-mysl h2{color:var(--ink)}
-.wk-mysl h1{margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:44px;line-height:1.12;color:#e2ddd4}
+.wk-mysl h1,.wk-mysl .wk-h1{margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:44px;line-height:1.12;color:#e2ddd4}
+/* tytuł karty w Atlasie jest h2 pod tytułem Atlasu, więc zrzuca krój etykiet pudełek */
+.wk-mysl .wk-h1{text-transform:none;letter-spacing:normal}
 .wk-rodziny{margin:10px 0 0;font-size:14px;color:var(--ink)}
 .wk-rodziny a{color:inherit;text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wk-zaj{margin:6px 0 0;font-size:14px;color:#a09888}
@@ -46,6 +48,13 @@
 .at-sciezka{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 24px}
 .at-wroc{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none;display:inline-block;padding:12px 0;margin:-12px 0}
 .at-wroc[hidden]{display:none}
+/* karta zaznaczenia pod widokami Atlasu, w szablonie karty wiki, bez odstępów strony; przy adresie z #siec-… albo #obszar-… czeka
+   ukryta, aż skrypt postawi kartę zaznaczenia w miejscu przeglądu (2026-11-11) */
+.wk.at-karta{max-width:none;margin:0;padding:0}
+.at-karta .wk-grid{margin-top:0}
+.at-miejsce{display:flex;flex-direction:column;gap:24px}
+.at-miejsce:empty{display:none}
+html.at-czeka .at-miejsce{visibility:hidden}
 /* kolejność kart (hasło pierwsze na wąskim ekranie) nie dotyczy Atlasu: tytuł zostaje nad widokami */
 .at-grid>.wk-mysl{order:0}
 .at-glowa .wk-tu{margin-bottom:10px;min-height:22px}
@@ -113,7 +122,7 @@
 .wk-chip{display:inline-flex;align-items:center;text-decoration:none;font-size:13px;min-height:36px;padding:6px 14px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);color:var(--c)}
 .wk-wstep{margin:0;padding:0 0 32px}
 @media (max-width:960px){.wk-grid{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:720px){.wk{margin:0 20px;padding:28px 0 64px;max-width:none}.wk.wk-wstep{margin:0;padding:0 0 24px}.wk-mysl h1{font-size:34px}.wk-box{padding:18px 18px}}
+@media (max-width:720px){.wk{margin:0 20px;padding:28px 0 64px;max-width:none}.wk.at-karta{margin:0;padding:0}.wk.wk-wstep{margin:0;padding:0 0 24px}.wk-mysl h1,.wk-mysl .wk-h1{font-size:34px}.wk-box{padding:18px 18px}}
 /* żywa rycina, wspólna dla wpisów i kart (jego słowo, 2026-11-02: *updating one animation updates the other one also*); przycisk zaskoczenia
    na środku pod ryciną, jako wezwanie do działania (*Move the zaskoczenie button to the center bottom, make it more CTA*) */
 .wz-zywa{position:relative;width:100%}

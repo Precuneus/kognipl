@@ -8,6 +8,8 @@ sieci:
 - kod: SMN
   powód: 'Ruszasz ręką w wybranej przez siebie chwili: wczesna część potencjału gotowości, od około 2 sekund przed ruchem, to aktywność pola przeddodatkowego ruchowego (ang. pre-supplementary motor area, pre-SMA), dodatkowego pola ruchowego (ang. supplementary motor area, SMA), a zaraz potem obustronnie bocznej kory przedruchowej; późna, stromiejąca część, od około 400 milisekund przed ruchem, to aktywność przeciwległej pierwszorzędowej kory ruchowej i bocznej kory przedruchowej (Shibasaki i Hallett 2006)<!--[s:shibasaki2006-early-late-bp-sources]-->.'
 bez_sieci: ''
+obszary:
+- zakręt obręczy
 ryciny:
 - rp.svg
 materiały:

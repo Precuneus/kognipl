@@ -6,6 +6,8 @@ rodziny:
 - '[[Fizjologia i zdrowie ciała]]'
 sieci: []
 bez_sieci: 'Propozycja Llinása i Roya obejmuje cały mózg (Llinás i Roy 2009)<!--[s:llinas2009-brain-for-intelligent-motricity]-->, więc dotyczy wszystkich sieci naraz.'
+obszary:
+- hipokamp
 ryciny: []
 materiały:
 - tytuł: 'Kiana Docherty, What daily exercise does to your mind: myślenie wyewoluowało z ruchu'

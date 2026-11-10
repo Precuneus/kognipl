@@ -2,7 +2,9 @@
 // który zostaje ciepłą plamą światła; mruga co jakiś czas. Na górze strony wraca do logo (jego słowo o stronie startowej: *when
 // the page is at the top, Iskra should be in the logo*). Bez ruchu (przełącznik albo ustawienie systemu) siedzi od razu przy akapicie,
 // a plama świeci od początku.
-export function iskraKursu() {
+// zmienna: strona, na której karta zmienia się bez przeładowania (Atlas, 2026-11-11); funkcja zwraca wtedy odśwież(), które szuka
+// akapitu kursu od nowa po każdej zmianie karty
+export function iskraKursu({ zmienna = false } = {}) {
   const cicho = document.documentElement.classList.contains('roj-cicho');
   // przełącznik działa także na kartach bez akapitu kursu, gdzie rusza się tylko ziarno mózgu
   const btn = document.querySelector('.wk-anim');
@@ -13,8 +15,8 @@ export function iskraKursu() {
       location.reload();
     });
   }
-  const kurs = document.querySelector('.wk-kurs');
-  if (!kurs) return;
+  let kurs = document.querySelector('.wk-kurs');
+  if (!kurs && !zmienna) return () => {};
   const knot = document.querySelector('.rocznik-knot');
 
   const is = document.createElement('span');
@@ -28,7 +30,8 @@ export function iskraKursu() {
   const docXY = (el, fx, fy) => { const r = el.getBoundingClientRect(); return [r.left + scrollX + r.width * fx, r.top + scrollY + r.height * fy]; };
   const home = () => (knot ? docXY(knot, 0.5, 0.5) : [scrollX + 24, 24]);
   // przy lewym górnym rogu akapitu, tuż poza plamą, jak snop padający z góry
-  const perch = () => { const r = kurs.getBoundingClientRect(); return [r.left + scrollX + 2, r.top + scrollY - S * 0.9]; };
+  const perch = () => { if (!kurs) return home(); const r = kurs.getBoundingClientRect(); return [r.left + scrollX + 2, r.top + scrollY - S * 0.9]; };
+  const widacAkapit = () => { if (!kurs) return false; const r = kurs.getBoundingClientRect(); return r.top < innerHeight * 0.75 && r.bottom > innerHeight * 0.25; };
   let pos = home();
   const place = (p) => { pos = p; is.style.left = (p[0] - S / 2) + 'px'; is.style.top = (p[1] - S / 2) + 'px'; };
 
@@ -44,22 +47,22 @@ export function iskraKursu() {
   if (cicho) {
     // bez ruchu Iskra jest w jednym miejscu naraz, jak z ruchem: przy akapicie, kiedy go widać, w logo na górze strony; zmiana
     // miejsca jest natychmiastowa, a plama świeci cały czas (audyt 2026-11-09: dwie kropki naraz)
-    kurs.classList.add('lit');
+    if (kurs) kurs.classList.add('lit');
     const at = (w) => {
       where = w;
       if (w === 'kurs') { place(perch()); is.classList.add('widac'); if (knot) knot.style.visibility = 'hidden'; }
       else { is.classList.remove('widac'); if (knot) knot.style.visibility = ''; }
     };
     const still = () => {
-      const r = kurs.getBoundingClientRect();
-      const inView = r.top < innerHeight * 0.75 && r.bottom > innerHeight * 0.25;
+      const inView = widacAkapit();
       if (inView && where !== 'kurs') at('kurs');
-      else if (!inView && scrollY < 60 && where === 'kurs') at('home');
+      else if (!inView && (scrollY < 60 || !kurs) && where === 'kurs') at('home');
+      else if (where === 'kurs') place(perch());
     };
     addEventListener('scroll', still, { passive: true });
     addEventListener('resize', () => { if (where === 'kurs') place(perch()); });
     still();
-    return;
+    return () => { kurs = document.querySelector('.wk-kurs'); if (kurs) kurs.classList.add('lit'); still(); };
   }
 
   place(home());
@@ -87,23 +90,30 @@ export function iskraKursu() {
     is.classList.add('widac');
     blink();
     setTimeout(() => blink(), 320);
-    setTimeout(() => fly(perch(), () => { where = 'kurs'; kurs.classList.add('lit'); blinks(); }), 650);
+    setTimeout(() => fly(perch(), () => { where = 'kurs'; if (kurs) kurs.classList.add('lit'); blinks(); }), 650);
   };
   const back = () => {
     where = 'lot';
-    kurs.classList.remove('lit');
+    if (kurs) kurs.classList.remove('lit');
     fly(home(), () => { where = 'home'; is.classList.remove('widac'); if (knot) knot.style.visibility = ''; });
   };
 
   let tick = 0;
   const check = () => {
     tick = 0;
-    const r = kurs.getBoundingClientRect();
-    const inView = r.top < innerHeight * 0.75 && r.bottom > innerHeight * 0.25;
+    const inView = widacAkapit();
     if (inView && where === 'home') leave();
-    else if (!inView && scrollY < 60 && where === 'kurs') back();
+    else if (!inView && (scrollY < 60 || !kurs) && where === 'kurs') back();
   };
   addEventListener('scroll', () => { if (!tick) tick = requestAnimationFrame(check); }, { passive: true });
   addEventListener('resize', () => { if (where === 'kurs') place(perch()); else if (where === 'home') place(home()); });
   check();
+  // nowa karta: Iskra przelatuje na jej akapit kursu albo wraca do logo, kiedy karta go nie ma
+  return () => {
+    const nowy = document.querySelector('.wk-kurs');
+    if (nowy === kurs) return;
+    kurs = nowy;
+    if (where === 'kurs') { if (kurs && widacAkapit()) { kurs.classList.add('lit'); fly(perch()); } else back(); }
+    else check();
+  };
 }

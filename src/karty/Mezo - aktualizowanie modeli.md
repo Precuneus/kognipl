@@ -13,6 +13,8 @@ sieci:
 - kod: DMN
   powód: 'Kształtują się Twoje Modele Mentalne przeciwnika, jego zamiarów i nawyków: to aktywność sieci domyślnej, której grzbietowo-przyśrodkowa część pokrywa się w mapach metaanalitycznych z mentalizacją i teorią umysłu (Andrews-Hanna, Smallwood i Spreng 2014)<!--[s:andrewshanna2014-dorsal-medial-mentalizing]-->.'
 bez_sieci: ''
+obszary:
+- zakręt obręczy
 ryciny: []
 materiały:
 - tytuł: 'Surnex: warstwa mezo, prawdopodobieństwo i czytanie przeciwnika'

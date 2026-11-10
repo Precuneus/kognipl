@@ -11,6 +11,8 @@ sieci:
 - kod: VIS
   powód: 'Ogarniasz wzrokiem całą scenę, a Twoje Modele Mentalne sceny to aktywność między innymi sieci wzrokowej, której rdzeń tworzy kora płata potylicznego (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-on-core-occipital]-->. Zespół Bálinta pojawia się najczęściej po obustronnym uszkodzeniu obszaru potyliczno-ciemieniowego (Denburg i in. 2009)<!--[s:denburg2009-balint-three-components]-->.'
 bez_sieci: ''
+obszary:
+- płacik ciemieniowy górny
 ryciny: []
 materiały:
 - tytuł: 'Balint Syndrome'

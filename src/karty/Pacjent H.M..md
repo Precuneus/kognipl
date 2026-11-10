@@ -10,6 +10,8 @@ sieci:
 - kod: SMN
   powód: 'Ćwiczysz ruch ręki, którą widzisz tylko w lustrze, a Twoje Modele Mentalne tego ruchu kształtują się z każdą próbą. U H.M. nabywanie i utrzymanie takiej wprawy wzrokowo-ruchowej opierało się według Corkin na obszarach poza przyśrodkowym płatem skroniowym (Corkin 2002)<!--[s:corkin2002-visuomotor-skill-beyond-mtl]-->, prawdopodobnie na sieci czuciowo-ruchowej, której rdzeń tworzą kora ruchowa i somatosensoryczna (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-pn-core-motor-somatosensory]-->.'
 bez_sieci: ''
+obszary:
+- hipokamp
 ryciny: []
 materiały:
 - tytuł: 'SciShow, How Do You Make Memories?'

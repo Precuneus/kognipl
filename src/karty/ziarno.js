@@ -78,6 +78,12 @@ export async function ziarno() {
   // pokazują, a sieci karty prowadzą do atlasu linkiem pod listą
   const ATLAS = mozg.hasAttribute('data-atlas');
   const KARTY_SIECI = JSON.parse(mozg.dataset.kartySieci || '{}');
+  // karty obszaru: karty, których miejsce leży w tym obszarze (pole `obszary` karty), numer obszaru jak w mapie obszarów
+  const KARTY_OBSZARU = JSON.parse(mozg.dataset.kartyObszaru || '{}');
+  // strony Atlasu (2026-11-11, jego *ok, execute* na anatomię w Atlasie): sieć i obszar z własną kartą mają adres /atlas/<karta>/,
+  // przeglądy /atlas/ i /atlas/platy-mozgu/; START to zaznaczenie strony, na której stoi czytelnik
+  const STRONY = JSON.parse(mozg.dataset.strony || '{"siec":{},"obszar":{}}');
+  const START = JSON.parse(mozg.dataset.start || '{}');
   const BIALA = REG.findIndex((r) => r[0] === 'istota biała') + 1;
   const WSZYSTKIE = NETS.slice(0, N - 0).filter((n) => n !== 'X');
   const LIT = new Set((mozg.dataset.lit || '').split(',').filter(Boolean));
@@ -347,13 +353,22 @@ export async function ziarno() {
       if (o[2]) czesci.push(link(o[3], esc(o[2])));
       sieciObszaru(wybor.n).forEach((n) => czesci.push(link(URL[n], kodHtml(n))));
       tu.innerHTML = czesci.join(' · ');
-      if (karty) karty.hidden = true;
+      const lista = KARTY_OBSZARU[wybor.n] || [];
+      if (karty) {
+        karty.querySelector('.wk-chips').innerHTML = lista.map(([h, u, c]) => '<a href="' + esc(u) + '" class="wk-chip" style="--c:' + c + '">' + esc(h) + '</a>').join('');
+        karty.hidden = !lista.length;
+      }
     }
     tu.hidden = false;
   }
+  // strona zaznaczenia: sieć albo obszar z kartą ma swoją stronę, brak zaznaczenia przegląd trybu, reszta adres /atlas/#siec-…
+  // albo /atlas/#obszar-…; zaznaczenie zmienia adres bez nowego wpisu w historii, jak dotąd
+  const stronaWyboru = (w, t) => (!w ? (t === 'obszary' ? STRONY.obszary : STRONY.sieci) : w.typ === 'siec' ? (w.kody.length === 1 ? STRONY.siec[w.kody[0]] : '') : STRONY.obszar[w.n]) || '';
+  const kartyWyboru = (w, t) => (w && w.typ === 'siec' && w.kody.length > 1 ? w.kody.map((n) => STRONY.siec[n]).filter(Boolean) : [stronaWyboru(w, t)].filter(Boolean));
   function adres() {
-    const h = !wybor ? '' : wybor.typ === 'siec' ? '#siec-' + wybor.kody.map((n) => n.toLowerCase()).join('+') : '#obszar-' + REG[wybor.n - 1][4];
-    history.replaceState(null, '', location.pathname + location.search + h);
+    const p = stronaWyboru(wybor, tryb);
+    const h = p ? '' : wybor.typ === 'siec' ? '#siec-' + wybor.kody.map((n) => n.toLowerCase()).join('+') : '#obszar-' + REG[wybor.n - 1][4];
+    history.replaceState(null, '', (p || STRONY.sieci || location.pathname) + h);
   }
   function ustawTryb(t) {
     tryb = t;
@@ -361,7 +376,7 @@ export async function ziarno() {
     mozg.classList.toggle('at-obszary', t === 'obszary');
     if (lista) lista.classList.toggle('at-lista-off', t !== 'obszary');
   }
-  function wybierz(w, bezAdresu) {
+  function wybierz(w, bezAdresu, przewin) {
     wybor = w;
     LIT.clear();
     (w && w.typ === 'siec' ? w.kody : WSZYSTKIE).forEach((n) => LIT.add(n));
@@ -369,6 +384,9 @@ export async function ziarno() {
     tagi(); panel(); if (!bezAdresu) adres();
     if (wybieraj) wybieraj.value = w && w.typ === 'obszar' ? String(w.n) : '';
     rysujWszystko();
+    // karta zaznaczenia staje pod widokami: wczytuje ją strona Atlasu (jego słowa, 2026-11-10: *below the brains the card of this
+    // network/region should be visible. And then below the other cards*)
+    if (ATLAS) mozg.dispatchEvent(new CustomEvent('atlas-wybor', { detail: { karty: kartyWyboru(w, tryb), przewin: !!przewin } }));
   }
   const tenSam = (a, b) => a && b && a.typ === b.typ && (a.typ === 'obszar' ? a.n === b.n : a.kody.join() === b.kody.join());
   function kliknij(v, e) {
@@ -381,16 +399,45 @@ export async function ziarno() {
   widoki.forEach(uloz);
   if (ATLAS) {
     // adres #siec-dmn, #siec-sn+dmn albo #obszar-wyspa otwiera atlas z tym zaznaczeniem (linki z kart)
-    const zAdresu = () => {
+    // zaznaczenie z adresu: #siec-… albo #obszar-… z linku, inaczej strona karty albo przegląd; undefined, gdy adres nie jest Atlasem
+    const zeStrony = (sciezka, hash) => {
       let h = '';
-      try { h = decodeURIComponent(location.hash); } catch (e) {} // zepsuty adres niczego nie zaznacza (audyt Atlasu, 2026-11-10)
-      let w = null;
+      try { h = decodeURIComponent(hash); } catch (e) {} // zepsuty adres niczego nie zaznacza (audyt Atlasu, 2026-11-10)
       const ms = /^#siec-([a-z+]+)$/.exec(h), mo = /^#obszar-([a-z0-9-]+)$/.exec(h);
-      if (ms) { const kody = ms[1].split('+').map((x) => x.toUpperCase()).filter((x) => WSZYSTKIE.includes(x)); if (kody.length) w = { typ: 'siec', kody }; }
-      if (mo) { const n = REG.findIndex((r) => r[4] === mo[1]) + 1; if (n) w = { typ: 'obszar', n }; }
-      ustawTryb(w && w.typ === 'obszar' ? 'obszary' : 'sieci'); hotReg = 0;
-      wybierz(w, true);
+      if (sciezka === STRONY.sieci && (ms || mo)) {
+        if (ms) { const kody = ms[1].split('+').map((x) => x.toUpperCase()).filter((x) => WSZYSTKIE.includes(x)); if (kody.length) return { w: { typ: 'siec', kody }, t: 'sieci' }; }
+        if (mo) { const n = REG.findIndex((r) => r[4] === mo[1]) + 1; if (n) return { w: { typ: 'obszar', n }, t: 'obszary' }; }
+        return { w: null, t: 'sieci' };
+      }
+      if (sciezka === STRONY.sieci) return { w: null, t: 'sieci' };
+      if (sciezka === STRONY.obszary) return { w: null, t: 'obszary' };
+      const kod = Object.keys(STRONY.siec).find((n) => STRONY.siec[n] === sciezka);
+      if (kod) return { w: { typ: 'siec', kody: [kod] }, t: 'sieci' };
+      const n = Object.keys(STRONY.obszar).find((x) => STRONY.obszar[x] === sciezka);
+      if (n) return { w: { typ: 'obszar', n: Number(n) }, t: 'obszary' };
+      return undefined;
     };
+    const zAdresu = () => {
+      const z = zeStrony(location.pathname, location.hash) || { w: null, t: START.tryb || 'sieci' };
+      ustawTryb(z.t); hotReg = 0;
+      wybierz(z.w, true);
+    };
+    // link do strony Atlasu w samym Atlasie, z karty pod widokami, z listy kart albo z wiersza nad tytułem, zaznacza na miejscu i
+    // zmienia kartę bez przeładowania; link z karty albo z listy kart przewija do nowej karty. Nasłuch na oknie, po dymku terminu:
+    // pierwsze stuknięcie w termin otwiera dymek i wtedy link czeka
+    addEventListener('click', (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = e.target.closest && e.target.closest('a[href]');
+      if (!a || a.target === '_blank') return;
+      const u = new globalThis.URL(a.href, location.href);
+      if (u.origin !== location.origin) return;
+      const z = zeStrony(u.pathname, u.hash);
+      if (!z) return;
+      e.preventDefault();
+      if (z.t !== tryb) ustawTryb(z.t);
+      hotReg = 0;
+      wybierz(z.w, false, !!a.closest('.at-karta, .at-karty, .td'));
+    });
     zAdresu();
     // wstecz, dalej i link do Atlasu z samego Atlasu zmieniają tylko adres: zaznaczenie idzie za nim
     addEventListener('hashchange', zAdresu);
