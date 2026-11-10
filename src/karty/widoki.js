@@ -1,5 +1,5 @@
-// Widoki mózgu na stronie: jeden budowniczy dla rzędu na karcie i dla atlasu (2026-11-10: *lets make an "Atlas" subpage, next to the
-// wiki*). Ziarno rysuje `src/karty/ziarno.js` na płótnie pod liniami, z mapy sieci `<plik>-sieci.png`, mapy obszarów `<plik>-obszary.png`
+// Widoki mózgu w Atlasie, jedynym miejscu, gdzie strona rysuje mózg (2026-11-10: *lets make an "Atlas" subpage, next to the wiki*, potem
+// *lets remove the graphics of the sieci mozgowe from the wiki*). Ziarno rysuje `src/karty/ziarno.js` na płótnie pod liniami, z mapy sieci `<plik>-sieci.png`, mapy obszarów `<plik>-obszary.png`
 // i ośrodków `huby` z `mozg-widoki.json`; wielokąty obszarów sieci zostają linkami dla klawiatury i czytnika ekranu.
 import D from './mozg-widoki.json';
 import { NETN, netCard, card, slugify } from './data.js';

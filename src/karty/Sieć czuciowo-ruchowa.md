@@ -1,6 +1,5 @@
 ---
 tytuł: Sieć czuciowo-ruchowa
-mózg: tak
 osnowa: '[[Sieci mózgu i predykcja]]'
 rodziny:
 - '[[Sieci wielkoskalowe]]'

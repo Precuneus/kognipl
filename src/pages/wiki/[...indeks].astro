@@ -1,14 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
 import KartaWiki from '../../components/KartaWiki.astro';
-import { template } from '../../rocznik/views/karta.js';
 import { INK, WIKI_ON, KARTY, NETN, card, netCard, segs } from '../../karty/data.js';
 import { KOLOR } from '../../karty/mozg.js';
 // pierwszy artykuł wiki: karta Kognitywistyka w szablonie karty (jego słowo, 2026-10-22)
 const pierwsza = card('Kognitywistyka');
 
-// Mapa sieci: mózg z karty, każda sieć w kolorze ze strony startowej; klik pokazuje karty,
-// które wskazują tę sieć w części Sieć mózgowa (jego, 2026-10-23: *Build the brain index first*).
+// Lista sieci: każda sieć w kolorze ze strony startowej, z liczbą kart, które ją wskazują w części Sieć mózgowa (jego, 2026-10-23:
+// *Build the brain index first*); rysunek mózgu z tej listy przeszedł do Atlasu (2026-11-10).
 // osiem sieci modelu strony; sieć limbiczna osobno od domyślnej (jego słowo, 2026-11-09)
 // kolory sieci ze strony startowej (mozg.js, 2026-10-23)
 const ROLA = { VIS: '„Widzę.”', SMN: '„Czuję ciało i się ruszam.”', DAN: '„Koordynuję oko i rękę.”', VAN: '„Coś przerywa plan.”', SN: '„Coś zagraża schematowi ciała.”', CN: '„Dążę do celu.”', LIM: '„Coś mnie przyciąga albo odpycha.”', DMN: '„Ja, przeszłość i przyszłość, inni ludzie.”' };
@@ -20,11 +19,6 @@ const SIECI = Object.keys(KOLOR).map((kod) => {
     .map((k) => ({ h: k.h, url: k.url, g: k.g, why: plain((k.nets.find((n) => n[0] === kod && !n[2]) || k.nets.find((n) => n[0] === kod))[1]) }));
   return { kod, nazwa: NETN[kod], kolor: KOLOR[kod], rola: ROLA[kod], own, karty };
 }).filter((s) => s.karty.length);
-const shown = new Set(SIECI.map((s) => s.kod));
-const mapa = template.match(/<svg viewBox="10 4 236 340"[\s\S]*?<\/g><\/svg>/)[0]
-  .replace(/<svg [^>]*>/, '<svg viewBox="10 4 236 340" class="sieci-svg wn-svg" data-wn role="img" aria-label="Sieci mózgu z boku i od środka">')
-  .replace(/style="\{\{bn\.(\w+)\}\}"/g, (_, n) => { return shown.has(n) ? 'class="nb" data-k="' + n + '" style="fill:' + KOLOR[n] + '"' : 'style="display:none"'; })
-  .replace(/style="\{\{bl\.(\w+)\}\}"/g, (_, n) => (shown.has(n) ? 'class="nl" data-k="' + n + '"' : 'style="display:none"'));
 // Indeks powstaje dopiero, gdy choć jedna karta jest gotowa.
 export function getStaticPaths() {
   return WIKI_ON ? [{ params: { indeks: undefined } }] : [];
@@ -32,16 +26,15 @@ export function getStaticPaths() {
 ---
 <Base title="Wiki · kogni.pl" activePage="wiki" description={String((pierwsza && pierwsza.def) || '').replace(/<!--\[[so]:[^\]]*\]-->/g, '').trim()}>
   <div class="wi">
-    {/* mapa sieci w prawym panelu pierwszego artykułu, w miejscu jego części Sieć mózgowa (jego słowo, 2026-10-23: *embed the sieci mozgowe in the wiki main page to the panel to the right*) */}
+    {/* lista sieci w prawym panelu pierwszego artykułu, w miejscu jego części Sieć mózgowa (jego słowo, 2026-10-23: *embed the sieci mozgowe in the wiki main page to the panel to the right*) */}
     {pierwsza ? (
       <KartaWiki k={pierwsza} wstep>
         {SIECI.length > 0 && (
           <section slot="siec" class="wk-box wn" id="sieci" aria-labelledby="wn-h">
             <h2 id="wn-h">Sieci mózgu</h2>
-            {/* mapa sieci prowadzi do Atlasu, gdzie widać każdą sieć i każdy obszar we wszystkich widokach (jego słowa, 2026-11-10: *lets make an
-                "Atlas" subpage, next to the wiki. And link between them!*) */}
+            {/* lista sieci bez rysunku: mózg stoi w Atlasie, a nazwa sieci go otwiera (jego słowa, 2026-11-10: *lets remove the graphics of the
+                sieci mozgowe from the wiki. We will link them to the atlas*) */}
             <p class="wn-lead">Wybierz sieć, żeby zobaczyć ją w atlasie.</p>
-            <a href="/atlas/" class="wn-fig wn-atlas" aria-label="Atlas mózgu"><Fragment set:html={mapa} /></a>
             <ul class="sieci-legend wn-legend" aria-label="Sieci mózgu">
               {/* link do karty sieci obok jej nazwy, bez okna pod listą (jego słowo, 2026-11-09: *the link to the given network should be next
                   to its name. Remove this pop-up window below the list*); nazwa otwiera sieć w Atlasie, strzałka prowadzi do karty (2026-11-10) */}
@@ -65,11 +58,8 @@ export function getStaticPaths() {
 .wi-cards{display:flex;flex-wrap:wrap;gap:6px 8px}
 .wi-cards a{display:inline-flex;align-items:center;text-decoration:none;font-size:13.5px;min-height:32px;padding:4px 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);color:var(--c)}
 @media (max-width:720px){.wi{margin:0 20px;padding:32px 0 64px;max-width:none}}
-/* mapa sieci w prawym panelu pierwszego artykułu (2026-10-23): mózg, pod nim lista sieci w jednej kolumnie, pod nią karty wybranej sieci */
+/* lista sieci w prawym panelu pierwszego artykułu (2026-10-23), w jednej kolumnie; rysunek mózgu stoi w Atlasie (2026-11-10) */
 .wn-lead{margin:0 0 14px;font-size:14px;line-height:1.6;color:#cfc8bb}
-.wn-fig{display:block;margin:0 auto 12px;max-width:300px}
-.wn-atlas{border-radius:12px}
-.wn-atlas:focus-visible{outline:2px solid #f0c060;outline-offset:4px}
 .wn-legend{margin:0;grid-template-columns:minmax(0,1fr);gap:2px}
 .wn-legend li{margin:0}
 .wn-row{position:relative;display:flex;gap:10px;align-items:flex-start;padding:7px 10px;border:1px solid transparent;border-radius:12px;transition:background .15s ease,border-color .15s ease}
@@ -79,13 +69,14 @@ export function getStaticPaths() {
 .wn-sel::after{content:'';position:absolute;inset:0;border-radius:12px}
 .wn-legend .wn-sel:focus-visible{outline:none}
 .wn-sel:focus-visible::after{outline:2px solid #f0c060;outline-offset:2px}
-.wn-karta{position:relative;z-index:1;display:inline-flex;align-items:center;justify-content:center;min-width:24px;min-height:24px;margin:-4px 0 -4px 4px;color:var(--c);text-decoration:none;font-size:15px;border-radius:6px}
+/* strzałka do karty sieci ma obwódkę jak chipy kart, więc odróżnia się od tekstu nie tylko kolorem (audyt 2026-11-10, axe link-in-text-block) */
+.wn-karta{position:relative;z-index:1;display:inline-flex;align-items:center;justify-content:center;min-width:24px;min-height:24px;margin:-4px 0 -4px 4px;color:var(--c);text-decoration:none;font-size:15px;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);border-radius:6px}
 .wn-karta:hover{background:color-mix(in srgb,var(--c) 18%,transparent)}
 .wn-karta:focus-visible{outline:2px solid #f0c060;outline-offset:1px}
 .wn-legend .sieci-sw{flex-basis:12px;height:12px;margin-top:5px}
 .wn-rola{display:block;font-family:var(--font-display);font-size:17px;line-height:1.3;color:var(--text-primary)}
 .wn-n{display:block;font-size:12px;color:#8f877a}
-@media (max-width:720px){.wn-fig{max-width:260px}.wn-row{padding:6px 8px;gap:8px}.wn-rola{display:none}}
+@media (max-width:720px){.wn-row{padding:6px 8px;gap:8px}.wn-rola{display:none}}
 </style>
 
 

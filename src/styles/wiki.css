@@ -24,13 +24,6 @@
 .wk-box h2+.wk-p{margin-top:0}
 .wk-p a,.wk-net dd a{text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wk-fig{margin:22px 0 24px}.wk-fig svg{display:block;width:100%;max-width:560px}.wk-fig figcaption{margin:10px 0 0;font-size:13px;line-height:1.55;color:#a09888}
-/* karta mózgu: rząd widoków nad hasłem, na całą szerokość, pod nim dwie kolumny (jego słowa, 2026-11-09: *can we make the brain images
-   above the haslo?*); pozostałe karty mają tylko listę sieci, pełne widoki stoją w Atlasie (2026-11-10) */
-.wk-pasmo{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:flex-end;gap:0 16px;margin:0;border-bottom-right-radius:0}
-.wk-pasmo h2{flex:0 0 100%}
-/* lista sieci zwisa z rzędu: wchodzi w odstęp siatki i zakrywa dolną krawędź pasma nad prawą kolumną, więc rząd i lista to jedno
-   pudełko w kształcie odwróconej litery L (jego słowa, 2026-11-10: *embed the figures more*); bez rzędu lista stoi sama */
-.wk-grid-karta:has(.wk-rzad) .wk-siec{position:relative;z-index:1;margin-top:-25px;border-top:0;border-top-left-radius:0;border-top-right-radius:0;padding-top:18px}
 .wk-siec>.wk-p:first-child{margin-top:0}
 .wk-widok{margin:0;min-width:0}
 /* widoki w jednej skali (jego słowa, 2026-11-10: *make the ventral to scale of the lateral and medial*): obrys mózgu od przodu do tyłu
@@ -39,27 +32,20 @@
    too big*). Przekrój czołowy ma wysokość widoku z boku w kolumnie cięcia (482,5 jednostki przekroju na 544,5 jednostki widoku z
    boku), więc jego 634 jednostki szerokości to 0,7727 L; przekrój poziomy ma od bieguna do bieguna długość L (561,5 jednostki), więc
    jego 440 jednostek to 0,7836 L. Przekroje pokazują obie półkule (*I'd like the view on the both hemispheres on the sections*). */
-/* rząd karty: trzy widoki w jednej linii na każdym ekranie (jego słowa, 2026-11-10: *a simplified view of medial, leteral and ventral
-   views in one line*), razem 2,8171 L i dwa odstępy po 16 px */
-.wk-rzad{flex-wrap:wrap}
-.wk-rzad .wk-widok-boczny{flex:0 0 calc((100% - 32px) * .38025)}
-.wk-rzad .wk-widok-przysrodkowy{flex:0 0 calc((100% - 32px) * .36495)}
-.wk-rzad .wk-widok-brzuszny{flex:0 0 calc((100% - 32px) * .2548)}
-/* poniżej 721 px widok od dołu w rzędzie ma niecałe 150 px: znacznik 12 px zakryłby sieć, którą nazywa, więc sieci nazywa kolor */
-@media (max-width:720px){.wk-rzad .wk-nl{display:none!important}.wk-rzad figcaption{font-size:11.5px}}
 .wk-do-atlasu{margin:14px 0 0;font-size:14px}
 .wk-do-atlasu a{color:var(--ink);text-decoration:underline dotted 1px;text-underline-offset:4px}
 .wk-widok-czolowy .wk-linie,.wk-widok-poziomy .wk-linie{opacity:.5}
 /* płaszczyzna przekroju na widoku z boku; przerywana, żeby nie udawała bruzdy */
 .wk-ciecie{stroke:#e2ddd4;stroke-width:1.5;stroke-dasharray:5 4;vector-effect:non-scaling-stroke;opacity:.4;pointer-events:none;transition:opacity .15s}
 .wk-brain:has(.wk-widok-czolowy .wk-pole:hover) .wk-ciecie-czolowy,.wk-brain:has(.wk-widok-poziomy .wk-pole:hover) .wk-ciecie-poziomy{opacity:.9}
-@media (min-width:1081px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr) calc(34.19% + 26.1px)}}
-/* węższy ekran: jedna kolumna, hasło, pod nim rząd i lista sieci, potem opis i reszta (przegląd 2026-11-09) */
-@media (max-width:1080px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr)}.wk-brain .wk-col{display:contents}.wk-brain .wk-col>*{order:5}.wk-brain .wk-mysl{order:1}.wk-brain .wk-pasmo{order:2;border-bottom-left-radius:0}.wk-brain .wk-siec{order:3}.wk-brain .wk-opis{order:4}}
 /* Atlas (jego słowa, 2026-11-10: *lets make an "Atlas" subpage, next to the wiki*): tytuł z zaznaczeniem nad nim, pod nim pięć widoków
    w dwóch rzędach w jednej skali: z boku i od środka, potem od dołu i oba przekroje; drugi rząd ma 2,2741 L i dwa odstępy, więc
    wyznacza L, a pierwszy, 2,0993 L, stoi pośrodku */
 .at-grid{display:flex;flex-direction:column;gap:24px;margin-top:28px}
+/* wiersz ścieżki Atlasu: po lewej Wiki › Atlas, po prawej powrót do karty, z której przyszedł czytelnik, w kroju ścieżki */
+.at-sciezka{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 24px}
+.at-wroc{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none;display:inline-block;padding:12px 0;margin:-12px 0}
+.at-wroc[hidden]{display:none}
 /* kolejność kart (hasło pierwsze na wąskim ekranie) nie dotyczy Atlasu: tytuł zostaje nad widokami */
 .at-grid>.wk-mysl{order:0}
 .at-glowa .wk-tu{margin-bottom:10px;min-height:22px}
