@@ -49,9 +49,9 @@
 /* kolejność kart (hasło pierwsze na wąskim ekranie) nie dotyczy Atlasu: tytuł zostaje nad widokami */
 .at-grid>.wk-mysl{order:0}
 .at-glowa .wk-tu{margin-bottom:10px;min-height:22px}
-/* tytuł z zaznaczeniem zostaje u góry ekranu przy przewijaniu widoków, więc zaznaczenie z dolnego widoku widać od razu, także na
-   telefonie (audyt Atlasu, 2026-11-10: na 390 px zaznaczenie stawało 966 px nad stuknięciem) */
-.at-glowa{position:sticky;top:8px;z-index:5;padding-top:16px;padding-bottom:18px}
+/* tytuł przewija się razem ze stroną i niczego nie zakrywa (jego słowa, 2026-11-10, nad tytułem przyklejonym do górnej krawędzi na
+   widokach: *look how it covers, it shouldnt*) */
+.at-glowa{padding-top:16px;padding-bottom:18px}
 .at-lead{margin:8px 0 0;font-size:14px;line-height:1.6;color:#a09888}
 .at-lista select{font:500 13px/1.2 Inter,sans-serif;color:#e2ddd4;background:#16140f;border:1px solid rgba(226,200,150,.45);border-radius:999px;padding:7px 12px;min-height:34px;max-width:100%}
 .at-lista select:focus-visible{outline:2px solid #f0c060;outline-offset:2px}
