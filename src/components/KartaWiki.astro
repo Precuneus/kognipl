@@ -56,7 +56,8 @@ const nets = k.nets.map(([kod, why]) => ({ kod, name: NETN[kod] || kod, why, to:
 // Sieci tej karty w kolorach strony startowej; sieć limbiczna świeci własnym kolorem.
 const on = new Set(own ? [ownKey] : nets.map((n) => n.kod));
 const lit = (n) => on.has(n);
-const ruch = kurs || on.size > 0;
+// rycina żywa też się rusza, więc jej karta też ma przełącznik (2026-11-10: *Animations off should switch off all animations*)
+const ruch = kurs || on.size > 0 || items.some((b) => b.zywa);
 // Każda sieć na mózgu karty prowadzi do swojej karty (jego słowo, 2026-11-09: *make the all networks clickable on every wiki card*).
 // Trzy widoki z kolokwium Neurokogni, boczny, przyśrodkowy i brzuszny (jego słowo, 2026-11-09: *We have the 3 views of the brain
 // from the exam (lateral, ventral, medial), can we adapt these pictures to be visible in the wiki cards?*). Sieci pokrywają korę

@@ -213,6 +213,8 @@ html.roj-blok{overscroll-behavior:none}
 /* palec trafia w 44 px: niewidoczne pole wokół przełącznika, rysunek bez zmian (audyt karty 2026-11-09) */
 .roj-anim::before{content:'';position:absolute;inset:-7px -4px}
 html.roj-cicho .roj *{animation:none!important}
+/* bez animacji nic się nie rusza, przejścia CSS też nie (jego słowa, 2026-11-10: *Animations off should switch off all animations*) */
+html.roj-cicho *,html.roj-cicho *::before,html.roj-cicho *::after{animation:none!important;transition:none!important}
 /* dymek sieci: jak dymek splotu na Płótnie, dwa kółka od klikniętego miejsca do ramki w kolorze sieci (2026-10-23) */
 .roj-dymek-w{position:fixed;inset:0;z-index:15;pointer-events:none}
 .roj-dymek-w[hidden]{display:none}
@@ -1328,7 +1330,10 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
   };
   let c: any = null;
   if (ZD.biegnie && scrollY >= 4) c = zdIskra();
-  if (!c && KLv > .01 && MOZG_AKT) c = klikCel(now);
+  // bez animacji kliknięta sieć tylko świeci, a Iskra zostaje na miejscu: nie zwraca się ku niej, nie leci i nie bawi się siecią
+  // (jego słowa, 2026-11-10: *when animations are off and I click brain networks, Iskra still interacts with the clicked network.
+  // Animations off should switch off all animations*)
+  if (!c && KLv > .01 && MOZG_AKT && !CICHO) c = klikCel(now);
   if (!c) {
     if (S.k === 'start') c = startIskra(now);
     else if (S.k === 'czesc') {
@@ -1603,7 +1608,7 @@ function wiazka(dt: number, c: any, now: number) {
   IS.bi += (I - IS.bi) * (CICHO || c.bnag ? 1 : e);
   if (c.len) {
     let da = c.ang - IS.bang; da = Math.atan2(Math.sin(da), Math.cos(da));
-    IS.bang += da * (CICHO ? 1 : Math.min(1, dt * 7)); IS.blen += (c.len - IS.blen) * (CICHO || c.bnag ? 1 : e); IS.bhalf += (c.half - IS.bhalf) * e;
+    IS.bang += da * (CICHO ? 1 : Math.min(1, dt * 7)); IS.blen += (c.len - IS.blen) * (CICHO || c.bnag ? 1 : e); IS.bhalf += (c.half - IS.bhalf) * (CICHO ? 1 : e); // bez animacji szerokość snopu też staje od razu, a nie krok po kroku z każdym zdarzeniem
     if (c.wir) IS.bang = c.ang;
   }
   const s = c.id === 'czesc' ? +(IS.bi.toFixed(3)) : 0;
@@ -1632,14 +1637,17 @@ function oko(dt: number, c: any, now: number) {
   if (c.id === 'dom' || c.id === 'wiki') amt = 0;
   const e = CICHO ? 1 : Math.min(1, dt * 11);
   IS.gx += (Math.cos(ang) * amt - IS.gx) * e; IS.gy += (Math.sin(ang) * amt - IS.gy) * e;
-  IS.zdz *= Math.exp(-dt * 2.6);
-  IS.pd += ((m.pd || 1) * (1 - .12 * WSTECZ) + IS.zdz * .45 + (SK.air && c.slizg ? .3 : 0) - IS.pd) * Math.min(1, dt * 7);
-  IS.lid += ((m.lid || 1) * (1 - .14 * WSTECZ) - IS.lid) * Math.min(1, dt * 6);
+  // bez animacji źrenica, powieki i postawa stają od razu w stanie celu, a nie krok po kroku z każdym zdarzeniem (jego słowa,
+  // 2026-11-10: *Animations off should switch off all animations*)
+  const kr = (k: number) => (CICHO ? 1 : Math.min(1, dt * k));
+  IS.zdz *= CICHO ? 0 : Math.exp(-dt * 2.6);
+  IS.pd += ((m.pd || 1) * (1 - .12 * WSTECZ) + IS.zdz * .45 + (SK.air && c.slizg ? .3 : 0) - IS.pd) * kr(7);
+  IS.lid += ((m.lid || 1) * (1 - .14 * WSTECZ) - IS.lid) * kr(6);
   if (!CICHO && now > IS.nast) { if (IS.nast && IS.joy < .1) IS.mrug = now; IS.nast = now + 9000 + Math.random() * 7000; }
-  IS.joy += ((m.joy || 0) * (1 - .35 * WSTECZ) * (SK.air && c.slizg ? .15 : 1) * (c.hura && !IS.kontakt ? .3 : 1) - IS.joy) * Math.min(1, dt * 9);
-  IS.lean += ((c.slizg && IS.kontakt ? Math.max(-.35, Math.min(.35, IS.vx / 700)) + SK.przech : 0) - IS.lean) * Math.min(1, dt * 8);
-  IS.mach += ((c.macha && IS.kontakt ? 1 : 0) - IS.mach) * Math.min(1, dt * 6);
-  IS.skala += ((c.skala || 1) - IS.skala) * Math.min(1, dt * 5);
+  IS.joy += ((m.joy || 0) * (1 - .35 * WSTECZ) * (SK.air && c.slizg ? .15 : 1) * (c.hura && !IS.kontakt ? .3 : 1) - IS.joy) * kr(9);
+  IS.lean += ((c.slizg && IS.kontakt ? Math.max(-.35, Math.min(.35, IS.vx / 700)) + SK.przech : 0) - IS.lean) * kr(8);
+  IS.mach += ((c.macha && IS.kontakt ? 1 : 0) - IS.mach) * kr(6);
+  IS.skala += ((c.skala || 1) - IS.skala) * kr(5);
 }
 // Plecak odrzutowy Iskry na ekranie startowym: dwie dysze po przeciwnej stronie niż jej „góra”, płomień, gdy ciągnie,
 // i dwie białe smugi, które zostają w powietrzu, rozpływają się i gasną w 1,6 s.

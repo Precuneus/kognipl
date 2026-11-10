@@ -123,6 +123,8 @@
 .wk-iskra.widac{opacity:1}
 .wk-iskra.mruga{transform:scaleY(.15)}
 html.roj-cicho .wk-kurs::before{transition:none}
+/* bez animacji nic się nie rusza, przejścia CSS też nie (jego słowa, 2026-11-10: *Animations off should switch off all animations*) */
+html.roj-cicho *,html.roj-cicho *::before,html.roj-cicho *::after{animation:none!important;transition:none!important}
 /* przełącznik animacji jak na stronie startowej, w tym samym rogu na wysokości logo; tu stoi w dokumencie, nie na ekranie, bo karta
    przewija się pod nagłówkiem, a przełącznik należy do niego */
 .wk-anim{position:absolute;right:calc(8vw - 10px);top:32px;z-index:20;display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.55);border:0;border-radius:15px;cursor:pointer;font-family:Inter,sans-serif;font-weight:300;font-size:14px;letter-spacing:.04em;color:#b3aa9b}

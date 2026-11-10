@@ -72,7 +72,9 @@ const OFF = { 3: 0, 2: 0.5, 1: 1.0, 0: 1.5 }, CYCLE = 1.5 + 0.6 + 2.4, SEQ = [0,
 
 export function mozg(root) {
   const cv = root.querySelector('canvas'), btn = root.querySelector('button'), ctx = cv.getContext('2d');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // bez ruchu, kiedy chce tego system albo przełącznik animacji strony (roj-cicho ustawia skrypt w nagłówku karty z obu źródeł; jego
+  // słowa, 2026-11-10: *Animations off should switch off all animations*)
+  const reduce = document.documentElement.classList.contains('roj-cicho') || matchMedia('(prefers-reduced-motion: reduce)').matches;
   const font = getComputedStyle(root).fontFamily;
   let W = 0, H = 0, S = 1, FS = 13, narrow = false;
   let yaw = Math.PI - 0.35, pitch = 0.18, drag = null, auto = true, t0 = performance.now(), predStart = 0, visible = true, raf = 0;
@@ -123,7 +125,10 @@ export function mozg(root) {
     while (bursts.length && t - bursts[0].t > 3) bursts.shift();
     const g = [0, 0, 0, 0, 0]; let env = 0;
     for (const b of bursts) {
-      const dt = t - b.t; env = Math.max(env, bell(Math.max(0, dt - 0.2 * b.reach), 0.35));
+      const dt = t - b.t;
+      // bez ruchu zaskoczenie nie płynie falą: sieci, do których sięga, świecą od razu przez 2,5 s
+      if (reduce) { if (dt < 2.5) { env = 1; for (let i = 0; i <= Math.min(4, b.reach); i++) g[SEQ[i]] = Math.max(g[SEQ[i]], 1.25 - 0.06 * i); } continue; }
+      env = Math.max(env, bell(Math.max(0, dt - 0.2 * b.reach), 0.35));
       for (let i = 0; i <= Math.min(4, b.reach); i++) g[SEQ[i]] = Math.max(g[SEQ[i]], (1.25 - 0.06 * i) * bell(dt - 0.16 * i, 0.2));
     }
     if (bursts.length) { const b = bursts[bursts.length - 1]; predStart = Math.max(predStart, b.t + 0.6 + 0.2 * b.reach); }
@@ -143,7 +148,7 @@ export function mozg(root) {
     poly(SPI, '#ebe3d3', 1, [2, 6], lf, 0.35);
     const v1 = lf ? P([-1.3, 0, hz(-1.3, 0) + 0.05]) : P([-1.2, 0.02, 0]);
     ctx.strokeStyle = 'rgba(235,227,211,.85)'; ctx.setLineDash([4, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(v1[0], v1[1], S * 0.05, 0, 6.3); ctx.stroke(); ctx.setLineDash([]);
-    for (const b of bursts) { const dt = t - b.t; if (dt < 1.1) { ctx.strokeStyle = `rgba(111,179,168,${0.9 * (1 - dt / 1.1)})`; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(v1[0], v1[1], S * 0.05 + dt * S * (0.4 + 0.3 * b.reach), 0, 6.3); ctx.stroke(); } }
+    if (!reduce) for (const b of bursts) { const dt = t - b.t; if (dt < 1.1) { ctx.strokeStyle = `rgba(111,179,168,${0.9 * (1 - dt / 1.1)})`; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(v1[0], v1[1], S * 0.05 + dt * S * (0.4 + 0.3 * b.reach), 0, 6.3); ctx.stroke(); } }
     labels(lf);
     const lvl = bursts.length ? bursts[bursts.length - 1].reach : 0;
     tag(W / 2, FS * 1.6, env > 0.15 ? (lvl >= 4 ? 'zaskoczenie sięga sieci domyślnej' : lvl >= 3 ? 'zaskoczenie sięga sieci kontroli' : lvl >= 2 ? 'zaskoczenie sięga uwagi' : 'zaskoczenie: receptory i sieć istotności') : 'predykcje: od sieci do sieci, ku receptorom', 'middle');
