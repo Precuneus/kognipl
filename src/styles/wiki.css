@@ -39,11 +39,24 @@
 .wk-pasmo .wk-widok-boczny{flex:1.0712 1 0}
 .wk-pasmo .wk-widok-przysrodkowy{flex:1.0281 1 0}
 .wk-siec .wk-widok-brzuszny{margin:0 auto 18px}
+/* przekrój czołowy pod widokiem od dołu (jego słowa, 2026-11-10: *we want to add a coronal section also.... Below the ventral view of
+   the brain?*): w tej samej skali co widok z boku, bo jego wysokość od szczytu do podstawy płata skroniowego, 482,5 jednostki, równa
+   się wysokości widoku z boku w kolumnie cięcia, 544,5 jednostki przy szerokości 991,9 = 1,0712 L; stąd szerokość 407 jednostek
+   przekroju to 0,4961 L, czyli 69,11 % szerokości widoku od dołu */
+.wk-siec .wk-widok-przekroj{width:69.11%;margin:0 auto 18px}
+.wk-widok-przekroj .wk-linie{opacity:.5}
+/* płaszczyzna przekroju na widoku z boku; przerywana, żeby nie udawała bruzdy */
+.wk-ciecie{stroke:#e2ddd4;stroke-width:1.5;stroke-dasharray:5 4;vector-effect:non-scaling-stroke;opacity:.4;pointer-events:none;transition:opacity .15s}
+.wk-brain:has(.wk-widok-przekroj .wk-pole:hover) .wk-ciecie{opacity:.9}
 @media (min-width:1081px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr) calc(34.19% + 26.1px)}}
 /* węższy ekran: jedna kolumna, hasło, pod nim pasmo i widok od dołu z tekstem o sieci, potem opis i reszta (przegląd 2026-11-09);
    widok od dołu ma szerokość pudełka pomniejszoną tak jak w paśmie; od 720 px w dół widoki stoją jeden pod drugim */
-@media (max-width:1080px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr)}.wk-brain .wk-col{display:contents}.wk-brain .wk-col>*{order:5}.wk-brain .wk-mysl{order:1}.wk-brain .wk-pasmo{order:2;border-bottom-left-radius:0}.wk-brain .wk-siec{order:3}.wk-brain .wk-opis{order:4}.wk-siec .wk-widok-brzuszny{width:calc(34.19% - 5.5px)}}
-@media (max-width:720px){.wk-pasmo{display:block}.wk-pasmo .wk-widok{margin:0 auto 12px}.wk-pasmo .wk-widok-przysrodkowy{width:95.98%}.wk-siec .wk-widok-brzuszny{width:67.01%}}
+@media (max-width:1080px){.wk-grid-karta.wk-brain{grid-template-columns:minmax(0,1fr)}.wk-brain .wk-col{display:contents}.wk-brain .wk-col>*{order:5}.wk-brain .wk-mysl{order:1}.wk-brain .wk-pasmo{order:2;border-bottom-left-radius:0}.wk-brain .wk-siec{order:3}.wk-brain .wk-opis{order:4}.wk-siec .wk-widok-brzuszny{width:calc(34.19% - 5.5px)}.wk-siec .wk-widok-przekroj{width:calc(23.63% - 3.8px)}}
+@media (max-width:720px){.wk-pasmo{display:block}.wk-pasmo .wk-widok{margin:0 auto 12px}.wk-pasmo .wk-widok-przysrodkowy{width:95.98%}.wk-siec .wk-widok-brzuszny{width:67.01%}.wk-siec .wk-widok-przekroj{width:46.31%}}
+/* znaczniki przekroju ustawiono dla jego szerokości 144 px; na ekranie węższym niż 390 px przekrój ma mniej (112 px przy 320), a jego
+   kora około 3 px grubości, więc znacznik 12 px zakrywałby sieć, którą nazywa, i sąsiednie znaczniki: tam sieci przekroju nazywają
+   kolor i kody pod palcem */
+@media (max-width:389px){.wk-widok-przekroj .wk-nl{display:none}}
 .wk-pole{position:relative}
 .wk-widok svg{position:relative;display:block;width:100%;height:auto;overflow:visible}
 /* ziarno leży pod liniami rysunku; płótno nie łapie wskaźnika, łapią go obszary sieci i pole widoku */

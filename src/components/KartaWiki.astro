@@ -66,8 +66,10 @@ const ruch = kurs || on.size > 0;
 // wielokąty obszarów zostają linkami dla klawiatury i czytnika ekranu.
 // oba rysunki Cartera pokazują lewą półkulę, więc podpis ją nazywa (przegląd 2026-11-09: karta sieci brzusznej mówi o prawej);
 // widok od dołu to kresomózg z ryciny 630 Sobotty, bez móżdżku i pnia (jego słowa, 2026-11-10: *can we remove the cerebellum so that
-// the ventral cerebrum will be visible?*), z obiema półkulami
-const WIDOKI = [['lateral', 'z boku, lewa półkula', 'lewej półkuli z boku'], ['medial', 'od środka, lewa półkula', 'lewej półkuli od środka'], ['ventral', 'od dołu', 'mózgu od dołu']];
+// the ventral cerebrum will be visible?*), z obiema półkulami; przekrój czołowy to ryc. 718 Cartera z Graya, cięta przez ciała
+// suteczkowate, stoi pod widokiem od dołu (jego słowa, 2026-11-10: *we want to add a coronal section also.... Below the ventral view of
+// the brain?*, potem *ok, add this*): odsłania wyspę, jądra podstawy i ciało migdałowate, których żaden widok powierzchni nie pokazuje
+const WIDOKI = [['lateral', 'z boku, lewa półkula', 'lewej półkuli z boku'], ['medial', 'od środka, lewa półkula', 'lewej półkuli od środka'], ['ventral', 'od dołu', 'mózgu od dołu'], ['coronal', 'w przekroju czołowym', 'mózgu w przekroju czołowym']];
 const swieci = [...on].map((n) => NETN[n]).filter(Boolean);
 const IMG = '/images/mozg-widoki/';
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
@@ -96,6 +98,8 @@ const widok = Object.fromEntries(WIDOKI.map(([v, cap, gdzie]) => {
     + '<svg viewBox="0 0 ' + W + ' ' + H + '"' + (v === 'lateral' ? ' role="group" aria-label="Sieci mózgowe na ' + gdzie + (swieci.length ? ', zaznaczona: ' + swieci.join(', ') : '') + '"' : ' aria-hidden="true"') + '>'
     + sieci.map((s) => s.shape).join('')
     + '<image href="' + IMG + f + '.webp" width="' + W + '" height="' + H + '" class="wk-linie"/>'
+    // płaszczyzna przekroju na widoku z boku: przerywana linia mówi, gdzie leży cięcie, bez słów; świeci, kiedy wskaźnik jest na przekroju
+    + (d.ciecie ? '<line class="wk-ciecie" x1="' + d.ciecie[0] + '" y1="' + d.ciecie[1] + '" x2="' + d.ciecie[0] + '" y2="' + d.ciecie[2] + '"/>' : '')
     + '</svg>' + sieci.map((s) => s.tag).join('') + '<div class="wk-kody" aria-hidden="true" hidden></div></div><figcaption>' + cap + '</figcaption></figure>'];
 }));
 const karty = Object.fromEntries(Object.keys(NETN).map((n) => [n, netCard(n)]).filter(([, c]) => c && c !== k).map(([n, c]) => [n, c.url]));
@@ -122,7 +126,7 @@ const brainData = { kolory: JSON.stringify(KOLOR), kolejnosc: JSON.stringify(WID
       have text about the network*); pasmo jest pudełkiem karty z nagłówkiem „Sieć mózgowa”, a widok od dołu z tekstem o sieci zwisa
       z niego w prawej kolumnie jako jedna całość (2026-11-10: *can you embed the figures more into the page layout? Now they are
       slightly disonnected from the content of the card*); na wąskim ekranie pasmo i tekst o sieci stoją zaraz pod hasłem, przed
-      opisem (przegląd 2026-11-09: na telefonie mózg zaczynał się po sześciu ekranach opisu); ziarno czyta wszystkie trzy widoki z
+      opisem (przegląd 2026-11-09: na telefonie mózg zaczynał się po sześciu ekranach opisu); ziarno czyta wszystkie widoki z
       siatki karty, która nosi dane sieci */}
   <div class={'wk-grid wk-grid-karta' + (Astro.slots.has('siec') ? '' : ' wk-brain')} data-ziarno={Astro.slots.has('siec') ? undefined : ''} data-kolory={brainData.kolory} data-kolejnosc={brainData.kolejnosc} data-lit={brainData.lit} data-karty={brainData.karty} data-nazwy={brainData.nazwy} data-wspolne={brainData.wspolne}>
     {!Astro.slots.has('siec') && <div class="wk-box wk-pasmo"><h2>Sieć mózgowa</h2><Fragment set:html={widok.lateral + widok.medial} /></div>}
@@ -152,7 +156,7 @@ const brainData = { kolory: JSON.stringify(KOLOR), kolejnosc: JSON.stringify(WID
       {Astro.slots.has('siec') ? <slot name="siec" /> : (
       <section aria-label="Sieć mózgowa" class="wk-box wk-siec">
         {/* bez nagłówka: pudełko jest dalszym ciągiem pasma z mózgiem, nad którym stoi „Sieć mózgowa” */}
-        <Fragment set:html={widok.ventral} />
+        <Fragment set:html={widok.ventral + widok.coronal} />
         {/* mózg stoi na każdej karcie, także bez sieci, żeby każda sieć prowadziła do swojej karty (jego słowo, 2026-11-09) */}
         {nets.length > 0 ? (
           <Fragment>
@@ -193,7 +197,7 @@ const brainData = { kolory: JSON.stringify(KOLOR), kolejnosc: JSON.stringify(WID
       )}
     </div>
   </div>
-  {!Astro.slots.has('siec') && <p class="wk-zrodlo wk-zrodlo-mozg">Rysunki mózgu: z boku i od środka Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918; od dołu K. Hajek, <a href="https://commons.wikimedia.org/wiki/File:Sobo_1909_630.png">ryc. 630</a> w <i>Atlas and Text-book of Human Anatomy</i> Sobotty, 1909, przerysowana liniami; wszystkie w domenie publicznej.</p>}
+  {!Astro.slots.has('siec') && <p class="wk-zrodlo wk-zrodlo-mozg">Rysunki mózgu: z boku, od środka i w przekroju czołowym Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918, przekrój z <a href="https://commons.wikimedia.org/wiki/File:Gray718.png">ryc. 718</a> przerysowany liniami; od dołu K. Hajek, <a href="https://commons.wikimedia.org/wiki/File:Sobo_1909_630.png">ryc. 630</a> w <i>Atlas and Text-book of Human Anatomy</i> Sobotty, 1909, przerysowana liniami; wszystkie w domenie publicznej.</p>}
 </article>
 <TerminDymek />
 <script>

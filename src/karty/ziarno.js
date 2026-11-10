@@ -2,7 +2,7 @@
 // do jednej sieci i co jakiś czas przechodzi do innej, z wagami sieci w swoim miejscu. Rdzeń sieci trzyma kolor, ośrodek wspólny
 // kilku sieciom migocze między nimi (jego słowa: *real multi-membership and the time*). Sieci karty świecą swoim kolorem, reszta
 // ziaren to ciepła szarość. Wskazane miejsce pokazuje kody wszystkich sieci, które tam są, najsilniejsza pierwsza, i zapala je
-// we wszystkich trzech widokach; klik otwiera kartę najsilniejszej (jego *ok*, 2026-11-09). Bez ruchu (przełącznik animacji albo
+// we wszystkich widokach; klik otwiera kartę najsilniejszej (jego *ok*, 2026-11-09). Bez ruchu (przełącznik animacji albo
 // ustawienie systemu) ziarno losuje się raz i stoi.
 // Przegląd 2026-11-09: wspólne są tylko miejsca, których sieci nazywa span (`huby` i `wspolne` w `mozg-widoki.json`), sieci dzielą
 // je po równo, bo żaden span nie podaje wag, a w czasie zmienia się tylko ośrodek, którego span mówi o zmianie z zadaniem
