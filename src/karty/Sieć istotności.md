@@ -1,5 +1,6 @@
 ---
 tytuł: Sieć istotności
+mózg: tak
 osnowa: '[[Sieci mózgu i predykcja]]'
 rodziny:
 - '[[Sieci wielkoskalowe]]'

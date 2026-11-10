@@ -1,5 +1,6 @@
 ---
 tytuł: Płaty mózgu
+mózg: tak
 osnowa: '[[Sieci mózgu i predykcja]]'
 rodziny:
 - '[[Anatomia mózgu]]'

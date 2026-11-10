@@ -1,0 +1,59 @@
+---
+// Atlas mózgu: osobna strona obok wiki, z linkami w obie strony (jego słowa, 2026-11-10: *lets make an "Atlas" subpage, next to the wiki.
+// And link between them!*). Pięć widoków w jednej skali, przekroje z obiema półkulami (*I'd like the view on the both hemispheres on the
+// sections*), przełącznik Sieci i Obszary, klik zaznacza sieć albo obszar we wszystkich widokach (*The view should be modified to click
+// different regions (and a switch region/network) and clicking should switch to the marked region/network*); nad tytułem stoi
+// zaznaczenie z linkami, pod widokami karty zaznaczonej sieci. Ziarno i zaznaczanie robi `src/karty/ziarno.js`.
+import Base from '../layouts/Base.astro';
+import '../styles/wiki.css';
+import { KARTY, NETN, netCard } from '../karty/data.js';
+import { KOLOR } from '../karty/mozg.js';
+import { widok, DANE, regiony, kartySieci } from '../karty/widoki.js';
+const WSZYSTKIE = new Set(Object.keys(NETN));
+const W = (v) => widok(v, { lit: WSZYSTKIE, tab: v === 'lateral', ciecia: v === 'lateral' });
+const karty = Object.fromEntries(Object.keys(NETN).map((n) => [n, netCard(n)]).filter(([, c]) => c).map(([n, c]) => [n, c.url]));
+// lista obszarów do wyboru klawiaturą i czytnikiem ekranu w trybie Obszary, w grupach według płata (audyt Atlasu, 2026-11-10: obszarów
+// nie dało się wybrać bez myszy); struktury pod korą i istota biała w osobnej grupie
+const REG = regiony();
+const grupy = [];
+REG.forEach(([n, , plat], i) => { const g = plat || 'pod korą'; let x = grupy.find((y) => y[0] === g); if (!x) { x = [g, []]; grupy.push(x); } x[1].push([n, i + 1]); });
+const opis = 'Atlas mózgu na kogni.pl: sieci mózgowe i obszary mózgu z boku, od środka, od dołu i w przekrojach, z kartami wiki każdej sieci.';
+---
+<Base title="Atlas mózgu · kogni.pl" activePage="atlas" description={opis}>
+  <script is:inline>(function(){var z=null;try{z=localStorage.getItem('kogni-animacje')}catch(e){}var c=z?z==='off':matchMedia('(prefers-reduced-motion: reduce)').matches;if(c)document.documentElement.classList.add('roj-cicho')})();</script>
+  <aside aria-label="Animacje"><button type="button" class="wk-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="wk-anim-tor" aria-hidden="true"></span></button></aside>
+  <article class="wk at" style="--ink:#f0c060;--base:#c89a3c">
+    <nav aria-label="Ścieżka" class="wk-path"><a href="/wiki/">Wiki</a><span aria-hidden="true"> › </span><span aria-current="page">Atlas</span></nav>
+    <div class="at-grid wk-brain" data-ziarno data-atlas data-kolory={JSON.stringify(KOLOR)} data-kolejnosc={JSON.stringify(DANE.kolejnosc)} data-lit={[...WSZYSTKIE].join(',')} data-karty={JSON.stringify(karty)} data-nazwy={JSON.stringify(NETN)} data-wspolne={JSON.stringify(DANE.wspolne || [])} data-regiony={JSON.stringify(REG)} data-karty-sieci={JSON.stringify(kartySieci(KARTY))}>
+      {/* pudełko tytułu bez etykiety: jego tytułem jest nazwa strony; nad tytułem zaznaczenie z linkami (jego słowa, 2026-11-10: *list a
+          region/network above the title*) */}
+      <section aria-label="Atlas" class="wk-box wk-mysl at-glowa">
+        <p class="wk-tu" aria-live="polite"></p>
+        <h1>Atlas</h1>
+        {/* jedno zdanie dla czytelnika, który nie zna jeszcze kodów sieci, jak zdanie nad mapą sieci w indeksie wiki (audyt Atlasu, 2026-11-10) */}
+        <p class="at-lead">Kliknij miejsce na mózgu, żeby zobaczyć jego sieć albo obszar.</p>
+      </section>
+      <section aria-label="Mózg" class="wk-box at-widoki">
+        <div class="at-pasek">
+          <h2>Mózg</h2>
+          {/* przełącznik stoi w miejscu w obu stanach (design: *a control holds its place*) */}
+          <label class="at-lista at-lista-off"><span class="sr-only">Obszar</span><select><option value="">wybierz obszar</option>{grupy.map(([g, xs]) => <optgroup label={g}>{xs.map(([n, i]) => <option value={String(i)}>{n}</option>)}</optgroup>)}</select></label>
+          <div class="at-tryb" role="group" aria-label="Co zaznacza klik"><button type="button" data-tryb="sieci" aria-pressed="true">Sieci</button><button type="button" data-tryb="obszary" aria-pressed="false">Obszary</button></div>
+        </div>
+        <div class="at-rzad"><Fragment set:html={W('lateral') + W('medial')} /></div>
+        <div class="at-rzad"><Fragment set:html={W('ventral') + W('coronal') + W('horizontal')} /></div>
+      </section>
+      <section aria-label="Karty" class="wk-box at-karty" hidden>
+        <h2>Karty</h2>
+        <div class="wk-chips"></div>
+      </section>
+    </div>
+    <p class="wk-zrodlo wk-zrodlo-mozg">Rysunki mózgu: z boku, od środka i w przekrojach Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918, przekrój czołowy z <a href="https://commons.wikimedia.org/wiki/File:Gray718.png">ryc. 718</a> i poziomy z <a href="https://commons.wikimedia.org/wiki/File:Gray742.png">ryc. 742</a> przerysowane liniami, z drugą półkulą w odbiciu lustrzanym; od dołu K. Hajek, <a href="https://commons.wikimedia.org/wiki/File:Sobo_1909_630.png">ryc. 630</a> w <i>Atlas and Text-book of Human Anatomy</i> Sobotty, 1909, przerysowana liniami; wszystkie w domenie publicznej.</p>
+  </article>
+</Base>
+<script>
+  import { iskraKursu } from '../karty/iskra.js';
+  iskraKursu();
+  import { ziarno } from '../karty/ziarno.js';
+  ziarno();
+</script>

@@ -33,6 +33,13 @@
   .rocznik-menu{gap:14px}
   .rocznik-views{gap:6px 18px}
 }
+/* pięć pozycji menu od dodania Atlasu ma 336 px: poniżej 360 px węższy odstęp i mniejsze litery, żeby Wiki i Kontakt mieściły się
+   na ekranie (audyt Atlasu, 2026-11-10) */
+@media (max-width:359px){
+  .rocznik-head{padding-left:10px;padding-right:10px}
+  .rocznik-menu{gap:9px}
+  .rocznik-menu a,.rocznik-menu span{font-size:21px}
+}
 /* jeden nagłówek na wszystkich stronach, startowej też (jego słowo, 2026-10-23): logo w lewym górnym rogu, 8vw od brzegu; menu pośrodku */
 .rocznik-head{max-width:none}
 .rocznik-logo{position:absolute;left:8vw;top:34px}

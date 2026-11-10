@@ -64,6 +64,8 @@ export const ALL = Object.entries(notes).map(([file, mod]) => {
     l: (f['materiały'] || []).map((x) => [x['tytuł'], x.url, x.czas ? String(x.czas) : '']),
     fig: (f.ryciny || []).map((x) => x.replace(/\.svg$/, '')),
     ready: f.stan === 'gotowa',
+    // karta mózgu: sieć, obszar albo mózg jako całość; nosi rząd widoków z boku, od środka i od dołu (2026-11-10)
+    mozg: f['mózg'] === true || f['mózg'] === 'tak',
   };
 });
 

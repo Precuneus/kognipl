@@ -38,15 +38,17 @@ export function getStaticPaths() {
         {SIECI.length > 0 && (
           <section slot="siec" class="wk-box wn" id="sieci" aria-labelledby="wn-h">
             <h2 id="wn-h">Sieci mózgu</h2>
-            <p class="wn-lead">Wybierz sieć, żeby zobaczyć ją na mózgu.</p>
-            <figure class="wn-fig"><Fragment set:html={mapa} /></figure>
+            {/* mapa sieci prowadzi do Atlasu, gdzie widać każdą sieć i każdy obszar we wszystkich widokach (jego słowa, 2026-11-10: *lets make an
+                "Atlas" subpage, next to the wiki. And link between them!*) */}
+            <p class="wn-lead">Wybierz sieć, żeby zobaczyć ją w atlasie.</p>
+            <a href="/atlas/" class="wn-fig wn-atlas" aria-label="Atlas mózgu"><Fragment set:html={mapa} /></a>
             <ul class="sieci-legend wn-legend" aria-label="Sieci mózgu">
               {/* link do karty sieci obok jej nazwy, bez okna pod listą (jego słowo, 2026-11-09: *the link to the given network should be next
-                  to its name. Remove this pop-up window below the list*); cały wiersz zapala sieć, strzałka prowadzi do karty */}
+                  to its name. Remove this pop-up window below the list*); nazwa otwiera sieć w Atlasie, strzałka prowadzi do karty (2026-11-10) */}
               {SIECI.map((s) => (
                 <li class="wn-row" style={'--c:' + s.kolor}>
                   <span class="sieci-sw" aria-hidden="true"></span>
-                  <span class="sieci-txt"><button type="button" class="wn-sel" data-k={s.kod} aria-pressed="false"><span class="sieci-kod">{s.kod}</span> <span class="sieci-nazwa">{s.nazwa}</span></button>{s.own && <a class="wn-karta" href={s.own.url} aria-label={'Karta: ' + s.own.h}>→</a>}{s.rola && <span class="wn-rola">{s.rola}</span>}<span class="wn-n">{ile(s.karty.length)}</span></span>
+                  <span class="sieci-txt"><a class="wn-sel" href={'/atlas/#siec-' + s.kod.toLowerCase()} data-k={s.kod}><span class="sieci-kod">{s.kod}</span> <span class="sieci-nazwa">{s.nazwa}</span></a>{s.own && <a class="wn-karta" href={s.own.url} aria-label={'Karta: ' + s.own.h}>→</a>}{s.rola && <span class="wn-rola">{s.rola}</span>}<span class="wn-n">{ile(s.karty.length)}</span></span>
                 </li>
               ))}
             </ul>
@@ -65,13 +67,14 @@ export function getStaticPaths() {
 @media (max-width:720px){.wi{margin:0 20px;padding:32px 0 64px;max-width:none}}
 /* mapa sieci w prawym panelu pierwszego artykułu (2026-10-23): mózg, pod nim lista sieci w jednej kolumnie, pod nią karty wybranej sieci */
 .wn-lead{margin:0 0 14px;font-size:14px;line-height:1.6;color:#cfc8bb}
-.wn-fig{margin:0 auto 12px;max-width:300px}
+.wn-fig{display:block;margin:0 auto 12px;max-width:300px}
+.wn-atlas{border-radius:12px}
+.wn-atlas:focus-visible{outline:2px solid #f0c060;outline-offset:4px}
 .wn-legend{margin:0;grid-template-columns:minmax(0,1fr);gap:2px}
 .wn-legend li{margin:0}
 .wn-row{position:relative;display:flex;gap:10px;align-items:flex-start;padding:7px 10px;border:1px solid transparent;border-radius:12px;transition:background .15s ease,border-color .15s ease}
 .wn-row:hover,.wn-row.on{background:rgba(255,255,255,0.035);border-color:color-mix(in srgb,var(--c) 50%,transparent)}
-.wn-row:has(.wn-sel[aria-pressed="true"]){border-color:var(--c)}
-.wn-legend .wn-sel{width:auto;display:inline;padding:0;margin:0;border:0;border-radius:0;background:none;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.wn-legend .wn-sel{width:auto;display:inline;padding:0;margin:0;border:0;border-radius:0;background:none;text-align:left;font:inherit;color:inherit;cursor:pointer;text-decoration:none}
 .wn-legend .wn-sel:hover{background:none;border:0}
 .wn-sel::after{content:'';position:absolute;inset:0;border-radius:12px}
 .wn-legend .wn-sel:focus-visible{outline:none}
@@ -85,36 +88,4 @@ export function getStaticPaths() {
 @media (max-width:720px){.wn-fig{max-width:260px}.wn-row{padding:6px 8px;gap:8px}.wn-rola{display:none}}
 </style>
 
-<script>
-// Klik na sieć (na mózgu albo na liście) zapala ją; drugi klik gasi. Adres #siec-dmn otwiera sieć od razu.
-const root = document.querySelector('.wn');
-if (root) {
-  const svg = root.querySelector('[data-wn]');
-  const btns = [...root.querySelectorAll('.wn-legend .wn-sel')];
-  let cur = null;
-  const light = (k) => {
-    svg.classList.toggle('has-on', !!k);
-    svg.querySelectorAll('[data-k]').forEach((e) => e.classList.toggle('on', e.dataset.k === k));
-  };
-  const pick = (k) => {
-    cur = cur === k ? null : k;
-    light(cur);
-    btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.k === cur)));
-    history.replaceState(null, '', location.pathname + location.search + (cur ? '#siec-' + cur.toLowerCase() : ''));
-  };
-  const hover = (k) => { if (!cur) light(k); };
-  btns.forEach((b) => {
-    const row = b.closest('.wn-row');
-    b.addEventListener('click', () => pick(b.dataset.k));
-    row.addEventListener('mouseenter', () => hover(b.dataset.k));
-    row.addEventListener('mouseleave', () => hover(null));
-  });
-  svg.querySelectorAll('.nb').forEach((e) => {
-    e.addEventListener('click', () => pick(e.dataset.k));
-    e.addEventListener('mouseenter', () => hover(e.dataset.k));
-    e.addEventListener('mouseleave', () => hover(null));
-  });
-  const h = /^#siec-(\w+)$/.exec(location.hash);
-  if (h && btns.some((b) => b.dataset.k === h[1].toUpperCase())) { pick(h[1].toUpperCase()); root.scrollIntoView(); }
-}
-</script>
+

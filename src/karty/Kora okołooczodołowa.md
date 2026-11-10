@@ -1,5 +1,6 @@
 ---
 tytuł: Kora okołooczodołowa
+mózg: tak
 osnowa: '[[Decyzja i działanie]]'
 rodziny:
 - '[[Wybór i wartość]]'

@@ -1,5 +1,6 @@
 ---
 tytuł: Sieć brzuszna uwagi
+mózg: tak
 osnowa: '[[Sieci mózgu i predykcja]]'
 rodziny:
 - '[[Sieci wielkoskalowe]]'
