@@ -541,7 +541,12 @@ export async function ziarno() {
     rysujWszystko();
     // karta zaznaczenia staje pod widokami: wczytuje ją strona Atlasu (jego słowa, 2026-11-10: *below the brains the card of this
     // network/region should be visible. And then below the other cards*)
-    if (ATLAS) mozg.dispatchEvent(new CustomEvent('atlas-wybor', { detail: { karty: kartyWyboru(w, tryb), przewin: !!przewin } }));
+    // stan zostaje też na siatce, żeby mózg w 3D, który wczytuje się dłużej, zaczął od bieżącego zaznaczenia
+    if (ATLAS) {
+      const detail = { karty: kartyWyboru(w, tryb), przewin: !!przewin, tryb, lit: [...LIT], wybor: w };
+      mozg.__stan = detail;
+      mozg.dispatchEvent(new CustomEvent('atlas-wybor', { detail }));
+    }
   }
   const tenSam = (a, b) => a && b && a.typ === b.typ && (a.typ === 'obszar' ? a.n === b.n : a.kody.join() === b.kody.join());
   function kliknij(v, e) {
@@ -660,7 +665,12 @@ export async function ziarno() {
       const bylo = czeka[p] !== undefined;
       czeka[p] = mm;
       if (bylo) return;
-      requestAnimationFrame(() => { const m = czeka[p]; delete czeka[p]; if (Math.abs(m - v.mm) < 0.01) return; plastry(v, m); uloz(v); wspolnota(v); tagi(); rysuj(v); });
+      requestAnimationFrame(() => {
+        const m = czeka[p]; delete czeka[p];
+        if (Math.abs(m - v.mm) < 0.01) return;
+        plastry(v, m); uloz(v); wspolnota(v); tagi(); rysuj(v);
+        mozg.dispatchEvent(new CustomEvent('atlas-ciecie', { detail: { p, mm: m } }));
+      });
     };
     mozg.querySelectorAll('.at-suwak').forEach((s) => s.addEventListener('input', () => ustaw(s.dataset.p, Number(s.value))));
     if (boczny) mozg.querySelectorAll('.wk-chwyt').forEach((g) => {

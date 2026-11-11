@@ -81,8 +81,8 @@ export function kartySieci(KARTY) {
   }));
 }
 
-// Przekrój z objętości: płótno ziarna, linie rysowane w przeglądarce z szablonu i suwak położenia, który przesuwa też linię cięcia na
-// widoku z boku; ramka ma stałe wymiary całego mózgu, więc przekrój nie zmienia rozmiaru przy przesuwaniu
+// Przekrój z objętości: płótno ziarna i linie rysowane w przeglądarce z szablonu; cięcie przesuwają suwaki na osiach mózgu w 3D i linie
+// na widoku z boku; ramka ma stałe wymiary całego mózgu, więc przekrój nie zmienia rozmiaru przy przesuwaniu
 const PRZEKROJ = { czolowy: ['w przekroju czołowym', 'przekroju czołowego'], poziomy: ['w przekroju poziomym', 'przekroju poziomego'] };
 export function wymiarPrzekroju(p) {
   const [NX, NY, NZ] = O.wymiar, s = O.krok;
@@ -93,9 +93,14 @@ export function zywy(p) {
   return '<figure class="wk-widok wk-widok-' + p + ' wk-zywy" data-objetosc="' + p + '" data-vb="' + W + ' ' + H + '" data-k="' + O.krok + '">'
     + '<div class="wk-pole"><canvas class="wk-ziarno" aria-hidden="true"></canvas>'
     + '<svg viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true"><path class="wk-linie-zywe" d=""/></svg>'
-    + '<div class="wk-kody" aria-hidden="true" hidden></div></div><figcaption>' + PRZEKROJ[p][0] + '</figcaption>'
-    + '<input type="range" class="at-suwak" data-p="' + p + '" min="' + lo.toFixed(1) + '" max="' + hi.toFixed(1) + '" step="0.5" value="' + CIECIE[p] + '" aria-label="Położenie ' + PRZEKROJ[p][1] + '">'
-    + '</figure>';
+    + '<div class="wk-kody" aria-hidden="true" hidden></div></div><figcaption>' + PRZEKROJ[p][0] + '</figcaption></figure>';
+}
+// suwak cięcia na osi mózgu w 3D: czołowy biegnie od przodu do tyłu, poziomy od góry do dołu, z nazwami końców
+export function suwak(p) {
+  const [lo, hi] = ZAKRES[p], [a, b] = p === 'czolowy' ? ['przód', 'tył'] : ['góra', 'dół'];
+  return '<div class="at-os at-os-' + p + '"><span aria-hidden="true">' + a + '</span>'
+    + '<input type="range" class="at-suwak" data-p="' + p + '"' + (p === 'czolowy' ? ' dir="rtl"' : '') + ' min="' + lo.toFixed(1) + '" max="' + hi.toFixed(1) + '" step="0.5" value="' + CIECIE[p] + '" aria-label="Położenie ' + PRZEKROJ[p][1] + '">'
+    + '<span aria-hidden="true">' + b + '</span></div>';
 }
 // obszary Atlasu: 40 obszarów rysunków i struktury Allena takie, jakie są; struktura o nazwie obszaru rysunku jest tym obszarem, część
 // grupy, którą Allen nazywa jak obszar rysunku (głowa hipokampa w formacji hipokampa), ma własny wpis i wskazuje ten obszar (JAK)

@@ -16,7 +16,7 @@ import KartaWiki from '../../components/KartaWiki.astro';
 import TerminDymek from '../../components/TerminDymek.astro';
 import { KARTY, NETN, INK, ATLAS, STRONY, netCard } from '../../karty/data.js';
 import { KOLOR } from '../../karty/mozg.js';
-import { widok, zywy, DANE, OBJ, BOK, regiony, regionyAtlasu, kartySieci } from '../../karty/widoki.js';
+import { widok, zywy, suwak, DANE, OBJ, BOK, regiony, regionyAtlasu, kartySieci } from '../../karty/widoki.js';
 export function getStaticPaths() {
   return ATLAS.map((s) => ({ params: { strona: s.sciezka === '/atlas/' ? undefined : s.sciezka.split('/')[2] }, props: { s } }));
 }
@@ -62,7 +62,7 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: sieci mózgowe i obszary 
         <p class="wk-tu" aria-live="polite"></p>
         <h1>Atlas</h1>
         {/* jedno zdanie dla czytelnika, który nie zna jeszcze kodów sieci, jak zdanie nad listą sieci w indeksie wiki (audyt Atlasu, 2026-11-10) */}
-        <p class="at-lead">Kliknij miejsce na mózgu, żeby zobaczyć jego sieć albo obszar.</p>
+        <p class="at-lead">Obróć mózg, przesuń cięcia i kliknij miejsce, żeby zobaczyć, co to jest.</p>
       </section>
       <section aria-label="Mózg" class="wk-box at-widoki">
         <div class="at-pasek">
@@ -71,8 +71,19 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: sieci mózgowe i obszary 
           <label class="at-lista at-lista-off"><span class="sr-only">Obszar</span><select><option value="">wybierz obszar</option>{grupy.map(([g, xs]) => <optgroup label={g}>{xs.map(([n, i]) => <option value={String(i)}>{n}</option>)}</optgroup>)}</select></label>
           <div class="at-tryb" role="group" aria-label="Co zaznacza klik"><button type="button" data-tryb="sieci" aria-pressed="true">Sieci</button><button type="button" data-tryb="obszary" aria-pressed="false">Obszary</button></div>
         </div>
-        <div class="at-rzad"><Fragment set:html={W('lateral') + W('medial')} /></div>
-        <div class="at-rzad"><Fragment set:html={W('ventral') + zywy('czolowy') + zywy('poziomy')} /></div>
+        {/* mózg w 3D jest ryciną centralną (jego słowa, 2026-11-11: *make the brain with the sliders central. We want to have this as a central
+            figure... and... somehow show the slices relative to this brain*, potem *can we make C and possible to rotate?*); suwaki cięć
+            leżą na osiach mózgu w widoku startowym (*the suwaki should scale somehow within the image*), poziomy pionowo (*Maybe przekroj
+            poziomy should be vertical?*); obok płaskie przekroje do czytania, pod spodem trzy rysunki z kolokwium */}
+        <div class="at-glowny">
+          <div class="at-3d" role="group" aria-label="Mózg w trzech wymiarach z cięciem czołowym i poziomym" data-powierzchnia="/images/mozg-widoki/powierzchnia.bin">
+            <div class="at-3d-scena"></div>
+            <Fragment set:html={suwak('czolowy') + suwak('poziomy')} />
+            <div class="at-3d-dymek" role="dialog" aria-label="Miejsce w mózgu" hidden></div>
+          </div>
+          <div class="at-przekroje"><Fragment set:html={zywy('czolowy') + zywy('poziomy')} /></div>
+        </div>
+        <div class="at-rzad"><Fragment set:html={W('lateral') + W('medial') + W('ventral')} /></div>
       </section>
       {/* karta zaznaczenia pod widokami; przy kilku zaznaczonych sieciach ich karty jedna pod drugą */}
       <div class="at-miejsce">{k && <KartaWiki k={k} wAtlasie />}</div>
@@ -81,7 +92,7 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: sieci mózgowe i obszary 
         <div class="wk-chips"></div>
       </section>
     </div>
-    <p class="wk-zrodlo wk-zrodlo-mozg">Rysunki mózgu: z boku i od środka Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918; od dołu K. Hajek, <a href="https://commons.wikimedia.org/wiki/File:Sobo_1909_630.png">ryc. 630</a> w <i>Atlas and Text-book of Human Anatomy</i> Sobotty, 1909, przerysowana liniami; obie w domenie publicznej. Przekroje liczone z szablonu MNI ICBM152 2009c (© 1993–2004 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University), ze strukturami z <a href="https://download.alleninstitute.org/informatics-archive/allen_human_reference_atlas_3d_2020/version_1/">Allen Human Reference Atlas – 3D, 2020</a> (Ding i in., Allen Institute for Brain Science, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>) i siecią z 17 sieci Yeo i in. (2011) w parcelacji Schaefera i in. (2018); przekroje przeliczone i przerysowane liniami.</p>
+    <p class="wk-zrodlo wk-zrodlo-mozg">Rysunki mózgu: z boku i od środka Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918; od dołu K. Hajek, <a href="https://commons.wikimedia.org/wiki/File:Sobo_1909_630.png">ryc. 630</a> w <i>Atlas and Text-book of Human Anatomy</i> Sobotty, 1909, przerysowana liniami; obie w domenie publicznej. Mózg w trzech wymiarach i przekroje liczone z szablonu MNI ICBM152 2009c (© 1993–2004 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University), ze strukturami z <a href="https://download.alleninstitute.org/informatics-archive/allen_human_reference_atlas_3d_2020/version_1/">Allen Human Reference Atlas – 3D, 2020</a> (Ding i in., Allen Institute for Brain Science, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>) i siecią z 17 sieci Yeo i in. (2011) w parcelacji Schaefera i in. (2018); powierzchnia i przekroje przeliczone, przekroje przerysowane liniami.</p>
   </article>
   <TerminDymek />
 </Base>
@@ -89,6 +100,7 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: sieci mózgowe i obszary 
   import { iskraKursu } from '../../karty/iskra.js';
   const iskra = iskraKursu({ zmienna: true });
   import { ziarno } from '../../karty/ziarno.js';
+  import { mozg3d } from '../../karty/mozg3d.js';
   // karta zaznaczenia: strona Atlasu z kartą bierze z niej sekcję karty; pobrane strony zostają w pamięci strony
   const mozg = document.querySelector<HTMLElement>('.at-grid')!;
   const miejsce = document.querySelector<HTMLElement>('.at-miejsce')!;
@@ -121,6 +133,7 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: sieci mózgowe i obszary 
     if (przewin) (miejsce.querySelector('.at-karta') || mozg.querySelector('.at-karty') || miejsce).scrollIntoView({ block: 'start' });
   });
   ziarno();
+  mozg3d(document.querySelector<HTMLElement>('.at-3d')!);
   const sciezka = document.querySelector<HTMLElement>('.at-sciezka');
   const wroc = sciezka?.querySelector<HTMLAnchorElement>('.at-wroc');
   try {
