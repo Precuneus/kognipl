@@ -13,7 +13,7 @@ sieci:
 bez_sieci: ''
 obszary:
 - klinek
-- zakręt językowy
+- zakręt językowaty
 - biegun potyliczny
 - wzgórek górny
 - kora okołooczodołowa

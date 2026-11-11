@@ -9,7 +9,7 @@ sieci: []
 bez_sieci: 'W ujęciu kursu rytmy alfa i gamma dotyczą każdej sieci. Zmierzono je w obszarach wzrokowych: w paśmie gamma przeważają tam wpływy biegnące połączeniami wstępującymi, a w paśmie alfa i beta wpływy biegnące połączeniami zwrotnymi (Michalareas i in. 2016)<!--[s:michalareas2016-human-meg-gamma-ff-alphabeta-fb]-->.'
 obszary:
 - klinek
-- zakręt językowy
+- zakręt językowaty
 - biegun potyliczny
 ryciny: []
 materiały:

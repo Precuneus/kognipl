@@ -15,7 +15,7 @@ sieci:
 bez_sieci: ''
 obszary:
 - klinek
-- zakręt językowy
+- zakręt językowaty
 - biegun potyliczny
 ryciny: []
 materiały:

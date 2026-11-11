@@ -37,7 +37,7 @@ const KLUCZOWE = ['zakręt czołowy górny', 'zakręt czołowy środkowy', 'zakr
   'zakręt prosty', 'płacik okołośrodkowy, część przednia', 'płacik okołośrodkowy, część tylna', 'zakręt zaśrodkowy', 'płacik ciemieniowy górny',
   'zakręt nadbrzeżny', 'zakręt kątowy', 'przedklinek', 'zakręt skroniowy górny', 'zakręt skroniowy środkowy', 'zakręt skroniowy dolny',
   'biegun skroniowy', 'zakręt wrzecionowaty, część skroniowa', 'zakręt wrzecionowaty, część potyliczna', 'zakręt przyhipokampowy',
-  'zakręt potyliczny dolny', 'zakręt potyliczny górny', 'klinek', 'zakręt językowy', 'biegun potyliczny', 'zakręt obręczy', 'wyspa',
+  'zakręt potyliczny dolny', 'zakręt potyliczny górny', 'klinek', 'zakręt językowaty', 'biegun potyliczny', 'zakręt obręczy', 'wyspa',
   'ciało modzelowate', 'jądro ogoniaste', 'wzgórze', 'skorupa', 'gałka blada', 'przedmurze', 'ciało migdałowate', 'hipokamp', 'komora boczna',
   'komora trzecia', 'okolica suteczkowata podwzgórza', 'pasmo wzrokowe', 'sklepienie', 'śródmózgowie', 'podwzgórze', 'istota biała przodomózgowia'];
 const PLATY = ['płat czołowy', 'płat ciemieniowy', 'płat skroniowy', 'płat potyliczny', 'płat limbiczny', 'płat wyspowy'];
@@ -53,7 +53,7 @@ const POD_KORA = [
   ['węchomózgowie i kora bezziarnista', ['opuszka węchowa', 'jądro węchowe przednie', 'kora gruszkowata', 'pasmo węchowe', 'kora wyspowa bezziarnista czołowa', 'kora wyspowa bezziarnista skroniowa', 'próg wyspy']],
 ];
 // Szukanie obszaru (jego słowo, 2026-11-11: *add the search*): obok polskiej nazwy obszar znajduje się po nazwie angielskiej i po
-// skrócie, którego używają podręczniki i karty (OFC, ACC, Broca, Heschl, V1 jak na kartach: klinek, zakręt językowy, biegun potyliczny)
+// skrócie, którego używają podręczniki i karty (OFC, ACC, Broca, Heschl, V1 jak na kartach: klinek, zakręt językowaty, biegun potyliczny)
 export const ALIASY = {
   'kora okołooczodołowa': ['OFC', 'orbitofrontal cortex', 'kora oczodołowo-czołowa'],
   'zakręt czołowy górny': ['superior frontal gyrus', 'SFG'],
@@ -81,7 +81,8 @@ export const ALIASY = {
   'zakręt wrzecionowaty, część potyliczna': ['fusiform gyrus', 'FFA'],
   'biegun potyliczny': ['occipital pole', 'V1', 'kora wzrokowa pierwszorzędowa'],
   'klinek': ['cuneus', 'V1', 'kora wzrokowa pierwszorzędowa'],
-  'zakręt językowy': ['lingual gyrus', 'V1', 'kora wzrokowa pierwszorzędowa'],
+  // zakręt językowaty, nazwa anatomiczna gyrus lingualis (jego słowo, 2026-11-11: *jezykowaty ok*); dawna nazwa strony zostaje do szukania
+  'zakręt językowaty': ['zakręt językowy', 'lingual gyrus', 'V1', 'kora wzrokowa pierwszorzędowa'],
   'zakręt potyliczny dolny': ['inferior occipital gyrus'],
   'zakręt potyliczny górny': ['superior occipital gyrus'],
   'zakręt obręczy': ['cingulate gyrus'],
