@@ -861,14 +861,13 @@
      "po": 8,
      "zywa": "mozg",
      "alt": "Półkula mózgu z kropek, która się obraca: sieci w swoich kolorach, trzy szlaki wzrokowe od V1, predykcje rozświetlają sieci od domyślnej ku receptorom, a zaskoczenie biegnie w drugą stronę.",
-     "podpis": "Sieci mózgu według odległości od receptorów, moja hipoteza w jej obecnej postaci. Najbliżej receptorów leżą sieć wzrokowa i czuciowo-ruchowa, a na drugim końcu głównego gradientu kory leży sieć domyślna (Margulies i in. 2016)<!--[s:margulies2016-dmn-far-end-from-sensorimotor]-->. Między nimi leżą sieć grzbietowa uwagi i sieć kontroli. Predykcje płyną falą od sieci domyślnej przez sieć kontroli i grzbietową uwagi do sieci przy receptorach. Zaskoczenie biegnie w drugą stronę: od receptorów przez sieć istotności, która ostrzega przed przewidywanymi skutkami zaskoczenia, w górę ku sieci domyślnej. Kliknij „zaskoczenie”: każde kolejne kliknięcie sięga o sieć wyżej. Przeciągnij mózg w bok, a zobaczysz jego przyśrodkową ścianę. Kształty sieci są schematyczne, a ich położenie wyznaczają obszary rdzeniowe:",
+     "podpis": "Sieci mózgu według odległości od receptorów, moja hipoteza w jej obecnej postaci. Najbliżej receptorów leżą sieć wzrokowa i czuciowo-ruchowa, a na drugim końcu głównego gradientu kory leży sieć domyślna (Margulies i in. 2016)<!--[s:margulies2016-dmn-far-end-from-sensorimotor]-->. Między nimi leżą sieć grzbietowa uwagi i sieć kontroli. Predykcje płyną falą od sieci domyślnej przez sieć kontroli i grzbietową uwagi do sieci przy receptorach. Zaskoczenie biegnie w drugą stronę: od receptorów w górę ku sieci domyślnej. Kliknij „zaskoczenie”: każde kolejne kliknięcie sięga o sieć wyżej. Przeciągnij mózg w bok, a zobaczysz jego przyśrodkową ścianę. Kształty sieci są schematyczne, a ich położenie wyznaczają obszary rdzeniowe:",
      "lista": [
       "Sieć wzrokowa: płat potyliczny, kora prążkowa i pozaprążkowa (Uddin i in. 2019)<!--[s:uddin2019-on-core-occipital]-->.",
       "Sieć czuciowo-ruchowa: kora ruchowa i czuciowa po obu stronach bruzdy środkowej (Uddin i in. 2019)<!--[s:uddin2019-pn-core-motor-somatosensory]-->. W podziale Yeo i współpracowników kora słuchowa i tylna część wyspy należą do tej samej sieci (Yeo i in. 2011)<!--[s:yeo2011-somatomotor-auditory-insula]-->.",
       "Sieć grzbietowa uwagi: płacik ciemieniowy górny z bruzdą śródciemieniową, obszary ruchu wokół V5 i przypuszczalne czołowe pola okoruchowe (Uddin i in. 2019)<!--[s:uddin2019-dfpn-core-spl-ips-fef]-->.",
       "Sieć kontroli: boczna kora przedczołowa wzdłuż zakrętu czołowego środkowego i przednia część płacika ciemieniowego dolnego (Uddin i in. 2019)<!--[s:uddin2019-lfpn-core-lateral-pfc]-->.",
-      "Sieć domyślna: przyśrodkowa kora przedczołowa, tylny zakręt obręczy i tylna część płacika ciemieniowego dolnego, a także przednie części płatów skroniowych i kora okołooczodołowa (Uddin i in. 2019)<!--[s:uddin2019-mfpn-core-and-limbic]-->.",
-      "Sieć istotności: przednia część wyspy i przednia część środkowego zakrętu obręczy (Uddin i in. 2019)<!--[s:uddin2019-mcin-core-salience]-->."
+      "Sieć domyślna: przyśrodkowa kora przedczołowa, tylny zakręt obręczy i tylna część płacika ciemieniowego dolnego, a także przednie części płatów skroniowych i kora okołooczodołowa (Uddin i in. 2019)<!--[s:uddin2019-mfpn-core-and-limbic]-->."
      ]
     }
    ]
