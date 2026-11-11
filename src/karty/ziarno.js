@@ -623,6 +623,8 @@ export async function ziarno() {
     zAdresu();
     // wstecz, dalej i link do Atlasu z samego Atlasu zmieniają tylko adres: zaznaczenie idzie za nim
     addEventListener('hashchange', zAdresu);
+    // klik w mózg w 3D zaznacza jak klik w przekroju: drugi klik w to samo zdejmuje zaznaczenie; karta wczytuje się bez przewijania
+    mozg.addEventListener('atlas-klik', (e) => { const w = e.detail; hotReg = 0; wybierz(tenSam(w, wybor) ? null : w); });
     // wstecz po zmianie ścieżki na miejscu wraca do wpisu z innym adresem bez zdarzenia hashchange (przegląd Atlasu 2026-11-11)
     addEventListener('popstate', zAdresu);
     if (szukaj && wyniki) {

@@ -148,13 +148,8 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-os-poziomy .at-wl{margin:6px 0 0}
 .at-wl::before{content:'';position:absolute;inset:-12px -5px}
 .at-wl:focus-visible{outline:1px solid #f0c060;outline-offset:4px}
-.at-3d-dymek{position:absolute;z-index:5;width:min(300px,calc(100% - 16px));background:#16140f;border:1px solid rgba(180,155,100,.32);border-radius:14px;padding:14px 16px 12px;box-shadow:0 10px 34px rgba(0,0,0,.5)}
-.at-3d-dymek[hidden]{display:none}
-.at-3d-x{position:absolute;top:4px;right:6px;background:none;border:0;color:#a09888;font-size:20px;line-height:1;cursor:pointer;padding:4px}
-.at-3d-x:hover{color:#e2ddd4}
-.at-3d-t{margin:0 22px 6px 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;font-weight:500;line-height:1.15;color:#f0c060}
-.at-3d-p{margin:4px 0 0;font-size:13.5px;line-height:1.55;color:#e2ddd4}
-.at-3d-t a,.at-3d-p a{color:inherit;text-decoration:underline dotted 1px;text-underline-offset:3px}
+/* nazwa części pod wskaźnikiem na mózgu w 3D, w kroju znacznika przekrojów, nad suwakami i przekrojami */
+.at-3d-nazwa{z-index:6}
 /* bez WebGL albo bez objętości mózg w 3D znika, a suwaki leżą płasko jeden pod drugim nad przekrojami; strzałkowy biegnie wtedy od
    lewej półkuli do prawej, jak lewa i prawa w przekroju czołowym */
 .at-3d.at-3d-brak{height:auto;display:flex;flex-direction:column;gap:12px}

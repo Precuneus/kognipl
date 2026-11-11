@@ -4,7 +4,7 @@
 // objętości co przekroje (szablon MNI 2009c, odbity w linii środkowej jak przekroje), każdy jej punkt z siecią Yeo i strukturą Allena.
 // Trzy cięcia wycinają ósemkę mózgu od strony widza, przednią górną część na lewo od cięcia strzałkowego, a na ścianach wycięcia leżą
 // przekroje (jego słowa, 2026-11-11: *add a 3rd cut on the 3d brain, from lateral to medial to lateral*). Przeciąganie obraca, kółko przybliża w stronę
-// wskaźnika, prawy przycisk, Shift albo dwa palce przesuwają, dwuklik wraca do widoku startowego, klik otwiera dymek z tym, co jest
+// wskaźnika, prawy przycisk, Shift albo dwa palce przesuwają, dwuklik wraca do widoku startowego, wskazanie nazywa, a klik zaznacza to, co jest
 // w miejscu. Kolory idą za przełącznikiem Sieci | Obszary i za zaznaczeniem Atlasu, które prowadzi `ziarno.js` (zdarzenia
 // `atlas-wybor` i `atlas-ciecie` na siatce Atlasu).
 import * as THREE from 'three';
@@ -289,38 +289,40 @@ export async function mozg3d(el) {
     stan.obszar = d.wybor && d.wybor.typ === 'obszar' ? d.wybor.n : 0;
   };
   zStanu(siatka.__stan);
-  siatka.addEventListener('atlas-wybor', (e) => { zStanu(e.detail); zamknij(); wszystko(); });
+  siatka.addEventListener('atlas-wybor', (e) => { zStanu(e.detail); wszystko(); });
   siatka.addEventListener('atlas-ciecie', (e) => {
     cut[e.detail.p] = e.detail.mm; pC.constant = cut.czolowy; pH.constant = cut.poziomy; pS.constant = -cut.strzalkowy;
     lica(); rysuj();
   });
 
-  // dymek: co jest w klikniętym miejscu; nazwa struktury i sieć prowadzą do ich zaznaczenia w Atlasie
-  const dymek = el.querySelector('.at-3d-dymek');
+  // wskazanie nazywa część pod wskaźnikiem w kroju znacznika przekrojów: w trybie Obszary strukturę Allena i jej płat, w trybie Sieci
+  // sieć Yeo i sieci strony; klik zaznacza to samo, co klik w przekroju, a karta zaznaczenia wczytuje się pod mózgiem bez przewijania
+  // (jego słowa, 2026-11-11: *clicking on the 3d brain should highlight the structure and open its card below in the background.
+  // hovering over should display a name of the part*); dymek po kliknięciu zszedł
+  const nazwa = el.querySelector('.at-3d-nazwa');
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-  const zamknij = () => { if (dymek) dymek.hidden = true; };
-  function pokaz(a, y, x, yy) {
-    const r = a ? A2R[a] : 0, reg = r ? REG[r - 1] : null, nazwa = a ? NAZWY[a] : '';
-    const sie = y ? O.sieci[y - 1] : null;
-    if (!nazwa && !sie) { zamknij(); return; }
-    const link = (u, h) => (u ? '<a href="' + esc(u) + '">' + h + '</a>' : h);
-    let h = '<button type="button" class="at-3d-x" aria-label="Zamknij">×</button>';
-    if (nazwa) {
-      h += '<p class="at-3d-t">' + link(reg ? '/atlas/#obszar-' + reg[4] : '', esc(nazwa)) + '</p>';
-      const nad = r && JAK[r] ? REG[JAK[r] - 1][0] : '';
-      const dalej = [nad && nad !== nazwa ? 'część: ' + esc(nad) : '', reg && reg[2] ? esc(reg[2]) : ''].filter(Boolean);
-      if (dalej.length) h += '<p class="at-3d-p">' + dalej.join(' · ') + '</p>';
+  const zamknij = () => { if (nazwa) nazwa.hidden = true; };
+  function opis(a, y) {
+    if (stan.tryb === 'obszary') {
+      const r = a ? A2R[a] : 0;
+      if (!r) return '';
+      const reg = REG[r - 1];
+      return '<span><b>' + esc(NAZWY[a]) + '</b>' + (reg && reg[2] ? ' ' + esc(reg[2]) : '') + '</span>';
     }
-    if (sie) {
-      const kody = sie[1];
-      h += '<p class="at-3d-p">sieć ' + esc(sie[0]) + ' (Yeo)' + (kody.length ? ': ' + kody.map((c) => link(STRONY.siec[c] || '/atlas/#siec-' + c.toLowerCase(), '<b style="color:' + KOL[c] + '">' + c + '</b> ' + esc(NAZWA[c] || ''))).join(' · ') : '') + '</p>';
-    }
-    dymek.innerHTML = h;
-    dymek.hidden = false;
-    dymek.querySelector('.at-3d-x').addEventListener('click', zamknij);
-    const rb = el.getBoundingClientRect(), w = dymek.offsetWidth, hh = dymek.offsetHeight;
-    dymek.style.left = Math.min(rb.width - w - 8, Math.max(8, x - rb.left + 14)) + 'px';
-    dymek.style.top = Math.min(rb.height - hh - 8, Math.max(8, yy - rb.top + 14)) + 'px';
+    if (!y) return '';
+    const sie = O.sieci[y - 1];
+    return '<span class="wk-kod-yeo">' + esc(sie[0]) + '</span>' + sie[1].map((c, j) => '<span' + (j ? ' class="wk-kod-dalej"' : '') + '><b style="color:' + KOL[c] + '">' + c + '</b> ' + esc(NAZWA[c] || '') + '</span>').join('');
+  }
+  function nazwij(t, x, yy) {
+    const h = t ? opis(t[0], t[1]) : '';
+    if (!h || !nazwa) { zamknij(); return; }
+    nazwa.innerHTML = h;
+    nazwa.hidden = false;
+    // na prawo od wskaźnika, a gdzie tam brak miejsca na ekranie, na lewo, i nigdy poza ekranem
+    const rb = el.getBoundingClientRect(), w = nazwa.offsetWidth, E = document.documentElement.clientWidth;
+    const L = x + 14 + w <= E - 4 ? x + 14 : x - 14 - w >= 4 ? x - 14 - w : 4;
+    nazwa.style.left = L - rb.left + 'px';
+    nazwa.style.top = Math.max(0, yy - rb.top - 10) + 'px';
   }
   const ray = new THREE.Raycaster(), mysz = new THREE.Vector2();
   const usuniete = (q) => q.y > cut.czolowy && q.z > cut.poziomy && q.x < cut.strzalkowy;
@@ -362,10 +364,27 @@ export async function mozg3d(el) {
     if (!start || e.button !== 0) { start = null; return; }
     const [sx, sy, t0] = start; start = null;
     if (Math.hypot(e.clientX - sx, e.clientY - sy) > 5 || performance.now() - t0 > 600) return;
-    const t = trafienie(e), cx = e.clientX, cy = e.clientY;
+    const t = trafienie(e), cx = e.clientX, cy = e.clientY, palec = e.pointerType === 'touch';
     clearTimeout(tKlik);
-    tKlik = setTimeout(() => { if (t) pokaz(t[0], t[1], cx, cy); else zamknij(); }, 250);
+    // klik czeka 250 ms, więc dwuklik tylko wraca do widoku startowego; palec nie ma wskazania, więc stuknięcie też nazywa część
+    tKlik = setTimeout(() => {
+      if (!t) return;
+      let w = null;
+      if (stan.tryb === 'obszary') { const r = t[0] ? A2R[t[0]] : 0; if (r) w = { typ: 'obszar', n: r }; }
+      else if (t[1] && O.sieci[t[1] - 1][1].length) w = { typ: 'siec', kody: O.sieci[t[1] - 1][1].slice() };
+      if (w) siatka.dispatchEvent(new CustomEvent('atlas-klik', { detail: w }));
+      if (palec) nazwij(t, cx, cy);
+    }, 250);
   });
+  let ruch = 0, ostatni = null;
+  renderer.domElement.addEventListener('pointermove', (e) => {
+    if (e.pointerType === 'touch') return;
+    if (e.buttons) { zamknij(); return; }
+    ostatni = e;
+    if (ruch) return;
+    ruch = requestAnimationFrame(() => { ruch = 0; nazwij(trafienie(ostatni), ostatni.clientX, ostatni.clientY); });
+  });
+  renderer.domElement.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') zamknij(); });
   addEventListener('keydown', (e) => { if (e.key === 'Escape') zamknij(); });
   controls.addEventListener('start', zamknij);
   controls.addEventListener('change', rysuj);
