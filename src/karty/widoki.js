@@ -54,7 +54,8 @@ const POD_KORA = [
 ];
 // REG: obszary jak z `regiony()`, numer = pozycja + 1; karty: numer obszaru → karty, które w nim leżą
 export function listaObszarow(REG, karty) {
-  const ile = (i) => (karty[i] || []).length + (REG[i - 1][1] ? 1 : 0); // karty w obszarze i jego własna karta
+  // karty w obszarze i w jego częściach, każda raz, i jego własna karta
+  const ile = (i) => new Set([i].concat(REG.map((_, j) => j + 1).filter((j) => JAK[j] === i)).flatMap((j) => (karty[j] || []).map((x) => x[1]))).size + (REG[i - 1][1] ? 1 : 0);
   const klucz = (i) => { const k = KLUCZOWE.indexOf(REG[i - 1][0]); return k < 0 ? 1000 + i : k; };
   const porzadek = (a, b) => ile(b) - ile(a) || klucz(a) - klucz(b);
   const numery = REG.map((_, j) => j + 1);
@@ -102,7 +103,7 @@ export function suwak(p) {
   return '<div class="at-os at-os-' + p + '"><span aria-hidden="true">' + a + '</span>'
     + '<input type="range" class="at-suwak" data-p="' + p + '"' + dir + ' min="' + lo.toFixed(1) + '" max="' + hi.toFixed(1) + '" step="0.5" value="' + CIECIE[p] + '" aria-label="Położenie ' + PRZEKROJ[p][1] + '">'
     + '<span aria-hidden="true">' + b + '</span>'
-    + '<button type="button" class="at-wl" data-p="' + p + '" role="switch" aria-checked="true" aria-label="Płaski przekrój ' + NAZWA_CIECIA[p] + '"><span class="at-wl-tor" aria-hidden="true"></span></button></div>';
+    + '<button type="button" class="at-wl" data-p="' + p + '" role="switch" aria-checked="true" aria-label="Płaski przekrój ' + NAZWA_CIECIA[p] + '"><span class="at-wl-tor" aria-hidden="true"></span><span class="at-podpis" aria-hidden="true"></span></button></div>';
 }
 // dane obszarów dla skryptów Atlasu: struktura Allena ma w objętości numer swojego wpisu, JAK wskazuje jej grupę
 export function regionyAtlasu(REG) {

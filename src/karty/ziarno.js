@@ -140,6 +140,7 @@ export async function ziarno() {
   // przekroje z objętości: mapy sieci i obszarów, linie i etykiety liczone z plastra, na nowo przy każdym przesunięciu cięcia
   const vol = objetosc ? await objetosc : null;
   const zywe = {};
+  const czeka = {};
   if (vol) for (const fig of mozg.querySelectorAll('.wk-zywy')) {
     const [VW, VH] = fig.dataset.vb.split(' ').map(Number);
     const pole = fig.querySelector('.wk-pole');
@@ -147,6 +148,52 @@ export async function ziarno() {
     zywe[v.zywy] = v;
     widoki.push(v);
   } else mozg.querySelectorAll('.wk-zywy').forEach((f) => { f.hidden = true; });
+  // położenie cięcia; z kodu (wybór obszaru) przesuwa też suwak
+  function ustaw(p, mm, zKodu) {
+    const s = mozg.querySelector('.at-suwak[data-p="' + p + '"]'), v = zywe[p];
+    if (!s || !v) return;
+    mm = Math.max(Number(s.min), Math.min(Number(s.max), Math.round(mm * 2) / 2));
+    if (zKodu) { s.value = String(mm); s.dispatchEvent(new Event('input')); return; }
+    const bylo = czeka[p] !== undefined;
+    czeka[p] = mm;
+    if (bylo) return;
+    requestAnimationFrame(() => {
+      const m = czeka[p]; delete czeka[p];
+      if (Math.abs(m - v.mm) < 0.01) return;
+      plastry(v, m); uloz(v); wspolnota(v); tagi(); rysuj(v);
+      mozg.dispatchEvent(new CustomEvent('atlas-ciecie', { detail: { p, mm: m } }));
+    });
+  }
+  // obszar wybrany z listy, z adresu albo z linku: trzy cięcia przechodzą przez jego punkt najbliższy środkowi, więc obszar widać we
+  // wszystkich przekrojach i na ścianach wycięcia w 3D (przegląd Atlasu 2026-11-11: kora oczodołowo-czołowa i hipokamp nie leżały
+  // w żadnym przekroju, a student przesuwał trzy suwaki na ślepo); klik w przekroju cięć nie rusza, bo obszar już tam widać
+  const PUNKT = new Map();
+  function doObszaru(n) {
+    if (!vol || !n) return;
+    if (!PUNKT.has(n)) {
+      const [NX, NY, NZ] = OBJ.wymiar, NV = NX * NY * NZ, k = OBJ.krok, [X0, Y0, Z0] = OBJ.poczatek, pola = [];
+      let sx = 0, sy = 0, sz = 0;
+      for (let i = 0; i < NV; i++) {
+        const a = vol[2 * NV + i];
+        if (!a || !trafia(OBJ.A2R[a], n)) continue;
+        const xi = i % NX, t = (i / NX) | 0, zi = t % NZ, yi = (t / NZ) | 0;
+        pola.push(xi, yi, zi); sx += xi; sy += yi; sz += zi;
+      }
+      const c = pola.length / 3;
+      let p = null;
+      if (c) {
+        let bd = Infinity;
+        for (let j = 0; j < pola.length; j += 3) {
+          const d = (pola[j] - sx / c) ** 2 + (pola[j + 1] - sy / c) ** 2 + (pola[j + 2] - sz / c) ** 2;
+          if (d < bd) { bd = d; p = [X0 + pola[j] * k, Y0 + pola[j + 1] * k, Z0 + pola[j + 2] * k]; }
+        }
+      }
+      PUNKT.set(n, p);
+    }
+    const p = PUNKT.get(n);
+    if (!p) return;
+    ustaw('strzalkowy', p[0], true); ustaw('czolowy', p[1], true); ustaw('poziomy', p[2], true);
+  }
   function plastry(v, mm) {
     v.mm = mm;
     const T = plaster(vol, OBJ, 0, v.zywy, mm), B = plaster(vol, OBJ, 1, v.zywy, mm), A = plaster(vol, OBJ, 2, v.zywy, mm), Y = plaster(vol, OBJ, 3, v.zywy, mm);
@@ -338,7 +385,9 @@ export async function ziarno() {
     }
     return '';
   }
-  function podWskaznikiem(v, e) {
+  // najbliższe pole kory w promieniu trzech pól; wskazanie i klik biorą to samo pole, więc klik zaznacza sieci, które pokazało
+  // wskazanie (przegląd Atlasu 2026-11-11: wskazanie mówiło VAN i SN, a klik w linię bruzdy zaznaczał samą VAN)
+  function koraPod(v, e) {
     const [fx, fy] = pole(v, e);
     let best = -1, bd = 99;
     for (let dy = -3; dy <= 3; dy++) for (let dx = -3; dx <= 3; dx++) {
@@ -346,6 +395,10 @@ export async function ziarno() {
       if (x < 0 || y < 0 || x >= v.FW || y >= v.FH || d > 9 || d >= bd) continue;
       if (v.kora[y * v.FW + x]) { best = y * v.FW + x; bd = d; }
     }
+    return best;
+  }
+  function podWskaznikiem(v, e) {
+    const best = koraPod(v, e);
     if (best < 0) return [];
     return wMiejscu(v, best).map((n) => NETS[n]);
   }
@@ -370,8 +423,11 @@ export async function ziarno() {
     const r = v.pole.getBoundingClientRect();
     const x = e.clientX - r.left, y = e.clientY - r.top;
     v.kody.style.left = v.kody.style.right = '';
-    const lewo = x + 14 + v.kody.offsetWidth > r.width; // kody mierzone po wypełnieniu, żeby nie wychodziły za widok
-    if (lewo) v.kody.style.right = r.width - x + 14 + 'px'; else v.kody.style.left = x + 14 + 'px';
+    // kody mierzone po wypełnieniu: stoją na prawo od wskaźnika, a gdzie tam brak miejsca na ekranie, na lewo, i nigdy poza ekranem
+    // (przegląd Atlasu 2026-11-11: podpis przekroju czołowego wychodził za lewy brzeg)
+    const w = v.kody.offsetWidth, E = document.documentElement.clientWidth;
+    const L = e.clientX + 14 + w <= E - 4 ? x + 14 : e.clientX - 14 - w >= 4 ? x - 14 - w : 4 - r.left;
+    v.kody.style.left = L + 'px';
     v.kody.style.top = Math.max(0, y - 10) + 'px';
   }
   // pod wskaźnikiem: w trybie sieci kod i nazwa każdej sieci miejsca, w trybie obszarów nazwa obszaru i jego płat, zawsze jako tekst
@@ -411,6 +467,9 @@ export async function ziarno() {
   const wybieraj = ATLAS ? document.querySelector('.at-lista[data-tryb="obszary"] select') : null;
   const link = (url, html) => (url ? '<a href="' + esc(url) + '">' + html + '</a>' : '<span>' + html + '</span>');
   const kodHtml = (n) => '<b style="color:' + KOL[n] + '">' + n + '</b> ' + esc(NAZWA[n] || '');
+  // przy kilku sieciach i przy obszarze sam kod, nazwa dla czytnika ekranu: wiersz zaznaczenia mieści się w dwóch liniach (przegląd
+  // Atlasu 2026-11-11: długie zaznaczenie zajmowało trzy do pięciu linii i spychało mózg)
+  const kodKrotki = (n) => '<b style="color:' + KOL[n] + '">' + n + '</b><span class="sr-only"> ' + esc(NAZWA[n] || '') + '</span>';
   // sieci obszaru: te, które zajmują co najmniej 15 % jego kory w całej objętości; sieć Yeo wspólna dwóm sieciom strony liczy się
   // w obu
   const SIECI_OBSZARU = new Map();
@@ -437,7 +496,7 @@ export async function ziarno() {
     // wiersz nad tytułem ma zawsze swoją wysokość, pusty bez zaznaczenia, więc widoki nie skaczą (audyt Atlasu, 2026-11-10)
     if (!wybor) { tu.innerHTML = ''; if (karty) karty.hidden = true; return; }
     if (wybor.typ === 'siec') {
-      tu.innerHTML = wybor.kody.map((n) => link(URL[n], kodHtml(n))).join(' · ');
+      tu.innerHTML = wybor.kody.map((n) => link(URL[n], (wybor.kody.length > 1 ? kodKrotki : kodHtml)(n))).join(' · ');
       const lista = [];
       wybor.kody.forEach((n) => (KARTY_SIECI[n] || []).forEach((x) => { if (!lista.some((y) => y[1] === x[1])) lista.push([x[0], x[1], n]); }));
       if (karty) {
@@ -450,9 +509,11 @@ export async function ziarno() {
       const nad = JAK[wybor.n] ? REG[JAK[wybor.n] - 1] : null;
       if (nad) czesci.push(link(nad[1], esc(nad[0])));
       if (o[2]) czesci.push(link(o[3], esc(o[2])));
-      sieciObszaru(wybor.n).forEach((n) => czesci.push(link(URL[n], kodHtml(n))));
+      sieciObszaru(wybor.n).forEach((n) => czesci.push(link(URL[n], kodKrotki(n))));
       tu.innerHTML = czesci.join(' · ');
-      const lista = KARTY_OBSZARU[wybor.n] || KARTY_OBSZARU[JAK[wybor.n]] || [];
+      // karty grupy to jej własne i karty jej części (śródmózgowie i wzgórek górny); część bez kart pokazuje karty swojej grupy
+      const zCzesci = [wybor.n].concat(REG.map((_, j) => j + 1).filter((j) => JAK[j] === wybor.n)).flatMap((j) => KARTY_OBSZARU[j] || []);
+      const lista = (zCzesci.length ? zCzesci : KARTY_OBSZARU[JAK[wybor.n]] || []).filter((x, j, a) => a.findIndex((y) => y[1] === x[1]) === j);
       if (karty) {
         karty.querySelector('.wk-chips').innerHTML = lista.map(([h, u, c]) => '<a href="' + esc(u) + '" class="wk-chip" style="--c:' + c + '">' + esc(h) + '</a>').join('');
         karty.hidden = !lista.length;
@@ -482,13 +543,20 @@ export async function ziarno() {
     widoki.forEach(wspolnota);
     tagi(); panel(); if (!bezAdresu) adres();
     if (wybieraj) wybieraj.value = w && w.typ === 'obszar' ? String(w.n) : '';
-    if (wybierajSiec) wybierajSiec.value = w && w.typ === 'siec' && w.kody.length === 1 ? w.kody[0] : '';
+    // kilka sieci naraz (z karty wiki) lista nazywa kodami (przegląd Atlasu 2026-11-11: lista mówiła *wybierz sieć* nad pięcioma
+    // zaznaczonymi sieciami)
+    if (wybierajSiec) {
+      const wiele = wybierajSiec.querySelector('option[value="wiele"]'), kilka = w && w.typ === 'siec' && w.kody.length > 1;
+      if (wiele) wiele.textContent = kilka ? w.kody.join(' · ') : '';
+      wybierajSiec.value = !w || w.typ !== 'siec' ? '' : kilka ? 'wiele' : w.kody[0];
+    }
     rysujWszystko();
     // karta zaznaczenia staje pod widokami: wczytuje ją strona Atlasu (jego słowa, 2026-11-10: *below the brains the card of this
     // network/region should be visible. And then below the other cards*)
     // stan zostaje też na siatce, żeby mózg w 3D, który wczytuje się dłużej, zaczął od bieżącego zaznaczenia
     if (ATLAS) {
-      const detail = { karty: kartyWyboru(w, tryb), przewin: !!przewin, tryb, lit: [...LIT], wybor: w };
+      const nazwa = !w ? '' : w.typ === 'obszar' ? REG[w.n - 1][0] : w.kody.join(' · ');
+      const detail = { karty: kartyWyboru(w, tryb), przewin: !!przewin, tryb, lit: [...LIT], wybor: w, nazwa };
       mozg.__stan = detail;
       mozg.dispatchEvent(new CustomEvent('atlas-wybor', { detail }));
     }
@@ -500,8 +568,8 @@ export async function ziarno() {
     else {
       const lista = podWskaznikiem(v, e);
       if (!lista.length) return;
-      const i = v.zywy ? komorka(v, e) : -1;
-      const fam = i >= 0 && v.kora[i] && v.yeo[i] ? OBJ.sieci[v.yeo[i] - 1][1] : [];
+      const i = v.zywy ? koraPod(v, e) : -1;
+      const fam = i >= 0 && v.yeo[i] ? OBJ.sieci[v.yeo[i] - 1][1] : [];
       w = { typ: 'siec', kody: fam.length > 1 ? fam.slice() : [lista[0]] };
     }
     wybierz(tenSam(w, wybor) ? null : w);
@@ -532,6 +600,7 @@ export async function ziarno() {
       const z = zeStrony(location.pathname, location.hash) || { w: null, t: START.tryb || 'sieci' };
       ustawTryb(z.t); hotReg = 0;
       wybierz(z.w, true);
+      if (z.w && z.w.typ === 'obszar') doObszaru(z.w.n);
     };
     // link do strony Atlasu w samym Atlasie, z karty pod widokami, z listy kart albo z wiersza nad tytułem, zaznacza na miejscu i
     // zmienia kartę bez przeładowania; link z karty albo z listy kart przewija do nowej karty. Nasłuch na oknie, po dymku terminu:
@@ -548,12 +617,15 @@ export async function ziarno() {
       if (z.t !== tryb) ustawTryb(z.t);
       hotReg = 0;
       wybierz(z.w, false, !!a.closest('.at-karta, .at-karty, .td'));
+      if (z.w && z.w.typ === 'obszar') doObszaru(z.w.n);
     });
     zAdresu();
     // wstecz, dalej i link do Atlasu z samego Atlasu zmieniają tylko adres: zaznaczenie idzie za nim
     addEventListener('hashchange', zAdresu);
-    if (wybieraj) wybieraj.addEventListener('change', () => { const n = Number(wybieraj.value); wybierz(n ? { typ: 'obszar', n } : null); });
-    if (wybierajSiec) wybierajSiec.addEventListener('change', () => { const k = wybierajSiec.value; wybierz(k ? { typ: 'siec', kody: [k] } : null); });
+    // wstecz po zmianie ścieżki na miejscu wraca do wpisu z innym adresem bez zdarzenia hashchange (przegląd Atlasu 2026-11-11)
+    addEventListener('popstate', zAdresu);
+    if (wybieraj) wybieraj.addEventListener('change', () => { const n = Number(wybieraj.value); wybierz(n ? { typ: 'obszar', n } : null); doObszaru(n); });
+    if (wybierajSiec) wybierajSiec.addEventListener('change', () => { const k = wybierajSiec.value; if (k !== 'wiele') wybierz(k ? { typ: 'siec', kody: [k] } : null); });
     przyciski.forEach((b) => b.addEventListener('click', () => { if (b.dataset.tryb === tryb) return; ustawTryb(b.dataset.tryb); hotReg = 0; wybierz(null); }));
   }
   rysujWszystko();
@@ -599,24 +671,7 @@ export async function ziarno() {
   };
   mozg.querySelectorAll('.at-suwak').forEach((s) => { opisz(s); s.addEventListener('input', () => opisz(s)); });
   // cięcie przesuwa suwak na osi mózgu w 3D; przekrój liczy się na nowo raz na klatkę
-  if (vol) {
-    const czeka = {};
-    const ustaw = (p, mm) => {
-      const s = mozg.querySelector('.at-suwak[data-p="' + p + '"]'), v = zywe[p];
-      if (!s || !v) return;
-      mm = Math.max(Number(s.min), Math.min(Number(s.max), mm));
-      const bylo = czeka[p] !== undefined;
-      czeka[p] = mm;
-      if (bylo) return;
-      requestAnimationFrame(() => {
-        const m = czeka[p]; delete czeka[p];
-        if (Math.abs(m - v.mm) < 0.01) return;
-        plastry(v, m); uloz(v); wspolnota(v); tagi(); rysuj(v);
-        mozg.dispatchEvent(new CustomEvent('atlas-ciecie', { detail: { p, mm: m } }));
-      });
-    };
-    mozg.querySelectorAll('.at-suwak').forEach((s) => s.addEventListener('input', () => ustaw(s.dataset.p, Number(s.value))));
-  }
+  if (vol) mozg.querySelectorAll('.at-suwak').forEach((s) => s.addEventListener('input', () => ustaw(s.dataset.p, Number(s.value))));
 
   if (stoi) return;
   let widac = true;

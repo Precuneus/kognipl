@@ -101,7 +101,12 @@ export async function mozg3d(el) {
   controls.minDistance = 40; controls.maxDistance = 700;
   controls.update();
   controls.saveState();
-  renderer.domElement.addEventListener('dblclick', () => controls.reset());
+  // dwuklik i ↻ wracają do widoku startowego; pierwszy klik dwukliku nie otwiera dymka (przegląd Atlasu 2026-11-11)
+  let tKlik = 0;
+  const odNowa = () => { clearTimeout(tKlik); controls.reset(); zamknij(); };
+  renderer.domElement.addEventListener('dblclick', odNowa);
+  const przyciskStart = el.querySelector('.at-3d-start');
+  if (przyciskStart) przyciskStart.addEventListener('click', () => odNowa());
 
   scene.add(new THREE.HemisphereLight(0xfff1dc, 0x0d0b08, 0.7));
   const lampa = new THREE.DirectionalLight(0xffffff, 2.2);
@@ -264,8 +269,9 @@ export async function mozg3d(el) {
     renderer.setSize(w, h, false); renderer.domElement.style.width = '100%'; renderer.domElement.style.height = '100%';
     camera.aspect = w / h; camera.updateProjectionMatrix();
     if (!ruszony) {
-      const pol = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-      const d = Math.min(560, Math.max(320, Math.max(84 / pol, 112 / (pol * camera.aspect))));
+      // scena pod suwakami (na komputerze) mieści mózg między pasem górnego suwaka a pasem dolnego
+      const pol = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)), hm = scena.offsetTop < 10 ? (h - 110) / h : 1;
+      const d = Math.min(620, Math.max(320, Math.max(84 / (pol * hm), 112 / (pol * camera.aspect))));
       camera.position.copy(controls.target).addScaledVector(kierunek, d);
       controls.update(); controls.saveState();
     }
@@ -312,7 +318,7 @@ export async function mozg3d(el) {
     dymek.innerHTML = h;
     dymek.hidden = false;
     dymek.querySelector('.at-3d-x').addEventListener('click', zamknij);
-    const rb = scena.getBoundingClientRect(), w = dymek.offsetWidth, hh = dymek.offsetHeight;
+    const rb = el.getBoundingClientRect(), w = dymek.offsetWidth, hh = dymek.offsetHeight;
     dymek.style.left = Math.min(rb.width - w - 8, Math.max(8, x - rb.left + 14)) + 'px';
     dymek.style.top = Math.min(rb.height - hh - 8, Math.max(8, yy - rb.top + 14)) + 'px';
   }
@@ -339,14 +345,26 @@ export async function mozg3d(el) {
     }
     return null;
   }
+  // kółko przybliża mózg, kiedy wskaźnik jest na nim; nad pustym miejscem sceny przewija stronę, bo scena na komputerze ma całą
+  // szerokość strony i inaczej strona nie dałaby się przewinąć kółkiem przez mózg
+  geo.computeBoundingSphere();
+  const kula = geo.boundingSphere, sr = new THREE.Vector3();
+  scena.addEventListener('wheel', (e) => {
+    const r = renderer.domElement.getBoundingClientRect();
+    sr.copy(kula.center).project(camera);
+    const cx = r.left + ((sr.x + 1) / 2) * r.width, cy = r.top + ((1 - sr.y) / 2) * r.height;
+    const pr = (kula.radius / (camera.position.distanceTo(kula.center) * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)))) * (r.height / 2);
+    if (Math.hypot(e.clientX - cx, e.clientY - cy) > pr * 0.85) e.stopPropagation();
+  }, { capture: true, passive: true });
   let start = null;
   renderer.domElement.addEventListener('pointerdown', (e) => { start = [e.clientX, e.clientY, performance.now()]; });
   renderer.domElement.addEventListener('pointerup', (e) => {
     if (!start || e.button !== 0) { start = null; return; }
     const [sx, sy, t0] = start; start = null;
     if (Math.hypot(e.clientX - sx, e.clientY - sy) > 5 || performance.now() - t0 > 600) return;
-    const t = trafienie(e);
-    if (t) pokaz(t[0], t[1], e.clientX, e.clientY); else zamknij();
+    const t = trafienie(e), cx = e.clientX, cy = e.clientY;
+    clearTimeout(tKlik);
+    tKlik = setTimeout(() => { if (t) pokaz(t[0], t[1], cx, cy); else zamknij(); }, 250);
   });
   addEventListener('keydown', (e) => { if (e.key === 'Escape') zamknij(); });
   controls.addEventListener('start', zamknij);
