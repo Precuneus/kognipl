@@ -1,0 +1,1149 @@
+{
+"krok": 1.5,
+"poczatek": [
+-75.0,
+-111.0,
+-75.0
+],
+"wymiar": [
+51,
+125,
+107
+],
+"uklad": "y,z,x",
+"pola": [
+"tkanka",
+"biala",
+"obszar",
+"siec"
+],
+"obszary": [
+[
+"OB",
+"opuszka węchowa",
+"kora",
+"",
+""
+],
+[
+"AON",
+"jądro węchowe przednie",
+"kora",
+"",
+""
+],
+[
+"Pir",
+"kora gruszkowata",
+"kora",
+"",
+""
+],
+[
+"FI",
+"kora wyspowa bezziarnista czołowa",
+"kora",
+"",
+""
+],
+[
+"TI",
+"kora wyspowa bezziarnista skroniowa",
+"kora",
+"",
+""
+],
+[
+"CaH",
+"głowa jądra ogoniastego",
+"gleb",
+"jądro ogoniaste",
+""
+],
+[
+"CaB",
+"trzon jądra ogoniastego",
+"gleb",
+"jądro ogoniaste",
+""
+],
+[
+"CaT",
+"ogon jądra ogoniastego",
+"gleb",
+"jądro ogoniaste",
+""
+],
+[
+"Pu",
+"skorupa",
+"gleb",
+"",
+""
+],
+[
+"NAC",
+"jądro półleżące",
+"gleb",
+"",
+""
+],
+[
+"GPe",
+"gałka blada, część zewnętrzna",
+"gleb",
+"",
+""
+],
+[
+"GPi",
+"gałka blada, część wewnętrzna",
+"gleb",
+"",
+""
+],
+[
+"Cla",
+"przedmurze",
+"gleb",
+"przedmurze",
+""
+],
+[
+"BF",
+"podstawa przodomózgowia",
+"gleb",
+"",
+""
+],
+[
+"SEP",
+"jądra przegrody",
+"gleb",
+"",
+""
+],
+[
+"AMY",
+"ciało migdałowate",
+"gleb",
+"ciało migdałowate",
+""
+],
+[
+"AAA",
+"pole przednie ciała migdałowatego",
+"gleb",
+"ciało migdałowate",
+""
+],
+[
+"CEN",
+"jądra środkowe ciała migdałowatego",
+"gleb",
+"ciało migdałowate",
+""
+],
+[
+"La",
+"jądro boczne ciała migdałowatego",
+"gleb",
+"ciało migdałowate",
+""
+],
+[
+"BL",
+"jądro podstawno-boczne ciała migdałowatego",
+"gleb",
+"ciało migdałowate",
+""
+],
+[
+"BM",
+"jądro podstawno-przyśrodkowe ciała migdałowatego",
+"gleb",
+"ciało migdałowate",
+""
+],
+[
+"CoA",
+"jądro korowe przednie ciała migdałowatego",
+"gleb",
+"ciało migdałowate",
+""
+],
+[
+"CoP",
+"jądro korowe tylne ciała migdałowatego",
+"gleb",
+"ciało migdałowate",
+""
+],
+[
+"Me",
+"jądro przyśrodkowe ciała migdałowatego",
+"gleb",
+"ciało migdałowate",
+""
+],
+[
+"AHA",
+"pole migdałowato-hipokampowe",
+"gleb",
+"ciało migdałowate",
+""
+],
+[
+"BNST",
+"jądro łożyskowe prążka krańcowego",
+"gleb",
+"",
+""
+],
+[
+"THM",
+"wzgórze",
+"gleb",
+"wzgórze",
+""
+],
+[
+"ANC",
+"jądra przednie wzgórza",
+"gleb",
+"wzgórze",
+""
+],
+[
+"LD",
+"jądro grzbietowo-boczne wzgórza",
+"gleb",
+"wzgórze",
+""
+],
+[
+"MD",
+"jądro przyśrodkowo-grzbietowe wzgórza",
+"gleb",
+"wzgórze",
+""
+],
+[
+"Re",
+"jądro łączące wzgórza",
+"gleb",
+"wzgórze",
+""
+],
+[
+"LP",
+"jądro boczne tylne wzgórza",
+"gleb",
+"wzgórze",
+""
+],
+[
+"Pul",
+"poduszka wzgórza",
+"gleb",
+"wzgórze",
+""
+],
+[
+"VA",
+"jądro brzuszne przednie wzgórza",
+"gleb",
+"wzgórze",
+""
+],
+[
+"VL",
+"jądro brzuszne boczne wzgórza",
+"gleb",
+"wzgórze",
+""
+],
+[
+"VPL",
+"jądro brzuszne tylno-boczne wzgórza",
+"gleb",
+"wzgórze",
+""
+],
+[
+"VPM",
+"jądro brzuszne tylno-przyśrodkowe wzgórza",
+"gleb",
+"wzgórze",
+""
+],
+[
+"DLG",
+"ciało kolankowate boczne",
+"gleb",
+"wzgórze",
+""
+],
+[
+"MG",
+"ciało kolankowate przyśrodkowe",
+"gleb",
+"wzgórze",
+""
+],
+[
+"CM",
+"jądro środkowo-przyśrodkowe wzgórza",
+"gleb",
+"wzgórze",
+""
+],
+[
+"Pf",
+"jądro przypęczkowe wzgórza",
+"gleb",
+"wzgórze",
+""
+],
+[
+"HN",
+"jądra uzdeczki",
+"gleb",
+"wzgórze",
+""
+],
+[
+"Pin",
+"szyszynka",
+"gleb",
+"wzgórze",
+""
+],
+[
+"ZI",
+"warstwa niepewna",
+"gleb",
+"wzgórze",
+""
+],
+[
+"STH",
+"jądro niskowzgórzowe",
+"gleb",
+"",
+""
+],
+[
+"HTH",
+"podwzgórze",
+"gleb",
+"podwzgórze",
+""
+],
+[
+"HTHpo",
+"okolica przedwzrokowa podwzgórza",
+"gleb",
+"podwzgórze",
+""
+],
+[
+"HTHso",
+"okolica nadwzrokowa podwzgórza",
+"gleb",
+"podwzgórze",
+""
+],
+[
+"HTHtub",
+"okolica guzowa podwzgórza",
+"gleb",
+"podwzgórze",
+""
+],
+[
+"HTHma",
+"okolica suteczkowata podwzgórza",
+"gleb",
+"podwzgórze",
+""
+],
+[
+"FWM",
+"istota biała przodomózgowia",
+"biala",
+"istota biała",
+""
+],
+[
+"ac",
+"spoidło przednie",
+"biala",
+"",
+""
+],
+[
+"cc",
+"ciało modzelowate",
+"biala",
+"ciało modzelowate",
+""
+],
+[
+"fx",
+"sklepienie",
+"biala",
+"sklepienie",
+""
+],
+[
+"mtt",
+"pęczek suteczkowo-wzgórzowy",
+"biala",
+"",
+""
+],
+[
+"ot",
+"pasmo wzrokowe",
+"biala",
+"pasmo wzrokowe",
+""
+],
+[
+"aLV",
+"róg przedni komory bocznej",
+"komora",
+"komora boczna",
+""
+],
+[
+"bLV",
+"część środkowa komory bocznej",
+"komora",
+"komora boczna",
+""
+],
+[
+"pLV",
+"róg tylny komory bocznej",
+"komora",
+"komora boczna",
+""
+],
+[
+"iLV",
+"róg dolny komory bocznej",
+"komora",
+"komora boczna",
+""
+],
+[
+"3V",
+"komora trzecia",
+"komora",
+"komora trzecia",
+""
+],
+[
+"CBV",
+"robak móżdżku",
+"gleb",
+"",
+""
+],
+[
+"CbDN",
+"jądra głębokie móżdżku",
+"gleb",
+"",
+""
+],
+[
+"HWM",
+"istota biała tyłomózgowia",
+"biala",
+"",
+""
+],
+[
+"olt",
+"pasmo węchowe",
+"biala",
+"",
+""
+],
+[
+"PrCG",
+"zakręt przedśrodkowy",
+"kora",
+"zakręt przedśrodkowy",
+"płat czołowy"
+],
+[
+"SFG",
+"zakręt czołowy górny",
+"kora",
+"zakręt czołowy górny",
+"płat czołowy"
+],
+[
+"MFG",
+"zakręt czołowy środkowy",
+"kora",
+"zakręt czołowy środkowy",
+"płat czołowy"
+],
+[
+"IFGtr",
+"zakręt czołowy dolny, część trójkątna",
+"kora",
+"zakręt czołowy dolny",
+"płat czołowy"
+],
+[
+"IFGop",
+"zakręt czołowy dolny, część wieczkowa",
+"kora",
+"zakręt czołowy dolny",
+"płat czołowy"
+],
+[
+"ReG",
+"zakręt prosty",
+"kora",
+"zakręt prosty",
+"płat czołowy"
+],
+[
+"MOrG",
+"zakręt oczodołowy przyśrodkowy",
+"kora",
+"",
+"płat czołowy"
+],
+[
+"AOrG",
+"zakręt oczodołowy przedni",
+"kora",
+"",
+"płat czołowy"
+],
+[
+"POrG",
+"zakręt oczodołowy tylny",
+"kora",
+"",
+"płat czołowy"
+],
+[
+"LOrG",
+"zakręt oczodołowy boczny",
+"kora",
+"",
+"płat czołowy"
+],
+[
+"PCLr",
+"płacik okołośrodkowy, część przednia",
+"kora",
+"",
+"płat czołowy"
+],
+[
+"FrO",
+"wieczko czołowe",
+"kora",
+"",
+"płat czołowy"
+],
+[
+"PoCG",
+"zakręt zaśrodkowy",
+"kora",
+"zakręt zaśrodkowy",
+"płat ciemieniowy"
+],
+[
+"SPL",
+"płacik ciemieniowy górny",
+"kora",
+"płacik ciemieniowy górny",
+"płat ciemieniowy"
+],
+[
+"SMG",
+"zakręt nadbrzeżny",
+"kora",
+"zakręt nadbrzeżny",
+"płat ciemieniowy"
+],
+[
+"AnG",
+"zakręt kątowy",
+"kora",
+"zakręt kątowy",
+"płat ciemieniowy"
+],
+[
+"PrCun",
+"przedklinek",
+"kora",
+"przedklinek",
+"płat ciemieniowy"
+],
+[
+"PCLc",
+"płacik okołośrodkowy, część tylna",
+"kora",
+"",
+"płat ciemieniowy"
+],
+[
+"STG",
+"zakręt skroniowy górny",
+"kora",
+"zakręt skroniowy górny",
+"płat skroniowy"
+],
+[
+"MTG",
+"zakręt skroniowy środkowy",
+"kora",
+"zakręt skroniowy środkowy",
+"płat skroniowy"
+],
+[
+"ITG",
+"zakręt skroniowy dolny",
+"kora",
+"zakręt skroniowy dolny",
+"płat skroniowy"
+],
+[
+"FuGt",
+"zakręt wrzecionowaty, część skroniowa",
+"kora",
+"",
+"płat skroniowy"
+],
+[
+"TTG",
+"zakręt skroniowy poprzeczny (Heschla)",
+"kora",
+"",
+"płat skroniowy"
+],
+[
+"PLT",
+"płaszczyzna skroniowa",
+"kora",
+"",
+"płat skroniowy"
+],
+[
+"TP",
+"biegun skroniowy",
+"kora",
+"biegun skroniowy",
+"płat skroniowy"
+],
+[
+"PLP",
+"płaszczyzna biegunowa",
+"kora",
+"",
+"płat skroniowy"
+],
+[
+"OP",
+"biegun potyliczny",
+"kora",
+"",
+"płat potyliczny"
+],
+[
+"Cun",
+"klinek",
+"kora",
+"klinek",
+"płat potyliczny"
+],
+[
+"LiG",
+"zakręt językowy",
+"kora",
+"zakręt językowy",
+"płat potyliczny"
+],
+[
+"FuGo",
+"zakręt wrzecionowaty, część potyliczna",
+"kora",
+"",
+"płat potyliczny"
+],
+[
+"IOG",
+"zakręt potyliczny dolny",
+"kora",
+"",
+"płat potyliczny"
+],
+[
+"SOG",
+"zakręt potyliczny górny",
+"kora",
+"",
+"płat potyliczny"
+],
+[
+"CgGr",
+"zakręt obręczy, część przednia",
+"kora",
+"zakręt obręczy",
+"płat limbiczny"
+],
+[
+"CgGc",
+"zakręt obręczy, część tylna",
+"kora",
+"zakręt obręczy",
+"płat limbiczny"
+],
+[
+"IsCPH",
+"cieśń zakrętu obręczy",
+"kora",
+"",
+"płat limbiczny"
+],
+[
+"SCG",
+"zakręt podspoidłowy",
+"kora",
+"",
+"płat limbiczny"
+],
+[
+"APH",
+"zakręt przyhipokampowy, część przednia",
+"kora",
+"zakręt przyhipokampowy",
+"płat limbiczny"
+],
+[
+"PPH",
+"zakręt przyhipokampowy, część tylna",
+"kora",
+"zakręt przyhipokampowy",
+"płat limbiczny"
+],
+[
+"AG",
+"zakręt otaczający",
+"kora",
+"hak",
+"płat limbiczny"
+],
+[
+"HiH",
+"głowa hipokampa",
+"kora",
+"hipokamp",
+"płat limbiczny"
+],
+[
+"HiB",
+"trzon hipokampa",
+"kora",
+"hipokamp",
+"płat limbiczny"
+],
+[
+"HiT",
+"ogon hipokampa",
+"kora",
+"hipokamp",
+"płat limbiczny"
+],
+[
+"LIG",
+"zakręty długie wyspy",
+"kora",
+"wyspa",
+"płat wyspowy"
+],
+[
+"SIG",
+"zakręty krótkie wyspy",
+"kora",
+"wyspa",
+"płat wyspowy"
+],
+[
+"LI",
+"próg wyspy",
+"kora",
+"",
+""
+],
+[
+"PTR",
+"okolica przedpokrywowa",
+"gleb",
+"śródmózgowie",
+""
+],
+[
+"MTg",
+"nakrywka śródmózgowia",
+"gleb",
+"śródmózgowie",
+""
+],
+[
+"RN",
+"jądro czerwienne",
+"gleb",
+"śródmózgowie",
+""
+],
+[
+"SN",
+"istota czarna",
+"gleb",
+"śródmózgowie",
+""
+],
+[
+"SC",
+"wzgórek górny",
+"gleb",
+"śródmózgowie",
+""
+],
+[
+"IC",
+"wzgórek dolny",
+"gleb",
+"śródmózgowie",
+""
+],
+[
+"cpd",
+"odnoga mózgu",
+"biala",
+"śródmózgowie",
+""
+],
+[
+"scp",
+"konar górny móżdżku",
+"biala",
+"śródmózgowie",
+""
+],
+[
+"Aq",
+"wodociąg mózgu",
+"komora",
+"śródmózgowie",
+""
+],
+[
+"CBPV",
+"część przyrobakowa móżdżku",
+"gleb",
+"",
+""
+],
+[
+"CBL",
+"część boczna półkuli móżdżku",
+"gleb",
+"",
+""
+],
+[
+"PnBa",
+"część podstawna mostu",
+"gleb",
+"",
+""
+],
+[
+"PnTg",
+"nakrywka mostu",
+"gleb",
+"",
+""
+],
+[
+"MoPy",
+"piramida rdzenia przedłużonego",
+"gleb",
+"",
+""
+],
+[
+"MoTg",
+"nakrywka rdzenia przedłużonego",
+"gleb",
+"",
+""
+],
+[
+"IO",
+"jądro dolne oliwki",
+"gleb",
+"",
+""
+],
+[
+"icp",
+"konar dolny móżdżku",
+"biala",
+"",
+""
+],
+[
+"mcp",
+"konar środkowy móżdżku",
+"biala",
+"",
+""
+],
+[
+"4V",
+"komora czwarta",
+"komora",
+"",
+""
+],
+[
+"cec",
+"kanał środkowy rdzenia przedłużonego",
+"komora",
+"",
+""
+],
+[
+"MiN",
+"jądra linii pośrodkowej wzgórza",
+"gleb",
+"wzgórze",
+""
+],
+[
+"LOG",
+"zakręt węchowy boczny",
+"kora",
+"",
+"płat czołowy"
+],
+[
+"PaO",
+"wieczko ciemieniowe",
+"kora",
+"",
+"płat ciemieniowy"
+],
+[
+"PuPV",
+"skorupa, część brzuszno-tylna",
+"gleb",
+"",
+""
+],
+[
+"PaCG",
+"zakręt przyobręczowy",
+"kora",
+"",
+"płat czołowy"
+],
+[
+"RoG",
+"zakręt dziobowy",
+"kora",
+"",
+"płat czołowy"
+],
+[
+"FMG",
+"zakręt czołowo-brzeżny",
+"kora",
+"",
+"płat czołowy"
+],
+[
+"FP",
+"biegun czołowy",
+"kora",
+"",
+"płat czołowy"
+],
+[
+"PRG",
+"zakręt okołowęchowy",
+"kora",
+"",
+"płat skroniowy"
+],
+[
+"or",
+"promienistość wzrokowa",
+"biala",
+"",
+""
+],
+[
+"xLV",
+"przedsionek komory bocznej",
+"komora",
+"komora boczna",
+""
+]
+],
+"sieci": [
+[
+"VisCent",
+"wzrokowa centralna",
+[
+"VIS"
+]
+],
+[
+"VisPeri",
+"wzrokowa obwodowa",
+[
+"VIS"
+]
+],
+[
+"SomMotA",
+"czuciowo-ruchowa A",
+[
+"SMN"
+]
+],
+[
+"SomMotB",
+"czuciowo-ruchowa B",
+[
+"SMN"
+]
+],
+[
+"DorsAttnA",
+"grzbietowa uwagi A",
+[
+"DAN"
+]
+],
+[
+"DorsAttnB",
+"grzbietowa uwagi B",
+[
+"DAN"
+]
+],
+[
+"SalVentAttnA",
+"istotności i brzuszna uwagi A",
+[
+"SN",
+"VAN"
+]
+],
+[
+"SalVentAttnB",
+"istotności i brzuszna uwagi B",
+[
+"SN",
+"VAN"
+]
+],
+[
+"Limbic_OFC",
+"limbiczna oczodołowa",
+[
+"LIM"
+]
+],
+[
+"Limbic_TempPole",
+"limbiczna skroniowa",
+[
+"LIM"
+]
+],
+[
+"ContA",
+"kontroli A",
+[
+"CN"
+]
+],
+[
+"ContB",
+"kontroli B",
+[
+"CN"
+]
+],
+[
+"ContC",
+"kontroli C",
+[
+"CN"
+]
+],
+[
+"TempPar",
+"skroniowo-ciemieniowa",
+[]
+],
+[
+"DefaultA",
+"domyślna A",
+[
+"DMN"
+]
+],
+[
+"DefaultB",
+"domyślna B",
+[
+"DMN"
+]
+],
+[
+"DefaultC",
+"domyślna C",
+[
+"DMN"
+]
+]
+],
+"zrodla": "MNI ICBM152 2009c (Fonov i in. 2011); Allen Human Reference Atlas 3D 2020 (Ding i in., CC BY 4.0); Schaefer i in. 2018 z 17 sieciami Yeo i in. 2011",
+"mozg": {
+"przod": 73.5,
+"tyl": -106.5,
+"gora": 81.0,
+"dol": -51.0,
+"bok": 72.0,
+"calosc": {
+"y": [
+-106.5,
+72.0
+],
+"z": [
+-72.0,
+81.0
+],
+"x": 70.5
+}
+}
+}

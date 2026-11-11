@@ -31,17 +31,26 @@
 /* widoki w jednej skali (jego słowa, 2026-11-10: *make the ventral to scale of the lateral and medial*): obrys mózgu od przodu do tyłu
    ma na ekranie tę samą długość L. Widok z boku ma szerokość 1,0712 L, od środka 1,0281 L, od dołu 0,7178 L, czyli 90 % tej skali,
    bo obie półkule naraz wyglądają na większe (jego słowa: *the ventral looks bigger than lateral and medial now*, potem *still a bit
-   too big*). Przekrój czołowy ma wysokość widoku z boku w kolumnie cięcia (482,5 jednostki przekroju na 544,5 jednostki widoku z
-   boku), więc jego 634 jednostki szerokości to 0,7727 L; przekrój poziomy ma od bieguna do bieguna długość L (561,5 jednostki), więc
-   jego 440 jednostek to 0,7836 L. Przekroje pokazują obie półkule (*I'd like the view on the both hemispheres on the sections*). */
+   too big*). Przekroje z objętości (2026-11-11) liczą się w milimetrach: kora mózgu od bieguna do bieguna ma 180 mm, więc to L, a ramka
+   przekroju ma 151,5 mm szerokości, czyli 0,8417 L, w obu przekrojach. Przekroje pokazują obie półkule (*I'd like the view on the both
+   hemispheres on the sections*). */
 .wk-do-atlasu{margin:14px 0 0;font-size:14px}
 .wk-do-atlasu a{color:var(--ink);text-decoration:underline dotted 1px;text-underline-offset:4px}
-.wk-widok-czolowy .wk-linie,.wk-widok-poziomy .wk-linie{opacity:.5}
+/* przekroje z objętości: linie z szablonu, suwak położenia pod przekrojem, uchwyt linii cięcia na widoku z boku szerszy od linii */
+.wk-linie-zywe{fill:none;stroke:#e2ddd4;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke;opacity:.55}
+.wk-chwyt{stroke:transparent;stroke-width:18;vector-effect:non-scaling-stroke;pointer-events:stroke;touch-action:none}
+.wk-chwyt[data-p="czolowy"]{cursor:ew-resize}
+.wk-chwyt[data-p="poziomy"]{cursor:ns-resize}
+.wk-brain:has(.wk-chwyt[data-p="czolowy"]:hover) .wk-ciecie-czolowy,.wk-brain:has(.wk-chwyt[data-p="poziomy"]:hover) .wk-ciecie-poziomy{opacity:.9}
+.at-suwak{display:block;width:80%;margin:10px auto 0;accent-color:#f0c060;cursor:pointer}
+.at-suwak:focus-visible{outline:2px solid #f0c060;outline-offset:4px}
+.wk-kody .wk-kod-yeo{color:#b3ab9e}
+.wk-zywy[hidden]{display:none}
 /* płaszczyzna przekroju na widoku z boku; przerywana, żeby nie udawała bruzdy */
 .wk-ciecie{stroke:#e2ddd4;stroke-width:1.5;stroke-dasharray:5 4;vector-effect:non-scaling-stroke;opacity:.4;pointer-events:none;transition:opacity .15s}
 .wk-brain:has(.wk-widok-czolowy .wk-pole:hover) .wk-ciecie-czolowy,.wk-brain:has(.wk-widok-poziomy .wk-pole:hover) .wk-ciecie-poziomy{opacity:.9}
 /* Atlas (jego słowa, 2026-11-10: *lets make an "Atlas" subpage, next to the wiki*): tytuł z zaznaczeniem nad nim, pod nim pięć widoków
-   w dwóch rzędach w jednej skali: z boku i od środka, potem od dołu i oba przekroje; drugi rząd ma 2,2741 L i dwa odstępy, więc
+   w dwóch rzędach w jednej skali: z boku i od środka, potem od dołu i oba przekroje; drugi rząd ma 2,4012 L i dwa odstępy, więc
    wyznacza L, a pierwszy, 2,0993 L, stoi pośrodku */
 .at-grid{display:flex;flex-direction:column;gap:24px;margin-top:28px}
 /* wiersz ścieżki Atlasu: po lewej Wiki › Atlas, po prawej powrót do karty, z której przyszedł czytelnik, w kroju ścieżki */
@@ -77,13 +86,13 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-tryb button:focus-visible{outline:2px solid #f0c060;outline-offset:2px}
 .at-rzad{display:flex;justify-content:center;align-items:flex-end;gap:16px}
 .at-rzad+.at-rzad{margin-top:22px}
-.at-rzad .wk-widok-boczny{flex:0 0 calc((100% - 32px) * .47104)}
-.at-rzad .wk-widok-przysrodkowy{flex:0 0 calc((100% - 32px) * .45209)}
-.at-rzad .wk-widok-brzuszny{flex:0 0 calc((100% - 32px) * .31564)}
-.at-rzad .wk-widok-czolowy{flex:0 0 calc((100% - 32px) * .33978)}
-.at-rzad .wk-widok-poziomy{flex:0 0 calc((100% - 32px) * .34458)}
+.at-rzad .wk-widok-boczny{flex:0 0 calc((100% - 32px) * .44611)}
+.at-rzad .wk-widok-przysrodkowy{flex:0 0 calc((100% - 32px) * .42816)}
+.at-rzad .wk-widok-brzuszny{flex:0 0 calc((100% - 32px) * .29894)}
+.at-rzad .wk-widok-czolowy{flex:0 0 calc((100% - 32px) * .35053)}
+.at-rzad .wk-widok-poziomy{flex:0 0 calc((100% - 32px) * .35053)}
 /* na telefonie widoki stoją jeden pod drugim w tej samej skali: szerokość widoku z boku to 100 % */
-@media (max-width:720px){.at-rzad{flex-direction:column;align-items:center;gap:14px}.at-rzad .wk-widok{flex:none}.at-rzad .wk-widok-boczny{width:100%}.at-rzad .wk-widok-przysrodkowy{width:95.98%}.at-rzad .wk-widok-brzuszny{width:67.01%}.at-rzad .wk-widok-czolowy{width:72.13%}.at-rzad .wk-widok-poziomy{width:73.15%}.at-pasek{flex-wrap:wrap}}
+@media (max-width:720px){.at-rzad{flex-direction:column;align-items:center;gap:14px}.at-rzad .wk-widok{flex:none}.at-rzad .wk-widok-boczny{width:100%}.at-rzad .wk-widok-przysrodkowy{width:95.98%}.at-rzad .wk-widok-brzuszny{width:67.01%}.at-rzad .wk-widok-czolowy{width:78.58%}.at-rzad .wk-widok-poziomy{width:78.58%}.at-pasek{flex-wrap:wrap}}
 .at-obszary .wk-pole{cursor:pointer}
 .wk-pole{position:relative}
 .wk-widok svg{position:relative;display:block;width:100%;height:auto;overflow:visible}

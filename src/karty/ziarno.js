@@ -58,6 +58,41 @@ function los(seed) {
   return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 }
 
+// --- przekroje z objętości (2026-11-11): objętość to cztery pola na siatce lewej półkuli co 1,5 mm (tkanka, istota biała, struktura
+// Allena, sieć Yeo), w kolejności y, z, x; przekrój bierze płaszczyznę i odbija ją w linii środkowej, jak dotąd przekroje Cartera
+async function wczytajObjetosc(url) {
+  const r = await fetch(url);
+  if (!r.ok || !('DecompressionStream' in window)) throw new Error('objetosc');
+  return new Uint8Array(await new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
+}
+function plaster(vol, O, pole, p, mm) {
+  const [NX, NY, NZ] = O.wymiar, NV = NX * NY * NZ, W = 2 * NX - 1, H = p === 'czolowy' ? NZ : NY;
+  const os = p === 'czolowy' ? 1 : 2, n = p === 'czolowy' ? NY : NZ;
+  const i = Math.max(0, Math.min(n - 1, Math.round((mm - O.poczatek[os]) / O.krok)));
+  const out = new Uint8Array(W * H), f = pole * NV;
+  for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) {
+    const xi = c < NX ? c : 2 * (NX - 1) - c;
+    const yi = p === 'czolowy' ? i : NY - 1 - r, zi = p === 'czolowy' ? NZ - 1 - r : i;
+    out[r * W + c] = vol[f + (yi * NZ + zi) * NX + xi];
+  }
+  return { W, H, v: out };
+}
+// linia, na której pole przechodzi przez próg, odcinkami po komórkach siatki (marching squares), w jednostkach rysunku
+function kontur(a, W, H, prog, k, x0 = 0, y0 = 0, x1 = W - 1, y1 = H - 1) {
+  let d = '';
+  const P = (x, y) => (x * k + k / 2).toFixed(1) + ' ' + (y * k + k / 2).toFixed(1);
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
+    const v0 = a[y * W + x], v1 = a[y * W + x + 1], v2 = a[(y + 1) * W + x + 1], v3 = a[(y + 1) * W + x];
+    const c = (v0 > prog ? 8 : 0) | (v1 > prog ? 4 : 0) | (v2 > prog ? 2 : 0) | (v3 > prog ? 1 : 0);
+    if (c === 0 || c === 15) continue;
+    const t = (u, w) => (prog - u) / (w - u);
+    const g = [x + t(v0, v1), y], pr = [x + 1, y + t(v1, v2)], dl = [x + t(v3, v2), y + 1], l = [x, y + t(v0, v3)];
+    const seg = { 1: [l, dl], 2: [dl, pr], 3: [l, pr], 4: [g, pr], 5: [l, g, dl, pr], 6: [g, dl], 7: [l, g], 8: [l, g], 9: [g, dl], 10: [g, pr, l, dl], 11: [g, pr], 12: [l, pr], 13: [dl, pr], 14: [l, dl] }[c];
+    for (let s = 0; s < seg.length; s += 2) d += 'M' + P(...seg[s]) + 'L' + P(...seg[s + 1]);
+  }
+  return d;
+}
+
 function wczytaj(src) {
   return new Promise((ok, zle) => { const i = new Image(); i.onload = () => ok(i); i.onerror = zle; i.src = src; });
 }
@@ -87,6 +122,12 @@ export async function ziarno() {
   const BIALA = REG.findIndex((r) => r[0] === 'istota biała') + 1;
   const WSZYSTKIE = NETS.slice(0, N - 0).filter((n) => n !== 'X');
   const LIT = new Set((mozg.dataset.lit || '').split(',').filter(Boolean));
+  // przekroje z objętości: 141 struktur Allena i 17 sieci Yeo takie, jakie są; JAK wskazuje obszar rysunku, którego częścią jest
+  // struktura, więc zaznaczenie jednego zapala drugi
+  const OBJ = ATLAS && mozg.dataset.objetosc ? JSON.parse(mozg.dataset.objetosc) : null;
+  const JAK = OBJ ? OBJ.JAK : [];
+  const trafia = (zr, n) => !!zr && !!n && (zr === n || JAK[zr] === n || (!!JAK[n] && JAK[n] === zr));
+  const objetosc = OBJ && mozg.querySelector('.wk-zywy') ? wczytajObjetosc(OBJ.url).catch(() => null) : null;
   const stoi = cicho();
   const hot = new Set();
   let tryb = 'sieci', wybor = null, hotReg = 0;
@@ -148,6 +189,102 @@ export async function ziarno() {
     const kody = pole.querySelector('.wk-kody');
     widoki.push({ fig, pole, cv, kody, FW, FH, VW, VH, k, lab, kora, rdzen, osr, reg, ziarna: [] });
   }
+  // przekroje z objętości: mapy sieci i obszarów, linie i etykiety liczone z plastra, na nowo przy każdym przesunięciu cięcia
+  const vol = objetosc ? await objetosc : null;
+  const zywe = {};
+  if (vol) for (const fig of mozg.querySelectorAll('.wk-zywy')) {
+    const [VW, VH] = fig.dataset.vb.split(' ').map(Number);
+    const pole = fig.querySelector('.wk-pole');
+    const v = { fig, pole, cv: pole.querySelector('.wk-ziarno'), kody: pole.querySelector('.wk-kody'), VW, VH, k: OBJ.krok, osr: [], ziarna: [], zywy: fig.dataset.objetosc, sciezka: pole.querySelector('.wk-linie-zywe') };
+    zywe[v.zywy] = v;
+    widoki.push(v);
+  } else mozg.querySelectorAll('.wk-zywy').forEach((f) => { f.hidden = true; });
+  function plastry(v, mm) {
+    v.mm = mm;
+    const T = plaster(vol, OBJ, 0, v.zywy, mm), B = plaster(vol, OBJ, 1, v.zywy, mm), A = plaster(vol, OBJ, 2, v.zywy, mm), Y = plaster(vol, OBJ, 3, v.zywy, mm);
+    const FW = T.W, FH = T.H, L = FW * FH;
+    const lab = new Uint8Array(L), kora = new Float32Array(L), rv = new Uint8Array(L), dwie = new Uint8Array(L);
+    for (let i = 0; i < L; i++) {
+      const a = A.v[i], rodz = OBJ.RODZAJ[a];
+      if (T.v[i] > 127 && a && rodz !== 'komora') rv[i] = OBJ.A2R[a];
+      if (T.v[i] > 127 && B.v[i] < 128 && rodz === 'kora') {
+        kora[i] = 1;
+        const fam = Y.v[i] ? OBJ.sieci[Y.v[i] - 1][1] : [];
+        lab[i] = fam.length ? NETS.indexOf(fam[0]) + 1 : N + 1;
+        if (fam.length > 1) dwie[i] = NETS.indexOf(fam[1]) + 1;
+      }
+    }
+    const rdzen = [];
+    for (let n = 0; n < N; n++) {
+      const a = new Float32Array(L);
+      for (let i = 0; i < L; i++) a[i] = lab[i] === n + 1 || dwie[i] === n + 1 ? 1 : 0;
+      const b = rozmyj(a, FW, FH, 1);
+      for (let i = 0; i < L; i++) b[i] *= kora[i];
+      rdzen.push(b);
+    }
+    for (const { sieci: [a, b] } of WSP) {
+      const X = rdzen[NETS.indexOf(a)], Z = rdzen[NETS.indexOf(b)];
+      for (let i = 0; i < L; i++) Z[i] = Math.max(Z[i], X[i]);
+    }
+    Object.assign(v, { FW, FH, lab, kora, rdzen, reg: { W: FW, H: FH, v: rv }, yeo: Y.v, allen: A.v });
+    // linie: brzeg mózgu, granica istoty szarej i białej, brzegi jąder i komór, każde po rozmyciu do gładkiej krawędzi
+    let d = kontur(T.v, FW, FH, 127.5, OBJ.krok) + kontur(B.v, FW, FH, 127.5, OBJ.krok);
+    const bb = new Map();
+    for (let y = 0; y < FH; y++) for (let x = 0; x < FW; x++) {
+      const a = A.v[y * FW + x], rodz = OBJ.RODZAJ[a];
+      if (!a || (rodz !== 'gleb' && rodz !== 'komora')) continue;
+      const b = bb.get(a) || [x, y, x, y];
+      bb.set(a, [Math.min(b[0], x), Math.min(b[1], y), Math.max(b[2], x), Math.max(b[3], y)]);
+    }
+    for (const [a, [x0, y0, x1, y1]] of bb) {
+      const X0 = Math.max(0, x0 - 2), Y0 = Math.max(0, y0 - 2), X1 = Math.min(FW - 1, x1 + 2), Y1 = Math.min(FH - 1, y1 + 2);
+      const f = new Float32Array(L);
+      for (let y = Y0; y <= Y1; y++) for (let x = X0; x <= X1; x++) {
+        let s = 0;
+        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && xx >= 0 && yy < FH && xx < FW && A.v[yy * FW + xx] === a) s++; }
+        f[y * FW + x] = s / 9;
+      }
+      d += kontur(f, FW, FH, 0.5, OBJ.krok, X0, Y0, X1, Y1);
+    }
+    v.sciezka.setAttribute('d', d);
+    etykietyPrzekroju(v);
+  }
+  // etykiety sieci w przekroju: każda sieć z dość dużą korą dostaje znacznik w miejscu najdalszym od swojego brzegu, bez nakładania się
+  function etykietyPrzekroju(v) {
+    v.pole.querySelectorAll('.wk-nl').forEach((x) => x.remove());
+    const { FW, FH } = v, L = FW * FH, r = v.pole.getBoundingClientRect();
+    const sx = r.width ? r.width / FW : 3, sy = r.height ? r.height / FH : 3;
+    const zajete = [];
+    const kand = [];
+    for (let n = 0; n < N; n++) {
+      const dist = new Float32Array(L);
+      let ile = 0;
+      for (let i = 0; i < L; i++) if (v.rdzen[n][i] > 0.5) { dist[i] = 1e9; ile++; }
+      if (ile < 25) continue;
+      for (let y = 0; y < FH; y++) for (let x = 0; x < FW; x++) { const i = y * FW + x; if (!dist[i]) continue; dist[i] = Math.min(dist[i], (x ? dist[i - 1] : 0) + 1, (y ? dist[i - FW] : 0) + 1); }
+      for (let y = FH - 1; y >= 0; y--) for (let x = FW - 1; x >= 0; x--) { const i = y * FW + x; if (!dist[i]) continue; dist[i] = Math.min(dist[i], (x < FW - 1 ? dist[i + 1] : 0) + 1, (y < FH - 1 ? dist[i + FW] : 0) + 1); }
+      const kol = [];
+      // znacznik staje tylko tam, gdzie sieć jest dość gruba, żeby go objąć: na wąskim ekranie mniej znaczników, żaden nie zakrywa
+      // małej sieci, którą nazywa (przegląd 2026-11-09)
+      const min = 10 / Math.min(sx, sy);
+      for (let i = 0; i < L; i++) if (dist[i] >= Math.max(2, min)) kol.push([dist[i], i]);
+      kol.sort((a, b) => b[0] - a[0]);
+      kand.push([ile, NETS[n], kol]);
+    }
+    kand.sort((a, b) => b[0] - a[0]);
+    for (const [, kod, kol] of kand) {
+      const w = (kod.length * 8 + 16) / sx, h = 22 / sy;
+      const miejsce = kol.find(([, i]) => { const x = i % FW, y = (i / FW) | 0; return x - w / 2 > 0 && x + w / 2 < FW && !zajete.some(([zx, zy, zw, zh]) => Math.abs(zx - x) < (zw + w) / 2 && Math.abs(zy - y) < (zh + h) / 2); });
+      if (!miejsce) continue;
+      const x = miejsce[1] % FW, y = (miejsce[1] / FW) | 0;
+      zajete.push([x, y, w, h]);
+      const s = document.createElement('span');
+      s.className = 'wk-nl'; s.setAttribute('aria-hidden', 'true'); s.dataset.k = kod; s.textContent = kod;
+      s.style.left = ((x + 0.5) / FW * 100).toFixed(2) + '%'; s.style.top = ((y + 0.5) / FH * 100).toFixed(2) + '%';
+      v.pole.appendChild(s);
+    }
+  }
+  for (const p in zywe) { const s = mozg.querySelector('.at-suwak[data-p="' + p + '"]'); plastry(zywe[p], s ? Number(s.value) : 0); }
   if (!widoki.length) return;
 
   const Wg = new Float32Array(N);
@@ -223,8 +360,9 @@ export async function ziarno() {
       let kolor;
       if (tryb === 'obszary') {
         // istota biała ma ziarno tylko wtedy, gdy ją zaznaczono, inaczej zalałaby przekroje
-        if (!z.r || (z.r === BIALA && wybranyReg !== BIALA)) continue;
-        kolor = z.r === wybranyReg ? ZLOTE : z.r === hotReg ? JASNE : SZARE;
+        const wyb = trafia(z.r, wybranyReg);
+        if (!z.r || ((z.r === BIALA || JAK[z.r] === BIALA) && !wyb)) continue;
+        kolor = wyb ? ZLOTE : trafia(z.r, hotReg) ? JASNE : SZARE;
       } else {
         if (!z.k) continue;
         const kod = z.n >= 0 ? NETS[z.n] : null;
@@ -249,6 +387,18 @@ export async function ziarno() {
   function pole(v, e) {
     const r = v.pole.getBoundingClientRect();
     return [Math.floor(((e.clientX - r.left) / r.width) * v.VW / v.k), Math.floor(((e.clientY - r.top) / r.height) * v.VH / v.k)];
+  }
+  const komorka = (v, e) => { const [fx, fy] = pole(v, e); return Math.max(0, Math.min(v.FH - 1, fy)) * v.FW + Math.max(0, Math.min(v.FW - 1, fx)); };
+  // sieć Yeo pod wskaźnikiem: najbliższa kora w promieniu trzech pól, jak przy sieciach
+  function yeoPod(v, e) {
+    const [fx, fy] = pole(v, e);
+    for (let r = 0; r <= 3; r++) for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) {
+      const x = fx + dx, y = fy + dy;
+      if (x < 0 || y < 0 || x >= v.FW || y >= v.FH) continue;
+      const i = y * v.FW + x;
+      if (v.kora[i] && v.yeo[i]) return OBJ.sieci[v.yeo[i] - 1][0];
+    }
+    return '';
   }
   function podWskaznikiem(v, e, t) {
     const [fx, fy] = pole(v, e);
@@ -295,7 +445,8 @@ export async function ziarno() {
       if (n !== hotReg) { hotReg = n; rysujWszystko(); }
       if (!n) { v.kody.hidden = true; v.pole.style.cursor = ''; return; }
       const o = REG[n - 1];
-      postaw(v, e, '<span><b>' + esc(o[0]) + '</b>' + (o[2] ? ' ' + esc(o[2]) : '') + '</span>');
+      const st = v.zywy ? OBJ.NAZWY[v.allen[komorka(v, e)]] : '';
+      postaw(v, e, '<span><b>' + esc(st || o[0]) + '</b>' + (o[2] ? ' ' + esc(o[2]) : '') + '</span>');
       v.pole.style.cursor = ATLAS ? 'pointer' : '';
       return;
     }
@@ -303,8 +454,10 @@ export async function ziarno() {
     ostatni.lista = lista;
     hot.clear(); lista.forEach((n) => hot.add(n));
     rysujWszystko();
-    if (!lista.length) { v.kody.hidden = true; v.pole.style.cursor = ''; return; }
-    postaw(v, e, lista.map((n, j) => '<span' + (j ? ' class="wk-kod-dalej"' : '') + '><b>' + n + '</b> ' + (NAZWA[n] || '') + '</span>').join(''));
+    // w przekroju z objętości pierwsza linia nazywa sieć Yeo pod wskaźnikiem, także skroniowo-ciemieniową bez grupy
+    const yeo = v.zywy ? yeoPod(v, e) : '';
+    if (!lista.length && !yeo) { v.kody.hidden = true; v.pole.style.cursor = ''; return; }
+    postaw(v, e, (yeo ? '<span class="wk-kod-yeo">' + esc(yeo) + '</span>' : '') + lista.map((n, j) => '<span' + (j ? ' class="wk-kod-dalej"' : '') + '><b>' + n + '</b> ' + (NAZWA[n] || '') + '</span>').join(''));
     v.pole.style.cursor = ATLAS ? 'pointer' : '';
   }
   function schowaj(v) { ostatni = null; hot.clear(); hotReg = 0; v.kody.hidden = true; rysujWszystko(); }
@@ -324,7 +477,7 @@ export async function ziarno() {
     for (const v of widoki) {
       if (!v.reg) continue;
       for (let y = 0; y < v.FH; y++) for (let x = 0; x < v.FW; x++) {
-        if (regPola(v, x, y) !== n) continue;
+        if (!trafia(regPola(v, x, y), n)) continue;
         const l = v.lab[y * v.FW + x];
         if (l > 0 && l <= N && NETS[l - 1] !== 'X') { c[l - 1]++; tot++; }
       }
@@ -350,10 +503,12 @@ export async function ziarno() {
     } else {
       const o = REG[wybor.n - 1];
       const czesci = [link(o[1], esc(o[0]))];
+      const nad = JAK[wybor.n] ? REG[JAK[wybor.n] - 1] : null;
+      if (nad) czesci.push(link(nad[1], esc(nad[0])));
       if (o[2]) czesci.push(link(o[3], esc(o[2])));
       sieciObszaru(wybor.n).forEach((n) => czesci.push(link(URL[n], kodHtml(n))));
       tu.innerHTML = czesci.join(' · ');
-      const lista = KARTY_OBSZARU[wybor.n] || [];
+      const lista = KARTY_OBSZARU[wybor.n] || KARTY_OBSZARU[JAK[wybor.n]] || [];
       if (karty) {
         karty.querySelector('.wk-chips').innerHTML = lista.map(([h, u, c]) => '<a href="' + esc(u) + '" class="wk-chip" style="--c:' + c + '">' + esc(h) + '</a>').join('');
         karty.hidden = !lista.length;
@@ -392,7 +547,13 @@ export async function ziarno() {
   function kliknij(v, e) {
     let w = null;
     if (tryb === 'obszary') { const n = obszarPod(v, e); if (!n) return; w = { typ: 'obszar', n }; }
-    else { const lista = podWskaznikiem(v, e, performance.now() / 1000); if (!lista.length) return; w = { typ: 'siec', kody: [lista[0]] }; }
+    else {
+      const lista = podWskaznikiem(v, e, performance.now() / 1000);
+      if (!lista.length) return;
+      const i = v.zywy ? komorka(v, e) : -1;
+      const fam = i >= 0 && v.kora[i] && v.yeo[i] ? OBJ.sieci[v.yeo[i] - 1][1] : [];
+      w = { typ: 'siec', kody: fam.length > 1 ? fam.slice() : [lista[0]] };
+    }
     wybierz(tenSam(w, wybor) ? null : w);
   }
 
@@ -446,19 +607,19 @@ export async function ziarno() {
   }
   rysujWszystko();
   if ('ResizeObserver' in window) {
-    const ro = new ResizeObserver(() => { widoki.forEach(uloz); rysujWszystko(); });
+    const ro = new ResizeObserver(() => { widoki.forEach((v) => { uloz(v); if (v.zywy) etykietyPrzekroju(v); }); tagi(); rysujWszystko(); });
     widoki.forEach((v) => ro.observe(v.pole));
   }
 
-  let palec = false;
+  let palec = false, ciagnie = null, tlumKlik = false;
   widoki.forEach((v) => {
     v.pole.addEventListener('pointerdown', (e) => { palec = e.pointerType === 'touch'; });
-    v.pole.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse' || e.pointerType === 'pen') pokaz(v, e); });
+    v.pole.addEventListener('pointermove', (e) => { if (ciagnie) return; if (e.pointerType === 'mouse' || e.pointerType === 'pen') pokaz(v, e); });
     v.pole.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch' && !(ostatni && ostatni.palec)) schowaj(v); });
     // klik nie przenosi: w atlasie zaznacza sieć albo obszar, na karcie nic nie robi; Enter z klawiatury na obszarze sieci w atlasie
     // zaznacza tę sieć, na karcie idzie za linkiem do karty sieci
     v.pole.addEventListener('click', (e) => {
-      if (e.target.closest('.wk-kody')) return;
+      if (e.target.closest('.wk-kody') || tlumKlik || e.target.closest('.wk-chwyt')) return;
       if (e.detail === 0) {
         const a = e.target.closest('.wk-nb');
         if (ATLAS && a) { e.preventDefault(); if (tryb !== 'sieci') ustawTryb('sieci'); const w = { typ: 'siec', kody: [a.dataset.k] }; wybierz(tenSam(w, wybor) ? null : w); }
@@ -481,6 +642,39 @@ export async function ziarno() {
     a.addEventListener('focus', () => { hot.clear(); hot.add(a.dataset.k); rysujWszystko(); });
     a.addEventListener('blur', () => { hot.clear(); rysujWszystko(); });
   });
+
+  // cięcie przesuwa suwak pod przekrojem i linia przeciągana na widoku z boku; przekrój liczy się na nowo raz na klatkę
+  if (vol) {
+    const boczny = mozg.querySelector('.wk-widok-boczny svg');
+    const M = OBJ.mozg, Bk = OBJ.bok;
+    const naBoku = { czolowy: (y) => Bk.x[0] + ((M.przod - y) / (M.przod - M.tyl)) * (Bk.x[1] - Bk.x[0]), poziomy: (z) => Bk.y[0] + ((M.gora - z) / (M.gora - M.dol)) * (Bk.y[1] - Bk.y[0]) };
+    const zBoku = { czolowy: (x) => M.przod - ((x - Bk.x[0]) / (Bk.x[1] - Bk.x[0])) * (M.przod - M.tyl), poziomy: (y) => M.gora - ((y - Bk.y[0]) / (Bk.y[1] - Bk.y[0])) * (M.gora - M.dol) };
+    const czeka = {};
+    const ustaw = (p, mm) => {
+      const s = mozg.querySelector('.at-suwak[data-p="' + p + '"]'), v = zywe[p];
+      if (!s || !v) return;
+      mm = Math.max(Number(s.min), Math.min(Number(s.max), mm));
+      s.value = String(mm);
+      const c = naBoku[p](mm).toFixed(1);
+      mozg.querySelectorAll('.wk-ciecie-' + p + ', .wk-chwyt[data-p="' + p + '"]').forEach((l) => { if (p === 'czolowy') { l.setAttribute('x1', c); l.setAttribute('x2', c); } else { l.setAttribute('y1', c); l.setAttribute('y2', c); } });
+      const bylo = czeka[p] !== undefined;
+      czeka[p] = mm;
+      if (bylo) return;
+      requestAnimationFrame(() => { const m = czeka[p]; delete czeka[p]; if (Math.abs(m - v.mm) < 0.01) return; plastry(v, m); uloz(v); wspolnota(v); tagi(); rysuj(v); });
+    };
+    mozg.querySelectorAll('.at-suwak').forEach((s) => s.addEventListener('input', () => ustaw(s.dataset.p, Number(s.value))));
+    if (boczny) mozg.querySelectorAll('.wk-chwyt').forEach((g) => {
+      g.addEventListener('pointerdown', (e) => { e.preventDefault(); e.stopPropagation(); ciagnie = g.dataset.p; try { g.setPointerCapture(e.pointerId); } catch (x) {} });
+      g.addEventListener('pointermove', (e) => {
+        if (ciagnie !== g.dataset.p) return;
+        const pt = boczny.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+        const q = pt.matrixTransform(boczny.getScreenCTM().inverse());
+        ustaw(ciagnie, zBoku[ciagnie](ciagnie === 'czolowy' ? q.x : q.y));
+      });
+      const koniec = () => { if (ciagnie) { tlumKlik = true; setTimeout(() => { tlumKlik = false; }, 0); } ciagnie = null; };
+      g.addEventListener('pointerup', koniec); g.addEventListener('pointercancel', koniec);
+    });
+  }
 
   if (stoi) return;
   let widac = true;

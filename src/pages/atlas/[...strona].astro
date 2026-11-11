@@ -16,7 +16,7 @@ import KartaWiki from '../../components/KartaWiki.astro';
 import TerminDymek from '../../components/TerminDymek.astro';
 import { KARTY, NETN, INK, ATLAS, STRONY, netCard } from '../../karty/data.js';
 import { KOLOR } from '../../karty/mozg.js';
-import { widok, DANE, regiony, kartySieci } from '../../karty/widoki.js';
+import { widok, zywy, DANE, OBJ, BOK, regiony, regionyAtlasu, kartySieci } from '../../karty/widoki.js';
 export function getStaticPaths() {
   return ATLAS.map((s) => ({ params: { strona: s.sciezka === '/atlas/' ? undefined : s.sciezka.split('/')[2] }, props: { s } }));
 }
@@ -27,7 +27,11 @@ const W = (v) => widok(v, { lit: WSZYSTKIE, tab: v === 'lateral', ciecia: v === 
 const karty = Object.fromEntries(Object.keys(NETN).map((n) => [n, netCard(n)]).filter(([, c]) => c).map(([n, c]) => [n, c.url]));
 // lista obszarów do wyboru klawiaturą i czytnikiem ekranu w trybie Obszary, w grupach według płata (audyt Atlasu, 2026-11-10: obszarów
 // nie dało się wybrać bez myszy); struktury pod korą i istota biała w osobnej grupie
-const REG = regiony();
+// obszary rysunków i struktury Allena z przekrojów (2026-11-11), w jednej liście
+const { REG, A2R, JAK, RODZAJ, NAZWY } = regionyAtlasu(regiony());
+// przekroje z objętości: sieć Yeo w kolorze sieci strony, do której należy jej grupa (istotności i brzuszna uwagi: SN i VAN po równo,
+// s:uddin2019-group-combines-van-salience; skroniowo-ciemieniowa bez grupy, szara)
+const OBJETOSC = { krok: OBJ.krok, poczatek: OBJ.poczatek, wymiar: OBJ.wymiar, sieci: OBJ.sieci.map(([, pl, kody]) => [pl, kody]), A2R, JAK, RODZAJ, NAZWY, mozg: OBJ.mozg, bok: BOK, url: '/images/mozg-widoki/objetosc.bin' };
 const grupy = [];
 REG.forEach(([n, , plat], i) => { const g = plat || 'pod korą'; let x = grupy.find((y) => y[0] === g); if (!x) { x = [g, []]; grupy.push(x); } x[1].push([n, i + 1]); });
 // karty obszaru: karty, których miejsce leży w zaznaczonym obszarze, w kolorze swojej grupy
@@ -51,7 +55,7 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: sieci mózgowe i obszary 
           *Every door swings both ways*); bez karty w poprzedniej stronie link się nie pokazuje */}
       <a class="at-wroc" href="/wiki/" hidden><span aria-hidden="true">← </span><span></span></a>
     </div>
-    <div class="at-grid wk-brain" data-ziarno data-atlas data-kolory={JSON.stringify(KOLOR)} data-kolejnosc={JSON.stringify(DANE.kolejnosc)} data-lit={[...WSZYSTKIE].join(',')} data-karty={JSON.stringify(karty)} data-nazwy={JSON.stringify(NETN)} data-wspolne={JSON.stringify(DANE.wspolne || [])} data-regiony={JSON.stringify(REG)} data-karty-sieci={JSON.stringify(kartySieci(KARTY))} data-karty-obszaru={JSON.stringify(kartyObszaru)} data-strony={JSON.stringify(STRONY)} data-start={JSON.stringify(start)}>
+    <div class="at-grid wk-brain" data-ziarno data-atlas data-kolory={JSON.stringify(KOLOR)} data-kolejnosc={JSON.stringify(DANE.kolejnosc)} data-lit={[...WSZYSTKIE].join(',')} data-karty={JSON.stringify(karty)} data-nazwy={JSON.stringify(NETN)} data-wspolne={JSON.stringify(DANE.wspolne || [])} data-regiony={JSON.stringify(REG)} data-karty-sieci={JSON.stringify(kartySieci(KARTY))} data-karty-obszaru={JSON.stringify(kartyObszaru)} data-strony={JSON.stringify(STRONY)} data-start={JSON.stringify(start)} data-objetosc={JSON.stringify(OBJETOSC)}>
       {/* pudełko tytułu bez etykiety: jego tytułem jest nazwa strony; nad tytułem zaznaczenie z linkami (jego słowa, 2026-11-10: *list a
           region/network above the title*) */}
       <section aria-label="Atlas" class="wk-box wk-mysl at-glowa">
@@ -68,7 +72,7 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: sieci mózgowe i obszary 
           <div class="at-tryb" role="group" aria-label="Co zaznacza klik"><button type="button" data-tryb="sieci" aria-pressed="true">Sieci</button><button type="button" data-tryb="obszary" aria-pressed="false">Obszary</button></div>
         </div>
         <div class="at-rzad"><Fragment set:html={W('lateral') + W('medial')} /></div>
-        <div class="at-rzad"><Fragment set:html={W('ventral') + W('coronal') + W('horizontal')} /></div>
+        <div class="at-rzad"><Fragment set:html={W('ventral') + zywy('czolowy') + zywy('poziomy')} /></div>
       </section>
       {/* karta zaznaczenia pod widokami; przy kilku zaznaczonych sieciach ich karty jedna pod drugą */}
       <div class="at-miejsce">{k && <KartaWiki k={k} wAtlasie />}</div>
@@ -77,7 +81,7 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: sieci mózgowe i obszary 
         <div class="wk-chips"></div>
       </section>
     </div>
-    <p class="wk-zrodlo wk-zrodlo-mozg">Rysunki mózgu: z boku, od środka i w przekrojach Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918, przekrój czołowy z <a href="https://commons.wikimedia.org/wiki/File:Gray718.png">ryc. 718</a> i poziomy z <a href="https://commons.wikimedia.org/wiki/File:Gray742.png">ryc. 742</a> przerysowane liniami, z drugą półkulą w odbiciu lustrzanym; od dołu K. Hajek, <a href="https://commons.wikimedia.org/wiki/File:Sobo_1909_630.png">ryc. 630</a> w <i>Atlas and Text-book of Human Anatomy</i> Sobotty, 1909, przerysowana liniami; wszystkie w domenie publicznej.</p>
+    <p class="wk-zrodlo wk-zrodlo-mozg">Rysunki mózgu: z boku i od środka Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918; od dołu K. Hajek, <a href="https://commons.wikimedia.org/wiki/File:Sobo_1909_630.png">ryc. 630</a> w <i>Atlas and Text-book of Human Anatomy</i> Sobotty, 1909, przerysowana liniami; obie w domenie publicznej. Przekroje liczone z szablonu MNI ICBM152 2009c (© 1993–2004 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University), ze strukturami z <a href="https://download.alleninstitute.org/informatics-archive/allen_human_reference_atlas_3d_2020/version_1/">Allen Human Reference Atlas – 3D, 2020</a> (Ding i in., Allen Institute for Brain Science, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>) i siecią z 17 sieci Yeo i in. (2011) w parcelacji Schaefera i in. (2018); przekroje przeliczone i przerysowane liniami.</p>
   </article>
   <TerminDymek />
 </Base>
