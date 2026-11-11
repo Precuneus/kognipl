@@ -580,6 +580,15 @@ export async function ziarno() {
     if (ostatni && ostatni.palec && !e.target.closest('.wk-pole')) schowaj(ostatni.v);
   });
 
+  // wyłącznik za końcem suwaka chowa płaski przekrój tego cięcia (jego słowa, 2026-11-11: *these 2d views should disappear, not the part
+  // of the 3d view. I want to zoom to the brain and do not have these 3 x 2d images obscuring the view*); mózg w 3D bierze zwolnione
+  // miejsce, a cięcie i jego suwak działają dalej
+  mozg.querySelectorAll('.at-wl').forEach((b) => b.addEventListener('click', () => {
+    const wl = b.getAttribute('aria-checked') !== 'true';
+    b.setAttribute('aria-checked', String(wl));
+    const f = mozg.querySelector('.wk-zywy.wk-widok-' + b.dataset.p);
+    if (f) f.classList.toggle('at-bez', !wl);
+  }));
   // czytnik ekranu słyszy położenie cięcia słowami (audyt Atlasu, 2026-11-11: sama liczba nie mówi, gdzie leży cięcie): strzałkowe
   // od linii środkowej, w której objętość jest odbita, czołowe i poziome jako część drogi między końcami suwaka
   const opisz = (s) => {

@@ -93,8 +93,8 @@ export function zywy(p) {
 }
 // suwak cięcia na osi mózgu w 3D: czołowy biegnie od przodu do tyłu, poziomy od góry do dołu, strzałkowy od prawej półkuli do lewej,
 // bo w widoku startowym lewa półkula stoi bliżej i niżej, a prawa wychodzi za nią w lewo; końce nazwane. Za końcem suwaka wyłącznik
-// cięcia (jego słowa, 2026-11-11: *we want a switch on/off button next to each*, potem *ONLY the cut preview should disapper*):
-// wyłączony chowa obraz przekroju na mózgu w 3D
+// cięcia (jego słowa, 2026-11-11: *we want a switch on/off button next to each*, potem *these 2d views should disappear, not the part
+// of the 3d view*): wyłączony chowa płaski przekrój tego cięcia
 const NAZWA_CIECIA = { czolowy: 'czołowy', poziomy: 'poziomy', strzalkowy: 'strzałkowy' };
 const KONCE = { czolowy: ['przód', 'tył', ' dir="rtl"'], poziomy: ['góra', 'dół', ''], strzalkowy: ['prawa', 'lewa', ' dir="rtl"'] };
 export function suwak(p) {
@@ -102,7 +102,7 @@ export function suwak(p) {
   return '<div class="at-os at-os-' + p + '"><span aria-hidden="true">' + a + '</span>'
     + '<input type="range" class="at-suwak" data-p="' + p + '"' + dir + ' min="' + lo.toFixed(1) + '" max="' + hi.toFixed(1) + '" step="0.5" value="' + CIECIE[p] + '" aria-label="Położenie ' + PRZEKROJ[p][1] + '">'
     + '<span aria-hidden="true">' + b + '</span>'
-    + '<button type="button" class="at-wl" data-p="' + p + '" role="switch" aria-checked="true" aria-label="Przekrój ' + NAZWA_CIECIA[p] + ' na mózgu"><span class="at-wl-tor" aria-hidden="true"></span></button></div>';
+    + '<button type="button" class="at-wl" data-p="' + p + '" role="switch" aria-checked="true" aria-label="Płaski przekrój ' + NAZWA_CIECIA[p] + '"><span class="at-wl-tor" aria-hidden="true"></span></button></div>';
 }
 // dane obszarów dla skryptów Atlasu: struktura Allena ma w objętości numer swojego wpisu, JAK wskazuje jej grupę
 export function regionyAtlasu(REG) {

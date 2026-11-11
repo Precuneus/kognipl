@@ -115,11 +115,6 @@ export async function mozg3d(el) {
   const pH = new THREE.Plane(new THREE.Vector3(0, 0, -1), cut.poziomy);
   const pS = new THREE.Plane(new THREE.Vector3(1, 0, 0), -cut.strzalkowy);
   const plaszczyzny = [pC, pH, pS];
-  // wyłącznik każdego cięcia (jego słowa, 2026-11-11: *we want a switch on/off button next to each*, potem *for the on/off switch I meant
-  // the cut. ONLY the cut preview should disapper. To not obscure the view of the 3d brain. The suwaki stays. And the cut is off fully.
-  // transparent*): wyłączony chowa tylko obraz przekroju na ścianie wycięcia razem z ramką, więc przez wycięcie widać wnętrze mózgu;
-  // cięcie tnie dalej, a suwak i płaski przekrój działają jak przedtem
-  const wl = { czolowy: true, poziomy: true, strzalkowy: true };
 
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
@@ -227,7 +222,6 @@ export async function mozg3d(el) {
   function postawLico(p) {
     if (lico[p]) { scene.remove(lico[p].m, lico[p].r); lico[p].m.geometry.dispose(); lico[p].m.material.map.dispose(); lico[p].m.material.dispose(); lico[p].r.geometry.dispose(); }
     delete lico[p];
-    if (!wl[p]) return;
     // ściany czołowa i pozioma sięgają od lewego brzegu mózgu do cięcia strzałkowego; obraz obejmuje obie półkule, więc ściana bierze
     // z niego tyle, ile ma szerokości
     const xs = Math.min(x0 + Wmm, cut.strzalkowy), ux = (xs - x0) / Wmm, yc = cut.czolowy, zc = cut.poziomy;
@@ -383,12 +377,6 @@ export async function mozg3d(el) {
     // suwak z wyłącznikiem ma co najmniej 210 px, żeby dało się go przesuwać, i zostaje w ramce
     if (gor) { const w = Math.max(210, Math.abs(rx - lx)), c = (lx + rx) / 2; gor.style.left = ox + Math.max(0, Math.min(rb.width - w, c - w / 2)) + 'px'; gor.style.width = w + 'px'; }
   };
-  el.querySelectorAll('.at-wl').forEach((b) => b.addEventListener('click', () => {
-    const p = b.dataset.p;
-    wl[p] = !wl[p];
-    b.setAttribute('aria-checked', String(wl[p]));
-    zamknij(); postawLico(p); rysuj();
-  }));
   new ResizeObserver(() => { wymiar(); osie(); }).observe(scena);
   wymiar(); osie();
   wszystko();

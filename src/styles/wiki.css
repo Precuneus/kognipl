@@ -82,8 +82,12 @@ html.at-czeka .at-miejsce{visibility:hidden}
    desktop version to sides... next to the suwaki*): z lewej strzałkowy u góry przy górnym suwaku i czołowy u dołu przy dolnym, z prawej
    poziomy przy pionowym, w jednej skali (czołowy i poziomy mają 0,808 szerokości strzałkowego, 151,5 do 187,5 mm); bez WebGL zostaje rząd */
 @media (min-width:1000px){
-.at-glowny:not(:has(.at-3d-brak)){display:grid;grid-template-columns:calc((100% - 32px) * .2) minmax(0,1fr) calc((100% - 32px) * .2);gap:16px;align-items:stretch}
-.at-glowny:not(:has(.at-3d-brak)) .at-boki{display:flex;flex-direction:column;justify-content:space-between;align-items:center}
+.at-glowny:not(:has(.at-3d-brak)){flex-wrap:nowrap;align-items:stretch;gap:16px}
+.at-glowny:not(:has(.at-3d-brak)) .at-3d{flex:1 1 0;min-width:0}
+.at-glowny:not(:has(.at-3d-brak)) .at-boki{flex:0 0 calc((100% - 32px) * .2);display:flex;flex-direction:column;justify-content:space-between;align-items:center}
+/* przekrój zostaje przy swoim suwaku także sam w kolumnie: czołowy na dole; kolumna bez przekroju znika, a mózg w 3D bierze jej miejsce */
+.at-glowny:not(:has(.at-3d-brak)) .at-boki-lewe .wk-widok-czolowy{margin-top:auto}
+.at-glowny:not(:has(.at-3d-brak)) .at-boki:not(:has(.wk-widok:not(.at-bez))){display:none}
 .at-glowny:not(:has(.at-3d-brak)) .at-boki-prawe{justify-content:center}
 .at-glowny:not(:has(.at-3d-brak)) .wk-widok{order:0}
 .at-glowny:not(:has(.at-3d-brak)) .wk-widok-strzalkowy{flex:none;width:100%}
@@ -102,7 +106,8 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-os-czolowy .at-suwak,.at-os-strzalkowy .at-suwak{flex:1 1 auto;width:auto;margin:0}
 .at-os-poziomy{right:8px;top:16%;height:62%;flex-direction:column;width:44px}
 .at-os-poziomy .at-suwak{flex:1 1 auto;width:auto;margin:0;writing-mode:vertical-lr;direction:rtl}
-/* wyłącznik za końcem suwaka, w wyglądzie przełącznika Animacje: chowa obraz przekroju na mózgu w 3D, suwak i płaski przekrój zostają */
+/* wyłącznik za końcem suwaka, w wyglądzie przełącznika Animacje: chowa płaski przekrój swojego cięcia; cięcie w 3D i suwak zostają */
+.at-glowny .wk-widok.at-bez{display:none}
 .at-wl{position:relative;flex:none;display:inline-flex;align-items:center;background:none;border:0;padding:0;margin:0 0 0 4px;cursor:pointer}
 .at-os-poziomy .at-wl{margin:6px 0 0}
 .at-wl::before{content:'';position:absolute;inset:-12px -5px}
