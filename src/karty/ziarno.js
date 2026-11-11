@@ -464,7 +464,8 @@ export async function ziarno() {
   // w trybie Sieci, odkąd rysunek z boku z linkami sieci zszedł ze strony (2026-11-11)
   const listy = ATLAS ? [...document.querySelectorAll('.at-lista')] : [];
   const wybierajSiec = ATLAS ? document.querySelector('.at-lista[data-tryb="sieci"] select') : null;
-  const wybieraj = ATLAS ? document.querySelector('.at-lista[data-tryb="obszary"] select') : null;
+  const szukaj = ATLAS ? document.querySelector('#at-szukaj') : null;
+  const wyniki = ATLAS ? document.querySelector('#at-wyniki') : null;
   const link = (url, html) => (url ? '<a href="' + esc(url) + '">' + html + '</a>' : '<span>' + html + '</span>');
   const kodHtml = (n) => '<b style="color:' + KOL[n] + '">' + n + '</b> ' + esc(NAZWA[n] || '');
   // przy kilku sieciach i przy obszarze sam kod, nazwa dla czytnika ekranu: wiersz zaznaczenia mieści się w dwóch liniach (przegląd
@@ -542,7 +543,7 @@ export async function ziarno() {
     (w && w.typ === 'siec' ? w.kody : WSZYSTKIE).forEach((n) => LIT.add(n));
     widoki.forEach(wspolnota);
     tagi(); panel(); if (!bezAdresu) adres();
-    if (wybieraj) wybieraj.value = w && w.typ === 'obszar' ? String(w.n) : '';
+    if (szukaj && document.activeElement !== szukaj) szukaj.value = w && w.typ === 'obszar' ? REG[w.n - 1][0] : '';
     // kilka sieci naraz (z karty wiki) lista nazywa kodami (przegląd Atlasu 2026-11-11: lista mówiła *wybierz sieć* nad pięcioma
     // zaznaczonymi sieciami)
     if (wybierajSiec) {
@@ -624,7 +625,70 @@ export async function ziarno() {
     addEventListener('hashchange', zAdresu);
     // wstecz po zmianie ścieżki na miejscu wraca do wpisu z innym adresem bez zdarzenia hashchange (przegląd Atlasu 2026-11-11)
     addEventListener('popstate', zAdresu);
-    if (wybieraj) wybieraj.addEventListener('change', () => { const n = Number(wybieraj.value); wybierz(n ? { typ: 'obszar', n } : null); doObszaru(n); });
+    if (szukaj && wyniki) {
+      // szukanie obszaru: wpisane słowa muszą wystąpić w nazwie, w innej nazwie albo w nazwie grupy, bez względu na wielkość liter
+      // i polskie znaki; najpierw nazwy, które zaczynają się od wpisanego słowa, potem inne nazwy, potem reszta, w kolejności listy
+      const LISTA = JSON.parse(szukaj.dataset.lista || '[]');
+      const plasko = (t) => t.toLowerCase().replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      const WPISY = LISTA.flatMap(([g, xs]) => xs.map(([n, i, inne]) => ({ n, i, g, inne, pn: plasko(n), pi: inne.map(plasko), pg: plasko(g) })));
+      let aktywny = -1, widac = [];
+      const otworz = (tak) => { wyniki.hidden = !tak; szukaj.setAttribute('aria-expanded', String(tak)); if (!tak) { szukaj.removeAttribute('aria-activedescendant'); aktywny = -1; } };
+      const opcja = (x, pod, wybrany) => '<li role="option" id="at-w-' + x.i + '" data-n="' + x.i + '" aria-selected="' + wybrany + '">' + esc(x.n) + (pod ? ' <span class="at-w-pod">' + esc(pod) + '</span>' : '') + '</li>';
+      const pokazWyniki = () => {
+        const q = plasko(szukaj.value.trim()), teraz = wybor && wybor.typ === 'obszar' ? wybor.n : 0;
+        let html = '';
+        if (!q || (teraz && szukaj.value === REG[teraz - 1][0])) {
+          // puste pole albo nazwa zaznaczenia: cała lista w grupach, z wierszem bez zaznaczenia na początku
+          widac = (teraz ? [{ i: 0, n: 'bez zaznaczenia' }] : []).concat(WPISY);
+          if (teraz) html += '<li role="option" id="at-w-0" data-n="0" aria-selected="false" class="at-w-bez">bez zaznaczenia</li>';
+          LISTA.forEach(([g]) => { html += '<li role="presentation" class="at-w-grupa">' + esc(g) + '</li>' + WPISY.filter((x) => x.g === g).map((x) => opcja(x, '', x.i === teraz)).join(''); });
+        } else {
+          const slowa = q.split(/\s+/);
+          const pasuje = (x) => slowa.every((s) => x.pn.includes(s) || x.pi.some((a) => a.includes(s)) || x.pg.includes(s));
+          const ranga = (x) => (x.pn.startsWith(q) || x.pn.includes(' ' + q) ? 0 : x.pi.some((a) => a.startsWith(q) || a.includes(' ' + q)) ? 1 : 2);
+          widac = WPISY.filter(pasuje).map((x, k) => [ranga(x), k, x]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).map(([, , x]) => x).slice(0, 12);
+          html = widac.length ? widac.map((x) => { const inna = x.inne.find((a, k) => x.pi[k].includes(slowa[0])); return opcja(x, inna && !x.pn.includes(slowa[0]) ? inna : x.g, x.i === teraz); }).join('') : '<li role="presentation" class="at-w-nic">nic nie pasuje</li>';
+        }
+        wyniki.innerHTML = html;
+        otworz(true);
+        aktywny = -1;
+        const zaz = wyniki.querySelector('[aria-selected="true"]');
+        if (zaz) zaz.scrollIntoView({ block: 'nearest' }); else wyniki.scrollTop = 0;
+      };
+      const zaznaczAktywny = (k) => {
+        const el = wyniki.querySelectorAll('[role="option"]');
+        if (!el.length) return;
+        aktywny = (k + el.length) % el.length;
+        el.forEach((o, j) => o.classList.toggle('at-w-akt', j === aktywny));
+        szukaj.setAttribute('aria-activedescendant', el[aktywny].id);
+        el[aktywny].scrollIntoView({ block: 'nearest' });
+      };
+      const wez = (n) => {
+        otworz(false);
+        if (!n) { wybierz(null); szukaj.value = ''; return; }
+        if (tryb !== 'obszary') ustawTryb('obszary');
+        hotReg = 0;
+        wybierz({ typ: 'obszar', n });
+        szukaj.value = REG[n - 1][0];
+        doObszaru(n);
+      };
+      szukaj.addEventListener('focus', () => { szukaj.select(); pokazWyniki(); });
+      // po wyborze fokus zostaje w polu, więc klik w pole otwiera listę jeszcze raz
+      szukaj.addEventListener('click', () => { if (wyniki.hidden) { szukaj.select(); pokazWyniki(); } });
+      szukaj.addEventListener('input', pokazWyniki);
+      szukaj.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (wyniki.hidden) pokazWyniki(); zaznaczAktywny(aktywny + (e.key === 'ArrowDown' ? 1 : -1)); }
+        else if (e.key === 'Enter') {
+          e.preventDefault();
+          const el = wyniki.querySelectorAll('[role="option"]'), o = el[aktywny] || (szukaj.value.trim() ? el[0] : null);
+          if (o) wez(Number(o.dataset.n));
+        } else if (e.key === 'Escape') { otworz(false); szukaj.value = wybor && wybor.typ === 'obszar' ? REG[wybor.n - 1][0] : ''; }
+      });
+      // klik w wynik nie zabiera fokusu polu, więc lista nie znika przed wyborem
+      wyniki.addEventListener('mousedown', (e) => e.preventDefault());
+      wyniki.addEventListener('click', (e) => { const o = e.target.closest('[role="option"]'); if (o) wez(Number(o.dataset.n)); });
+      szukaj.addEventListener('blur', () => { otworz(false); szukaj.value = wybor && wybor.typ === 'obszar' ? REG[wybor.n - 1][0] : ''; });
+    }
     if (wybierajSiec) wybierajSiec.addEventListener('change', () => { const k = wybierajSiec.value; if (k !== 'wiele') wybierz(k ? { typ: 'siec', kody: [k] } : null); });
     przyciski.forEach((b) => b.addEventListener('click', () => { if (b.dataset.tryb === tryb) return; ustawTryb(b.dataset.tryb); hotReg = 0; wybierz(null); }));
   }

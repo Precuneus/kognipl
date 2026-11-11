@@ -64,7 +64,13 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: mózg do obracania i cię
           <p class="wk-tu" aria-live="polite"></p>
           {/* przełącznik stoi w miejscu w obu stanach (design: *a control holds its place*) */}
           <label class="at-lista" data-tryb="sieci"><span class="sr-only">Sieć</span><select><option value="">wybierz sieć</option><option value="wiele" hidden></option>{sieciListy.map((n) => <option value={n}>{n} · {NETN[n]}</option>)}</select></label>
-          <label class="at-lista at-lista-off" data-tryb="obszary"><span class="sr-only">Obszar</span><select><option value="">wybierz obszar</option>{grupy.map(([g, xs]) => <optgroup label={g}>{xs.map(([n, i]) => <option value={String(i)}>{n}</option>)}</optgroup>)}</select></label>
+          {/* w trybie Obszary pole szukania w miejscu listy (jego słowo, 2026-11-11: *add the search*): pisanie zawęża obszary po nazwie
+              polskiej, angielskiej i po skrócie, puste pole pokazuje całą listę w jej kolejności; strzałki, Enter i Esc jak w liście */}
+          <div class="at-lista at-lista-off at-szukaj" data-tryb="obszary">
+            <label class="sr-only" for="at-szukaj">Szukaj obszaru</label>
+            <input id="at-szukaj" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="at-wyniki" autocomplete="off" spellcheck="false" placeholder="szukaj obszaru" data-lista={JSON.stringify(grupy)} />
+            <ul id="at-wyniki" role="listbox" aria-label="Obszary" hidden></ul>
+          </div>
           <div class="at-tryb" role="group" aria-label="Co zaznacza klik"><button type="button" data-tryb="sieci" aria-pressed="true">Sieci</button><button type="button" data-tryb="obszary" aria-pressed="false">Obszary</button></div>
         </div>
         {/* mózg w 3D jest ryciną centralną (jego słowa, 2026-11-11: *make the brain with the sliders central. We want to have this as a central

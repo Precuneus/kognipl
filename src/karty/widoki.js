@@ -52,7 +52,82 @@ const POD_KORA = [
   ['móżdżek', ['robak móżdżku', 'część przyrobakowa móżdżku', 'część boczna półkuli móżdżku', 'jądra głębokie móżdżku', 'konar dolny móżdżku', 'konar środkowy móżdżku']],
   ['węchomózgowie i kora bezziarnista', ['opuszka węchowa', 'jądro węchowe przednie', 'kora gruszkowata', 'pasmo węchowe', 'kora wyspowa bezziarnista czołowa', 'kora wyspowa bezziarnista skroniowa', 'próg wyspy']],
 ];
-// REG: obszary jak z `regiony()`, numer = pozycja + 1; karty: numer obszaru → karty, które w nim leżą
+// Szukanie obszaru (jego słowo, 2026-11-11: *add the search*): obok polskiej nazwy obszar znajduje się po nazwie angielskiej i po
+// skrócie, którego używają podręczniki i karty (OFC, ACC, Broca, Heschl, V1 jak na kartach: klinek, zakręt językowy, biegun potyliczny)
+export const ALIASY = {
+  'kora okołooczodołowa': ['OFC', 'orbitofrontal cortex', 'kora oczodołowo-czołowa'],
+  'zakręt czołowy górny': ['superior frontal gyrus', 'SFG'],
+  'zakręt czołowy środkowy': ['middle frontal gyrus', 'MFG'],
+  'zakręt czołowy dolny': ['inferior frontal gyrus', 'IFG'],
+  'zakręt czołowy dolny, część trójkątna': ['pars triangularis', 'Broca', 'ośrodek Broki'],
+  'zakręt czołowy dolny, część wieczkowa': ['pars opercularis', 'Broca', 'ośrodek Broki'],
+  'zakręt przedśrodkowy': ['precentral gyrus', 'M1', 'kora ruchowa pierwszorzędowa'],
+  'zakręt prosty': ['gyrus rectus'],
+  'biegun czołowy': ['frontal pole'],
+  'płacik okołośrodkowy, część przednia': ['paracentral lobule'],
+  'płacik okołośrodkowy, część tylna': ['paracentral lobule'],
+  'zakręt zaśrodkowy': ['postcentral gyrus', 'S1', 'kora somatosensoryczna pierwszorzędowa'],
+  'płacik ciemieniowy górny': ['superior parietal lobule', 'SPL'],
+  'zakręt nadbrzeżny': ['supramarginal gyrus', 'SMG'],
+  'zakręt kątowy': ['angular gyrus'],
+  'przedklinek': ['precuneus'],
+  'zakręt skroniowy górny': ['superior temporal gyrus', 'STG', 'Wernicke', 'ośrodek Wernickego'],
+  'zakręt skroniowy środkowy': ['middle temporal gyrus', 'MTG'],
+  'zakręt skroniowy dolny': ['inferior temporal gyrus', 'ITG'],
+  'zakręt skroniowy poprzeczny (Heschla)': ['Heschl', 'transverse temporal gyrus', 'A1', 'kora słuchowa pierwszorzędowa'],
+  'płaszczyzna skroniowa': ['planum temporale', 'Wernicke', 'ośrodek Wernickego'],
+  'biegun skroniowy': ['temporal pole'],
+  'zakręt wrzecionowaty, część skroniowa': ['fusiform gyrus', 'FFA'],
+  'zakręt wrzecionowaty, część potyliczna': ['fusiform gyrus', 'FFA'],
+  'biegun potyliczny': ['occipital pole', 'V1', 'kora wzrokowa pierwszorzędowa'],
+  'klinek': ['cuneus', 'V1', 'kora wzrokowa pierwszorzędowa'],
+  'zakręt językowy': ['lingual gyrus', 'V1', 'kora wzrokowa pierwszorzędowa'],
+  'zakręt potyliczny dolny': ['inferior occipital gyrus'],
+  'zakręt potyliczny górny': ['superior occipital gyrus'],
+  'zakręt obręczy': ['cingulate gyrus'],
+  'zakręt obręczy, część przednia': ['anterior cingulate', 'ACC'],
+  'zakręt obręczy, część tylna': ['posterior cingulate', 'PCC'],
+  'hipokamp': ['hippocampus', 'formacja hipokampa'],
+  'zakręt przyhipokampowy': ['parahippocampal gyrus', 'PHG'],
+  'wyspa': ['insula', 'kora wyspy'],
+  'ciało migdałowate': ['amygdala'],
+  'wzgórze': ['thalamus'],
+  'podwzgórze': ['hypothalamus'],
+  'okolica suteczkowata podwzgórza': ['ciała suteczkowate', 'mammillary bodies'],
+  'poduszka wzgórza': ['pulvinar'],
+  'ciało kolankowate boczne': ['lateral geniculate nucleus', 'LGN'],
+  'ciało kolankowate przyśrodkowe': ['medial geniculate nucleus', 'MGN'],
+  'jądro ogoniaste': ['caudate nucleus', 'prążkowie', 'striatum'],
+  'skorupa': ['putamen', 'prążkowie', 'striatum', 'jądro soczewkowate'],
+  'gałka blada': ['globus pallidus', 'jądro soczewkowate'],
+  'jądro półleżące': ['nucleus accumbens', 'prążkowie brzuszne'],
+  'jądro niskowzgórzowe': ['subthalamic nucleus', 'STN'],
+  'przedmurze': ['claustrum'],
+  'istota czarna': ['substantia nigra'],
+  'jądro czerwienne': ['red nucleus'],
+  'wzgórek górny': ['superior colliculus'],
+  'wzgórek dolny': ['inferior colliculus'],
+  'śródmózgowie': ['midbrain', 'mesencephalon'],
+  'część podstawna mostu': ['pons', 'most'],
+  'nakrywka mostu': ['pons', 'most'],
+  'piramida rdzenia przedłużonego': ['medulla oblongata', 'rdzeń przedłużony'],
+  'nakrywka rdzenia przedłużonego': ['medulla oblongata', 'rdzeń przedłużony'],
+  'robak móżdżku': ['vermis', 'cerebellum'],
+  'część boczna półkuli móżdżku': ['cerebellum', 'półkula móżdżku'],
+  'ciało modzelowate': ['corpus callosum'],
+  'sklepienie': ['fornix'],
+  'spoidło przednie': ['anterior commissure'],
+  'pasmo wzrokowe': ['optic tract'],
+  'promienistość wzrokowa': ['optic radiation'],
+  'istota biała przodomózgowia': ['white matter', 'istota biała'],
+  'komora boczna': ['lateral ventricle'],
+  'komora trzecia': ['third ventricle'],
+  'komora czwarta': ['fourth ventricle'],
+  'opuszka węchowa': ['olfactory bulb'],
+  'kora gruszkowata': ['piriform cortex'],
+};
+// REG: obszary jak z `regiony()`, numer = pozycja + 1; karty: numer obszaru → karty, które w nim leżą; wpis listy to [nazwa, numer,
+// inne nazwy do szukania]
 export function listaObszarow(REG, karty) {
   // karty w obszarze i w jego częściach, każda raz, i jego własna karta
   const ile = (i) => new Set([i].concat(REG.map((_, j) => j + 1).filter((j) => JAK[j] === i)).flatMap((j) => (karty[j] || []).map((x) => x[1]))).size + (REG[i - 1][1] ? 1 : 0);
@@ -62,7 +137,7 @@ export function listaObszarow(REG, karty) {
   const gdzie = (i) => { const [n, , plat] = REG[i - 1]; return plat || (POD_KORA.find(([, xs]) => xs.includes(n)) || ['inne pod korą'])[0]; };
   const grupy = new Map([...PLATY, ...POD_KORA.map(([g]) => g), 'inne pod korą'].map((g) => [g, []]));
   numery.filter((i) => !JAK[i]).forEach((i) => grupy.get(gdzie(i)).push(i));
-  return [...grupy].filter(([, xs]) => xs.length).map(([g, xs]) => [g, xs.sort(porzadek).flatMap((i) => [i, ...numery.filter((j) => JAK[j] === i).sort(porzadek)]).map((i) => [REG[i - 1][0], i])]);
+  return [...grupy].filter(([, xs]) => xs.length).map(([g, xs]) => [g, xs.sort(porzadek).flatMap((i) => [i, ...numery.filter((j) => JAK[j] === i).sort(porzadek)]).map((i) => [REG[i - 1][0], i, ALIASY[REG[i - 1][0]] || []])]);
 }
 // karty każdej sieci, w kolejności alfabetu, bez karty samej sieci
 export function kartySieci(KARTY) {
