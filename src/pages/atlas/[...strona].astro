@@ -16,7 +16,7 @@ import KartaWiki from '../../components/KartaWiki.astro';
 import TerminDymek from '../../components/TerminDymek.astro';
 import { KARTY, NETN, INK, ATLAS, STRONY, netCard } from '../../karty/data.js';
 import { KOLOR } from '../../karty/mozg.js';
-import { zywy, suwak, DANE, OBJ, regiony, regionyAtlasu, kartySieci } from '../../karty/widoki.js';
+import { zywy, suwak, DANE, OBJ, regiony, regionyAtlasu, kartySieci, listaObszarow } from '../../karty/widoki.js';
 export function getStaticPaths() {
   return ATLAS.map((s) => ({ params: { strona: s.sciezka === '/atlas/' ? undefined : s.sciezka.split('/')[2] }, props: { s } }));
 }
@@ -32,11 +32,11 @@ const { REG, A2R, JAK, RODZAJ, NAZWY } = regionyAtlasu(regiony());
 const OBJETOSC = { krok: OBJ.krok, poczatek: OBJ.poczatek, wymiar: OBJ.wymiar, sieci: OBJ.sieci.map(([, pl, kody]) => [pl, kody]), A2R, JAK, RODZAJ, NAZWY, mozg: OBJ.mozg, url: '/images/mozg-widoki/objetosc.bin' };
 // lista sieci w trybie Sieci: klawiatura wybiera sieć tak jak klik, odkąd rysunek z boku z linkami sieci zszedł ze strony (2026-11-11)
 const sieciListy = DANE.kolejnosc.filter((n) => NETN[n]);
-const grupy = [];
-REG.forEach(([n, , plat], i) => { const g = plat || 'pod korą'; let x = grupy.find((y) => y[0] === g); if (!x) { x = [g, []]; grupy.push(x); } x[1].push([n, i + 1]); });
 // karty obszaru: karty, których miejsce leży w zaznaczonym obszarze, w kolorze swojej grupy
 const kartyObszaru = {};
 KARTY.forEach((x) => x.obszary.forEach((n) => { (kartyObszaru[n] = kartyObszaru[n] || []).push([x.h, x.url, INK[x.g]]); }));
+// lista obszarów: najważniejsze płaty i obszary na początku (2026-11-11, `listaObszarow` w `widoki.js`)
+const grupy = listaObszarow(REG, kartyObszaru);
 // karty wiki po adresie: Atlas otwarty z karty wiki pokazuje link z powrotem do niej (jego słowa, 2026-11-10: *We will link them to the
 // atlas, and link back from atlas to the wiki*)
 const WIKI = Object.fromEntries(KARTY.filter((x) => x.url.startsWith('/wiki/')).map((x) => [x.url, x.h]));
@@ -76,15 +76,18 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: mózg do obracania i cię
             figure... and... somehow show the slices relative to this brain*, potem *can we make C and possible to rotate?*); suwaki cięć
             leżą na osiach mózgu w widoku startowym (*the suwaki should scale somehow within the image*), poziomy pionowo (*Maybe przekroj
             poziomy should be vertical?*); trzecie cięcie, strzałkowe, idzie od jednego boku przez środek do drugiego (*add a 3rd cut on the 3d
-            brain, from lateral to medial to lateral*), a trzy rysunki z kolokwium zeszły ze strony; pod mózgiem płaskie przekroje do
-            czytania, w jednej skali */}
+            brain, from lateral to medial to lateral*), a trzy rysunki z kolokwium zeszły ze strony; płaskie przekroje do czytania, w jednej
+            skali, na komputerze po bokach mózgu obok swoich suwaków (*We want to move the brain slices in the desktop version to sides... next
+            to the suwaki*): strzałkowy u góry z lewej przy górnym suwaku, czołowy u dołu z lewej przy dolnym, poziomy z prawej przy pionowym;
+            na węższym ekranie w rzędzie pod mózgiem; każde cięcie ma swój wyłącznik (*we want a switch on/off button next to each*) */}
         <div class="at-glowny">
+          <div class="at-boki at-boki-lewe"><Fragment set:html={zywy('strzalkowy') + zywy('czolowy')} /></div>
           <div class="at-3d" role="group" aria-label="Mózg w trzech wymiarach z cięciem czołowym, poziomym i strzałkowym" data-powierzchnia="/images/mozg-widoki/powierzchnia.bin">
             <div class="at-3d-scena"></div>
             <Fragment set:html={suwak('strzalkowy') + suwak('czolowy') + suwak('poziomy')} />
             <div class="at-3d-dymek" role="dialog" aria-label="Miejsce w mózgu" hidden></div>
           </div>
-          <div class="at-przekroje"><Fragment set:html={zywy('czolowy') + zywy('poziomy') + zywy('strzalkowy')} /></div>
+          <div class="at-boki at-boki-prawe"><Fragment set:html={zywy('poziomy')} /></div>
         </div>
       </section>
       {/* karta zaznaczenia pod widokami; przy kilku zaznaczonych sieciach ich karty jedna pod drugą */}

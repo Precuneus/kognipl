@@ -74,15 +74,30 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-tryb button{font:500 13px/1 Inter,sans-serif;color:#cfc8bb;background:none;border:0;border-radius:999px;padding:8px 14px;cursor:pointer;min-height:32px}
 .at-tryb button[aria-pressed="true"]{background:rgba(240,192,96,.16);color:#f0c060}
 .at-tryb button:focus-visible{outline:2px solid #f0c060;outline-offset:2px}
-.at-glowny{display:flex;flex-direction:column;gap:22px}
-/* przekroje w rzędzie pod mózgiem, dolnymi brzegami w jednej linii, więc podpisy też */
-.at-przekroje{display:flex;justify-content:center;align-items:flex-end;gap:16px}
-.at-przekroje .wk-widok-czolowy,.at-przekroje .wk-widok-poziomy{flex:0 0 calc((100% - 32px) * .30887)}
-.at-przekroje .wk-widok-strzalkowy{flex:0 0 calc((100% - 32px) * .38226)}
-/* mózg w 3D: scena zostawia pas u góry na suwak strzałkowy i u dołu na czołowy, na telefonie także z prawej na poziomy; suwaki ustawia
-   `mozg3d.js` na osiach mózgu w widoku startowym */
+/* przekroje w rzędzie pod mózgiem, dolnymi brzegami w jednej linii, więc podpisy też; kolumny boków znikają z układu (contents), więc
+   przekroje stają w rzędzie w kolejności czołowy, poziomy, strzałkowy */
+.at-glowny{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:22px 16px}
+.at-boki{display:contents}
+.at-glowny .at-3d{flex:0 0 100%;order:0}
+.at-glowny .wk-widok-czolowy{order:1;flex:0 0 calc((100% - 32px) * .30887)}
+.at-glowny .wk-widok-poziomy{order:2;flex:0 0 calc((100% - 32px) * .30887)}
+.at-glowny .wk-widok-strzalkowy{order:3;flex:0 0 calc((100% - 32px) * .38226)}
+/* na komputerze przekroje stoją po bokach mózgu obok swoich suwaków (jego słowa, 2026-11-11: *We want to move the brain slices in the
+   desktop version to sides... next to the suwaki*): z lewej strzałkowy u góry przy górnym suwaku i czołowy u dołu przy dolnym, z prawej
+   poziomy przy pionowym, w jednej skali (czołowy i poziomy mają 0,808 szerokości strzałkowego, 151,5 do 187,5 mm); bez WebGL zostaje rząd */
+@media (min-width:1000px){
+.at-glowny:not(:has(.at-3d-brak)){display:grid;grid-template-columns:calc((100% - 32px) * .2) minmax(0,1fr) calc((100% - 32px) * .2);gap:16px;align-items:stretch}
+.at-glowny:not(:has(.at-3d-brak)) .at-boki{display:flex;flex-direction:column;justify-content:space-between;align-items:center}
+.at-glowny:not(:has(.at-3d-brak)) .at-boki-prawe{justify-content:center}
+.at-glowny:not(:has(.at-3d-brak)) .wk-widok{order:0}
+.at-glowny:not(:has(.at-3d-brak)) .wk-widok-strzalkowy{flex:none;width:100%}
+.at-glowny:not(:has(.at-3d-brak)) .wk-widok-czolowy,.at-glowny:not(:has(.at-3d-brak)) .wk-widok-poziomy{flex:none;width:80.8%}
+.at-glowny:not(:has(.at-3d-brak)) .at-3d{height:clamp(500px,44vw,580px)}
+}
+/* mózg w 3D: scena zostawia pas u góry na suwak strzałkowy, u dołu na czołowy i z prawej na poziomy, który staje tuż za tyłem mózgu,
+   jeśli jest tam miejsce; suwaki ustawia `mozg3d.js` na osiach mózgu w widoku startowym */
 .at-3d{position:relative;height:clamp(460px,56vw,640px)}
-.at-3d-scena{position:absolute;top:44px;left:0;right:0;bottom:58px;cursor:grab;touch-action:none}
+.at-3d-scena{position:absolute;top:44px;left:0;right:56px;bottom:58px;cursor:grab;touch-action:none}
 .at-3d-scena:active{cursor:grabbing}
 .at-3d-scena canvas{display:block}
 .at-os{position:absolute;display:flex;align-items:center;gap:10px;font:500 12px/1 Inter,sans-serif;color:#a09888;letter-spacing:.04em}
@@ -91,6 +106,14 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-os-czolowy .at-suwak,.at-os-strzalkowy .at-suwak{flex:1 1 auto;width:auto;margin:0}
 .at-os-poziomy{right:8px;top:16%;height:62%;flex-direction:column;width:44px}
 .at-os-poziomy .at-suwak{flex:1 1 auto;width:auto;margin:0;writing-mode:vertical-lr;direction:rtl}
+/* wyłącznik cięcia za końcem suwaka, w wyglądzie przełącznika Animacje; wyłączone cięcie gasi swój suwak i obraz swojego przekroju */
+.at-wl{position:relative;flex:none;display:inline-flex;align-items:center;background:none;border:0;padding:0;margin:0 0 0 4px;cursor:pointer}
+.at-os-poziomy .at-wl{margin:6px 0 0}
+.at-wl::before{content:'';position:absolute;inset:-12px -5px}
+.at-wl:focus-visible{outline:1px solid #f0c060;outline-offset:4px}
+.at-suwak:disabled{opacity:.35;cursor:default}
+/* gaśnie obraz przekroju, a jego podpis i nazwy końców suwaka zostają czytelne (kontrast, audyt 2026-11-11) */
+.at-grid[data-wylaczone~="czolowy"] .wk-widok-czolowy .wk-pole,.at-grid[data-wylaczone~="poziomy"] .wk-widok-poziomy .wk-pole,.at-grid[data-wylaczone~="strzalkowy"] .wk-widok-strzalkowy .wk-pole{opacity:.4}
 .at-3d-dymek{position:absolute;z-index:5;width:min(300px,calc(100% - 16px));background:#16140f;border:1px solid rgba(180,155,100,.32);border-radius:14px;padding:14px 16px 12px;box-shadow:0 10px 34px rgba(0,0,0,.5)}
 .at-3d-dymek[hidden]{display:none}
 .at-3d-x{position:absolute;top:4px;right:6px;background:none;border:0;color:#a09888;font-size:20px;line-height:1;cursor:pointer;padding:4px}
@@ -101,13 +124,14 @@ html.at-czeka .at-miejsce{visibility:hidden}
 /* bez WebGL albo bez objętości mózg w 3D znika, a suwaki leżą płasko jeden pod drugim nad przekrojami; strzałkowy biegnie wtedy od
    lewej półkuli do prawej, jak lewa i prawa w przekroju czołowym */
 .at-3d.at-3d-brak{height:auto;display:flex;flex-direction:column;gap:12px}
-.at-3d.at-3d-brak .at-3d-scena{display:none}
+.at-3d.at-3d-brak .at-3d-scena,.at-3d.at-3d-brak .at-wl{display:none}
 .at-3d.at-3d-brak .at-os{position:static;width:100%;height:auto;flex-direction:row}
 .at-3d.at-3d-brak .at-os-strzalkowy{flex-direction:row-reverse}
 .at-3d.at-3d-brak .at-os-strzalkowy .at-suwak{direction:ltr}
 .at-3d.at-3d-brak .at-os-poziomy .at-suwak{writing-mode:horizontal-tb;direction:rtl}
-/* na telefonie mózg w 3D jest kwadratem, a przekroje w tej samej skali: czołowy i poziomy obok siebie, strzałkowy pod nimi */
-@media (max-width:720px){.at-3d{height:auto;aspect-ratio:1/1}.at-3d-scena{right:56px}.at-3d.at-3d-brak{aspect-ratio:auto}.at-przekroje{flex-wrap:wrap;gap:14px 16px}.at-przekroje .wk-widok-czolowy,.at-przekroje .wk-widok-poziomy{flex-basis:calc((100% - 16px) / 2)}.at-przekroje .wk-widok-strzalkowy{flex-basis:calc((100% - 16px) * .6188)}}
+/* na telefonie mózg w 3D jest kwadratem, a przekroje w tej samej skali: czołowy i poziomy obok siebie, strzałkowy pod nimi; scena kończy
+   się wyżej, żeby wyłącznik pionowego suwaka i wyłącznik dolnego nie dzieliły pola palca */
+@media (max-width:720px){.at-3d{height:auto;aspect-ratio:1/1}.at-3d-scena{bottom:72px}.at-3d.at-3d-brak{aspect-ratio:auto}.at-glowny{gap:14px 16px}.at-glowny .wk-widok-czolowy,.at-glowny .wk-widok-poziomy{flex-basis:calc((100% - 16px) / 2)}.at-glowny .wk-widok-strzalkowy{flex-basis:calc((100% - 16px) * .6188)}}
 .at-obszary .wk-pole{cursor:pointer}
 .wk-pole{position:relative}
 .wk-widok svg{position:relative;display:block;width:100%;height:auto;overflow:visible}
@@ -168,10 +192,10 @@ html.roj-cicho *,html.roj-cicho *::before,html.roj-cicho *::after{animation:none
    przewija się pod nagłówkiem, a przełącznik należy do niego */
 .wk-anim{position:absolute;right:calc(8vw - 10px);top:32px;z-index:20;display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.55);border:0;border-radius:15px;cursor:pointer;font-family:Inter,sans-serif;font-weight:300;font-size:14px;letter-spacing:.04em;color:#b3aa9b}
 .wk-anim:hover{color:#ece6da}
-.wk-anim-tor{position:relative;width:34px;height:18px;box-sizing:border-box;border:1px solid rgba(240,192,96,.55);border-radius:9px;transition:background .2s ease}
-.wk-anim-tor::after{content:'';position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#6e675c;transition:transform .2s ease,background .2s ease}
-.wk-anim[aria-checked="true"] .wk-anim-tor{background:rgba(240,192,96,.16)}
-.wk-anim[aria-checked="true"] .wk-anim-tor::after{transform:translateX(16px);background:#f0c060}
+.wk-anim-tor,.at-wl-tor{position:relative;display:block;width:34px;height:18px;box-sizing:border-box;border:1px solid rgba(240,192,96,.55);border-radius:9px;transition:background .2s ease}
+.wk-anim-tor::after,.at-wl-tor::after{content:'';position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#6e675c;transition:transform .2s ease,background .2s ease}
+.wk-anim[aria-checked="true"] .wk-anim-tor,.at-wl[aria-checked="true"] .at-wl-tor{background:rgba(240,192,96,.16)}
+.wk-anim[aria-checked="true"] .wk-anim-tor::after,.at-wl[aria-checked="true"] .at-wl-tor::after{transform:translateX(16px);background:#f0c060}
 .wk-anim:focus-visible{outline:1px solid #f0c060;outline-offset:4px}
 @media (max-width:720px){.wk-anim{right:16px;top:14px;font-size:13px}}
 /* palec trafia w 44 px: niewidoczne pole wokół przełącznika, rysunek bez zmian (audyt 2026-11-09) */

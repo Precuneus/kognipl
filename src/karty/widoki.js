@@ -28,6 +28,41 @@ export function regiony(k = null) {
   const url = (n) => { const c = kartaObszaru(n); return c && c !== k ? c.url : ''; };
   return OBSZARY.map(({ nazwa, plat }) => [nazwa, url(nazwa), plat, plat && platy && platy !== k ? platy.url : '', slugify(nazwa)]);
 }
+// Lista obszarów do wyboru (jego słowa, 2026-11-11: *sort the regions on the list better. At the beginning they should be key regions in
+// key lobes*): płaty od przodu do tyłu, potem płat limbiczny i wyspa, a za nimi struktury pod korą w swoich układach. W każdej grupie
+// pierwszy jest obszar z najwięcej kartami, które w nim leżą, i własną (ważność to liczba połączeń, design), przy równej liczbie obszar z KLUCZOWYCH,
+// czyli 40 obszarów, które Atlas rysował z rysunków kolokwium do przyjęcia atlasu Allena, w ich kolejności i w nazwach Allena, na końcu
+// reszta w kolejności objętości. Część grupy Allena (głowa hipokampa, zakręty oczodołowe) stoi zaraz za swoją grupą.
+const KLUCZOWE = ['zakręt czołowy górny', 'zakręt czołowy środkowy', 'zakręt czołowy dolny', 'zakręt przedśrodkowy', 'kora okołooczodołowa',
+  'zakręt prosty', 'płacik okołośrodkowy, część przednia', 'płacik okołośrodkowy, część tylna', 'zakręt zaśrodkowy', 'płacik ciemieniowy górny',
+  'zakręt nadbrzeżny', 'zakręt kątowy', 'przedklinek', 'zakręt skroniowy górny', 'zakręt skroniowy środkowy', 'zakręt skroniowy dolny',
+  'biegun skroniowy', 'zakręt wrzecionowaty, część skroniowa', 'zakręt wrzecionowaty, część potyliczna', 'zakręt przyhipokampowy',
+  'zakręt potyliczny dolny', 'zakręt potyliczny górny', 'klinek', 'zakręt językowy', 'biegun potyliczny', 'zakręt obręczy', 'wyspa',
+  'ciało modzelowate', 'jądro ogoniaste', 'wzgórze', 'skorupa', 'gałka blada', 'przedmurze', 'ciało migdałowate', 'hipokamp', 'komora boczna',
+  'komora trzecia', 'okolica suteczkowata podwzgórza', 'pasmo wzrokowe', 'sklepienie', 'śródmózgowie', 'podwzgórze', 'istota biała przodomózgowia'];
+const PLATY = ['płat czołowy', 'płat ciemieniowy', 'płat skroniowy', 'płat potyliczny', 'płat limbiczny', 'płat wyspowy'];
+// struktury bez płata w układach, które nazywa ontologia Allena; część grupy idzie za swoją grupą
+const POD_KORA = [
+  ['jądra podstawy', ['jądro ogoniaste', 'skorupa', 'skorupa, część brzuszno-tylna', 'gałka blada', 'jądro półleżące', 'przedmurze', 'jądro niskowzgórzowe']],
+  ['międzymózgowie', ['wzgórze', 'podwzgórze']],
+  ['ciało migdałowate i podstawa przodomózgowia', ['ciało migdałowate', 'podstawa przodomózgowia', 'jądra przegrody', 'jądro łożyskowe prążka krańcowego']],
+  ['istota biała', ['istota biała przodomózgowia', 'ciało modzelowate', 'spoidło przednie', 'sklepienie', 'pęczek suteczkowo-wzgórzowy', 'pasmo wzrokowe', 'promienistość wzrokowa', 'istota biała tyłomózgowia']],
+  ['komory', ['komora boczna', 'komora trzecia', 'komora czwarta', 'kanał środkowy rdzenia przedłużonego']],
+  ['pień mózgu', ['śródmózgowie', 'część podstawna mostu', 'nakrywka mostu', 'piramida rdzenia przedłużonego', 'nakrywka rdzenia przedłużonego', 'jądro dolne oliwki']],
+  ['móżdżek', ['robak móżdżku', 'część przyrobakowa móżdżku', 'część boczna półkuli móżdżku', 'jądra głębokie móżdżku', 'konar dolny móżdżku', 'konar środkowy móżdżku']],
+  ['węchomózgowie i kora bezziarnista', ['opuszka węchowa', 'jądro węchowe przednie', 'kora gruszkowata', 'pasmo węchowe', 'kora wyspowa bezziarnista czołowa', 'kora wyspowa bezziarnista skroniowa', 'próg wyspy']],
+];
+// REG: obszary jak z `regiony()`, numer = pozycja + 1; karty: numer obszaru → karty, które w nim leżą
+export function listaObszarow(REG, karty) {
+  const ile = (i) => (karty[i] || []).length + (REG[i - 1][1] ? 1 : 0); // karty w obszarze i jego własna karta
+  const klucz = (i) => { const k = KLUCZOWE.indexOf(REG[i - 1][0]); return k < 0 ? 1000 + i : k; };
+  const porzadek = (a, b) => ile(b) - ile(a) || klucz(a) - klucz(b);
+  const numery = REG.map((_, j) => j + 1);
+  const gdzie = (i) => { const [n, , plat] = REG[i - 1]; return plat || (POD_KORA.find(([, xs]) => xs.includes(n)) || ['inne pod korą'])[0]; };
+  const grupy = new Map([...PLATY, ...POD_KORA.map(([g]) => g), 'inne pod korą'].map((g) => [g, []]));
+  numery.filter((i) => !JAK[i]).forEach((i) => grupy.get(gdzie(i)).push(i));
+  return [...grupy].filter(([, xs]) => xs.length).map(([g, xs]) => [g, xs.sort(porzadek).flatMap((i) => [i, ...numery.filter((j) => JAK[j] === i).sort(porzadek)]).map((i) => [REG[i - 1][0], i])]);
+}
 // karty każdej sieci, w kolejności alfabetu, bez karty samej sieci
 export function kartySieci(KARTY) {
   return Object.fromEntries(Object.keys(NETN).map((kod) => {
@@ -57,13 +92,16 @@ export function zywy(p) {
     + '<div class="wk-kody" aria-hidden="true" hidden></div></div><figcaption>' + PRZEKROJ[p][0] + '</figcaption></figure>';
 }
 // suwak cięcia na osi mózgu w 3D: czołowy biegnie od przodu do tyłu, poziomy od góry do dołu, strzałkowy od prawej półkuli do lewej,
-// bo w widoku startowym lewa półkula stoi bliżej i niżej, a prawa wychodzi za nią w lewo; końce nazwane
+// bo w widoku startowym lewa półkula stoi bliżej i niżej, a prawa wychodzi za nią w lewo; końce nazwane. Za końcem suwaka wyłącznik
+// cięcia (jego słowa, 2026-11-11: *we want a switch on/off button next to each*): wyłączone cięcie nie tnie mózgu w 3D
+const NAZWA_CIECIA = { czolowy: 'czołowe', poziomy: 'poziome', strzalkowy: 'strzałkowe' };
 const KONCE = { czolowy: ['przód', 'tył', ' dir="rtl"'], poziomy: ['góra', 'dół', ''], strzalkowy: ['prawa', 'lewa', ' dir="rtl"'] };
 export function suwak(p) {
   const [lo, hi] = ZAKRES[p], [a, b, dir] = KONCE[p];
   return '<div class="at-os at-os-' + p + '"><span aria-hidden="true">' + a + '</span>'
     + '<input type="range" class="at-suwak" data-p="' + p + '"' + dir + ' min="' + lo.toFixed(1) + '" max="' + hi.toFixed(1) + '" step="0.5" value="' + CIECIE[p] + '" aria-label="Położenie ' + PRZEKROJ[p][1] + '">'
-    + '<span aria-hidden="true">' + b + '</span></div>';
+    + '<span aria-hidden="true">' + b + '</span>'
+    + '<button type="button" class="at-wl" data-p="' + p + '" role="switch" aria-checked="true" aria-label="Cięcie ' + NAZWA_CIECIA[p] + '"><span class="at-wl-tor" aria-hidden="true"></span></button></div>';
 }
 // dane obszarów dla skryptów Atlasu: struktura Allena ma w objętości numer swojego wpisu, JAK wskazuje jej grupę
 export function regionyAtlasu(REG) {
