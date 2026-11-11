@@ -119,7 +119,7 @@ export async function ziarno() {
   // przeglądy /atlas/ i /atlas/platy-mozgu/; START to zaznaczenie strony, na której stoi czytelnik
   const STRONY = JSON.parse(mozg.dataset.strony || '{"siec":{},"obszar":{}}');
   const START = JSON.parse(mozg.dataset.start || '{}');
-  const BIALA = REG.findIndex((r) => r[0] === 'istota biała') + 1;
+  const BIALA = REG.findIndex((r) => r[0] === 'istota biała przodomózgowia') + 1;
   const WSZYSTKIE = NETS.slice(0, N - 0).filter((n) => n !== 'X');
   const LIT = new Set((mozg.dataset.lit || '').split(',').filter(Boolean));
   // przekroje z objętości: 141 struktur Allena i 17 sieci Yeo takie, jakie są; JAK wskazuje obszar rysunku, którego częścią jest
@@ -147,11 +147,13 @@ export async function ziarno() {
     for (let i = 0; i < lab.length; i++) lab[i] = Math.round(px[i * 4] / 20);
     const kora = new Float32Array(FW * FH);
     for (let i = 0; i < lab.length; i++) kora[i] = lab[i] > 0 ? 1 : 0;
-    // rdzeń każdej sieci: jej obszar z miękką krawędzią, tylko na korze
+    // rdzeń każdej sieci: jej obszar z miękką krawędzią, tylko na korze; wartość 10 to istotności i brzuszna uwagi Yeo, wspólne SN
+    // i VAN po równo (2026-11-11, mapy rysunków z sieci Yeo)
     const rdzen = [];
+    const SNi = NETS.indexOf('SN'), VANi = NETS.indexOf('VAN');
     for (let n = 0; n < N; n++) {
       const a = new Float32Array(FW * FH);
-      for (let i = 0; i < a.length; i++) a[i] = lab[i] === n + 1 ? 1 : 0;
+      for (let i = 0; i < a.length; i++) a[i] = lab[i] === n + 1 || (lab[i] === 10 && (n === SNi || n === VANi)) ? 1 : 0;
       const b = rozmyj(a, FW, FH, 2);
       for (let i = 0; i < b.length; i++) b[i] *= kora[i];
       rdzen.push(b);
@@ -479,7 +481,8 @@ export async function ziarno() {
       for (let y = 0; y < v.FH; y++) for (let x = 0; x < v.FW; x++) {
         if (!trafia(regPola(v, x, y), n)) continue;
         const l = v.lab[y * v.FW + x];
-        if (l > 0 && l <= N && NETS[l - 1] !== 'X') { c[l - 1]++; tot++; }
+        if (l === 10) { c[NETS.indexOf('SN')]++; c[NETS.indexOf('VAN')]++; tot += 2; }
+        else if (l > 0 && l <= N && NETS[l - 1] !== 'X') { c[l - 1]++; tot++; }
       }
     }
     if (!tot) return [];

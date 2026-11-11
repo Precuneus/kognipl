@@ -4,6 +4,7 @@
 import D from './mozg-widoki.json';
 import O from './objetosc.json';
 import { NETN, netCard, card, slugify, kartaObszaru } from './data.js';
+import { OBSZARY, JAK } from './obszary.js';
 
 export const DANE = D;
 export const OBJ = O;
@@ -66,12 +67,12 @@ export function widok(v, { k = null, lit = new Set(), tab = false, ciecia = fals
     + '</svg>' + sieci.map((s) => s.tag).join('') + '<div class="wk-kody" aria-hidden="true" hidden></div></div><figcaption>' + cap + '</figcaption></figure>';
 }
 
-// Obszary anatomiczne atlasu: nazwa prowadzi do swojej karty, jeśli taka jest, płat do karty Płaty mózgu, istota biała do karty
-// Istota szara i istota biała; adres #obszar-<nazwa> otwiera atlas z obszarem bez karty
+// Obszary Atlasu (struktury Allena i ich grupy, `obszary.js`): nazwa prowadzi do swojej karty, jeśli taka jest, płat do karty Płaty
+// mózgu; adres #obszar-<nazwa> otwiera Atlas z obszarem bez karty
 export function regiony(k = null) {
   const platy = card('Płaty mózgu');
   const url = (n) => { const c = kartaObszaru(n); return c && c !== k ? c.url : ''; };
-  return (D.regiony || []).map(([n, plat]) => [n, url(n), plat, plat && platy && platy !== k ? platy.url : '', slugify(n)]);
+  return OBSZARY.map(({ nazwa, plat }) => [nazwa, url(nazwa), plat, plat && platy && platy !== k ? platy.url : '', slugify(nazwa)]);
 }
 // karty każdej sieci, w kolejności alfabetu, bez karty samej sieci
 export function kartySieci(KARTY) {
@@ -102,18 +103,7 @@ export function suwak(p) {
     + '<input type="range" class="at-suwak" data-p="' + p + '"' + (p === 'czolowy' ? ' dir="rtl"' : '') + ' min="' + lo.toFixed(1) + '" max="' + hi.toFixed(1) + '" step="0.5" value="' + CIECIE[p] + '" aria-label="Położenie ' + PRZEKROJ[p][1] + '">'
     + '<span aria-hidden="true">' + b + '</span></div>';
 }
-// obszary Atlasu: 40 obszarów rysunków i struktury Allena takie, jakie są; struktura o nazwie obszaru rysunku jest tym obszarem, część
-// grupy, którą Allen nazywa jak obszar rysunku (głowa hipokampa w formacji hipokampa), ma własny wpis i wskazuje ten obszar (JAK)
+// dane obszarów dla skryptów Atlasu: struktura Allena ma w objętości numer swojego wpisu, JAK wskazuje jej grupę
 export function regionyAtlasu(REG) {
-  const nr = (n) => REG.findIndex((r) => r[0] === n) + 1;
-  const platy = card('Płaty mózgu');
-  const out = REG.slice(), A2R = [0], JAK = new Array(REG.length + 1).fill(0);
-  for (const [, pl, kind, jak, plat] of O.obszary) {
-    const sam = nr(pl);
-    if (sam) { A2R.push(sam); continue; }
-    out.push([pl, '', plat, plat && platy ? platy.url : '', slugify(pl)]);
-    A2R.push(out.length);
-    JAK.push(jak ? nr(jak) : 0);
-  }
-  return { REG: out, A2R, JAK, RODZAJ: [''].concat(O.obszary.map((r) => r[2])), NAZWY: [''].concat(O.obszary.map((r) => r[1])) };
+  return { REG, A2R: [0].concat(O.obszary.map((_, i) => i + 1)), JAK, RODZAJ: [''].concat(O.obszary.map((r) => r[2])), NAZWY: [''].concat(O.obszary.map((r) => r[1])) };
 }

@@ -57,7 +57,7 @@ export async function mozg3d(el) {
   // kora limbiczna jest też domyślna, Girn i in. 2024)
   const WSP = JSON.parse(siatka.dataset.wspolne || '[]');
   const FAM = O.sieci.map((s) => { const f = s[1].slice(); for (const { sieci: [a, b] } of WSP) if (f.includes(a) && !f.includes(b)) f.push(b); return f; });
-  const BIALA = REG.findIndex((r) => r[0] === 'istota biała') + 1;
+  const BIALA = REG.findIndex((r) => r[0] === 'istota biała przodomózgowia') + 1;
   const trafia = (zr, n) => !!zr && !!n && (zr === n || JAK[zr] === n || (!!JAK[n] && JAK[n] === zr));
 
   let renderer;

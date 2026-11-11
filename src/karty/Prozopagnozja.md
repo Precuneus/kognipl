@@ -10,7 +10,8 @@ sieci:
   powód: 'Rozpoznajesz twarz przyjaciółki i polegasz na Modelach Mentalnych tej osoby: to między innymi aktywność brzusznych obszarów potyliczno-skroniowych, wśród nich prawego obszaru twarzy w zakręcie wrzecionowatym. Wszystkie 44 opisane uszkodzenia, po których pojawiła się prozopagnozja, leżały w obszarach połączonych z tym obszarem (Cohen i in. 2019)<!--[s:cohen2019-prosopagnosia-ffa-network]-->, ale u czterech osób z prozopagnozją wrodzoną te obszary odpowiadały na twarze prawidłowo (Avidan i in. 2005)<!--[s:avidan2005-cp-normal-ventral-activation]-->. Rdzeń sieci wzrokowej tworzy kora płata potylicznego (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-on-core-occipital]-->.'
 bez_sieci: ''
 obszary:
-- zakręt wrzecionowaty
+- zakręt wrzecionowaty, część skroniowa
+- zakręt wrzecionowaty, część potyliczna
 ryciny: []
 materiały:
 - tytuł: 'CrashCourse, Sensation and Perception: Crash Course Psychology #5'

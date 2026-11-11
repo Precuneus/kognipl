@@ -14,7 +14,9 @@ sieci:
   powód: 'Myślisz o tym, co czuje rozmówczyni: Twoje Modele Mentalne drugiej osoby to aktywność obszarów wspólnych dla teorii umysłu i sieci domyślnej, ze skrzyżowaniem skroniowo-ciemieniowym (Spreng, Mar i Kim 2009)<!--[s:spreng2009-core-network-memory-prospection-navigation]-->. Bruzda skroniowa górna, w której kończy się trzeci szlak, należy do sieci domyślnej poza jej rdzeniem (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-mfpn-includes-ifg]-->.'
 bez_sieci: ''
 obszary:
-- kora wzrokowa pierwszorzędowa
+- klinek
+- zakręt językowy
+- biegun potyliczny
 ryciny: []
 materiały:
 - tytuł: 'Mel Goodale o pacjentce D.F.'

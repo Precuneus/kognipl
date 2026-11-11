@@ -10,7 +10,9 @@ sieci:
   powód: 'Patrzysz na litery: droga wzrokowa prowadzi bioinformację z czopków przez ciało kolankowate boczne do pierwszorzędowej kory wzrokowej (V1) (Chapelle 2025)<!--[s:chapelle2025-rgc-lgn-v1]-->. Kształt liter to aktywność sieci wzrokowej.'
 bez_sieci: ''
 obszary:
-- kora wzrokowa pierwszorzędowa
+- klinek
+- zakręt językowy
+- biegun potyliczny
 ryciny: []
 materiały:
 - tytuł: 'The Rest Is Science, Why Is It A Colour Wheel And Not A Line?'

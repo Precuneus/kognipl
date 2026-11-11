@@ -12,8 +12,10 @@ sieci:
   powód: 'Śledzisz wzrokiem toczącą się piłkę, a Twoje Modele Mentalne jej ruchu to także aktywność kompleksu MT+ (ang. middle temporal complex), należącego do rdzenia sieci grzbietowej uwagi (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-dfpn-core-spl-ips-fef]-->. U każdej osoby ze ślepowidzeniem w badaniu Ajiny i współpracowników połączenie ciała kolankowatego bocznego z ludzkim kompleksem MT+ (ang. human middle temporal complex, hMT+) było zachowane (Ajina i in. 2015)<!--[s:ajina2015-v1-damage-residual-vision]-->.'
 bez_sieci: ''
 obszary:
-- kora wzrokowa pierwszorzędowa
-- śródmózgowie
+- klinek
+- zakręt językowy
+- biegun potyliczny
+- wzgórek górny
 - kora okołooczodołowa
 ryciny: []
 materiały:

@@ -92,21 +92,21 @@
 "GPe",
 "gałka blada, część zewnętrzna",
 "gleb",
-"",
+"gałka blada",
 ""
 ],
 [
 "GPi",
 "gałka blada, część wewnętrzna",
 "gleb",
-"",
+"gałka blada",
 ""
 ],
 [
 "Cla",
 "przedmurze",
 "gleb",
-"przedmurze",
+"",
 ""
 ],
 [
@@ -127,7 +127,7 @@
 "AMY",
 "ciało migdałowate",
 "gleb",
-"ciało migdałowate",
+"",
 ""
 ],
 [
@@ -204,7 +204,7 @@
 "THM",
 "wzgórze",
 "gleb",
-"wzgórze",
+"",
 ""
 ],
 [
@@ -337,7 +337,7 @@
 "HTH",
 "podwzgórze",
 "gleb",
-"podwzgórze",
+"",
 ""
 ],
 [
@@ -372,7 +372,7 @@
 "FWM",
 "istota biała przodomózgowia",
 "biala",
-"istota biała",
+"",
 ""
 ],
 [
@@ -386,14 +386,14 @@
 "cc",
 "ciało modzelowate",
 "biala",
-"ciało modzelowate",
+"",
 ""
 ],
 [
 "fx",
 "sklepienie",
 "biala",
-"sklepienie",
+"",
 ""
 ],
 [
@@ -407,7 +407,7 @@
 "ot",
 "pasmo wzrokowe",
 "biala",
-"pasmo wzrokowe",
+"",
 ""
 ],
 [
@@ -442,7 +442,7 @@
 "3V",
 "komora trzecia",
 "komora",
-"komora trzecia",
+"",
 ""
 ],
 [
@@ -477,21 +477,21 @@
 "PrCG",
 "zakręt przedśrodkowy",
 "kora",
-"zakręt przedśrodkowy",
+"",
 "płat czołowy"
 ],
 [
 "SFG",
 "zakręt czołowy górny",
 "kora",
-"zakręt czołowy górny",
+"",
 "płat czołowy"
 ],
 [
 "MFG",
 "zakręt czołowy środkowy",
 "kora",
-"zakręt czołowy środkowy",
+"",
 "płat czołowy"
 ],
 [
@@ -512,35 +512,35 @@
 "ReG",
 "zakręt prosty",
 "kora",
-"zakręt prosty",
+"",
 "płat czołowy"
 ],
 [
 "MOrG",
 "zakręt oczodołowy przyśrodkowy",
 "kora",
-"",
+"kora okołooczodołowa",
 "płat czołowy"
 ],
 [
 "AOrG",
 "zakręt oczodołowy przedni",
 "kora",
-"",
+"kora okołooczodołowa",
 "płat czołowy"
 ],
 [
 "POrG",
 "zakręt oczodołowy tylny",
 "kora",
-"",
+"kora okołooczodołowa",
 "płat czołowy"
 ],
 [
 "LOrG",
 "zakręt oczodołowy boczny",
 "kora",
-"",
+"kora okołooczodołowa",
 "płat czołowy"
 ],
 [
@@ -561,35 +561,35 @@
 "PoCG",
 "zakręt zaśrodkowy",
 "kora",
-"zakręt zaśrodkowy",
+"",
 "płat ciemieniowy"
 ],
 [
 "SPL",
 "płacik ciemieniowy górny",
 "kora",
-"płacik ciemieniowy górny",
+"",
 "płat ciemieniowy"
 ],
 [
 "SMG",
 "zakręt nadbrzeżny",
 "kora",
-"zakręt nadbrzeżny",
+"",
 "płat ciemieniowy"
 ],
 [
 "AnG",
 "zakręt kątowy",
 "kora",
-"zakręt kątowy",
+"",
 "płat ciemieniowy"
 ],
 [
 "PrCun",
 "przedklinek",
 "kora",
-"przedklinek",
+"",
 "płat ciemieniowy"
 ],
 [
@@ -603,21 +603,21 @@
 "STG",
 "zakręt skroniowy górny",
 "kora",
-"zakręt skroniowy górny",
+"",
 "płat skroniowy"
 ],
 [
 "MTG",
 "zakręt skroniowy środkowy",
 "kora",
-"zakręt skroniowy środkowy",
+"",
 "płat skroniowy"
 ],
 [
 "ITG",
 "zakręt skroniowy dolny",
 "kora",
-"zakręt skroniowy dolny",
+"",
 "płat skroniowy"
 ],
 [
@@ -645,7 +645,7 @@
 "TP",
 "biegun skroniowy",
 "kora",
-"biegun skroniowy",
+"",
 "płat skroniowy"
 ],
 [
@@ -666,14 +666,14 @@
 "Cun",
 "klinek",
 "kora",
-"klinek",
+"",
 "płat potyliczny"
 ],
 [
 "LiG",
 "zakręt językowy",
 "kora",
-"zakręt językowy",
+"",
 "płat potyliczny"
 ],
 [
@@ -743,7 +743,7 @@
 "AG",
 "zakręt otaczający",
 "kora",
-"hak",
+"zakręt przyhipokampowy",
 "płat limbiczny"
 ],
 [
