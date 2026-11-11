@@ -448,7 +448,7 @@
 [
 "CBV",
 "robak móżdżku",
-"gleb",
+"kora",
 "",
 ""
 ],
@@ -854,14 +854,14 @@
 [
 "CBPV",
 "część przyrobakowa móżdżku",
-"gleb",
+"kora",
 "",
 ""
 ],
 [
 "CBL",
 "część boczna półkuli móżdżku",
-"gleb",
+"kora",
 "",
 ""
 ],
@@ -1127,7 +1127,7 @@
 ]
 ]
 ],
-"zrodla": "MNI ICBM152 2009c (Fonov i in. 2011); Allen Human Reference Atlas 3D 2020 (Ding i in., CC BY 4.0); Schaefer i in. 2018 z 17 sieciami Yeo i in. 2011",
+"zrodla": "MNI ICBM152 2009c (Fonov i in. 2011); Allen Human Reference Atlas 3D 2020 (Ding i in., CC BY 4.0); Schaefer i in. 2018 z 17 sieciami Yeo i in. 2011; w móżdżku Buckner i in. 2011 (zbiór laboratorium Diedrichsena, CC BY)",
 "mozg": {
 "przod": 73.5,
 "tyl": -106.5,
