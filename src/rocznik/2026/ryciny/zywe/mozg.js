@@ -5,19 +5,23 @@
 // (`rysunki/atlas/objetosc/ryc5.py` w wątku kursu, plik `public/images/2026/ryc5-punkty.bin`). Predykcje płyną złotą falą od sieci
 // domyślnej ku receptorom, z przerwą między falami; zaskoczenie biegnie turkusową falą od receptorów po tych samych sieciach w górę,
 // a kolejne kliknięcia sięgają wyżej (*more surprises the higher it reaches*). Pod mózgiem ten sam przepływ na osi od receptorów
-// do sieci domyślnej: predykcje górnym torem w lewo, zaskoczenie dolnym w prawo, w rytmie fal na mózgu. Sieci istotności na rycinie
+// do sieci domyślnej, skierowanej jak mózg w widoku startowym (sieć domyślna z przodu po lewej, receptory i V1 z tyłu po prawej): predykcje
+// górnym torem w prawo, zaskoczenie dolnym w lewo, w rytmie fal na mózgu. Predykcje płyną dalej, kiedy biegnie zaskoczenie (przegląd
+// 2026-11-11: przerwa w predykcjach była twierdzeniem, którego podpis nie stawia). Sieci istotności na rycinie
 // nie ma (jego słowa, 2026-11-11: *remove istotnosci from the picture*): jej kora jest szara, a zaskoczenie nie ma stopnia przy niej.
 const NET = [
   null,
-  { n: 'wzrokowa', c: [249, 215, 128] },
-  { n: 'czuciowo-ruchowa', c: [238, 107, 111] },
+  // barwy sieci strony (strona startowa, Atlas, karty): wzrokowa czerwona, czuciowo-ruchowa żółta (przegląd 2026-11-11: rycina miała je
+  // zamienione)
+  { n: 'wzrokowa', c: [238, 107, 111] },
+  { n: 'czuciowo-ruchowa', c: [249, 215, 128] },
   { n: 'grzbietowa uwagi', c: [229, 142, 118] },
   null, // sieć istotności zeszła z ryciny
   { n: 'kontroli', c: [246, 153, 89] },
   { n: 'domyślna', c: [187, 111, 178] },
 ];
 const SZARY = [150, 142, 128];
-const ZLOTO = [255, 226, 150]; // predykcja
+const ZLOTO = [255, 244, 214]; // predykcja: jasne złoto, widoczne także na żółtej sieci wzrokowej (przegląd 2026-11-11)
 const TURKUS = [90, 222, 200]; // zaskoczenie
 // poziomy na osi grafu, jak w danych: predykcje 3 → 0, zaskoczenie 0 → 3 po tych samych sieciach
 const WEZLY = [{ f: 1, z: 0, p: 0 }, { f: 2, z: 0, p: 0 }, { f: 3, z: 1, p: 1 }, { f: 5, z: 2, p: 2 }, { f: 6, z: 3, p: 3 }];
@@ -46,7 +50,10 @@ export function mozg(root) {
   const reduce = document.documentElement.classList.contains('roj-cicho') || matchMedia('(prefers-reduced-motion: reduce)').matches;
   const font = getComputedStyle(root).fontFamily;
   let D = null, W = 0, H = 0, HB = 0, S = 1, FS = 13, narrow = false;
-  let yaw = -0.3, pitch = 0.16, drag = null, auto = true, t0 = performance.now(), predStart = 0, visible = true, raf = 0;
+  let yaw = -0.3, pitch = 0.16, drag = null, auto = true, t0 = performance.now(), visible = true, raf = 0;
+  // kolejne kliknięcie sięga o sieć wyżej, jeśli przyszło do 6 s po poprzednim (przegląd 2026-11-11: przy 2,5 s student, który patrzy
+  // na falę i klika znowu, nie dochodził dalej niż do uwagi)
+  let ostatniKlik = -99, zasieg = 0;
   const bursts = [];
   let cx = 0, cy = 0, cz = 0, V1 = null, SPI = [], STR = [];
 
@@ -80,22 +87,21 @@ export function mozg(root) {
   // poziomy fal w danej chwili: front predykcji, front i zasięg zaskoczenia, wygaszenie predykcji w czasie zaskoczenia
   function fale(t) {
     while (bursts.length && t - bursts[0].t > 4) bursts.shift();
-    let zF = -9, zA = 0, zR = 0, env = 0;
+    let zF = -9, zA = 0, zR = 0;
     for (const b of bursts) {
-      const dt = t - b.t, R = ZASIEG[b.reach];
-      if (reduce) { if (dt < 2.5) { zF = 9; zR = Math.max(zR, R); zA = 1; env = 1; } continue; }
+      const dt = Math.max(0, t - b.t), R = ZASIEG[b.reach];
+      if (reduce) { if (dt < 2.5) { zF = 9; zR = Math.max(zR, R); zA = 1; } continue; }
       const front = -0.3 + dt * 2.4; // poziomy na sekundę
       const a = front < R + 0.25 ? 1 : bell(dt - (R + 0.55) / 2.4, 0.45);
       if (a > zA) { zA = a; zF = Math.min(front, R + 0.25); zR = R; }
-      env = Math.max(env, a);
     }
-    if (bursts.length) { const b = bursts[bursts.length - 1]; predStart = Math.max(predStart, b.t + (ZASIEG[b.reach] + 0.55) / 2.4 + 0.9); }
+    // bez ruchu predykcje stoją jako stałe światło na wszystkich sieciach, które je niosą (przegląd 2026-11-11: przy wyłączonych
+    // animacjach predykcji nie było wcale)
+    if (reduce) return { pF: 0, pA: 1, pStat: true, zF, zA, zR };
     let pF = -9, pA = 0;
-    if (!reduce && t >= predStart) {
-      const tc = (t - predStart) % (FALA_P + PRZERWA);
-      if (tc < FALA_P) { pF = 3.35 - (tc / FALA_P) * 3.8; pA = 1 - Math.min(1, env); }
-    }
-    return { pF, pA, zF, zA, zR };
+    const tc = t % (FALA_P + PRZERWA);
+    if (tc < FALA_P) { pF = 3.35 - (tc / FALA_P) * 3.8; pA = 1; }
+    return { pF, pA, pStat: false, zF, zA, zR };
   }
 
   const kubly = new Map();
@@ -114,13 +120,14 @@ export function mozg(root) {
       const sh = Math.min(2, Math.floor((0.35 + 0.65 * lam) * 3));
       let typ = 0, g = 0;
       if (fi) {
-        if (w.pA > 0.02 && pp[i] < 255) { const v = bell(pp[i] / 80 - w.pF, 0.26) * w.pA; if (v > g) { g = v; typ = 1; } }
+        if (w.pA > 0.02 && pp[i] < 255) { const v = (w.pStat ? 0.5 : bell(pp[i] / 80 - w.pF, 0.26)) * w.pA; if (v > g) { g = v; typ = 1; } }
         if (w.zA > 0.02 && pz[i] < 255) {
           const lv = pz[i] / 80;
           const v = (lv <= w.zR + 0.05 ? Math.max(bell(lv - w.zF, 0.3), lv <= w.zF ? 0.55 : 0) : 0) * w.zA;
           if (v > g) { g = v; typ = 2; }
         }
-        const k = kot[fi] || (kot[fi] = [0, 0, 0, 0]); k[0] += q[0]; k[1] += q[1]; k[2]++;
+        const k = kot[fi] || (kot[fi] = [0, 0, 0, []]); k[0] += q[0]; k[1] += q[1]; k[2]++;
+        if (!(i & 3)) k[3].push(q[0], q[1]);
       }
       const lvl = Math.min(4, Math.round(g * 4));
       const key = fi * 100 + typ * 20 + lvl * 3 + sh;
@@ -131,7 +138,7 @@ export function mozg(root) {
     for (const [key, a] of kubly) {
       const fi = Math.floor(key / 100), r = key % 100, typ = Math.floor(r / 20), lvl = Math.floor((r % 20) / 3), sh = r % 3;
       const g = lvl / 4, base = fi ? NET[fi].c : SZARY, tint = typ === 1 ? ZLOTO : typ === 2 ? TURKUS : base;
-      const mix = typ === 1 ? 0.6 * g : typ === 2 ? 0.75 * g : 0;
+      const mix = typ === 1 ? 0.75 * g : typ === 2 ? 0.75 * g : 0;
       const c = base.map((v, j) => Math.round(v * (1 - mix) + tint[j] * mix));
       const al = Math.min(1, (fi ? 0.5 : 0.16) + g * 0.5) * (0.55 + 0.225 * sh);
       ctx.fillStyle = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + al.toFixed(3) + ')';
@@ -153,7 +160,16 @@ export function mozg(root) {
 
   function etykiety(kot) {
     const items = [];
-    for (const fi in kot) { const k = kot[fi]; if (k[2] > 40) items.push({ t: NET[fi].n, q: [k[0] / k[2], k[1] / k[2]] }); }
+    // kotwica etykiety: widoczna kropka sieci najbliższa środkowi jej kropek, więc wskaźnik zawsze trafia w sieć (przegląd 2026-11-11:
+    // środek sieci grzbietowej uwagi leżał w kropkach sieci domyślnej)
+    for (const fi in kot) {
+      const k = kot[fi];
+      if (k[2] <= 40) continue;
+      const cx0 = k[0] / k[2], cy0 = k[1] / k[2], p = k[3];
+      let bx = cx0, by = cy0, bd = Infinity;
+      for (let j = 0; j < p.length; j += 2) { const d = (p[j] - cx0) ** 2 + (p[j + 1] - cy0) ** 2; if (d < bd) { bd = d; bx = p[j]; by = p[j + 1]; } }
+      items.push({ t: NET[fi].n, q: [bx, by] });
+    }
     if (V1) { const q = P(V1[0], V1[1], V1[2]); if (V1[3] * F[0] + V1[4] * F[1] + V1[5] * F[2] < 0.2) items.push({ t: 'V1', q }); }
     const gap = FS * 2.1, pad = FS * 0.7;
     const place = (col, x, al, ymin, ymax) => {
@@ -175,7 +191,8 @@ export function mozg(root) {
   // graf pod mózgiem: oś od receptorów do sieci domyślnej, predykcje górnym torem w lewo, zaskoczenie dolnym w prawo
   function graf(w) {
     const top = HB + FS * 0.6, h = H - top, m = narrow ? FS * 1.6 : FS * 4.2;
-    const xL = m + (narrow ? FS * 3.6 : FS * 6.8), xR = W - m - FS * 1.2, X = (lv) => xL + ((lv + 0.25) / 3.25) * (xR - xL);
+    // oś jak mózg w widoku startowym: sieć domyślna po lewej, receptory po prawej
+    const xL = m + (narrow ? FS * 3.6 : FS * 6.8), xR = W - m - (narrow ? FS * 3.4 : FS * 5), X = (lv) => xR - ((lv + 0.25) / 3.25) * (xR - xL);
     const yP = top + h * 0.2, yN = top + h * 0.5, yZ = top + h * 0.8;
     ctx.save();
     ctx.strokeStyle = 'rgba(214,198,166,.18)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(m, top); ctx.lineTo(W - m, top); ctx.stroke();
@@ -185,8 +202,8 @@ export function mozg(root) {
       for (let lv = 0.25; lv < 3; lv += 0.75) { const x = X(lv), d = kier * FS * 0.42; ctx.beginPath(); ctx.moveTo(x - d, y - FS * 0.36); ctx.lineTo(x + d, y); ctx.lineTo(x - d, y + FS * 0.36); ctx.stroke(); }
       ctx.globalAlpha = 1;
     };
-    tor(yP, '#f0c060', -1, 0.55);
-    tor(yZ, '#6fb3a8', 1, 0.55);
+    tor(yP, '#f0c060', 1, 0.55);
+    tor(yZ, '#6fb3a8', -1, 0.55);
     // fronty fal jako światło na torach
     const swiatlo = (x, y, rgb, a) => {
       if (a < 0.02) return;
@@ -194,7 +211,7 @@ export function mozg(root) {
       gr.addColorStop(0, 'rgba(' + rgb + ',' + (0.95 * a).toFixed(3) + ')'); gr.addColorStop(1, 'rgba(' + rgb + ',0)');
       ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(x, y, FS * 1.4, 0, 6.3); ctx.fill();
     };
-    if (w.pA > 0.02 && w.pF > -0.3 && w.pF < 3.3) swiatlo(X(Math.max(-0.25, w.pF)), yP, '255,226,150', w.pA);
+    if (!w.pStat && w.pA > 0.02 && w.pF > -0.3 && w.pF < 3.3) swiatlo(X(Math.max(-0.25, w.pF)), yP, '255,226,150', w.pA);
     if (w.zA > 0.02 && w.zF > -0.3) swiatlo(X(Math.min(w.zF, w.zR)), yZ, '150,236,220', w.zA);
     // węzły sieci na osi, rozświetlone, kiedy mija je fala
     ctx.strokeStyle = 'rgba(214,198,166,.35)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X(-0.25), yN); ctx.lineTo(X(3), yN); ctx.stroke();
@@ -202,7 +219,7 @@ export function mozg(root) {
     const zajete = [];
     WEZLY.forEach((wz, j) => {
       let g = 0;
-      if (wz.p !== null && w.pA > 0.02) g = Math.max(g, bell(wz.p - w.pF, 0.26) * w.pA);
+      if (wz.p !== null && w.pA > 0.02) g = Math.max(g, (w.pStat ? 0.5 : bell(wz.p - w.pF, 0.26)) * w.pA);
       if (w.zA > 0.02 && wz.z <= w.zR + 0.05) g = Math.max(g, Math.max(bell(wz.z - w.zF, 0.3), wz.z <= w.zF ? 0.55 : 0) * w.zA);
       const x = X(wz.z) + (wz.f === 2 ? r * 1.2 : wz.f === 1 ? -r * 1.2 : 0), c = NET[wz.f].c;
       ctx.fillStyle = 'rgba(' + c.join(',') + ',' + (0.35 + 0.65 * g).toFixed(3) + ')';
@@ -212,9 +229,17 @@ export function mozg(root) {
     // podpisy węzłów pod osią i nad nią na przemian, żeby się nie nakładały
     ctx.font = '500 ' + (FS - 1) + 'px ' + font; ctx.fillStyle = '#cfc8bb'; ctx.textAlign = 'center';
     const pod = [['wzrokowa i czuciowo-ruchowa', 0], ['grzbietowa uwagi', 1], ['kontroli', 2], ['domyślna', 3]];
-    pod.forEach(([t, lv], j) => { const y = j % 2 ? yN - r - FS * 0.55 : yN + r + FS * 1.15; ctx.fillText(narrow && t.length > 12 ? t.split(' ')[0] : t, Math.min(W - FS * 3, X(lv)), y); });
+    // na wąskim ekranie długa nazwa w dwóch liniach, nigdy ucięta (przegląd 2026-11-11: „wzrokowa” zostawiała sieć czuciowo-ruchową bez
+    // nazwy); podpis stoi cały na ekranie
+    const dwie = (t) => { const s = t.split(' '); let b = 1, bm = Infinity; for (let i = 1; i < s.length; i++) { const m2 = Math.max(s.slice(0, i).join(' ').length, s.slice(i).join(' ').length); if (m2 < bm) { bm = m2; b = i; } } return [s.slice(0, b).join(' '), s.slice(b).join(' ')]; };
+    pod.forEach(([t, lv], j) => {
+      const linie = narrow && t.length > 12 && t.includes(' ') ? dwie(t) : [t];
+      const wmax = Math.max(...linie.map((l) => ctx.measureText(l).width)), lh = (FS - 1) * 1.15;
+      const x = Math.max(wmax / 2 + 4, Math.min(W - wmax / 2 - 4, X(lv)));
+      linie.forEach((l, k) => ctx.fillText(l, x, j % 2 ? yN - r - FS * 0.55 - (linie.length - 1 - k) * lh : yN + r + FS * 1.15 + k * lh));
+    });
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#8f877a'; ctx.fillText('receptory', X(-0.25) - ctx.measureText('receptory').width - FS * 0.6, yN + FS * 0.35);
+    ctx.fillStyle = '#8f877a'; ctx.fillText('receptory', X(-0.25) + FS * 0.6, yN + FS * 0.35);
     // nazwy torów
     tag(m - (narrow ? FS * 0.4 : 0), yP + FS * 0.35, 'predykcje', 'start');
     tag(m - (narrow ? FS * 0.4 : 0), yZ + FS * 0.35, 'zaskoczenie', 'start');
@@ -233,12 +258,12 @@ export function mozg(root) {
     if (V1) {
       const v = P(V1[0], V1[1], V1[2]), przod = V1[3] * F[0] + V1[4] * F[1] + V1[5] * F[2] < 0.2;
       ctx.globalAlpha = przod ? 1 : 0.2; ctx.strokeStyle = 'rgba(235,227,211,.85)'; ctx.setLineDash([4, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(v[0], v[1], S * 7, 0, 6.3); ctx.stroke(); ctx.setLineDash([]);
-      if (!reduce) for (const b of bursts) { const dt = t - b.t; if (dt < 1.1) { ctx.strokeStyle = 'rgba(111,179,168,' + (0.9 * (1 - dt / 1.1)).toFixed(3) + ')'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(v[0], v[1], S * 7 + dt * S * 30, 0, 6.3); ctx.stroke(); } }
+      if (!reduce) for (const b of bursts) { const dt = Math.max(0, t - b.t); if (dt < 1.1) { ctx.strokeStyle = 'rgba(111,179,168,' + (0.9 * (1 - dt / 1.1)).toFixed(3) + ')'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(v[0], v[1], S * 7 + dt * S * 30, 0, 6.3); ctx.stroke(); } }
       ctx.globalAlpha = 1;
     }
     etykiety(kot);
     const lvl = bursts.length ? bursts[bursts.length - 1].reach : 0;
-    tag(W / 2, FS * 1.6, w.zA > 0.15 ? (lvl >= 3 ? 'zaskoczenie sięga sieci domyślnej' : lvl >= 2 ? 'zaskoczenie sięga sieci kontroli' : 'zaskoczenie sięga uwagi') : 'predykcje płyną od sieci domyślnej ku receptorom', 'middle');
+    tag(W / 2, FS * 1.6, w.zA > 0.15 ? (lvl >= 3 ? 'zaskoczenie sięga sieci domyślnej' : lvl >= 2 ? 'zaskoczenie sięga sieci kontroli' : 'zaskoczenie sięga sieci grzbietowej uwagi') : 'predykcje płyną od sieci domyślnej ku receptorom', 'middle');
     ctx.font = '500 ' + FS + 'px ' + font;
     STR.forEach((s, i) => { const y = HB - FS * 5 + i * FS * 1.7; ctx.setLineDash(s.d); ctx.strokeStyle = s.c; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(4, y); ctx.lineTo(4 + FS * 2, y); ctx.stroke(); ctx.setLineDash([]); ctx.fillStyle = '#cfc8bb'; ctx.fillText(s.n, 4 + FS * 2.6, y + FS * 0.35); });
     graf(w);
@@ -281,7 +306,13 @@ export function mozg(root) {
   cv.addEventListener('pointerdown', (e) => { drag = [e.clientX, e.clientY]; auto = false; cv.setPointerCapture(e.pointerId); });
   cv.addEventListener('pointermove', (e) => { if (!drag) return; yaw -= (e.clientX - drag[0]) * 0.01; if (e.pointerType === 'mouse') pitch = Math.max(-0.6, Math.min(0.9, pitch + (e.clientY - drag[1]) * 0.006)); drag = [e.clientX, e.clientY]; if (reduce || !raf) draw(performance.now()); });
   const up = () => { drag = null; }; cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
-  btn.addEventListener('click', () => { const t = (performance.now() - t0) / 1000; const recent = bursts.filter((b) => t - b.t < 2.5).length; bursts.push({ t, reach: Math.min(ZASIEG.length - 1, recent + 1) }); if (!raf) raf = requestAnimationFrame(loop); });
+  btn.addEventListener('click', () => {
+    const t = (performance.now() - t0) / 1000;
+    zasieg = t - ostatniKlik < 6 ? Math.min(ZASIEG.length - 1, zasieg + 1) : 1;
+    ostatniKlik = t;
+    bursts.push({ t, reach: zasieg });
+    if (!raf) raf = requestAnimationFrame(loop);
+  });
   new ResizeObserver(() => { size(); draw(performance.now()); }).observe(root);
   new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible && !raf) raf = requestAnimationFrame(loop); }).observe(cv);
   size();

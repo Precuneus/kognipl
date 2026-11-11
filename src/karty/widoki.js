@@ -42,9 +42,10 @@ const KLUCZOWE = ['zakręt czołowy górny', 'zakręt czołowy środkowy', 'zakr
   'komora trzecia', 'okolica suteczkowata podwzgórza', 'pasmo wzrokowe', 'sklepienie', 'śródmózgowie', 'podwzgórze', 'istota biała przodomózgowia'];
 export const PLATY = ['płat czołowy', 'płat ciemieniowy', 'płat skroniowy', 'płat potyliczny', 'płat limbiczny', 'płat wyspowy'];
 // widok Płaty (jego słowa, 2026-11-11: *we should add płaty to the views*): płaty w barwach ryc. 2 wpisu 28.10 (rysunek płatów z Wikimedia
-// Commons: czołowy niebieski, ciemieniowy żółty, skroniowy zielony, potyliczny różowy), rozjaśnionych do ziarna na ciemnym tle; limbiczny
-// i wyspowy, których na ryc. 2 nie ma, w barwach od nich odrębnych
-export const PLAT_KOL = { 'płat czołowy': '#7fa3d1', 'płat ciemieniowy': '#d6c46a', 'płat skroniowy': '#8bbf75', 'płat potyliczny': '#d9849a', 'płat limbiczny': '#b29ad6', 'płat wyspowy': '#e0905e' };
+// Commons: czołowy niebieski, ciemieniowy żółty, skroniowy zielony, potyliczny różowy), w głębokich odcieniach, odrębnych od jasnych barw
+// sieci strony (przegląd 2026-11-11: jasne płaty nosiły barwy LIM, DMN, SMN i CN); limbiczny i wyspowy, których na ryc. 2 nie ma, w barwach
+// spoza obu rodzin
+export const PLAT_KOL = { 'płat czołowy': '#4f86c9', 'płat ciemieniowy': '#c9a43a', 'płat skroniowy': '#4f9e52', 'płat potyliczny': '#c4506f', 'płat limbiczny': '#8762c4', 'płat wyspowy': '#a8743c' };
 // struktury bez płata w układach, które nazywa ontologia Allena; część grupy idzie za swoją grupą
 const POD_KORA = [
   ['jądra podstawy', ['jądro ogoniaste', 'skorupa', 'skorupa, część brzuszno-tylna', 'gałka blada', 'jądro półleżące', 'przedmurze', 'jądro niskowzgórzowe']],
@@ -52,8 +53,10 @@ const POD_KORA = [
   ['ciało migdałowate i podstawa przodomózgowia', ['ciało migdałowate', 'podstawa przodomózgowia', 'jądra przegrody', 'jądro łożyskowe prążka krańcowego']],
   ['istota biała', ['istota biała przodomózgowia', 'ciało modzelowate', 'spoidło przednie', 'sklepienie', 'pęczek suteczkowo-wzgórzowy', 'pasmo wzrokowe', 'promienistość wzrokowa', 'istota biała tyłomózgowia']],
   ['komory', ['komora boczna', 'komora trzecia', 'komora czwarta', 'kanał środkowy rdzenia przedłużonego']],
-  ['pień mózgu', ['śródmózgowie', 'część podstawna mostu', 'nakrywka mostu', 'piramida rdzenia przedłużonego', 'nakrywka rdzenia przedłużonego', 'jądro dolne oliwki']],
-  ['móżdżek', ['robak móżdżku', 'część przyrobakowa móżdżku', 'część boczna półkuli móżdżku', 'jądra głębokie móżdżku', 'konar dolny móżdżku', 'konar środkowy móżdżku']],
+  ['pień mózgu', ['śródmózgowie', 'część podstawna mostu', 'nakrywka mostu', 'piramida rdzenia przedłużonego', 'nakrywka rdzenia przedłużonego', 'jądro dolne oliwki', 'konar środkowy móżdżku', 'konar dolny móżdżku']],
+  // móżdżek jako całość, grupa Allena (CB), z częściami za nią; trzy konary móżdżku razem w pniu, gdzie Allen stawia górny przy śródmózgowiu
+  // (przegląd 2026-11-11: nie było jednej odpowiedzi na pytanie o sieci móżdżku, a konary stały w dwóch grupach)
+  ['móżdżek', ['móżdżek', 'robak móżdżku', 'część przyrobakowa móżdżku', 'część boczna półkuli móżdżku', 'jądra głębokie móżdżku']],
   ['węchomózgowie i kora bezziarnista', ['opuszka węchowa', 'jądro węchowe przednie', 'kora gruszkowata', 'pasmo węchowe', 'kora wyspowa bezziarnista czołowa', 'kora wyspowa bezziarnista skroniowa', 'próg wyspy']],
 ];
 // Szukanie obszaru (jego słowo, 2026-11-11: *add the search*): obok polskiej nazwy obszar znajduje się po nazwie angielskiej i po
@@ -83,10 +86,12 @@ export const ALIASY = {
   'biegun skroniowy': ['temporal pole'],
   'zakręt wrzecionowaty, część skroniowa': ['fusiform gyrus', 'FFA'],
   'zakręt wrzecionowaty, część potyliczna': ['fusiform gyrus', 'FFA'],
-  'biegun potyliczny': ['occipital pole', 'V1', 'kora wzrokowa pierwszorzędowa'],
-  'klinek': ['cuneus', 'V1', 'kora wzrokowa pierwszorzędowa'],
+  // V1 leży wzdłuż bruzdy ostrogowej na klinku i zakręcie językowatym i sięga bieguna; Allen nie ma osobnej V1 (przegląd 2026-11-11:
+  // „kora wzrokowa pierwszorzędowa” przy całym obszarze uczyła, że cały klinek to V1)
+  'biegun potyliczny': ['occipital pole', 'V1 wzdłuż bruzdy ostrogowej', 'bruzda ostrogowa'],
+  'klinek': ['cuneus', 'V1 wzdłuż bruzdy ostrogowej', 'bruzda ostrogowa'],
   // zakręt językowaty, nazwa anatomiczna gyrus lingualis (jego słowo, 2026-11-11: *jezykowaty ok*); dawna nazwa strony zostaje do szukania
-  'zakręt językowaty': ['zakręt językowy', 'lingual gyrus', 'V1', 'kora wzrokowa pierwszorzędowa'],
+  'zakręt językowaty': ['zakręt językowy', 'lingual gyrus', 'V1 wzdłuż bruzdy ostrogowej', 'bruzda ostrogowa'],
   'zakręt potyliczny dolny': ['inferior occipital gyrus'],
   'zakręt potyliczny górny': ['superior occipital gyrus'],
   'zakręt obręczy': ['cingulate gyrus'],
@@ -117,7 +122,8 @@ export const ALIASY = {
   'nakrywka mostu': ['pons', 'most'],
   'piramida rdzenia przedłużonego': ['medulla oblongata', 'rdzeń przedłużony'],
   'nakrywka rdzenia przedłużonego': ['medulla oblongata', 'rdzeń przedłużony'],
-  'robak móżdżku': ['vermis', 'cerebellum'],
+  'móżdżek': ['cerebellum'],
+  'robak móżdżku': ['vermis'],
   'część boczna półkuli móżdżku': ['cerebellum', 'półkula móżdżku'],
   'ciało modzelowate': ['corpus callosum'],
   'sklepienie': ['fornix'],

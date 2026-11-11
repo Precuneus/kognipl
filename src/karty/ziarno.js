@@ -255,10 +255,11 @@ export async function ziarno() {
   // płaty tak samo, każdy swoim przymiotnikiem, widoczne tylko w widoku Płaty
   function etykietyPrzekroju(v) {
     v.pole.querySelectorAll('.wk-nl').forEach((x) => x.remove());
-    znaczniki(v, NETS.slice(0, N).map((kod, n) => [kod, kod, (i) => v.rdzen[n][i] > 0.5]), '');
-    if (ATLAS && PLATY.length) znaczniki(v, PLATY.map((p, j) => [p, p.replace(/^płat /, ''), (i) => v.pl[i] === j + 1]), ' wk-nl-plat');
+    znaczniki(v, NETS.slice(0, N).map((kod, n) => [kod, kod, (i) => v.rdzen[n][i] > 0.5]), '', 1);
+    // płaty są duże, więc ich znacznik staje także na cieńszej korze (przegląd 2026-11-11: przekrój czołowy nie miał żadnego)
+    if (ATLAS && PLATY.length) znaczniki(v, PLATY.map((p, j) => [p, p.replace(/^płat /, ''), (i) => v.pl[i] === j + 1]), ' wk-nl-plat', 0.4);
   }
-  function znaczniki(v, maski, klasa) {
+  function znaczniki(v, maski, klasa, grubosc) {
     const { FW, FH } = v, L = FW * FH, r = v.pole.getBoundingClientRect();
     const sx = r.width ? r.width / FW : 3, sy = r.height ? r.height / FH : 3;
     const zajete = [];
@@ -273,8 +274,8 @@ export async function ziarno() {
       const kol = [];
       // znacznik staje tylko tam, gdzie sieć jest dość gruba, żeby go objąć: na wąskim ekranie mniej znaczników, żaden nie zakrywa
       // małej sieci, którą nazywa (przegląd 2026-11-09)
-      const min = 10 / Math.min(sx, sy);
-      for (let i = 0; i < L; i++) if (dist[i] >= Math.max(2, min)) kol.push([dist[i], i]);
+      const min = (10 / Math.min(sx, sy)) * grubosc;
+      for (let i = 0; i < L; i++) if (dist[i] >= Math.max(grubosc < 1 ? 1 : 2, min)) kol.push([dist[i], i]);
       kol.sort((a, b) => b[0] - a[0]);
       kand.push([ile, kod, napis, kol]);
     }
@@ -452,8 +453,10 @@ export async function ziarno() {
   function pokaz(v, e, palec) {
     ostatni = { v, e: { clientX: e.clientX, clientY: e.clientY }, palec };
     if (tryb === 'platy') {
-      const p = platObszaru(obszarPod(v, e));
+      const n = obszarPod(v, e), p = platObszaru(n);
       if (p !== hotPlat) { hotPlat = p; rysujWszystko(); }
+      // struktura bez płata (móżdżek, pień, jądra) dostaje swoją nazwę zwykłym krojem, bez zaznaczania (przegląd 2026-11-11)
+      if (!p && n && REG[n - 1]) { postaw(v, e, '<span>' + esc(REG[n - 1][0]) + '</span>'); v.pole.style.cursor = ''; return; }
       if (!p) { v.kody.hidden = true; v.pole.style.cursor = ''; return; }
       postaw(v, e, '<span><b>' + esc(p) + '</b></span>');
       v.pole.style.cursor = ATLAS ? 'pointer' : '';
@@ -613,13 +616,19 @@ export async function ziarno() {
       const lista = podWskaznikiem(v, e);
       if (!lista.length) return;
       const i = v.zywy ? koraPod(v, e) : -1;
-      const fam = i >= 0 && v.yeo[i] ? OBJ.sieci[v.yeo[i] - 1][1] : [];
+      // sieci Yeo z siecią, którą span bierze do niej w całości (kora limbiczna jest też domyślna), jak we wskazaniu i w 3D (przegląd
+      // 2026-11-11: wskazanie mówiło DMN · LIM, a klik zaznaczał samą DMN)
+      const fam = i >= 0 && v.yeo[i] ? OBJ.sieci[v.yeo[i] - 1][1].slice() : [];
+      for (const { sieci: [a, b] } of WSP) if (fam.includes(a) && !fam.includes(b)) fam.push(b);
       w = { typ: 'siec', kody: fam.length > 1 ? fam.slice() : [lista[0]] };
     }
     wybierz(tenSam(w, wybor) ? null : w);
   }
 
   widoki.forEach(uloz);
+  // cięcie przesuwa suwak na osi mózgu w 3D; przekrój liczy się na nowo raz na klatkę. Nasłuch stoi przed odczytem adresu, bo obszar
+  // z adresu przesuwa cięcia przez siebie (przegląd 2026-11-11: otwarty link zostawiał przekroje płaskie na cięciach startowych)
+  if (vol) mozg.querySelectorAll('.at-suwak').forEach((s) => s.addEventListener('input', () => ustaw(s.dataset.p, Number(s.value))));
   if (ATLAS) {
     // adres #siec-dmn, #siec-sn+dmn albo #obszar-wyspa otwiera atlas z tym zaznaczeniem (linki z kart)
     // zaznaczenie z adresu: #siec-… albo #obszar-… z linku, inaczej strona karty albo przegląd; undefined, gdy adres nie jest Atlasem
@@ -785,8 +794,6 @@ export async function ziarno() {
     s.setAttribute('aria-valuetext', t);
   };
   mozg.querySelectorAll('.at-suwak').forEach((s) => { opisz(s); s.addEventListener('input', () => opisz(s)); });
-  // cięcie przesuwa suwak na osi mózgu w 3D; przekrój liczy się na nowo raz na klatkę
-  if (vol) mozg.querySelectorAll('.at-suwak').forEach((s) => s.addEventListener('input', () => ustaw(s.dataset.p, Number(s.value))));
 
   if (stoi) return;
   let widac = true;

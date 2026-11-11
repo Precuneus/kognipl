@@ -117,6 +117,8 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-glowny:not(:has(.at-3d-brak)) .at-boki-lewe .wk-widok-czolowy{margin-top:auto}
 .at-glowny:not(:has(.at-3d-brak)) .wk-widok-strzalkowy{flex:none;width:100%}
 .at-glowny:not(:has(.at-3d-brak)) .wk-widok-czolowy,.at-glowny:not(:has(.at-3d-brak)) .wk-widok-poziomy{flex:none;width:80.8%}
+/* prawą kolumnę stawia `mozg3d.js` za pionowym suwakiem w szerokości przekroju, więc przekrój bierze ją całą */
+.at-glowny:not(:has(.at-3d-brak)) .at-boki-prawe[style*="left"] .wk-widok-poziomy{width:100%}
 }
 /* mózg w 3D: na węższym ekranie scena zostawia pas u góry na suwak strzałkowy, u dołu na czołowy i z prawej na poziomy, który staje
    tuż za tyłem mózgu, jeśli jest tam miejsce; suwaki ustawia `mozg3d.js` na osiach mózgu w widoku startowym */
@@ -149,7 +151,7 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-wl::before{content:'';position:absolute;inset:-12px -5px}
 .at-wl:focus-visible{outline:1px solid #f0c060;outline-offset:4px}
 /* nazwa części pod wskaźnikiem na mózgu w 3D, w kroju znacznika przekrojów, nad suwakami i przekrojami */
-.at-3d-nazwa{z-index:6}
+.wk-kody.at-3d-nazwa{z-index:6}
 /* bez WebGL albo bez objętości mózg w 3D znika, a suwaki leżą płasko jeden pod drugim nad przekrojami; strzałkowy biegnie wtedy od
    lewej półkuli do prawej, jak lewa i prawa w przekroju czołowym */
 .at-3d.at-3d-brak{height:auto;display:flex;flex-direction:column;gap:12px}

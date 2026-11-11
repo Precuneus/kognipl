@@ -105,7 +105,7 @@ export async function mozg3d(el) {
   controls.update();
   controls.saveState();
   // dwuklik i ↻ wracają do widoku startowego; pierwszy klik dwukliku nie otwiera dymka (przegląd Atlasu 2026-11-11)
-  let tKlik = 0;
+  let tKlik = 0, tNazwa = 0;
   const odNowa = () => { clearTimeout(tKlik); controls.reset(); zamknij(); };
   renderer.domElement.addEventListener('dblclick', odNowa);
   const przyciskStart = el.querySelector('.at-3d-start');
@@ -116,7 +116,7 @@ export async function mozg3d(el) {
   camera.add(lampa); lampa.position.set(80, 120, 0); scene.add(camera);
 
   // stan Atlasu: tryb, świecące sieci, zaznaczony obszar, położenie cięć
-  const stan = { tryb: 'sieci', lit: new Set(Object.keys(KOL)), obszar: 0, plat: '' };
+  const stan = { tryb: 'sieci', lit: new Set(Object.keys(KOL)), obszar: 0, plat: '', hot: 0 };
   const cut = {};
   el.querySelectorAll('.at-suwak').forEach((s) => { cut[s.dataset.p] = Number(s.value); });
   const pC = new THREE.Plane(new THREE.Vector3(0, -1, 0), cut.czolowy);
@@ -148,18 +148,18 @@ export async function mozg3d(el) {
   gg.setAttribute('color', new THREE.BufferAttribute(gc, 3));
   scene.add(new THREE.Points(gg, new THREE.PointsMaterial({ size: 2, sizeAttenuation: false, vertexColors: true, clippingPlanes: plaszczyzny, clipIntersection: true })));
 
-  const kol = new THREE.Color(), kol2 = new THREE.Color(), ciem = new THREE.Color(CIEMNY), szary = new THREE.Color(SZARY), zloto = new THREE.Color(ZLOTE);
+  const kol = new THREE.Color(), kol2 = new THREE.Color(), ciem = new THREE.Color(CIEMNY), szary = new THREE.Color(SZARY), zloto = new THREE.Color(ZLOTE), jasny = new THREE.Color('#bdb5a6');
   // sieci punktu, kiedy świeci któraś z nich: miejsce, które świecąca sieć dzieli z inną, świeci kolorem każdej swojej sieci, jak
   // ziarno na rysunkach
   const swieci = (y) => (y && FAM[y - 1].some((k) => stan.lit.has(k)) ? FAM[y - 1] : []);
   function koloruj() {
     for (let i = 0; i < nv; i++) {
       if (stan.tryb === 'platy') {
-        const p = platPola(allen[i]);
-        if (p && (!stan.plat || p === stan.plat)) kol.set(PLAT_KOL[p]).lerp(ciem, 0.55); else kol.copy(ciem);
+        const p = platPola(allen[i]), hp = stan.hot && REG[stan.hot - 1] ? REG[stan.hot - 1][2] : '';
+        if (p && (!stan.plat || p === stan.plat || p === hp)) kol.set(PLAT_KOL[p]).lerp(ciem, 0.55); else kol.copy(ciem);
       } else if (stan.tryb === 'obszary') {
         const zaz = stan.obszar && trafia(A2R[allen[i]], stan.obszar);
-        if (zaz) kol.copy(zloto).lerp(ciem, 0.45); else kol.copy(ciem);
+        if (zaz) kol.copy(zloto).lerp(ciem, 0.45); else if (stan.hot && trafia(A2R[allen[i]], stan.hot)) kol.copy(szary).lerp(ciem, 0.35); else kol.copy(ciem);
       } else {
         const f = swieci(yeo[i]);
         if (f.length) { kol.set(KOL[f[0]]); if (f.length > 1) kol.lerp(kol2.set(KOL[f[1]]), 0.5); kol.lerp(ciem, 0.55); } else kol.copy(ciem);
@@ -169,8 +169,8 @@ export async function mozg3d(el) {
     geo.getAttribute('color').needsUpdate = true;
     for (let j = 0; j < ng; j++) {
       const i = j * KROK;
-      if (stan.tryb === 'platy') { const p = platPola(allen[i]); if (p && (!stan.plat || p === stan.plat)) kol.set(PLAT_KOL[p]); else kol.copy(szary); }
-      else if (stan.tryb === 'obszary') kol.copy(stan.obszar && trafia(A2R[allen[i]], stan.obszar) ? zloto : szary);
+      if (stan.tryb === 'platy') { const p = platPola(allen[i]), hp = stan.hot && REG[stan.hot - 1] ? REG[stan.hot - 1][2] : ''; if (p && (!stan.plat || p === stan.plat || p === hp)) kol.set(PLAT_KOL[p]); else kol.copy(szary); }
+      else if (stan.tryb === 'obszary') kol.copy(stan.obszar && trafia(A2R[allen[i]], stan.obszar) ? zloto : stan.hot && trafia(A2R[allen[i]], stan.hot) ? jasny : szary);
       else { const f = swieci(yeo[i]); if (f.length) kol.set(KOL[f[Math.floor(los1[j] * f.length)]]); else kol.copy(szary); }
       gc[j * 3] = kol.r; gc[j * 3 + 1] = kol.g; gc[j * 3 + 2] = kol.b;
     }
@@ -302,7 +302,13 @@ export async function mozg3d(el) {
     stan.plat = d.wybor && d.wybor.typ === 'plat' ? d.wybor.p : '';
   };
   zStanu(siatka.__stan);
-  siatka.addEventListener('atlas-wybor', (e) => { zStanu(e.detail); wszystko(); });
+  siatka.addEventListener('atlas-wybor', (e) => {
+    // inny widok albo zdjęte zaznaczenie chowa nazwę części, bo nazywała coś, czego już nie ma (przegląd 2026-11-11)
+    const byl = stan.tryb;
+    zStanu(e.detail);
+    if (stan.tryb !== byl || !e.detail.wybor) zamknij();
+    wszystko();
+  });
   siatka.addEventListener('atlas-ciecie', (e) => {
     cut[e.detail.p] = e.detail.mm; pC.constant = cut.czolowy; pH.constant = cut.poziomy; pS.constant = -cut.strzalkowy;
     lica(); rysuj();
@@ -388,7 +394,7 @@ export async function mozg3d(el) {
       else if (stan.tryb === 'obszary') { const r = t[0] ? A2R[t[0]] : 0; if (r) w = { typ: 'obszar', n: r }; }
       else if (t[1] && O.sieci[t[1] - 1][1].length) w = { typ: 'siec', kody: O.sieci[t[1] - 1][1].slice() };
       if (w) siatka.dispatchEvent(new CustomEvent('atlas-klik', { detail: w }));
-      if (palec) nazwij(t, cx, cy);
+      if (palec) { nazwij(t, cx, cy); clearTimeout(tNazwa); tNazwa = setTimeout(zamknij, 3000); } // na telefonie nazwa nie zostaje na mózgu
     }, 250);
   });
   let ruch = 0, ostatni = null;
@@ -397,9 +403,11 @@ export async function mozg3d(el) {
     if (e.buttons) { zamknij(); return; }
     ostatni = e;
     if (ruch) return;
-    ruch = requestAnimationFrame(() => { ruch = 0; nazwij(trafienie(ostatni), ostatni.clientX, ostatni.clientY); });
+    ruch = requestAnimationFrame(() => { ruch = 0; const t = trafienie(ostatni); nazwij(t, ostatni.clientX, ostatni.clientY); naHot(t ? A2R[t[0]] || 0 : 0); });
   });
-  renderer.domElement.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') zamknij(); });
+  // wskazana struktura jaśnieje w 3D jak w przekrojach (przegląd 2026-11-11), kolory liczą się na nowo tylko przy zmianie
+  function naHot(r) { if (stan.tryb === 'sieci') r = 0; if (r === stan.hot) return; stan.hot = r; koloruj(); rysuj(); }
+  renderer.domElement.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') { zamknij(); naHot(0); } });
   addEventListener('keydown', (e) => { if (e.key === 'Escape') zamknij(); });
   controls.addEventListener('start', zamknij);
   controls.addEventListener('change', rysuj);
@@ -426,6 +434,14 @@ export async function mozg3d(el) {
     // z wyłącznikiem pod spodem kończy się na dole sceny, nad dolnym suwakiem
     const bt = Math.max(0, Math.min(gy, dy));
     if (bok) { bok.style.top = oy + bt + 'px'; bok.style.height = Math.min(Math.abs(dy - gy), rb.height - bt) + 'px'; bok.style.right = 'auto'; bok.style.left = ox + Math.min(rb.width + 6, prawy + 20) + 'px'; }
+    // na szerokim ekranie przekrój poziomy staje za pionowym suwakiem, w skali przekrojów z lewej, i nigdy pod nim (przegląd 2026-11-11:
+    // suwak szedł przez lewą półkulę przekroju i jego znacznik)
+    const gl = el.closest('.at-glowny'), pz = gl && gl.querySelector('.at-boki-prawe'), lw = gl && gl.querySelector('.at-boki-lewe');
+    if (pz && bok && lw && getComputedStyle(pz).position === 'absolute') {
+      const g = gl.getBoundingClientRect(), sb = bok.getBoundingClientRect(), szer = lw.getBoundingClientRect().width * 0.808;
+      const od = sb.right + 10 - g.left, maks = document.documentElement.clientWidth - 8 - g.left;
+      pz.style.left = od + 'px'; pz.style.right = 'auto'; pz.style.width = Math.max(120, Math.min(szer, maks - od)) + 'px';
+    } else if (pz) { pz.style.left = pz.style.right = pz.style.width = ''; }
     // suwak z wyłącznikiem ma co najmniej 210 px, żeby dało się go przesuwać, i zostaje w ramce
     if (gor) { const w = Math.max(210, Math.abs(rx - lx)), c = (lx + rx) / 2; gor.style.left = ox + Math.max(0, Math.min(rb.width - w, c - w / 2)) + 'px'; gor.style.width = w + 'px'; }
   };

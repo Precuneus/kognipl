@@ -103,7 +103,7 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: mózg do obracania i cię
         <div class="wk-chips"></div>
       </section>
     </div>
-    <p class="wk-zrodlo wk-zrodlo-mozg">Mózg w trzech wymiarach i przekroje liczone z szablonu MNI ICBM152 2009c (© 1993–2004 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University), ze strukturami z <a href="https://download.alleninstitute.org/informatics-archive/allen_human_reference_atlas_3d_2020/version_1/">Allen Human Reference Atlas – 3D, 2020</a> (Ding i in., Allen Institute for Brain Science, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>) i siecią z 17 sieci Yeo i in. (2011) w parcelacji Schaefera i in. (2018), w móżdżku z mapy Bucknera i in. (2011) w zbiorze <a href="https://github.com/DiedrichsenLab/cerebellar_atlases">laboratorium Diedrichsena</a> (CC BY); powierzchnia i przekroje przeliczone, przekroje przerysowane liniami.</p>
+    <p class="wk-zrodlo wk-zrodlo-mozg">Mózg w trzech wymiarach i przekroje liczone z szablonu MNI ICBM152 2009c (© 1993–2004 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University), ze strukturami z <a href="https://download.alleninstitute.org/informatics-archive/allen_human_reference_atlas_3d_2020/version_1/">Allen Human Reference Atlas – 3D, 2020</a> (Ding i in., Allen Institute for Brain Science, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>) i 17 sieciami Yeo i in. (2011) w parcelacji Schaefera i in. (2018), w móżdżku według mapy Bucknera i in. (2011) ze zbioru <a href="https://github.com/DiedrichsenLab/cerebellar_atlases">laboratorium Diedrichsena</a> (CC BY); powierzchnia i przekroje przeliczone, przekroje przerysowane liniami.</p>
   </article>
   <TerminDymek />
 </Base>
@@ -140,7 +140,9 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: mózg do obracania i cię
     }
     if (nr !== zadanie) return;
     // tytuł karty, a bez jednej karty nazwa zaznaczenia przed nazwą Atlasu (przegląd Atlasu 2026-11-11)
-    try { document.title = chce.length === 1 ? (await pobierz(chce[0])).tytul : nazwa ? nazwa + ' · ' + OGOLNY : OGOLNY; } catch (err) {}
+    // płat nie ma własnej karty: tytuł nazywa płat, nie kartę Płaty mózgu pod nim (przegląd 2026-11-11)
+    const plat = ((e as CustomEvent).detail as { wybor?: { typ: string } }).wybor?.typ === 'plat';
+    try { document.title = plat ? nazwa + ' · ' + OGOLNY : chce.length === 1 ? (await pobierz(chce[0])).tytul : nazwa ? nazwa + ' · ' + OGOLNY : OGOLNY; } catch (err) {}
     if (nr !== zadanie) return;
     document.documentElement.classList.remove('at-czeka');
     if (przewin) (miejsce.querySelector('.at-karta') || mozg.querySelector('.at-karty') || miejsce).scrollIntoView({ block: 'start' });

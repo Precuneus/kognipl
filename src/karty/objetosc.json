@@ -449,14 +449,14 @@
 "CBV",
 "robak móżdżku",
 "kora",
-"",
+"móżdżek",
 ""
 ],
 [
 "CbDN",
 "jądra głębokie móżdżku",
 "gleb",
-"",
+"móżdżek",
 ""
 ],
 [
@@ -855,14 +855,14 @@
 "CBPV",
 "część przyrobakowa móżdżku",
 "kora",
-"",
+"móżdżek",
 ""
 ],
 [
 "CBL",
 "część boczna półkuli móżdżku",
 "kora",
-"",
+"móżdżek",
 ""
 ],
 [
@@ -1051,7 +1051,7 @@
 ],
 [
 "SalVentAttnA",
-"istotności i brzuszna uwagi A",
+"istotności / brzuszna uwagi A",
 [
 "SN",
 "VAN"
@@ -1059,7 +1059,7 @@
 ],
 [
 "SalVentAttnB",
-"istotności i brzuszna uwagi B",
+"istotności / brzuszna uwagi B",
 [
 "SN",
 "VAN"
