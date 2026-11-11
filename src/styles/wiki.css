@@ -28,30 +28,20 @@
 .wk-fig{margin:22px 0 24px}.wk-fig svg{display:block;width:100%;max-width:560px}.wk-fig figcaption{margin:10px 0 0;font-size:13px;line-height:1.55;color:#a09888}
 .wk-siec>.wk-p:first-child{margin-top:0}
 .wk-widok{margin:0;min-width:0}
-/* widoki w jednej skali (jego słowa, 2026-11-10: *make the ventral to scale of the lateral and medial*): obrys mózgu od przodu do tyłu
-   ma na ekranie tę samą długość L. Widok z boku ma szerokość 1,0712 L, od środka 1,0281 L, od dołu 0,7178 L, czyli 90 % tej skali,
-   bo obie półkule naraz wyglądają na większe (jego słowa: *the ventral looks bigger than lateral and medial now*, potem *still a bit
-   too big*). Przekroje z objętości (2026-11-11) liczą się w milimetrach: kora mózgu od bieguna do bieguna ma 180 mm, więc to L, a ramka
-   przekroju ma 151,5 mm szerokości, czyli 0,8417 L, w obu przekrojach; stoją w kolumnie obok mózgu w 3D, w skali rysunków pod nim. Przekroje pokazują obie półkule (*I'd like the view on the both
+/* przekroje w jednej skali (jego słowa, 2026-11-10: *make the ventral to scale of the lateral and medial*), liczone w milimetrach
+   objętości (2026-11-11): ramka czołowego i poziomego ma 151,5 mm szerokości, strzałkowego 187,5 mm, więc w rzędzie dzielą jego
+   szerokość bez odstępów jak 0,30887, 0,30887 i 0,38226. Czołowy i poziomy pokazują obie półkule (*I'd like the view on the both
    hemispheres on the sections*). */
 .wk-do-atlasu{margin:14px 0 0;font-size:14px}
 .wk-do-atlasu a{color:var(--ink);text-decoration:underline dotted 1px;text-underline-offset:4px}
-/* przekroje z objętości: linie z szablonu, suwak położenia pod przekrojem, uchwyt linii cięcia na widoku z boku szerszy od linii */
+/* przekroje z objętości: linie z szablonu */
 .wk-linie-zywe{fill:none;stroke:#e2ddd4;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke;opacity:.55}
-.wk-chwyt{stroke:transparent;stroke-width:18;vector-effect:non-scaling-stroke;pointer-events:stroke;touch-action:none}
-.wk-chwyt[data-p="czolowy"]{cursor:ew-resize}
-.wk-chwyt[data-p="poziomy"]{cursor:ns-resize}
-.wk-brain:has(.wk-chwyt[data-p="czolowy"]:hover) .wk-ciecie-czolowy,.wk-brain:has(.wk-chwyt[data-p="poziomy"]:hover) .wk-ciecie-poziomy{opacity:.9}
 .at-suwak{accent-color:#f0c060;cursor:pointer}
 .at-suwak:focus-visible{outline:2px solid #f0c060;outline-offset:4px}
 .wk-kody .wk-kod-yeo{color:#b3ab9e}
 .wk-zywy[hidden]{display:none}
-/* płaszczyzna przekroju na widoku z boku; przerywana, żeby nie udawała bruzdy */
-.wk-ciecie{stroke:#e2ddd4;stroke-width:1.5;stroke-dasharray:5 4;vector-effect:non-scaling-stroke;opacity:.4;pointer-events:none;transition:opacity .15s}
-.wk-brain:has(.wk-widok-czolowy .wk-pole:hover) .wk-ciecie-czolowy,.wk-brain:has(.wk-widok-poziomy .wk-pole:hover) .wk-ciecie-poziomy{opacity:.9}
 /* Atlas (jego słowa, 2026-11-10: *lets make an "Atlas" subpage, next to the wiki*): tytuł z zaznaczeniem nad nim, pod nim mózg w 3D
-   w środku z oboma przekrojami w kolumnie obok, niżej rząd trzech rysunków, z boku, od środka i od dołu (2026-11-11); rysunki
-   i przekroje są w jednej skali, rząd rysunków ma 2,8171 L i dwa odstępy, więc wyznacza L */
+   na całą szerokość, a pod mózgiem rząd trzech przekrojów (2026-11-11, po zejściu rysunków z boku, od środka i od dołu) */
 .at-grid{display:flex;flex-direction:column;gap:24px;margin-top:28px}
 /* wiersz ścieżki Atlasu: po lewej Wiki › Atlas, po prawej powrót do karty, z której przyszedł czytelnik, w kroju ścieżki */
 .at-sciezka{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 24px}
@@ -75,33 +65,31 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-lista select:focus-visible{outline:2px solid #f0c060;outline-offset:2px}
 .at-pasek .at-lista{margin-left:auto}
 .at-lista-off{display:none}
-/* na telefonie lista obszarów stoi pod przełącznikiem w swoim wierszu, który zostaje także w trybie Sieci (niewidoczny i poza
-   tabulatorem), więc przełącznik nie zmienia miejsca, a widoki nie skaczą (ponowny audyt Atlasu, 2026-11-10) */
-@media (max-width:720px){.at-pasek{flex-wrap:wrap}.at-pasek .at-lista{order:3;flex:0 0 100%;margin-left:0}.at-lista select{width:100%}.at-lista.at-lista-off{display:block;visibility:hidden}}
+/* na telefonie lista stoi pod przełącznikiem w swoim wierszu; w każdym trybie jest jedna lista, sieci albo obszarów, więc wiersz
+   zostaje, przełącznik nie zmienia miejsca, a widoki nie skaczą (ponowny audyt Atlasu, 2026-11-10) */
+@media (max-width:720px){.at-pasek{flex-wrap:wrap}.at-pasek .at-lista{order:3;flex:0 0 100%;margin-left:0}.at-lista select{width:100%}}
 .at-pasek{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 14px}
 .at-pasek h2{margin:0}
 .at-tryb{display:inline-flex;border:1px solid rgba(226,200,150,.45);border-radius:999px;padding:2px}
 .at-tryb button{font:500 13px/1 Inter,sans-serif;color:#cfc8bb;background:none;border:0;border-radius:999px;padding:8px 14px;cursor:pointer;min-height:32px}
 .at-tryb button[aria-pressed="true"]{background:rgba(240,192,96,.16);color:#f0c060}
 .at-tryb button:focus-visible{outline:2px solid #f0c060;outline-offset:2px}
-.at-rzad{display:flex;justify-content:center;align-items:flex-end;gap:16px}
-.at-rzad+.at-rzad{margin-top:22px}
-.at-rzad .wk-widok-boczny{flex:0 0 calc((100% - 32px) * .38025)}
-.at-rzad .wk-widok-przysrodkowy{flex:0 0 calc((100% - 32px) * .36495)}
-.at-rzad .wk-widok-brzuszny{flex:0 0 calc((100% - 32px) * .2548)}
-/* mózg w 3D w środku, obok płaskie przekroje w kolumnie tej samej skali co rysunki pod spodem: rząd rysunków ma 2,8171 L, kolumna
-   przekroju 0,8417 L (2026-11-11) */
-.at-glowny{display:grid;grid-template-columns:minmax(0,1fr) calc((100% - 32px) * .29878);gap:16px;align-items:stretch;margin:0 0 26px}
-.at-przekroje{display:flex;flex-direction:column;justify-content:center;gap:18px}
-.at-przekroje .wk-widok{width:100%}
-.at-3d{position:relative;min-height:440px}
-.at-3d-scena{position:absolute;top:0;left:0;right:56px;bottom:58px;cursor:grab;touch-action:none}
+.at-glowny{display:flex;flex-direction:column;gap:22px}
+/* przekroje w rzędzie pod mózgiem, dolnymi brzegami w jednej linii, więc podpisy też */
+.at-przekroje{display:flex;justify-content:center;align-items:flex-end;gap:16px}
+.at-przekroje .wk-widok-czolowy,.at-przekroje .wk-widok-poziomy{flex:0 0 calc((100% - 32px) * .30887)}
+.at-przekroje .wk-widok-strzalkowy{flex:0 0 calc((100% - 32px) * .38226)}
+/* mózg w 3D: scena zostawia pas u góry na suwak strzałkowy i u dołu na czołowy, na telefonie także z prawej na poziomy; suwaki ustawia
+   `mozg3d.js` na osiach mózgu w widoku startowym */
+.at-3d{position:relative;height:clamp(460px,56vw,640px)}
+.at-3d-scena{position:absolute;top:44px;left:0;right:0;bottom:58px;cursor:grab;touch-action:none}
 .at-3d-scena:active{cursor:grabbing}
 .at-3d-scena canvas{display:block}
 .at-os{position:absolute;display:flex;align-items:center;gap:10px;font:500 12px/1 Inter,sans-serif;color:#a09888;letter-spacing:.04em}
 .at-os-czolowy{bottom:14px;left:15%;width:62%}
-.at-os-czolowy .at-suwak{flex:1 1 auto;width:auto;margin:0}
-.at-os-poziomy{right:8px;top:12%;height:62%;flex-direction:column;width:44px}
+.at-os-strzalkowy{top:12px;left:36%;width:22%}
+.at-os-czolowy .at-suwak,.at-os-strzalkowy .at-suwak{flex:1 1 auto;width:auto;margin:0}
+.at-os-poziomy{right:8px;top:16%;height:62%;flex-direction:column;width:44px}
 .at-os-poziomy .at-suwak{flex:1 1 auto;width:auto;margin:0;writing-mode:vertical-lr;direction:rtl}
 .at-3d-dymek{position:absolute;z-index:5;width:min(300px,calc(100% - 16px));background:#16140f;border:1px solid rgba(180,155,100,.32);border-radius:14px;padding:14px 16px 12px;box-shadow:0 10px 34px rgba(0,0,0,.5)}
 .at-3d-dymek[hidden]{display:none}
@@ -110,20 +98,20 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-3d-t{margin:0 22px 6px 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;font-weight:500;line-height:1.15;color:#f0c060}
 .at-3d-p{margin:4px 0 0;font-size:13.5px;line-height:1.55;color:#e2ddd4}
 .at-3d-t a,.at-3d-p a{color:inherit;text-decoration:underline dotted 1px;text-underline-offset:3px}
-/* bez WebGL albo bez objętości mózg w 3D znika, a suwaki zostają w rzędzie nad przekrojami */
-.at-glowny:has(.at-3d-brak){display:flex;flex-direction:column;gap:18px}
-.at-3d.at-3d-brak{min-height:0;display:flex;flex-direction:column;gap:12px}
+/* bez WebGL albo bez objętości mózg w 3D znika, a suwaki leżą płasko jeden pod drugim nad przekrojami; strzałkowy biegnie wtedy od
+   lewej półkuli do prawej, jak lewa i prawa w przekroju czołowym */
+.at-3d.at-3d-brak{height:auto;display:flex;flex-direction:column;gap:12px}
 .at-3d.at-3d-brak .at-3d-scena{display:none}
 .at-3d.at-3d-brak .at-os{position:static;width:100%;height:auto;flex-direction:row}
+.at-3d.at-3d-brak .at-os-strzalkowy{flex-direction:row-reverse}
+.at-3d.at-3d-brak .at-os-strzalkowy .at-suwak{direction:ltr}
 .at-3d.at-3d-brak .at-os-poziomy .at-suwak{writing-mode:horizontal-tb;direction:rtl}
-.at-glowny:has(.at-3d-brak) .at-przekroje{flex-direction:row;justify-content:center;align-items:flex-end;gap:16px}
-.at-glowny:has(.at-3d-brak) .at-przekroje .wk-widok{width:calc((100% - 32px) * .29878 * 1.5)}
-/* na telefonie widoki stoją jeden pod drugim w tej samej skali: szerokość widoku z boku to 100 % */
-@media (max-width:720px){.at-rzad{flex-direction:column;align-items:center;gap:14px}.at-rzad .wk-widok{flex:none}.at-rzad .wk-widok-boczny{width:100%}.at-rzad .wk-widok-przysrodkowy{width:95.98%}.at-rzad .wk-widok-brzuszny{width:67.01%}.at-glowny{grid-template-columns:minmax(0,1fr)}.at-3d{min-height:0;aspect-ratio:1/1}.at-przekroje{align-items:center}.at-przekroje .wk-widok{width:78.58%}.at-pasek{flex-wrap:wrap}}
+/* na telefonie mózg w 3D jest kwadratem, a przekroje w tej samej skali: czołowy i poziomy obok siebie, strzałkowy pod nimi */
+@media (max-width:720px){.at-3d{height:auto;aspect-ratio:1/1}.at-3d-scena{right:56px}.at-3d.at-3d-brak{aspect-ratio:auto}.at-przekroje{flex-wrap:wrap;gap:14px 16px}.at-przekroje .wk-widok-czolowy,.at-przekroje .wk-widok-poziomy{flex-basis:calc((100% - 16px) / 2)}.at-przekroje .wk-widok-strzalkowy{flex-basis:calc((100% - 16px) * .6188)}}
 .at-obszary .wk-pole{cursor:pointer}
 .wk-pole{position:relative}
 .wk-widok svg{position:relative;display:block;width:100%;height:auto;overflow:visible}
-/* ziarno leży pod liniami rysunku; płótno nie łapie wskaźnika, łapią go obszary sieci i pole widoku */
+/* ziarno leży pod liniami przekroju; płótno nie łapie wskaźnika, łapie go pole widoku */
 .wk-ziarno{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 /* kody sieci pod wskaźnikiem, najsilniejsza pierwsza; podpisane jak każda etykieta rysunku */
 .wk-kody{position:absolute;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:4px;pointer-events:none;white-space:nowrap}
@@ -134,9 +122,6 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .wk-nl{position:absolute;z-index:1;transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap}
 .wk-kody .wk-kod-dalej{color:#b3ab9e}
 .wk-widok figcaption{margin:4px 0 0;text-align:center;font-size:13px;color:#8f877a}
-.wk-widok .wk-linie{opacity:.62;pointer-events:none}
-.wk-widok-brzuszny .wk-linie{opacity:.45}
-.wk-widok .wk-hit{fill:transparent}
 .wk-zrodlo{margin:2px 0 0;text-align:center;font-size:11.5px;line-height:1.5;color:#8f877a}
 /* źródło rysunków mózgu stoi na końcu karty, pod wszystkimi pudełkami (jego słowa, 2026-11-10: *Move the text describing the images
    somewhere*) */
@@ -194,19 +179,3 @@ html.roj-cicho *,html.roj-cicho *::before,html.roj-cicho *::after{animation:none
 /* scena zamykająca jako przykład, głosem opowieści: krój nagłówków kursywą, lekko wcięta (jego wybór B, 2026-11-09) */
 .wk-p.wk-przyklad{margin:22px 0 0 20px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;line-height:1.6;color:#e2ddd4}
 @media (max-width:720px){.wk-p.wk-przyklad{margin-left:12px;font-size:19px}}
-
-/* mózg karty: każda sieć to link do jej karty; ziarno zapala sieci pod wskaźnikiem (`src/karty/ziarno.js`), fokus z klawiatury pokazuje kod i obrys obszaru (jego słowo, 2026-11-09) */
-.wk-nb{cursor:pointer}
-/* bez prostokąta przeglądarki wokół obszaru: Chrome rysuje go na linku w SVG także po kliknięciu myszą, kiedy klik nie przenosi
-   (jego zrzut, 2026-11-10: *there is this blue square after clicking*); fokus z klawiatury pokazuje złoty obrys obszaru niżej */
-.wk-nb:focus,.wk-nb:focus-visible{outline:none}
-/* sieć już zapalona na karcie nie zmienia się pod fokusem, więc fokus rysuje obrys tego jednego obszaru (audyt 2026-11-09) */
-.wk-nb:focus-visible .wk-hit{stroke:#f0c060;stroke-width:2px;vector-effect:non-scaling-stroke}
-.wk-brain:has(.wk-nb[data-k="VIS"]:focus-visible) .wk-nl[data-k="VIS"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="SMN"]:focus-visible) .wk-nl[data-k="SMN"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="DAN"]:focus-visible) .wk-nl[data-k="DAN"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="VAN"]:focus-visible) .wk-nl[data-k="VAN"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="SN"]:focus-visible) .wk-nl[data-k="SN"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="CN"]:focus-visible) .wk-nl[data-k="CN"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="DMN"]:focus-visible) .wk-nl[data-k="DMN"]{display:inline!important}
-.wk-brain:has(.wk-nb[data-k="LIM"]:focus-visible) .wk-nl[data-k="LIM"]{display:inline!important}

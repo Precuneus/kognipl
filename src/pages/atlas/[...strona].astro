@@ -1,7 +1,7 @@
 ---
 // Atlas mózgu: osobna strona obok wiki, z linkami w obie strony (jego słowa, 2026-11-10: *lets make an "Atlas" subpage, next to the wiki.
-// And link between them!*). Pięć widoków w jednej skali, przekroje z obiema półkulami (*I'd like the view on the both hemispheres on the
-// sections*), przełącznik Sieci i Obszary, klik zaznacza sieć albo obszar we wszystkich widokach (*The view should be modified to click
+// And link between them!*). Mózg w 3D z trzema cięciami i trzy przekroje w jednej skali (2026-11-11), czołowy i poziomy z obiema
+// półkulami (*I'd like the view on the both hemispheres on the sections*), przełącznik Sieci i Obszary, klik zaznacza sieć albo obszar we wszystkich widokach (*The view should be modified to click
 // different regions (and a switch region/network) and clicking should switch to the marked region/network*); nad tytułem stoi
 // zaznaczenie z linkami. Ziarno i zaznaczanie robi `src/karty/ziarno.js`.
 // Anatomia stoi tutaj, a wiki zostaje dla pojęć i przypadków (jego słowa, 2026-11-10: *When I have a network choosen, or a region...
@@ -16,22 +16,22 @@ import KartaWiki from '../../components/KartaWiki.astro';
 import TerminDymek from '../../components/TerminDymek.astro';
 import { KARTY, NETN, INK, ATLAS, STRONY, netCard } from '../../karty/data.js';
 import { KOLOR } from '../../karty/mozg.js';
-import { widok, zywy, suwak, DANE, OBJ, BOK, regiony, regionyAtlasu, kartySieci } from '../../karty/widoki.js';
+import { zywy, suwak, DANE, OBJ, regiony, regionyAtlasu, kartySieci } from '../../karty/widoki.js';
 export function getStaticPaths() {
   return ATLAS.map((s) => ({ params: { strona: s.sciezka === '/atlas/' ? undefined : s.sciezka.split('/')[2] }, props: { s } }));
 }
 const { s } = Astro.props;
 const k = s.k;
 const WSZYSTKIE = new Set(Object.keys(NETN));
-const W = (v) => widok(v, { lit: WSZYSTKIE, tab: v === 'lateral', ciecia: v === 'lateral' });
 const karty = Object.fromEntries(Object.keys(NETN).map((n) => [n, netCard(n)]).filter(([, c]) => c).map(([n, c]) => [n, c.url]));
 // lista obszarów do wyboru klawiaturą i czytnikiem ekranu w trybie Obszary, w grupach według płata (audyt Atlasu, 2026-11-10: obszarów
-// nie dało się wybrać bez myszy); struktury pod korą i istota biała w osobnej grupie
-// obszary rysunków i struktury Allena z przekrojów (2026-11-11), w jednej liście
+// nie dało się wybrać bez myszy); struktury pod korą i istota biała w osobnej grupie; struktury Allena i ich grupy (2026-11-11)
 const { REG, A2R, JAK, RODZAJ, NAZWY } = regionyAtlasu(regiony());
 // przekroje z objętości: sieć Yeo w kolorze sieci strony, do której należy jej grupa (istotności i brzuszna uwagi: SN i VAN po równo,
 // s:uddin2019-group-combines-van-salience; skroniowo-ciemieniowa bez grupy, szara)
-const OBJETOSC = { krok: OBJ.krok, poczatek: OBJ.poczatek, wymiar: OBJ.wymiar, sieci: OBJ.sieci.map(([, pl, kody]) => [pl, kody]), A2R, JAK, RODZAJ, NAZWY, mozg: OBJ.mozg, bok: BOK, url: '/images/mozg-widoki/objetosc.bin' };
+const OBJETOSC = { krok: OBJ.krok, poczatek: OBJ.poczatek, wymiar: OBJ.wymiar, sieci: OBJ.sieci.map(([, pl, kody]) => [pl, kody]), A2R, JAK, RODZAJ, NAZWY, mozg: OBJ.mozg, url: '/images/mozg-widoki/objetosc.bin' };
+// lista sieci w trybie Sieci: klawiatura wybiera sieć tak jak klik, odkąd rysunek z boku z linkami sieci zszedł ze strony (2026-11-11)
+const sieciListy = DANE.kolejnosc.filter((n) => NETN[n]);
 const grupy = [];
 REG.forEach(([n, , plat], i) => { const g = plat || 'pod korą'; let x = grupy.find((y) => y[0] === g); if (!x) { x = [g, []]; grupy.push(x); } x[1].push([n, i + 1]); });
 // karty obszaru: karty, których miejsce leży w zaznaczonym obszarze, w kolorze swojej grupy
@@ -43,7 +43,7 @@ const WIKI = Object.fromEntries(KARTY.filter((x) => x.url.startsWith('/wiki/')).
 const start = { tryb: s.tryb, siec: s.siec, obszar: s.obszar };
 const glowna = s.sciezka === '/atlas/';
 const tytul = glowna || !k ? 'Atlas mózgu · kogni.pl' : k.h + ' · Atlas mózgu · kogni.pl';
-const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: sieci mózgowe i obszary mózgu z boku, od środka, od dołu i w przekrojach, z kartą każdej sieci i każdego obszaru.' : String(k.def || '').replace(/<!--\[[so]:[^\]]*\]-->/g, '').trim();
+const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: mózg do obracania i cięcia w trzech płaszczyznach, z kartą każdej sieci mózgowej i każdego obszaru.' : String(k.def || '').replace(/<!--\[[so]:[^\]]*\]-->/g, '').trim();
 ---
 <Base title={tytul} activePage="atlas" description={opis}>
   <script is:inline>(function(){var z=null;try{z=localStorage.getItem('kogni-animacje')}catch(e){}var c=z?z==='off':matchMedia('(prefers-reduced-motion: reduce)').matches;if(c)document.documentElement.classList.add('roj-cicho');if(/^#(siec|obszar)-/.test(location.hash))document.documentElement.classList.add('at-czeka')})();</script>
@@ -68,22 +68,24 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: sieci mózgowe i obszary 
         <div class="at-pasek">
           <h2>Mózg</h2>
           {/* przełącznik stoi w miejscu w obu stanach (design: *a control holds its place*) */}
-          <label class="at-lista at-lista-off"><span class="sr-only">Obszar</span><select><option value="">wybierz obszar</option>{grupy.map(([g, xs]) => <optgroup label={g}>{xs.map(([n, i]) => <option value={String(i)}>{n}</option>)}</optgroup>)}</select></label>
+          <label class="at-lista" data-tryb="sieci"><span class="sr-only">Sieć</span><select><option value="">wybierz sieć</option>{sieciListy.map((n) => <option value={n}>{n} · {NETN[n]}</option>)}</select></label>
+          <label class="at-lista at-lista-off" data-tryb="obszary"><span class="sr-only">Obszar</span><select><option value="">wybierz obszar</option>{grupy.map(([g, xs]) => <optgroup label={g}>{xs.map(([n, i]) => <option value={String(i)}>{n}</option>)}</optgroup>)}</select></label>
           <div class="at-tryb" role="group" aria-label="Co zaznacza klik"><button type="button" data-tryb="sieci" aria-pressed="true">Sieci</button><button type="button" data-tryb="obszary" aria-pressed="false">Obszary</button></div>
         </div>
         {/* mózg w 3D jest ryciną centralną (jego słowa, 2026-11-11: *make the brain with the sliders central. We want to have this as a central
             figure... and... somehow show the slices relative to this brain*, potem *can we make C and possible to rotate?*); suwaki cięć
             leżą na osiach mózgu w widoku startowym (*the suwaki should scale somehow within the image*), poziomy pionowo (*Maybe przekroj
-            poziomy should be vertical?*); obok płaskie przekroje do czytania, pod spodem trzy rysunki z kolokwium */}
+            poziomy should be vertical?*); trzecie cięcie, strzałkowe, idzie od jednego boku przez środek do drugiego (*add a 3rd cut on the 3d
+            brain, from lateral to medial to lateral*), a trzy rysunki z kolokwium zeszły ze strony; pod mózgiem płaskie przekroje do
+            czytania, w jednej skali */}
         <div class="at-glowny">
-          <div class="at-3d" role="group" aria-label="Mózg w trzech wymiarach z cięciem czołowym i poziomym" data-powierzchnia="/images/mozg-widoki/powierzchnia.bin">
+          <div class="at-3d" role="group" aria-label="Mózg w trzech wymiarach z cięciem czołowym, poziomym i strzałkowym" data-powierzchnia="/images/mozg-widoki/powierzchnia.bin">
             <div class="at-3d-scena"></div>
-            <Fragment set:html={suwak('czolowy') + suwak('poziomy')} />
+            <Fragment set:html={suwak('strzalkowy') + suwak('czolowy') + suwak('poziomy')} />
             <div class="at-3d-dymek" role="dialog" aria-label="Miejsce w mózgu" hidden></div>
           </div>
-          <div class="at-przekroje"><Fragment set:html={zywy('czolowy') + zywy('poziomy')} /></div>
+          <div class="at-przekroje"><Fragment set:html={zywy('czolowy') + zywy('poziomy') + zywy('strzalkowy')} /></div>
         </div>
-        <div class="at-rzad"><Fragment set:html={W('lateral') + W('medial') + W('ventral')} /></div>
       </section>
       {/* karta zaznaczenia pod widokami; przy kilku zaznaczonych sieciach ich karty jedna pod drugą */}
       <div class="at-miejsce">{k && <KartaWiki k={k} wAtlasie />}</div>
@@ -92,7 +94,7 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: sieci mózgowe i obszary 
         <div class="wk-chips"></div>
       </section>
     </div>
-    <p class="wk-zrodlo wk-zrodlo-mozg">Rysunki mózgu: z boku i od środka Henry Vandyke Carter, <i>Anatomy of the Human Body</i> Graya, 1918; od dołu K. Hajek, <a href="https://commons.wikimedia.org/wiki/File:Sobo_1909_630.png">ryc. 630</a> w <i>Atlas and Text-book of Human Anatomy</i> Sobotty, 1909, przerysowana liniami; obie w domenie publicznej. Mózg w trzech wymiarach i przekroje liczone z szablonu MNI ICBM152 2009c (© 1993–2004 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University), ze strukturami z <a href="https://download.alleninstitute.org/informatics-archive/allen_human_reference_atlas_3d_2020/version_1/">Allen Human Reference Atlas – 3D, 2020</a> (Ding i in., Allen Institute for Brain Science, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>) i siecią z 17 sieci Yeo i in. (2011) w parcelacji Schaefera i in. (2018); powierzchnia i przekroje przeliczone, przekroje przerysowane liniami.</p>
+    <p class="wk-zrodlo wk-zrodlo-mozg">Mózg w trzech wymiarach i przekroje liczone z szablonu MNI ICBM152 2009c (© 1993–2004 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University), ze strukturami z <a href="https://download.alleninstitute.org/informatics-archive/allen_human_reference_atlas_3d_2020/version_1/">Allen Human Reference Atlas – 3D, 2020</a> (Ding i in., Allen Institute for Brain Science, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>) i siecią z 17 sieci Yeo i in. (2011) w parcelacji Schaefera i in. (2018); powierzchnia i przekroje przeliczone, przekroje przerysowane liniami.</p>
   </article>
   <TerminDymek />
 </Base>

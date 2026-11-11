@@ -4,14 +4,14 @@
 // ziaren to ciepła szarość. Wskazane miejsce pokazuje kody wszystkich sieci, które tam są, najsilniejsza pierwsza, i zapala je
 // we wszystkich widokach; klik wpisuje obszar i sieci miejsca nad tytuł karty i nie przenosi (2026-11-10). Bez ruchu (przełącznik animacji albo
 // ustawienie systemu) ziarno losuje się raz i stoi.
-// Przegląd 2026-11-09: wspólne są tylko miejsca, których sieci nazywa span (`huby` i `wspolne` w `mozg-widoki.json`), sieci dzielą
-// je po równo, bo żaden span nie podaje wag, a w czasie zmienia się tylko ośrodek, którego span mówi o zmianie z zadaniem
-// (`czas`); rdzenie stoją. Na karcie świecą też sieci, z którymi jej sieć dzieli miejsce, w tym miejscu.
+// Przegląd 2026-11-09: wspólne są tylko miejsca, których sieci nazywa span (`wspolne` w `mozg-widoki.json`), sieci dzielą je po
+// równo, bo żaden span nie podaje wag. W przekrojach z objętości (2026-11-11) wspólna jest też sieć Yeo, którą span dzieli między
+// dwie sieci strony (istotności i brzuszna uwagi). Ziarno zmienia sieć na brzegach sieci i w miejscach wspólnych. Świecą też sieci,
+// z którymi świecąca sieć dzieli miejsce, w tym miejscu.
 const ODSTEP = 3.5; // odstęp ziaren w pikselach ekranu
 const PROMIEN = 1.4;
 const ZMIANA = 0.1; // część ziaren losowana na nowo w każdym takcie, więc ziarno zmienia się mniej więcej raz na sekundę
 const TAKT = 100; // ms
-const OMEGA = (2 * Math.PI) / 15; // ośrodek ze zmianą w czasie przechodzi między sieciami w okresie około 15 s; tempa nie podaje żaden span
 // sieć jest w miejscu, kiedy jej udział przekracza 1/7, jak u Yeo i in. 2014 (s:yeo2014-association-multi-network-sensorimotor-isolated)
 const PROG = 1 / 7;
 const SZARE = 'rgba(226,221,212,0.13)';
@@ -66,10 +66,18 @@ async function wczytajObjetosc(url) {
   return new Uint8Array(await new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
 }
 function plaster(vol, O, pole, p, mm) {
-  const [NX, NY, NZ] = O.wymiar, NV = NX * NY * NZ, W = 2 * NX - 1, H = p === 'czolowy' ? NZ : NY;
-  const os = p === 'czolowy' ? 1 : 2, n = p === 'czolowy' ? NY : NZ;
-  const i = Math.max(0, Math.min(n - 1, Math.round((mm - O.poczatek[os]) / O.krok)));
-  const out = new Uint8Array(W * H), f = pole * NV;
+  // czołowy: stałe y, kolumny x obu półkul, wiersze z od góry; poziomy: stałe z, wiersze y od przodu; strzałkowy: stałe x (półkula
+  // prawa to odbicie lewej), kolumny y od przodu, wiersze z od góry
+  const [NX, NY, NZ] = O.wymiar, NV = NX * NY * NZ, f = pole * NV, k = O.krok;
+  const idx = (os, n, v) => Math.max(0, Math.min(n - 1, Math.round((v - O.poczatek[os]) / k)));
+  if (p === 'strzalkowy') {
+    const xi = idx(0, NX, -Math.abs(mm)), W = NY, H = NZ, out = new Uint8Array(W * H);
+    for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) out[r * W + c] = vol[f + ((NY - 1 - c) * NZ + (NZ - 1 - r)) * NX + xi];
+    return { W, H, v: out };
+  }
+  const W = 2 * NX - 1, H = p === 'czolowy' ? NZ : NY;
+  const i = p === 'czolowy' ? idx(1, NY, mm) : idx(2, NZ, mm);
+  const out = new Uint8Array(W * H);
   for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) {
     const xi = c < NX ? c : 2 * (NX - 1) - c;
     const yi = p === 'czolowy' ? i : NY - 1 - r, zi = p === 'czolowy' ? NZ - 1 - r : i;
@@ -91,10 +99,6 @@ function kontur(a, W, H, prog, k, x0 = 0, y0 = 0, x1 = W - 1, y1 = H - 1) {
     for (let s = 0; s < seg.length; s += 2) d += 'M' + P(...seg[s]) + 'L' + P(...seg[s + 1]);
   }
   return d;
-}
-
-function wczytaj(src) {
-  return new Promise((ok, zle) => { const i = new Image(); i.onload = () => ok(i); i.onerror = zle; i.src = src; });
 }
 
 export async function ziarno() {
@@ -133,71 +137,13 @@ export async function ziarno() {
   let tryb = 'sieci', wybor = null, hotReg = 0;
   const widoki = [];
 
-  for (const fig of mozg.querySelectorAll('.wk-widok[data-pole]')) {
-    const [VW, VH] = fig.dataset.vb.split(' ').map(Number);
-    const k = Number(fig.dataset.k);
-    const huby = JSON.parse(fig.dataset.huby || '[]');
-    let img;
-    try { img = await wczytaj(fig.dataset.pole); } catch (e) { continue; }
-    const FW = img.width, FH = img.height;
-    const c = document.createElement('canvas'); c.width = FW; c.height = FH;
-    const cx = c.getContext('2d'); cx.drawImage(img, 0, 0);
-    const px = cx.getImageData(0, 0, FW, FH).data;
-    const lab = new Uint8Array(FW * FH);
-    for (let i = 0; i < lab.length; i++) lab[i] = Math.round(px[i * 4] / 20);
-    const kora = new Float32Array(FW * FH);
-    for (let i = 0; i < lab.length; i++) kora[i] = lab[i] > 0 ? 1 : 0;
-    // rdzeń każdej sieci: jej obszar z miękką krawędzią, tylko na korze; wartość 10 to istotności i brzuszna uwagi Yeo, wspólne SN
-    // i VAN po równo (2026-11-11, mapy rysunków z sieci Yeo)
-    const rdzen = [];
-    const SNi = NETS.indexOf('SN'), VANi = NETS.indexOf('VAN');
-    for (let n = 0; n < N; n++) {
-      const a = new Float32Array(FW * FH);
-      for (let i = 0; i < a.length; i++) a[i] = lab[i] === n + 1 || (lab[i] === 10 && (n === SNi || n === VANi)) ? 1 : 0;
-      const b = rozmyj(a, FW, FH, 2);
-      for (let i = 0; i < b.length; i++) b[i] *= kora[i];
-      rdzen.push(b);
-    }
-    // obszar wspólny całej sieci: obszar pierwszej sieci należy też do drugiej, po równo (Girn i in. 2024: kora oczodołowo-czołowa
-    // i przednia skroniowa to część rozszerzonej sieci domyślnej)
-    for (const { sieci: [a, b] } of WSP) {
-      const A = rdzen[NETS.indexOf(a)], B = rdzen[NETS.indexOf(b)];
-      for (let i = 0; i < A.length; i++) B[i] = Math.max(B[i], A[i]);
-    }
-    // ośrodki wspólne kilku sieciom: w środku ośrodka każda jego sieć ma ten sam udział, ku brzegowi wraca rdzeń
-    const osr = huby.map(({ xy: [hx, hy], r: hr, sieci, czas }, h) => {
-      const g = new Float32Array(FW * FH);
-      const X = hx / k, Y = hy / k, R = hr / k;
-      for (let y = 0; y < FH; y++) for (let x = 0; x < FW; x++) {
-        const d = ((x - X) ** 2 + (y - Y) ** 2) / (R * R);
-        g[y * FW + x] = d < 9 ? Math.exp(-d * 1.4) * kora[y * FW + x] : 0;
-      }
-      return { g, sieci: sieci.map((n) => NETS.indexOf(n)), czas: !!czas, faza: h * 1.7 };
-    });
-    // mapa obszarów anatomicznych tej samej siatki co mapa sieci: wartość piksela to numer obszaru (tylko atlas jej używa)
-    let reg = null;
-    if (ATLAS && fig.dataset.obszary) {
-      try {
-        const ri = await wczytaj(fig.dataset.obszary);
-        const rc = document.createElement('canvas'); rc.width = ri.width; rc.height = ri.height;
-        const rx = rc.getContext('2d'); rx.drawImage(ri, 0, 0);
-        const rp = rx.getImageData(0, 0, ri.width, ri.height).data;
-        reg = { W: ri.width, H: ri.height, v: new Uint8Array(ri.width * ri.height) };
-        for (let i = 0; i < reg.v.length; i++) reg.v[i] = rp[i * 4];
-      } catch (e) {}
-    }
-    const pole = fig.querySelector('.wk-pole');
-    const cv = pole.querySelector('.wk-ziarno');
-    const kody = pole.querySelector('.wk-kody');
-    widoki.push({ fig, pole, cv, kody, FW, FH, VW, VH, k, lab, kora, rdzen, osr, reg, ziarna: [] });
-  }
   // przekroje z objętości: mapy sieci i obszarów, linie i etykiety liczone z plastra, na nowo przy każdym przesunięciu cięcia
   const vol = objetosc ? await objetosc : null;
   const zywe = {};
   if (vol) for (const fig of mozg.querySelectorAll('.wk-zywy')) {
     const [VW, VH] = fig.dataset.vb.split(' ').map(Number);
     const pole = fig.querySelector('.wk-pole');
-    const v = { fig, pole, cv: pole.querySelector('.wk-ziarno'), kody: pole.querySelector('.wk-kody'), VW, VH, k: OBJ.krok, osr: [], ziarna: [], zywy: fig.dataset.objetosc, sciezka: pole.querySelector('.wk-linie-zywe') };
+    const v = { fig, pole, cv: pole.querySelector('.wk-ziarno'), kody: pole.querySelector('.wk-kody'), VW, VH, k: OBJ.krok, ziarna: [], zywy: fig.dataset.objetosc, sciezka: pole.querySelector('.wk-linie-zywe') };
     zywe[v.zywy] = v;
     widoki.push(v);
   } else mozg.querySelectorAll('.wk-zywy').forEach((f) => { f.hidden = true; });
@@ -287,27 +233,17 @@ export async function ziarno() {
     }
   }
   for (const p in zywe) { const s = mozg.querySelector('.at-suwak[data-p="' + p + '"]'); plastry(zywe[p], s ? Number(s.value) : 0); }
-  if (!widoki.length) return;
+  // bez objętości Atlas nie ma przekrojów, ale wybór z list i karty zaznaczenia działają dalej
+  if (!widoki.length && !ATLAS) return;
 
   const Wg = new Float32Array(N);
-  // t === null: udziały bez ruchu, średnie w czasie
-  function wagi(v, i, t) {
+  function wagi(v, i) {
     for (let n = 0; n < N; n++) Wg[n] = v.rdzen[n][i];
-    for (const o of v.osr) {
-      const g = o.g[i];
-      if (!g) continue;
-      for (let n = 0; n < N; n++) Wg[n] *= 1 - g;
-      const m = o.sieci.length;
-      o.sieci.forEach((n, j) => {
-        const fala = o.czas && t !== null && !stoi ? 1 + 0.6 * Math.sin(OMEGA * t + o.faza + (j * 2 * Math.PI) / m) : 1;
-        Wg[n] += (g / m) * fala;
-      });
-    }
     return Wg;
   }
   // sieci, które są w miejscu (udział ponad PROG), najsilniejsza pierwsza
-  function wMiejscu(v, i, t) {
-    const w = wagi(v, i, t);
+  function wMiejscu(v, i) {
+    const w = wagi(v, i);
     let tot = 0;
     for (let n = 0; n < N; n++) tot += w[n];
     if (tot < 0.05) return [];
@@ -315,9 +251,9 @@ export async function ziarno() {
     for (let n = 0; n < N; n++) if (w[n] / tot > PROG) out.push([n, w[n] / tot]);
     return out.sort((a, b) => b[1] - a[1]).map(([n]) => n);
   }
-  function losuj(v, z, t, r) {
+  function losuj(v, z, r) {
     if (!z.k) { z.n = -1; return; }
-    const w = wagi(v, z.i, t);
+    const w = wagi(v, z.i);
     let tot = 0;
     for (let n = 0; n < N; n++) tot += w[n];
     if (tot < 0.05) { z.n = -1; return; }
@@ -345,8 +281,8 @@ export async function ziarno() {
       const i = fy * v.FW + fx;
       const kk = v.kora[i] > 0, rr = regPola(v, fx, fy);
       if (!kk && !rr) continue;
-      const z = { x: jx * v.skala, y: jy * v.skala, i, n: -1, k: kk, r: rr, tu: kk ? wMiejscu(v, i, null) : null, wsp: null };
-      losuj(v, z, 0, r2);
+      const z = { x: jx * v.skala, y: jy * v.skala, i, n: -1, k: kk, r: rr, tu: kk ? wMiejscu(v, i) : null, wsp: null };
+      losuj(v, z, r2);
       v.ziarna.push(z);
     }
     wspolnota(v);
@@ -402,7 +338,7 @@ export async function ziarno() {
     }
     return '';
   }
-  function podWskaznikiem(v, e, t) {
+  function podWskaznikiem(v, e) {
     const [fx, fy] = pole(v, e);
     let best = -1, bd = 99;
     for (let dy = -3; dy <= 3; dy++) for (let dx = -3; dx <= 3; dx++) {
@@ -411,7 +347,7 @@ export async function ziarno() {
       if (v.kora[y * v.FW + x]) { best = y * v.FW + x; bd = d; }
     }
     if (best < 0) return [];
-    return wMiejscu(v, best, t).map((n) => NETS[n]);
+    return wMiejscu(v, best).map((n) => NETS[n]);
   }
   // numer obszaru anatomicznego pod wskaźnikiem; linia rysunku bierze najbliższy obszar w promieniu trzech pól mapy
   function obszarPod(v, e) {
@@ -452,7 +388,7 @@ export async function ziarno() {
       v.pole.style.cursor = ATLAS ? 'pointer' : '';
       return;
     }
-    const lista = podWskaznikiem(v, e, performance.now() / 1000);
+    const lista = podWskaznikiem(v, e);
     ostatni.lista = lista;
     hot.clear(); lista.forEach((n) => hot.add(n));
     rysujWszystko();
@@ -468,25 +404,30 @@ export async function ziarno() {
   const tu = ATLAS ? document.querySelector('.wk-tu') : null;
   const karty = ATLAS ? document.querySelector('.at-karty') : null;
   const przyciski = ATLAS ? [...document.querySelectorAll('.at-tryb [data-tryb]')] : [];
-  // lista obszarów: wybór obszaru klawiaturą i czytnikiem ekranu, widoczna w trybie Obszary (audyt Atlasu, 2026-11-10)
-  const lista = ATLAS ? document.querySelector('.at-lista') : null;
-  const wybieraj = lista ? lista.querySelector('select') : null;
+  // listy wyboru klawiaturą i czytnikiem ekranu, jedna w każdym trybie: obszary w trybie Obszary (audyt Atlasu, 2026-11-10), sieci
+  // w trybie Sieci, odkąd rysunek z boku z linkami sieci zszedł ze strony (2026-11-11)
+  const listy = ATLAS ? [...document.querySelectorAll('.at-lista')] : [];
+  const wybierajSiec = ATLAS ? document.querySelector('.at-lista[data-tryb="sieci"] select') : null;
+  const wybieraj = ATLAS ? document.querySelector('.at-lista[data-tryb="obszary"] select') : null;
   const link = (url, html) => (url ? '<a href="' + esc(url) + '">' + html + '</a>' : '<span>' + html + '</span>');
   const kodHtml = (n) => '<b style="color:' + KOL[n] + '">' + n + '</b> ' + esc(NAZWA[n] || '');
-  // sieci obszaru: te, które zajmują co najmniej 15 % jego kory we wszystkich widokach
+  // sieci obszaru: te, które zajmują co najmniej 15 % jego kory w całej objętości; sieć Yeo wspólna dwóm sieciom strony liczy się
+  // w obu
+  const SIECI_OBSZARU = new Map();
   function sieciObszaru(n) {
-    const c = new Float64Array(N); let tot = 0;
-    for (const v of widoki) {
-      if (!v.reg) continue;
-      for (let y = 0; y < v.FH; y++) for (let x = 0; x < v.FW; x++) {
-        if (!trafia(regPola(v, x, y), n)) continue;
-        const l = v.lab[y * v.FW + x];
-        if (l === 10) { c[NETS.indexOf('SN')]++; c[NETS.indexOf('VAN')]++; tot += 2; }
-        else if (l > 0 && l <= N && NETS[l - 1] !== 'X') { c[l - 1]++; tot++; }
-      }
+    if (!vol) return [];
+    if (SIECI_OBSZARU.has(n)) return SIECI_OBSZARU.get(n);
+    const [NX, NY, NZ] = OBJ.wymiar, NV = NX * NY * NZ, c = new Float64Array(N);
+    let tot = 0;
+    for (let i = 0; i < NV; i++) {
+      const a = vol[2 * NV + i];
+      if (!a || OBJ.RODZAJ[a] !== 'kora' || vol[i] <= 127 || vol[NV + i] >= 128 || !trafia(OBJ.A2R[a], n)) continue;
+      const y = vol[3 * NV + i];
+      for (const k of y ? OBJ.sieci[y - 1][1] : []) { c[NETS.indexOf(k)]++; tot++; }
     }
-    if (!tot) return [];
-    return [...c].map((x, i) => [NETS[i], x / tot]).filter(([, s]) => s >= 0.15).sort((a, b) => b[1] - a[1]).map(([k]) => k);
+    const wyn = tot ? [...c].map((x, i) => [NETS[i], x / tot]).filter(([, s]) => s >= 0.15).sort((a, b) => b[1] - a[1]).map(([k]) => k) : [];
+    SIECI_OBSZARU.set(n, wyn);
+    return wyn;
   }
   function tagi() {
     mozg.querySelectorAll('.wk-nl').forEach((t) => { t.style.display = tryb === 'sieci' && LIT.has(t.dataset.k) ? '' : 'none'; });
@@ -532,7 +473,7 @@ export async function ziarno() {
     tryb = t;
     przyciski.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tryb === t)));
     mozg.classList.toggle('at-obszary', t === 'obszary');
-    if (lista) lista.classList.toggle('at-lista-off', t !== 'obszary');
+    listy.forEach((l) => l.classList.toggle('at-lista-off', l.dataset.tryb !== t));
   }
   function wybierz(w, bezAdresu, przewin) {
     wybor = w;
@@ -541,6 +482,7 @@ export async function ziarno() {
     widoki.forEach(wspolnota);
     tagi(); panel(); if (!bezAdresu) adres();
     if (wybieraj) wybieraj.value = w && w.typ === 'obszar' ? String(w.n) : '';
+    if (wybierajSiec) wybierajSiec.value = w && w.typ === 'siec' && w.kody.length === 1 ? w.kody[0] : '';
     rysujWszystko();
     // karta zaznaczenia staje pod widokami: wczytuje ją strona Atlasu (jego słowa, 2026-11-10: *below the brains the card of this
     // network/region should be visible. And then below the other cards*)
@@ -556,7 +498,7 @@ export async function ziarno() {
     let w = null;
     if (tryb === 'obszary') { const n = obszarPod(v, e); if (!n) return; w = { typ: 'obszar', n }; }
     else {
-      const lista = podWskaznikiem(v, e, performance.now() / 1000);
+      const lista = podWskaznikiem(v, e);
       if (!lista.length) return;
       const i = v.zywy ? komorka(v, e) : -1;
       const fam = i >= 0 && v.kora[i] && v.yeo[i] ? OBJ.sieci[v.yeo[i] - 1][1] : [];
@@ -611,6 +553,7 @@ export async function ziarno() {
     // wstecz, dalej i link do Atlasu z samego Atlasu zmieniają tylko adres: zaznaczenie idzie za nim
     addEventListener('hashchange', zAdresu);
     if (wybieraj) wybieraj.addEventListener('change', () => { const n = Number(wybieraj.value); wybierz(n ? { typ: 'obszar', n } : null); });
+    if (wybierajSiec) wybierajSiec.addEventListener('change', () => { const k = wybierajSiec.value; wybierz(k ? { typ: 'siec', kody: [k] } : null); });
     przyciski.forEach((b) => b.addEventListener('click', () => { if (b.dataset.tryb === tryb) return; ustawTryb(b.dataset.tryb); hotReg = 0; wybierz(null); }));
   }
   rysujWszystko();
@@ -619,24 +562,15 @@ export async function ziarno() {
     widoki.forEach((v) => ro.observe(v.pole));
   }
 
-  let palec = false, ciagnie = null, tlumKlik = false;
+  let palec = false;
   widoki.forEach((v) => {
     v.pole.addEventListener('pointerdown', (e) => { palec = e.pointerType === 'touch'; });
-    v.pole.addEventListener('pointermove', (e) => { if (ciagnie) return; if (e.pointerType === 'mouse' || e.pointerType === 'pen') pokaz(v, e); });
+    v.pole.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse' || e.pointerType === 'pen') pokaz(v, e); });
     v.pole.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch' && !(ostatni && ostatni.palec)) schowaj(v); });
-    // klik nie przenosi: w atlasie zaznacza sieć albo obszar, na karcie nic nie robi; Enter z klawiatury na obszarze sieci w atlasie
-    // zaznacza tę sieć, na karcie idzie za linkiem do karty sieci
+    // klik nie przenosi: w atlasie zaznacza sieć albo obszar (jego słowa, 2026-11-10: *clicking itself should not redirect*)
     v.pole.addEventListener('click', (e) => {
-      if (e.target.closest('.wk-kody') || tlumKlik || e.target.closest('.wk-chwyt')) return;
-      if (e.detail === 0) {
-        const a = e.target.closest('.wk-nb');
-        if (ATLAS && a) { e.preventDefault(); if (tryb !== 'sieci') ustawTryb('sieci'); const w = { typ: 'siec', kody: [a.dataset.k] }; wybierz(tenSam(w, wybor) ? null : w); }
-        return;
-      }
+      if (e.target.closest('.wk-kody')) return;
       e.preventDefault();
-      // link obszaru kliknięty myszą nie trzyma fokusu: fokus jest dla klawiatury i zapalałby sieć linku do następnego kliknięcia
-      const a = document.activeElement;
-      if (a && a.classList && a.classList.contains('wk-nb') && v.pole.contains(a)) a.blur();
       if (palec) pokaz(v, e, true);
       if (ATLAS) kliknij(v, e);
     });
@@ -645,26 +579,23 @@ export async function ziarno() {
   document.addEventListener('click', (e) => {
     if (ostatni && ostatni.palec && !e.target.closest('.wk-pole')) schowaj(ostatni.v);
   });
-  // fokus z klawiatury zapala sieć swojego linku
-  mozg.querySelectorAll('.wk-nb').forEach((a) => {
-    a.addEventListener('focus', () => { hot.clear(); hot.add(a.dataset.k); rysujWszystko(); });
-    a.addEventListener('blur', () => { hot.clear(); rysujWszystko(); });
-  });
 
-  // cięcie przesuwa suwak pod przekrojem i linia przeciągana na widoku z boku; przekrój liczy się na nowo raz na klatkę
+  // czytnik ekranu słyszy położenie cięcia słowami (audyt Atlasu, 2026-11-11: sama liczba nie mówi, gdzie leży cięcie): strzałkowe
+  // od linii środkowej, w której objętość jest odbita, czołowe i poziome jako część drogi między końcami suwaka
+  const opisz = (s) => {
+    const v = Number(s.value), lo = Number(s.min), hi = Number(s.max), czesc = Math.round(((hi - v) / (hi - lo)) * 100) + '% ';
+    const t = s.dataset.p === 'strzalkowy' ? (v === 0 ? 'linia środkowa' : (v < 0 ? 'lewa' : 'prawa') + ' półkula, ' + String(Math.abs(v)).replace('.', ',') + ' mm od linii środkowej')
+      : s.dataset.p === 'czolowy' ? czesc + 'drogi od przodu do tyłu' : czesc + 'drogi od góry do dołu';
+    s.setAttribute('aria-valuetext', t);
+  };
+  mozg.querySelectorAll('.at-suwak').forEach((s) => { opisz(s); s.addEventListener('input', () => opisz(s)); });
+  // cięcie przesuwa suwak na osi mózgu w 3D; przekrój liczy się na nowo raz na klatkę
   if (vol) {
-    const boczny = mozg.querySelector('.wk-widok-boczny svg');
-    const M = OBJ.mozg, Bk = OBJ.bok;
-    const naBoku = { czolowy: (y) => Bk.x[0] + ((M.przod - y) / (M.przod - M.tyl)) * (Bk.x[1] - Bk.x[0]), poziomy: (z) => Bk.y[0] + ((M.gora - z) / (M.gora - M.dol)) * (Bk.y[1] - Bk.y[0]) };
-    const zBoku = { czolowy: (x) => M.przod - ((x - Bk.x[0]) / (Bk.x[1] - Bk.x[0])) * (M.przod - M.tyl), poziomy: (y) => M.gora - ((y - Bk.y[0]) / (Bk.y[1] - Bk.y[0])) * (M.gora - M.dol) };
     const czeka = {};
     const ustaw = (p, mm) => {
       const s = mozg.querySelector('.at-suwak[data-p="' + p + '"]'), v = zywe[p];
       if (!s || !v) return;
       mm = Math.max(Number(s.min), Math.min(Number(s.max), mm));
-      s.value = String(mm);
-      const c = naBoku[p](mm).toFixed(1);
-      mozg.querySelectorAll('.wk-ciecie-' + p + ', .wk-chwyt[data-p="' + p + '"]').forEach((l) => { if (p === 'czolowy') { l.setAttribute('x1', c); l.setAttribute('x2', c); } else { l.setAttribute('y1', c); l.setAttribute('y2', c); } });
       const bylo = czeka[p] !== undefined;
       czeka[p] = mm;
       if (bylo) return;
@@ -676,17 +607,6 @@ export async function ziarno() {
       });
     };
     mozg.querySelectorAll('.at-suwak').forEach((s) => s.addEventListener('input', () => ustaw(s.dataset.p, Number(s.value))));
-    if (boczny) mozg.querySelectorAll('.wk-chwyt').forEach((g) => {
-      g.addEventListener('pointerdown', (e) => { e.preventDefault(); e.stopPropagation(); ciagnie = g.dataset.p; try { g.setPointerCapture(e.pointerId); } catch (x) {} });
-      g.addEventListener('pointermove', (e) => {
-        if (ciagnie !== g.dataset.p) return;
-        const pt = boczny.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
-        const q = pt.matrixTransform(boczny.getScreenCTM().inverse());
-        ustaw(ciagnie, zBoku[ciagnie](ciagnie === 'czolowy' ? q.x : q.y));
-      });
-      const koniec = () => { if (ciagnie) { tlumKlik = true; setTimeout(() => { tlumKlik = false; }, 0); } ciagnie = null; };
-      g.addEventListener('pointerup', koniec); g.addEventListener('pointercancel', koniec);
-    });
   }
 
   if (stoi) return;
@@ -700,8 +620,7 @@ export async function ziarno() {
   const r3 = los(11);
   setInterval(() => {
     if (!widac || document.hidden || tryb !== 'sieci') return; // w trybie obszarów kolor ziarna nie zależy od sieci, więc płótno stoi
-    const t = performance.now() / 1000;
-    for (const v of widoki) for (const z of v.ziarna) if (z.k && r3() < ZMIANA) losuj(v, z, t, r3);
+    for (const v of widoki) for (const z of v.ziarna) if (z.k && r3() < ZMIANA) losuj(v, z, r3);
     if (ostatni && !ostatni.palec) {
       // lista pod nieruchomym wskaźnikiem nadąża za wagami; po stuknięciu stoi
       const { v, e } = ostatni;
