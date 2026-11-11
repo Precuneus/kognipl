@@ -49,24 +49,18 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: mózg do obracania i cię
   <script is:inline>(function(){var z=null;try{z=localStorage.getItem('kogni-animacje')}catch(e){}var c=z?z==='off':matchMedia('(prefers-reduced-motion: reduce)').matches;if(c)document.documentElement.classList.add('roj-cicho');if(/^#(siec|obszar)-/.test(location.hash))document.documentElement.classList.add('at-czeka')})();</script>
   <aside aria-label="Animacje"><button type="button" class="wk-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="wk-anim-tor" aria-hidden="true"></span></button></aside>
   <article class="wk at" style="--ink:#f0c060;--base:#c89a3c">
-    <div class="at-sciezka" data-wiki={JSON.stringify(WIKI)}>
-      <nav aria-label="Ścieżka" class="wk-path"><a href="/wiki/">Wiki</a><span aria-hidden="true"> › </span><span aria-current="page">Atlas</span></nav>
-      {/* drzwi w obie strony: karta prowadzi do Atlasu linkiem pod listą sieci, Atlas wraca do karty, z której przyszedł czytelnik (design:
-          *Every door swings both ways*); bez karty w poprzedniej stronie link się nie pokazuje */}
-      <a class="at-wroc" href="/wiki/" hidden><span aria-hidden="true">← </span><span></span></a>
-    </div>
+    {/* drzwi w obie strony: karta prowadzi do Atlasu linkiem pod listą sieci, Atlas wraca do karty, z której przyszedł czytelnik (design:
+        *Every door swings both ways*); bez karty w poprzedniej stronie link się nie pokazuje i nie zajmuje miejsca. Ścieżka Wiki › Atlas
+        i pudełko tytułu zeszły ze strony (jego słowa, 2026-11-11: *remove the wiki>atlas and the atlas box from the top of the page - just
+        taking place*) */}
+    <a class="at-wroc" href="/wiki/" data-wiki={JSON.stringify(WIKI)} hidden><span aria-hidden="true">← </span><span></span></a>
     <div class="at-grid wk-brain" data-ziarno data-atlas data-kolory={JSON.stringify(KOLOR)} data-kolejnosc={JSON.stringify(DANE.kolejnosc)} data-lit={[...WSZYSTKIE].join(',')} data-karty={JSON.stringify(karty)} data-nazwy={JSON.stringify(NETN)} data-wspolne={JSON.stringify(DANE.wspolne || [])} data-regiony={JSON.stringify(REG)} data-karty-sieci={JSON.stringify(kartySieci(KARTY))} data-karty-obszaru={JSON.stringify(kartyObszaru)} data-strony={JSON.stringify(STRONY)} data-start={JSON.stringify(start)} data-objetosc={JSON.stringify(OBJETOSC)}>
-      {/* pudełko tytułu bez etykiety: jego tytułem jest nazwa strony; nad tytułem zaznaczenie z linkami (jego słowa, 2026-11-10: *list a
-          region/network above the title*) */}
-      <section aria-label="Atlas" class="wk-box wk-mysl at-glowa">
-        <p class="wk-tu" aria-live="polite"></p>
-        <h1>Atlas</h1>
-        {/* jedno zdanie dla czytelnika, który nie zna jeszcze kodów sieci, jak zdanie nad listą sieci w indeksie wiki (audyt Atlasu, 2026-11-10) */}
-        <p class="at-lead">Obróć mózg, przesuń cięcia i kliknij miejsce, żeby zobaczyć, co to jest.</p>
-      </section>
-      <section aria-label="Mózg" class="wk-box at-widoki">
+      {/* tytułem strony jest nazwa pudełka mózgu (jego słowa, 2026-11-11: *Rename mozg to Atlas Mózgu*), w kroju etykiet pudełek; obok niej
+          zaznaczenie z linkami, które stało nad tytułem (jego słowa, 2026-11-10: *list a region/network above the title*) */}
+      <section aria-label="Atlas Mózgu" class="wk-box at-widoki">
         <div class="at-pasek">
-          <h2>Mózg</h2>
+          <h1 class="at-tytul">Atlas Mózgu</h1>
+          <p class="wk-tu" aria-live="polite"></p>
           {/* przełącznik stoi w miejscu w obu stanach (design: *a control holds its place*) */}
           <label class="at-lista" data-tryb="sieci"><span class="sr-only">Sieć</span><select><option value="">wybierz sieć</option>{sieciListy.map((n) => <option value={n}>{n} · {NETN[n]}</option>)}</select></label>
           <label class="at-lista at-lista-off" data-tryb="obszary"><span class="sr-only">Obszar</span><select><option value="">wybierz obszar</option>{grupy.map(([g, xs]) => <optgroup label={g}>{xs.map(([n, i]) => <option value={String(i)}>{n}</option>)}</optgroup>)}</select></label>
@@ -139,11 +133,10 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: mózg do obracania i cię
   });
   ziarno();
   mozg3d(document.querySelector<HTMLElement>('.at-3d')!);
-  const sciezka = document.querySelector<HTMLElement>('.at-sciezka');
-  const wroc = sciezka?.querySelector<HTMLAnchorElement>('.at-wroc');
+  const wroc = document.querySelector<HTMLAnchorElement>('.at-wroc');
   try {
     const r = new URL(document.referrer);
-    const h = r.origin === location.origin ? JSON.parse(sciezka!.dataset.wiki || '{}')[r.pathname] : '';
+    const h = r.origin === location.origin ? JSON.parse(wroc!.dataset.wiki || '{}')[r.pathname] : '';
     if (wroc && h) { wroc.href = r.pathname; (wroc.lastElementChild as HTMLElement).textContent = h; wroc.hidden = false; }
   } catch (e) {} // wejście bez poprzedniej strony albo z innej witryny: link zostaje ukryty
 </script>

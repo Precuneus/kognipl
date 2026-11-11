@@ -115,10 +115,11 @@ export async function mozg3d(el) {
   const pH = new THREE.Plane(new THREE.Vector3(0, 0, -1), cut.poziomy);
   const pS = new THREE.Plane(new THREE.Vector3(1, 0, 0), -cut.strzalkowy);
   const plaszczyzny = [pC, pH, pS];
-  // wyłącznik każdego cięcia (jego słowa, 2026-11-11: *we want a switch on/off button next to each*): wyłączone cięcie nie tnie, więc
-  // wycięcie wyznaczają włączone; jedno włączone przecina mózg na pół i pokazuje cały przekrój, żadne zostawia mózg cały
+  // wyłącznik każdego cięcia (jego słowa, 2026-11-11: *we want a switch on/off button next to each*, potem *for the on/off switch I meant
+  // the cut. ONLY the cut preview should disapper. To not obscure the view of the 3d brain. The suwaki stays. And the cut is off fully.
+  // transparent*): wyłączony chowa tylko obraz przekroju na ścianie wycięcia razem z ramką, więc przez wycięcie widać wnętrze mózgu;
+  // cięcie tnie dalej, a suwak i płaski przekrój działają jak przedtem
   const wl = { czolowy: true, poziomy: true, strzalkowy: true };
-  const PL = { czolowy: pC, poziomy: pH, strzalkowy: pS };
 
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
@@ -142,8 +143,7 @@ export async function mozg3d(el) {
   const gg = new THREE.BufferGeometry();
   gg.setAttribute('position', new THREE.BufferAttribute(gp, 3));
   gg.setAttribute('color', new THREE.BufferAttribute(gc, 3));
-  const matZ = new THREE.PointsMaterial({ size: 2, sizeAttenuation: false, vertexColors: true, clippingPlanes: plaszczyzny, clipIntersection: true });
-  scene.add(new THREE.Points(gg, matZ));
+  scene.add(new THREE.Points(gg, new THREE.PointsMaterial({ size: 2, sizeAttenuation: false, vertexColors: true, clippingPlanes: plaszczyzny, clipIntersection: true })));
 
   const kol = new THREE.Color(), kol2 = new THREE.Color(), ciem = new THREE.Color(CIEMNY), szary = new THREE.Color(SZARY), zloto = new THREE.Color(ZLOTE);
   // sieci punktu, kiedy świeci któraś z nich: miejsce, które świecąca sieć dzieli z inną, świeci kolorem każdej swojej sieci, jak
@@ -229,9 +229,8 @@ export async function mozg3d(el) {
     delete lico[p];
     if (!wl[p]) return;
     // ściany czołowa i pozioma sięgają od lewego brzegu mózgu do cięcia strzałkowego; obraz obejmuje obie półkule, więc ściana bierze
-    // z niego tyle, ile ma szerokości; ściana sięga po wyłączonym cięciu do brzegu mózgu
-    const xs = wl.strzalkowy ? Math.min(x0 + Wmm, cut.strzalkowy) : x0 + Wmm, ux = (xs - x0) / Wmm;
-    const yc = wl.czolowy ? cut.czolowy : yBot, zc = wl.poziomy ? cut.poziomy : zBot;
+    // z niego tyle, ile ma szerokości
+    const xs = Math.min(x0 + Wmm, cut.strzalkowy), ux = (xs - x0) / Wmm, yc = cut.czolowy, zc = cut.poziomy;
     if (p !== 'strzalkowy' && ux <= 0) return;
     const tx = obraz(p);
     let P, U;
@@ -324,7 +323,7 @@ export async function mozg3d(el) {
     dymek.style.top = Math.min(rb.height - hh - 8, Math.max(8, yy - rb.top + 14)) + 'px';
   }
   const ray = new THREE.Raycaster(), mysz = new THREE.Vector2();
-  const usuniete = (q) => (wl.czolowy || wl.poziomy || wl.strzalkowy) && (!wl.czolowy || q.y > cut.czolowy) && (!wl.poziomy || q.z > cut.poziomy) && (!wl.strzalkowy || q.x < cut.strzalkowy);
+  const usuniete = (q) => q.y > cut.czolowy && q.z > cut.poziomy && q.x < cut.strzalkowy;
   function trafienie(e) {
     const r = renderer.domElement.getBoundingClientRect();
     mysz.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
@@ -388,12 +387,7 @@ export async function mozg3d(el) {
     const p = b.dataset.p;
     wl[p] = !wl[p];
     b.setAttribute('aria-checked', String(wl[p]));
-    const s = el.querySelector('.at-suwak[data-p="' + p + '"]');
-    if (s) s.disabled = !wl[p];
-    siatka.dataset.wylaczone = CIECIA.filter((q) => !wl[q]).join(' ');
-    const akt = CIECIA.filter((q) => wl[q]).map((q) => PL[q]);
-    mat.clippingPlanes = akt; matZ.clippingPlanes = akt; mat.needsUpdate = true; matZ.needsUpdate = true;
-    zamknij(); lica(); rysuj();
+    zamknij(); postawLico(p); rysuj();
   }));
   new ResizeObserver(() => { wymiar(); osie(); }).observe(scena);
   wymiar(); osie();
