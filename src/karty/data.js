@@ -100,12 +100,12 @@ export const kartaObszaru = (n) => byName[KARTA_OBSZARU[n] || n.charAt(0).toUppe
 export const ATLAS = [];
 const doAtlasu = (k, s) => { if (k) { k.wiki = k.url; k.url = s.sciezka; k.atlas = s; } ATLAS.push({ k: k || null, ...s }); };
 doAtlasu(byName['Sieci wielkoskalowe'], { sciezka: '/atlas/', tryb: 'sieci' });
-doAtlasu(byName['Płaty mózgu'], { sciezka: '/atlas/' + slugify('Płaty mózgu') + '/', tryb: 'obszary' });
+doAtlasu(byName['Płaty mózgu'], { sciezka: '/atlas/' + slugify('Płaty mózgu') + '/', tryb: 'platy' });
 Object.keys(NETN).forEach((kod) => { const k = netCard(kod); if (k) doAtlasu(k, { sciezka: '/atlas/' + k.id + '/', tryb: 'sieci', siec: kod }); });
 OBSZARY.forEach(({ nazwa }, i) => { const k = kartaObszaru(nazwa); if (k && !k.atlas) doAtlasu(k, { sciezka: '/atlas/' + k.id + '/', tryb: 'obszary', obszar: i + 1 }); });
 // adresy Atlasu dla skryptu: sieć i obszar ze swoją kartą, oba przeglądy
 export const STRONY = {
-  sieci: '/atlas/', obszary: ATLAS[1].sciezka,
+  sieci: '/atlas/', obszary: ATLAS[1].sciezka, platy: ATLAS[1].sciezka,
   siec: Object.fromEntries(ATLAS.filter((s) => s.siec).map((s) => [s.siec, s.sciezka])),
   obszar: Object.fromEntries(ATLAS.filter((s) => s.obszar).map((s) => [s.obszar, s.sciezka])),
 };

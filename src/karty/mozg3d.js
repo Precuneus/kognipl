@@ -61,6 +61,9 @@ export async function mozg3d(el) {
   const O = JSON.parse(siatka.dataset.objetosc);
   const KOL = JSON.parse(siatka.dataset.kolory), NAZWA = JSON.parse(siatka.dataset.nazwy || '{}');
   const REG = JSON.parse(siatka.dataset.regiony || '[]'), STRONY = JSON.parse(siatka.dataset.strony || '{"siec":{}}');
+  // widok Płaty: kora płata w jego barwie (jego słowa, 2026-11-11: *we should add płaty to the views*)
+  const PLAT_KOL = JSON.parse(siatka.dataset.platy || '{}');
+  const platPola = (a) => { const r = a ? A2R[a] : 0; return r && REG[r - 1] ? REG[r - 1][2] : ''; };
   const { JAK, A2R, RODZAJ, NAZWY } = O;
   // grupa sieci Yeo w sieciach strony; sieć, którą span bierze w całości do innej, należy też do niej (`wspolne`, jak na rysunkach:
   // kora limbiczna jest też domyślna, Girn i in. 2024)
@@ -113,7 +116,7 @@ export async function mozg3d(el) {
   camera.add(lampa); lampa.position.set(80, 120, 0); scene.add(camera);
 
   // stan Atlasu: tryb, świecące sieci, zaznaczony obszar, położenie cięć
-  const stan = { tryb: 'sieci', lit: new Set(Object.keys(KOL)), obszar: 0 };
+  const stan = { tryb: 'sieci', lit: new Set(Object.keys(KOL)), obszar: 0, plat: '' };
   const cut = {};
   el.querySelectorAll('.at-suwak').forEach((s) => { cut[s.dataset.p] = Number(s.value); });
   const pC = new THREE.Plane(new THREE.Vector3(0, -1, 0), cut.czolowy);
@@ -151,7 +154,10 @@ export async function mozg3d(el) {
   const swieci = (y) => (y && FAM[y - 1].some((k) => stan.lit.has(k)) ? FAM[y - 1] : []);
   function koloruj() {
     for (let i = 0; i < nv; i++) {
-      if (stan.tryb === 'obszary') {
+      if (stan.tryb === 'platy') {
+        const p = platPola(allen[i]);
+        if (p && (!stan.plat || p === stan.plat)) kol.set(PLAT_KOL[p]).lerp(ciem, 0.55); else kol.copy(ciem);
+      } else if (stan.tryb === 'obszary') {
         const zaz = stan.obszar && trafia(A2R[allen[i]], stan.obszar);
         if (zaz) kol.copy(zloto).lerp(ciem, 0.45); else kol.copy(ciem);
       } else {
@@ -163,7 +169,8 @@ export async function mozg3d(el) {
     geo.getAttribute('color').needsUpdate = true;
     for (let j = 0; j < ng; j++) {
       const i = j * KROK;
-      if (stan.tryb === 'obszary') kol.copy(stan.obszar && trafia(A2R[allen[i]], stan.obszar) ? zloto : szary);
+      if (stan.tryb === 'platy') { const p = platPola(allen[i]); if (p && (!stan.plat || p === stan.plat)) kol.set(PLAT_KOL[p]); else kol.copy(szary); }
+      else if (stan.tryb === 'obszary') kol.copy(stan.obszar && trafia(A2R[allen[i]], stan.obszar) ? zloto : szary);
       else { const f = swieci(yeo[i]); if (f.length) kol.set(KOL[f[Math.floor(los1[j] * f.length)]]); else kol.copy(szary); }
       gc[j * 3] = kol.r; gc[j * 3 + 1] = kol.g; gc[j * 3 + 2] = kol.b;
     }
@@ -189,7 +196,12 @@ export async function mozg3d(el) {
       if (T.v[i] <= 127) continue;
       const a = A.v[i], rodz = RODZAJ[a];
       let c = null;
-      if (stan.tryb === 'obszary') {
+      if (stan.tryb === 'platy') {
+        const r = rodz === 'komora' ? 0 : A2R[a];
+        if (!r || r === BIALA || JAK[r] === BIALA) continue;
+        const pp = REG[r - 1] ? REG[r - 1][2] : '';
+        c = pp ? (!stan.plat || pp === stan.plat ? PLAT_KOL[pp] : SZARY) : 'rgba(226,221,212,0.18)';
+      } else if (stan.tryb === 'obszary') {
         const r = rodz === 'komora' ? 0 : A2R[a], zaz = stan.obszar && trafia(r, stan.obszar);
         if (!r || ((r === BIALA || JAK[r] === BIALA) && !zaz)) continue;
         c = zaz ? ZLOTE : 'rgba(226,221,212,0.18)';
@@ -287,6 +299,7 @@ export async function mozg3d(el) {
     stan.tryb = d.tryb || stan.tryb;
     stan.lit = new Set(d.lit || []);
     stan.obszar = d.wybor && d.wybor.typ === 'obszar' ? d.wybor.n : 0;
+    stan.plat = d.wybor && d.wybor.typ === 'plat' ? d.wybor.p : '';
   };
   zStanu(siatka.__stan);
   siatka.addEventListener('atlas-wybor', (e) => { zStanu(e.detail); wszystko(); });
@@ -303,6 +316,7 @@ export async function mozg3d(el) {
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   const zamknij = () => { if (nazwa) nazwa.hidden = true; };
   function opis(a, y) {
+    if (stan.tryb === 'platy') { const p = platPola(a); return p ? '<span><b>' + esc(p) + '</b></span>' : ''; }
     if (stan.tryb === 'obszary') {
       const r = a ? A2R[a] : 0;
       if (!r) return '';
@@ -370,7 +384,8 @@ export async function mozg3d(el) {
     tKlik = setTimeout(() => {
       if (!t) return;
       let w = null;
-      if (stan.tryb === 'obszary') { const r = t[0] ? A2R[t[0]] : 0; if (r) w = { typ: 'obszar', n: r }; }
+      if (stan.tryb === 'platy') { const p = platPola(t[0]); if (p) w = { typ: 'plat', p }; }
+      else if (stan.tryb === 'obszary') { const r = t[0] ? A2R[t[0]] : 0; if (r) w = { typ: 'obszar', n: r }; }
       else if (t[1] && O.sieci[t[1] - 1][1].length) w = { typ: 'siec', kody: O.sieci[t[1] - 1][1].slice() };
       if (w) siatka.dispatchEvent(new CustomEvent('atlas-klik', { detail: w }));
       if (palec) nazwij(t, cx, cy);

@@ -16,7 +16,7 @@ import KartaWiki from '../../components/KartaWiki.astro';
 import TerminDymek from '../../components/TerminDymek.astro';
 import { KARTY, NETN, INK, ATLAS, STRONY, netCard } from '../../karty/data.js';
 import { KOLOR } from '../../karty/mozg.js';
-import { zywy, suwak, DANE, OBJ, regiony, regionyAtlasu, kartySieci, listaObszarow } from '../../karty/widoki.js';
+import { zywy, suwak, DANE, OBJ, regiony, regionyAtlasu, kartySieci, listaObszarow, PLATY, PLAT_KOL } from '../../karty/widoki.js';
 export function getStaticPaths() {
   return ATLAS.map((s) => ({ params: { strona: s.sciezka === '/atlas/' ? undefined : s.sciezka.split('/')[2] }, props: { s } }));
 }
@@ -46,7 +46,7 @@ const tytul = glowna || !k ? 'Atlas mózgu · kogni.pl' : k.h + ' · Atlas mózg
 const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: mózg do obracania i cięcia w trzech płaszczyznach, z kartą każdej sieci mózgowej i każdego obszaru.' : String(k.def || '').replace(/<!--\[[so]:[^\]]*\]-->/g, '').trim();
 ---
 <Base title={tytul} activePage="atlas" description={opis}>
-  <script is:inline>(function(){var z=null;try{z=localStorage.getItem('kogni-animacje')}catch(e){}var c=z?z==='off':matchMedia('(prefers-reduced-motion: reduce)').matches;if(c)document.documentElement.classList.add('roj-cicho');if(/^#(siec|obszar)-/.test(location.hash))document.documentElement.classList.add('at-czeka')})();</script>
+  <script is:inline>(function(){var z=null;try{z=localStorage.getItem('kogni-animacje')}catch(e){}var c=z?z==='off':matchMedia('(prefers-reduced-motion: reduce)').matches;if(c)document.documentElement.classList.add('roj-cicho');if(/^#(siec|obszar|plat)-/.test(location.hash))document.documentElement.classList.add('at-czeka')})();</script>
   <aside aria-label="Animacje"><button type="button" class="wk-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="wk-anim-tor" aria-hidden="true"></span></button></aside>
   <article class="wk at" style="--ink:#f0c060;--base:#c89a3c">
     {/* drzwi w obie strony: karta prowadzi do Atlasu linkiem pod listą sieci, Atlas wraca do karty, z której przyszedł czytelnik (design:
@@ -54,7 +54,7 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: mózg do obracania i cię
         i pudełko tytułu zeszły ze strony (jego słowa, 2026-11-11: *remove the wiki>atlas and the atlas box from the top of the page - just
         taking place*) */}
     <a class="at-wroc" href="/wiki/" data-wiki={JSON.stringify(WIKI)} hidden><span aria-hidden="true">← </span><span></span></a>
-    <div class="at-grid wk-brain" data-ziarno data-atlas data-kolory={JSON.stringify(KOLOR)} data-kolejnosc={JSON.stringify(DANE.kolejnosc)} data-lit={[...WSZYSTKIE].join(',')} data-karty={JSON.stringify(karty)} data-nazwy={JSON.stringify(NETN)} data-wspolne={JSON.stringify(DANE.wspolne || [])} data-regiony={JSON.stringify(REG)} data-karty-sieci={JSON.stringify(kartySieci(KARTY))} data-karty-obszaru={JSON.stringify(kartyObszaru)} data-strony={JSON.stringify(STRONY)} data-start={JSON.stringify(start)} data-objetosc={JSON.stringify(OBJETOSC)}>
+    <div class="at-grid wk-brain" data-ziarno data-atlas data-kolory={JSON.stringify(KOLOR)} data-kolejnosc={JSON.stringify(DANE.kolejnosc)} data-lit={[...WSZYSTKIE].join(',')} data-karty={JSON.stringify(karty)} data-nazwy={JSON.stringify(NETN)} data-wspolne={JSON.stringify(DANE.wspolne || [])} data-regiony={JSON.stringify(REG)} data-karty-sieci={JSON.stringify(kartySieci(KARTY))} data-karty-obszaru={JSON.stringify(kartyObszaru)} data-strony={JSON.stringify(STRONY)} data-platy={JSON.stringify(PLAT_KOL)} data-start={JSON.stringify(start)} data-objetosc={JSON.stringify(OBJETOSC)}>
       {/* tytułem strony jest nazwa pudełka mózgu (jego słowa, 2026-11-11: *Rename mozg to Atlas Mózgu*), w kroju etykiet pudełek; obok niej
           zaznaczenie z linkami, które stało nad tytułem (jego słowa, 2026-11-10: *list a region/network above the title*) */}
       {/* mózg nie stoi w pudełku (jego słowa, 2026-11-11: *do not box it*) */}
@@ -66,12 +66,14 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: mózg do obracania i cię
           <label class="at-lista" data-tryb="sieci"><span class="sr-only">Sieć</span><select><option value="">wybierz sieć</option><option value="wiele" hidden></option>{sieciListy.map((n) => <option value={n}>{n} · {NETN[n]}</option>)}</select></label>
           {/* w trybie Obszary pole szukania w miejscu listy (jego słowo, 2026-11-11: *add the search*): pisanie zawęża obszary po nazwie
               polskiej, angielskiej i po skrócie, puste pole pokazuje całą listę w jej kolejności; strzałki, Enter i Esc jak w liście */}
+          {/* w trybie Płaty lista płatów (jego słowa, 2026-11-11: *we should add płaty to the views*) */}
+          <label class="at-lista at-lista-off" data-tryb="platy"><span class="sr-only">Płat</span><select><option value="">wybierz płat</option>{PLATY.map((p) => <option value={p}>{p}</option>)}</select></label>
           <div class="at-lista at-lista-off at-szukaj" data-tryb="obszary">
             <label class="sr-only" for="at-szukaj">Szukaj obszaru</label>
             <input id="at-szukaj" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="at-wyniki" autocomplete="off" spellcheck="false" placeholder="szukaj obszaru" data-lista={JSON.stringify(grupy)} />
             <ul id="at-wyniki" role="listbox" aria-label="Obszary" hidden></ul>
           </div>
-          <div class="at-tryb" role="group" aria-label="Co zaznacza klik"><button type="button" data-tryb="sieci" aria-pressed="true">Sieci</button><button type="button" data-tryb="obszary" aria-pressed="false">Obszary</button></div>
+          <div class="at-tryb" role="group" aria-label="Co zaznacza klik"><button type="button" data-tryb="sieci" aria-pressed="true">Sieci</button><button type="button" data-tryb="platy" aria-pressed="false">Płaty</button><button type="button" data-tryb="obszary" aria-pressed="false">Obszary</button></div>
         </div>
         {/* mózg w 3D jest ryciną centralną (jego słowa, 2026-11-11: *make the brain with the sliders central. We want to have this as a central
             figure... and... somehow show the slices relative to this brain*, potem *can we make C and possible to rotate?*); suwaki cięć

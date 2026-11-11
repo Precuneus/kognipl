@@ -40,7 +40,11 @@ const KLUCZOWE = ['zakręt czołowy górny', 'zakręt czołowy środkowy', 'zakr
   'zakręt potyliczny dolny', 'zakręt potyliczny górny', 'klinek', 'zakręt językowaty', 'biegun potyliczny', 'zakręt obręczy', 'wyspa',
   'ciało modzelowate', 'jądro ogoniaste', 'wzgórze', 'skorupa', 'gałka blada', 'przedmurze', 'ciało migdałowate', 'hipokamp', 'komora boczna',
   'komora trzecia', 'okolica suteczkowata podwzgórza', 'pasmo wzrokowe', 'sklepienie', 'śródmózgowie', 'podwzgórze', 'istota biała przodomózgowia'];
-const PLATY = ['płat czołowy', 'płat ciemieniowy', 'płat skroniowy', 'płat potyliczny', 'płat limbiczny', 'płat wyspowy'];
+export const PLATY = ['płat czołowy', 'płat ciemieniowy', 'płat skroniowy', 'płat potyliczny', 'płat limbiczny', 'płat wyspowy'];
+// widok Płaty (jego słowa, 2026-11-11: *we should add płaty to the views*): płaty w barwach ryc. 2 wpisu 28.10 (rysunek płatów z Wikimedia
+// Commons: czołowy niebieski, ciemieniowy żółty, skroniowy zielony, potyliczny różowy), rozjaśnionych do ziarna na ciemnym tle; limbiczny
+// i wyspowy, których na ryc. 2 nie ma, w barwach od nich odrębnych
+export const PLAT_KOL = { 'płat czołowy': '#7fa3d1', 'płat ciemieniowy': '#d6c46a', 'płat skroniowy': '#8bbf75', 'płat potyliczny': '#d9849a', 'płat limbiczny': '#b29ad6', 'płat wyspowy': '#e0905e' };
 // struktury bez płata w układach, które nazywa ontologia Allena; część grupy idzie za swoją grupą
 const POD_KORA = [
   ['jądra podstawy', ['jądro ogoniaste', 'skorupa', 'skorupa, część brzuszno-tylna', 'gałka blada', 'jądro półleżące', 'przedmurze', 'jądro niskowzgórzowe']],
