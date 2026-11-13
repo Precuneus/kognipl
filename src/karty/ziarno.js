@@ -794,6 +794,22 @@ export async function ziarno() {
     s.setAttribute('aria-valuetext', t);
   };
   mozg.querySelectorAll('.at-suwak').forEach((s) => { opisz(s); s.addEventListener('input', () => opisz(s)); });
+  // palec bierze suwak w każdym miejscu toru, nie tylko na gałce, i ciągnie go od razu (jego słowa, 2026-11-13: *changing the cut is
+  // difficult*); położenie liczy się z kierunku suwaka, więc działa poziomy, odwrócony i pionowy
+  const palcem = (s, t) => {
+    const r = s.getBoundingClientRect(), cs = getComputedStyle(s), pion = cs.writingMode.startsWith('vertical'), g = 14;
+    let f = pion ? (t.clientY - r.top - g) / (r.height - 2 * g) : (t.clientX - r.left - g) / (r.width - 2 * g);
+    f = Math.max(0, Math.min(1, f));
+    if (cs.direction === 'rtl') f = 1 - f; // poziomy rtl ma minimum z prawej, pionowy vertical-lr rtl na dole
+    const lo = Number(s.min), hi = Number(s.max), st = Number(s.step) || 1, v = Math.round((lo + f * (hi - lo)) / st) * st;
+    if (Number(s.value) === v) return;
+    s.value = v; s.dispatchEvent(new Event('input', { bubbles: true }));
+  };
+  mozg.querySelectorAll('.at-suwak').forEach((s) => {
+    s.addEventListener('touchstart', (e) => { e.preventDefault(); palcem(s, e.touches[0]); }, { passive: false });
+    s.addEventListener('touchmove', (e) => { e.preventDefault(); palcem(s, e.touches[0]); }, { passive: false });
+    s.addEventListener('touchend', () => s.dispatchEvent(new Event('change', { bubbles: true })));
+  });
 
   if (stoi) return;
   let widac = true;

@@ -163,6 +163,21 @@ html.at-czeka .at-miejsce{visibility:hidden}
 /* na telefonie mózg w 3D jest kwadratem, a przekroje w tej samej skali: czołowy i poziomy obok siebie, strzałkowy pod nimi; scena kończy
    się wyżej, żeby wyłącznik pionowego suwaka i wyłącznik dolnego nie dzieliły pola palca */
 @media (max-width:720px){.at-3d{height:auto;aspect-ratio:1/1}.at-3d-scena{bottom:80px}.at-3d.at-3d-brak{aspect-ratio:auto}.at-glowny{gap:14px 16px}.at-glowny .wk-widok-czolowy,.at-glowny .wk-widok-poziomy{flex-basis:calc((100% - 16px) / 2)}.at-glowny .wk-widok-strzalkowy{flex-basis:calc((100% - 16px) * .6188)}}
+/* telefon i tablet (jego słowa, 2026-11-13: *too small on the vertical view and too big on horizontal*): poniżej 1000 px ramka mózgu nigdy
+   nie jest wyższa niż ekran, więc w poziomie widać cały mózg z suwakami naraz; na telefonie ramka sięga brzegów ekranu, a mózg wypełnia
+   scenę (`wpasuj` w `mozg3d.js`) */
+@media (max-width:999px){.at-3d:not(.at-3d-brak){height:clamp(300px,min(56vw,100vh - 16px),640px);height:clamp(300px,min(56vw,100svh - 16px),640px)}}
+@media (max-width:720px){
+.at-glowny .at-3d:not(.at-3d-brak){flex:0 0 100vw;height:auto;max-height:calc(100vh - 16px);max-height:calc(100svh - 16px);margin-inline:calc(50% - 50vw)}
+.at-3d:not(.at-3d-brak) .at-3d-scena{left:6px;right:50px}
+.at-3d-start{right:12px}
+}
+/* suwak pod palcem ma pole 32 px w poprzek toru, a jego środek zostaje tam, gdzie stał */
+@media (pointer:coarse){
+.at-os-czolowy .at-suwak,.at-os-strzalkowy .at-suwak{height:32px;margin:-7px 0}
+.at-os-poziomy .at-suwak{width:32px;margin:0 -7px}
+.at-suwak{touch-action:none}
+}
 .at-obszary .wk-pole{cursor:pointer}
 .wk-pole{position:relative}
 .wk-widok svg{position:relative;display:block;width:100%;height:auto;overflow:visible}

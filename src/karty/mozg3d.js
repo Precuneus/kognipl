@@ -280,14 +280,39 @@ export async function mozg3d(el) {
     if (!w || !h) return;
     renderer.setSize(w, h, false); renderer.domElement.style.width = '100%'; renderer.domElement.style.height = '100%';
     camera.aspect = w / h; camera.updateProjectionMatrix();
+    // obrót palcem idzie za wysokością sceny (OrbitControls liczy pełny obrót na jej wysokość), więc na niskiej scenie telefonu ten sam
+    // ruch palca obraca mózg tyle, ile ruch myszy na komputerze (jego słowa, 2026-11-13: *the navigation is somewhat off*)
+    controls.rotateSpeed = scena.offsetTop < 10 ? 1 : Math.min(1, h / 600);
     if (!ruszony) {
-      // scena pod suwakami (na komputerze) mieści mózg między pasem górnego suwaka a pasem dolnego
-      const pol = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)), hm = scena.offsetTop < 10 ? (h - 110) / h : 1;
-      const d = Math.min(620, Math.max(320, Math.max(84 / (pol * hm), 112 / (pol * camera.aspect))));
-      camera.position.copy(controls.target).addScaledVector(kierunek, d);
+      if (scena.offsetTop < 10) {
+        // scena pod suwakami (na komputerze) mieści mózg między pasem górnego suwaka a pasem dolnego
+        const pol = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)), hm = (h - 110) / h;
+        const d = Math.min(620, Math.max(320, Math.max(84 / (pol * hm), 112 / (pol * camera.aspect))));
+        camera.position.copy(controls.target).addScaledVector(kierunek, d);
+      } else wpasuj();
       controls.update(); controls.saveState();
     }
     rysuj();
+  }
+  // poniżej 1000 px mózg wypełnia ramkę: kamera mierzy obrys powierzchni na ekranie, staje na jego środku i odsuwa się tak, żeby zajął
+  // ramkę bez 4% marginesu (jego słowa, 2026-11-13: *too small on the vertical view*)
+  function wpasuj() {
+    const q = new THREE.Vector3(), pr = new THREE.Vector3(), gr = new THREE.Vector3(), pol = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    let d = camera.position.distanceTo(controls.target);
+    for (let k = 0; k < 4; k++) {
+      camera.position.copy(controls.target).addScaledVector(kierunek, d);
+      camera.lookAt(controls.target); camera.updateMatrixWorld();
+      let x0 = 9, x1 = -9, y0 = 9, y1 = -9;
+      for (let i = 0; i < nv; i += 4) {
+        q.set(pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2]).project(camera);
+        if (q.x < x0) x0 = q.x; if (q.x > x1) x1 = q.x; if (q.y < y0) y0 = q.y; if (q.y > y1) y1 = q.y;
+      }
+      const hh = d * pol, hw = hh * camera.aspect;
+      pr.setFromMatrixColumn(camera.matrixWorld, 0); gr.setFromMatrixColumn(camera.matrixWorld, 1);
+      controls.target.addScaledVector(pr, ((x0 + x1) / 2) * hw).addScaledVector(gr, ((y0 + y1) / 2) * hh);
+      d = Math.min(controls.maxDistance, Math.max(controls.minDistance, d * Math.max((x1 - x0) / 2, (y1 - y0) / 2) / 0.96));
+    }
+    camera.position.copy(controls.target).addScaledVector(kierunek, d);
   }
   const CIECIA = ['czolowy', 'poziomy', 'strzalkowy'];
   const lica = () => CIECIA.forEach(postawLico);
@@ -383,8 +408,10 @@ export async function mozg3d(el) {
   renderer.domElement.addEventListener('pointerup', (e) => {
     if (!start || e.button !== 0) { start = null; return; }
     const [sx, sy, t0] = start; start = null;
-    if (Math.hypot(e.clientX - sx, e.clientY - sy) > 5 || performance.now() - t0 > 600) return;
-    const t = trafienie(e), cx = e.clientX, cy = e.clientY, palec = e.pointerType === 'touch';
+    // palec drży bardziej niż mysz, więc stuknięcie znosi 12 px ruchu
+    const palec = e.pointerType === 'touch';
+    if (Math.hypot(e.clientX - sx, e.clientY - sy) > (palec ? 12 : 5) || performance.now() - t0 > 600) return;
+    const t = trafienie(e), cx = e.clientX, cy = e.clientY;
     clearTimeout(tKlik);
     // klik czeka 250 ms, więc dwuklik tylko wraca do widoku startowego; palec nie ma wskazania, więc stuknięcie też nazywa część
     tKlik = setTimeout(() => {
