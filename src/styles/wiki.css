@@ -102,6 +102,8 @@ html.at-czeka .at-miejsce{visibility:hidden}
    i poziomy mają 0,808 szerokości strzałkowego, 151,5 do 187,5 mm); scena ma wysokość ekranu pod menu i wierszem tytułu; bez WebGL
    zostaje rząd */
 @media (min-width:1000px){
+.at-glowny .at-3d{--pas-g:0px;--pas-p:0px;--pas-d:0px;--pas-l:0px}
+.at-glowny .at-3d-pas{display:none}
 .at-glowny:not(:has(.at-3d-brak)){display:block;position:relative;height:clamp(540px,calc(100vh - 210px),800px)}
 .at-glowny:not(:has(.at-3d-brak)) .at-3d{position:absolute;inset:0;height:auto}
 .at-glowny:not(:has(.at-3d-brak)) .at-3d-scena{top:0;bottom:0;right:auto;left:calc(50% - 50vw);width:100vw}
@@ -123,7 +125,17 @@ html.at-czeka .at-miejsce{visibility:hidden}
 /* mózg w 3D: na węższym ekranie scena zostawia pas u góry na suwak strzałkowy, u dołu na czołowy i z prawej na poziomy, który staje
    tuż za tyłem mózgu, jeśli jest tam miejsce; suwaki ustawia `mozg3d.js` na osiach mózgu w widoku startowym */
 .at-3d{position:relative;height:clamp(460px,56vw,640px)}
-.at-3d-scena{position:absolute;top:44px;left:0;right:56px;bottom:58px;cursor:grab;touch-action:none}
+/* scena to cała ramka; pasy suwaków u góry, u dołu i z prawej leżą nad nią i przepuszczają palec do przewijania strony, a mózg w widoku
+   startowym mieści się między nimi (`wpasuj` w `mozg3d.js` czyta te zmienne); na komputerze pasów nie ma (jego nagranie, 2026-11-13) */
+.at-3d{--pas-g:44px;--pas-p:56px;--pas-d:58px;--pas-l:0px}
+.at-3d-scena{position:absolute;inset:0;cursor:grab;touch-action:none}
+.at-3d-pas{position:absolute;z-index:2;touch-action:auto}
+.at-3d-pas-g{top:0;left:0;right:0;height:var(--pas-g)}
+.at-3d-pas-d{bottom:0;left:0;right:0;height:var(--pas-d)}
+.at-3d-pas-p{top:var(--pas-g);bottom:var(--pas-d);right:0;width:var(--pas-p)}
+.at-3d.at-3d-brak .at-3d-pas{display:none}
+.at-3d:not(.at-3d-brak) .at-os{z-index:3}
+.at-3d:not(.at-3d-brak) .at-os span{text-shadow:0 0 3px #0e0d0b,0 0 7px #0e0d0b,0 0 12px #0e0d0b}
 .at-3d-scena:active{cursor:grabbing}
 .at-3d-scena canvas{display:block}
 .at-os{position:absolute;display:flex;align-items:center;gap:10px;font:500 12px/1 Inter,sans-serif;color:#a09888;letter-spacing:.04em}
@@ -138,7 +150,9 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-podpis,.at-3d-start::after{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);white-space:nowrap;font:500 12px/1 Inter,sans-serif;letter-spacing:normal;color:#e2ddd4;background:rgba(14,13,11,.9);border:1px solid rgba(226,200,150,.45);border-radius:5px;padding:4px 7px;pointer-events:none;opacity:0;z-index:6}
 .at-wl[aria-checked="true"] .at-podpis::before{content:'schowaj przekrój'}
 .at-wl[aria-checked="false"] .at-podpis::before{content:'pokaż przekrój'}
-.at-wl:hover .at-podpis,.at-wl:focus-visible .at-podpis,.at-3d-start:hover::after,.at-3d-start:focus-visible::after{opacity:1}
+/* podpis na wskazanie tylko tam, gdzie jest wskaźnik: stuknięcie zostawiało na telefonie podpis ↻ na ekranie (jego nagranie, 2026-11-13) */
+@media (hover:hover){.at-wl:hover .at-podpis,.at-3d-start:hover::after{opacity:1}}
+.at-wl:focus-visible .at-podpis,.at-3d-start:focus-visible::after{opacity:1}
 .at-os-poziomy .at-podpis{bottom:auto;top:calc(100% + 8px)}
 /* powrót do widoku startowego w prawym dolnym rogu sceny */
 .at-3d-start{position:absolute;right:0;bottom:6px;z-index:3;width:34px;height:34px;display:grid;place-items:center;font:400 19px/1 Inter,sans-serif;color:#cfc8bb;background:rgba(14,13,11,.75);border:1px solid rgba(226,200,150,.45);border-radius:999px;cursor:pointer;padding:0}
@@ -162,16 +176,17 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-3d.at-3d-brak .at-os-poziomy .at-suwak{writing-mode:horizontal-tb;direction:rtl}
 /* na telefonie mózg w 3D jest kwadratem, a przekroje w tej samej skali: czołowy i poziomy obok siebie, strzałkowy pod nimi; scena kończy
    się wyżej, żeby wyłącznik pionowego suwaka i wyłącznik dolnego nie dzieliły pola palca */
-@media (max-width:720px){.at-3d{height:auto;aspect-ratio:1/1}.at-3d-scena{bottom:80px}.at-3d.at-3d-brak{aspect-ratio:auto}.at-glowny{gap:14px 16px}.at-glowny .wk-widok-czolowy,.at-glowny .wk-widok-poziomy{flex-basis:calc((100% - 16px) / 2)}.at-glowny .wk-widok-strzalkowy{flex-basis:calc((100% - 16px) * .6188)}}
+@media (max-width:720px){.at-3d{height:auto;aspect-ratio:1/1}.at-3d{--pas-d:80px;--pas-p:50px;--pas-l:6px}.at-3d.at-3d-brak{aspect-ratio:auto}.at-glowny{gap:14px 16px}.at-glowny .wk-widok-czolowy,.at-glowny .wk-widok-poziomy{flex-basis:calc((100% - 16px) / 2)}.at-glowny .wk-widok-strzalkowy{flex-basis:calc((100% - 16px) * .6188)}}
 /* telefon i tablet (jego słowa, 2026-11-13: *too small on the vertical view and too big on horizontal*): poniżej 1000 px ramka mózgu nigdy
    nie jest wyższa niż ekran, więc w poziomie widać cały mózg z suwakami naraz; na telefonie ramka sięga brzegów ekranu, a mózg wypełnia
    scenę (`wpasuj` w `mozg3d.js`) */
 @media (max-width:999px){.at-3d:not(.at-3d-brak){height:clamp(300px,min(56vw,100vh - 16px),640px);height:clamp(300px,min(56vw,100svh - 16px),640px)}}
 @media (max-width:720px){
 .at-glowny .at-3d:not(.at-3d-brak){flex:0 0 100vw;height:auto;max-height:calc(100vh - 16px);max-height:calc(100svh - 16px);margin-inline:calc(50% - 50vw)}
-.at-3d:not(.at-3d-brak) .at-3d-scena{left:6px;right:50px}
 .at-3d-start{right:12px}
 }
+/* w poziomie na niskim ekranie pasy są węższe, żeby mózg wziął więcej wysokości */
+@media (max-width:999px) and (max-height:500px) and (orientation:landscape){.at-3d{--pas-g:38px;--pas-d:46px}.at-os-czolowy{bottom:8px}.at-os-strzalkowy{top:8px}}
 /* suwak pod palcem ma pole 32 px w poprzek toru, a jego środek zostaje tam, gdzie stał */
 @media (pointer:coarse){
 .at-os-czolowy .at-suwak,.at-os-strzalkowy .at-suwak{height:32px;margin:-7px 0}

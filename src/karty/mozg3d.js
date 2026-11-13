@@ -100,6 +100,12 @@ export async function mozg3d(el) {
   scena.appendChild(renderer.domElement);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.target.set(0, -17, 5);
+  const T0 = controls.target.clone();
+  // poniżej 1000 px płótno zajmuje całą ramkę, więc przybliżony mózg przechodzi pod suwakami zamiast urywać się w kwadracie; pasy suwaków
+  // (--pas-g, --pas-p, --pas-d, --pas-l w wiki.css) przepuszczają palec do przewijania strony, a mózg w widoku startowym mieści się
+  // między nimi (jego nagranie, 2026-11-13: *this is not fixed well*)
+  for (const k of ['g', 'd', 'p']) { const d = document.createElement('div'); d.className = 'at-3d-pas at-3d-pas-' + k; d.setAttribute('aria-hidden', 'true'); el.appendChild(d); }
+  const pas = () => { const cs = getComputedStyle(el); return ['--pas-g', '--pas-p', '--pas-d', '--pas-l'].map((v) => parseFloat(cs.getPropertyValue(v)) || 0); };
   controls.enablePan = true; controls.screenSpacePanning = true; controls.zoomToCursor = true; controls.enableDamping = false;
   controls.minDistance = 40; controls.maxDistance = 700;
   controls.update();
@@ -282,24 +288,32 @@ export async function mozg3d(el) {
     camera.aspect = w / h; camera.updateProjectionMatrix();
     // obrót palcem idzie za wysokością sceny (OrbitControls liczy pełny obrót na jej wysokość), więc na niskiej scenie telefonu ten sam
     // ruch palca obraca mózg tyle, ile ruch myszy na komputerze (jego słowa, 2026-11-13: *the navigation is somewhat off*)
-    controls.rotateSpeed = scena.offsetTop < 10 ? 1 : Math.min(1, h / 600);
+    const [pg, pp, pd, pl] = pas(), poz = w > h;
+    controls.rotateSpeed = pg ? Math.min(1, (h - pg - pd) / 600) : 1;
+    // obrót telefonu stawia mózg od nowa w widoku startowym nowej ramki: przybliżenie z pionu urywało go w poziomie
+    if (pg && bylPoz !== null && poz !== bylPoz && ruszony) { ruszony = false; zamknij(); }
+    bylPoz = poz;
     if (!ruszony) {
-      if (scena.offsetTop < 10) {
+      if (!pg) {
         // scena pod suwakami (na komputerze) mieści mózg między pasem górnego suwaka a pasem dolnego
         const pol = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)), hm = (h - 110) / h;
         const d = Math.min(620, Math.max(320, Math.max(84 / (pol * hm), 112 / (pol * camera.aspect))));
         camera.position.copy(controls.target).addScaledVector(kierunek, d);
-      } else wpasuj();
+      } else wpasuj(w, h, pg, pp, pd, pl);
       controls.update(); controls.saveState();
     }
     rysuj();
   }
-  // poniżej 1000 px mózg wypełnia ramkę: kamera mierzy obrys powierzchni na ekranie, staje na jego środku i odsuwa się tak, żeby zajął
-  // ramkę bez 4% marginesu (jego słowa, 2026-11-13: *too small on the vertical view*)
-  function wpasuj() {
+  let bylPoz = null;
+  // poniżej 1000 px mózg wypełnia ramkę między pasami suwaków: kamera mierzy obrys powierzchni na ekranie, staje tak, żeby jego środek
+  // wypadł na środku tego pola, i odsuwa się, aż zajmie je bez 4% marginesu (jego słowa, 2026-11-13: *too small on the vertical view*)
+  function wpasuj(w, h, pg, pp, pd, pl) {
     const q = new THREE.Vector3(), pr = new THREE.Vector3(), gr = new THREE.Vector3(), pol = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-    let d = camera.position.distanceTo(controls.target);
-    for (let k = 0; k < 4; k++) {
+    const xL = -1 + 2 * pl / w, xR = 1 - 2 * pp / w, yG = 1 - 2 * pg / h, yD = -1 + 2 * pd / h;
+    const icx = (xL + xR) / 2, icy = (yG + yD) / 2, ihw = (xR - xL) / 2, ihh = (yG - yD) / 2;
+    controls.target.copy(T0);
+    let d = camera.position.distanceTo(controls.target) || 400;
+    for (let k = 0; k < 5; k++) {
       camera.position.copy(controls.target).addScaledVector(kierunek, d);
       camera.lookAt(controls.target); camera.updateMatrixWorld();
       let x0 = 9, x1 = -9, y0 = 9, y1 = -9;
@@ -309,8 +323,8 @@ export async function mozg3d(el) {
       }
       const hh = d * pol, hw = hh * camera.aspect;
       pr.setFromMatrixColumn(camera.matrixWorld, 0); gr.setFromMatrixColumn(camera.matrixWorld, 1);
-      controls.target.addScaledVector(pr, ((x0 + x1) / 2) * hw).addScaledVector(gr, ((y0 + y1) / 2) * hh);
-      d = Math.min(controls.maxDistance, Math.max(controls.minDistance, d * Math.max((x1 - x0) / 2, (y1 - y0) / 2) / 0.96));
+      controls.target.addScaledVector(pr, ((x0 + x1) / 2 - icx) * hw).addScaledVector(gr, ((y0 + y1) / 2 - icy) * hh);
+      d = Math.min(controls.maxDistance, Math.max(controls.minDistance, d * Math.max((x1 - x0) / 2 / ihw, (y1 - y0) / 2 / ihh) / 0.96));
     }
     camera.position.copy(controls.target).addScaledVector(kierunek, d);
   }
@@ -452,15 +466,16 @@ export async function mozg3d(el) {
     const [lx] = ekr(-M.bok, ys, zs), [rx] = ekr(M.bok, ys, zs);
     const dol = el.querySelector('.at-os-czolowy'), bok = el.querySelector('.at-os-poziomy'), gor = el.querySelector('.at-os-strzalkowy');
     // scena zaczyna się pod górnym suwakiem, więc suwaki liczą się od jej rogu
-    const ox = scena.offsetLeft, oy = scena.offsetTop;
-    if (dol) { dol.style.left = ox + Math.max(0, Math.min(px, tx)) + 'px'; dol.style.width = Math.abs(tx - px) + 'px'; }
+    // poniżej 1000 px scena to cała ramka, a suwaki trzymają się pola między pasami
+    const ox = scena.offsetLeft, oy = scena.offsetTop, [pg, pp, pd, pl] = pas();
+    if (dol) { dol.style.left = ox + Math.max(pl, Math.min(px, tx)) + 'px'; dol.style.width = Math.abs(tx - px) + 'px'; }
     // boczny stoi tuż za tyłem mózgu, mierzonym na powierzchni, a gdzie ramka jest za wąska, w pasie przy jej brzegu
     let prawy = 0;
     const q = new THREE.Vector3();
     for (let i = 0; i < nv; i += 5) { q.set(pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2]).project(kam); prawy = Math.max(prawy, (q.x + 1) / 2 * rb.width); }
     // z wyłącznikiem pod spodem kończy się na dole sceny, nad dolnym suwakiem
-    const bt = Math.max(0, Math.min(gy, dy));
-    if (bok) { bok.style.top = oy + bt + 'px'; bok.style.height = Math.min(Math.abs(dy - gy), rb.height - bt) + 'px'; bok.style.right = 'auto'; bok.style.left = ox + Math.min(rb.width + 6, prawy + 20) + 'px'; }
+    const bt = Math.max(pg, Math.min(gy, dy));
+    if (bok) { bok.style.top = oy + bt + 'px'; bok.style.height = Math.min(Math.abs(dy - gy), rb.height - pd - bt) + 'px'; bok.style.right = 'auto'; bok.style.left = ox + Math.min(rb.width - pp + 6, prawy + 20) + 'px'; }
     // na szerokim ekranie przekrój poziomy staje za pionowym suwakiem, w skali przekrojów z lewej, i nigdy pod nim (przegląd 2026-11-11:
     // suwak szedł przez lewą półkulę przekroju i jego znacznik)
     const gl = el.closest('.at-glowny'), pz = gl && gl.querySelector('.at-boki-prawe'), lw = gl && gl.querySelector('.at-boki-lewe');
@@ -470,7 +485,7 @@ export async function mozg3d(el) {
       pz.style.left = od + 'px'; pz.style.right = 'auto'; pz.style.width = Math.max(120, Math.min(szer, maks - od)) + 'px';
     } else if (pz) { pz.style.left = pz.style.right = pz.style.width = ''; }
     // suwak z wyłącznikiem ma co najmniej 210 px, żeby dało się go przesuwać, i zostaje w ramce
-    if (gor) { const w = Math.max(210, Math.abs(rx - lx)), c = (lx + rx) / 2; gor.style.left = ox + Math.max(0, Math.min(rb.width - w, c - w / 2)) + 'px'; gor.style.width = w + 'px'; }
+    if (gor) { const w = Math.max(210, Math.abs(rx - lx)), c = (lx + rx) / 2; gor.style.left = ox + Math.max(0, Math.min(rb.width - pp - w, c - w / 2)) + 'px'; gor.style.width = w + 'px'; }
   };
   new ResizeObserver(() => { wymiar(); osie(); }).observe(scena);
   wymiar(); osie();
