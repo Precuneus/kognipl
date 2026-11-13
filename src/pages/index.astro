@@ -515,6 +515,10 @@ function size() {
   document.documentElement.style.setProperty('--hh', $('.roj').offsetTop + 'px');
   if (w !== W || h !== H || cv.width !== Math.round(w * D)) { W = w; H = h; cv.width = cv2.width = Math.round(W * D); cv.height = cv2.height = Math.round(H * D); }
   geomS();
+  // na telefonie nazwy sieci stoją tuż pod mózgiem, nie w 66vh: w Safari 100vh sięga pod pasek, więc ostatni rząd znikał pod nim
+  // (jego zrzut, 2026-11-13: limbiczna pod paskiem, pusty pas między mózgiem a nazwami)
+  const lista = $('.roj-sieci-lista') as HTMLElement | null;
+  if (lista) lista.style.top = MOB ? Math.round(BS.cy + BS.bw * .375 + 16 - $('.roj').offsetTop) + 'px' : '';
   // c0..c1: odcinek, na którym ekran trwa w swoim stanie; przejścia między c1 jednego a c0 następnego.
   SEC = $$('.roj-st').map((s) => {
     const lep = s.classList.contains('poziom') || s.classList.contains('lepkie') || s.classList.contains('oba'), hh = lep ? H : s.offsetHeight;
@@ -2255,6 +2259,9 @@ function dymekPokaz(n: number, x: number, y: number) {
   // na telefonie menu stoi pod przełącznikiem: dymek schodzi pod menu, żeby go nie zasłaniać
   const mn = (document.querySelector('.rocznik-menu') as HTMLElement | null)?.getBoundingClientRect();
   if (mn && mn.height && left < mn.right && left + w > mn.left && mn.bottom + 12 > top) top = mn.bottom + 12;
+  // na telefonie dymek otwiera się pod mózgiem, na miejscu nazw sieci, bo nad mózgiem nie ma na niego miejsca i zasłaniał sieć, którą
+  // opisuje (jego zrzut, 2026-11-13); × albo stuknięcie obok oddaje nazwy
+  if (MOB) top = brainB({ u: 120, v: 180 })[1] + 12;
   if (DYM_POS) [left, top] = DYM_POS;
   DYM.style.left = Math.max(m, Math.min(vw - w - m, left)) + 'px'; DYM.style.top = Math.max(m, Math.min(vh - h - m, top)) + 'px';
   [[20, 7], [38, 12]].forEach(([, r], i) => { const b = DYM_B[i]; b.hidden = false; b.style.width = b.style.height = r + 'px'; });
