@@ -195,8 +195,13 @@ export async function mozg3d(el) {
     plastry[p] = { T, B, A, Y };
     const S = 8, cv = document.createElement('canvas'); cv.width = T.W * S; cv.height = T.H * S;
     const g = cv.getContext('2d');
-    g.fillStyle = '#1b1813';
-    for (let i = 0; i < T.v.length; i++) if (T.v[i] > 127) g.fillRect((i % T.W) * S, Math.floor(i / T.W) * S, S + 1, S + 1);
+    // komory też są ścianą: przez dziurę w ścianie widać było od środka ścianę komory na powierzchni 3D, a każdy jej punkt nosi strukturę,
+    // której dotyka, więc zaznaczone jądro przy komorze (jądro łożyskowe prążka krańcowego) świeciło plamami za liniami przekroju (jego
+    // zrzut, 2026-11-16: *it marks strange structures and they are on top of each other*)
+    for (let i = 0; i < T.v.length; i++) {
+      const kom = T.v[i] <= 127 && RODZAJ[A.v[i]] === 'komora';
+      if (T.v[i] > 127 || kom) { g.fillStyle = kom ? '#100e0b' : '#1b1813'; g.fillRect((i % T.W) * S, Math.floor(i / T.W) * S, S + 1, S + 1); }
+    }
     let s2 = 11;
     const l2 = () => ((s2 = (s2 * 16807) % 2147483647) / 2147483647);
     for (let yy = 1.75; yy < T.H * S; yy += 3.5) for (let xx = 1.75; xx < T.W * S; xx += 3.5) {
@@ -536,7 +541,8 @@ export async function mozg3d(el) {
       const pl = plastry[h.object.userData.p];
       if (!pl || !h.uv) continue;
       const c = Math.min(pl.T.W - 1, Math.floor(h.uv.x * pl.T.W)), rr = Math.min(pl.T.H - 1, Math.floor((1 - h.uv.y) * pl.T.H)), i = rr * pl.T.W + c;
-      if (pl.T.v[i] <= 127) continue; // poza tkanką ściana jest przezroczysta
+      // poza tkanką ściana jest przezroczysta, ale komora ją zamyka: wskazanie w komorze nie sięga ściany komory za nią
+      if (pl.T.v[i] <= 127) { if (RODZAJ[pl.A.v[i]] === 'komora') return null; continue; }
       const czyKora = pl.B.v[i] < 128 && RODZAJ[pl.A.v[i]] === 'kora';
       return [pl.A.v[i], czyKora ? pl.Y.v[i] : 0];
     }
