@@ -480,6 +480,9 @@ export async function mozg3d(el) {
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   const zamknij = () => { if (nazwa) nazwa.hidden = true; };
   function opis(a, y) {
+    // jądro pod korą nazywa się w każdym widoku, bo w Sieciach i Płatach nie ma sieci ani płata (2026-11-16)
+    const jadro = a && RODZAJ[a] === 'gleb' && A2R[a] && REG[A2R[a] - 1] ? A2R[a] : 0;
+    if (jadro && stan.tryb !== 'obszary') return '<span><b>' + esc(REG[jadro - 1][0]) + '</b></span>';
     if (stan.tryb === 'platy') { const p = platPola(a); return p ? '<span><b>' + esc(p) + '</b></span>' : ''; }
     if (stan.tryb === 'obszary') {
       const r = a ? A2R[a] : 0;
@@ -508,7 +511,9 @@ export async function mozg3d(el) {
     const r = renderer.domElement.getBoundingClientRect();
     mysz.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
     ray.setFromCamera(mysz, camera);
-    for (const h of ray.intersectObjects([kora, ...CIECIA.filter((p) => lico[p]).map((p) => lico[p].m), ...piny.filter((p) => p.widac).map((p) => p.m)], false)) {
+    // przypięta bryła bierze klik przed tkanką, bo jej cień leży na wierzchu: klik trafia w to, co oko widzi na górze (2026-11-16)
+    const naPinie = ray.intersectObjects(piny.filter((p) => p.widac).map((p) => p.m), false);
+    for (const h of naPinie.concat(ray.intersectObjects([kora, ...CIECIA.filter((p) => lico[p]).map((p) => lico[p].m)], false))) {
       if (h.object.userData.n) {
         // bryła przypiętego obszaru: struktura pola, w którym leży punkt, albo najbliższego pola tej bryły
         const n = h.object.userData.n, xi = Math.round((-Math.abs(h.point.x) - O.poczatek[0]) / k), yi = Math.round((h.point.y - O.poczatek[1]) / k), zi = Math.round((h.point.z - O.poczatek[2]) / k);
@@ -562,7 +567,9 @@ export async function mozg3d(el) {
     tKlik = setTimeout(() => {
       if (!t) return;
       let w = null;
-      if (stan.tryb === 'platy') { const p = platPola(t[0]); if (p) w = { typ: 'plat', p }; }
+      const jadro = t[0] && RODZAJ[t[0]] === 'gleb' && A2R[t[0]] ? A2R[t[0]] : 0;
+      if (jadro && stan.tryb !== 'obszary') w = { typ: 'obszar', n: jadro };
+      else if (stan.tryb === 'platy') { const p = platPola(t[0]); if (p) w = { typ: 'plat', p }; }
       else if (stan.tryb === 'obszary') { const r = t[0] ? A2R[t[0]] : 0; if (r) w = { typ: 'obszar', n: r }; }
       else if (t[1] && O.sieci[t[1] - 1][1].length) w = { typ: 'siec', kody: O.sieci[t[1] - 1][1].slice() };
       if (w) siatka.dispatchEvent(new CustomEvent('atlas-klik', { detail: w }));

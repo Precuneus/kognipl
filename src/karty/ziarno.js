@@ -452,8 +452,19 @@ export async function ziarno() {
   }
   // pod wskaźnikiem: w trybie sieci kod i nazwa każdej sieci miejsca, w trybie obszarów nazwa obszaru i jego płat, zawsze jako tekst
   // (jego słowa, 2026-11-10: *clicking itself should not redirect*)
+  // jądro pod korą dokładnie pod wskaźnikiem (rodzaj gleb: jądra podstawy, wzgórze, pień, jądra móżdżku): w Sieciach i Płatach nie ma
+  // ani sieci, ani płata, więc wskazanie je nazywa, a klik zaznacza je jako obszar i przełącza widok na Obszary (jego słowa, 2026-11-16:
+  // *can we make the subcortical structures clickable?*)
+  const jadroPod = (v, e) => { if (!ATLAS || !v.zywy) return 0; const a = v.allen[komorka(v, e)]; return a && OBJ.RODZAJ[a] === 'gleb' && REG[OBJ.A2R[a] - 1] ? OBJ.A2R[a] : 0; };
   function pokaz(v, e, palec) {
     ostatni = { v, e: { clientX: e.clientX, clientY: e.clientY }, palec };
+    const jadro = tryb !== 'obszary' ? jadroPod(v, e) : 0;
+    if (jadro) {
+      if (hot.size || hotPlat) { hot.clear(); hotPlat = ''; rysujWszystko(); }
+      postaw(v, e, '<span><b>' + esc(REG[jadro - 1][0]) + '</b></span>');
+      v.pole.style.cursor = 'pointer';
+      return;
+    }
     if (tryb === 'platy') {
       const n = obszarPod(v, e), p = platObszaru(n);
       if (p !== hotPlat) { hotPlat = p; rysujWszystko(); }
@@ -612,6 +623,8 @@ export async function ziarno() {
   const tenSam = (a, b) => a && b && a.typ === b.typ && (a.typ === 'obszar' ? a.n === b.n : a.typ === 'plat' ? a.p === b.p : a.kody.join() === b.kody.join());
   function kliknij(v, e) {
     let w = null;
+    const jadro = tryb !== 'obszary' ? jadroPod(v, e) : 0;
+    if (jadro) { ustawTryb('obszary'); hot.clear(); hotPlat = ''; wybierz({ typ: 'obszar', n: jadro }); return; }
     if (tryb === 'platy') { const p = platObszaru(obszarPod(v, e)); if (!p) return; w = { typ: 'plat', p }; }
     else if (tryb === 'obszary') { const n = obszarPod(v, e); if (!n) return; w = { typ: 'obszar', n }; }
     else {
@@ -683,7 +696,7 @@ export async function ziarno() {
     // wstecz, dalej i link do Atlasu z samego Atlasu zmieniają tylko adres: zaznaczenie idzie za nim
     addEventListener('hashchange', zAdresu);
     // klik w mózg w 3D zaznacza jak klik w przekroju: drugi klik w to samo zdejmuje zaznaczenie; karta wczytuje się bez przewijania
-    mozg.addEventListener('atlas-klik', (e) => { const w = e.detail; hotReg = 0; wybierz(tenSam(w, wybor) ? null : w); });
+    mozg.addEventListener('atlas-klik', (e) => { const w = e.detail; hotReg = 0; if (w && w.typ === 'obszar' && tryb !== 'obszary') { ustawTryb('obszary'); hot.clear(); hotPlat = ''; } wybierz(tenSam(w, wybor) ? null : w); });
     // wstecz po zmianie ścieżki na miejscu wraca do wpisu z innym adresem bez zdarzenia hashchange (przegląd Atlasu 2026-11-11)
     addEventListener('popstate', zAdresu);
     if (szukaj && wyniki) {
