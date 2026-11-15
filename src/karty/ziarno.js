@@ -704,7 +704,7 @@ export async function ziarno() {
       // i polskie znaki; najpierw nazwy, które zaczynają się od wpisanego słowa, potem inne nazwy, potem reszta, w kolejności listy
       const LISTA = JSON.parse(szukaj.dataset.lista || '[]');
       const plasko = (t) => t.toLowerCase().replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      const WPISY = LISTA.flatMap(([g, xs]) => xs.map(([n, i, inne]) => ({ n, i, g, inne, pn: plasko(n), pi: inne.map(plasko), pg: plasko(g) })));
+      const WPISY = LISTA.flatMap(([g, xs]) => xs.map(([n, i, inne, czesty, nad]) => ({ n, i, g, inne, czesty, nad, pn: plasko(n), pi: inne.map(plasko), pg: plasko(g) })));
       let aktywny = -1, widac = [];
       const otworz = (tak) => { wyniki.hidden = !tak; szukaj.setAttribute('aria-expanded', String(tak)); if (!tak) { szukaj.removeAttribute('aria-activedescendant'); aktywny = -1; } };
       const opcja = (x, pod, wybrany) => '<li role="option" id="at-w-' + x.i + '" data-n="' + x.i + '" aria-selected="' + wybrany + '">' + esc(x.n) + (pod ? ' <span class="at-w-pod">' + esc(pod) + '</span>' : '') + '</li>';
@@ -713,9 +713,18 @@ export async function ziarno() {
         let html = '';
         if (!q || (teraz && szukaj.value === REG[teraz - 1][0])) {
           // puste pole albo nazwa zaznaczenia: cała lista w grupach, z wierszem bez zaznaczenia na początku
-          widac = (teraz ? [{ i: 0, n: 'bez zaznaczenia' }] : []).concat(WPISY);
           if (teraz) html += '<li role="option" id="at-w-0" data-n="0" aria-selected="false" class="at-w-bez">bez zaznaczenia</li>';
-          LISTA.forEach(([g]) => { html += '<li role="presentation" class="at-w-grupa">' + esc(g) + '</li>' + WPISY.filter((x) => x.g === g).map((x) => opcja(x, '', x.i === teraz)).join(''); });
+          // obszary częste w grupach, pod nimi blok pozostałych w tych samych grupach; część, której grupa stoi w bloku częstych, niesie
+          // jej nazwę szarym
+          const blok = (czeste) => LISTA.forEach(([g]) => {
+            const xs = WPISY.filter((x) => x.g === g && x.czesty === czeste);
+            if (!xs.length) return;
+            html += '<li role="presentation" class="at-w-grupa">' + esc(g) + '</li>' + xs.map((x) => opcja(x, !czeste && x.nad && WPISY.some((y) => y.n === x.nad && y.czesty) ? x.nad : '', x.i === teraz)).join('');
+          });
+          widac = (teraz ? [{ i: 0, n: 'bez zaznaczenia' }] : []).concat(WPISY.filter((x) => x.czesty), WPISY.filter((x) => !x.czesty));
+          blok(true);
+          html += '<li role="presentation" class="at-w-blok">pozostałe obszary</li>';
+          blok(false);
         } else {
           const slowa = q.split(/\s+/);
           const pasuje = (x) => slowa.every((s) => x.pn.includes(s) || x.pi.some((a) => a.includes(s)) || x.pg.includes(s));

@@ -40,6 +40,8 @@ const KLUCZOWE = ['zakręt czołowy górny', 'zakręt czołowy środkowy', 'zakr
   'zakręt potyliczny dolny', 'zakręt potyliczny górny', 'klinek', 'zakręt językowaty', 'biegun potyliczny', 'zakręt obręczy', 'wyspa',
   'ciało modzelowate', 'jądro ogoniaste', 'wzgórze', 'skorupa', 'gałka blada', 'przedmurze', 'ciało migdałowate', 'hipokamp', 'komora boczna',
   'komora trzecia', 'okolica suteczkowata podwzgórza', 'pasmo wzrokowe', 'sklepienie', 'śródmózgowie', 'podwzgórze', 'istota biała przodomózgowia'];
+// jądra z podręcznika, częste mimo braku kart
+const CZESTE = ['istota czarna', 'pole brzuszne nakrywki', 'jądro półleżące', 'jądro niskowzgórzowe', 'móżdżek'];
 export const PLATY = ['płat czołowy', 'płat ciemieniowy', 'płat skroniowy', 'płat potyliczny', 'płat limbiczny', 'płat wyspowy'];
 // widok Płaty (jego słowa, 2026-11-11: *we should add płaty to the views*): płaty w barwach ryc. 2 wpisu 28.10 (rysunek płatów z Wikimedia
 // Commons: czołowy niebieski, ciemieniowy żółty, skroniowy zielony, potyliczny różowy), w głębokich odcieniach, odrębnych od jasnych barw
@@ -158,7 +160,11 @@ export function listaObszarow(REG, karty) {
   numery.filter((i) => !JAK[i]).forEach((i) => grupy.get(gdzie(i)).push(i));
   // część stoi za swoją grupą, a jej części za nią
   const zCzesciami = (i) => [i, ...numery.filter((j) => JAK[j] === i).sort(porzadek).flatMap(zCzesciami)];
-  return [...grupy].filter(([, xs]) => xs.length).map(([g, xs]) => [g, xs.sort(porzadek).flatMap(zCzesciami).map((i) => [REG[i - 1][0], i, ALIASY[REG[i - 1][0]] || []])]);
+  // obszar częsty (jego słowa, 2026-11-16: *group the regions on the list... from the common in the section at the top... and the secondary
+  // obscure regions in a block below*): jeden z 40 obszarów rysunków, obszar z kartą albo z kartami, które w nim leżą, albo jądro
+  // z podręcznika (CZESTE); reszta schodzi do bloku pod nim, w tych samych grupach, część z nazwą swojej grupy
+  const czesty = (i) => KLUCZOWE.includes(REG[i - 1][0]) || CZESTE.includes(REG[i - 1][0]) || ile(i) > 0;
+  return [...grupy].filter(([, xs]) => xs.length).map(([g, xs]) => [g, xs.sort(porzadek).flatMap(zCzesciami).map((i) => [REG[i - 1][0], i, ALIASY[REG[i - 1][0]] || [], czesty(i), JAK[i] ? REG[JAK[i] - 1][0] : ''])]);
 }
 // karty każdej sieci, w kolejności alfabetu, bez karty samej sieci
 export function kartySieci(KARTY) {
