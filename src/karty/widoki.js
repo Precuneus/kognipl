@@ -6,7 +6,7 @@
 import D from './mozg-widoki.json';
 import O from './objetosc.json';
 import { NETN, netCard, card, slugify, kartaObszaru } from './data.js';
-import { OBSZARY, JAK } from './obszary.js';
+import { OBSZARY, JAK, wGrupie } from './obszary.js';
 
 export const DANE = D;
 export const OBJ = O;
@@ -48,9 +48,9 @@ export const PLATY = ['płat czołowy', 'płat ciemieniowy', 'płat skroniowy', 
 export const PLAT_KOL = { 'płat czołowy': '#4f86c9', 'płat ciemieniowy': '#c9a43a', 'płat skroniowy': '#4f9e52', 'płat potyliczny': '#c4506f', 'płat limbiczny': '#8762c4', 'płat wyspowy': '#a8743c' };
 // struktury bez płata w układach, które nazywa ontologia Allena; część grupy idzie za swoją grupą
 const POD_KORA = [
-  ['jądra podstawy', ['jądro ogoniaste', 'skorupa', 'skorupa, część brzuszno-tylna', 'gałka blada', 'jądro półleżące', 'przedmurze', 'jądro niskowzgórzowe']],
+  ['jądra podstawy', ['jądro ogoniaste', 'skorupa', 'skorupa, część brzuszno-tylna', 'gałka blada', 'gałka blada brzuszna', 'jądro półleżące', 'przedmurze', 'jądro niskowzgórzowe']],
   ['międzymózgowie', ['wzgórze', 'podwzgórze']],
-  ['ciało migdałowate i podstawa przodomózgowia', ['ciało migdałowate', 'podstawa przodomózgowia', 'jądra przegrody', 'jądro łożyskowe prążka krańcowego']],
+  ['ciało migdałowate i podstawa przodomózgowia', ['ciało migdałowate', 'rozszerzone ciało migdałowate', 'podstawa przodomózgowia', 'jądra przegrody', 'jądro łożyskowe prążka krańcowego']],
   ['istota biała', ['istota biała przodomózgowia', 'ciało modzelowate', 'spoidło przednie', 'sklepienie', 'pęczek suteczkowo-wzgórzowy', 'pasmo wzrokowe', 'promienistość wzrokowa', 'istota biała tyłomózgowia']],
   ['komory', ['komora boczna', 'komora trzecia', 'komora czwarta', 'kanał środkowy rdzenia przedłużonego']],
   ['pień mózgu', ['śródmózgowie', 'część podstawna mostu', 'nakrywka mostu', 'piramida rdzenia przedłużonego', 'nakrywka rdzenia przedłużonego', 'jądro dolne oliwki', 'konar środkowy móżdżku', 'konar dolny móżdżku']],
@@ -62,6 +62,14 @@ const POD_KORA = [
 // Szukanie obszaru (jego słowo, 2026-11-11: *add the search*): obok polskiej nazwy obszar znajduje się po nazwie angielskiej i po
 // skrócie, którego używają podręczniki i karty (OFC, ACC, Broca, Heschl, V1 jak na kartach: klinek, zakręt językowaty, biegun potyliczny)
 export const ALIASY = {
+  // jądra CIT168 (2026-11-15): nazwy angielskie i skróty autorów atlasu
+  'istota czarna, część zbita': ['substantia nigra pars compacta', 'SNc'],
+  'istota czarna, część siatkowata': ['substantia nigra pars reticulata', 'SNr'],
+  'pole brzuszne nakrywki': ['ventral tegmental area', 'VTA', 'brzuszna część nakrywki śródmózgowia'],
+  'jądro przyramienne barwnikowe': ['parabrachial pigmented nucleus', 'PBP', 'jądro okołoramienne barwnikowe'],
+  'gałka blada brzuszna': ['ventral pallidum', 'VeP', 'pallidum brzuszne'],
+  'rozszerzone ciało migdałowate': ['extended amygdala', 'EXA'],
+  'ciało suteczkowate': ['mammillary body', 'corpus mamillare', 'ciała suteczkowate'],
   'kora okołooczodołowa': ['OFC', 'orbitofrontal cortex', 'kora oczodołowo-czołowa'],
   'zakręt czołowy górny': ['superior frontal gyrus', 'SFG'],
   'zakręt czołowy środkowy': ['middle frontal gyrus', 'MFG'],
@@ -141,14 +149,16 @@ export const ALIASY = {
 // inne nazwy do szukania]
 export function listaObszarow(REG, karty) {
   // karty w obszarze i w jego częściach, każda raz, i jego własna karta
-  const ile = (i) => new Set([i].concat(REG.map((_, j) => j + 1).filter((j) => JAK[j] === i)).flatMap((j) => (karty[j] || []).map((x) => x[1]))).size + (REG[i - 1][1] ? 1 : 0);
+  const ile = (i) => new Set([i].concat(REG.map((_, j) => j + 1).filter((j) => wGrupie(JAK, j, i))).flatMap((j) => (karty[j] || []).map((x) => x[1]))).size + (REG[i - 1][1] ? 1 : 0);
   const klucz = (i) => { const k = KLUCZOWE.indexOf(REG[i - 1][0]); return k < 0 ? 1000 + i : k; };
   const porzadek = (a, b) => ile(b) - ile(a) || klucz(a) - klucz(b);
   const numery = REG.map((_, j) => j + 1);
   const gdzie = (i) => { const [n, , plat] = REG[i - 1]; return plat || (POD_KORA.find(([, xs]) => xs.includes(n)) || ['inne pod korą'])[0]; };
   const grupy = new Map([...PLATY, ...POD_KORA.map(([g]) => g), 'inne pod korą'].map((g) => [g, []]));
   numery.filter((i) => !JAK[i]).forEach((i) => grupy.get(gdzie(i)).push(i));
-  return [...grupy].filter(([, xs]) => xs.length).map(([g, xs]) => [g, xs.sort(porzadek).flatMap((i) => [i, ...numery.filter((j) => JAK[j] === i).sort(porzadek)]).map((i) => [REG[i - 1][0], i, ALIASY[REG[i - 1][0]] || []])]);
+  // część stoi za swoją grupą, a jej części za nią
+  const zCzesciami = (i) => [i, ...numery.filter((j) => JAK[j] === i).sort(porzadek).flatMap(zCzesciami)];
+  return [...grupy].filter(([, xs]) => xs.length).map(([g, xs]) => [g, xs.sort(porzadek).flatMap(zCzesciami).map((i) => [REG[i - 1][0], i, ALIASY[REG[i - 1][0]] || []])]);
 }
 // karty każdej sieci, w kolejności alfabetu, bez karty samej sieci
 export function kartySieci(KARTY) {

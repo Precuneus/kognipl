@@ -132,11 +132,13 @@ export async function ziarno() {
   const BIALA = REG.findIndex((r) => r[0] === 'istota biała przodomózgowia') + 1;
   const WSZYSTKIE = NETS.slice(0, N - 0).filter((n) => n !== 'X');
   const LIT = new Set((mozg.dataset.lit || '').split(',').filter(Boolean));
-  // przekroje z objętości: 141 struktur Allena i 17 sieci Yeo takie, jakie są; JAK wskazuje obszar rysunku, którego częścią jest
+  // przekroje z objętości: 141 struktur Allena, siedem jąder CIT168 i 17 sieci Yeo takie, jakie są; JAK wskazuje obszar rysunku, którego częścią jest
   // struktura, więc zaznaczenie jednego zapala drugi
   const OBJ = ATLAS && mozg.dataset.objetosc ? JSON.parse(mozg.dataset.objetosc) : null;
   const JAK = OBJ ? OBJ.JAK : [];
-  const trafia = (zr, n) => !!zr && !!n && (zr === n || JAK[zr] === n || (!!JAK[n] && JAK[n] === zr));
+  // zaznaczona grupa zapala swoje części na każdym szczeblu, a zaznaczona część swoje grupy
+  const wyzej = (a, g) => { for (let x = JAK[a], i = 0; x && i < 8; x = JAK[x], i++) if (x === g) return true; return false; };
+  const trafia = (zr, n) => !!zr && !!n && (zr === n || wyzej(zr, n) || wyzej(n, zr));
   const objetosc = OBJ && mozg.querySelector('.wk-zywy') ? wczytajObjetosc(OBJ.url).catch(() => null) : null;
   const stoi = cicho();
   const hot = new Set();
@@ -555,7 +557,7 @@ export async function ziarno() {
       sieciObszaru(wybor.n).forEach((n) => czesci.push(link(URL[n], kodKrotki(n))));
       tu.innerHTML = czesci.join(' · ');
       // karty grupy to jej własne i karty jej części (śródmózgowie i wzgórek górny); część bez kart pokazuje karty swojej grupy
-      const zCzesci = [wybor.n].concat(REG.map((_, j) => j + 1).filter((j) => JAK[j] === wybor.n)).flatMap((j) => KARTY_OBSZARU[j] || []);
+      const zCzesci = [wybor.n].concat(REG.map((_, j) => j + 1).filter((j) => wyzej(j, wybor.n))).flatMap((j) => KARTY_OBSZARU[j] || []);
       const lista = (zCzesci.length ? zCzesci : KARTY_OBSZARU[JAK[wybor.n]] || []).filter((x, j, a) => a.findIndex((y) => y[1] === x[1]) === j);
       if (karty) {
         karty.querySelector('.wk-chips').innerHTML = lista.map(([h, u, c]) => '<a href="' + esc(u) + '" class="wk-chip" style="--c:' + c + '">' + esc(h) + '</a>').join('');

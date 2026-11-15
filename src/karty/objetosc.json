@@ -1004,6 +1004,55 @@
 "komora",
 "komora boczna",
 ""
+],
+[
+"SNc",
+"istota czarna, część zbita",
+"gleb",
+"istota czarna",
+""
+],
+[
+"SNr",
+"istota czarna, część siatkowata",
+"gleb",
+"istota czarna",
+""
+],
+[
+"VTA",
+"pole brzuszne nakrywki",
+"gleb",
+"śródmózgowie",
+""
+],
+[
+"PBP",
+"jądro przyramienne barwnikowe",
+"gleb",
+"śródmózgowie",
+""
+],
+[
+"VeP",
+"gałka blada brzuszna",
+"gleb",
+"",
+""
+],
+[
+"EXA",
+"rozszerzone ciało migdałowate",
+"gleb",
+"",
+""
+],
+[
+"MN",
+"ciało suteczkowate",
+"gleb",
+"okolica suteczkowata podwzgórza",
+""
 ]
 ],
 "sieci": [
@@ -1127,7 +1176,7 @@
 ]
 ]
 ],
-"zrodla": "MNI ICBM152 2009c (Fonov i in. 2011); Allen Human Reference Atlas 3D 2020 (Ding i in., CC BY 4.0); Schaefer i in. 2018 z 17 sieciami Yeo i in. 2011; w móżdżku Buckner i in. 2011 (zbiór laboratorium Diedrichsena, CC BY)",
+"zrodla": "MNI ICBM152 2009c (Fonov i in. 2011); Allen Human Reference Atlas 3D 2020 (Ding i in., CC BY 4.0); Schaefer i in. 2018 z 17 sieciami Yeo i in. 2011; w móżdżku Buckner i in. 2011 (zbiór laboratorium Diedrichsena, CC BY); pod korą CIT168 (Pauli, Nili i Tyszka 2018, CC BY 4.0)",
 "mozg": {
 "przod": 73.5,
 "tyl": -106.5,

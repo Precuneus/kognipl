@@ -160,6 +160,26 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-3d-start:hover{color:#f0c060}
 .at-3d-start:focus-visible{outline:2px solid #f0c060;outline-offset:2px}
 .at-3d.at-3d-brak .at-3d-start{display:none}
+/* przypięte struktury: chipy w kroju znaczników, kropka w barwie bryły; nowy obszar do przypięcia w przerywanej ramce */
+.at-przypiete{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;flex:0 0 100%;order:0}
+.at-przypiete[hidden],.at-glowny:has(.at-3d-brak) .at-przypiete{display:none}
+.at-pin{display:inline-flex;align-items:stretch;border:1px solid rgba(226,200,150,.45);border-radius:999px;background:rgba(14,13,11,.75)}
+.at-pin button,.at-pin-nowy{position:relative;display:inline-flex;align-items:center;gap:7px;min-height:30px;font:500 12.5px/1 Inter,sans-serif;color:#e2ddd4;background:none;border:0;border-radius:999px;padding:6px 6px 6px 11px;cursor:pointer}
+.at-pin .at-pin-x{padding:6px 11px 6px 4px;font-size:15px;color:#cfc8bb}
+.at-pin-pokaz i{flex:none;width:9px;height:9px;border-radius:50%}
+.at-pin-pokaz[aria-pressed="false"]{color:#8d867a}
+.at-pin-pokaz[aria-pressed="false"] i{opacity:.3}
+.at-pin-nowy{padding:6px 11px;color:#cfc8bb;background:rgba(14,13,11,.75);border:1px dashed rgba(226,200,150,.55)}
+.at-pin button:hover,.at-pin-nowy:hover{color:#f0c060}
+.at-pin button:focus-visible,.at-pin-nowy:focus-visible{outline:2px solid #f0c060;outline-offset:2px}
+.at-pin button::after,.at-pin-nowy::after{content:attr(data-podpis);position:absolute;bottom:calc(100% + 8px);right:0;white-space:nowrap;font:500 12px/1 Inter,sans-serif;color:#e2ddd4;background:rgba(14,13,11,.9);border:1px solid rgba(226,200,150,.45);border-radius:5px;padding:4px 7px;pointer-events:none;opacity:0;z-index:6}
+@media (hover:hover){.at-pin button:hover::after,.at-pin-nowy:hover::after{opacity:1}}
+.at-pin button:focus-visible::after,.at-pin-nowy:focus-visible::after{opacity:1}
+/* na komputerze w prawym górnym rogu sceny, nad przekrojem poziomym i na prawo od pionowego suwaka, aż do brzegu ekranu; chip do
+   przypięcia stoi zawsze na górze, w tym samym miejscu, a przypięte pod nim (render 2026-11-15: przy dole kolumny pięć chipów zasłaniało
+   wyłącznik pionowego suwaka) */
+@media (min-width:1000px){.at-glowny:not(:has(.at-3d-brak)) .at-przypiete{position:absolute;top:0;right:calc(50% - 50vw + 16px);z-index:3;flex-direction:column;align-items:flex-end;justify-content:flex-start}}
+.at-pin,.at-pin-nowy{max-width:100%}.at-pin button,.at-pin-nowy{text-align:left}
 .at-wl{position:relative;flex:none;display:inline-flex;align-items:center;background:none;border:0;padding:0;margin:0 0 0 4px;cursor:pointer}
 .at-os-poziomy .at-wl{margin:6px 0 0}
 .at-wl::before{content:'';position:absolute;inset:-12px -5px}

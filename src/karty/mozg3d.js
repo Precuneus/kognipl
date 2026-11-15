@@ -70,7 +70,9 @@ export async function mozg3d(el) {
   const WSP = JSON.parse(siatka.dataset.wspolne || '[]');
   const FAM = O.sieci.map((s) => { const f = s[1].slice(); for (const { sieci: [a, b] } of WSP) if (f.includes(a) && !f.includes(b)) f.push(b); return f; });
   const BIALA = REG.findIndex((r) => r[0] === 'istota biała przodomózgowia') + 1;
-  const trafia = (zr, n) => !!zr && !!n && (zr === n || JAK[zr] === n || (!!JAK[n] && JAK[n] === zr));
+  // zaznaczona grupa zapala swoje części na każdym szczeblu, a zaznaczona część swoje grupy
+  const wyzej = (a, g) => { for (let x = JAK[a], i = 0; x && i < 8; x = JAK[x], i++) if (x === g) return true; return false; };
+  const trafia = (zr, n) => !!zr && !!n && (zr === n || wyzej(zr, n) || wyzej(n, zr));
 
   let renderer;
   try {
@@ -330,7 +332,124 @@ export async function mozg3d(el) {
   }
   const CIECIA = ['czolowy', 'poziomy', 'strzalkowy'];
   const lica = () => CIECIA.forEach(postawLico);
-  function wszystko() { koloruj(); lica(); rysuj(); }
+  function wszystko() { koloruj(); lica(); rysuj(); przypiete(); }
+
+  // przypinanie (jego notatki, 2026-11-15: *User selects any structure (midbrain, basal ganglia, thalamic nucleus) and it stays as a 3D mesh
+  // regardless of sagittal/coronal/axial slice positions. Not clipped by slice planes. Multiple pinned structures, each with its own
+  // toggle*): zaznaczony obszar przypina się chipem pod mózgiem; przypięty stoi jako bryła liczona z objętości, bez płaszczyzn cięcia,
+  // w obu półkulach, a jej cień prześwituje przez tkankę, więc widać, gdzie leży, także pod korą; chip pokazuje i chowa bryłę, × ją odpina
+  const PIN_KOL = ['#e8d8b0', '#9fd0e0', '#e6a58c', '#b9d48c', '#c9a8e0', '#e8b8d0'];
+  const piny = [];
+  const pinBox = el.closest('.at-glowny') ? el.closest('.at-glowny').querySelector('.at-przypiete') : null;
+  function bryla(n) {
+    // pola obszaru n i jego części na każdym szczeblu, lewa półkula odbita w linii środkowej jak w przekrojach
+    const NV = NX * NY * NZ, f = 2 * NV, ok = new Uint8Array(256);
+    for (let a = 1; a < 256; a++) ok[a] = A2R[a] && (A2R[a] === n || wyzej(A2R[a], n)) ? 1 : 0;
+    let bx = NX, by0 = NY, by1 = -1, bz0 = NZ, bz1 = -1;
+    for (let yi = 0; yi < NY; yi++) for (let zi = 0; zi < NZ; zi++) {
+      const b = f + (yi * NZ + zi) * NX;
+      for (let xi = 0; xi < NX; xi++) if (ok[vol[b + xi]]) { if (xi < bx) bx = xi; if (yi < by0) by0 = yi; if (yi > by1) by1 = yi; if (zi < bz0) bz0 = zi; if (zi > bz1) bz1 = zi; }
+    }
+    if (by1 < 0) return null;
+    const c0 = bx - 2, A = 2 * (NX - 1 - bx) + 5, B = by1 - by0 + 5, C = bz1 - bz0 + 5;
+    const s = new Uint8Array(A * B * C), S = (i, j, l) => s[(i * B + j) * C + l];
+    for (let i = 0; i < A; i++) {
+      const c = c0 + i, xi = c < NX ? c : 2 * (NX - 1) - c;
+      if (xi < 0 || xi >= NX || c > 2 * (NX - 1)) continue;
+      for (let j = 0; j < B; j++) {
+        const yi = by0 - 2 + j; if (yi < 0 || yi >= NY) continue;
+        for (let l = 0; l < C; l++) { const zi = bz0 - 2 + l; if (zi >= 0 && zi < NZ && ok[vol[f + (yi * NZ + zi) * NX + xi]]) s[(i * B + j) * C + l] = 1; }
+      }
+    }
+    // siatka powierzchni (surface nets): wierzchołek w każdej komórce na granicy, w środku jej przecięć, ściana na każdej krawędzi granicy
+    const ci = new Int32Array((A - 1) * (B - 1) * (C - 1)).fill(-1), CI = (i, j, l) => ci[(i * (B - 1) + j) * (C - 1) + l];
+    const P = [];
+    for (let i = 0; i < A - 1; i++) for (let j = 0; j < B - 1; j++) for (let l = 0; l < C - 1; l++) {
+      let n0 = 0, sx = 0, sy = 0, sz = 0, m = 0;
+      for (let d = 0; d < 8; d++) n0 += S(i + (d & 1), j + ((d >> 1) & 1), l + (d >> 2));
+      if (n0 === 0 || n0 === 8) continue;
+      for (let d = 0; d < 8; d++) for (const e of [1, 2, 4]) {
+        if (d & e) continue;
+        const a = S(i + (d & 1), j + ((d >> 1) & 1), l + (d >> 2)), d2 = d | e, b = S(i + (d2 & 1), j + ((d2 >> 1) & 1), l + (d2 >> 2));
+        if (a === b) continue;
+        sx += (d & 1) + (e === 1 ? 0.5 : 0); sy += ((d >> 1) & 1) + (e === 2 ? 0.5 : 0); sz += (d >> 2) + (e === 4 ? 0.5 : 0); m++;
+      }
+      ci[(i * (B - 1) + j) * (C - 1) + l] = P.length / 3;
+      P.push(i + sx / m, j + sy / m, l + sz / m);
+    }
+    const I = [], quad = (a, b, c, d, w) => { if (a < 0 || b < 0 || c < 0 || d < 0) return; if (w) I.push(a, b, c, a, c, d); else I.push(a, d, c, a, c, b); };
+    for (let i = 0; i < A - 1; i++) for (let j = 1; j < B - 1; j++) for (let l = 1; l < C - 1; l++) {
+      const a = S(i, j, l); if (a !== S(i + 1, j, l)) quad(CI(i, j - 1, l - 1), CI(i, j, l - 1), CI(i, j, l), CI(i, j - 1, l), a);
+    }
+    for (let i = 1; i < A - 1; i++) for (let j = 0; j < B - 1; j++) for (let l = 1; l < C - 1; l++) {
+      const a = S(i, j, l); if (a !== S(i, j + 1, l)) quad(CI(i - 1, j, l - 1), CI(i - 1, j, l), CI(i, j, l), CI(i, j, l - 1), a);
+    }
+    for (let i = 1; i < A - 1; i++) for (let j = 1; j < B - 1; j++) for (let l = 0; l < C - 1; l++) {
+      const a = S(i, j, l); if (a !== S(i, j, l + 1)) quad(CI(i - 1, j - 1, l), CI(i, j - 1, l), CI(i, j, l), CI(i - 1, j, l), a);
+    }
+    // wygładzenie Taubina, jak powierzchnia mózgu: schodki pól znikają, a bryła nie kurczy się
+    const nv2 = P.length / 3, sas = Array.from({ length: nv2 }, () => new Set());
+    for (let t = 0; t < I.length; t += 3) for (let q = 0; q < 3; q++) { sas[I[t + q]].add(I[t + (q + 1) % 3]); sas[I[t + q]].add(I[t + (q + 2) % 3]); }
+    let p = Float32Array.from(P);
+    for (let it = 0; it < 12; it++) {
+      const w = it % 2 ? -0.53 : 0.5, q = new Float32Array(p.length);
+      for (let v = 0; v < nv2; v++) {
+        let mx = 0, my = 0, mz = 0; const ns = sas[v];
+        for (const u of ns) { mx += p[u * 3]; my += p[u * 3 + 1]; mz += p[u * 3 + 2]; }
+        const k2 = ns.size || 1;
+        q[v * 3] = p[v * 3] + w * (mx / k2 - p[v * 3]); q[v * 3 + 1] = p[v * 3 + 1] + w * (my / k2 - p[v * 3 + 1]); q[v * 3 + 2] = p[v * 3 + 2] + w * (mz / k2 - p[v * 3 + 2]);
+      }
+      p = q;
+    }
+    for (let v = 0; v < nv2; v++) { p[v * 3] = O.poczatek[0] + (c0 + p[v * 3]) * k; p[v * 3 + 1] = O.poczatek[1] + (by0 - 2 + p[v * 3 + 1]) * k; p[v * 3 + 2] = O.poczatek[2] + (bz0 - 2 + p[v * 3 + 2]) * k; }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(p, 3));
+    g.setIndex(nv2 > 65535 ? new THREE.Uint32BufferAttribute(I, 1) : new THREE.Uint16BufferAttribute(I, 1));
+    g.computeVertexNormals();
+    return g;
+  }
+  function przypnij(n) {
+    if (piny.some((p) => p.n === n)) return;
+    const g = bryla(n);
+    if (!g) return;
+    const kolor = PIN_KOL[piny.length % PIN_KOL.length];
+    const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: kolor, roughness: 0.55, metalness: 0, emissive: kolor, emissiveIntensity: 0.12 }));
+    const cien = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ color: kolor, transparent: true, opacity: 0.42, depthTest: false, depthWrite: false }));
+    cien.renderOrder = 10; m.userData.n = n;
+    scene.add(m, cien);
+    piny.push({ n, kolor, m, cien, widac: true });
+  }
+  function odepnij(n) {
+    const i = piny.findIndex((p) => p.n === n);
+    if (i < 0) return;
+    const p = piny[i];
+    scene.remove(p.m, p.cien); p.m.geometry.dispose(); p.m.material.dispose(); p.cien.material.dispose();
+    piny.splice(i, 1);
+  }
+  function przypiete() {
+    if (!pinBox) return;
+    const n = stan.obszar;
+    let h = '';
+    if (n && REG[n - 1] && !piny.some((p) => p.n === n)) h += '<button type="button" class="at-pin-nowy" data-n="' + n + '" data-podpis="przypnij w 3D">+ ' + esc(REG[n - 1][0]) + '</button>';
+    for (const p of piny) {
+      const nz = esc(REG[p.n - 1][0]);
+      h += '<span class="at-pin"><button type="button" class="at-pin-pokaz" data-n="' + p.n + '" aria-pressed="' + p.widac + '" data-podpis="' + (p.widac ? 'schowaj' : 'pokaż') + '"><i style="background:' + p.kolor + '"></i>' + nz + '</button>'
+        + '<button type="button" class="at-pin-x" data-n="' + p.n + '" aria-label="Odepnij: ' + nz + '" data-podpis="odepnij">×</button></span>';
+    }
+    pinBox.innerHTML = h;
+    pinBox.hidden = !h;
+  }
+  if (pinBox) pinBox.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-n]');
+    if (!b) return;
+    const n = Number(b.dataset.n), p = piny.find((q) => q.n === n);
+    if (b.classList.contains('at-pin-nowy')) przypnij(n);
+    else if (b.classList.contains('at-pin-x')) odepnij(n);
+    else if (p) { p.widac = !p.widac; p.m.visible = p.cien.visible = p.widac; }
+    przypiete(); rysuj();
+    const f = pinBox.querySelector('button[data-n="' + n + '"]');
+    if (f && e.detail === 0) f.focus();
+  });
 
   // zaznaczenie i tryb z Atlasu
   const zStanu = (d) => {
@@ -389,7 +508,19 @@ export async function mozg3d(el) {
     const r = renderer.domElement.getBoundingClientRect();
     mysz.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
     ray.setFromCamera(mysz, camera);
-    for (const h of ray.intersectObjects([kora, ...CIECIA.filter((p) => lico[p]).map((p) => lico[p].m)], false)) {
+    for (const h of ray.intersectObjects([kora, ...CIECIA.filter((p) => lico[p]).map((p) => lico[p].m), ...piny.filter((p) => p.widac).map((p) => p.m)], false)) {
+      if (h.object.userData.n) {
+        // bryła przypiętego obszaru: struktura pola, w którym leży punkt, albo najbliższego pola tej bryły
+        const n = h.object.userData.n, xi = Math.round((-Math.abs(h.point.x) - O.poczatek[0]) / k), yi = Math.round((h.point.y - O.poczatek[1]) / k), zi = Math.round((h.point.z - O.poczatek[2]) / k);
+        let a = 0;
+        for (let r = 0; r <= 2 && !a; r++) for (let dy = -r; dy <= r && !a; dy++) for (let dz = -r; dz <= r && !a; dz++) for (let dx = -r; dx <= r && !a; dx++) {
+          const x = xi + dx, y = yi + dy, z = zi + dz;
+          if (x < 0 || y < 0 || z < 0 || x >= NX || y >= NY || z >= NZ) continue;
+          const v = vol[2 * NX * NY * NZ + (y * NZ + z) * NX + x];
+          if (v && (v === n || wyzej(v, n))) a = v;
+        }
+        return [a || n, 0];
+      }
       if (h.object === kora) {
         if (usuniete(h.point)) continue;
         const f = h.face;
@@ -484,6 +615,10 @@ export async function mozg3d(el) {
       const od = sb.right + 10 - g.left, maks = document.documentElement.clientWidth - 8 - g.left;
       pz.style.left = od + 'px'; pz.style.right = 'auto'; pz.style.width = Math.max(120, Math.min(szer, maks - od)) + 'px';
     } else if (pz) { pz.style.left = pz.style.right = pz.style.width = ''; }
+    // chipy przypiętych zaczynają się 12 px za pionowym suwakiem z jego podpisami, więc węższy ekran nie kładzie ich na suwaku (audyt
+    // 2026-11-15: przy 1024 px chip leżał na torze suwaka)
+    if (pinBox && bok && gl && getComputedStyle(pinBox).position === 'absolute') pinBox.style.left = bok.getBoundingClientRect().right + 12 - gl.getBoundingClientRect().left + 'px';
+    else if (pinBox) pinBox.style.left = '';
     // suwak z wyłącznikiem ma co najmniej 210 px, żeby dało się go przesuwać, i zostaje w ramce
     if (gor) { const w = Math.max(210, Math.abs(rx - lx)), c = (lx + rx) / 2; gor.style.left = ox + Math.max(0, Math.min(rb.width - pp - w, c - w / 2)) + 'px'; gor.style.width = w + 'px'; }
   };
