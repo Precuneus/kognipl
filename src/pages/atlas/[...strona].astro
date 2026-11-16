@@ -43,7 +43,7 @@ const WIKI = Object.fromEntries(KARTY.filter((x) => x.url.startsWith('/wiki/')).
 const start = { tryb: s.tryb, siec: s.siec, obszar: s.obszar };
 const glowna = s.sciezka === '/atlas/';
 const tytul = glowna || !k ? 'Atlas mózgu · kogni.pl' : k.h + ' · Atlas mózgu · kogni.pl';
-const opis = glowna || !k ? 'Atlas mózgu na kogni.pl: mózg do obracania i cięcia w trzech płaszczyznach, z kartą każdej sieci mózgowej i każdego obszaru.' : String(k.def || '').replace(/<!--\[[so]:[^\]]*\]-->/g, '').trim();
+const opis = glowna || !k ? 'Atlas mózgu na kogni.pl to mózg do obracania i cięcia w trzech płaszczyznach. Każda sieć mózgowa ma tu swoją kartę, a przy obszarach widać przypisane do nich karty wiki.' : String(k.def || '').replace(/<!--\[[so]:[^\]]*\]-->/g, '').trim();
 ---
 <Base title={tytul} activePage="atlas" description={opis}>
   <script is:inline>(function(){var z=null;try{z=localStorage.getItem('kogni-animacje')}catch(e){}var c=z?z==='off':matchMedia('(prefers-reduced-motion: reduce)').matches;if(c)document.documentElement.classList.add('roj-cicho');if(/^#(siec|obszar|plat)-/.test(location.hash))document.documentElement.classList.add('at-czeka')})();</script>

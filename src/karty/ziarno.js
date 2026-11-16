@@ -17,6 +17,7 @@ const PROG = 1 / 7;
 const SZARE = 'rgba(226,221,212,0.13)';
 const JASNE = 'rgba(226,221,212,0.42)'; // obszar pod wskaźnikiem w trybie obszarów
 const ZLOTE = '#f0c060'; // zaznaczony obszar, kolor Iskry i fokusu
+const ZLOTE_BLADE = 'rgba(240,192,96,0.4)'; // grupa zaznaczonej części
 
 function cicho() {
   if (document.documentElement.classList.contains('roj-cicho')) return true;
@@ -136,9 +137,13 @@ export async function ziarno() {
   // struktura, więc zaznaczenie jednego zapala drugi
   const OBJ = ATLAS && mozg.dataset.objetosc ? JSON.parse(mozg.dataset.objetosc) : null;
   const JAK = OBJ ? OBJ.JAK : [];
-  // zaznaczona grupa zapala swoje części na każdym szczeblu, a zaznaczona część swoje grupy
+  // zaznaczona grupa zapala swoje części na każdym szczeblu, a zaznaczona część tylko swoją grupę, szczebel wyżej (przegląd 2026-11-16:
+  // ciało suteczkowate zapalało całe podwzgórze, a samo było 23 % złota)
   const wyzej = (a, g) => { for (let x = JAK[a], i = 0; x && i < 8; x = JAK[x], i++) if (x === g) return true; return false; };
-  const trafia = (zr, n) => !!zr && !!n && (zr === n || wyzej(zr, n) || wyzej(n, zr));
+  const trafia = (zr, n) => !!zr && !!n && (zr === n || wyzej(zr, n) || JAK[n] === zr);
+  // obszar wprost: sam obszar i jego części; grupa zaznaczonej części świeci bladym złotem, więc część nie tonie w niej (przegląd
+  // 2026-11-16: jądra przednie wzgórza świeciły obwódką całego wzgórza)
+  const wprost = (zr, n) => !!zr && !!n && (zr === n || wyzej(zr, n));
   const objetosc = OBJ && mozg.querySelector('.wk-zywy') ? wczytajObjetosc(OBJ.url).catch(() => null) : null;
   const stoi = cicho();
   const hot = new Set();
@@ -183,7 +188,9 @@ export async function ziarno() {
       let sx = 0, sy = 0, sz = 0;
       for (let i = 0; i < NV; i++) {
         const a = vol[2 * NV + i];
-        if (!a || !trafia(OBJ.A2R[a], n)) continue;
+        // środek liczony z samego obszaru i jego części, bez grupy nad nim: inaczej cięcia mijały małą część (przegląd 2026-11-16: ciało
+        // kolankowate boczne nie stało w żadnym przekroju)
+        if (!a || !(OBJ.A2R[a] === n || wyzej(OBJ.A2R[a], n))) continue;
         const xi = i % NX, t = (i / NX) | 0, zi = t % NZ, yi = (t / NZ) | 0;
         pola.push(xi, yi, zi); sx += xi; sy += yi; sz += zi;
       }
@@ -367,7 +374,7 @@ export async function ziarno() {
         // istota biała ma ziarno tylko wtedy, gdy ją zaznaczono, inaczej zalałaby przekroje
         const wyb = trafia(z.r, wybranyReg);
         if (!z.r || ((z.r === BIALA || JAK[z.r] === BIALA) && !wyb)) continue;
-        kolor = wyb ? ZLOTE : trafia(z.r, hotReg) ? JASNE : SZARE;
+        kolor = wyb ? (wprost(z.r, wybranyReg) ? ZLOTE : ZLOTE_BLADE) : trafia(z.r, hotReg) ? JASNE : SZARE;
       } else {
         if (!z.k) continue;
         const kod = z.n >= 0 ? NETS[z.n] : null;
@@ -569,7 +576,10 @@ export async function ziarno() {
       tu.innerHTML = czesci.join(' · ');
       // karty grupy to jej własne i karty jej części (śródmózgowie i wzgórek górny); część bez kart pokazuje karty swojej grupy
       const zCzesci = [wybor.n].concat(REG.map((_, j) => j + 1).filter((j) => wyzej(j, wybor.n))).flatMap((j) => KARTY_OBSZARU[j] || []);
-      const lista = (zCzesci.length ? zCzesci : KARTY_OBSZARU[JAK[wybor.n]] || []).filter((x, j, a) => a.findIndex((y) => y[1] === x[1]) === j);
+      // część bez kart pokazuje karty najbliższej grupy, która je ma, na każdym szczeblu
+      let wyzszy = JAK[wybor.n];
+      while (wyzszy && !(KARTY_OBSZARU[wyzszy] || []).length) wyzszy = JAK[wyzszy];
+      const lista = (zCzesci.length ? zCzesci : KARTY_OBSZARU[wyzszy] || []).filter((x, j, a) => a.findIndex((y) => y[1] === x[1]) === j);
       if (karty) {
         karty.querySelector('.wk-chips').innerHTML = lista.map(([h, u, c]) => '<a href="' + esc(u) + '" class="wk-chip" style="--c:' + c + '">' + esc(h) + '</a>').join('');
         karty.hidden = !lista.length;
@@ -704,7 +714,8 @@ export async function ziarno() {
       // i polskie znaki; najpierw nazwy, które zaczynają się od wpisanego słowa, potem inne nazwy, potem reszta, w kolejności listy
       const LISTA = JSON.parse(szukaj.dataset.lista || '[]');
       const plasko = (t) => t.toLowerCase().replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      const WPISY = LISTA.flatMap(([g, xs]) => xs.map(([n, i, inne, czesty, nad]) => ({ n, i, g, inne, czesty, nad, pn: plasko(n), pi: inne.map(plasko), pg: plasko(g) })));
+      // nazwa grupy listy niesie po | inne nazwy do szukania; część znajduje się też po nazwie swojej grupy w Allenie (*wzgórze* znajduje jądra wzgórza)
+      const WPISY = LISTA.flatMap(([gi, xs]) => { const [g, ...gInne] = gi.split('|'); return xs.map(([n, i, inne, czesty, nad]) => ({ n, i, g, inne, czesty, nad, pn: plasko(n), pi: inne.map(plasko), pg: plasko([g, ...gInne, nad || ''].join(' ')) })); });
       let aktywny = -1, widac = [];
       const otworz = (tak) => { wyniki.hidden = !tak; szukaj.setAttribute('aria-expanded', String(tak)); if (!tak) { szukaj.removeAttribute('aria-activedescendant'); aktywny = -1; } };
       const opcja = (x, pod, wybrany) => '<li role="option" id="at-w-' + x.i + '" data-n="' + x.i + '" aria-selected="' + wybrany + '">' + esc(x.n) + (pod ? ' <span class="at-w-pod">' + esc(pod) + '</span>' : '') + '</li>';
@@ -716,7 +727,8 @@ export async function ziarno() {
           if (teraz) html += '<li role="option" id="at-w-0" data-n="0" aria-selected="false" class="at-w-bez">bez zaznaczenia</li>';
           // obszary częste w grupach, pod nimi blok pozostałych w tych samych grupach; część, której grupa stoi w bloku częstych, niesie
           // jej nazwę szarym
-          const blok = (czeste) => LISTA.forEach(([g]) => {
+          const blok = (czeste) => LISTA.forEach(([gi]) => {
+            const g = gi.split('|')[0];
             const xs = WPISY.filter((x) => x.g === g && x.czesty === czeste);
             if (!xs.length) return;
             html += '<li role="presentation" class="at-w-grupa">' + esc(g) + '</li>' + xs.map((x) => opcja(x, !czeste && x.nad && WPISY.some((y) => y.n === x.nad && y.czesty) ? x.nad : '', x.i === teraz)).join('');

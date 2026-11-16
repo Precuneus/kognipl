@@ -70,9 +70,13 @@ export async function mozg3d(el) {
   const WSP = JSON.parse(siatka.dataset.wspolne || '[]');
   const FAM = O.sieci.map((s) => { const f = s[1].slice(); for (const { sieci: [a, b] } of WSP) if (f.includes(a) && !f.includes(b)) f.push(b); return f; });
   const BIALA = REG.findIndex((r) => r[0] === 'istota biała przodomózgowia') + 1;
-  // zaznaczona grupa zapala swoje części na każdym szczeblu, a zaznaczona część swoje grupy
+  // zaznaczona grupa zapala swoje części na każdym szczeblu, a zaznaczona część tylko swoją grupę, szczebel wyżej (przegląd 2026-11-16:
+  // ciało suteczkowate zapalało całe podwzgórze, a samo było 23 % złota)
   const wyzej = (a, g) => { for (let x = JAK[a], i = 0; x && i < 8; x = JAK[x], i++) if (x === g) return true; return false; };
-  const trafia = (zr, n) => !!zr && !!n && (zr === n || wyzej(zr, n) || wyzej(n, zr));
+  const trafia = (zr, n) => !!zr && !!n && (zr === n || wyzej(zr, n) || JAK[n] === zr);
+  // obszar wprost: sam obszar i jego części; grupa zaznaczonej części świeci bladym złotem, więc część nie tonie w niej (przegląd
+  // 2026-11-16: jądra przednie wzgórza świeciły obwódką całego wzgórza)
+  const wprost = (zr, n) => !!zr && !!n && (zr === n || wyzej(zr, n));
 
   let renderer;
   try {
@@ -156,7 +160,7 @@ export async function mozg3d(el) {
   gg.setAttribute('color', new THREE.BufferAttribute(gc, 3));
   scene.add(new THREE.Points(gg, new THREE.PointsMaterial({ size: 2, sizeAttenuation: false, vertexColors: true, clippingPlanes: plaszczyzny, clipIntersection: true })));
 
-  const kol = new THREE.Color(), kol2 = new THREE.Color(), ciem = new THREE.Color(CIEMNY), szary = new THREE.Color(SZARY), zloto = new THREE.Color(ZLOTE), jasny = new THREE.Color('#bdb5a6');
+  const kol = new THREE.Color(), kol2 = new THREE.Color(), ciem = new THREE.Color(CIEMNY), szary = new THREE.Color(SZARY), zloto = new THREE.Color(ZLOTE), blade = new THREE.Color(ZLOTE).lerp(new THREE.Color(SZARY), 0.55), jasny = new THREE.Color('#bdb5a6');
   // sieci punktu, kiedy świeci któraś z nich: miejsce, które świecąca sieć dzieli z inną, świeci kolorem każdej swojej sieci, jak
   // ziarno na rysunkach
   const swieci = (y) => (y && FAM[y - 1].some((k) => stan.lit.has(k)) ? FAM[y - 1] : []);
@@ -167,7 +171,7 @@ export async function mozg3d(el) {
         if (p && (!stan.plat || p === stan.plat || p === hp)) kol.set(PLAT_KOL[p]).lerp(ciem, 0.55); else kol.copy(ciem);
       } else if (stan.tryb === 'obszary') {
         const zaz = stan.obszar && trafia(A2R[allen[i]], stan.obszar);
-        if (zaz) kol.copy(zloto).lerp(ciem, 0.45); else if (stan.hot && trafia(A2R[allen[i]], stan.hot)) kol.copy(szary).lerp(ciem, 0.35); else kol.copy(ciem);
+        if (zaz) kol.copy(zloto).lerp(ciem, wprost(A2R[allen[i]], stan.obszar) ? 0.45 : 0.78); else if (stan.hot && trafia(A2R[allen[i]], stan.hot)) kol.copy(szary).lerp(ciem, 0.35); else kol.copy(ciem);
       } else {
         const f = swieci(yeo[i]);
         if (f.length) { kol.set(KOL[f[0]]); if (f.length > 1) kol.lerp(kol2.set(KOL[f[1]]), 0.5); kol.lerp(ciem, 0.55); } else kol.copy(ciem);
@@ -178,7 +182,7 @@ export async function mozg3d(el) {
     for (let j = 0; j < ng; j++) {
       const i = j * KROK;
       if (stan.tryb === 'platy') { const p = platPola(allen[i]), hp = stan.hot && REG[stan.hot - 1] ? REG[stan.hot - 1][2] : ''; if (p && (!stan.plat || p === stan.plat || p === hp)) kol.set(PLAT_KOL[p]); else kol.copy(szary); }
-      else if (stan.tryb === 'obszary') kol.copy(stan.obszar && trafia(A2R[allen[i]], stan.obszar) ? zloto : stan.hot && trafia(A2R[allen[i]], stan.hot) ? jasny : szary);
+      else if (stan.tryb === 'obszary') kol.copy(stan.obszar && trafia(A2R[allen[i]], stan.obszar) ? (wprost(A2R[allen[i]], stan.obszar) ? zloto : blade) : stan.hot && trafia(A2R[allen[i]], stan.hot) ? jasny : szary);
       else { const f = swieci(yeo[i]); if (f.length) kol.set(KOL[f[Math.floor(los1[j] * f.length)]]); else kol.copy(szary); }
       gc[j * 3] = kol.r; gc[j * 3 + 1] = kol.g; gc[j * 3 + 2] = kol.b;
     }
@@ -198,8 +202,17 @@ export async function mozg3d(el) {
     // komory też są ścianą: przez dziurę w ścianie widać było od środka ścianę komory na powierzchni 3D, a każdy jej punkt nosi strukturę,
     // której dotyka, więc zaznaczone jądro przy komorze (jądro łożyskowe prążka krańcowego) świeciło plamami za liniami przekroju (jego
     // zrzut, 2026-11-16: *it marks strange structures and they are on top of each other*)
+    // brzeg komory bez etykiety komory (pole tkanki poniżej progu w promieniu 2 pól od komory) też zamyka ścianę (przegląd 2026-11-16:
+    // 481 takich pól zostawało przezroczystych)
+    const K = new Uint8Array(T.v.length);
     for (let i = 0; i < T.v.length; i++) {
-      const kom = T.v[i] <= 127 && RODZAJ[A.v[i]] === 'komora';
+      if (RODZAJ[A.v[i]] !== 'komora') continue;
+      const x = i % T.W, y = (i / T.W) | 0;
+      for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const xx = x + dx, yy = y + dy; if (xx >= 0 && yy >= 0 && xx < T.W && yy < T.H) K[yy * T.W + xx] = 1; }
+    }
+    plastry[p].K = K;
+    for (let i = 0; i < T.v.length; i++) {
+      const kom = T.v[i] <= 127 && (RODZAJ[A.v[i]] === 'komora' || K[i]);
       if (T.v[i] > 127 || kom) { g.fillStyle = kom ? '#100e0b' : '#1b1813'; g.fillRect((i % T.W) * S, Math.floor(i / T.W) * S, S + 1, S + 1); }
     }
     let s2 = 11;
@@ -217,7 +230,7 @@ export async function mozg3d(el) {
       } else if (stan.tryb === 'obszary') {
         const r = rodz === 'komora' ? 0 : A2R[a], zaz = stan.obszar && trafia(r, stan.obszar);
         if (!r || ((r === BIALA || JAK[r] === BIALA) && !zaz)) continue;
-        c = zaz ? ZLOTE : 'rgba(226,221,212,0.18)';
+        c = zaz ? (wprost(r, stan.obszar) ? ZLOTE : 'rgba(240,192,96,0.4)') : 'rgba(226,221,212,0.18)';
       } else {
         if (B.v[i] >= 128 || rodz !== 'kora') continue;
         const f = swieci(Y.v[i]);
@@ -343,7 +356,7 @@ export async function mozg3d(el) {
   // regardless of sagittal/coronal/axial slice positions. Not clipped by slice planes. Multiple pinned structures, each with its own
   // toggle*): zaznaczony obszar przypina się chipem pod mózgiem; przypięty stoi jako bryła liczona z objętości, bez płaszczyzn cięcia,
   // w obu półkulach, a jej cień prześwituje przez tkankę, więc widać, gdzie leży, także pod korą; chip pokazuje i chowa bryłę, × ją odpina
-  const PIN_KOL = ['#e8d8b0', '#9fd0e0', '#e6a58c', '#b9d48c', '#c9a8e0', '#e8b8d0'];
+  const PIN_KOL = ['#e8d8b0', '#9fd0e0', '#e6a58c', '#b9d48c', '#c9a8e0', '#e8b8d0', '#8fd6b8', '#d8b878'];
   const piny = [];
   const pinBox = el.closest('.at-glowny') ? el.closest('.at-glowny').querySelector('.at-przypiete') : null;
   function bryla(n) {
@@ -417,7 +430,9 @@ export async function mozg3d(el) {
     if (piny.some((p) => p.n === n)) return;
     const g = bryla(n);
     if (!g) return;
-    const kolor = PIN_KOL[piny.length % PIN_KOL.length];
+    // barwa, której nie nosi żadna przypięta bryła; po wyczerpaniu ta, którą nosi najmniej brył (przegląd 2026-11-16: po odpięciu dwie bryły
+    // dostawały tę samą barwę)
+    const kolor = PIN_KOL.slice().sort((a, b) => piny.filter((p) => p.kolor === a).length - piny.filter((p) => p.kolor === b).length)[0];
     const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: kolor, roughness: 0.55, metalness: 0, emissive: kolor, emissiveIntensity: 0.12 }));
     const cien = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ color: kolor, transparent: true, opacity: 0.42, depthTest: false, depthWrite: false }));
     cien.renderOrder = 10; m.userData.n = n;
@@ -542,7 +557,7 @@ export async function mozg3d(el) {
       if (!pl || !h.uv) continue;
       const c = Math.min(pl.T.W - 1, Math.floor(h.uv.x * pl.T.W)), rr = Math.min(pl.T.H - 1, Math.floor((1 - h.uv.y) * pl.T.H)), i = rr * pl.T.W + c;
       // poza tkanką ściana jest przezroczysta, ale komora ją zamyka: wskazanie w komorze nie sięga ściany komory za nią
-      if (pl.T.v[i] <= 127) { if (RODZAJ[pl.A.v[i]] === 'komora') return null; continue; }
+      if (pl.T.v[i] <= 127) { if (RODZAJ[pl.A.v[i]] === 'komora' || (pl.K && pl.K[i])) return null; continue; }
       const czyKora = pl.B.v[i] < 128 && RODZAJ[pl.A.v[i]] === 'kora';
       return [pl.A.v[i], czyKora ? pl.Y.v[i] : 0];
     }

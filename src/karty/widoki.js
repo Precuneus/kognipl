@@ -41,7 +41,12 @@ const KLUCZOWE = ['zakręt czołowy górny', 'zakręt czołowy środkowy', 'zakr
   'ciało modzelowate', 'jądro ogoniaste', 'wzgórze', 'skorupa', 'gałka blada', 'przedmurze', 'ciało migdałowate', 'hipokamp', 'komora boczna',
   'komora trzecia', 'okolica suteczkowata podwzgórza', 'pasmo wzrokowe', 'sklepienie', 'śródmózgowie', 'podwzgórze', 'istota biała przodomózgowia'];
 // jądra z podręcznika, częste mimo braku kart
-const CZESTE = ['istota czarna', 'pole brzuszne nakrywki', 'jądro półleżące', 'jądro niskowzgórzowe', 'móżdżek'];
+const CZESTE = ['istota czarna', 'istota czarna, część zbita', 'istota czarna, część siatkowata', 'pole brzuszne nakrywki', 'jądro półleżące',
+  'jądro niskowzgórzowe', 'móżdżek', 'jądra przednie wzgórza', 'jądro przyśrodkowo-grzbietowe wzgórza', 'poduszka wzgórza', 'jądro brzuszne boczne wzgórza',
+  'jądro brzuszne tylno-boczne wzgórza', 'jądro brzuszne tylno-przyśrodkowe wzgórza', 'ciało kolankowate boczne', 'ciało kolankowate przyśrodkowe',
+  'jądro podstawno-boczne ciała migdałowatego', 'jądra środkowe ciała migdałowatego'];
+// inne nazwy grup listy, do szukania (przegląd 2026-11-16: *zwoje podstawy* nic nie znajdowało)
+export const GRUPY_INNE = { 'jądra podstawy': ['zwoje podstawy', 'basal ganglia', 'prążkowie', 'striatum'], 'międzymózgowie': ['diencephalon'], 'pień mózgu': ['brainstem'] };
 export const PLATY = ['płat czołowy', 'płat ciemieniowy', 'płat skroniowy', 'płat potyliczny', 'płat limbiczny', 'płat wyspowy'];
 // widok Płaty (jego słowa, 2026-11-11: *we should add płaty to the views*): płaty w barwach ryc. 2 wpisu 28.10 (rysunek płatów z Wikimedia
 // Commons: czołowy niebieski, ciemieniowy żółty, skroniowy zielony, potyliczny różowy), w głębokich odcieniach, odrębnych od jasnych barw
@@ -64,6 +69,12 @@ const POD_KORA = [
 // Szukanie obszaru (jego słowo, 2026-11-11: *add the search*): obok polskiej nazwy obszar znajduje się po nazwie angielskiej i po
 // skrócie, którego używają podręczniki i karty (OFC, ACC, Broca, Heschl, V1 jak na kartach: klinek, zakręt językowaty, biegun potyliczny)
 export const ALIASY = {
+  'gałka blada, część wewnętrzna': ['globus pallidus internus', 'GPi'],
+  'gałka blada, część zewnętrzna': ['globus pallidus externus', 'GPe'],
+  'jądro przyśrodkowo-grzbietowe wzgórza': ['mediodorsal nucleus', 'MD', 'jądro grzbietowo-przyśrodkowe'],
+  'poduszka wzgórza': ['pulvinar'],
+  'ciało kolankowate boczne': ['lateral geniculate nucleus', 'LGN'],
+  'ciało kolankowate przyśrodkowe': ['medial geniculate nucleus', 'MGN'],
   // jądra CIT168 (2026-11-15): nazwy angielskie i skróty autorów atlasu
   'istota czarna, część zbita': ['substantia nigra pars compacta', 'SNc'],
   'istota czarna, część siatkowata': ['substantia nigra pars reticulata', 'SNr'],
@@ -164,7 +175,7 @@ export function listaObszarow(REG, karty) {
   // obscure regions in a block below*): jeden z 40 obszarów rysunków, obszar z kartą albo z kartami, które w nim leżą, albo jądro
   // z podręcznika (CZESTE); reszta schodzi do bloku pod nim, w tych samych grupach, część z nazwą swojej grupy
   const czesty = (i) => KLUCZOWE.includes(REG[i - 1][0]) || CZESTE.includes(REG[i - 1][0]) || ile(i) > 0;
-  return [...grupy].filter(([, xs]) => xs.length).map(([g, xs]) => [g, xs.sort(porzadek).flatMap(zCzesciami).map((i) => [REG[i - 1][0], i, ALIASY[REG[i - 1][0]] || [], czesty(i), JAK[i] ? REG[JAK[i] - 1][0] : ''])]);
+  return [...grupy].filter(([, xs]) => xs.length).map(([g, xs]) => [g + (GRUPY_INNE[g] ? '|' + GRUPY_INNE[g].join('|') : ''), xs.sort(porzadek).flatMap(zCzesciami).map((i) => [REG[i - 1][0], i, ALIASY[REG[i - 1][0]] || [], czesty(i), JAK[i] ? REG[JAK[i] - 1][0] : ''])]);
 }
 // karty każdej sieci, w kolejności alfabetu, bez karty samej sieci
 export function kartySieci(KARTY) {

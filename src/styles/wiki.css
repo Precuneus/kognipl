@@ -112,7 +112,7 @@ html.at-czeka .at-miejsce{visibility:hidden}
 /* nazwy końców suwaków czytelne także na przybliżonym mózgu pod nimi */
 .at-glowny:not(:has(.at-3d-brak)) .at-os span{text-shadow:0 0 3px #0e0d0b,0 0 7px #0e0d0b,0 0 12px #0e0d0b}
 /* przekroje leżą na mózgu; wskaźnik przechodzi przez puste miejsce kolumny do mózgu */
-.at-glowny:not(:has(.at-3d-brak)) .at-boki{position:absolute;top:0;bottom:0;z-index:2;width:calc((100% - 32px) * .2);display:flex;flex-direction:column;justify-content:space-between;align-items:center;pointer-events:none}
+.at-glowny:not(:has(.at-3d-brak)) .at-boki{position:absolute;top:0;bottom:0;z-index:4;width:calc((100% - 32px) * .2);display:flex;flex-direction:column;justify-content:space-between;align-items:center;pointer-events:none}
 .at-glowny:not(:has(.at-3d-brak)) .at-boki-lewe{left:0}
 .at-glowny:not(:has(.at-3d-brak)) .at-boki-prawe{right:0;justify-content:center}
 .at-glowny:not(:has(.at-3d-brak)) .wk-widok{order:0;pointer-events:auto}
@@ -180,7 +180,7 @@ html.at-czeka .at-miejsce{visibility:hidden}
    przypięcia stoi zawsze na górze, w tym samym miejscu, a przypięte pod nim (render 2026-11-15: przy dole kolumny pięć chipów zasłaniało
    wyłącznik pionowego suwaka) */
 @media (min-width:1000px){.at-glowny:not(:has(.at-3d-brak)) .at-przypiete{position:absolute;top:0;right:calc(50% - 50vw + 16px);z-index:3;flex-direction:column;align-items:flex-end;justify-content:flex-start}}
-.at-pin,.at-pin-nowy{max-width:100%}.at-pin button,.at-pin-nowy{text-align:left}
+.at-pin,.at-pin-nowy{max-width:100%}.at-pin .at-pin-pokaz{flex:1 1 auto;min-width:0}.at-pin .at-pin-x{flex:none}.at-pin button,.at-pin-nowy{text-align:left}
 .at-wl{position:relative;flex:none;display:inline-flex;align-items:center;background:none;border:0;padding:0;margin:0 0 0 4px;cursor:pointer}
 .at-os-poziomy .at-wl{margin:6px 0 0}
 .at-wl::before{content:'';position:absolute;inset:-12px -5px}
