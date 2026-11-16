@@ -76,18 +76,15 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl to mózg do obracania i ci
           <div class="at-tryb" role="group" aria-label="Co zaznacza klik"><button type="button" data-tryb="sieci" aria-pressed="true">Sieci</button><button type="button" data-tryb="platy" aria-pressed="false">Płaty</button><button type="button" data-tryb="obszary" aria-pressed="false">Obszary</button></div>
         </div>
         {/* mózg w 3D jest ryciną centralną (jego słowa, 2026-11-11: *make the brain with the sliders central. We want to have this as a central
-            figure... and... somehow show the slices relative to this brain*, potem *can we make C and possible to rotate?*); suwaki cięć
-            leżą na osiach mózgu w widoku startowym (*the suwaki should scale somehow within the image*), poziomy pionowo (*Maybe przekroj
-            poziomy should be vertical?*); trzecie cięcie, strzałkowe, idzie od jednego boku przez środek do drugiego (*add a 3rd cut on the 3d
-            brain, from lateral to medial to lateral*), a trzy rysunki z kolokwium zeszły ze strony; płaskie przekroje do czytania, w jednej
-            skali, na komputerze po bokach mózgu obok swoich suwaków (*We want to move the brain slices in the desktop version to sides... next
-            to the suwaki*): strzałkowy u góry z lewej przy górnym suwaku, czołowy u dołu z lewej przy dolnym, poziomy z prawej przy pionowym;
-            na węższym ekranie w rzędzie pod mózgiem; każde cięcie ma swój wyłącznik (*we want a switch on/off button next to each*) */}
+            figure... and... somehow show the slices relative to this brain*, potem *can we make C and possible to rotate?*) */}
+        {/* cięcia z obu stron (jego słowa, 2026-11-16: *make maybe 3 brains right to the 3d brain. And each brain... has a suwak to cut in
+            either direction*, potem *execute as on the drawing*): mózg w 3D z lewej, nic na nim nie stoi; z prawej kolumna trzech przekrojów,
+            każdy ze swoim suwakiem o dwóch gałkach: góra i dół przy czołowym, lewa i prawa przy poziomym, przód i tył przy strzałkowym;
+            cięcie zdejmuje z mózgu cały plaster, na węższym ekranie przekroje stoją pod mózgiem */}
         <div class="at-glowny">
-          <div class="at-boki at-boki-lewe"><Fragment set:html={zywy('strzalkowy') + zywy('czolowy')} /></div>
-          <div class="at-3d" role="group" aria-label="Mózg w trzech wymiarach z cięciem czołowym, poziomym i strzałkowym" data-powierzchnia="/images/mozg-widoki/powierzchnia.bin">
+          <div class="at-ukryte" hidden><Fragment set:html={suwak('strzalkowy') + suwak('czolowy') + suwak('poziomy')} /></div>
+          <div class="at-3d" role="group" aria-label="Mózg w trzech wymiarach, cięty z każdej strony" data-powierzchnia="/images/mozg-widoki/powierzchnia.bin">
             <div class="at-3d-scena"></div>
-            <Fragment set:html={suwak('strzalkowy') + suwak('czolowy') + suwak('poziomy')} />
             {/* powrót do widoku startowego, widoczny zawsze, po suwakach w kolejności klawiatury (przegląd Atlasu 2026-11-11: po
                 przybliżeniu i obrocie student nie wiedział, jak wrócić; dwuklik robi to samo) */}
             <button type="button" class="at-3d-start" aria-label="Widok startowy" data-podpis="widok startowy">↻</button>
@@ -96,7 +93,11 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl to mózg do obracania i ci
           {/* przypięte struktury (jego notatki, 2026-11-15: *each with its own toggle*): zaznaczony obszar przypina się chipem, przypięty
               chip pokazuje i chowa bryłę, × odpina; na komputerze w prawej kolumnie pod przekrojem poziomym, węższy ekran pod mózgiem */}
           <div class="at-przypiete" role="group" aria-label="Przypięte struktury" hidden></div>
-          <div class="at-boki at-boki-prawe"><Fragment set:html={zywy('poziomy')} /></div>
+          <div class="at-kol">
+            <div class="at-blok at-blok-z"><Fragment set:html={zywy('czolowy', 'z')} /></div>
+            <div class="at-blok at-blok-x"><Fragment set:html={zywy('poziomy', 'x')} /></div>
+            <div class="at-blok at-blok-y"><Fragment set:html={zywy('strzalkowy', 'y')} /></div>
+          </div>
         </div>
       </section>
       {/* karta zaznaczenia pod widokami; przy kilku zaznaczonych sieciach ich karty jedna pod drugą */}
@@ -115,6 +116,7 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl to mózg do obracania i ci
   const iskra = iskraKursu({ zmienna: true });
   import { ziarno } from '../../karty/ziarno.js';
   import { mozg3d } from '../../karty/mozg3d.js';
+  import { ciecia } from '../../karty/ciecia.js';
   // karta zaznaczenia: strona Atlasu z kartą bierze z niej sekcję karty; pobrane strony zostają w pamięci strony
   const mozg = document.querySelector<HTMLElement>('.at-grid')!;
   const miejsce = document.querySelector<HTMLElement>('.at-miejsce')!;
@@ -151,6 +153,7 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl to mózg do obracania i ci
     if (przewin) (miejsce.querySelector('.at-karta') || mozg.querySelector('.at-karty') || miejsce).scrollIntoView({ block: 'start' });
   });
   ziarno();
+  ciecia(mozg);
   mozg3d(document.querySelector<HTMLElement>('.at-3d')!);
   const wroc = document.querySelector<HTMLAnchorElement>('.at-wroc');
   try {

@@ -36,8 +36,6 @@
 .wk-do-atlasu a{color:var(--ink);text-decoration:underline dotted 1px;text-underline-offset:4px}
 /* przekroje z objętości: linie z szablonu */
 .wk-linie-zywe{fill:none;stroke:#e2ddd4;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke;opacity:.55}
-.at-suwak{accent-color:#f0c060;cursor:pointer}
-.at-suwak:focus-visible{outline:2px solid #f0c060;outline-offset:4px}
 .wk-kody .wk-kod-yeo{color:#b3ab9e}
 .wk-zywy[hidden]{display:none}
 /* Atlas (jego słowa, 2026-11-10: *lets make an "Atlas" subpage, next to the wiki*): strona zaczyna się od pudełka mózgu, którego nazwa
@@ -88,65 +86,86 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-tryb button{font:500 13px/1 Inter,sans-serif;color:#cfc8bb;background:none;border:0;border-radius:999px;padding:8px 14px;cursor:pointer;min-height:32px}
 .at-tryb button[aria-pressed="true"]{background:rgba(240,192,96,.16);color:#f0c060}
 .at-tryb button:focus-visible{outline:2px solid #f0c060;outline-offset:2px}
-/* przekroje w rzędzie pod mózgiem, dolnymi brzegami w jednej linii, więc podpisy też; kolumny boków znikają z układu (contents), więc
-   przekroje stają w rzędzie w kolejności czołowy, poziomy, strzałkowy */
-.at-glowny{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:22px 16px}
-.at-boki{display:contents}
-.at-glowny .at-3d{flex:0 0 100%;order:0}
-.at-glowny .wk-widok-czolowy{order:1;flex:0 0 calc((100% - 32px) * .30887)}
-.at-glowny .wk-widok-poziomy{order:2;flex:0 0 calc((100% - 32px) * .30887)}
-.at-glowny .wk-widok-strzalkowy{order:3;flex:0 0 calc((100% - 32px) * .38226)}
-/* na komputerze mózg w 3D leży pod wszystkim na całą szerokość strony, bez pudełka, a przekroje i suwaki stoją na nim (jego słowa,
-   2026-11-11: *i told not to obscure the 3d view. so the 3d view should be to the entire width of the side!!! put it under the 2d
-   slices and under the suwaki. do not box it*); przekroje po bokach obok swoich suwaków (*We want to move the brain slices in the desktop
-   version to sides... next to the suwaki*): z lewej strzałkowy u góry i czołowy u dołu, z prawej poziomy, w jednej skali (czołowy
-   i poziomy mają 0,808 szerokości strzałkowego, 151,5 do 187,5 mm); scena ma wysokość ekranu pod menu i wierszem tytułu; bez WebGL
-   zostaje rząd */
+/* Atlas: mózg w 3D, obok kolumna trzech przekrojów, każdy ze swoim suwakiem o dwóch gałkach (jego słowa, 2026-11-16: *make maybe 3 brains
+   right to the 3d brain. And each brain... has a suwak to cut in either direction*, potem *execute as on the drawing*): góra i dół pionowo
+   przy czołowym, lewa i prawa pod poziomym, przód i tył pod strzałkowym. Przekroje w jednej skali, --s pikseli na milimetr (`ciecia.js`):
+   ramka czołowego i poziomego ma 151,5 mm szerokości, strzałkowego 187,5 mm; czołowy i strzałkowy mają 160,5 mm wysokości, poziomy 187,5.
+   Na węższym ekranie i bez WebGL przekroje stoją pod mózgiem. */
+.at-glowny{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:22px 16px}
+.at-glowny .at-3d{flex:0 0 100%}
+.at-kol{flex:0 0 100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:18px 16px}
+.at-blok{display:flex;flex-direction:column;align-items:center}
+.at-przy{display:flex;align-items:flex-start;gap:10px}
+.at-przy .wk-pole{flex:0 0 calc(var(--s,1) * 151.5px)}
+.at-kol .wk-widok-czolowy{width:calc(var(--s,1) * 151.5px + 72px)}
+.at-kol .wk-widok-poziomy{width:calc(var(--s,1) * 151.5px)}
+/* podpis w jednym wierszu, wyśrodkowany pod przekrojem także wtedy, gdy przekrój jest od niego węższy */
+.at-kol .wk-widok figcaption{display:flex;justify-content:center;white-space:nowrap}
+.at-kol .wk-widok-strzalkowy{width:calc(var(--s,1) * 187.5px)}
+/* na komputerze mózg w 3D leży pod wszystkim na całą szerokość strony, bez pudełka (jego słowa, 2026-11-11: *the 3d view should be to the
+   entire width of the side!!! ... do not box it*), a kolumna przekrojów stoi przy prawym brzegu; mózg w widoku startowym mieści się
+   w polu z lewej (`mozg3d.js`, `pole`); scena ma wysokość ekranu pod menu i wierszem tytułu */
 @media (min-width:1000px){
 .at-glowny .at-3d{--pas-g:0px;--pas-p:0px;--pas-d:0px;--pas-l:0px}
 .at-glowny .at-3d-pas{display:none}
 .at-glowny:not(:has(.at-3d-brak)){display:block;position:relative;height:clamp(540px,calc(100vh - 210px),800px)}
 .at-glowny:not(:has(.at-3d-brak)) .at-3d{position:absolute;inset:0;height:auto}
 .at-glowny:not(:has(.at-3d-brak)) .at-3d-scena{top:0;bottom:0;right:auto;left:calc(50% - 50vw);width:100vw}
-.at-glowny:not(:has(.at-3d-brak)) .at-os{z-index:3}
-/* nazwy końców suwaków czytelne także na przybliżonym mózgu pod nimi */
-.at-glowny:not(:has(.at-3d-brak)) .at-os span{text-shadow:0 0 3px #0e0d0b,0 0 7px #0e0d0b,0 0 12px #0e0d0b}
-/* przekroje leżą na mózgu; wskaźnik przechodzi przez puste miejsce kolumny do mózgu */
-.at-glowny:not(:has(.at-3d-brak)) .at-boki{position:absolute;top:0;bottom:0;z-index:4;width:calc((100% - 32px) * .2);display:flex;flex-direction:column;justify-content:space-between;align-items:center;pointer-events:none}
-.at-glowny:not(:has(.at-3d-brak)) .at-boki-lewe{left:0}
-.at-glowny:not(:has(.at-3d-brak)) .at-boki-prawe{right:0;justify-content:center}
-.at-glowny:not(:has(.at-3d-brak)) .wk-widok{order:0;pointer-events:auto}
-/* przekrój zostaje przy swoim suwaku także sam w kolumnie: czołowy na dole */
-.at-glowny:not(:has(.at-3d-brak)) .at-boki-lewe .wk-widok-czolowy{margin-top:auto}
-.at-glowny:not(:has(.at-3d-brak)) .wk-widok-strzalkowy{flex:none;width:100%}
-.at-glowny:not(:has(.at-3d-brak)) .wk-widok-czolowy,.at-glowny:not(:has(.at-3d-brak)) .wk-widok-poziomy{flex:none;width:80.8%}
-/* prawą kolumnę stawia `mozg3d.js` za pionowym suwakiem w szerokości przekroju, więc przekrój bierze ją całą */
-.at-glowny:not(:has(.at-3d-brak)) .at-boki-prawe[style*="left"] .wk-widok-poziomy{width:100%}
+/* kolumna przepuszcza wskaźnik przez puste miejsca do mózgu pod nią */
+.at-glowny:not(:has(.at-3d-brak)) .at-kol{position:absolute;top:0;bottom:0;right:0;z-index:4;flex-direction:column;flex-wrap:nowrap;justify-content:space-between;align-items:flex-end;gap:0;width:auto;pointer-events:none}
+.at-glowny:not(:has(.at-3d-brak)) .at-blok{pointer-events:auto}
+.at-glowny:not(:has(.at-3d-brak)) .at-3d-start{left:0;right:auto}
 }
-/* mózg w 3D: na węższym ekranie scena zostawia pas u góry na suwak strzałkowy, u dołu na czołowy i z prawej na poziomy, który staje
-   tuż za tyłem mózgu, jeśli jest tam miejsce; suwaki ustawia `mozg3d.js` na osiach mózgu w widoku startowym */
+/* suwak cięcia: tor z dwiema gałkami, mózg zostaje między nimi i ten odcinek toru świeci; końce nazwane */
+.at-cie{display:flex;align-items:center;gap:8px;font:500 12px/1 Inter,sans-serif;color:#a09888;letter-spacing:.04em;align-self:stretch}
+/* tor ma szerokość przekroju i wystaje o 10 px z każdej strony, tyle, ile gałka potrzebuje na końcu, więc gałka stoi naprzeciw swojej
+   złotej linii (audyt 2026-11-16); pod nim nazwy końców, a między nimi wyłącznik */
+.at-cie-x,.at-cie-y{display:block;margin-top:4px;position:relative;padding-bottom:22px}
+.at-cie-x .at-tor,.at-cie-y .at-tor{margin:0 -10px}
+.at-cie-x .at-koniec,.at-cie-y .at-koniec{position:absolute;bottom:3px;font-size:11.5px}
+.at-cie-x .at-koniec:first-child,.at-cie-y .at-koniec:first-child{left:0}
+.at-cie-x .at-koniec:nth-of-type(2),.at-cie-y .at-koniec:nth-of-type(2){right:0}
+.at-cie-x .at-wl,.at-cie-y .at-wl{position:absolute;bottom:0;left:50%;transform:translateX(-50%);margin:0}
+/* pionowy tor ma wysokość przekroju i wystaje o 10 px u góry i u dołu; nazwy końców i wyłącznik stoją obok niego */
+.at-cie-z{flex:0 0 62px;display:block;position:relative;width:62px;height:calc(var(--s,1) * 160.5px)}
+.at-cie-z .at-tor{position:absolute;left:0;top:-10px;bottom:-10px}
+.at-cie-z .at-koniec{position:absolute;left:32px;font-size:11.5px}
+.at-cie-z .at-koniec:first-child{top:0}
+.at-cie-z .at-koniec:nth-of-type(2){bottom:0}
+.at-cie-z .at-wl{position:absolute;left:30px;top:50%;transform:translateY(-50%);margin:0}
+.at-cie span.at-koniec{text-shadow:0 0 3px #0e0d0b,0 0 7px #0e0d0b,0 0 12px #0e0d0b}
+.at-tor{position:relative;flex:1 1 auto;touch-action:none;cursor:pointer}
+.at-cie-x .at-tor,.at-cie-y .at-tor{height:28px}
+.at-cie-z .at-tor{width:28px}
+.at-tor::before{content:'';position:absolute;background:rgba(160,152,136,.35);border-radius:2px}
+.at-cie-x .at-tor::before,.at-cie-y .at-tor::before{left:0;right:0;top:50%;height:4px;margin-top:-2px}
+.at-cie-z .at-tor::before{top:0;bottom:0;left:50%;width:4px;margin-left:-2px}
+.at-zostaje{position:absolute;background:#f0c060;opacity:.6;border-radius:2px;pointer-events:none}
+.at-cie-x .at-zostaje,.at-cie-y .at-zostaje{top:50%;height:4px;margin-top:-2px}
+.at-cie-z .at-zostaje{left:50%;width:4px;margin-left:-2px}
+.at-gal{position:absolute;width:16px;height:16px;border-radius:50%;background:#f0c060;box-shadow:0 0 0 3px #0e0d0b,0 0 10px 2px rgba(240,192,96,.35);transform:translate(-50%,-50%);cursor:grab}
+.at-cie-x .at-gal,.at-cie-y .at-gal{top:50%}
+.at-cie-z .at-gal{left:50%}
+.at-gal:focus-visible{outline:2px solid #f0c060;outline-offset:3px}
+.at-tor:active .at-gal{cursor:grabbing}
+/* odcięte części przekroju w cieniu, cięcia złotą linią (`ciecia.js`) */
+.at-cie-linie{pointer-events:none}
+.at-cie-cien{fill:rgba(14,13,11,.66)}
+.at-cie-linia{stroke:#f0c060;stroke-width:1.4;vector-effect:non-scaling-stroke}
+/* scena to cała ramka; pasy przy brzegach leżą nad nią i przepuszczają palec do przewijania strony, a mózg w widoku startowym mieści się
+   między nimi (`wpasuj` w `mozg3d.js` czyta te zmienne); na komputerze pasów nie ma (jego nagranie, 2026-11-13) */
 .at-3d{position:relative;height:clamp(460px,56vw,640px)}
-/* scena to cała ramka; pasy suwaków u góry, u dołu i z prawej leżą nad nią i przepuszczają palec do przewijania strony, a mózg w widoku
-   startowym mieści się między nimi (`wpasuj` w `mozg3d.js` czyta te zmienne); na komputerze pasów nie ma (jego nagranie, 2026-11-13) */
-.at-3d{--pas-g:44px;--pas-p:56px;--pas-d:58px;--pas-l:0px}
+.at-3d{--pas-g:12px;--pas-p:28px;--pas-d:12px;--pas-l:0px}
 .at-3d-scena{position:absolute;inset:0;cursor:grab;touch-action:none}
 .at-3d-pas{position:absolute;z-index:2;touch-action:auto}
 .at-3d-pas-g{top:0;left:0;right:0;height:var(--pas-g)}
 .at-3d-pas-d{bottom:0;left:0;right:0;height:var(--pas-d)}
 .at-3d-pas-p{top:var(--pas-g);bottom:var(--pas-d);right:0;width:var(--pas-p)}
-.at-3d.at-3d-brak .at-3d-pas{display:none}
-.at-3d:not(.at-3d-brak) .at-os{z-index:3}
-.at-3d:not(.at-3d-brak) .at-os span{text-shadow:0 0 3px #0e0d0b,0 0 7px #0e0d0b,0 0 12px #0e0d0b}
+.at-3d.at-3d-brak{display:none}
 .at-3d-scena:active{cursor:grabbing}
 .at-3d-scena canvas{display:block}
-.at-os{position:absolute;display:flex;align-items:center;gap:10px;font:500 12px/1 Inter,sans-serif;color:#a09888;letter-spacing:.04em}
-.at-os-czolowy{bottom:14px;left:15%;width:62%}
-.at-os-strzalkowy{top:12px;left:36%;width:22%}
-.at-os-czolowy .at-suwak,.at-os-strzalkowy .at-suwak{flex:1 1 auto;width:auto;margin:0}
-.at-os-poziomy{right:8px;top:16%;height:62%;flex-direction:column;width:44px}
-.at-os-poziomy .at-suwak{flex:1 1 auto;width:auto;margin:0;writing-mode:vertical-lr;direction:rtl}
 /* wyłącznik za końcem suwaka, w wyglądzie przełącznika Animacje: chowa płaski przekrój swojego cięcia; cięcie w 3D i suwak zostają */
-.at-glowny .wk-widok.at-bez{display:none}
+.at-glowny .wk-widok.at-bez .wk-pole{visibility:hidden}
 /* podpis wyłącznika na wskazanie, od razu, w kroju znacznika (przegląd Atlasu 2026-11-11: bez słowa nie było wiadomo, co robi) */
 .at-podpis,.at-3d-start::after{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);white-space:nowrap;font:500 12px/1 Inter,sans-serif;letter-spacing:normal;color:#e2ddd4;background:rgba(14,13,11,.9);border:1px solid rgba(226,200,150,.45);border-radius:5px;padding:4px 7px;pointer-events:none;opacity:0;z-index:6}
 .at-wl[aria-checked="true"] .at-podpis::before{content:'schowaj przekrój'}
@@ -154,8 +173,8 @@ html.at-czeka .at-miejsce{visibility:hidden}
 /* podpis na wskazanie tylko tam, gdzie jest wskaźnik: stuknięcie zostawiało na telefonie podpis ↻ na ekranie (jego nagranie, 2026-11-13) */
 @media (hover:hover){.at-wl:hover .at-podpis,.at-3d-start:hover::after{opacity:1}}
 .at-wl:focus-visible .at-podpis,.at-3d-start:focus-visible::after{opacity:1}
-.at-os-poziomy .at-podpis{bottom:auto;top:calc(100% + 8px)}
-/* powrót do widoku startowego w prawym dolnym rogu sceny */
+.at-cie-z .at-podpis{bottom:auto;top:calc(100% + 8px)}
+/* powrót do widoku startowego w rogu sceny: na komputerze w lewym dolnym, bo z prawej stoi kolumna przekrojów */
 .at-3d-start{position:absolute;right:0;bottom:6px;z-index:3;width:34px;height:34px;display:grid;place-items:center;font:400 19px/1 Inter,sans-serif;color:#cfc8bb;background:rgba(14,13,11,.75);border:1px solid rgba(226,200,150,.45);border-radius:999px;cursor:pointer;padding:0}
 .at-3d-start::after{content:attr(data-podpis);left:auto;right:0;transform:none}
 .at-3d-start:hover{color:#f0c060}
@@ -176,43 +195,31 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-pin button::after,.at-pin-nowy::after{content:attr(data-podpis);position:absolute;bottom:calc(100% + 8px);right:0;white-space:nowrap;font:500 12px/1 Inter,sans-serif;color:#e2ddd4;background:rgba(14,13,11,.9);border:1px solid rgba(226,200,150,.45);border-radius:5px;padding:4px 7px;pointer-events:none;opacity:0;z-index:6}
 @media (hover:hover){.at-pin button:hover::after,.at-pin-nowy:hover::after{opacity:1}}
 .at-pin button:focus-visible::after,.at-pin-nowy:focus-visible::after{opacity:1}
-/* na komputerze w prawym górnym rogu sceny, nad przekrojem poziomym i na prawo od pionowego suwaka, aż do brzegu ekranu; chip do
-   przypięcia stoi zawsze na górze, w tym samym miejscu, a przypięte pod nim (render 2026-11-15: przy dole kolumny pięć chipów zasłaniało
-   wyłącznik pionowego suwaka) */
-@media (min-width:1000px){.at-glowny:not(:has(.at-3d-brak)) .at-przypiete{position:absolute;top:0;right:calc(50% - 50vw + 16px);z-index:3;flex-direction:column;align-items:flex-end;justify-content:flex-start}}
+/* na komputerze w lewym górnym rogu sceny, bo z prawej stoi kolumna przekrojów; chip do przypięcia stoi zawsze na górze, w tym samym
+   miejscu, a przypięte pod nim (render 2026-11-15) */
+@media (min-width:1000px){.at-glowny:not(:has(.at-3d-brak)) .at-przypiete{position:absolute;top:0;left:0;z-index:3;flex-direction:column;align-items:flex-start;justify-content:flex-start}}
 .at-pin,.at-pin-nowy{max-width:100%}.at-pin .at-pin-pokaz{flex:1 1 auto;min-width:0}.at-pin .at-pin-x{flex:none}.at-pin button,.at-pin-nowy{text-align:left}
 .at-wl{position:relative;flex:none;display:inline-flex;align-items:center;background:none;border:0;padding:0;margin:0 0 0 4px;cursor:pointer}
-.at-os-poziomy .at-wl{margin:6px 0 0}
 .at-wl::before{content:'';position:absolute;inset:-12px -5px}
 .at-wl:focus-visible{outline:1px solid #f0c060;outline-offset:4px}
 /* nazwa części pod wskaźnikiem na mózgu w 3D, w kroju znacznika przekrojów, nad suwakami i przekrojami */
 .wk-kody.at-3d-nazwa{z-index:6}
-/* bez WebGL albo bez objętości mózg w 3D znika, a suwaki leżą płasko jeden pod drugim nad przekrojami; strzałkowy biegnie wtedy od
-   lewej półkuli do prawej, jak lewa i prawa w przekroju czołowym */
-.at-3d.at-3d-brak{height:auto;display:flex;flex-direction:column;gap:12px}
-.at-3d.at-3d-brak .at-3d-scena,.at-3d.at-3d-brak .at-wl{display:none}
-.at-3d.at-3d-brak .at-os{position:static;width:100%;height:auto;flex-direction:row}
-.at-3d.at-3d-brak .at-os-strzalkowy{flex-direction:row-reverse}
-.at-3d.at-3d-brak .at-os-strzalkowy .at-suwak{direction:ltr}
-.at-3d.at-3d-brak .at-os-poziomy .at-suwak{writing-mode:horizontal-tb;direction:rtl}
-/* na telefonie mózg w 3D jest kwadratem, a przekroje w tej samej skali: czołowy i poziomy obok siebie, strzałkowy pod nimi; scena kończy
-   się wyżej, żeby wyłącznik pionowego suwaka i wyłącznik dolnego nie dzieliły pola palca */
-@media (max-width:720px){.at-3d{height:auto;aspect-ratio:1/1}.at-3d{--pas-d:80px;--pas-p:50px;--pas-l:6px}.at-3d.at-3d-brak{aspect-ratio:auto}.at-glowny{gap:14px 16px}.at-glowny .wk-widok-czolowy,.at-glowny .wk-widok-poziomy{flex-basis:calc((100% - 16px) / 2)}.at-glowny .wk-widok-strzalkowy{flex-basis:calc((100% - 16px) * .6188)}}
+/* bez WebGL albo bez objętości mózg w 3D znika, a przekroje z suwakami stoją same */
+/* na telefonie mózg w 3D jest kwadratem od brzegu do brzegu ekranu, a przekroje pod nim w jednej skali: czołowy i poziomy obok siebie,
+   strzałkowy pod nimi */
+@media (max-width:720px){.at-3d{height:auto;aspect-ratio:1/1}.at-3d{--pas-l:6px}.at-glowny{gap:14px 16px}}
 /* telefon i tablet (jego słowa, 2026-11-13: *too small on the vertical view and too big on horizontal*): poniżej 1000 px ramka mózgu nigdy
-   nie jest wyższa niż ekran, więc w poziomie widać cały mózg z suwakami naraz; na telefonie ramka sięga brzegów ekranu, a mózg wypełnia
-   scenę (`wpasuj` w `mozg3d.js`) */
+   nie jest wyższa niż ekran, a mózg wypełnia scenę (`wpasuj` w `mozg3d.js`) */
 @media (max-width:999px){.at-3d:not(.at-3d-brak){height:clamp(300px,min(56vw,100vh - 16px),640px);height:clamp(300px,min(56vw,100svh - 16px),640px)}}
 @media (max-width:720px){
 .at-glowny .at-3d:not(.at-3d-brak){flex:0 0 100vw;height:auto;max-height:calc(100vh - 16px);max-height:calc(100svh - 16px);margin-inline:calc(50% - 50vw)}
 .at-3d-start{right:12px}
 }
-/* w poziomie na niskim ekranie pasy są węższe, żeby mózg wziął więcej wysokości */
-@media (max-width:999px) and (max-height:500px) and (orientation:landscape){.at-3d{--pas-g:38px;--pas-d:46px}.at-os-czolowy{bottom:8px}.at-os-strzalkowy{top:8px}}
-/* suwak pod palcem ma pole 32 px w poprzek toru, a jego środek zostaje tam, gdzie stał */
+/* tor pod palcem ma pole 40 px w poprzek, a jego środek zostaje tam, gdzie stał */
 @media (pointer:coarse){
-.at-os-czolowy .at-suwak,.at-os-strzalkowy .at-suwak{height:32px;margin:-7px 0}
-.at-os-poziomy .at-suwak{width:32px;margin:0 -7px}
-.at-suwak{touch-action:none}
+.at-cie-x .at-tor,.at-cie-y .at-tor{height:40px;margin:-6px -10px}
+.at-cie-z .at-tor{width:40px;margin-left:-6px}
+.at-gal{width:20px;height:20px}
 }
 .at-obszary .wk-pole{cursor:pointer}
 .wk-pole{position:relative}

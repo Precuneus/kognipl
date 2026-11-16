@@ -208,6 +208,8 @@ export async function ziarno() {
     const p = PUNKT.get(n);
     if (!p) return;
     ustaw('strzalkowy', p[0], true); ustaw('czolowy', p[1], true); ustaw('poziomy', p[2], true);
+    // mózg w 3D zdejmuje lewy plaster aż do obszaru (`ciecia.js`), więc obszar leży na ścianie widocznej od lewej (2026-11-16)
+    mozg.dispatchEvent(new CustomEvent('atlas-punkt', { detail: { x: p[0], y: p[1], z: p[2] } }));
   }
   function plastry(v, mm) {
     v.mm = mm;

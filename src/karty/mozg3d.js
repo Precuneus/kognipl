@@ -2,8 +2,9 @@
 // brain? When I scroll closely, i want to be able to change the focal point*, *clicking something will show a pop up window with what it
 // is*, *go and build it ... Remember to implement the choice between regions and networks*). Powierzchnia mózgu policzona z tej samej
 // objętości co przekroje (szablon MNI 2009c, odbity w linii środkowej jak przekroje), każdy jej punkt z siecią Yeo i strukturą Allena.
-// Trzy cięcia wycinają ósemkę mózgu od strony widza, przednią górną część na lewo od cięcia strzałkowego, a na ścianach wycięcia leżą
-// przekroje (jego słowa, 2026-11-11: *add a 3rd cut on the 3d brain, from lateral to medial to lateral*). Przeciąganie obraca, kółko przybliża w stronę
+// Mózg tnie się z każdej strony: suwak każdej osi ma dwie gałki, mózg zostaje między nimi, a to, co za gałką, schodzi całym plastrem;
+// na każdej ścianie cięcia leży przekrój (jego słowa, 2026-11-16: *So I can slice from top and from bottom on one suwak; from left and
+// from right on the second, and from front and from back on the third*; pudło cięć liczy `ciecia.js`, zdarzenie `atlas-pudlo`). Przeciąganie obraca, kółko przybliża w stronę
 // wskaźnika, prawy przycisk, Shift albo dwa palce przesuwają, dwuklik wraca do widoku startowego, wskazanie nazywa, a klik zaznacza to, co jest
 // w miejscu. Kolory idą za przełącznikiem Sieci | Obszary i za zaznaczeniem Atlasu, które prowadzi `ziarno.js` (zdarzenia
 // `atlas-wybor` i `atlas-ciecie` na siatce Atlasu).
@@ -129,12 +130,17 @@ export async function mozg3d(el) {
 
   // stan Atlasu: tryb, świecące sieci, zaznaczony obszar, położenie cięć
   const stan = { tryb: 'sieci', lit: new Set(Object.keys(KOL)), obszar: 0, plat: '', hot: 0 };
-  const cut = {};
-  el.querySelectorAll('.at-suwak').forEach((s) => { cut[s.dataset.p] = Number(s.value); });
-  const pC = new THREE.Plane(new THREE.Vector3(0, -1, 0), cut.czolowy);
-  const pH = new THREE.Plane(new THREE.Vector3(0, 0, -1), cut.poziomy);
-  const pS = new THREE.Plane(new THREE.Vector3(1, 0, 0), -cut.strzalkowy);
-  const plaszczyzny = [pC, pH, pS];
+  // pudło cięć: na każdej osi mózg zostaje między dwiema gałkami; płaszczyzna zostawia punkty, których odległość jest nieujemna
+  let P = siatka.__pudlo || { x: [-999, 999], y: [-999, 999], z: [-999, 999], tnie: { x: [false, false], y: [false, false], z: [false, false] } };
+  const plaszczyzny = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]].map(([a, b, c]) => new THREE.Plane(new THREE.Vector3(a, b, c), 0));
+  const ustawPlaszczyzny = () => {
+    plaszczyzny[0].constant = -P.x[0]; plaszczyzny[1].constant = P.x[1];
+    plaszczyzny[2].constant = -P.y[0]; plaszczyzny[3].constant = P.y[1];
+    plaszczyzny[4].constant = -P.z[0]; plaszczyzny[5].constant = P.z[1];
+  };
+  ustawPlaszczyzny();
+  // gałka 0 stoi na początku toru: lewa to mniejsze x, góra i przód to większe z i y
+  const tnie = (os, j) => { const t = P.tnie[os]; return os === 'x' ? t[j] : t[1 - j]; };
 
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
@@ -142,7 +148,7 @@ export async function mozg3d(el) {
   geo.computeVertexNormals();
   const vc = new Float32Array(nv * 3);
   geo.setAttribute('color', new THREE.BufferAttribute(vc, 3));
-  const mat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.85, metalness: 0, clippingPlanes: plaszczyzny, clipIntersection: true, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
+  const mat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.85, metalness: 0, clippingPlanes: plaszczyzny, clipIntersection: false, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
   const kora = new THREE.Mesh(geo, mat);
   scene.add(kora);
   // ziarno na powierzchni: co trzeci punkt, odsunięty o włos od powierzchni
@@ -158,7 +164,7 @@ export async function mozg3d(el) {
   const gg = new THREE.BufferGeometry();
   gg.setAttribute('position', new THREE.BufferAttribute(gp, 3));
   gg.setAttribute('color', new THREE.BufferAttribute(gc, 3));
-  scene.add(new THREE.Points(gg, new THREE.PointsMaterial({ size: 2, sizeAttenuation: false, vertexColors: true, clippingPlanes: plaszczyzny, clipIntersection: true })));
+  scene.add(new THREE.Points(gg, new THREE.PointsMaterial({ size: 2, sizeAttenuation: false, vertexColors: true, clippingPlanes: plaszczyzny, clipIntersection: false })));
 
   const kol = new THREE.Color(), kol2 = new THREE.Color(), ciem = new THREE.Color(CIEMNY), szary = new THREE.Color(SZARY), zloto = new THREE.Color(ZLOTE), blade = new THREE.Color(ZLOTE).lerp(new THREE.Color(SZARY), 0.55), jasny = new THREE.Color('#bdb5a6');
   // sieci punktu, kiedy świeci któraś z nich: miejsce, które świecąca sieć dzieli z inną, świeci kolorem każdej swojej sieci, jak
@@ -193,10 +199,9 @@ export async function mozg3d(el) {
   const [NX, NY, NZ] = O.wymiar, k = O.krok, x0 = O.poczatek[0] - k / 2, Wmm = (2 * NX - 1) * k;
   const yTop = O.poczatek[1] + (NY - 0.5) * k, zTop = O.poczatek[2] + (NZ - 0.5) * k, zBot = O.poczatek[2] - k / 2, yBot = O.poczatek[1] - k / 2;
   const plastry = {};
-  function obraz(p) {
-    const mm = cut[p];
+  function obraz(p, mm, id) {
     const T = plaster(vol, O, 0, p, mm), B = plaster(vol, O, 1, p, mm), A = plaster(vol, O, 2, p, mm), Y = plaster(vol, O, 3, p, mm);
-    plastry[p] = { T, B, A, Y };
+    plastry[id] = { T, B, A, Y };
     const S = 8, cv = document.createElement('canvas'); cv.width = T.W * S; cv.height = T.H * S;
     const g = cv.getContext('2d');
     // komory też są ścianą: przez dziurę w ścianie widać było od środka ścianę komory na powierzchni 3D, a każdy jej punkt nosi strukturę,
@@ -210,7 +215,7 @@ export async function mozg3d(el) {
       const x = i % T.W, y = (i / T.W) | 0;
       for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const xx = x + dx, yy = y + dy; if (xx >= 0 && yy >= 0 && xx < T.W && yy < T.H) K[yy * T.W + xx] = 1; }
     }
-    plastry[p].K = K;
+    plastry[id].K = K;
     for (let i = 0; i < T.v.length; i++) {
       const kom = T.v[i] <= 127 && (RODZAJ[A.v[i]] === 'komora' || K[i]);
       if (T.v[i] > 127 || kom) { g.fillStyle = kom ? '#100e0b' : '#1b1813'; g.fillRect((i % T.W) * S, Math.floor(i / T.W) * S, S + 1, S + 1); }
@@ -260,39 +265,40 @@ export async function mozg3d(el) {
     const tx = new THREE.CanvasTexture(cv); tx.colorSpace = THREE.SRGBColorSpace; tx.anisotropy = 4;
     return tx;
   }
+  // ściana cięcia: przekrój w miejscu gałki, na szerokość tego, co z mózgu zostało na dwóch pozostałych osiach; obraz ściany liczy się
+  // na nowo tylko wtedy, kiedy jej gałka się ruszyła albo zmieniło się zaznaczenie, a ruch innej osi przycina tylko jej ramę
   const lico = {};
   const ramka = new THREE.LineBasicMaterial({ color: 0xf0c060, transparent: true, opacity: 0.85 });
-  function postawLico(p) {
-    if (lico[p]) { scene.remove(lico[p].m, lico[p].r); lico[p].m.geometry.dispose(); lico[p].m.material.map.dispose(); lico[p].m.material.dispose(); lico[p].r.geometry.dispose(); }
-    delete lico[p];
-    // ściany czołowa i pozioma sięgają od lewego brzegu mózgu do cięcia strzałkowego; obraz obejmuje obie półkule, więc ściana bierze
-    // z niego tyle, ile ma szerokości
-    const xs = Math.min(x0 + Wmm, cut.strzalkowy), ux = (xs - x0) / Wmm, yc = cut.czolowy, zc = cut.poziomy;
-    if (p !== 'strzalkowy' && ux <= 0) return;
-    const tx = obraz(p);
-    let P, U;
-    if (p === 'czolowy') {
-      // ściana w y = cięcie, nad cięciem poziomym; obraz biegnie od góry mózgu w dół
-      const y = cut.czolowy, z0 = zc, vz = (z0 - zBot) / (zTop - zBot);
-      P = [x0, y, z0, xs, y, z0, xs, y, zTop, x0, y, zTop]; U = [0, vz, ux, vz, ux, 1, 0, 1];
-    } else if (p === 'poziomy') {
-      // ściana w z = cięcie, przed cięciem czołowym; obraz biegnie od przodu mózgu w tył
-      const z = cut.poziomy, y0 = yc, vy = (y0 - yBot) / (yTop - yBot);
-      P = [x0, y0, z, xs, y0, z, xs, yTop, z, x0, yTop, z]; U = [0, vy, ux, vy, ux, 1, 0, 1];
-    } else {
-      // ściana w x = cięcie, przed cięciem czołowym i nad poziomym; obraz biegnie od przodu mózgu w tył i od góry w dół
-      const x = cut.strzalkowy, y0 = yc, z0 = zc, uy = (yTop - y0) / (yTop - yBot), vz = (z0 - zBot) / (zTop - zBot);
-      P = [x, y0, z0, x, yTop, z0, x, yTop, zTop, x, y0, zTop]; U = [uy, vz, 0, vz, 0, 1, uy, 1];
-    }
+  const PRZEKROJ = { x: 'strzalkowy', y: 'czolowy', z: 'poziomy' };
+  const usunLico = (id, zTeksturą) => {
+    const L = lico[id];
+    if (!L) return;
+    scene.remove(L.m, L.r); L.m.geometry.dispose(); L.m.material.dispose(); L.r.geometry.dispose();
+    if (zTeksturą) { L.tx.dispose(); delete lico[id]; }
+  };
+  function postawLico(os, j, sila) {
+    const id = os + j, v = P[os][j], L = lico[id];
+    if (!tnie(os, j)) { usunLico(id, true); return; }
+    const nowa = !L || sila || Math.abs(L.mm - v) > 0.01;
+    const tx = nowa ? obraz(PRZEKROJ[os], v, id) : L.tx;
+    if (L) { usunLico(id, nowa); }
+    const xa = Math.max(P.x[0], x0), xb = Math.min(P.x[1], x0 + Wmm), ya = Math.max(P.y[0], yBot), yb = Math.min(P.y[1], yTop), za = Math.max(P.z[0], zBot), zb = Math.min(P.z[1], zTop);
+    if (xa >= xb || ya >= yb || za >= zb) { if (nowa) tx.dispose(); delete lico[id]; return; }
+    const ux = (x) => (x - x0) / Wmm, vy = (y) => (y - yBot) / (yTop - yBot), vz = (z) => (z - zBot) / (zTop - zBot), uy = (y) => (yTop - y) / (yTop - yBot);
+    let Pp, U;
+    // poziomy: obraz od przodu mózgu w tył; czołowy: od góry w dół; strzałkowy: od przodu w tył i od góry w dół, przód po lewej
+    if (os === 'z') { Pp = [xa, ya, v, xb, ya, v, xb, yb, v, xa, yb, v]; U = [ux(xa), vy(ya), ux(xb), vy(ya), ux(xb), vy(yb), ux(xa), vy(yb)]; }
+    else if (os === 'y') { Pp = [xa, v, za, xb, v, za, xb, v, zb, xa, v, zb]; U = [ux(xa), vz(za), ux(xb), vz(za), ux(xb), vz(zb), ux(xa), vz(zb)]; }
+    else { Pp = [v, ya, za, v, yb, za, v, yb, zb, v, ya, zb]; U = [uy(ya), vz(za), uy(yb), vz(za), uy(yb), vz(zb), uy(ya), vz(zb)]; }
     const g = new THREE.BufferGeometry();
-    g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3));
+    g.setAttribute('position', new THREE.Float32BufferAttribute(Pp, 3));
     g.setAttribute('uv', new THREE.Float32BufferAttribute(U, 2));
     g.setIndex([0, 1, 2, 0, 2, 3]);
     const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ map: tx, transparent: true, side: THREE.DoubleSide, depthWrite: false }));
-    m.userData.p = p;
-    const r = new THREE.LineLoop(new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(P, 3)), ramka);
+    m.userData.id = id;
+    const r = new THREE.LineLoop(new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(Pp, 3)), ramka);
     scene.add(m, r);
-    lico[p] = { m, r };
+    lico[id] = { m, r, tx, mm: v };
   }
 
   let czeka = 0;
@@ -314,17 +320,20 @@ export async function mozg3d(el) {
     if (pg && bylPoz !== null && poz !== bylPoz && ruszony) { ruszony = false; zamknij(); }
     bylPoz = poz;
     if (!ruszony) {
-      if (!pg) {
-        // scena pod suwakami (na komputerze) mieści mózg między pasem górnego suwaka a pasem dolnego
-        const pol = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)), hm = (h - 110) / h;
-        const d = Math.min(620, Math.max(320, Math.max(84 / (pol * hm), 112 / (pol * camera.aspect))));
-        camera.position.copy(controls.target).addScaledVector(kierunek, d);
-      } else wpasuj(w, h, pg, pp, pd, pl);
+      // na komputerze scena ma całą szerokość strony, a mózg mieści się w polu od lewego brzegu strony do kolumny przekrojów
+      if (!pg) wpasuj(w, h, ...pole());
+      else wpasuj(w, h, pg, pp, pd, pl);
       controls.update(); controls.saveState();
     }
     rysuj();
   }
   let bylPoz = null;
+  const pole = () => {
+    const rs = scena.getBoundingClientRect(), gl = el.closest('.at-glowny'), kol = gl && gl.querySelector('.at-kol');
+    const g = gl ? gl.getBoundingClientRect() : rs, kr = kol ? kol.getBoundingClientRect() : null;
+    const prawo = kr && kr.width ? rs.right - kr.left + 28 : rs.right - g.right;
+    return [24, Math.max(0, prawo), 56, Math.max(0, g.left - rs.left)];
+  };
   // poniżej 1000 px mózg wypełnia ramkę między pasami suwaków: kamera mierzy obrys powierzchni na ekranie, staje tak, żeby jego środek
   // wypadł na środku tego pola, i odsuwa się, aż zajmie je bez 4% marginesu (jego słowa, 2026-11-13: *too small on the vertical view*)
   function wpasuj(w, h, pg, pp, pd, pl) {
@@ -348,9 +357,9 @@ export async function mozg3d(el) {
     }
     camera.position.copy(controls.target).addScaledVector(kierunek, d);
   }
-  const CIECIA = ['czolowy', 'poziomy', 'strzalkowy'];
-  const lica = () => CIECIA.forEach(postawLico);
-  function wszystko() { koloruj(); lica(); rysuj(); przypiete(); }
+  const SCIANY = [['x', 0], ['x', 1], ['y', 0], ['y', 1], ['z', 0], ['z', 1]];
+  const lica = (sila) => SCIANY.forEach(([os, j]) => postawLico(os, j, sila));
+  function wszystko() { koloruj(); lica(true); rysuj(); przypiete(); }
 
   // przypinanie (jego notatki, 2026-11-15: *User selects any structure (midbrain, basal ganglia, thalamic nucleus) and it stays as a 3D mesh
   // regardless of sagittal/coronal/axial slice positions. Not clipped by slice planes. Multiple pinned structures, each with its own
@@ -487,9 +496,12 @@ export async function mozg3d(el) {
     if (stan.tryb !== byl || !e.detail.wybor) zamknij();
     wszystko();
   });
-  siatka.addEventListener('atlas-ciecie', (e) => {
-    cut[e.detail.p] = e.detail.mm; pC.constant = cut.czolowy; pH.constant = cut.poziomy; pS.constant = -cut.strzalkowy;
-    lica(); rysuj();
+  // gałka się rusza: płaszczyzny od razu, ściany raz na klatkę
+  let licaCzeka = 0;
+  siatka.addEventListener('atlas-pudlo', (e) => {
+    P = e.detail; ustawPlaszczyzny(); rysuj();
+    if (licaCzeka) return;
+    licaCzeka = requestAnimationFrame(() => { licaCzeka = 0; lica(false); rysuj(); });
   });
 
   // wskazanie nazywa część pod wskaźnikiem w kroju znacznika przekrojów: w trybie Obszary strukturę Allena i jej płat, w trybie Sieci
@@ -526,14 +538,14 @@ export async function mozg3d(el) {
     nazwa.style.top = Math.max(0, yy - rb.top - 10) + 'px';
   }
   const ray = new THREE.Raycaster(), mysz = new THREE.Vector2();
-  const usuniete = (q) => q.y > cut.czolowy && q.z > cut.poziomy && q.x < cut.strzalkowy;
+  const usuniete = (q) => q.x < P.x[0] || q.x > P.x[1] || q.y < P.y[0] || q.y > P.y[1] || q.z < P.z[0] || q.z > P.z[1];
   function trafienie(e) {
     const r = renderer.domElement.getBoundingClientRect();
     mysz.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
     ray.setFromCamera(mysz, camera);
     // przypięta bryła bierze klik przed tkanką, bo jej cień leży na wierzchu: klik trafia w to, co oko widzi na górze (2026-11-16)
     const naPinie = ray.intersectObjects(piny.filter((p) => p.widac).map((p) => p.m), false);
-    for (const h of naPinie.concat(ray.intersectObjects([kora, ...CIECIA.filter((p) => lico[p]).map((p) => lico[p].m)], false))) {
+    for (const h of naPinie.concat(ray.intersectObjects([kora, ...Object.values(lico).map((L) => L.m)], false))) {
       if (h.object.userData.n) {
         // bryła przypiętego obszaru: struktura pola, w którym leży punkt, albo najbliższego pola tej bryły
         const n = h.object.userData.n, xi = Math.round((-Math.abs(h.point.x) - O.poczatek[0]) / k), yi = Math.round((h.point.y - O.poczatek[1]) / k), zi = Math.round((h.point.z - O.poczatek[2]) / k);
@@ -553,7 +565,7 @@ export async function mozg3d(el) {
         for (const i of [f.a, f.b, f.c]) { const d = (pos[i * 3] - h.point.x) ** 2 + (pos[i * 3 + 1] - h.point.y) ** 2 + (pos[i * 3 + 2] - h.point.z) ** 2; if (d < bd) { bd = d; best = i; } }
         return [allen[best], yeo[best]];
       }
-      const pl = plastry[h.object.userData.p];
+      const pl = plastry[h.object.userData.id];
       if (!pl || !h.uv) continue;
       const c = Math.min(pl.T.W - 1, Math.floor(h.uv.x * pl.T.W)), rr = Math.min(pl.T.H - 1, Math.floor((1 - h.uv.y) * pl.T.H)), i = rr * pl.T.W + c;
       // poza tkanką ściana jest przezroczysta, ale komora ją zamyka: wskazanie w komorze nie sięga ściany komory za nią
@@ -612,46 +624,8 @@ export async function mozg3d(el) {
   controls.addEventListener('start', zamknij);
   controls.addEventListener('change', rysuj);
 
-  // suwaki na osiach widoku startowego: dolny biegnie od przodu do tyłu mózgu, boczny od góry do dołu, górny od prawej półkuli do lewej,
-  // tak jak mózg leży w ramce; każdy ma długość swojej osi mózgu na ekranie
-  const osie = () => {
-    const rb = scena.getBoundingClientRect();
-    if (!rb.width) return;
-    const kam = camera.clone();
-    kam.position.copy(controls.position0); kam.up.set(0, 0, 1); kam.lookAt(controls.target0); kam.updateMatrixWorld(); kam.updateProjectionMatrix();
-    const ekr = (x, y, z) => { const v = new THREE.Vector3(x, y, z).project(kam); return [(v.x + 1) / 2 * rb.width, (1 - v.y) / 2 * rb.height]; };
-    const M = O.mozg, zs = (M.gora + M.dol) / 2, ys = (M.przod + M.tyl) / 2;
-    const [px] = ekr(0, M.przod, zs), [tx] = ekr(0, M.tyl, zs), [, gy] = ekr(0, ys, M.gora), [, dy] = ekr(0, ys, M.dol);
-    const [lx] = ekr(-M.bok, ys, zs), [rx] = ekr(M.bok, ys, zs);
-    const dol = el.querySelector('.at-os-czolowy'), bok = el.querySelector('.at-os-poziomy'), gor = el.querySelector('.at-os-strzalkowy');
-    // scena zaczyna się pod górnym suwakiem, więc suwaki liczą się od jej rogu
-    // poniżej 1000 px scena to cała ramka, a suwaki trzymają się pola między pasami
-    const ox = scena.offsetLeft, oy = scena.offsetTop, [pg, pp, pd, pl] = pas();
-    if (dol) { dol.style.left = ox + Math.max(pl, Math.min(px, tx)) + 'px'; dol.style.width = Math.abs(tx - px) + 'px'; }
-    // boczny stoi tuż za tyłem mózgu, mierzonym na powierzchni, a gdzie ramka jest za wąska, w pasie przy jej brzegu
-    let prawy = 0;
-    const q = new THREE.Vector3();
-    for (let i = 0; i < nv; i += 5) { q.set(pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2]).project(kam); prawy = Math.max(prawy, (q.x + 1) / 2 * rb.width); }
-    // z wyłącznikiem pod spodem kończy się na dole sceny, nad dolnym suwakiem
-    const bt = Math.max(pg, Math.min(gy, dy));
-    if (bok) { bok.style.top = oy + bt + 'px'; bok.style.height = Math.min(Math.abs(dy - gy), rb.height - pd - bt) + 'px'; bok.style.right = 'auto'; bok.style.left = ox + Math.min(rb.width - pp + 6, prawy + 20) + 'px'; }
-    // na szerokim ekranie przekrój poziomy staje za pionowym suwakiem, w skali przekrojów z lewej, i nigdy pod nim (przegląd 2026-11-11:
-    // suwak szedł przez lewą półkulę przekroju i jego znacznik)
-    const gl = el.closest('.at-glowny'), pz = gl && gl.querySelector('.at-boki-prawe'), lw = gl && gl.querySelector('.at-boki-lewe');
-    if (pz && bok && lw && getComputedStyle(pz).position === 'absolute') {
-      const g = gl.getBoundingClientRect(), sb = bok.getBoundingClientRect(), szer = lw.getBoundingClientRect().width * 0.808;
-      const od = sb.right + 10 - g.left, maks = document.documentElement.clientWidth - 8 - g.left;
-      pz.style.left = od + 'px'; pz.style.right = 'auto'; pz.style.width = Math.max(120, Math.min(szer, maks - od)) + 'px';
-    } else if (pz) { pz.style.left = pz.style.right = pz.style.width = ''; }
-    // chipy przypiętych zaczynają się 12 px za pionowym suwakiem z jego podpisami, więc węższy ekran nie kładzie ich na suwaku (audyt
-    // 2026-11-15: przy 1024 px chip leżał na torze suwaka)
-    if (pinBox && bok && gl && getComputedStyle(pinBox).position === 'absolute') pinBox.style.left = bok.getBoundingClientRect().right + 12 - gl.getBoundingClientRect().left + 'px';
-    else if (pinBox) pinBox.style.left = '';
-    // suwak z wyłącznikiem ma co najmniej 210 px, żeby dało się go przesuwać, i zostaje w ramce
-    if (gor) { const w = Math.max(210, Math.abs(rx - lx)), c = (lx + rx) / 2; gor.style.left = ox + Math.max(0, Math.min(rb.width - pp - w, c - w / 2)) + 'px'; gor.style.width = w + 'px'; }
-  };
-  new ResizeObserver(() => { wymiar(); osie(); }).observe(scena);
-  wymiar(); osie();
+  new ResizeObserver(() => { wymiar(); }).observe(scena);
+  wymiar();
   wszystko();
   el.classList.add('at-3d-gotowy');
 }
