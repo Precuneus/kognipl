@@ -54,15 +54,16 @@ const ogImage = new URL('/og.png', Astro.site).href;
       <circle cx="50" cy="50" r="2" fill="#a09888" opacity="0.4"/>
     </svg>
   </div>
+  {/* strona jest jego, bez uczelni (jego słowo, 2026-11-16: *Live just me and link my website*) */}
   <p class="footer-name">Olgierd Borowiecki</p>
-  <p class="footer-faculty">Wydział Filozofii i Kognitywistyki</p>
-  <p class="footer-info">
-    Uniwersytet w Białymstoku &ensp;·&ensp; <a href="mailto:o.borowiecki@uwb.edu.pl">o.borowiecki@uwb.edu.pl</a>
+  <p class="footer-contact">
+    <a href="mailto:olgierd.borowiecki@gmail.com">olgierd.borowiecki@gmail.com</a><span class="footer-sep" aria-hidden="true">·</span><a href="https://olgierdborowiecki.com">olgierdborowiecki.com</a>
   </p>
+  {/* złota kropka z logo dzieli właściciela od strony, jak na Kontakcie i O stronie */}
+  <div class="footer-dot" aria-hidden="true"></div>
   {/* ujawnienie procesu na każdej stronie, jego zdanie (jego słowo, 2026-10-23: *add this to the footer*) */}
-  <p class="footer-ai">
-    Strona i jej treści wyłaniają się z procesu: pętli sprzężenia zwrotnego między inteligencją biologiczną a sztuczną. <span style="white-space:nowrap"><a href="/o-stronie/">O stronie</a> &ensp;·&ensp; <a href="/prywatnosc/">Prywatność</a></span>
-  </p>
+  <p class="footer-ai">Strona i jej treści wyłaniają się z procesu: pętli sprzężenia zwrotnego między inteligencją biologiczną a sztuczną.</p>
+  <p class="footer-links"><a href="/o-stronie/">O stronie</a><span class="footer-sep" aria-hidden="true">·</span><a href="/prywatnosc/">Prywatność</a><span class="footer-sep" aria-hidden="true">·</span><a href="/kontakt/">Kontakt</a></p>
 </footer>
 
 {/* Candlelight card tracking (shared) */}

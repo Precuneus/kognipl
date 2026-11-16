@@ -76,7 +76,8 @@ export const ALL = Object.entries(notes).map(([file, mod]) => {
 const defOf = (body) => {
   const b = body.find((x) => x.t); if (!b) return '';
   const s = b.t.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_, a, c) => c || a).replace(/\s*\(ang\.[^)]*\)/g, '').replace(/\s*\([^()]*\d{4}[^()]*\)/g, '');
-  const z = s.match(/[^.!?]+[.!?](?=\s|$)/g) || [s];
+  // kropka bez spacji po niej (kogni.pl, 0,1 s zapisane 0.1) nie kończy zdania (audyt 2026-11-16: opis karty kogni.pl zaczynał się od „pl”)
+  const z = s.match(/(?:[^.!?]|[.!?](?!\s|$))+[.!?](?=\s|$)/g) || [s];
   return (z[0].length < 150 && z[1] ? z[0] + z[1] : z[0]).trim();
 };
 ALL.forEach((k) => { k.def = defOf(k.body); });
