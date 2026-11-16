@@ -5,7 +5,7 @@
 // Na przekroju, w którego płaszczyźnie leży oś, dwie złote linie pokazują cięcia, a odcięta część ciemnieje. Przekrój prostopadły do osi (czołowy dla przodu i tyłu,
 // poziomy dla góry i dołu, strzałkowy dla lewej i prawej) pokazuje ścianę gałki przesuniętej ostatnio, przez ukryte pole, które czyta
 // `ziarno.js`. Działa też bez WebGL: wtedy tną się same przekroje.
-// t to położenie gałki liczone od pierwszego końca toru (góra, prawa, przód) do drugiego; gałka 0 stoi zawsze przed gałką 1.
+// t to położenie gałki liczone od pierwszego końca toru (góra, lewa, przód) do drugiego; gałka 0 stoi zawsze przed gałką 1.
 export function ciecia(siatka) {
   const glowny = siatka && siatka.querySelector('.at-glowny');
   if (!glowny) return;
@@ -20,12 +20,12 @@ export function ciecia(siatka) {
   const OS = {};
   glowny.querySelectorAll('.at-cie').forEach((el) => {
     const os = el.dataset.os, lo = Number(el.dataset.lo), hi = Number(el.dataset.hi);
-    // pierwszy koniec toru to większa współrzędna: góra, prawa półkula, przód
-    const a = hi, b = lo;
+    // pierwszy koniec toru: góra i przód to większe współrzędne, lewa mniejsza
+    const a = os === 'x' ? lo : hi, b = os === 'x' ? hi : lo;
     const fig = glowny.querySelector('.at-blok-' + os + ' .wk-zywy svg');
     const o = { el, os, lo, hi, a, b, t: [0, 1], gal: [...el.querySelectorAll('.at-gal')], tor: el.querySelector('.at-tor'), pas: el.querySelector('.at-zostaje'),
       plaster: el.dataset.plaster, spocz: Number(el.dataset.domysl), fig, linie: null, g: ODSTEP / (hi - lo), wymiar: el.dataset.wymiar,
-      strona: { z: ['od góry', 'od dołu'], x: ['od prawej', 'od lewej'], y: ['od przodu', 'od tyłu'] }[os] };
+      strona: { z: ['od góry', 'od dołu'], x: ['od lewej', 'od prawej'], y: ['od przodu', 'od tyłu'] }[os] };
     if (fig) {
       const g = document.createElementNS(NS, 'g');
       g.setAttribute('class', 'at-cie-linie');
@@ -148,9 +148,9 @@ export function ciecia(siatka) {
     o.spocz = e.detail.x;
     if (OS.z) OS.z.spocz = e.detail.z;
     if (OS.y) OS.y.spocz = e.detail.y;
-    // lewa półkula stoi bliżej, więc cięcie od lewej (gałka 1, drugi koniec toru) odsłania ścianę, którą widać
-    o.t[0] = 0;
-    ustaw(o, 1, doT(o, e.detail.x), false);
+    // lewa półkula stoi bliżej, więc cięcie od lewej (gałka 0, pierwszy koniec toru) odsłania ścianę, którą widać
+    o.t[1] = 1;
+    ustaw(o, 0, doT(o, e.detail.x), false);
     rysuj(o);
     if (OS.z) { OS.z.t = [0, 1]; rysuj(OS.z); }
     if (OS.y) { OS.y.t = [0, 1]; rysuj(OS.y); }

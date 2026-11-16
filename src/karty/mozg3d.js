@@ -641,8 +641,8 @@ export async function mozg3d(el) {
   controls.addEventListener('change', rysuj);
 
   // suwaki cięć wokół mózgu w widoku startowym (jego słowa, 2026-11-16: *make the suwaki above, below, and to the right of the brain in
-  // 3d. keep the 2d brains where they are. Mind to show it well on mobile*): nad mózgiem lewa i prawa, pod nim przód i tył, z prawej
-  // pionowo góra i dół. Końce toru to końce ramki objętości na ekranie, więc gałka stoi nad miejscem, które tnie; tor za krótki do
+  // 3d. keep the 2d brains where they are. Mind to show it well on mobile*): nad mózgiem lewa i prawa, lewa po lewej (jego słowa,
+  // 2026-11-17), pod nim przód i tył, z prawej pionowo góra i dół. Końce toru to końce ramki objętości na ekranie; tor za krótki do
   // chwycenia rośnie wokół swojego środka, a brak miejsca na nazwę końca skraca go od tej strony
   const osie = () => {
     const rb = scena.getBoundingClientRect();

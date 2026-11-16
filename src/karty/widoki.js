@@ -218,12 +218,12 @@ export function suwak(p) {
 // direction. So I can slice from top and from bottom on one suwak; from left and from right on the second, and from front and from back
 // on the third*): dwie gałki na jednym torze, mózg zostaje między nimi. Suwaki stoją wokół mózgu w 3D (jego słowa, 2026-11-16: *make the
 // suwaki above, below, and to the right of the brain in 3d. keep the 2d brains where they are*): nad nim lewa i prawa, pod nim przód i tył,
-// z prawej pionowo góra i dół, każdy od końca, który w widoku startowym stoi z lewej albo u góry: prawa półkula leży z lewej, przód
-// z lewej, góra u góry. Zakres to cały mózg z móżdżkiem i pniem, więc gałka na końcu nic nie tnie. Za dalszym końcem wyłącznik chowa
+// z prawej pionowo góra i dół; lewa po lewej, prawa po prawej (jego słowa, 2026-11-17: *prawa and lewa should be on the correct
+// site*), przód z lewej, góra u góry. Zakres to cały mózg z móżdżkiem i pniem, więc gałka na końcu nic nie tnie. Za dalszym końcem wyłącznik chowa
 // płaski przekrój, który to cięcie przesuwa (jego słowa, 2026-11-11: *we want a switch on/off button next to each*); złote linie cięć
 // leżą na przekroju, w którego płaszczyźnie leży oś (`stoi`)
 export const OSIE = {
-  x: { koniec: ['prawa', 'lewa'], zakres: RAMA.x, przy: 'strzalkowy', stoi: 'poziomy', ciecie: ['od prawej', 'od lewej'], wymiar: 'szerokości' },
+  x: { koniec: ['lewa', 'prawa'], zakres: RAMA.x, przy: 'strzalkowy', stoi: 'poziomy', ciecie: ['od lewej', 'od prawej'], wymiar: 'szerokości' },
   z: { koniec: ['góra', 'dół'], zakres: RAMA.z, przy: 'poziomy', stoi: 'czolowy', ciecie: ['od góry', 'od dołu'], wymiar: 'wysokości' },
   y: { koniec: ['przód', 'tył'], zakres: RAMA.y, przy: 'czolowy', stoi: 'strzalkowy', ciecie: ['od przodu', 'od tyłu'], wymiar: 'długości' },
 };
