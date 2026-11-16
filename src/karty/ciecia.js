@@ -24,7 +24,7 @@ export function ciecia(siatka) {
     const a = os === 'x' ? lo : hi, b = os === 'x' ? hi : lo;
     const fig = glowny.querySelector('.at-blok-' + os + ' .wk-zywy svg');
     const o = { el, os, lo, hi, a, b, t: [0, 1], gal: [...el.querySelectorAll('.at-gal')], tor: el.querySelector('.at-tor'), pas: el.querySelector('.at-zostaje'),
-      plaster: el.dataset.plaster, domysl: Number(el.dataset.domysl), fig, linie: null, g: ODSTEP / (hi - lo), wymiar: el.dataset.wymiar,
+      plaster: el.dataset.plaster, spocz: Number(el.dataset.domysl), fig, linie: null, g: ODSTEP / (hi - lo), wymiar: el.dataset.wymiar,
       strona: { z: ['od góry', 'od dołu'], x: ['od lewej', 'od prawej'], y: ['od przodu', 'od tyłu'] }[os] };
     if (fig) {
       const g = document.createElementNS(NS, 'g');
@@ -78,12 +78,13 @@ export function ciecia(siatka) {
     linie(o);
   }
   // gałka przesunięta ostatnio wyznacza przekrój prostopadły do swojej osi; gałka na końcu toru niczego nie tnie, więc przekrój bierze
-  // drugą gałkę, a gdy i ta stoi na końcu, położenie startowe przekroju
+  // drugą gałkę, a gdy i ta stoi na końcu, miejsce spoczynku przekroju: startowe, a po wyborze obszaru jego punkt (przegląd 2026-11-16:
+  // gałka cofnięta na koniec toru wyrzucała wybrany obszar z przekroju)
   function plaster(o, i) {
     const s = glowny.querySelector('.at-suwak[data-p="' + o.plaster + '"]');
     if (!s) return;
     const naKoncu = (j) => (j ? o.t[1] > 0.9995 : o.t[0] < 0.0005);
-    const v = !naKoncu(i) ? mm(o, o.t[i]) : !naKoncu(1 - i) ? mm(o, o.t[1 - i]) : o.domysl;
+    const v = !naKoncu(i) ? mm(o, o.t[i]) : !naKoncu(1 - i) ? mm(o, o.t[1 - i]) : o.spocz;
     s.value = String(v);
     s.dispatchEvent(new Event('input'));
   }
@@ -102,17 +103,30 @@ export function ciecia(siatka) {
     // palec i mysz biorą tor w każdym miejscu; rusza się gałka bliższa wskazanemu miejscu (jego słowa, 2026-11-13: *changing the cut is
     // difficult*)
     const tPod = (e) => { const r = o.tor.getBoundingClientRect(); return pion ? (e.clientY - r.top - ZAPAS) / (r.height - 2 * ZAPAS) : (e.clientX - r.left - ZAPAS) / (r.width - 2 * ZAPAS); };
-    let ciagnie = -1;
+    // gałki zsunięte na jedno miejsce: którą wziąć, mówi pierwszy ruch, w stronę pierwszego końca dolna, w stronę drugiego górna
+    // (przegląd 2026-11-16: przy obu gałkach na końcu toru chwyt za środek widocznej gałki niczego nie ruszał)
+    let ciagnie = -1, start = 0;
+    const PIKSEL = () => 1 / ((pion ? o.tor.clientHeight : o.tor.clientWidth) - 2 * ZAPAS);
     o.tor.addEventListener('pointerdown', (e) => {
       if (e.button !== 0) return;
       const t = tPod(e);
-      ciagnie = t <= o.t[0] ? 0 : t >= o.t[1] ? 1 : (t - o.t[0] < o.t[1] - t ? 0 : 1);
       o.tor.setPointerCapture(e.pointerId);
+      e.preventDefault();
+      if ((o.t[1] - o.t[0]) / PIKSEL() < 18 && Math.abs(t - (o.t[0] + o.t[1]) / 2) / PIKSEL() < 14) { ciagnie = 2; start = t; return; }
+      ciagnie = t <= o.t[0] ? 0 : t >= o.t[1] ? 1 : (t - o.t[0] < o.t[1] - t ? 0 : 1);
       o.gal[ciagnie].focus({ preventScroll: true });
       ustaw(o, ciagnie, t);
-      e.preventDefault();
     });
-    o.tor.addEventListener('pointermove', (e) => { if (ciagnie >= 0) ustaw(o, ciagnie, tPod(e)); });
+    o.tor.addEventListener('pointermove', (e) => {
+      if (ciagnie < 0) return;
+      const t = tPod(e);
+      if (ciagnie === 2) {
+        if (Math.abs(t - start) / PIKSEL() < 3) return;
+        ciagnie = t < start ? 0 : 1;
+        o.gal[ciagnie].focus({ preventScroll: true });
+      }
+      ustaw(o, ciagnie, t);
+    });
     const pusc = () => { ciagnie = -1; };
     o.tor.addEventListener('pointerup', pusc);
     o.tor.addEventListener('pointercancel', pusc);
@@ -135,11 +149,25 @@ export function ciecia(siatka) {
   siatka.addEventListener('atlas-punkt', (e) => {
     const o = OS.x;
     if (!o || !e.detail) return;
+    // cięcia z góry, z dołu, z przodu i z tyłu wracają na końce, bo mogłyby zdjąć obszar; przekroje spoczywają w jego punkcie
+    o.spocz = e.detail.x;
+    if (OS.z) OS.z.spocz = e.detail.z;
+    if (OS.y) OS.y.spocz = e.detail.y;
     o.t[1] = 1;
     ustaw(o, 0, doT(o, e.detail.x), false);
     rysuj(o);
     if (OS.z) { OS.z.t = [0, 1]; rysuj(OS.z); }
     if (OS.y) { OS.y.t = [0, 1]; rysuj(OS.y); }
+    oglos();
+  });
+  // widok startowy (↻, dwuklik) to cały mózg: cięcia wracają na końce torów, a przekroje na miejsca startowe
+  siatka.addEventListener('atlas-start', () => {
+    for (const os in OS) {
+      const o = OS[os];
+      o.t = [0, 1]; o.spocz = Number(o.el.dataset.domysl); rysuj(o);
+      const s = glowny.querySelector('.at-suwak[data-p="' + o.plaster + '"]');
+      if (s) { s.value = String(o.spocz); s.dispatchEvent(new Event('input')); }
+    }
     oglos();
   });
   // przekrój przerysowany na nowo w innej wielkości: linie liczą się w jego ramce, więc wystarczy je postawić jeszcze raz
@@ -150,19 +178,22 @@ export function ciecia(siatka) {
   // 2026-11-16: przy 1100 × 850 wychodziła o 22 px)
   const OBRAZY = (NZ + NY + NZ) * k;
   const skaluj = () => {
-    const szer = glowny.clientWidth, wys = glowny.clientHeight;
+    const szer = glowny.clientWidth, wys = glowny.clientHeight, kol = glowny.querySelector('.at-kol'), cs = kol && getComputedStyle(kol);
+    // odstępy między blokami i margines nad torem pionowym należą do narzutu kolumny
+    const luki = cs ? 2 * (parseFloat(cs.rowGap) || 0) + (parseFloat(cs.paddingTop) || 0) : 0;
     const komputer = matchMedia('(min-width:1000px)').matches && !glowny.querySelector('.at-3d-brak');
-    let s = (szer - 16 - 72) / (2 * (2 * NX - 1) * k);
+    let s = (szer - 26 - 72) / (2 * (2 * NX - 1) * k);
     if (komputer) {
       s = (wys - 170) / OBRAZY;
       for (let n = 0; n < 2; n++) {
         glowny.style.setProperty('--s', Math.max(0.5, Math.min(1.6, s)).toFixed(3));
         const bloki = [...glowny.querySelectorAll('.at-blok')].reduce((a, b) => a + b.offsetHeight, 0);
         const teraz = Number(glowny.style.getPropertyValue('--s'));
-        s = (wys - 12 - (bloki - OBRAZY * teraz)) / OBRAZY;
+        s = (wys - 12 - luki - (bloki - OBRAZY * teraz)) / OBRAZY;
       }
     }
-    glowny.style.setProperty('--s', Math.max(0.5, Math.min(1.6, s)).toFixed(3));
+    // skala zaokrąglona w dół: zaokrąglona w górę o ułamek piksela przerzucała przekrój poziomy do następnego wiersza (przegląd 2026-11-16)
+    glowny.style.setProperty('--s', (Math.floor(Math.max(0.5, Math.min(1.6, s)) * 1000) / 1000).toFixed(3));
   };
   skaluj();
   new ResizeObserver(skaluj).observe(glowny);

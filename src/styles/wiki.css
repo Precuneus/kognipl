@@ -93,14 +93,16 @@ html.at-czeka .at-miejsce{visibility:hidden}
    Na węższym ekranie i bez WebGL przekroje stoją pod mózgiem. */
 .at-glowny{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:22px 16px}
 .at-glowny .at-3d{flex:0 0 100%}
-.at-kol{flex:0 0 100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:18px 16px}
+/* w wierszu bloki stoją dolnymi krawędziami na jednej linii, a odstęp między blokami jest większy niż suwaka od jego przekroju */
+.at-kol{flex:0 0 100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:18px 26px}
 .at-blok{display:flex;flex-direction:column;align-items:center}
 .at-przy{display:flex;align-items:flex-start;gap:10px}
 .at-przy .wk-pole{flex:0 0 calc(var(--s,1) * 151.5px)}
 .at-kol .wk-widok-czolowy{width:calc(var(--s,1) * 151.5px + 72px)}
 .at-kol .wk-widok-poziomy{width:calc(var(--s,1) * 151.5px)}
-/* podpis w jednym wierszu, wyśrodkowany pod przekrojem także wtedy, gdy przekrój jest od niego węższy */
+/* podpis w jednym wierszu, wyśrodkowany pod samym przekrojem także wtedy, gdy przekrój jest od niego węższy albo suwak stoi obok */
 .at-kol .wk-widok figcaption{display:flex;justify-content:center;white-space:nowrap}
+.at-kol .wk-widok-czolowy figcaption{width:calc(var(--s,1) * 151.5px)}
 .at-kol .wk-widok-strzalkowy{width:calc(var(--s,1) * 187.5px)}
 /* na komputerze mózg w 3D leży pod wszystkim na całą szerokość strony, bez pudełka (jego słowa, 2026-11-11: *the 3d view should be to the
    entire width of the side!!! ... do not box it*), a kolumna przekrojów stoi przy prawym brzegu; mózg w widoku startowym mieści się
@@ -112,9 +114,16 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-glowny:not(:has(.at-3d-brak)) .at-3d{position:absolute;inset:0;height:auto}
 .at-glowny:not(:has(.at-3d-brak)) .at-3d-scena{top:0;bottom:0;right:auto;left:calc(50% - 50vw);width:100vw}
 /* kolumna przepuszcza wskaźnik przez puste miejsca do mózgu pod nią */
-.at-glowny:not(:has(.at-3d-brak)) .at-kol{position:absolute;top:0;bottom:0;right:0;z-index:4;flex-direction:column;flex-wrap:nowrap;justify-content:space-between;align-items:flex-end;gap:0;width:auto;pointer-events:none}
+.at-glowny:not(:has(.at-3d-brak)) .at-kol{position:absolute;top:0;bottom:0;right:0;z-index:4;flex-direction:column;flex-wrap:nowrap;justify-content:space-between;align-items:flex-end;gap:16px;padding-top:10px;box-sizing:border-box;width:auto;pointer-events:none}
 .at-glowny:not(:has(.at-3d-brak)) .at-blok{pointer-events:auto}
 .at-glowny:not(:has(.at-3d-brak)) .at-3d-start{left:0;right:auto}
+.at-glowny:not(:has(.at-3d-brak)) .at-3d-start::after{left:0;right:auto}
+/* w kolumnie przekroje stoją prawymi krawędziami na jednej linii, a z prawej każdego pas 72 px na sterowanie: pionowy suwak przy
+   czołowym, wyłącznik poziomego i strzałkowego za drugim końcem toru, na jego linii (przegląd 2026-11-16: wyłącznik między nazwami
+   końców wchodził na *prawa* przy 1000 × 700, a krawędzie przekrojów stały w trzech miejscach) */
+.at-glowny:not(:has(.at-3d-brak)) .at-blok-x .wk-widok,.at-glowny:not(:has(.at-3d-brak)) .at-blok-y .wk-widok{padding-right:72px;box-sizing:content-box}
+.at-glowny:not(:has(.at-3d-brak)) .at-cie-x .at-wl,.at-glowny:not(:has(.at-3d-brak)) .at-cie-y .at-wl{bottom:auto;top:14px;left:auto;right:-50px;transform:translateY(-50%)}
+.at-glowny:not(:has(.at-3d-brak)) .at-cie-x .at-podpis,.at-glowny:not(:has(.at-3d-brak)) .at-cie-y .at-podpis{left:auto;right:0;transform:none}
 }
 /* suwak cięcia: tor z dwiema gałkami, mózg zostaje między nimi i ten odcinek toru świeci; końce nazwane */
 .at-cie{display:flex;align-items:center;gap:8px;font:500 12px/1 Inter,sans-serif;color:#a09888;letter-spacing:.04em;align-self:stretch}
@@ -132,7 +141,8 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-cie-z .at-koniec{position:absolute;left:32px;font-size:11.5px}
 .at-cie-z .at-koniec:first-child{top:0}
 .at-cie-z .at-koniec:nth-of-type(2){bottom:0}
-.at-cie-z .at-wl{position:absolute;left:30px;top:50%;transform:translateY(-50%);margin:0}
+/* wyłącznik pionowego suwaka stoi pod nazwą dołu (jego słowa, 2026-11-11) */
+.at-cie-z .at-wl{position:absolute;left:30px;top:calc(100% + 14px);margin:0}
 .at-cie span.at-koniec{text-shadow:0 0 3px #0e0d0b,0 0 7px #0e0d0b,0 0 12px #0e0d0b}
 .at-tor{position:relative;flex:1 1 auto;touch-action:none;cursor:pointer}
 .at-cie-x .at-tor,.at-cie-y .at-tor{height:28px}

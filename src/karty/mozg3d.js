@@ -7,7 +7,7 @@
 // from right on the second, and from front and from back on the third*; pudło cięć liczy `ciecia.js`, zdarzenie `atlas-pudlo`). Przeciąganie obraca, kółko przybliża w stronę
 // wskaźnika, prawy przycisk, Shift albo dwa palce przesuwają, dwuklik wraca do widoku startowego, wskazanie nazywa, a klik zaznacza to, co jest
 // w miejscu. Kolory idą za przełącznikiem Sieci | Obszary i za zaznaczeniem Atlasu, które prowadzi `ziarno.js` (zdarzenia
-// `atlas-wybor` i `atlas-ciecie` na siatce Atlasu).
+// `atlas-wybor` na siatce Atlasu).
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
@@ -119,7 +119,9 @@ export async function mozg3d(el) {
   controls.saveState();
   // dwuklik i ↻ wracają do widoku startowego; pierwszy klik dwukliku nie otwiera dymka (przegląd Atlasu 2026-11-11)
   let tKlik = 0, tNazwa = 0;
-  const odNowa = () => { clearTimeout(tKlik); controls.reset(); zamknij(); };
+  // widok startowy to też cały mózg: ↻ i dwuklik zdejmują cięcia (`ciecia.js`, zdarzenie `atlas-start`; przegląd 2026-11-16: po
+  // cięciach ↻ wracał tylko kamerą, a mózg zostawał pocięty)
+  const odNowa = () => { clearTimeout(tKlik); controls.reset(); zamknij(); siatka.dispatchEvent(new CustomEvent('atlas-start')); };
   renderer.domElement.addEventListener('dblclick', odNowa);
   const przyciskStart = el.querySelector('.at-3d-start');
   if (przyciskStart) przyciskStart.addEventListener('click', () => odNowa());
@@ -195,7 +197,7 @@ export async function mozg3d(el) {
     gg.getAttribute('color').needsUpdate = true;
   }
 
-  // przekroje na ścianach wycięcia: ten sam plaster co w płaskich przekrojach, z ziarnem w trybie Atlasu
+  // przekroje na ścianach cięć: ten sam plaster co w płaskich przekrojach, z ziarnem w trybie Atlasu
   const [NX, NY, NZ] = O.wymiar, k = O.krok, x0 = O.poczatek[0] - k / 2, Wmm = (2 * NX - 1) * k;
   const yTop = O.poczatek[1] + (NY - 0.5) * k, zTop = O.poczatek[2] + (NZ - 0.5) * k, zBot = O.poczatek[2] - k / 2, yBot = O.poczatek[1] - k / 2;
   const plastry = {};
@@ -216,6 +218,11 @@ export async function mozg3d(el) {
       for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const xx = x + dx, yy = y + dy; if (xx >= 0 && yy >= 0 && xx < T.W && yy < T.H) K[yy * T.W + xx] = 1; }
     }
     plastry[id].K = K;
+    // ramka ściany obejmuje tkankę przekroju, a nie całą ramkę objętości (przegląd 2026-11-16: przy 1920 px złota ramka szła przez
+    // przekrój w kolumnie i urywała się na dole sceny); tkanka to pole ze strukturą Allena albo siecią, z polem zapasu z każdej strony
+    let c0 = T.W, c1 = -1, r0 = T.H, r1 = -1;
+    for (let i = 0; i < T.v.length; i++) if (A.v[i] || Y.v[i]) { const x = i % T.W, y = (i / T.W) | 0; if (x < c0) c0 = x; if (x > c1) c1 = x; if (y < r0) r0 = y; if (y > r1) r1 = y; }
+    plastry[id].bb = c1 < 0 ? null : [Math.max(0, c0 - 1) / T.W, Math.min(T.W, c1 + 2) / T.W, 1 - Math.min(T.H, r1 + 2) / T.H, 1 - Math.max(0, r0 - 1) / T.H];
     for (let i = 0; i < T.v.length; i++) {
       const kom = T.v[i] <= 127 && (RODZAJ[A.v[i]] === 'komora' || K[i]);
       if (T.v[i] > 127 || kom) { g.fillStyle = kom ? '#100e0b' : '#1b1813'; g.fillRect((i % T.W) * S, Math.floor(i / T.W) * S, S + 1, S + 1); }
@@ -282,7 +289,15 @@ export async function mozg3d(el) {
     const nowa = !L || sila || Math.abs(L.mm - v) > 0.01;
     const tx = nowa ? obraz(PRZEKROJ[os], v, id) : L.tx;
     if (L) { usunLico(id, nowa); }
-    const xa = Math.max(P.x[0], x0), xb = Math.min(P.x[1], x0 + Wmm), ya = Math.max(P.y[0], yBot), yb = Math.min(P.y[1], yTop), za = Math.max(P.z[0], zBot), zb = Math.min(P.z[1], zTop);
+    let xa = Math.max(P.x[0], x0), xb = Math.min(P.x[1], x0 + Wmm), ya = Math.max(P.y[0], yBot), yb = Math.min(P.y[1], yTop), za = Math.max(P.z[0], zBot), zb = Math.min(P.z[1], zTop);
+    const bb = plastry[id] && plastry[id].bb, Dy = yTop - yBot, Dz = zTop - zBot;
+    if (bb) {
+      const [u0, u1, v0, v1] = bb;
+      if (os !== 'x') { xa = Math.max(xa, x0 + u0 * Wmm); xb = Math.min(xb, x0 + u1 * Wmm); }
+      else { ya = Math.max(ya, yTop - u1 * Dy); yb = Math.min(yb, yTop - u0 * Dy); }
+      if (os === 'z') { ya = Math.max(ya, yBot + v0 * Dy); yb = Math.min(yb, yBot + v1 * Dy); }
+      else { za = Math.max(za, zBot + v0 * Dz); zb = Math.min(zb, zBot + v1 * Dz); }
+    }
     if (xa >= xb || ya >= yb || za >= zb) { if (nowa) tx.dispose(); delete lico[id]; return; }
     const ux = (x) => (x - x0) / Wmm, vy = (y) => (y - yBot) / (yTop - yBot), vz = (z) => (z - zBot) / (zTop - zBot), uy = (y) => (yTop - y) / (yTop - yBot);
     let Pp, U;

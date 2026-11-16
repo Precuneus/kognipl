@@ -85,13 +85,13 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl to mózg do obracania i ci
           <div class="at-ukryte" hidden><Fragment set:html={suwak('strzalkowy') + suwak('czolowy') + suwak('poziomy')} /></div>
           <div class="at-3d" role="group" aria-label="Mózg w trzech wymiarach, cięty z każdej strony" data-powierzchnia="/images/mozg-widoki/powierzchnia.bin">
             <div class="at-3d-scena"></div>
-            {/* powrót do widoku startowego, widoczny zawsze, po suwakach w kolejności klawiatury (przegląd Atlasu 2026-11-11: po
+            {/* powrót do widoku startowego, widoczny zawsze, przed suwakami w kolejności klawiatury (przegląd Atlasu 2026-11-11: po
                 przybliżeniu i obrocie student nie wiedział, jak wrócić; dwuklik robi to samo) */}
             <button type="button" class="at-3d-start" aria-label="Widok startowy" data-podpis="widok startowy">↻</button>
             <div class="wk-kody at-3d-nazwa" aria-hidden="true" hidden></div>
           </div>
           {/* przypięte struktury (jego notatki, 2026-11-15: *each with its own toggle*): zaznaczony obszar przypina się chipem, przypięty
-              chip pokazuje i chowa bryłę, × odpina; na komputerze w prawej kolumnie pod przekrojem poziomym, węższy ekran pod mózgiem */}
+              chip pokazuje i chowa bryłę, × odpina; na komputerze w lewym górnym rogu sceny, na węższym ekranie pod mózgiem */}
           <div class="at-przypiete" role="group" aria-label="Przypięte struktury" hidden></div>
           <div class="at-kol">
             <div class="at-blok at-blok-z"><Fragment set:html={zywy('czolowy', 'z')} /></div>

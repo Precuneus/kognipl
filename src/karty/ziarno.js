@@ -174,11 +174,10 @@ export async function ziarno() {
       const m = czeka[p]; delete czeka[p];
       if (Math.abs(m - v.mm) < 0.01) return;
       plastry(v, m); uloz(v); wspolnota(v); tagi(); rysuj(v);
-      mozg.dispatchEvent(new CustomEvent('atlas-ciecie', { detail: { p, mm: m } }));
     });
   }
   // obszar wybrany z listy, z adresu albo z linku: trzy cięcia przechodzą przez jego punkt najbliższy środkowi, więc obszar widać we
-  // wszystkich przekrojach i na ścianach wycięcia w 3D (przegląd Atlasu 2026-11-11: kora oczodołowo-czołowa i hipokamp nie leżały
+  // wszystkich przekrojach i na ścianie cięcia w 3D (przegląd Atlasu 2026-11-11: kora oczodołowo-czołowa i hipokamp nie leżały
   // w żadnym przekroju, a student przesuwał trzy suwaki na ślepo); klik w przekroju cięć nie rusza, bo obszar już tam widać
   const PUNKT = new Map();
   function doObszaru(n) {
@@ -653,7 +652,7 @@ export async function ziarno() {
   }
 
   widoki.forEach(uloz);
-  // cięcie przesuwa suwak na osi mózgu w 3D; przekrój liczy się na nowo raz na klatkę. Nasłuch stoi przed odczytem adresu, bo obszar
+  // gałka suwaka cięcia (`ciecia.js`) przesuwa ukryte pole przekroju; przekrój liczy się na nowo raz na klatkę. Nasłuch stoi przed odczytem adresu, bo obszar
   // z adresu przesuwa cięcia przez siebie (przegląd 2026-11-11: otwarty link zostawiał przekroje płaskie na cięciach startowych)
   if (vol) mozg.querySelectorAll('.at-suwak').forEach((s) => s.addEventListener('input', () => ustaw(s.dataset.p, Number(s.value))));
   if (ATLAS) {
@@ -815,39 +814,14 @@ export async function ziarno() {
   });
 
   // wyłącznik za końcem suwaka chowa płaski przekrój tego cięcia (jego słowa, 2026-11-11: *these 2d views should disappear, not the part
-  // of the 3d view. I want to zoom to the brain and do not have these 3 x 2d images obscuring the view*); mózg w 3D bierze zwolnione
-  // miejsce, a cięcie i jego suwak działają dalej
+  // of the 3d view. I want to zoom to the brain and do not have these 3 x 2d images obscuring the view*); w miejscu przekroju widać
+  // mózg w 3D pod nim, a cięcie i jego suwak działają dalej
   mozg.querySelectorAll('.at-wl').forEach((b) => b.addEventListener('click', () => {
     const wl = b.getAttribute('aria-checked') !== 'true';
     b.setAttribute('aria-checked', String(wl));
     const f = mozg.querySelector('.wk-zywy.wk-widok-' + b.dataset.p);
     if (f) f.classList.toggle('at-bez', !wl);
   }));
-  // czytnik ekranu słyszy położenie cięcia słowami (audyt Atlasu, 2026-11-11: sama liczba nie mówi, gdzie leży cięcie): strzałkowe
-  // od linii środkowej, w której objętość jest odbita, czołowe i poziome jako część drogi między końcami suwaka
-  const opisz = (s) => {
-    const v = Number(s.value), lo = Number(s.min), hi = Number(s.max), czesc = Math.round(((hi - v) / (hi - lo)) * 100) + '% ';
-    const t = s.dataset.p === 'strzalkowy' ? (v === 0 ? 'linia środkowa' : (v < 0 ? 'lewa' : 'prawa') + ' półkula, ' + String(Math.abs(v)).replace('.', ',') + ' mm od linii środkowej')
-      : s.dataset.p === 'czolowy' ? czesc + 'drogi od przodu do tyłu' : czesc + 'drogi od góry do dołu';
-    s.setAttribute('aria-valuetext', t);
-  };
-  mozg.querySelectorAll('.at-suwak').forEach((s) => { opisz(s); s.addEventListener('input', () => opisz(s)); });
-  // palec bierze suwak w każdym miejscu toru, nie tylko na gałce, i ciągnie go od razu (jego słowa, 2026-11-13: *changing the cut is
-  // difficult*); położenie liczy się z kierunku suwaka, więc działa poziomy, odwrócony i pionowy
-  const palcem = (s, t) => {
-    const r = s.getBoundingClientRect(), cs = getComputedStyle(s), pion = cs.writingMode.startsWith('vertical'), g = 14;
-    let f = pion ? (t.clientY - r.top - g) / (r.height - 2 * g) : (t.clientX - r.left - g) / (r.width - 2 * g);
-    f = Math.max(0, Math.min(1, f));
-    if (cs.direction === 'rtl') f = 1 - f; // poziomy rtl ma minimum z prawej, pionowy vertical-lr rtl na dole
-    const lo = Number(s.min), hi = Number(s.max), st = Number(s.step) || 1, v = Math.round((lo + f * (hi - lo)) / st) * st;
-    if (Number(s.value) === v) return;
-    s.value = v; s.dispatchEvent(new Event('input', { bubbles: true }));
-  };
-  mozg.querySelectorAll('.at-suwak').forEach((s) => {
-    s.addEventListener('touchstart', (e) => { e.preventDefault(); palcem(s, e.touches[0]); }, { passive: false });
-    s.addEventListener('touchmove', (e) => { e.preventDefault(); palcem(s, e.touches[0]); }, { passive: false });
-    s.addEventListener('touchend', () => s.dispatchEvent(new Event('change', { bubbles: true })));
-  });
 
   if (stoi) return;
   let widac = true;
