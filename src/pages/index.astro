@@ -95,7 +95,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
     <nav class="roj-sieci-lista" aria-label="Sieci mózgu">{SIECI.map(([n, nazwa]) => <button type="button" data-n={n} style={'--c:' + KOLOR[n]}>{String(nazwa).replace(/^Sieć /, '')}</button>)}</nav>
   </section>
   <section class="roj-st lewo pierwszy" data-k="czesc" id="czesc">
-    <div class="roj-t"><h1 class="roj-czesc">Cześć!</h1></div>
+    <div class="roj-t"><h1 class="roj-czesc">Doświadczanie.</h1></div>
   </section>
   <section class="roj-st lewo ciag" data-k="pytanie">
     <div class="roj-t">
@@ -199,9 +199,12 @@ body:has(.roj) .site-footer::before{display:none}
 @keyframes menuNudge{0%{color:#f0c060;text-shadow:0 0 0 rgba(240,192,96,0)}35%{color:#f0c060;text-shadow:0 0 14px rgba(240,192,96,.8)}100%{text-shadow:0 0 0 rgba(240,192,96,0)}}
 @keyframes storyNudge{0%{box-shadow:0 0 0 0 rgba(240,192,96,.7);transform:scale(1)}30%{transform:scale(1.045)}100%{box-shadow:0 0 0 22px rgba(240,192,96,0);transform:scale(1)}}
 html.roj-blok{overscroll-behavior:none}
-/* po kliknięciu Story logo zostaje na górze ekranu, a przy pierwszym przewinięciu znika (jego słowo, 2026-11-02) */
-.rocznik-logo.roj-logo-trzyma{position:fixed;z-index:20;transition:opacity .35s ease}
-.rocznik-logo.roj-logo-trzyma.znika{opacity:0}
+/* po kliknięciu Story nagłówek z logo i menu zostaje na górze ekranu, a znika dopiero przy przewinięciu w dół
+   (jego słowo, 2026-11-02, o logo; 2026-11-16: *story should keep the menu above after clicking, it should disappear only when the page is scrolled down*) */
+body:has(.roj) .rocznik-head.roj-glowa-trzyma{position:sticky;top:0;z-index:20;transition:opacity .35s ease}
+body:has(.roj) .rocznik-head.roj-glowa-trzyma.znika{opacity:0}
+/* na telefonie nazwy sieci spod mózgu gasną przy wejściu w historię, zanim przejadą pod przytrzymanym menu (render 2026-11-16) */
+.roj-wchodzi .roj-sieci-lista{opacity:0;pointer-events:none;transition:opacity .25s ease}
 /* przełącznik animacji w prawym górnym rogu, na wysokości logo; stoi na ekranie przez całą historię (jego słowo, 2026-10-22) */
 .roj-anim{position:fixed;right:calc(8vw - 10px);top:32px;z-index:20;display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.55);border:0;border-radius:15px;cursor:pointer;font-family:Inter,sans-serif;font-weight:300;font-size:14px;letter-spacing:.04em;color:var(--mgla)}
 .roj-anim:hover{color:var(--kosc)}
@@ -652,14 +655,17 @@ function knot(w: number, cx: number, cy: number, rb0: number, rc: number) {
     g2.shadowBlur = 0;
   }
 }
-// Iskra: kropka z „i” w logo. Przy pierwszym przewinięciu wyskakuje z logo i rozświetla „Cześć”; na górze strony wraca do logo.
+// Iskra: kropka z „i” w logo. Po kliknięciu Story skacze w dół na pierwsze słowo, „Doświadczanie.”, i je rozświetla; na górze strony wraca do logo.
 // Potem wędruje z czytelnikiem:
 // stoi na słowach, ogląda sieci po kolei, odsłania solipsystę, jeździ na łyżwach po osnowach, macha postaciom,
 // skacze z radości przy „wytłumaczyć” i na końcu staje się kropką w kogni.pl/wiki.
 // Ruch: każdy ekran wyznacza cel; iskra goni go jak ciężarek na sprężynie, na powierzchni działa grawitacja.
 const IS: any = { x: 0, y: 0, vx: 0, vy: 0, kontakt: false, lot: false, kuc: 0, sq: 0, sqv: 0, id: '', dom: true, start: false,
   bi: 0, bang: 0, blen: 0, bhalf: .28, look: -1, last: 0, r: 4.4, py: 0,
-  gx: 0, gy: 0, pd: 1, lid: 1, zdz: 0, joy: 0, lean: 0, rot: 0, mrug: -1e9, nast: 0, mach: 0, hura: 0, osiadla: 0, skala: 1 };
+  gx: 0, gy: 0, pd: 1, lid: 1, zdz: 0, joy: 0, lean: 0, rot: 0, mrug: -1e9, nast: 0, mach: 0, hura: 0, osiadla: 0, skala: 1, czL: 0 };
+// górna krawędź liter pierwszego słowa w jego pudełku (h1, line-height 1): tu Iskra staje; skok na nie trwa CZ_T ms
+const CZ_GORA = .2, CZ_T = 600;
+const CZ: any = { t0: -1, x0: 0, y0: 0, lad: false };
 let KIER = 1, KIER_T = -1e9, OSTATNI_Y = scrollY, WSTECZ = 0, SCR_DY = 0, SEL_K = '';
 const DIP = new Map<HTMLElement, number[]>();
 const G = 2600;
@@ -1338,13 +1344,23 @@ function cel(A: any, B: any, t: number, lpA: number, lpB: number, now: number, l
   // (jego słowa, 2026-11-10: *when animations are off and I click brain networks, Iskra still interacts with the clicked network.
   // Animations off should switch off all animations*)
   if (!c && KLv > .01 && MOZG_AKT && !CICHO) c = klikCel(now);
+  if (S.k !== 'czesc') { CZ.t0 = -1; CZ.lad = false; }
   if (!c) {
     if (S.k === 'start') c = startIskra(now);
     else if (S.k === 'czesc') {
-      // unosi się nad słowem i świeci na nie z góry
-      const rr = czesc.getBoundingClientRect(), wx = rr.left + rr.width * .5, wy = rr.top + rr.height * .55;
-      const x = rr.left + rr.width * .12, y = rr.top - rr.height * .55, d = Math.hypot(wx - x, wy - y);
-      c = { id: 'czesc', tryb: 'lot', x, y, I: 1, ang: Math.atan2(wy - y, wx - x), len: d + rr.width * .6, half: Math.max(.2, Math.min(.75, Math.atan2(rr.width * .62, d))) };
+      // skacze w dół na pierwsze słowo, staje na nim i je rozświetla (jego słowo, 2026-11-16: *Clicking the story should make Iskra
+      // jump down and light the first word*); słowo zapala się, kiedy Iskra na nim ląduje
+      const rr = czesc.getBoundingClientRect(), tx = rr.left + Math.min(rr.width * .22, 90), ty = rr.top + rr.height * CZ_GORA - r;
+      c = { id: 'czesc', tryb: 'stoj', x: tx, y: ty, el: czesc, I: 0 };
+      if (!CICHO && !CZ.lad) {
+        // skok prowadzi czas, nie fizyka: łuk od miejsca, z którego Iskra rusza, do miejsca, w którym słowo stanie po zjeździe strony,
+        // więc ląduje na nim, kiedy ono dojeżdża; najpierw wybicie o 40 px ponad wyższy z dwóch punktów
+        if (CZ.t0 < 0) { CZ.t0 = now; CZ.x0 = IS.x; CZ.y0 = IS.y; }
+        const ty1 = ty - ((SCR ? SCR.to : scrollY) - scrollY), u = cl((now - CZ.t0) / CZ_T), D = ty1 - CZ.y0;
+        const h = Math.max(40, 40 - D), A = 2 * h + 2 * Math.sqrt(h * (h + D)), B = A + D;
+        if (u < 1) c = { id: 'czesc-skok', tryb: 'stoj', rail: true, x: CZ.x0 + (tx - CZ.x0) * sm(u), y: CZ.y0 - A * u + B * u * u, I: 0 };
+        else { CZ.lad = true; IS.sq = .38; IS.sqv = 0; dip(czesc, 700); }
+      }
     } else if (S.k === 'sieci' || ((S.k === 'pytanie' || S.k === 'naglowek') && SIECI_N && ZD.te >= ZD_F[4])) {
       // przy mózgu iskra robi, co chce: ogląda sieci, siada na ich nazwach, krąży i rozgląda się; wybory losowe
       const mz = (k: string) => k === 'sieci' || k === 'pytanie' || k === 'naglowek', wy = (mz(A.k) ? 1 - t : 0) + (mz(B.k) ? t : 0);
@@ -1615,7 +1631,9 @@ function wiazka(dt: number, c: any, now: number) {
     IS.bang += da * (CICHO ? 1 : Math.min(1, dt * 7)); IS.blen += (c.len - IS.blen) * (CICHO || c.bnag ? 1 : e); IS.bhalf += (c.half - IS.bhalf) * (CICHO ? 1 : e); // bez animacji szerokość snopu też staje od razu, a nie krok po kroku z każdym zdarzeniem
     if (c.wir) IS.bang = c.ang;
   }
-  const s = c.id === 'czesc' ? +(IS.bi.toFixed(3)) : 0;
+  // słowo świeci od lądowania Iskry na nim
+  IS.czL += ((c.id === 'czesc' && IS.kontakt ? 1 : 0) - IS.czL) * (CICHO ? 1 : Math.min(1, dt * 12));
+  const s = c.id === 'czesc' ? +(Math.max(IS.bi, IS.czL).toFixed(3)) : 0;
   czesc.style.setProperty('--s', String(s));
   if (scrollY < 4) czesc.classList.remove('lit'); else if (s > .7) czesc.classList.add('lit');
 }
@@ -2138,7 +2156,7 @@ function nudgeStory() {
 function przypomnij() { nudgeStory(); }
 function jedzDo(y: number) {
   const koniec = () => {
-    if (y < 3) zaprzyj(!WSZEDL);
+    if (y < 3) { zaprzyj(!WSZEDL); document.documentElement.classList.remove('roj-wchodzi'); logoPusc(); }
     else { const c = document.getElementById('czesc'); if (c) { c.setAttribute('tabindex', '-1'); c.focus({ preventScroll: true }); } }
   };
   if (CICHO) { scrollTo(0, y); koniec(); frame(); return; }
@@ -2185,7 +2203,7 @@ let CISZA: any = 0;
 addEventListener('scroll', () => {
   if (SCR) return;
   if (BLOK) { if (scrollY > 3) { if (performance.now() - T_START < 1500) zaprzyj(false); else scrollTo(0, 0); } return; }
-  if (scrollY < 3) { zaprzyj(!WSZEDL); return; }
+  if (scrollY < 3) { zaprzyj(!WSZEDL); document.documentElement.classList.remove('roj-wchodzi'); return; }
   clearTimeout(CISZA);
   CISZA = setTimeout(() => {
     if (SCR || !wolne() || scrollY < 3 || scrollY > LAND_Y() - 3) return;
@@ -2194,22 +2212,26 @@ addEventListener('scroll', () => {
 }, { passive: true });
 // Story w menu nagłówka (jego słowo, 2026-11-01: *Move stories to the menu on top*): na stronie startowej otwiera historię jak dawny przycisk
 const storyM = document.querySelector('.rocznik-menu a[href="/#czesc"]') as HTMLElement | null;
-// Po kliknięciu Story logo zostaje na górze ekranu, kiedy strona zjeżdża do Cześć, a znika przy pierwszym przewinięciu
-// (jego słowo, 2026-11-02: *after clicking story keep the logo for a moment on the top, when I scroll then hide it*).
-// Logo stoi w nagłówku absolutnie, więc przypięcie go do ekranu niczego w nagłówku nie przesuwa.
+// Po kliknięciu Story nagłówek, logo z menu, zostaje na górze ekranu, kiedy strona zjeżdża do pierwszego słowa, a znika dopiero przy
+// przewinięciu w dół (jego słowa, 2026-11-02: *after clicking story keep the logo for a moment on the top, when I scroll then hide it*;
+// 2026-11-16: *story should keep the menu above after clicking, it should disappear only when the page is scrolled down*).
+// Nagłówek przyklejony (sticky) zostaje w układzie strony, więc nic pod nim się nie przesuwa.
+const glowa = document.querySelector('.rocznik-head') as HTMLElement | null;
 let LOGO_T = false, LOGO_Z: any = 0;
 function logoTrzymaj() {
-  if (!logoA) return;
-  clearTimeout(LOGO_Z); logoA.classList.remove('znika'); logoA.classList.add('roj-logo-trzyma'); LOGO_T = true;
+  if (!glowa) return;
+  clearTimeout(LOGO_Z); glowa.classList.remove('znika'); glowa.classList.add('roj-glowa-trzyma'); LOGO_T = true;
+  document.documentElement.classList.add('roj-wchodzi');
 }
 function logoPusc() {
-  if (!logoA || !LOGO_T) return;
-  LOGO_T = false; const l = logoA;
-  if (scrollY < 3) { l.classList.remove('roj-logo-trzyma', 'znika'); return; }
+  if (!glowa || !LOGO_T) return;
+  LOGO_T = false; const l = glowa;
+  if (scrollY < 3) { l.classList.remove('roj-glowa-trzyma', 'znika'); return; }
   l.classList.add('znika');
-  LOGO_Z = setTimeout(() => l.classList.remove('roj-logo-trzyma', 'znika'), 380);
+  LOGO_Z = setTimeout(() => l.classList.remove('roj-glowa-trzyma', 'znika'), 380);
 }
-addEventListener('scroll', () => { if (LOGO_T && !SCR && Math.abs(scrollY - LAND_Y()) > 4) logoPusc(); }, { passive: true });
+// znika przy przewinięciu w dół; w górę strona wraca na ekran startowy, gdzie nagłówek i tak stoi
+addEventListener('scroll', () => { if (LOGO_T && !SCR && (scrollY > LAND_Y() + 4 || scrollY < 3)) logoPusc(); }, { passive: true });
 storyM?.addEventListener('click', (ev) => {
   const e = ev as MouseEvent;
   if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
