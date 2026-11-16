@@ -16,7 +16,7 @@ import KartaWiki from '../../components/KartaWiki.astro';
 import TerminDymek from '../../components/TerminDymek.astro';
 import { KARTY, NETN, INK, ATLAS, STRONY, netCard } from '../../karty/data.js';
 import { KOLOR } from '../../karty/mozg.js';
-import { zywy, suwak, DANE, OBJ, regiony, regionyAtlasu, kartySieci, listaObszarow, PLATY, PLAT_KOL } from '../../karty/widoki.js';
+import { zywy, suwak, ciecie, DANE, OBJ, regiony, regionyAtlasu, kartySieci, listaObszarow, PLATY, PLAT_KOL } from '../../karty/widoki.js';
 export function getStaticPaths() {
   return ATLAS.map((s) => ({ params: { strona: s.sciezka === '/atlas/' ? undefined : s.sciezka.split('/')[2] }, props: { s } }));
 }
@@ -78,9 +78,10 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl to mózg do obracania i ci
         {/* mózg w 3D jest ryciną centralną (jego słowa, 2026-11-11: *make the brain with the sliders central. We want to have this as a central
             figure... and... somehow show the slices relative to this brain*, potem *can we make C and possible to rotate?*) */}
         {/* cięcia z obu stron (jego słowa, 2026-11-16: *make maybe 3 brains right to the 3d brain. And each brain... has a suwak to cut in
-            either direction*, potem *execute as on the drawing*): mózg w 3D z lewej, nic na nim nie stoi; z prawej kolumna trzech przekrojów,
-            każdy ze swoim suwakiem o dwóch gałkach: góra i dół przy czołowym, lewa i prawa przy poziomym, przód i tył przy strzałkowym;
-            cięcie zdejmuje z mózgu cały plaster, na węższym ekranie przekroje stoją pod mózgiem */}
+            either direction*): suwak o dwóch gałkach na każdej osi, cięcie zdejmuje z mózgu cały plaster. Suwaki stoją wokół mózgu w 3D, nad
+            nim, pod nim i z prawej, a trzy przekroje w kolumnie z prawej (jego słowa, 2026-11-16: *make the suwaki above, below, and to the
+            right of the brain in 3d. keep the 2d brains where they are. Mind to show it well on mobile*); na węższym ekranie przekroje stoją
+            pod mózgiem */}
         <div class="at-glowny">
           <div class="at-ukryte" hidden><Fragment set:html={suwak('strzalkowy') + suwak('czolowy') + suwak('poziomy')} /></div>
           <div class="at-3d" role="group" aria-label="Mózg w trzech wymiarach, cięty z każdej strony" data-powierzchnia="/images/mozg-widoki/powierzchnia.bin">
@@ -88,15 +89,16 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl to mózg do obracania i ci
             {/* powrót do widoku startowego, widoczny zawsze, przed suwakami w kolejności klawiatury (przegląd Atlasu 2026-11-11: po
                 przybliżeniu i obrocie student nie wiedział, jak wrócić; dwuklik robi to samo) */}
             <button type="button" class="at-3d-start" aria-label="Widok startowy" data-podpis="widok startowy">↻</button>
+            <Fragment set:html={ciecie('x') + ciecie('z') + ciecie('y')} />
             <div class="wk-kody at-3d-nazwa" aria-hidden="true" hidden></div>
           </div>
           {/* przypięte struktury (jego notatki, 2026-11-15: *each with its own toggle*): zaznaczony obszar przypina się chipem, przypięty
               chip pokazuje i chowa bryłę, × odpina; na komputerze w lewym górnym rogu sceny, na węższym ekranie pod mózgiem */}
           <div class="at-przypiete" role="group" aria-label="Przypięte struktury" hidden></div>
           <div class="at-kol">
-            <div class="at-blok at-blok-z"><Fragment set:html={zywy('czolowy', 'z')} /></div>
-            <div class="at-blok at-blok-x"><Fragment set:html={zywy('poziomy', 'x')} /></div>
-            <div class="at-blok at-blok-y"><Fragment set:html={zywy('strzalkowy', 'y')} /></div>
+            <div class="at-blok at-blok-z"><Fragment set:html={zywy('czolowy')} /></div>
+            <div class="at-blok at-blok-x"><Fragment set:html={zywy('poziomy')} /></div>
+            <div class="at-blok at-blok-y"><Fragment set:html={zywy('strzalkowy')} /></div>
           </div>
         </div>
       </section>

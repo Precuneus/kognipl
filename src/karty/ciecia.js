@@ -1,11 +1,11 @@
 // Cięcia Atlasu z obu stron (jego słowa, 2026-11-16: *Can we rethink the suwaki.. to make maybe 3 brains right to the 3d brain. And each
 // brain... has a suwak to cut in either direction. So I can slice from top and from bottom on one suwak; from left and from right on the
-// second, and from front and from back on the third*, potem *execute as on the drawing*). Każda oś ma tor z dwiema gałkami; mózg zostaje
-// między nimi, a to, co za gałką, mózg w 3D zdejmuje całym plastrem (`mozg3d.js`, zdarzenie `atlas-pudlo`). Na przekroju, przy którym
-// stoi suwak, dwie złote linie pokazują cięcia, a odcięta część ciemnieje. Przekrój prostopadły do osi (czołowy dla przodu i tyłu,
+// second, and from front and from back on the third*). Każda oś ma tor z dwiema gałkami; mózg zostaje między nimi, a to, co za gałką,
+// mózg w 3D zdejmuje całym plastrem (`mozg3d.js`, zdarzenie `atlas-pudlo`). Suwaki stoją wokół mózgu w 3D (`mozg3d.js` je tam kładzie).
+// Na przekroju, w którego płaszczyźnie leży oś, dwie złote linie pokazują cięcia, a odcięta część ciemnieje. Przekrój prostopadły do osi (czołowy dla przodu i tyłu,
 // poziomy dla góry i dołu, strzałkowy dla lewej i prawej) pokazuje ścianę gałki przesuniętej ostatnio, przez ukryte pole, które czyta
 // `ziarno.js`. Działa też bez WebGL: wtedy tną się same przekroje.
-// t to położenie gałki liczone od pierwszego końca toru (góra, lewa, przód) do drugiego; gałka 0 stoi zawsze przed gałką 1.
+// t to położenie gałki liczone od pierwszego końca toru (góra, prawa, przód) do drugiego; gałka 0 stoi zawsze przed gałką 1.
 export function ciecia(siatka) {
   const glowny = siatka && siatka.querySelector('.at-glowny');
   if (!glowny) return;
@@ -20,12 +20,12 @@ export function ciecia(siatka) {
   const OS = {};
   glowny.querySelectorAll('.at-cie').forEach((el) => {
     const os = el.dataset.os, lo = Number(el.dataset.lo), hi = Number(el.dataset.hi);
-    // wartość na pierwszym końcu toru: góra i przód to większe współrzędne, lewa mniejsza
-    const a = os === 'x' ? lo : hi, b = os === 'x' ? hi : lo;
+    // pierwszy koniec toru to większa współrzędna: góra, prawa półkula, przód
+    const a = hi, b = lo;
     const fig = glowny.querySelector('.at-blok-' + os + ' .wk-zywy svg');
     const o = { el, os, lo, hi, a, b, t: [0, 1], gal: [...el.querySelectorAll('.at-gal')], tor: el.querySelector('.at-tor'), pas: el.querySelector('.at-zostaje'),
       plaster: el.dataset.plaster, spocz: Number(el.dataset.domysl), fig, linie: null, g: ODSTEP / (hi - lo), wymiar: el.dataset.wymiar,
-      strona: { z: ['od góry', 'od dołu'], x: ['od lewej', 'od prawej'], y: ['od przodu', 'od tyłu'] }[os] };
+      strona: { z: ['od góry', 'od dołu'], x: ['od prawej', 'od lewej'], y: ['od przodu', 'od tyłu'] }[os] };
     if (fig) {
       const g = document.createElementNS(NS, 'g');
       g.setAttribute('class', 'at-cie-linie');
@@ -45,21 +45,16 @@ export function ciecia(siatka) {
     for (const os in OS) p.tnie[os] = [OS[os].t[0] > 0.0005, OS[os].t[1] < 0.9995];
     return p;
   };
-  // na przekroju przy suwaku: odcięte części w cieniu, cięcia złotymi liniami; współrzędne w milimetrach ramki przekroju
+  // na przekroju, w którego płaszczyźnie leży oś: odcięte części w cieniu, cięcia złotymi liniami; współrzędne w milimetrach ramki przekroju
   function linie(o) {
     if (!o.linie) return;
     const vb = o.fig.viewBox.baseVal, W = vb.width, H = vb.height;
     const [c0, c1, l0, l1] = o.linie.children;
-    const u = [mm(o, o.t[0]), mm(o, o.t[1])];
-    if (o.os === 'z') {
-      const Y = u.map((z) => Math.max(0, Math.min(H, zTop - z)));
-      ust(c0, 0, 0, W, Y[0]); ust(c1, 0, Y[1], W, H - Y[1]);
-      lin(l0, 0, Y[0], W, Y[0], o.t[0] > 0.0005); lin(l1, 0, Y[1], W, Y[1], o.t[1] < 0.9995);
-    } else {
-      const X = u.map((v) => Math.max(0, Math.min(W, o.os === 'x' ? v - x0 : yTop - v)));
-      ust(c0, 0, 0, X[0], H); ust(c1, X[1], 0, W - X[1], H);
-      lin(l0, X[0], 0, X[0], H, o.t[0] > 0.0005); lin(l1, X[1], 0, X[1], H, o.t[1] < 0.9995);
-    }
+    // miejsce na przekroju: z w dół od góry ramki, x od lewej, y od przodu; każda gałka zaciemnia odcinek od swojego końca toru do siebie
+    const m = o.os === 'z' ? (v) => Math.max(0, Math.min(H, zTop - v)) : (v) => Math.max(0, Math.min(W, o.os === 'x' ? v - x0 : yTop - v));
+    const E = [m(o.a), m(o.b)], P = [m(mm(o, o.t[0])), m(mm(o, o.t[1]))], tnie = [o.t[0] > 0.0005, o.t[1] < 0.9995];
+    [c0, c1].forEach((c, i) => { const u = Math.min(E[i], P[i]), d = Math.abs(E[i] - P[i]); if (o.os === 'z') ust(c, 0, u, W, d); else ust(c, u, 0, d, H); });
+    [l0, l1].forEach((l, i) => { if (o.os === 'z') lin(l, 0, P[i], W, P[i], tnie[i]); else lin(l, P[i], 0, P[i], H, tnie[i]); });
   }
   const ust = (r, x, y, w, h) => { r.setAttribute('x', x); r.setAttribute('y', y); r.setAttribute('width', Math.max(0, w)); r.setAttribute('height', Math.max(0, h)); };
   const lin = (l, xa, ya, xb, yb, widac) => { l.setAttribute('x1', xa); l.setAttribute('y1', ya); l.setAttribute('x2', xb); l.setAttribute('y2', yb); l.style.display = widac ? '' : 'none'; };
@@ -153,8 +148,9 @@ export function ciecia(siatka) {
     o.spocz = e.detail.x;
     if (OS.z) OS.z.spocz = e.detail.z;
     if (OS.y) OS.y.spocz = e.detail.y;
-    o.t[1] = 1;
-    ustaw(o, 0, doT(o, e.detail.x), false);
+    // lewa półkula stoi bliżej, więc cięcie od lewej (gałka 1, drugi koniec toru) odsłania ścianę, którą widać
+    o.t[0] = 0;
+    ustaw(o, 1, doT(o, e.detail.x), false);
     rysuj(o);
     if (OS.z) { OS.z.t = [0, 1]; rysuj(OS.z); }
     if (OS.y) { OS.y.t = [0, 1]; rysuj(OS.y); }
@@ -174,15 +170,15 @@ export function ciecia(siatka) {
   for (const os in OS) linie(OS[os]);
   // skala przekrojów: na komputerze kolumna mieści trzy przekroje w wysokości sceny, na węższym ekranie dwa stoją obok siebie
   // w szerokości strony; jedna skala dla trzech, w pikselach na milimetr
-  // na komputerze narzut kolumny (podpisy, suwaki pod przekrojami) mierzy się z niej samej, więc kolumna nie wychodzi poza scenę (audyt
+  // na komputerze narzut kolumny (podpisy pod przekrojami) mierzy się z niej samej, więc kolumna nie wychodzi poza scenę (audyt
   // 2026-11-16: przy 1100 × 850 wychodziła o 22 px)
   const OBRAZY = (NZ + NY + NZ) * k;
   const skaluj = () => {
     const szer = glowny.clientWidth, wys = glowny.clientHeight, kol = glowny.querySelector('.at-kol'), cs = kol && getComputedStyle(kol);
-    // odstępy między blokami i margines nad torem pionowym należą do narzutu kolumny
+    // odstępy między blokami należą do narzutu kolumny
     const luki = cs ? 2 * (parseFloat(cs.rowGap) || 0) + (parseFloat(cs.paddingTop) || 0) : 0;
     const komputer = matchMedia('(min-width:1000px)').matches && !glowny.querySelector('.at-3d-brak');
-    let s = (szer - 26 - 72) / (2 * (2 * NX - 1) * k);
+    let s = (szer - 26 - 2) / (2 * (2 * NX - 1) * k);
     if (komputer) {
       s = (wys - 170) / OBRAZY;
       for (let n = 0; n < 2; n++) {

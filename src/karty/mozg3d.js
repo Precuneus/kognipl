@@ -346,8 +346,9 @@ export async function mozg3d(el) {
   const pole = () => {
     const rs = scena.getBoundingClientRect(), gl = el.closest('.at-glowny'), kol = gl && gl.querySelector('.at-kol');
     const g = gl ? gl.getBoundingClientRect() : rs, kr = kol ? kol.getBoundingClientRect() : null;
-    const prawo = kr && kr.width ? rs.right - kr.left + 28 : rs.right - g.right;
-    return [24, Math.max(0, prawo), 56, Math.max(0, g.left - rs.left)];
+    // pas nad mózgiem, pod nim i z prawej trzyma suwaki cięć, a lewy brzeg zostawia miejsce na ↻ i nazwę przodu
+    const prawo = kr && kr.width ? rs.right - kr.left + 28 + 84 : rs.right - g.right;
+    return [56, Math.max(0, prawo), 60, Math.max(0, g.left - rs.left + 56)];
   };
   // poniżej 1000 px mózg wypełnia ramkę między pasami suwaków: kamera mierzy obrys powierzchni na ekranie, staje tak, żeby jego środek
   // wypadł na środku tego pola, i odsuwa się, aż zajmie je bez 4% marginesu (jego słowa, 2026-11-13: *too small on the vertical view*)
@@ -639,8 +640,54 @@ export async function mozg3d(el) {
   controls.addEventListener('start', zamknij);
   controls.addEventListener('change', rysuj);
 
-  new ResizeObserver(() => { wymiar(); }).observe(scena);
-  wymiar();
+  // suwaki cięć wokół mózgu w widoku startowym (jego słowa, 2026-11-16: *make the suwaki above, below, and to the right of the brain in
+  // 3d. keep the 2d brains where they are. Mind to show it well on mobile*): nad mózgiem lewa i prawa, pod nim przód i tył, z prawej
+  // pionowo góra i dół. Końce toru to końce ramki objętości na ekranie, więc gałka stoi nad miejscem, które tnie; tor za krótki do
+  // chwycenia rośnie wokół swojego środka, a brak miejsca na nazwę końca skraca go od tej strony
+  const osie = () => {
+    const rb = scena.getBoundingClientRect();
+    const cx = el.querySelector('.at-cie-x'), cy = el.querySelector('.at-cie-y'), cz = el.querySelector('.at-cie-z');
+    if (!rb.width || !cx || !cy || !cz) return;
+    const W = rb.width, H = rb.height, ox = scena.offsetLeft, oy = scena.offsetTop;
+    const kam = camera.clone();
+    kam.position.copy(controls.position0); kam.lookAt(controls.target0); kam.updateMatrixWorld(); kam.updateProjectionMatrix();
+    const q = new THREE.Vector3();
+    const ekr = (x, y, z) => { q.set(x, y, z).project(kam); return [(q.x + 1) / 2 * W, (1 - q.y) / 2 * H]; };
+    let L = 1e9, P = -1e9, G = 1e9, D = -1e9;
+    for (let i = 0; i < nv; i += 5) {
+      const [sx, sy] = ekr(pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2]);
+      if (sx < L) L = sx; if (sx > P) P = sx; if (sy < G) G = sy; if (sy > D) D = sy;
+    }
+    const R = (c) => [Number(c.dataset.lo), Number(c.dataset.hi)];
+    const [xl, xh] = R(cx), [yl, yh] = R(cy), [zl, zh] = R(cz), ys = (yl + yh) / 2, zs = (zl + zh) / 2;
+    // z prawej granicą jest kolumna przekrojów, gdy stoi na scenie, inaczej brzeg ramki
+    const gl = el.closest('.at-glowny'), kol = gl && gl.querySelector('.at-kol');
+    const kr = kol && getComputedStyle(kol).position === 'absolute' ? kol.getBoundingClientRect() : null;
+    const prawo = (kr && kr.width ? kr.left - rb.left : W) - 8, lewo = 6;
+    // na telefonie nazwy końców stoją nad górnym torem i pod dolnym, więc mózg dostaje całą szerokość ramki
+    const wys = cx.offsetHeight || 28, nad = matchMedia('(max-width:720px)').matches ? 13 : 0;
+    const poziomy = (c, a, b, y, min) => {
+      const na = nad ? 10 : c.querySelector('.at-koniec-a').offsetWidth + 14, nb = c.querySelector('.at-za').offsetWidth + 14;
+      let x0 = Math.min(a, b), x1 = Math.max(a, b);
+      if (x1 - x0 < min) { const sr = (x0 + x1) / 2; x0 = sr - min / 2; x1 = sr + min / 2; }
+      x0 = Math.max(lewo + na, x0); x1 = Math.min(prawo - nb, x1);
+      c.style.left = ox + x0 + 'px'; c.style.width = Math.max(48, x1 - x0) + 'px'; c.style.top = oy + y + 'px';
+    };
+    const yD = Math.min(D + 8, H - wys - 6 - nad), yG = Math.max(6 + nad, G - 8 - wys);
+    poziomy(cy, ekr(0, yh, zs)[0], ekr(0, yl, zs)[0], yD, 120);
+    poziomy(cx, ekr(xh, ys, zs)[0], ekr(xl, ys, zs)[0], yG, 160);
+    // pionowy stoi tuż za tyłem mózgu; z nazwą dołu i wyłącznikiem pod nią kończy się nad dolnym suwakiem
+    const za = cz.querySelector('.at-za').offsetHeight - 12, szer = 34 + cz.querySelector('.at-koniec-a').offsetWidth;
+    const gora = Math.max(yG + wys + 18, ekr(0, ys, zh)[1]), dol = Math.min(ekr(0, ys, zl)[1], yD - 10 - za);
+    cz.style.left = ox + Math.min(prawo - Math.max(szer, za ? 64 : 0), P + 16) + 'px';
+    cz.style.top = oy + gora + 'px'; cz.style.height = Math.max(60, dol - gora) + 'px';
+    el.classList.add('at-3d-osie');
+  };
+  const odswiez = () => { wymiar(); osie(); };
+  new ResizeObserver(odswiez).observe(scena);
+  if (el.closest('.at-glowny') && el.closest('.at-glowny').querySelector('.at-kol')) new ResizeObserver(odswiez).observe(el.closest('.at-glowny').querySelector('.at-kol'));
+  if (document.fonts) document.fonts.ready.then(osie);
+  wymiar(); osie();
   wszystko();
   el.classList.add('at-3d-gotowy');
 }

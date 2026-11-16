@@ -200,14 +200,13 @@ export function wymiarPrzekroju(p) {
 }
 // suwak cięcia stoi w figurze przekroju, zaraz przy obrazie, a podpis pod nim (render 2026-11-16: podpis między mózgiem a suwakiem
 // przypisywał suwak przekrojowi niżej); pionowy suwak stoi obok obrazu
-export function zywy(p, os = '') {
+export function zywy(p) {
   const [W, H] = wymiarPrzekroju(p);
-  const pole = '<div class="wk-pole"><canvas class="wk-ziarno" aria-hidden="true"></canvas>'
-    + '<svg viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true"><path class="wk-linie-zywe" d=""/></svg>'
-    + '<div class="wk-kody" aria-hidden="true" hidden></div></div>';
-  const srodek = !os ? pole : os === 'z' ? '<div class="at-przy">' + pole + ciecie(os) + '</div>' : pole + ciecie(os);
   return '<figure class="wk-widok wk-widok-' + p + ' wk-zywy" data-objetosc="' + p + '" data-vb="' + W + ' ' + H + '" data-k="' + O.krok + '">'
-    + srodek + '<figcaption>' + PRZEKROJ[p][0] + '</figcaption></figure>';
+    + '<div class="wk-pole"><canvas class="wk-ziarno" aria-hidden="true"></canvas>'
+    + '<svg viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true"><path class="wk-linie-zywe" d=""/></svg>'
+    + '<div class="wk-kody" aria-hidden="true" hidden></div></div>'
+    + '<figcaption>' + PRZEKROJ[p][0] + '</figcaption></figure>';
 }
 // położenie płaskiego przekroju: ukryte pole, które czyta `ziarno.js`; ustawiają je suwaki cięć (`ciecia.js`) i obszar wybrany z listy
 const NAZWA_CIECIA = { czolowy: 'czołowy', poziomy: 'poziomy', strzalkowy: 'strzałkowy' };
@@ -217,25 +216,26 @@ export function suwak(p) {
 }
 // cięcie z obu stron (jego słowa, 2026-11-16: *make maybe 3 brains right to the 3d brain. And each brain... has a suwak to cut in either
 // direction. So I can slice from top and from bottom on one suwak; from left and from right on the second, and from front and from back
-// on the third*, potem *execute as on the drawing*): dwie gałki na jednym torze, mózg zostaje między nimi. Suwak stoi przy przekroju, na
-// którym jego oś leży w płaszczyźnie: góra i dół pionowo przy czołowym, lewa i prawa pod poziomym, lewa po lewej (*lewa / prawa. swap
-// it*), przód i tył pod strzałkowym, przód po lewej jak w przekroju. Zakres to cały mózg z móżdżkiem i pniem, więc gałka na końcu nic nie
-// tnie; przekrój przy osi, której płaszczyzna jest prostopadła, pokazuje ścianę gałki przesuniętej ostatnio (`ciecia.js`). Za końcem
-// wyłącznik chowa przekrój, przy którym stoi suwak (jego słowa, 2026-11-11: *we want a switch on/off button next to each*)
-// tor suwaka to ramka przekroju, przy którym stoi, więc gałka stoi naprzeciw swojej złotej linii (audyt 2026-11-16)
+// on the third*): dwie gałki na jednym torze, mózg zostaje między nimi. Suwaki stoją wokół mózgu w 3D (jego słowa, 2026-11-16: *make the
+// suwaki above, below, and to the right of the brain in 3d. keep the 2d brains where they are*): nad nim lewa i prawa, pod nim przód i tył,
+// z prawej pionowo góra i dół, każdy od końca, który w widoku startowym stoi z lewej albo u góry: prawa półkula leży z lewej, przód
+// z lewej, góra u góry. Zakres to cały mózg z móżdżkiem i pniem, więc gałka na końcu nic nie tnie. Za dalszym końcem wyłącznik chowa
+// płaski przekrój, który to cięcie przesuwa (jego słowa, 2026-11-11: *we want a switch on/off button next to each*); złote linie cięć
+// leżą na przekroju, w którego płaszczyźnie leży oś (`stoi`)
 export const OSIE = {
+  x: { koniec: ['prawa', 'lewa'], zakres: RAMA.x, przy: 'strzalkowy', stoi: 'poziomy', ciecie: ['od prawej', 'od lewej'], wymiar: 'szerokości' },
   z: { koniec: ['góra', 'dół'], zakres: RAMA.z, przy: 'poziomy', stoi: 'czolowy', ciecie: ['od góry', 'od dołu'], wymiar: 'wysokości' },
-  x: { koniec: ['lewa', 'prawa'], zakres: RAMA.x, przy: 'strzalkowy', stoi: 'poziomy', ciecie: ['od lewej', 'od prawej'], wymiar: 'szerokości' },
   y: { koniec: ['przód', 'tył'], zakres: RAMA.y, przy: 'czolowy', stoi: 'strzalkowy', ciecie: ['od przodu', 'od tyłu'], wymiar: 'długości' },
 };
+// pudełko suwaka to jego tor; nazwa pierwszego końca stoi przed nim, nazwa drugiego z wyłącznikiem za nim (`mozg3d.js` kładzie je na mózgu)
 export function ciecie(os) {
   const o = OSIE[os], [a, b] = o.koniec, pion = os === 'z';
   const gal = (i) => '<span class="at-gal" role="slider" tabindex="0" data-i="' + i + '" aria-orientation="' + (pion ? 'vertical' : 'horizontal') + '" aria-label="Cięcie ' + o.ciecie[i] + '"></span>';
   return '<div class="at-cie at-cie-' + os + '" data-os="' + os + '" data-lo="' + o.zakres[0] + '" data-hi="' + o.zakres[1] + '" data-plaster="' + o.przy + '" data-domysl="' + CIECIE[o.przy] + '" data-wymiar="' + o.wymiar + '">'
-    + '<span class="at-koniec" aria-hidden="true">' + a + '</span>'
     + '<div class="at-tor"><span class="at-zostaje" aria-hidden="true"></span>' + gal(0) + gal(1) + '</div>'
-    + '<span class="at-koniec" aria-hidden="true">' + b + '</span>'
-    + '<button type="button" class="at-wl" data-p="' + o.stoi + '" role="switch" aria-checked="true" aria-label="Płaski przekrój ' + NAZWA_CIECIA[o.stoi] + '"><span class="at-wl-tor" aria-hidden="true"></span><span class="at-podpis" aria-hidden="true"></span></button></div>';
+    + '<span class="at-koniec at-koniec-a" aria-hidden="true">' + a + '</span>'
+    + '<span class="at-za"><span class="at-koniec" aria-hidden="true">' + b + '</span>'
+    + '<button type="button" class="at-wl" data-p="' + o.przy + '" role="switch" aria-checked="true" aria-label="Płaski przekrój ' + NAZWA_CIECIA[o.przy] + '"><span class="at-wl-tor" aria-hidden="true"></span><span class="at-podpis" aria-hidden="true"></span></button></span></div>';
 }
 // dane obszarów dla skryptów Atlasu: struktura Allena ma w objętości numer swojego wpisu, JAK wskazuje jej grupę
 export function regionyAtlasu(REG) {

@@ -96,13 +96,9 @@ html.at-czeka .at-miejsce{visibility:hidden}
 /* w wierszu bloki stoją dolnymi krawędziami na jednej linii, a odstęp między blokami jest większy niż suwaka od jego przekroju */
 .at-kol{flex:0 0 100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:18px 26px}
 .at-blok{display:flex;flex-direction:column;align-items:center}
-.at-przy{display:flex;align-items:flex-start;gap:10px}
-.at-przy .wk-pole{flex:0 0 calc(var(--s,1) * 151.5px)}
-.at-kol .wk-widok-czolowy{width:calc(var(--s,1) * 151.5px + 72px)}
-.at-kol .wk-widok-poziomy{width:calc(var(--s,1) * 151.5px)}
-/* podpis w jednym wierszu, wyśrodkowany pod samym przekrojem także wtedy, gdy przekrój jest od niego węższy albo suwak stoi obok */
+.at-kol .wk-widok-czolowy,.at-kol .wk-widok-poziomy{width:calc(var(--s,1) * 151.5px)}
+/* podpis w jednym wierszu, wyśrodkowany pod przekrojem */
 .at-kol .wk-widok figcaption{display:flex;justify-content:center;white-space:nowrap}
-.at-kol .wk-widok-czolowy figcaption{width:calc(var(--s,1) * 151.5px)}
 .at-kol .wk-widok-strzalkowy{width:calc(var(--s,1) * 187.5px)}
 /* na komputerze mózg w 3D leży pod wszystkim na całą szerokość strony, bez pudełka (jego słowa, 2026-11-11: *the 3d view should be to the
    entire width of the side!!! ... do not box it*), a kolumna przekrojów stoi przy prawym brzegu; mózg w widoku startowym mieści się
@@ -118,35 +114,29 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-glowny:not(:has(.at-3d-brak)) .at-blok{pointer-events:auto}
 .at-glowny:not(:has(.at-3d-brak)) .at-3d-start{left:0;right:auto}
 .at-glowny:not(:has(.at-3d-brak)) .at-3d-start::after{left:0;right:auto}
-/* w kolumnie przekroje stoją prawymi krawędziami na jednej linii, a z prawej każdego pas 72 px na sterowanie: pionowy suwak przy
-   czołowym, wyłącznik poziomego i strzałkowego za drugim końcem toru, na jego linii (przegląd 2026-11-16: wyłącznik między nazwami
-   końców wchodził na *prawa* przy 1000 × 700, a krawędzie przekrojów stały w trzech miejscach) */
-.at-glowny:not(:has(.at-3d-brak)) .at-blok-x .wk-widok,.at-glowny:not(:has(.at-3d-brak)) .at-blok-y .wk-widok{padding-right:72px;box-sizing:content-box}
-.at-glowny:not(:has(.at-3d-brak)) .at-cie-x .at-wl,.at-glowny:not(:has(.at-3d-brak)) .at-cie-y .at-wl{bottom:auto;top:14px;left:auto;right:-50px;transform:translateY(-50%)}
-.at-glowny:not(:has(.at-3d-brak)) .at-cie-x .at-podpis,.at-glowny:not(:has(.at-3d-brak)) .at-cie-y .at-podpis{left:auto;right:0;transform:none}
 }
-/* suwak cięcia: tor z dwiema gałkami, mózg zostaje między nimi i ten odcinek toru świeci; końce nazwane */
-.at-cie{display:flex;align-items:center;gap:8px;font:500 12px/1 Inter,sans-serif;color:#a09888;letter-spacing:.04em;align-self:stretch}
-/* tor ma szerokość przekroju i wystaje o 10 px z każdej strony, tyle, ile gałka potrzebuje na końcu, więc gałka stoi naprzeciw swojej
-   złotej linii (audyt 2026-11-16); pod nim nazwy końców, a między nimi wyłącznik */
-.at-cie-x,.at-cie-y{display:block;margin-top:4px;position:relative;padding-bottom:22px}
-.at-cie-x .at-tor,.at-cie-y .at-tor{margin:0 -10px}
-.at-cie-x .at-koniec,.at-cie-y .at-koniec{position:absolute;bottom:3px;font-size:11.5px}
-.at-cie-x .at-koniec:first-child,.at-cie-y .at-koniec:first-child{left:0}
-.at-cie-x .at-koniec:nth-of-type(2),.at-cie-y .at-koniec:nth-of-type(2){right:0}
-.at-cie-x .at-wl,.at-cie-y .at-wl{position:absolute;bottom:0;left:50%;transform:translateX(-50%);margin:0}
-/* pionowy tor ma wysokość przekroju i wystaje o 10 px u góry i u dołu; nazwy końców i wyłącznik stoją obok niego */
-.at-cie-z{flex:0 0 62px;display:block;position:relative;width:62px;height:calc(var(--s,1) * 160.5px)}
-.at-cie-z .at-tor{position:absolute;left:0;top:-10px;bottom:-10px}
-.at-cie-z .at-koniec{position:absolute;left:32px;font-size:11.5px}
-.at-cie-z .at-koniec:first-child{top:0}
-.at-cie-z .at-koniec:nth-of-type(2){bottom:0}
-/* wyłącznik pionowego suwaka stoi pod nazwą dołu (jego słowa, 2026-11-11) */
-.at-cie-z .at-wl{position:absolute;left:30px;top:calc(100% + 14px);margin:0}
+/* suwak cięcia: tor z dwiema gałkami, mózg zostaje między nimi i ten odcinek toru świeci; końce nazwane. Suwaki stoją wokół mózgu w 3D
+   (jego słowa, 2026-11-16: *make the suwaki above, below, and to the right of the brain in 3d*): pudełko suwaka to jego tor od końca do
+   końca ramki objętości na ekranie, które `mozg3d.js` (osie) mierzy w widoku startowym; tor wystaje o 10 px z każdej strony, tyle, ile
+   gałka potrzebuje na końcu. Nazwa pierwszego końca stoi przed torem, nazwa drugiego z wyłącznikiem za nim */
+.at-cie{position:absolute;z-index:4;font:500 12px/1 Inter,sans-serif;color:#a09888;letter-spacing:.04em;visibility:hidden}
+.at-3d-osie .at-cie{visibility:visible}
+.at-cie .at-tor{position:absolute}
+.at-cie-x,.at-cie-y{height:28px}
+.at-cie-x .at-tor,.at-cie-y .at-tor{top:0;bottom:0;left:-10px;right:-10px}
+.at-cie-z{width:28px}
+.at-cie-z .at-tor{left:0;right:0;top:-10px;bottom:-10px}
+.at-koniec{position:absolute;font-size:11.5px;white-space:nowrap}
+.at-za{position:absolute;display:flex;align-items:center;gap:10px}
+.at-za .at-koniec{position:static}
+.at-za .at-wl{margin:0}
+.at-cie-x .at-koniec-a,.at-cie-y .at-koniec-a{right:calc(100% + 14px);top:50%;transform:translateY(-50%)}
+.at-cie-x .at-za,.at-cie-y .at-za{left:calc(100% + 14px);top:50%;transform:translateY(-50%)}
+/* pionowy: nazwy końców obok toru, wyłącznik pod nazwą dołu (jego słowa, 2026-11-11) */
+.at-cie-z .at-koniec-a{left:34px;top:0}
+.at-cie-z .at-za{left:34px;top:calc(100% - 11.5px);flex-direction:column;align-items:flex-start;gap:12px}
 .at-cie span.at-koniec{text-shadow:0 0 3px #0e0d0b,0 0 7px #0e0d0b,0 0 12px #0e0d0b}
 .at-tor{position:relative;flex:1 1 auto;touch-action:none;cursor:pointer}
-.at-cie-x .at-tor,.at-cie-y .at-tor{height:28px}
-.at-cie-z .at-tor{width:28px}
 .at-tor::before{content:'';position:absolute;background:rgba(160,152,136,.35);border-radius:2px}
 .at-cie-x .at-tor::before,.at-cie-y .at-tor::before{left:0;right:0;top:50%;height:4px;margin-top:-2px}
 .at-cie-z .at-tor::before{top:0;bottom:0;left:50%;width:4px;margin-left:-2px}
@@ -165,13 +155,18 @@ html.at-czeka .at-miejsce{visibility:hidden}
 /* scena to cała ramka; pasy przy brzegach leżą nad nią i przepuszczają palec do przewijania strony, a mózg w widoku startowym mieści się
    między nimi (`wpasuj` w `mozg3d.js` czyta te zmienne); na komputerze pasów nie ma (jego nagranie, 2026-11-13) */
 .at-3d{position:relative;height:clamp(460px,56vw,640px)}
-.at-3d{--pas-g:12px;--pas-p:28px;--pas-d:12px;--pas-l:0px}
+.at-3d{--pas-g:46px;--pas-p:84px;--pas-d:48px;--pas-l:56px}
 .at-3d-scena{position:absolute;inset:0;cursor:grab;touch-action:none}
 .at-3d-pas{position:absolute;z-index:2;touch-action:auto}
 .at-3d-pas-g{top:0;left:0;right:0;height:var(--pas-g)}
 .at-3d-pas-d{bottom:0;left:0;right:0;height:var(--pas-d)}
 .at-3d-pas-p{top:var(--pas-g);bottom:var(--pas-d);right:0;width:var(--pas-p)}
-.at-3d.at-3d-brak{display:none}
+/* bez WebGL albo bez objętości mózg w 3D znika, a suwaki stoją w rzędzie nad przekrojami, bez wyłączników */
+.at-3d.at-3d-brak{height:auto;aspect-ratio:auto;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:24px 96px;padding:6px 60px 20px}
+.at-3d-brak .at-3d-scena,.at-3d-brak .at-wl,.at-3d-brak .at-3d-pas{display:none}
+.at-3d-brak .at-cie{position:relative;visibility:visible}
+.at-3d-brak .at-cie-x,.at-3d-brak .at-cie-y{width:200px;margin-top:10px}
+.at-3d-brak .at-cie-z{height:120px;margin-right:40px}
 .at-3d-scena:active{cursor:grabbing}
 .at-3d-scena canvas{display:block}
 /* wyłącznik za końcem suwaka, w wyglądzie przełącznika Animacje: chowa płaski przekrój swojego cięcia; cięcie w 3D i suwak zostają */
@@ -183,10 +178,11 @@ html.at-czeka .at-miejsce{visibility:hidden}
 /* podpis na wskazanie tylko tam, gdzie jest wskaźnik: stuknięcie zostawiało na telefonie podpis ↻ na ekranie (jego nagranie, 2026-11-13) */
 @media (hover:hover){.at-wl:hover .at-podpis,.at-3d-start:hover::after{opacity:1}}
 .at-wl:focus-visible .at-podpis,.at-3d-start:focus-visible::after{opacity:1}
-.at-cie-z .at-podpis{bottom:auto;top:calc(100% + 8px)}
+.at-cie-z .at-podpis,.at-cie-x .at-podpis{bottom:auto;top:calc(100% + 8px)}
 /* powrót do widoku startowego w rogu sceny: na komputerze w lewym dolnym, bo z prawej stoi kolumna przekrojów */
-.at-3d-start{position:absolute;right:0;bottom:6px;z-index:3;width:34px;height:34px;display:grid;place-items:center;font:400 19px/1 Inter,sans-serif;color:#cfc8bb;background:rgba(14,13,11,.75);border:1px solid rgba(226,200,150,.45);border-radius:999px;cursor:pointer;padding:0}
-.at-3d-start::after{content:attr(data-podpis);left:auto;right:0;transform:none}
+/* ↻ w górnym rogu sceny: dolne rogi trzymają nazwy końców i wyłącznik dolnego suwaka */
+.at-3d-start{position:absolute;right:12px;top:6px;z-index:3;width:34px;height:34px;display:grid;place-items:center;font:400 19px/1 Inter,sans-serif;color:#cfc8bb;background:rgba(14,13,11,.75);border:1px solid rgba(226,200,150,.45);border-radius:999px;cursor:pointer;padding:0}
+.at-3d-start::after{content:attr(data-podpis);left:auto;right:0;transform:none;bottom:auto;top:calc(100% + 8px)}
 .at-3d-start:hover{color:#f0c060}
 .at-3d-start:focus-visible{outline:2px solid #f0c060;outline-offset:2px}
 .at-3d.at-3d-brak .at-3d-start{display:none}
@@ -207,7 +203,7 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-pin button:focus-visible::after,.at-pin-nowy:focus-visible::after{opacity:1}
 /* na komputerze w lewym górnym rogu sceny, bo z prawej stoi kolumna przekrojów; chip do przypięcia stoi zawsze na górze, w tym samym
    miejscu, a przypięte pod nim (render 2026-11-15) */
-@media (min-width:1000px){.at-glowny:not(:has(.at-3d-brak)) .at-przypiete{position:absolute;top:0;left:0;z-index:3;flex-direction:column;align-items:flex-start;justify-content:flex-start}}
+@media (min-width:1000px){.at-glowny:not(:has(.at-3d-brak)) .at-przypiete{position:absolute;top:48px;left:0;z-index:3;flex-direction:column;align-items:flex-start;justify-content:flex-start}}
 .at-pin,.at-pin-nowy{max-width:100%}.at-pin .at-pin-pokaz{flex:1 1 auto;min-width:0}.at-pin .at-pin-x{flex:none}.at-pin button,.at-pin-nowy{text-align:left}
 .at-wl{position:relative;flex:none;display:inline-flex;align-items:center;background:none;border:0;padding:0;margin:0 0 0 4px;cursor:pointer}
 .at-wl::before{content:'';position:absolute;inset:-12px -5px}
@@ -217,18 +213,25 @@ html.at-czeka .at-miejsce{visibility:hidden}
 /* bez WebGL albo bez objętości mózg w 3D znika, a przekroje z suwakami stoją same */
 /* na telefonie mózg w 3D jest kwadratem od brzegu do brzegu ekranu, a przekroje pod nim w jednej skali: czołowy i poziomy obok siebie,
    strzałkowy pod nimi */
-@media (max-width:720px){.at-3d{height:auto;aspect-ratio:1/1}.at-3d{--pas-l:6px}.at-glowny{gap:14px 16px}}
+@media (max-width:720px){.at-3d{height:auto;aspect-ratio:1/1}.at-3d{--pas-g:48px;--pas-p:76px;--pas-d:48px;--pas-l:6px}.at-glowny{gap:14px 16px}
+/* na telefonie nazwy końców stoją nad końcami górnego toru i pod końcami dolnego, a wyłącznik za drugim końcem, więc mózg ma całą
+   szerokość ramki bez pasa z lewej */
+.at-cie-x .at-koniec-a,.at-cie-y .at-koniec-a{right:auto;left:-6px;transform:none}
+.at-cie-x .at-koniec-a{top:auto;bottom:calc(100% - 1px)}
+.at-cie-y .at-koniec-a{top:calc(100% - 1px)}
+.at-cie-x .at-za .at-koniec,.at-cie-y .at-za .at-koniec{position:absolute;right:calc(100% + 8px)}
+.at-cie-x .at-za .at-koniec{bottom:calc(100% + 4px)}
+.at-cie-y .at-za .at-koniec{top:calc(100% + 4px)}}
 /* telefon i tablet (jego słowa, 2026-11-13: *too small on the vertical view and too big on horizontal*): poniżej 1000 px ramka mózgu nigdy
    nie jest wyższa niż ekran, a mózg wypełnia scenę (`wpasuj` w `mozg3d.js`) */
 @media (max-width:999px){.at-3d:not(.at-3d-brak){height:clamp(300px,min(56vw,100vh - 16px),640px);height:clamp(300px,min(56vw,100svh - 16px),640px)}}
 @media (max-width:720px){
 .at-glowny .at-3d:not(.at-3d-brak){flex:0 0 100vw;height:auto;max-height:calc(100vh - 16px);max-height:calc(100svh - 16px);margin-inline:calc(50% - 50vw)}
-.at-3d-start{right:12px}
 }
 /* tor pod palcem ma pole 40 px w poprzek, a jego środek zostaje tam, gdzie stał */
 @media (pointer:coarse){
-.at-cie-x .at-tor,.at-cie-y .at-tor{height:40px;margin:-6px -10px}
-.at-cie-z .at-tor{width:40px;margin-left:-6px}
+.at-cie-x .at-tor,.at-cie-y .at-tor{top:-6px;bottom:-6px}
+.at-cie-z .at-tor{left:-6px;right:-6px}
 .at-gal{width:20px;height:20px}
 }
 .at-obszary .wk-pole{cursor:pointer}
