@@ -1,7 +1,7 @@
 ---
 // Karta wiki w jednym szablonie: strona karty i pierwszy artykuł na /wiki/ (2026-10-22).
 import { template } from '../rocznik/views/karta.js';
-import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, classesOf, slugify, INDEKS, rodzinaUrl } from '../karty/data.js';
+import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, slugify, INDEKS, rodzinaUrl } from '../karty/data.js';
 import { KOLOR } from '../karty/mozg.js';
 import '../styles/wiki.css';
 import TerminDymek from './TerminDymek.astro';
@@ -48,7 +48,7 @@ const back = backlinks(k);
 // karta z akapitem kursu dostaje Iskrę i przełącznik animacji ze strony startowej (jego słowa, 2026-11-09: *if we add iskra, we need to
 // add on/off animation there also*)
 const kurs = items.some((b) => b.kurs);
-const zaj = classesOf(k);
+// „Na zajęciach” zeszło z kart razem z kursami (jego słowo, 2026-11-17: *Take off the kursy from kogni*)
 // rodzina o nazwie tej karty powtarzałaby tytuł nad sobą, więc wiersz rodzin pomija kartę samą (przegląd 2026-11-05: Predykcja, Interocepcja i cztery inne)
 const rodz = k.r2.filter((r) => card(r) !== k);
 const nets = k.nets.map(([kod, why]) => ({ kod, name: NETN[kod] || kod, why, to: netCard(kod) }))
@@ -83,7 +83,6 @@ const Owijka = wAtlasie ? 'section' : 'article';
         <h2>Termin</h2>
         {wAtlasie ? <h2 class="wk-h1">{k.h}</h2> : <h1>{k.h}</h1>}
         {rodz.length > 0 && <p class="wk-rodziny">{rodz.map((r, i) => [i ? ' · ' : '', rodzinaUrl(r, k) ? <a href={rodzinaUrl(r, k)}>{r}</a> : r])}</p>}
-        {zaj.length > 0 && <p class="wk-zaj">Na zajęciach {zaj.map((z, i) => [i ? ' · ' : '', <a href={z.url} style={'color:' + (z.kurs === 'Intro' ? '#f0c060' : '#edbbc5')}>{z.label.split(':')[0]}</a>])}</p>}
       </section>
       <section aria-label="Opis" class="wk-box wk-opis">
         <h2>Opis</h2>
@@ -134,12 +133,6 @@ const Owijka = wAtlasie ? 'section' : 'article';
         <section aria-label="Linkują tutaj" class="wk-box">
           <h2>Linkują tutaj</h2>
           <div class="wk-chips">{back.map((b) => <a href={b.url} class="wk-chip" style={'--c:' + INK[b.g]}>{b.h}</a>)}</div>
-        </section>
-      )}
-      {zaj.length > 0 && (
-        <section aria-label="Na zajęciach" class="wk-box">
-          <h2>Na zajęciach</h2>
-          <div class="wk-chips">{zaj.map((z) => <a href={z.url} class="wk-chip" style={'--c:' + (z.kurs === 'Intro' ? '#f0c060' : '#edbbc5')}>{z.label}</a>)}</div>
         </section>
       )}
     </div>

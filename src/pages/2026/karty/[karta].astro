@@ -1,25 +1,14 @@
 ---
-import Base from '../../../layouts/Base.astro';
-import Board from '../../../components/Board.astro';
-import { SP } from '../../../rocznik/data.js';
 import R from '../../../rocznik/2026/rocznik.json';
 import { card } from '../../../karty/data.js';
-// Stare karty Rocznika: póki ich zajęcia nie mają listy kart, stoją tu jak dotąd; potem adres prowadzi
-// do karty w jednym zbiorze albo do dymku zajęć na Płótnie (przekierowania w rocznik.json).
+// Dawne adresy kart Rocznika prowadzą do kart wiki. Stare karty zajęć i adresy prowadzące do dymków zajęć zeszły ze strony
+// razem z kursami (jego słowo, 2026-11-17: *Take off the kursy from kogni*); ich strona leży w _backups/2026-11-17_kursy/.
 export function getStaticPaths() {
-  const old = SP.filter((s) => s.isOld).map((s) => ({ params: { karta: s.id }, props: { s } }));
-  const red = Object.entries(R['przekierowania'] || {}).map(([slug, t]) => {
-    const k = t.karta && card(t.karta);
-    return { params: { karta: slug }, props: { to: k ? k.url : '/2026/?z=' + t.watek } };
-  });
-  return old.concat(red.filter((r) => !old.some((o) => o.params.karta === r.params.karta)));
+  return Object.entries(R['przekierowania'] || {})
+    .map(([slug, t]) => ({ slug, k: t.karta && card(t.karta) }))
+    .filter((r) => r.k)
+    .map((r) => ({ params: { karta: r.slug }, props: { to: r.k.url } }));
 }
-const { s, to } = Astro.props;
+const { to } = Astro.props;
 ---
-{to ? (
-  <html lang="pl"><head><meta charset="UTF-8"><meta http-equiv="refresh" content={'0; url=' + to}><link rel="canonical" href={to}><meta name="robots" content="noindex"><title>kogni.pl</title></head><body><a href={to}>{to}</a></body></html>
-) : (
-  <Base title={s.h + ' · Rocznik 2026 · kogni.pl'} activePage="" rocznik="2026">
-    <Board view="karta" state={{ id: s.id }} />
-  </Base>
-)}
+<html lang="pl"><head><meta charset="UTF-8"><meta http-equiv="refresh" content={'0; url=' + to}><link rel="canonical" href={to}><meta name="robots" content="noindex"><title>kogni.pl</title></head><body><a href={to}>{to}</a></body></html>

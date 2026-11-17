@@ -15,8 +15,6 @@
 .wk-mysl .wk-h1{text-transform:none;letter-spacing:normal}
 .wk-rodziny{margin:10px 0 0;font-size:14px;color:var(--ink)}
 .wk-rodziny a{color:inherit;text-decoration:underline dotted 1px;text-underline-offset:4px}
-.wk-zaj{margin:6px 0 0;font-size:14px;color:#a09888}
-.wk-zaj a{text-decoration:underline dotted 1px;text-underline-offset:4px;white-space:nowrap}
 /* nad tytułem: obszar i sieci miejsca klikniętego na mózgu, jak wiersz rodzin pod tytułem (jego słowa, 2026-11-10: *let me click this
    and then list a region/network above the title*) */
 .wk-tu{margin:0 0 8px;font-size:14px;line-height:1.6;color:#cfc8bb}
