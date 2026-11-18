@@ -945,9 +945,9 @@ const DZIEN = (() => {
   return () => { s = (s + 0x6d2b79f5) | 0; let t = Math.imul(s ^ (s >>> 15), 1 | s); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 })();
 const gaus = (r: () => number) => Math.sqrt(-2 * Math.log(Math.max(1e-9, r()))) * Math.cos(2 * Math.PI * r());
-const WAGI0: Record<string, number> = { swieci: .07, ciagnie: .05, stuka: .04, bada: .05, siada: .03, krazy: .05, wycieczka: .05, zbiera: .05, dmucha: .04, nurkuje: .09, okraza: .07, unosi: .1, kreci: .07, zapala: .1, latarnia: .07, laczy: .04, drzemie: .02, kolo: .07, lupa: .08 };
+const WAGI0: Record<string, number> = { swieci: .07, ciagnie: .05, stuka: .04, bada: .05, siada: .03, krazy: .05, wycieczka: .05, zbiera: .05, dmucha: .04, nurkuje: .09, okraza: .07, unosi: .1, kreci: .08, zapala: .1, latarnia: .07, laczy: .04, drzemie: .02, kolo: .07, lupa: .08 };
 const DW: any = {}; for (const m in WAGI0) DW[m] = WAGI0[m] * Math.exp(.7 * gaus(DZIEN));
-{ const ks = Object.keys(DW); for (let i = 0; i < 2; i++) DW[ks[(DZIEN() * ks.length) | 0]] *= 2.6; }
+{ const ks = Object.keys(DW), a = (DZIEN() * ks.length) | 0, b = (a + 1 + ((DZIEN() * (ks.length - 1)) | 0)) % ks.length; DW[ks[a]] *= 2.6; DW[ks[b]] *= 2.6; }
 const DN: any = {}; for (const n of SIECI_L) DN[n] = Math.exp(.8 * gaus(DZIEN));
 if (SIECI_L.length) DN[SIECI_L[(DZIEN() * SIECI_L.length) | 0]] *= 3;
 const TEMPO = .8 + .45 * DZIEN(), ZDRADZA = .3 + .4 * DZIEN(), BUDZ = ['powoli', 'zryw', 'ziewa', 'juz'][(DZIEN() * 4) | 0];
@@ -958,6 +958,9 @@ const BUDZ_T: any = {
   ziewa: { mrug: [1200, 1800, 3000], drzy: [1900, 2900], oko: 3150, otw: 650, ciag: 3600, sq: -.38, snop: 3800, leci: 4600 },
 };
 const MW: any = { ...DW }, NW: any = { ...DN };
+// długość każdej zabawy w ms, zanim tempo dnia ją rozciągnie albo skróci; wycieczka liczy się po 600 ms na sieć
+const DLUG: any = { swieci: 2600, ciagnie: 3200, stuka: 2600, bada: 3400, siada: 3000, krazy: 3600, zbiera: 3800, dmucha: 2700, nurkuje: 7600, okraza: 6400, unosi: 5600, kreci: 3600, zapala: 4400, latarnia: 7600, laczy: 3000, drzemie: 3600, kolo: 6400, lupa: 5600 };
+const dlugosc = (m: string, ns: number) => (m === 'wycieczka' ? 600 * ns + 500 : (DLUG[m] + Math.random() * 1400) * TEMPO);
 function losujZ(W: any, klucze: string[]) {
   let tot = 0; for (const k of klucze) tot += W[k] || 0;
   let u = Math.random() * tot; for (const k of klucze) { u -= W[k] || 0; if (u <= 0) return k; }
@@ -968,9 +971,11 @@ function dryf(m: string, n: number) {
   for (const k in MW) MW[k] = (MW[k] + (DW[k] - MW[k]) * .15) * Math.exp(.18 * gaus(Math.random));
   for (const k in NW) NW[k] = (NW[k] + (DN[k] - NW[k]) * .12) * Math.exp(.15 * gaus(Math.random));
   MW[m] *= .5; if (NW[n]) NW[n] = Math.min(NW[n] * 1.12, DN[n] * 6);
+  // kręcenie i kołowrotek obracają ten sam mózg: jedno nudzi też drugie, żeby mózg nie wirował co chwilę
+  if (m === 'kreci') MW.kolo *= .5; else if (m === 'kolo') MW.kreci *= .5;
 }
 // klik czytelnika w sieć w czasie zabawy: zabawa i sieć zyskują
-function lubi(n: number) { if (ST.ph !== 'bada') return; if (MW[ST.mode]) MW[ST.mode] *= 1.35; if (NW[n]) NW[n] *= 1.3; }
+function lubi(n: number) { if (ST.ph !== 'bada') return; if (MW[ST.mode]) MW[ST.mode] = Math.min(MW[ST.mode] * 1.35, DW[ST.mode] * 6); if (NW[n]) NW[n] = Math.min(NW[n] * 1.3, DN[n] * 6); }
 // lupa w ręku Iskry: krąg szkła, w nim punkty mózgu rosną; reg to obszar Allena pod środkiem szkła
 const LUPA: any = { k: 0, x: 0, y: 0, R: 50, reg: 0, t: 0, zyw: false };
 // sieć zapala się sama: Iskra się płoszy, zwraca ku niej, a następna zabawa idzie tam
@@ -984,7 +989,8 @@ function zaskocz(now: number) {
   const p = L[(Math.random() * L.length) | 0];
   STX.rip3.push({ X: p.X, Y: p.Y, Z: p.Z, n, t0: now });
   ST.zask = { p, t: now }; ST.nast = n; NW[n] *= 1.8; IS.sq = -.28; IS.zdz = .9;
-  ST.mt = Math.min(ST.mt, now + 750);
+  // zabawa kończy się w 750 ms, ale od miejsca, w którym była: u się nie zmienia, więc lupa ani Iskra nie przeskakują
+  if (ST.mt > now + 750) { const u = cl((now - ST.m0) / (ST.mt - ST.m0)); ST.mt = now + 750; ST.m0 = now - u * 750 / Math.max(.05, 1 - u); }
 }
 // punkt sieci n na mózgu ekranu startowego; blisko poprzedniego, gdy blisko > 0
 function startPkt(n: number, blisko = 0) {
@@ -1006,9 +1012,9 @@ function startTryb(now: number) {
   const tryby = zask ? ['bada', 'swieci', 'stuka', 'lupa', 'krazy', 'zapala'] : Object.keys(MW).filter((m) => m !== ST.poprz);
   ST.mode = losujZ(MW, tryby); ST.poprz = ST.mode; ST.nast = 0;
   dryf(ST.mode, ST.n);
-  const T = ({ swieci: 2600, ciagnie: 3200, stuka: 2600, bada: 3400, siada: 3000, krazy: 3600, wycieczka: 600 * ns.length + 500, zbiera: 3800, dmucha: 2700, nurkuje: 7600, okraza: 6400, unosi: 5600, kreci: 3600, zapala: 4400, latarnia: 7600, laczy: 3000, drzemie: 3600, kolo: 6400, lupa: 5600 } as any)[ST.mode];
-  ST.m0 = now; ST.mt = now + (ST.mode === 'wycieczka' ? T : (T + Math.random() * 1400) * TEMPO);
-  if (!ST.zaskT) ST.zaskT = now + (12000 + Math.random() * 14000) * TEMPO;
+  const wybrana = ST.mode;
+  ST.m0 = now; ST.mt = now + dlugosc(ST.mode, ns.length);
+  if (!ST.zaskT) ST.zaskT = now + (14000 + Math.random() * 20000) * TEMPO;
   ST.ns = ns; ST.n2 = ns.filter((n) => n !== ST.n)[(Math.random() * Math.max(1, ns.length - 1)) | 0] || ST.n; ST.dmuch = 0; ST.kfaz = 0; ST.chwiej = 0; ST.zrzut = 0;
   [ST.px, ST.py] = startPkt(ST.n);
   if (zask && ST.zask) [ST.px, ST.py] = brainS(ST.zask.p);
@@ -1059,11 +1065,14 @@ function startTryb(now: number) {
       ST.top = top < 1e8 ? top : 40; ST.zn = du < 0 ? -1 : 1; ST.dir = Math.random() < .5 ? 1 : -1;
     }
   }
+  // zabawa, która ustąpiła innej (kręcenie, kołowrotek albo nurkowanie zaraz po obrocie przez czytelnika), bierze długość tej innej
+  if (ST.mode !== wybrana) { ST.mt = now + dlugosc(ST.mode, ns.length); ST.poprz = ST.mode; }
   if (ST.mode === 'lupa') {
     // szkło i znacznik pod nim zostają nad dolnym brzegiem mózgu, więc na telefonie nie zachodzą na nazwy sieci pod mózgiem
     ST.kat = Math.random() * Math.PI * 2; ST.py = Math.min(ST.py, BS.cy + BS.bw * .375 - (MOB ? 38 : 50) - 48);
   }
-  // zamiar: czasem pół sekundy przed zabawą zdradza, co zrobi (cofa się, wpatruje albo przykuca); jak często, mówi dzień
+  // zamiar: czasem pół sekundy przed zabawą zdradza, co zrobi (cofa się, wpatruje albo przykuca); jak często, mówi dzień; wycieczka
+  // i drzemka nie mają zamiaru, bo wycieczka zaczyna się od pierwszego przystanku, a drzemki się nie zapowiada
   ST.zdr = 0;
   if (ST.mode !== 'wycieczka' && ST.mode !== 'drzemie' && Math.random() < ZDRADZA) {
     ST.zdr = 480 + Math.random() * 420; ST.zdrK = ['cofa', 'patrzy', 'kuca'][(Math.random() * 3) | 0]; ST.zdrS = 0;
@@ -1074,6 +1083,7 @@ function startTryb(now: number) {
   else if (ST.mode === 'kolo') [ST.tx, ST.ty] = brainS({ u: 120, v: ST.top });
   else if ((ST.mode === 'nurkuje' || ST.mode === 'latarnia') && ST.wej) [ST.tx, ST.ty] = brainS(ST.wej);
   else if (ST.mode === 'okraza') { ST.tx = BS.cx; ST.ty = BS.cy; }
+  else if (ST.mode === 'zapala' && ST.z1) [ST.tx, ST.ty] = brainS(ST.z1);
   else if ((ST.mode === 'krazy' || ST.mode === 'unosi' || ST.mode === 'laczy') && CENT[ST.n]) [ST.tx, ST.ty] = brainS({ u: CENT[ST.n][0], v: CENT[ST.n][1] });
   setTimeout(kick, ST.mt - now + 20);
 }
@@ -1105,6 +1115,9 @@ function startIskra(now: number): any {
     c = { id: 'leci', tryb: 'lot', x, y, I: .35, ang: Math.PI / 2, len: bw * .35, half: .45, mood: { pd: 1.15, lid: 1, joy: .3 } };
   }
   if (!c) {
+    // powrót na ekran startowy po kliku w sieć albo z historii zaczyna nową zabawę, a sieć nie zapala się sama od razu po nim
+    if (now - (ST.ost || now) > 300) { ST.mt = 0; ST.zaskT = now + (14000 + Math.random() * 20000) * TEMPO; }
+    ST.ost = now; ST.zyw = true;
     if (now > ST.mt) startTryb(now);
     const u = cl((now - ST.m0) / (ST.mt - ST.m0));
     // poza nurkowaniem Iskra wychodzi z mózgu, poza okrążaniem nic jej nie zasłania
@@ -1197,7 +1210,7 @@ function startIskra(now: number): any {
     } else if (ST.mode === 'kreci') {
       // kręci mózgiem: podlatuje do jego brzegu, popycha go i leci kawałek za nim, patrząc, jak się obraca
       const dir = ST.dir, x0 = BS.cx - dir * BS.bw * .47, y0 = BS.cy - BS.bw * .04;
-      if (u > .36 && !ST.pchnela) { ST.pchnela = 1; if (!OBROT.drag) OBROT.vy += dir * ST.sila; IS.sq = .38; }
+      if (u > .36 && !ST.pchnela) { ST.pchnela = 1; if (!OBROT.drag && now - OBROT.tUser > 6000) OBROT.vy += dir * ST.sila; IS.sq = .38; }
       const x = u < .36 ? x0 : x0 + dir * BS.bw * .22 * sm(cl((u - .36) / .3)), y = y0 - 10 * Math.sin(u * Math.PI), ang = dir > 0 ? 0 : Math.PI;
       c = { id: 'start-kreci', tryb: 'lot', x, y, I: .5, ang, len: 40, half: .4, gaze: ang, mood: { pd: 1.2, lid: 1, joy: .85 } };
     } else if (ST.mode === 'zapala') {
@@ -1220,33 +1233,36 @@ function startIskra(now: number): any {
       if (u > .85 && !ST.obudz) { ST.obudz = 1; IS.mrug = now; IS.sq = -.24; } if (u < .5) ST.obudz = 0;
       c = { id: 'start-drzemie', tryb: 'lot', x: ST.px, y: ST.py - r - 3 + Math.sin(now / 700) * 1.5, I: 0, ang: Math.PI / 2, len: 20, half: .3, mood: { pd: .9, lid } };
     } else if (ST.mode === 'kolo') {
-      // Kołowrotek (jego słowa, 2026-11-18: *apply all suggestions*, na *she lands on the crown of the brain and starts running; the brain
-      // turns under her feet*): ląduje na szczycie mózgu i biegnie w miejscu, a mózg obraca się pod nią coraz szybciej; traci grunt,
+      // Kołowrotek (jego słowa, 2026-11-18: *apply all suggestions*, wśród nich kołowrotek): ląduje na szczycie mózgu i biegnie w miejscu, a mózg obraca się pod nią coraz szybciej; traci grunt,
       // koziołkuje z mózgu i chwilę kręci się jej w głowie, a mózg kręci się jeszcze i zwalnia. Szarpnięcie mózgiem przez czytelnika ją zrzuca.
-      const dir = ST.dir, [x0, y0] = brainS({ u: 120, v: ST.top }), stopa = y0 - r * .9;
-      if (OBROT.drag && u > .14 && u < .7 && !ST.zrzut) { ST.zrzut = 1; const d = ST.mt - ST.m0; ST.m0 = now - .71 * d; ST.mt = ST.m0 + d; }
+      const dir = ST.dir, [x0, y0] = brainS({ u: 120, v: ST.top }), stopa = y0 - r * .9, xb = Math.max(42, Math.min(W - 42, BS.cx - dir * BS.bw * .58));
+      // czytelnik obraca mózg: przed lądowaniem zabawa ustępuje następnej, w biegu zrzuca ją od razu
+      const czyt = !!OBROT.drag || now - OBROT.tUser < 6000;
+      if (czyt && u < .14) ST.mt = now;
+      if (czyt && u > .14 && u < .7 && !ST.zrzut) { ST.zrzut = 1; const d = ST.mt - ST.m0; ST.m0 = now - .71 * d; ST.mt = ST.m0 + d; }
       if (u < .14) c = { id: 'start-kolo', tryb: 'lot', x: x0, y: stopa, I: .25, ang: Math.PI / 2, len: 30, half: .4, mood: { pd: 1.15, lid: 1, joy: .4 } };
       else if (u < .7) {
         if (ST.kfaz !== 1) { ST.kfaz = 1; ST.bx = IS.x; ST.by = IS.y; }
         const bieg = sm(cl((u - .14) / .4)), TK = 150 - 60 * bieg, f = (now % TK) / TK, kr = Math.floor(now / TK), zb = 1 - sm(cl((u - .14) / .05));
         if (kr !== ST.kr) { ST.kr = kr; IS.sq = .1 + .14 * bieg; }
-        if (!OBROT.drag) OBROT.vy = -dir * ST.zn * 2.4 * bieg;
+        if (!OBROT.drag && LD.w > .9) OBROT.vy = -dir * ST.zn * 2.4 * bieg;
         const x = x0 + dir * 3 * bieg, y = stopa - 5 * Math.sin(Math.PI * f), kier = dir > 0 ? 0 : Math.PI;
         c = { id: 'start-kolo-bieg', tryb: 'lot', rail: true, x: x + (ST.bx - x) * zb, y: y + (ST.by - y) * zb, I: .2 + .3 * bieg, ang: kier, len: 34, half: .3, gaze: kier, mood: { pd: 1.1 + .3 * bieg, lid: 1, joy: .3 + .6 * bieg } };
       } else if (u < .8) {
         // traci grunt: powierzchnia zabiera ją do tyłu, chwieje się
         const q = sm((u - .7) / .1);
         if (!ST.chwiej) { ST.chwiej = 1; IS.zdz = .9; IS.sq = -.3; }
-        c = { id: 'start-kolo-traci', tryb: 'lot', rail: true, x: x0 - dir * BS.bw * .1 * q, y: stopa - 3 * q, I: 0, ang: Math.PI / 2, len: 20, half: .3, obrot: Math.sin(now / 45) * .35 * (1 + q), mood: { pd: 1.5, lid: 1 } };
+        c = { id: 'start-kolo-traci', tryb: 'lot', rail: true, x: x0 - dir * BS.bw * .1 * q, y: stopa - 3 * q, I: 0, ang: Math.PI / 2, len: 20, half: .3, obrot: Math.sin(now / 45) * .5 * Math.sin(Math.PI * q), mood: { pd: 1.5, lid: 1 } };
       } else if (u < .9) {
         // koziołkuje z mózgu
-        // łuk od miejsca, w którym straciła grunt, za brzeg mózgu, na wysokość jego górnej jednej trzeciej
-        const q = (u - .8) / .1, xa = x0 - dir * BS.bw * .1, xb = BS.cx - dir * BS.bw * .58, D = BS.bw * .3 + 3, h = 40, A = 2 * h + 2 * Math.sqrt(h * (h + D)), Bq = A + D;
-        c = { id: 'start-kolo-spada', tryb: 'lot', rail: true, x: xa + (xb - xa) * q, y: stopa - 3 - A * q + Bq * q * q, I: 0, ang: Math.PI / 2, len: 20, half: .3, obrot: -dir * q * Math.PI * 3, mood: { pd: 1.5, lid: 1 } };
+        // łuk od miejsca, w którym straciła grunt, za brzeg mózgu, na wysokość jego górnej jednej trzeciej; dwa pełne obroty, więc ląduje
+        // głową do góry
+        const q = (u - .8) / .1, xa = x0 - dir * BS.bw * .1, D = BS.bw * .3 + 3, h = 40, A = 2 * h + 2 * Math.sqrt(h * (h + D)), Bq = A + D;
+        c = { id: 'start-kolo-spada', tryb: 'lot', rail: true, x: xa + (xb - xa) * q, y: stopa - 3 - A * q + Bq * q * q, I: 0, ang: Math.PI / 2, len: 20, half: .3, obrot: -dir * q * Math.PI * 4, mood: { pd: 1.5, lid: 1 } };
       } else {
         // kręci się jej w głowie
         if (ST.chwiej === 1) { ST.chwiej = 2; IS.sq = .4; }
-        c = { id: 'start-kolo-wiruje', tryb: 'lot', x: BS.cx - dir * BS.bw * .58 + Math.sin(now / 160) * 4, y: stopa + BS.bw * .3, I: 0, ang: Math.PI / 2, len: 20, half: .3, gaze: now / 110, mood: { pd: .85, lid: .7 } };
+        c = { id: 'start-kolo-wiruje', tryb: 'lot', x: xb + Math.sin(now / 160) * 4, y: stopa + BS.bw * .3, I: 0, ang: Math.PI / 2, len: 20, half: .3, gaze: now / 110, mood: { pd: .85, lid: .7 } };
       }
     } else if (ST.mode === 'lupa') {
       // Lupa (jego słowa, 2026-11-18: *apply all suggestions*, na lupę w ręku Iskry): trzyma szkło nad siecią i wodzi nim powoli; punkty pod
@@ -1254,8 +1270,8 @@ function startIskra(now: number): any {
       // trafia w to, co widać.
       const R = MOB ? 38 : 50, w = Math.sin(Math.PI * u), a = ST.kat + u * Math.PI * 1.6;
       LUPA.k = sm(cl(Math.min(u / .12, (1 - u) / .12))); LUPA.R = R; LUPA.zyw = true;
-      LUPA.x = ST.px + Math.cos(a) * 30 * w; LUPA.y = ST.py + Math.sin(a * 1.3) * 16 * w;
-      const x = LUPA.x - R * .62, y = LUPA.y - R * 1.12, ang = Math.atan2(LUPA.y - y, LUPA.x - x);
+      const lx = ST.px + Math.cos(a) * 30 * w, ly = ST.py + Math.sin(a * 1.3) * 16 * w;
+      const x = lx - R * .62, y = ly - R * 1.12, ang = Math.atan2(ly - y, lx - x);
       c = { id: 'start-lupa', tryb: 'lot', x, y, I: .3, ang, len: R * 1.3, half: .3, gaze: ang, mood: { pd: 1.35, lid: .8, joy: .3 } };
     } else {
       // siada na mózgu i świeci w dół
@@ -1267,26 +1283,29 @@ function startIskra(now: number): any {
       c = { ...c, id: 'start-zamiar', rail: false, obrot: undefined, I: .14, ang: ka, len: Math.min(dd, 160), half: .1, gaze: ka, mood: { pd: 1.35, lid: 1, joy: 0 } };
       if (ST.zdrK === 'cofa') { c.x -= Math.cos(ka) * 22 * Math.sin(Math.PI * q); c.y -= Math.sin(ka) * 22 * Math.sin(Math.PI * q); }
       else if (ST.zdrK === 'patrzy') c.mood = { pd: 1.5, lid: .55 };
-      else { if (q < .8) IS.sq += (.3 - IS.sq) * .2; else if (!ST.zdrS) { ST.zdrS = 1; IS.sq = -.32; } }
+      else { if (q < .8) IS.sq = Math.max(IS.sq, .3 * sm(q / .8)); else if (!ST.zdrS) { ST.zdrS = 1; IS.sq = -.32; } }
     }
     // sieć, która zapala się sama, zaskakuje ją, chyba że jest w środku mózgu, biegnie albo nim kręci
-    if (ST.zaskT && now > ST.zaskT && !['nurkuje', 'latarnia', 'kolo', 'kreci', 'unosi'].includes(ST.mode) && !(ST.zdr && now < ST.m0)) zaskocz(now);
-    if (ST.zask && now - ST.zask.t < 900 && c) { const [zx, zy] = brainS(ST.zask.p), ka = Math.atan2(zy - IS.y, zx - IS.x); c = { ...c, ang: ka, gaze: ka, I: Math.max(.3, c.I || 0), mood: { pd: 1.5, lid: 1 } }; }
+    if (ST.zaskT && now > ST.zaskT && !['nurkuje', 'latarnia', 'kolo', 'kreci', 'unosi'].includes(ST.mode) && u > .45) zaskocz(now);
+    if (ST.zask && now - ST.zask.t < 900 && c) { const [zx, zy] = brainS(ST.zask.p), ka = Math.atan2(zy - IS.y, zx - IS.x); c = { ...c, ang: ka, gaze: ka, I: Math.max(.3, c.I || 0) * (1 - (IS.zakryta || 0)), mood: { pd: 1.5, lid: 1 } }; }
   }
   // kursor: trzyma odległość, ucieka, patrzy na niego, podlatuje do stojącego kursora
   const KEEP = 90, mysz = MYSZ.typ === 'mouse' && now - MYSZ.t < 8000;
   if (mysz && ST.ph !== 'spi') {
+    const cx0 = c.x, cy0 = c.y;
     const dx = IS.x - MYSZ.x, dy = IS.y - MYSZ.y, d = Math.hypot(dx, dy) || 1, ka = Math.atan2(-dy, -dx);
     if (MYSZ.v > 1500 && d < 170 && now - MYSZ.t < 60 && now > ST.strach) { ST.strach = now + 900; IS.sq = -.3; IS.zdz = .9; }
     const strach = now < ST.strach, daleko = strach ? KEEP + 90 : KEEP;
     const tdx = c.x - MYSZ.x, tdy = c.y - MYSZ.y, td = Math.hypot(tdx, tdy) || 1;
-    if (d < daleko) { c.x = MYSZ.x + dx / d * (daleko + 30); c.y = MYSZ.y + dy / d * (daleko + 30); c.id = 'start-ucieka'; c.I = .25; c.ang = ka; c.len = 40; c.half = .4; c.gaze = ka; c.mood = { pd: 1.35, lid: 1 }; }
-    else if (td < KEEP) { c.x = MYSZ.x + tdx / td * KEEP; c.y = MYSZ.y + tdy / td * KEEP; }
+    if (d < daleko) { c.x = MYSZ.x + dx / d * (daleko + 30); c.y = MYSZ.y + dy / d * (daleko + 30); c.id = 'start-ucieka'; c.rail = false; c.I = .25; c.ang = ka; c.len = 40; c.half = .4; c.gaze = ka; c.mood = { pd: 1.35, lid: 1 }; }
+    else if (td < KEEP) { c.x = MYSZ.x + tdx / td * KEEP; c.y = MYSZ.y + tdy / td * KEEP; c.rail = false; }
     else if (now - MYSZ.t > 1400 && d < 320 && d > KEEP + 10 && ST.ph === 'bada') {
       // kursor stoi: ciekawość, ostrożny podlot na odległość KEEP, snop przygaszony ku kursorowi
-      c.x = MYSZ.x + dx / d * KEEP; c.y = MYSZ.y + dy / d * KEEP; c.id = 'start-ciekawi'; c.I = .3; c.ang = ka; c.len = KEEP * .8; c.half = .35; c.gaze = ka; c.mood = { pd: 1.25, lid: .85, joy: .2 };
+      c.x = MYSZ.x + dx / d * KEEP; c.y = MYSZ.y + dy / d * KEEP; c.id = 'start-ciekawi'; c.rail = false; c.I = .3; c.ang = ka; c.len = KEEP * .8; c.half = .35; c.gaze = ka; c.mood = { pd: 1.25, lid: .85, joy: .2 };
     }
     if (d < 260 && c.id !== 'start-ucieka' && c.id !== 'start-ciekawi') c.gaze = ka;
+    // kursor odpędził ją z kołowrotka: zabawa się kończy, a mózg kręci się jeszcze i zwalnia
+    if (ST.mode === 'kolo' && (c.x !== cx0 || c.y !== cy0)) ST.mt = Math.min(ST.mt, now);
   }
   c.y = Math.max(H * .06, c.y);
   return c;
@@ -1974,11 +1993,12 @@ function rysujLupe() {
   g2.beginPath(); g2.moveTo(lx + Math.cos(ha) * R, ly + Math.sin(ha) * R); g2.lineTo(lx + Math.cos(ha) * R * 1.3, ly + Math.sin(ha) * R * 1.3); g2.stroke();
   const nm = LUPA.reg && DYM_O[LUPA.reg] ? DYM_O[LUPA.reg][0] : '';
   if (nm) {
-    g2.font = '500 12px Inter, sans-serif'; g2.textAlign = 'center'; g2.textBaseline = 'middle';
-    const tw = g2.measureText(nm).width + 18, ty = ly + R + 18;
-    g2.globalAlpha = .92 * k; g2.fillStyle = '#16140f'; g2.strokeStyle = 'rgba(240,192,96,.5)'; g2.lineWidth = 1;
+    // litery i tło jak w nazwach sieci pod mózgiem na telefonie (`.roj-sieci-lista button`), obwódka złota jak szkło
+    g2.font = '500 13px Inter, sans-serif'; g2.textAlign = 'center'; g2.textBaseline = 'middle';
+    const tw = g2.measureText(nm).width + 20, ty = ly + R + 18;
+    g2.globalAlpha = k; g2.fillStyle = 'rgba(18,17,13,.9)'; g2.strokeStyle = 'rgba(240,192,96,.5)'; g2.lineWidth = 1;
     g2.beginPath(); g2.roundRect(lx - tw / 2, ty - 11, tw, 22, 11); g2.fill(); g2.stroke();
-    g2.globalAlpha = k; g2.fillStyle = '#efe6d6'; g2.fillText(nm, lx, ty);
+    g2.globalAlpha = k; g2.fillStyle = '#ebe3d3'; g2.fillText(nm, lx, ty);
   }
   g2.restore();
 }
@@ -2156,6 +2176,9 @@ function frame() {
     OBROT.yaw += OBROT.vy * dt; OBROT.pitch = Math.max(-1.1, Math.min(1.1, OBROT.pitch + OBROT.vp * dt));
     const t = Math.exp(-dt * 2.6); OBROT.vy *= t; OBROT.vp *= t;
   }
+  // na samym ekranie startowym kąt wraca do jednego obrotu (ten sam widok), więc wejście w historię cofa mózg najwyżej o pół obrotu,
+  // a nie o tyle obrotów, ile nakręciły zabawy
+  if (LD.w > .999) { const T2 = 2 * Math.PI; OBROT.yaw = ((OBROT.yaw % T2) + T2 + Math.PI) % T2 - Math.PI; }
   if (mzk(A.k) || mzk(B.k)) rzutuj();
   if (LD.w < .5) { IS.wn = Math.max(0, (IS.wn || 0) - .05); IS.zakryta = Math.max(0, (IS.zakryta || 0) - .08); }
   // ziarno: każdy punkt na brzegu albo w miejscu wspólnym losuje sieć mniej więcej raz na sekundę, póki mózg widać
@@ -2178,17 +2201,21 @@ function frame() {
   for (const n of SIECI_L) { WS[n] = slowoStan(n, now, wS, textR); if (WS[n] && WS[n].t < 1800) slowaRuch = true; if (WS[n] && WS[n].forma > 0) SLOWA_FORMA = wS > .02; }
   rozsun();
   zdKrok(now, dt);
-  LUPA.zyw = false;
+  LUPA.zyw = false; ST.zyw = false;
   const c = cel(A, B, t, lpA, lpB, now, lz);
   // lupa gaśnie, gdy zabawa z nią się kończy, klik przerywa ją albo strona schodzi z ekranu startowego
   if (!LUPA.zyw) LUPA.k = Math.max(0, LUPA.k - .06);
+  // szkło jest w jej ręce: idzie za nią, także gdy kursor ją odpędzi
+  if (LUPA.k > 0 || LUPA.zyw) { LUPA.x = IS.x + LUPA.R * .62; LUPA.y = IS.y + LUPA.R * 1.12; }
+  // klik w sieć przerywa zabawę: uniesiona sieć opada, latarnia gaśnie
+  if (!ST.zyw) { UNOS.A *= .85; UNOS.k = Math.max(0, UNOS.k - .05); LAT.k = Math.max(0, LAT.k - .04); }
   if (LUPA.k > .01 && now - LUPA.t > 150) {
-    LUPA.t = now; let b = 1e9; LUPA.reg = 0;
-    for (const p of P3) { if (p.wn || !(p.ea > .2) || !p.reg) continue; const d = Math.hypot(p.ex - LUPA.x, p.ey - LUPA.y); if (d < b) { b = d; LUPA.reg = p.reg; } }
+    LUPA.t = now; let b = LUPA.R * .5; LUPA.reg = 0;
+    for (const p of P3) { if (p.wn || !(p.ea > .3) || !(p.vis > .6) || !p.reg) continue; const d = Math.hypot(p.ex - LUPA.x, p.ey - LUPA.y); if (d < b) { b = d; LUPA.reg = p.reg; } }
   }
   if (c) { krok(dt, c, now); wiazka(dt, c, now); oko(dt, c, now); }
   const wid = !!c && !IS.dom;
-  const PCH = wid && c.id !== 'dom' && c.id !== 'wiki' && !c.rail ? (c.id === 'start-nurkuje' ? (MOB ? 40 : 58) : MOB ? 22 : 30) : 0;
+  const PCH = wid && c.id !== 'dom' && c.id !== 'wiki' && (!c.rail || c.id.startsWith('start-kolo')) ? (c.id === 'start-nurkuje' ? (MOB ? 40 : 58) : MOB ? 22 : 30) : 0;
   if (knotLogo) knotLogo.style.opacity = wid ? '0' : '';
   g.setTransform(D, 0, 0, D, 0, 0); g.clearRect(0, 0, W, H); g2.setTransform(D, 0, 0, D, 0, 0); g2.clearRect(0, 0, W, H); g.globalCompositeOperation = 'lighter'; g.lineWidth = 1;
   const NICI = (k: string) => k === 'osnowy' || k === 'kogni' || k === 'wiki', KROPKI = !NICI(A.k) && !NICI(B.k);
@@ -2297,7 +2324,7 @@ function frame() {
       if (d < R) {
         const k = LUPA.k * LD.w, M = 1 + .9 * k, d2 = d * M;
         if (d2 > R) al *= 1 - k;
-        else { x = LUPA.x + dx * M; y = LUPA.y + dy * M; sz *= 1 + (M - 1) * 1.1; al = Math.min(1, al + .3 * k); GL = Math.max(GL, .55 * k); }
+        else { x = LUPA.x + dx * M; y = LUPA.y + dy * M; sz *= 1 + (M - 1) * 1.1; al = Math.min(1, al * (1 + .45 * k)); GL = Math.max(GL, .55 * k * Math.min(1, al * 2)); }
       }
     }
     if (p.X !== undefined) { p.ex = x; p.ey = y; p.ea = MOZG_AKT ? al : 0; }
@@ -2404,8 +2431,8 @@ function frame() {
   rysujLod(dt);
   const dipRuch = dipy(dt);
   if (IS.osiadla > .01 && c) { const em = wikiK.getBoundingClientRect().height / .26; knot(IS.osiadla, IS.x, IS.y, Math.max(6, em * .25), em * .1625); }
-  // w środku mózgu i za nim Iskra przygasa: przed nią jest tkanka
   if (wid && LUPA.k > .02 && LD.w > .3) rysujLupe();
+  // w środku mózgu i za nim Iskra przygasa: przed nią jest tkanka
   if (wid) { rysujPlecak(dt); rysujIskre((1 - IS.osiadla) * (1 - .45 * (IS.wn || 0)) * (1 - .85 * (IS.zakryta || 0))); }
   // pętla klatek tylko wtedy, gdy coś się rusza
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
