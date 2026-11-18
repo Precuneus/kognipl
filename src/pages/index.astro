@@ -52,9 +52,10 @@ const DYMKI = SIECI.map(([n, nazwa]) => {
 });
 // Obszar pod kliknięciem (jego słowa, 2026-11-18: *yes, apply. Execute*, na mózg z danych Atlasu, w którym klik w punkt otwiera Atlas na
 // obszarze pod nim): dymek nazywa strukturę Allena pod klikniętym miejscem i prowadzi do niej tak, jak Atlas pisze adres obszaru, na stronę
-// obszaru z kartą albo na /atlas/#obszar-<nazwa>; w danych tylko obszary widoczne z boku
+// obszaru z kartą albo na /atlas/#obszar-<nazwa>; w danych tylko obszary, na których leżą punkty mózgu
 const REG = regiony();
-const OBSZARY_D = Object.fromEntries([...new Set(MS.obszary.split(',').map((t) => parseInt(t.slice(0, 2), 36)).filter(Boolean))]
+const PKT_B = Buffer.from(MS.punkty, 'base64');
+const OBSZARY_D = Object.fromEntries([...new Set(Array.from({ length: PKT_B.length / 12 }, (_, i) => PKT_B[i * 12 + 11]).filter(Boolean))]
   .map((n) => [n, [REG[n - 1][0], STRONY.obszar[n] || '/atlas/#obszar-' + REG[n - 1][4]]]));
 const OSNOWY = [['socjologia', '#8fa274'], ['psychologia', '#5f9a96'], ['biologia', '#6585b0'], ['fizyka', '#8577b3']];
 const KOL_OSN = Object.fromEntries(OSNOWY);
@@ -408,69 +409,96 @@ html.roj-cicho .roj-t{opacity:1;transform:none;transition:none}
 
 <script>
 // Rój: punkty mózgu z danych Atlasu (jego słowa, 2026-11-18: *check the brain at the beginning, think how to recalculate it to look better.
-// We should have something much better and more accurate. We can base it on the atlas*, potem *yes, apply. Execute*). Lewa półkula z boku:
-// kształt i fałdy z szablonu MNI 2009c, sieci Yeo w parcelacji Schaefera (w móżdżku Buckner) i struktury Allena z objętości Atlasu, tak jak
-// je rysuje Atlas; liczy je `startowy.py` w potoku rysunków Atlasu do `src/karty/mozg-startowy.json`. Punkt ma pole w siatce 240×180,
-// jasność (korona zakrętu jasna, dno bruzdy ciemne), normalną na ekranie i głębokość ku oku. Mapy nie czyta się z canvasu, bo Safari
-// zaszumia getImageData (ochrona przed fingerprintingiem) i psuje etykiety.
+// We should have something much better and more accurate. We can base it on the atlas*, potem *yes, apply. Execute*), w trzech wymiarach
+// (tego samego dnia: *can we make a brain possible to rotate? And then... to make iskra go inside and to interact with it more... 3d?*,
+// potem *ok, lets try it, go*). Punkty leżą na całej powierzchni kory obu półkul (prawa to odbicie lewej, jak w Atlasie): kształt i fałdy
+// z szablonu MNI 2009c, sieci Yeo w parcelacji Schaefera (w móżdżku Buckner) z wagami ziarna Atlasu i struktury Allena z objętości Atlasu;
+// liczy je `startowy.py` w potoku rysunków Atlasu do `src/karty/mozg-startowy.json`. W środku leżą struktury pod korą, które świecą
+// tylko w świetle Iskry. Każda klatka obraca chmurę, rzutuje ją na ramkę 240×180 i chowa punkty zasłonięte bliższą powierzchnią.
+// Mapy nie czyta się z canvasu, bo Safari zaszumia getImageData (ochrona przed fingerprintingiem) i psuje etykiety.
 // Ruch przy przewijaniu: każdy ekran ma swój stan, przejścia przewijają się w obie strony.
 import MS from '../karty/mozg-startowy.json';
-import MW from '../karty/mozg-widoki.json';
 const COL: Record<number, string> = { 1: '#7d7466', 2: '#ee6b6f', 3: '#f9d780', 4: '#e58e76', 5: '#f69959', 6: '#a9b26f', 7: '#bb6fb2', 8: '#6fb3a8', 9: '#8fa3db' };
-// kody siatki: 0 tło, 1 kora bez sieci (skroniowo-ciemieniowa Yeo, póki span jej nie umieści), 2–9 sieci strony, 10 grupa Yeo, którą Atlas
-// dzieli między istotności i brzuszną uwagi, 11 tkanka poza korą (pień)
-const RODZ: Record<number, number[]> = { 2: [2], 3: [3], 4: [4], 5: [5], 6: [6], 7: [7], 8: [8], 9: [9], 10: [6, 8] };
-// sieć, którą span bierze w całości do innej, należy też do niej (`wspolne` w mozg-widoki.json: kora limbiczna jest też domyślna, Girn i in. 2024)
-const NR: Record<string, number> = { VIS: 2, SMN: 3, DAN: 4, CN: 5, SN: 6, DMN: 7, VAN: 8, LIM: 9 };
-const WSP = MW.wspolne.map(({ sieci: [x, y] }: any) => [NR[x], NR[y]]);
-const RODZ_W: Record<number, number[]> = {};
-for (const k in RODZ) { const f = RODZ[k].slice(); for (const [x, y] of WSP) if (f.includes(x) && !f.includes(y)) f.push(y); RODZ_W[k] = f; }
-const przebiegi = (t: string, w: number) => { const out = new Uint8Array(240 * 180); let i = 0; for (const x of t.split(',')) { const n = parseInt(x.slice(w), 36); out.fill(parseInt(x.slice(0, w), 36), i, i + n); i += n; } return out; };
-const KODY = przebiegi(MS.siatka, 1), OBSZ = przebiegi(MS.obszary, 2);
-// Ziarno jak w Atlasie (`ziarno.js`): waga sieci w polu to jej obecność rozmyta trzema przejściami pudełka o promieniu 2 pól (1,5 mm, jedno
-// pole objętości), tylko na korze; sieć wspólna bierze wagę tej, która należy też do niej. Punkt należy w danej chwili do jednej sieci i co
-// jakiś czas losuje ją na nowo z wagami swojego pola, więc rdzeń trzyma kolor, a brzeg i miejsce wspólne migoczą. Świeci, gdy świeci któraś
-// z sieci, których udział w jego polu przekracza 1/7, jak w Atlasie (Yeo i in. 2014).
-const WAGI: Float32Array[] = [];
-{
-  const kora = KODY.map((k) => (k >= 1 && k <= 10 ? 1 : 0));
-  const rozmyj = (a: Float32Array) => {
-    let s = a; const t = new Float32Array(a.length), R = 2;
-    for (let p = 0; p < 3; p++) {
-      for (let y = 0; y < 180; y++) { let acc = 0; for (let x = -R; x < 240 + R; x++) { if (x + R < 240) acc += s[y * 240 + x + R]; if (x - R - 1 >= 0) acc -= s[y * 240 + x - R - 1]; if (x >= 0 && x < 240) t[y * 240 + x] = acc / (2 * R + 1); } }
-      const o = new Float32Array(a.length);
-      for (let x = 0; x < 240; x++) { let acc = 0; for (let y = -R; y < 180 + R; y++) { if (y + R < 180) acc += t[(y + R) * 240 + x]; if (y - R - 1 >= 0) acc -= t[(y - R - 1) * 240 + x]; if (y >= 0 && y < 180) o[y * 240 + x] = acc / (2 * R + 1); } }
-      s = o;
-    }
-    return s;
-  };
-  for (let n = 2; n <= 9; n++) { const a = new Float32Array(240 * 180); for (let i = 0; i < a.length; i++) a[i] = RODZ[KODY[i]] && RODZ[KODY[i]].includes(n) ? 1 : 0; const b = rozmyj(a); for (let i = 0; i < b.length; i++) b[i] *= kora[i]; WAGI[n] = b; }
-  for (const [x, y] of WSP) { const X = WAGI[x], Z = WAGI[y]; for (let i = 0; i < Z.length; i++) Z[i] = Math.max(Z[i], X[i]); }
+// struktury wnętrza w bladych barwach, jak przypięte bryły Atlasu; w świetle Iskry złocieją
+const KOL_WN = ['#e8d9b5', '#d6e4d9', '#ddd2ea', '#ead3d6', '#d3dcec'];
+const b64 = (t: string) => Uint8Array.from(atob(t), (z) => z.charCodeAt(0));
+const i8 = (b: number) => (b << 24) >> 24;
+const S3 = MS.skala, YC = MS.srodek[0], ZC = MS.srodek[1];
+// Obrót (jego słowa, 2026-11-18: *can we make a brain possible to rotate?*): na ekranie startowym czytelnik obraca mózg przeciągnięciem,
+// a puszczony kręci się jeszcze chwilę i zwalnia; w historii mózg wraca bokiem, bo pod ten widok stoją nazwy sieci i tekst. Do tego mózg
+// sam obraca się powoli o kilka stopni i wraca (2026-11-18, *the brain turns a few degrees and back, so it reads as 3D*). Bez animacji
+// obraca go tylko czytelnik, bez rozpędu.
+const OBROT: any = { yaw: 0, pitch: 0, vy: 0, vp: 0, drag: null, przeciagnal: false, dotyk: false, tUser: -1e9 };
+// sieć uniesiona przez Iskrę (n, wysokość A w mm, światło k) i jej latarnia w środku mózgu (k)
+const UNOS: any = { n: 0, A: 0, k: 0 }, LAT: any = { k: 0 };
+let OBR = 0, CY = 1, SY = 0, CP = 1, SP = 0, KS = 1;
+const OBR_KAT = 6 * Math.PI / 180, OBR_T = 20000;
+// punkt w milimetrach na ramkę: widok z boku z lewej, potem obrót wokół pionu ekranu i wokół jego poziomu; KS zmniejsza pochylony mózg,
+// żeby mieścił się między nagłówkiem a Story
+function rzut(x: number, y: number, z: number) {
+  const sx = -(y - YC), sy = -(z - ZC), sz = -x;
+  const sx2 = sx * CY + sz * SY, sz2 = -sx * SY + sz * CY, sy2 = sy * CP - sz2 * SP, sz3 = sy * SP + sz2 * CP;
+  return [120 + sx2 * S3 * KS, 90 + sy2 * S3 * KS, sz3];
+}
+// z-bufor w kubełkach 4×4 pól: punkt dalej niż kilka milimetrów za najbliższą powierzchnią w swoim kubełku gaśnie
+const ZB = new Float32Array(60 * 45);
+const kubel = (u: number, v: number) => Math.max(0, Math.min(44, (v / 4) | 0)) * 60 + Math.max(0, Math.min(59, (u / 4) | 0));
+// światło z góry, z przodu i od strony oka, w układzie ekranu (x w prawo, y w dół, z ku oku)
+const SW_L = (() => { const v = [-.45, -.7, .55], m = Math.hypot(...v); return v.map((a) => a / m); })();
+let JN = 1;
+const P3: any[] = [];
+function rzutuj() {
+  const yaw = OBROT.yaw * LD.w + OBR, pitch = OBROT.pitch * LD.w;
+  CY = Math.cos(yaw); SY = Math.sin(yaw); CP = Math.cos(pitch); SP = Math.sin(pitch);
+  const glebia = 140 * Math.abs(CY) + 178 * Math.abs(SY);
+  KS = Math.min(1, 141 / (141 * Math.abs(CP) + glebia * Math.abs(SP)));
+  ZB.fill(-1e9);
+  const K3 = S3 * KS;
+  const wnetrze = IS.wn > .001 || ST.mode === 'nurkuje' || ST.mode === 'latarnia', un = UNOS.A > .01 || UNOS.A < -.01;
+  for (const p of P3) {
+    if (p.wn && !wnetrze) continue;
+    const dA = un && !p.wn && p.tu.includes(UNOS.n) ? UNOS.A : 0;
+    const sx = YC - p.Y - p.NY * dA, sy = ZC - p.Z - p.NZ * dA, sz = -p.X - p.NX * dA, sx2 = sx * CY + sz * SY, sz2 = -sx * SY + sz * CY;
+    p.u = 120 + sx2 * K3; p.v = 90 + (sy * CP - sz2 * SP) * K3; p.d3 = sy * SP + sz2 * CP;
+    if (p.wn) continue;
+    const nx = -p.NY, ny = -p.NZ, nz = -p.NX, nx2 = nx * CY + nz * SY, nz2 = -nx * SY + nz * CY;
+    p.nx = nx2; p.ny = ny * CP - nz2 * SP; p.nz = ny * SP + nz2 * CP;
+    const b = kubel(p.u, p.v); if (p.d3 > ZB[b]) ZB[b] = p.d3;
+  }
+  for (const p of P3) {
+    if (p.wn) continue;
+    const dz = ZB[kubel(p.u, p.v)] - p.d3;
+    p.vis = cl(1 - (dz - 5) / 6) * sm(cl((p.nz + .2) / .4));
+    p.j = (.25 + .45 * Math.max(0, p.nx * SW_L[0] + p.ny * SW_L[1] + p.nz * SW_L[2]) + .3 * p.k) * JN;
+  }
+  for (const k in KOTW3) { const K = KOTW3[k]; if (!K) continue; const [u, v] = rzut(K[0], K[1], K[2]); KOTWICA[+k] = [u, v]; CENT[+k] = [u, v]; }
 }
 function losujSiec(p: any, r: () => number) {
   let u = r() * p.wt;
   for (const [n, w] of p.wg) { u -= w; if (u <= 0) { p.net = n; p.col = hex(COL[n]); return; } }
   p.net = p.wg[p.wg.length - 1][0]; p.col = hex(COL[p.net]);
 }
-function ziarnoPunktu(p: any, pole: number, r: () => number) {
-  const wg: number[][] = []; let tot = 0;
-  for (let n = 2; n <= 9; n++) { const w = WAGI[n][pole]; if (w > .01) { wg.push([n, w]); tot += w; } }
-  p.szary = KODY[pole] === 1 || KODY[pole] === 11;
+// Ziarno jak w Atlasie (`ziarno.js`): punkt należy w danej chwili do jednej sieci i co jakiś czas losuje ją na nowo z wagami swojego
+// miejsca (obecność sieci rozmyta o jedno pole objętości, tylko na korze; sieć wspólna bierze wagę tej, która należy też do niej), więc rdzeń
+// trzyma kolor, a brzeg i miejsce wspólne migoczą. Świeci, gdy świeci któraś z sieci, których udział w jego miejscu przekracza 1/7, jak
+// w Atlasie (Yeo i in. 2014).
+function ziarnoPunktu(p: any, wg: number[][], r: () => number) {
+  const tot = wg.reduce((t, [, w]) => t + w, 0);
   if (tot < .05) { p.net = 1; p.col = hex(COL[1]); p.tu = []; return; }
   p.tu = wg.filter(([, w]) => w / tot > 1 / 7).map(([n]) => n);
   p.wg = wg; p.wt = tot; losujSiec(p, r);
-  if (wg.length < 2) delete p.wg;
+  // bez `delete`: obiekt bez jednego pola przechodzi w wolny tryb słownika, a pętla klatek czyta te punkty kilkanaście tysięcy razy
+  if (wg.length < 2) p.wg = null;
 }
-// punkt należy do sieci n, gdy jej udział w jego polu przekracza 1/7; niewidoczne szare punkty nie należą do żadnej
+// punkt należy do sieci n, gdy jej udział w jego miejscu przekracza 1/7; niewidoczne szare punkty i wnętrze nie należą do żadnej
 const wSieci = (p: any, n: number) => p.net === n || (!!p.tu && p.tu.includes(n));
-// jasność punktu w mózgu; niewidoczne punkty zdań w mózgu nie świecą
-const jas = (p: any) => (p.ukr ? 0 : p.j || 1);
-// miejsca nazw sieci na mózgu [u, v]: najgłębsze pole największej widocznej plamy sieci na korze mózgu (`startowy.py`)
-const KOTWICA: Record<number, number[]> = MS.kotwice;
-// Mózg obraca się powoli o kilka stopni wokół osi pionowej i wraca (jego słowa, 2026-11-18: *yes, apply. Execute*, na *the brain turns a
-// few degrees and back, so it reads as 3D*): punkt bliżej oka przesuwa się w bok bardziej niż dalszy. Bez animacji stoi.
-let OBR = 0;
-const OBR_KAT = Math.sin(6 * Math.PI / 180), OBR_T = 20000;
+// jasność punktu w mózgu: światło na jego fałdzie, razy to, ile go widać zza bliższej powierzchni; punkty zdań czekają w mózgu niewidoczne
+const jas = (p: any) => (p.ukr ? 0 : (p.j || 1) * (p.vis === undefined ? 1 : p.vis));
+// miejsca nazw sieci: punkt powierzchni w trzech wymiarach (`startowy.py`), rzutowany w każdej klatce
+const KOTW3: Record<string, number[]> = MS.kotwice;
+const KOTWICA: Record<number, number[]> = {}, KOTW_REG: Record<number, number> = {};
+// punkty, które migoczą: brzeg sieci i miejsca wspólne
+const PW: any[] = [];
 const OSN = ['#8fa274', '#5f9a96', '#6585b0', '#8577b3'];
 const YN = [.30, .48, .66, .84];
 const hex = (h: string) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
@@ -545,7 +573,7 @@ function size() {
 function brain(p: any, sc = 1, r = 0) {
   // gdy sieci się rozchodzą (r), mózg maleje, a na szerokim ekranie przesuwa się w lewo: rozsunięte sieci mieszczą się na ekranie
   const bw = (MOB ? W * .88 : Math.min(W * .46, 760)) * sc * (1 - (MOB ? .22 : .16) * r), cx = MOB ? W / 2 : W * (.72 - .06 * r), cy = MOB ? H * .29 + MOB_DY : H * .52;
-  return [cx + ((p.u + (p.g || 0) * OBR) / 240 - .5) * bw, cy + (p.v / 180 - .5) * bw * .75, bw];
+  return [cx + (p.u / 240 - .5) * bw, cy + (p.v / 180 - .5) * bw * .75, bw];
 }
 // mózg na ekranie startowym stoi pośrodku, między nagłówkiem a Story, i jest większy niż w historii (jego słowo, 2026-10-23);
 // przy przejściu do Cześć odpływa na swoje miejsce, na telefonie w górę ekranu.
@@ -554,7 +582,7 @@ function geomS() {
   const top = $('.roj').offsetTop, bot = top + storyB.offsetTop;
   BS.bw = MOB ? W * .8 : Math.min(W * .5, 760, (bot - top - 40) / .75); BS.cx = W / 2; BS.cy = (top + bot) / 2;
 }
-function brainS(p: any) { return [BS.cx + ((p.u + (p.g || 0) * OBR) / 240 - .5) * BS.bw, BS.cy + (p.v / 180 - .5) * BS.bw * .75, BS.bw]; }
+function brainS(p: any) { return [BS.cx + (p.u / 240 - .5) * BS.bw, BS.cy + (p.v / 180 - .5) * BS.bw * .75, BS.bw]; }
 // mózg tam, gdzie go teraz widać: na ekranie startowym i przy przejściu z niego inaczej niż w reszcie strony
 function brainB(p: any, sc = 1, r = 0) {
   const a = brain(p, sc, r); if (LD.w < .005) return a;
@@ -590,6 +618,8 @@ function st(k: string, p: any, lp: number) {
   const net = p.net > 1; let x = 0, y = 0, a = 0, c = p.col, s = 1;
   // punkty kreski ekranu startowego są niewidoczne, dopóki nie polecą na kreskę (to robi pętla klatek)
   if (p.lonly) { [x, y] = k === 'start' ? brainS(p) : brain(p); return [x, y, 0, c, 1]; }
+  // wnętrze mózgu świeci tylko w świetle Iskry, które zapala pętla klatek
+  if (p.wn) { [x, y] = k === 'start' ? brainS(p) : brain(p); return [x, y, 0, c, 1]; }
   // mózg od środka widać tylko na ekranie z nagłówkiem; gdzie indziej jego punkty gasną i odlatują z rojem
   if (p.med) {
     if (k !== 'czesc' && k !== 'pytanie' && k !== 'naglowek') return [p.sx * W, p.sy * H, 0, c, 1];
@@ -615,7 +645,7 @@ function st(k: string, p: any, lp: number) {
     const L = LN; x = L.x0 + p.lx * (L.x1 - L.x0); y = L.y[p.ln] + (p.cr - .5) * 5; a = .6; c = hex(OSN[p.ln]); s = .85;
   }
   // kliknięta sieć świeci, pozostałe przygasają
-  if (KLv > 0 && net && (k === 'start' || k === 'czesc' || k === 'pytanie' || k === 'naglowek')) { if (wSieci(p, KL.n)) { a += (.98 - a) * KLv; s = 1 + .35 * KLv; } }
+  if (KLv > 0 && net && (k === 'start' || k === 'czesc' || k === 'pytanie' || k === 'naglowek')) { if (wSieci(p, KL.n)) { a += (.98 * (p.vis === undefined ? 1 : p.vis) - a) * KLv; s = 1 + .35 * KLv; } }
   return [x, y, a, c, s];
 }
 // Bicie kropki jak serce Spark Actor: podwójne uderzenie co 2 s (soulBeat, corePulse), oddech poświaty co 3 s (soulRing), iskry.
@@ -672,7 +702,7 @@ function knot(w: number, cx: number, cy: number, rb0: number, rc: number) {
 // stoi na słowach, ogląda sieci po kolei, odsłania solipsystę, jeździ na łyżwach po osnowach, macha postaciom,
 // skacze z radości przy „wytłumaczyć” i na końcu staje się kropką w kogni.pl/wiki.
 // Ruch: każdy ekran wyznacza cel; iskra goni go jak ciężarek na sprężynie, na powierzchni działa grawitacja.
-const IS: any = { x: 0, y: 0, vx: 0, vy: 0, kontakt: false, lot: false, kuc: 0, sq: 0, sqv: 0, id: '', dom: true, start: false,
+const IS: any = { x: 0, y: 0, vx: 0, vy: 0, kontakt: false, lot: false, kuc: 0, sq: 0, sqv: 0, id: '', dom: true, start: false, wn: 0, p3: [0, 0, 0], zakryta: 0,
   bi: 0, bang: 0, blen: 0, bhalf: .28, look: -1, last: 0, r: 4.4, py: 0,
   gx: 0, gy: 0, pd: 1, lid: 1, zdz: 0, joy: 0, lean: 0, rot: 0, mrug: -1e9, nast: 0, mach: 0, hura: 0, osiadla: 0, skala: 1, czL: 0 };
 // górna krawędź liter pierwszego słowa w jego pudełku (h1, line-height 1): tu Iskra staje; skok na nie trwa CZ_T ms
@@ -896,7 +926,7 @@ function landIskra(now: number): any {
 // więcej zabaw (jego słowo, 2026-11-01: *make the iskra play with the brain even more and in more ways*): krąży wokół sieci, robi wycieczkę
 // przez sieci od receptorów najdalej, zbiera punkty sieci w warkocz za sobą i je puszcza, dmucha w sieć, nurkuje przez mózg,
 // przeciąga świetlną nić między dwiema sieciami i czasem drzemie na mózgu
-const STX: any = { pull: { k: 0, n: 0, x0: 0, y0: 0, dx: 0, dy: 0, R: 64 }, rip: [] as any[], zb: { k: 0, set: new Map() }, wiatr: [] as any[], nic: { k: 0, ax: 0, ay: 0, bx: 0, by: 0, u: 0 } };
+const STX: any = { pull: { k: 0, n: 0, x0: 0, y0: 0, dx: 0, dy: 0, R: 64 }, rip: [] as any[], rip3: [] as any[], zb: { k: 0, set: new Map() }, wiatr: [] as any[], nic: { k: 0, ax: 0, ay: 0, bx: 0, by: 0, u: 0 } };
 const ST: any = { t0: 0, ph: 'spi', mode: '', mt: 0, m0: 0, n: 0, px: 0, py: 0, d0: 0, kat: 0, krok: 0, stuk: 0, strach: 0, ciek: 0, mrug: 0 };
 const MYSZ: any = { x: -1e4, y: -1e4, t: -1e9, v: 0, typ: '' };
 addEventListener('pointermove', (ev) => {
@@ -907,7 +937,7 @@ addEventListener('pointermove', (ev) => {
 addEventListener('pointerleave', () => { MYSZ.t = -1e9; }, { passive: true });
 // punkt sieci n na mózgu ekranu startowego; blisko poprzedniego, gdy blisko > 0
 function startPkt(n: number, blisko = 0) {
-  const L = P.filter((p) => wSieci(p, n) && !p.med && !p.lonly);
+  const L = P.filter((p) => wSieci(p, n) && !p.med && !p.lonly && (p.vis === undefined || p.vis > .6));
   let best: number[] | null = null;
   for (let i = 0; i < 30 && L.length; i++) {
     const [x, y] = brainS(L[(Math.random() * L.length) | 0]), d = Math.hypot(x - ST.px, y - ST.py);
@@ -919,17 +949,47 @@ function startPkt(n: number, blisko = 0) {
 function startTryb(now: number) {
   const los = Math.random(), ns = SIECI_L.filter((n) => P.some((p) => wSieci(p, n) && !p.med));
   ST.n = ns[(Math.random() * ns.length) | 0] || SIECI_L[0];
-  const WAGI: [string, number][] = [['swieci', .13], ['ciagnie', .1], ['stuka', .09], ['bada', .09], ['siada', .05], ['krazy', .1], ['wycieczka', .09], ['zbiera', .1], ['dmucha', .08], ['nurkuje', .06], ['laczy', .08], ['drzemie', .03]];
+  // zabawy w trzech wymiarach częściej (jego słowa, 2026-11-18: *think about some more complex interactions, make iskra change/interact the brain more*)
+  const WAGI: [string, number][] = [['swieci', .07], ['ciagnie', .05], ['stuka', .04], ['bada', .05], ['siada', .03], ['krazy', .05], ['wycieczka', .05], ['zbiera', .05], ['dmucha', .04], ['nurkuje', .09], ['okraza', .07], ['unosi', .1], ['kreci', .08], ['zapala', .1], ['latarnia', .07], ['laczy', .04], ['drzemie', .02]];
   let acc = 0; ST.mode = 'swieci'; for (const [m, w] of WAGI) { acc += w; if (los < acc) { ST.mode = m; break; } }
   if (ST.mode === ST.poprz && Math.random() < .7) ST.mode = 'krazy'; ST.poprz = ST.mode;
-  ST.m0 = now; ST.mt = now + ({ swieci: 2600, ciagnie: 3200, stuka: 2600, bada: 3400, siada: 3000, krazy: 3600, wycieczka: 600 * ns.length + 500, zbiera: 3800, dmucha: 2700, nurkuje: 2300, laczy: 3000, drzemie: 3600 } as any)[ST.mode] + Math.random() * (ST.mode === 'wycieczka' ? 0 : 1400);
+  ST.m0 = now; ST.mt = now + ({ swieci: 2600, ciagnie: 3200, stuka: 2600, bada: 3400, siada: 3000, krazy: 3600, wycieczka: 600 * ns.length + 500, zbiera: 3800, dmucha: 2700, nurkuje: 7600, okraza: 6400, unosi: 5600, kreci: 3600, zapala: 4400, latarnia: 7600, laczy: 3000, drzemie: 3600 } as any)[ST.mode] + Math.random() * (ST.mode === 'wycieczka' ? 0 : 1400);
   ST.ns = ns; ST.n2 = ns.filter((n) => n !== ST.n)[(Math.random() * Math.max(1, ns.length - 1)) | 0] || ST.n; ST.dmuch = 0;
   [ST.px, ST.py] = startPkt(ST.n);
-  if (ST.mode === 'siada') { const L = P.filter((p) => wSieci(p, ST.n) && !p.med && !p.lonly); let top: any = L[0]; for (const p of L) if (p.v < top.v) top = p; if (top) [ST.px, ST.py] = brainS(top); }
+  if (ST.mode === 'siada') { const L = P.filter((p) => wSieci(p, ST.n) && !p.med && !p.lonly && (p.vis === undefined || p.vis > .6)); let top: any = L[0]; for (const p of L) if (p.v < top.v) top = p; if (top) [ST.px, ST.py] = brainS(top); }
   ST.d0 = 40 + Math.random() * 80; ST.kat = -Math.PI / 2 + (Math.random() - .5) * 1.4; ST.krok = now + 650; ST.stuk = now + 650;
+  if (ST.mode === 'kreci') {
+    // nie kręci mózgiem, który czytelnik dopiero co ustawił; obrócony daleko od widoku z boku obraca z powrotem
+    const kat = ((OBROT.yaw % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI) - Math.PI;
+    if (now - OBROT.tUser < 6000) ST.mode = 'krazy';
+    else if (Math.abs(kat) > .6) { ST.dir = -Math.sign(kat); ST.sila = Math.abs(kat) * 2.6; }
+    else { ST.dir = Math.random() < .5 ? 1 : -1; ST.sila = 2.6 * (1.2 + Math.random() * 1.5); }
+    ST.pchnela = 0;
+  }
+  if (ST.mode === 'zapala') {
+    const L = P3.filter((p) => !p.wn && wSieci(p, ST.n) && p.vis > .8);
+    if (L.length < 2) ST.mode = 'stuka';
+    else { ST.z1 = L[(Math.random() * L.length) | 0]; ST.z2 = L[(Math.random() * L.length) | 0]; ST.zap = 0; }
+  }
+  if (ST.mode === 'nurkuje' || ST.mode === 'latarnia') {
+    // wejście: widoczny punkt sieci blisko środka mózgu na ekranie; trasa przez dwie albo trzy struktury wnętrza po stronie wejścia,
+    // od najbliższej
+    const kand = P3.filter((p) => !p.wn && p.net > 1 && p.vis > .8).map((p) => { const [x, y] = brainS(p); return [Math.hypot(x - BS.cx, y - BS.cy), p]; }).sort((a: any, b: any) => a[0] - b[0]).slice(0, 60);
+    const wej = kand.length ? (kand[(Math.random() * kand.length) | 0][1] as any) : null;
+    if (!wej) ST.mode = 'krazy';
+    else {
+      const zn = Math.sign(wej.X) || -1, cele = MS.grupy.map(([, c]: any) => [Math.abs(c[0]) * zn, c[1], c[2]]);
+      cele.sort((a: number[], b: number[]) => Math.hypot(a[0] - wej.X, a[1] - wej.Y, a[2] - wej.Z) - Math.hypot(b[0] - wej.X, b[1] - wej.Y, b[2] - wej.Z));
+      const reszta = cele.slice(1).sort(() => Math.random() - .5);
+      ST.wej = wej; ST.trasa = [cele[0], ...reszta.slice(0, 1 + ((Math.random() * 2) | 0))];
+      // latarnia staje w środku mózgu, między półkulami nad wzgórzami
+      if (ST.mode === 'latarnia') ST.trasa = [[0, YC + 4, ZC + 8]];
+    }
+  }
+  if (ST.mode === 'okraza') { ST.kat = Math.random() * Math.PI * 2; ST.okr = Math.random() < .5 ? 1 : -1; }
   if (ST.mode === 'zbiera') {
     // najbliższe punkty sieci wokół miejsca, z którego Iskra je zbierze
-    const L = P.filter((p) => wSieci(p, ST.n) && !p.med && !p.lonly).map((p) => { const [x, y] = brainS(p); return [Math.hypot(x - ST.px, y - ST.py), p]; }).sort((a: any, b: any) => a[0] - b[0]).slice(0, 22);
+    const L = P.filter((p) => wSieci(p, ST.n) && !p.med && !p.lonly && (p.vis === undefined || p.vis > .6)).map((p) => { const [x, y] = brainS(p); return [Math.hypot(x - ST.px, y - ST.py), p]; }).sort((a: any, b: any) => a[0] - b[0]).slice(0, 22);
     STX.zb.set = new Map(L.map((e: any, i: number) => [e[1], i])); STX.zb.k = 0;
   }
   setTimeout(kick, ST.mt - now + 20);
@@ -959,6 +1019,11 @@ function startIskra(now: number): any {
   if (!c) {
     if (now > ST.mt) startTryb(now);
     const u = cl((now - ST.m0) / (ST.mt - ST.m0));
+    // poza nurkowaniem Iskra wychodzi z mózgu, poza okrążaniem nic jej nie zasłania
+    if (ST.mode !== 'nurkuje' && ST.mode !== 'latarnia') IS.wn = Math.max(0, (IS.wn || 0) - .04);
+    if (ST.mode !== 'latarnia') LAT.k = Math.max(0, LAT.k - .04);
+    if (ST.mode !== 'unosi') { UNOS.A *= .85; UNOS.k = Math.max(0, UNOS.k - .05); }
+    if (ST.mode !== 'okraza') IS.zakryta = Math.max(0, (IS.zakryta || 0) - .06);
     STX.pull.k += (0 - STX.pull.k) * .08;
     if (ST.mode !== 'zbiera') STX.zb.k = Math.max(0, STX.zb.k - .05);
     if (ST.mode !== 'laczy') STX.nic.k = Math.max(0, STX.nic.k - .03);
@@ -1012,12 +1077,48 @@ function startIskra(now: number): any {
       const d = 70, x = ST.px + Math.cos(ST.kat) * d, y = ST.py + Math.sin(ST.kat) * d, ang = Math.atan2(ST.py - y, ST.px - x);
       for (const [m, i] of [[.35, 1], [.68, 2]] as number[][]) if (u > m && ST.dmuch < i) { ST.dmuch = i; STX.wiatr.push({ x: IS.x, y: IS.y, ang: Math.atan2(ST.py - IS.y, ST.px - IS.x), t0: now }); IS.sq = -.22; }
       c = { id: 'start-dmucha', tryb: 'lot', x, y, I: .3, ang, len: 50, half: .4, gaze: ang, mood: { pd: .95, lid: 1, joy: .25 } };
-    } else if (ST.mode === 'nurkuje') {
-      // nurkuje przez mózg z góry na dół i wraca bokiem; punkty rozstępują się przed nią
-      const top = BS.cy - bw * .5, dol = BS.cy + bw * .42, x0 = ST.px;
-      const y = u < .55 ? top - 30 + (dol - top + 60) * sm(u / .55) : dol + 30 - (dol - top + 60) * sm((u - .55) / .45);
-      const x = u < .55 ? x0 : x0 + bw * .28 * Math.sin(Math.PI * (u - .55) / .45);
-      c = { id: 'start-nurkuje', tryb: 'lot', x, y, I: .45, ang: u < .55 ? Math.PI / 2 : -Math.PI / 2, len: 60, half: .3, mood: { pd: 1.3, lid: .85, joy: .8 } };
+    } else if (ST.mode === 'nurkuje' || ST.mode === 'latarnia') {
+      // Nurkuje do środka (jego słowa, 2026-11-18: *to make iskra go inside and to interact with it more... 3d?*): podlatuje nad wejście,
+      // wchodzi w korę, która wokół niej staje się szklana, i płynie przez struktury pod korą, które świecą w jej świetle; potem wychodzi
+      // tą samą drogą. Jej miejsce leży w mózgu, więc obraca się razem z nim.
+      const w = ST.wej, tr = ST.trasa, zew = [w.X + w.NX * 16, w.Y + w.NY * 16, w.Z + w.NZ * 16];
+      const lerp = (a: number[], b: number[], q: number) => [a[0] + (b[0] - a[0]) * q, a[1] + (b[1] - a[1]) * q, a[2] + (b[2] - a[2]) * q];
+      let pos: number[], wn: number;
+      if (u < .13) { pos = zew; wn = 0; }
+      else if (u < .27) { const q = sm((u - .13) / .14); pos = lerp(zew, tr[0], q); wn = q; }
+      else if (u < .8) { const f = (u - .27) / .53 * (tr.length - 1), i = Math.min(tr.length - 2, Math.floor(f)); pos = tr.length > 1 ? lerp(tr[i], tr[i + 1], sm(f - i)) : tr[0]; wn = 1; }
+      else { const q = sm((u - .8) / .2); pos = lerp(tr[tr.length - 1], zew, q); wn = 1 - q; }
+      IS.wn = wn; IS.p3 = pos; LAT.k = ST.mode === 'latarnia' ? wn : 0;
+      const [pu, pv] = rzut(pos[0], pos[1], pos[2]), [x, y] = brainS({ u: pu, v: pv });
+      c = { id: 'start-nurkuje', tryb: 'lot', x, y, I: .3 + .45 * wn, ang: Math.PI / 2 + Math.sin(now / 650) * .7, len: 34 + 26 * wn, half: .65, mood: { pd: 1.3 + .15 * wn, lid: .85, joy: .8 } };
+    } else if (ST.mode === 'okraza') {
+      // okrąża mózg w trzech wymiarach: z przodu leci nad nim, z tyłu znika za nim, a jej snop gaśnie, póki mózg ją zasłania
+      const a = ST.kat + ST.okr * u * Math.PI * 2, R = 106, pos = [R * Math.sin(a), YC + R * Math.cos(a), ZC + 18 + 14 * Math.sin(u * Math.PI * 2)];
+      const [pu, pv, pd] = rzut(pos[0], pos[1], pos[2]), [x, y] = brainS({ u: pu, v: pv });
+      const zakr = ZB[kubel(pu, pv)] > pd + 3 ? 1 : 0;
+      IS.zakryta += (zakr - IS.zakryta) * .18;
+      c = { id: 'start-okraza', tryb: 'lot', x, y, I: .55 * (1 - IS.zakryta), ang: Math.atan2(BS.cy - y, BS.cx - x), len: 50, half: .4, mood: { pd: 1.1, lid: 1, joy: .65 } };
+    } else if (ST.mode === 'unosi') {
+      // Unosi sieć (jego słowa, 2026-11-18: *make iskra change/interact the brain more*): chwyta ją, podnosi z mózgu wzdłuż jej powierzchni,
+      // trzyma nad resztą w świetle, a potem puszcza; sieć opada i sprężyście wraca na miejsce
+      const q = (u - .76) / .24;
+      const A = u < .18 ? 0 : u < .4 ? 14 * sm((u - .18) / .22) : u < .76 ? 14 + 1.5 * Math.sin((u - .4) * 18) : 14 * Math.exp(-q * 4.5) * Math.cos(q * 11);
+      UNOS.n = ST.n; UNOS.A = A; UNOS.k = cl(Math.min((u - .15) / .1, (1 - u) / .15));
+      const K = CENT[ST.n] || [120, 90], [x0, y0] = brainS({ u: K[0], v: K[1] });
+      c = { id: 'start-unosi', tryb: 'lot', x: x0, y: y0 - 22 - Math.max(0, A) * BS.bw / 240 * S3 * .6, I: .75, ang: Math.PI / 2, len: 44, half: .45, mood: { pd: 1.25, lid: 1, joy: .7 } };
+    } else if (ST.mode === 'kreci') {
+      // kręci mózgiem: podlatuje do jego brzegu, popycha go i leci kawałek za nim, patrząc, jak się obraca
+      const dir = ST.dir, x0 = BS.cx - dir * BS.bw * .47, y0 = BS.cy - BS.bw * .04;
+      if (u > .36 && !ST.pchnela) { ST.pchnela = 1; if (!OBROT.drag) OBROT.vy += dir * ST.sila; IS.sq = .38; }
+      const x = u < .36 ? x0 : x0 + dir * BS.bw * .22 * sm(cl((u - .36) / .3)), y = y0 - 10 * Math.sin(u * Math.PI), ang = dir > 0 ? 0 : Math.PI;
+      c = { id: 'start-kreci', tryb: 'lot', x, y, I: .5, ang, len: 40, half: .4, gaze: ang, mood: { pd: 1.2, lid: 1, joy: .85 } };
+    } else if (ST.mode === 'zapala') {
+      // zapala sieć: stuka w nią dwa razy, a od każdego stuknięcia fala światła biegnie po powierzchni mózgu w trzech wymiarach, mocno po tej
+      // sieci i słabiej po reszcie, także po stronie, której nie widać
+      const pierwsza = u < .45, cel = pierwsza ? ST.z1 : ST.z2, q = pierwsza ? u / .45 : (u - .45) / .55;
+      const [x0, y0] = brainS(cel), w = Math.sin(Math.PI * cl(q));
+      if (q > .5 && ST.zap < (pierwsza ? 1 : 2)) { ST.zap = pierwsza ? 1 : 2; STX.rip3.push({ X: cel.X, Y: cel.Y, Z: cel.Z, n: ST.n, t0: now }); IS.sq = .34; }
+      c = { id: 'start-zapala', tryb: 'lot', x: x0, y: y0 - 24 + 20 * Math.pow(w, 3), I: .8, ang: Math.PI / 2, len: 40, half: .4, mood: { pd: 1.2, lid: 1, joy: .55 } };
     } else if (ST.mode === 'laczy') {
       // przeciąga świetlną nić od jednej sieci do drugiej
       const [ax, ay] = brainS({ u: CENT[ST.n][0], v: CENT[ST.n][1] }), [bx, by] = brainS({ u: CENT[ST.n2][0], v: CENT[ST.n2][1] });
@@ -1095,36 +1196,17 @@ function zakonczSol() { SOL.t0 = performance.now() - 10000; solKlasy(performance
 // Klik w sieć mózgu (jego słowo, 2026-10-20): sieć się zapala, iskra leci szybko w miejsce kliknięcia, potem bada tę sieć.
 const SIATKA = new Uint8Array(240 * 180), SIATKA_M = new Uint8Array(240 * 180), KL: any = { med: false, n: 0, t: -1e9, x: 0, y: 0, pt: 0, px: 0, py: 0, sx: null, sy: 0, gx: 0, gy: 0, doszla: false, mrugN: 0, zm: '', z0: 0, zt: 0, kat: 0, stuk: 0, uderz: 0, wyjrz: 0, krok: 0 }, KL_T = 11000;
 let KLv = 0, MOZG_AKT = false, NA_MED = false, DYM_N = 0, DYM_Y = 0;
+// klik i wskazanie biorą najbliższy widoczny punkt mózgu na ekranie (jego miejsce z ostatniej klatki), jego sieć w tej chwili i jego obszar
+let NA_PKT: any = null;
 const naSieci = (x: number, y: number) => {
+  NA_PKT = null; NA_MED = false;
   if (!MOZG_AKT || !P.length) return 0;
-  const szukaj = (cx: number, cy: number, bw: number, S: Uint8Array) => {
-    const u = Math.round((x - cx) / bw * 240 + 120), v = Math.round((y - cy) / (bw * .75) * 180 + 90);
-    for (let rr = 0; rr <= 3; rr++) for (let dv = -rr; dv <= rr; dv++) for (let du = -rr; du <= rr; du++) {
-      const uu = u + du, vv = v + dv; if (uu < 0 || vv < 0 || uu >= 240 || vv >= 180) continue;
-      const n = S[vv * 240 + uu]; if (n > 1 && n !== 11) return n;
-    }
-    return 0;
-  };
-  const [cx, cy, bw] = brainB({ u: 120, v: 90 });
-  let n = szukaj(cx, cy, bw, SIATKA); NA_MED = false;
-  if (!n && OBA > .5) { n = szukaj(MB.cx, MB.cy, MB.bw, SIATKA_M); NA_MED = n > 0; }
-  // w miejscu kilku sieci klik bierze tę, w której kolorze świeci najbliższy punkt
-  const f = n ? RODZ_W[n] : null;
-  if (f && f.length > 1) {
-    let best = 12, nn = f[0];
-    for (const p of P) { if (p.ukr || p.lonly || !f.includes(p.net)) continue; const [px, py] = brainB(p), d = Math.hypot(px - x, py - y); if (d < best) { best = d; nn = p.net; } }
-    return nn;
+  let best = 14;
+  for (const p of P) {
+    if (p.X === undefined || p.wn || !(p.ea > .05)) continue;
+    const d = Math.hypot(p.ex - x, p.ey - y); if (d < best) { best = d; NA_PKT = p; }
   }
-  return f ? f[0] : 0;
-};
-// obszar Atlasu pod punktem ekranu: najbliższe pole z obszarem w promieniu trzech pól
-const obszarPod = (x: number, y: number) => {
-  const [cx, cy, bw] = brainB({ u: 120, v: 90 }), u = Math.round((x - cx) / bw * 240 + 120), v = Math.round((y - cy) / (bw * .75) * 180 + 90);
-  for (let rr = 0; rr <= 3; rr++) for (let dv = -rr; dv <= rr; dv++) for (let du = -rr; du <= rr; du++) {
-    const uu = u + du, vv = v + dv; if (uu < 0 || vv < 0 || uu >= 240 || vv >= 180) continue;
-    if (OBSZ[vv * 240 + uu]) return OBSZ[vv * 240 + uu];
-  }
-  return 0;
+  return NA_PKT && NA_PKT.net > 1 ? NA_PKT.net : 0;
 };
 function klikCel(now: number): any {
   const tt = now - KL.t;
@@ -1152,7 +1234,7 @@ function klikCel(now: number): any {
   return klikZabawa(now);
 }
 function klikPkt(blisko = 0) {
-  const L = P.filter((p) => wSieci(p, KL.n) && !!p.med === KL.med && !p.lonly);
+  const L = P.filter((p) => wSieci(p, KL.n) && !!p.med === KL.med && !p.lonly && (p.vis === undefined || p.vis > .6));
   let best: number[] | null = null;
   for (let i = 0; i < 30 && L.length; i++) {
     const [x, y] = KL.med ? brainM(L[(Math.random() * L.length) | 0]) : brainB(L[(Math.random() * L.length) | 0]), d = Math.hypot(x - KL.px, y - KL.py);
@@ -1171,7 +1253,7 @@ function klikNowa(now: number) {
     // punkty sieci najbliżej środka, które przykryją Iskrę
     const [cx, cy] = KL.med ? brainM({ u: CENT[KL.n][0], v: CENT[KL.n][1] }) : brainB({ u: CENT[KL.n][0], v: CENT[KL.n][1] });
     KL.px = cx; KL.py = cy;
-    const L = P.filter((p) => wSieci(p, KL.n) && !p.med && !p.lonly).map((p) => { const [x, y] = brainB(p); return [Math.hypot(x - cx, y - cy), p]; }).sort((a: any, b: any) => a[0] - b[0]).slice(0, 26);
+    const L = P.filter((p) => wSieci(p, KL.n) && !p.med && !p.lonly && (p.vis === undefined || p.vis > .6)).map((p) => { const [x, y] = brainB(p); return [Math.hypot(x - cx, y - cy), p]; }).sort((a: any, b: any) => a[0] - b[0]).slice(0, 26);
     ST.n = KL.n; STX.zb.set = new Map(L.map((e: any, i: number) => [e[1], i])); STX.zb.k = 0;
   }
   setTimeout(kick, KL.zt - now + 20);
@@ -1904,6 +1986,7 @@ function frame() {
   LD.w = A.k === 'start' ? 1 - t : B.k === 'start' ? t : 0;
   if (LD.w > .005) { geomS(); landKrok(now); landGeom(); }
   if (STX.rip.length) STX.rip = STX.rip.filter((rp: any) => now - rp.t0 < 2400);
+  if (STX.rip3.length) STX.rip3 = STX.rip3.filter((rp: any) => now - rp.t0 < 3600);
   if (STX.wiatr.length) STX.wiatr = STX.wiatr.filter((w: any) => now - w.t0 < 1400);
   if (STX.pull.puszcza && now - STX.pull.puszcza > 1200) { STX.pull.k = 0; STX.pull.puszcza = 0; }
   const mzk = (k: string) => k === 'start' || k === 'czesc' || k === 'pytanie' || k === 'naglowek';
@@ -1912,8 +1995,14 @@ function frame() {
   { const tt = now - KL.t; KLv = !MOZG_AKT ? 0 : CICHO ? (tt < KL_T ? 1 : 0) : sm(cl(tt / 250)) * (1 - sm(cl((tt - KL_T + 1200) / 1200))); }
   const dt = Math.min(.033, Math.max(0, (now - (IS.last || now)) / 1000)); IS.last = now;
   OBR = CICHO ? 0 : Math.sin(now / OBR_T * 2 * Math.PI) * OBR_KAT;
+  if (!OBROT.drag && !CICHO && (Math.abs(OBROT.vy) > .001 || Math.abs(OBROT.vp) > .001)) {
+    OBROT.yaw += OBROT.vy * dt; OBROT.pitch = Math.max(-1.1, Math.min(1.1, OBROT.pitch + OBROT.vp * dt));
+    const t = Math.exp(-dt * 2.6); OBROT.vy *= t; OBROT.vp *= t;
+  }
+  if (mzk(A.k) || mzk(B.k)) rzutuj();
+  if (LD.w < .5) { IS.wn = Math.max(0, (IS.wn || 0) - .05); IS.zakryta = Math.max(0, (IS.zakryta || 0) - .08); }
   // ziarno: każdy punkt na brzegu albo w miejscu wspólnym losuje sieć mniej więcej raz na sekundę, póki mózg widać
-  if (MOZG_AKT && !CICHO) { const pr = dt; for (const p of P) if (p.wg && Math.random() < pr) losujSiec(p, Math.random); }
+  if (MOZG_AKT && !CICHO && PW.length) { for (let i = 0, n = Math.round(PW.length * dt + Math.random() - .5); i < n; i++) losujSiec(PW[(Math.random() * PW.length) | 0], Math.random); }
   SCR_DY = scrollY - OSTATNI_Y;
   if (scrollY !== OSTATNI_Y) { KIER = scrollY > OSTATNI_Y ? 1 : -1; KIER_T = now; OSTATNI_Y = scrollY; }
   WSTECZ = KIER < 0 ? cl(1 - (now - KIER_T - 500) / 900) : 0;
@@ -1939,7 +2028,10 @@ function frame() {
   if (knotLogo) knotLogo.style.opacity = wid ? '0' : '';
   g.setTransform(D, 0, 0, D, 0, 0); g.clearRect(0, 0, W, H); g2.setTransform(D, 0, 0, D, 0, 0); g2.clearRect(0, 0, W, H); g.globalCompositeOperation = 'lighter'; g.lineWidth = 1;
   const NICI = (k: string) => k === 'osnowy' || k === 'kogni' || k === 'wiki', KROPKI = !NICI(A.k) && !NICI(B.k);
+  // póki oba ekrany przejścia pokazują mózg, punkty za bliższą powierzchnią i wnętrze bez Iskry w środku się nie rysują
+  const TYLKO_MOZG = mzk(A.k) && (t <= 0 || mzk(B.k));
   for (const p of P) {
+    if (TYLKO_MOZG && p.X !== undefined && (p.wn ? IS.wn < .01 : p.vis < .02) && !(ZD_W > 0 && p.zj >= 0)) { p.ea = 0; continue; }
     const s1 = st(A.k, p, lpA), s2 = t > 0 ? st(B.k, p, lpB) : s1, q = A.k === 'dyscypliny' ? 1 : cl(t * 1.35 - p.d * .35);
     let x = s1[0] + (s2[0] - s1[0]) * q, y = s1[1] + (s2[1] - s1[1]) * q, al = s1[2] + (s2[2] - s1[2]) * q, sz = s1[4] + (s2[4] - s1[4]) * q;
     // z dyscyplin do osnów punkty nie lecą przez ekran: stoją już na niciach i tylko się rozjaśniają
@@ -2006,21 +2098,50 @@ function frame() {
         if (band > .02) { x += dx / d * 4.5 * band; y += dy / d * 4.5 * band; al = Math.min(1, al + .6 * band); sz *= 1 + .6 * band; GL = Math.max(GL, band); }
       }
     }
+    let szk = 1;
+    if (IS.wn > .01 && LD.w > .005 && p.X !== undefined) {
+      if (p.wn) {
+        // struktura pod korą: cała słabo, póki Iskra jest w środku, a w jej pobliżu jasno i złociście
+        const D = Math.hypot(p.X - IS.p3[0], p.Y - IS.p3[1], p.Z - IS.p3[2]), gw = IS.wn * LD.w * Math.pow(cl(1 - D / 30), 1.5);
+        al = Math.max(al, .1 * IS.wn * LD.w + .85 * gw);
+        cr += (ZLOTO[0] - cr) * gw * .7; cg += (ZLOTO[1] - cg) * gw * .7; cb += (ZLOTO[2] - cb) * gw * .7; GL = Math.max(GL, gw);
+      } else {
+        // kora wokół Iskry w środku staje się szklana
+        const d = Math.hypot(x - IS.x, y - IS.y), z = 1 - cl(d / 90);
+        szk = 1 - (LAT.k > .01 ? .45 : .82) * IS.wn * z * z; al *= szk;
+      }
+    }
+    if (p.X !== undefined && !p.wn && LD.w > .005) {
+      // fala z kliknięcia Iskry biegnie po powierzchni w trzech wymiarach, 70 mm na sekundę
+      for (const w of STX.rip3) {
+        const age = now - w.t0, D = Math.hypot(p.X - w.X, p.Y - w.Y, p.Z - w.Z), b = (D - age * .07) / 7;
+        const band = Math.exp(-b * b) * Math.exp(-age / 2200) * (wSieci(p, w.n) ? 1 : .3) * LD.w;
+        if (band > .02) { al = Math.min(1, al + .7 * band); sz *= 1 + .6 * band; GL = Math.max(GL, band); }
+      }
+      // uniesiona sieć świeci nad resztą
+      if (UNOS.k > .01 && p.tu.includes(UNOS.n)) { const k = UNOS.k * LD.w; al = Math.min(1, al + .5 * k); GL = Math.max(GL, .7 * k); }
+      // latarnia: Iskra w środku mózgu świeci przez korę od wewnątrz, bliższe miejsca jaśniej
+      if (LAT.k > .01) {
+        const D = Math.hypot(p.X - IS.p3[0], p.Y - IS.p3[1], p.Z - IS.p3[2]), gw = LAT.k * LD.w * Math.pow(cl(1 - D / 105), 1.3);
+        al = Math.min(1, al + .5 * gw); cr += (255 - cr) * .25 * gw; cg += (226 - cg) * .25 * gw; cb += (170 - cb) * .25 * gw; GL = Math.max(GL, .6 * gw);
+      }
+    }
+    if (p.X !== undefined) { p.ex = x; p.ey = y; p.ea = MOZG_AKT ? al : 0; }
     if (al < .02 || y < -20 || y > H + 20) continue;
     let sw = 0;
     if (GL > .06) sw = GL;
     if (wid) {
       // rój reaguje na iskrę: punkty w snopie jaśnieją, bliskie się rozstępują
       const dx = x - IS.x, dy = y - IS.y, d = Math.hypot(dx, dy);
-      if (d < PCH && d > .01) { const f = (PCH - d) / PCH * PCH * .7; x += dx / d * f; y += dy / d * f; }
+      if (d < PCH && d > .01 && !(IS.wn > .05)) { const f = (PCH - d) / PCH * PCH * .7; x += dx / d * f; y += dy / d * f; }
       if (IS.bi > .02 && d < IS.blen) {
         let da = Math.atan2(dy, dx) - IS.bang; da = Math.abs(Math.atan2(Math.sin(da), Math.cos(da)));
         if (da < IS.bhalf) {
           sw = IS.bi * Math.sqrt(1 - d / IS.blen) * (1 - da / IS.bhalf);
           // Iskra oświetla fałdy (jego słowa, 2026-11-18: *yes, apply. Execute*, na *where her light falls, the ridges brighten and the grooves
           // stay dark*): punkt świeci tym mocniej, im bardziej jego powierzchnia jest zwrócona ku niej, a korona zakrętu mocniej niż dno bruzdy
-          if (MOZG_AKT && p.nz !== undefined) { const lz = 80, ln = Math.hypot(dx, dy, lz), f = (p.nx * -dx + p.ny * -dy + p.nz * lz) / ln; sw *= Math.min(1.25, (.18 + .82 * Math.max(0, f)) * (.55 + .6 * p.c)); }
-          al = Math.min(1, al + sw * .85); sz *= 1 + sw * .7;
+          if (MOZG_AKT && p.nz !== undefined && !p.wn) { const lz = 80, ln = Math.hypot(dx, dy, lz), f = (p.nx * -dx + p.ny * -dy + p.nz * lz) / ln; sw *= Math.min(1.25, (.18 + .82 * Math.max(0, f)) * (.55 + .6 * p.k)); }
+          sw *= szk; al = Math.min(1, al + sw * .85); sz *= 1 + sw * .7;
         }
       }
     }
@@ -2109,7 +2230,8 @@ function frame() {
   rysujLod(dt);
   const dipRuch = dipy(dt);
   if (IS.osiadla > .01 && c) { const em = wikiK.getBoundingClientRect().height / .26; knot(IS.osiadla, IS.x, IS.y, Math.max(6, em * .25), em * .1625); }
-  if (wid) { rysujPlecak(dt); rysujIskre(1 - IS.osiadla); }
+  // w środku mózgu i za nim Iskra przygasa: przed nią jest tkanka
+  if (wid) { rysujPlecak(dt); rysujIskre((1 - IS.osiadla) * (1 - .45 * (IS.wn || 0)) * (1 - .85 * (IS.zakryta || 0))); }
   // pętla klatek tylko wtedy, gdy coś się rusza
   const wikiWidac = IS.osiadla > .01 && IS.y > -40 && IS.y < H + 40;
   const iskraRuch = (MOZG_AKT && !CICHO) || !!c && !CICHO && (solRuch || !!c.slizg || !!c.hura || (MOZG_AKT && now - KL.t < KL_T) || IS.mach > .02 || (SOL.t0 && !SOL.done) || LOD.length > 0 || wikiWidac
@@ -2121,23 +2243,43 @@ function frame() {
   if (iskraRuch) kick();
 }
 {
-  SIATKA.set(KODY);
-  const B = Uint8Array.from(atob(MS.punkty), (z) => z.charCodeAt(0)), r = rnd(7), NP = innerWidth < 760 ? 3600 : 6200;
+  const B = b64(MS.punkty), r = rnd(7), NL = B.length / 12, NP = innerWidth < 760 ? Math.min(NL, 4200) : NL;
+  // każdy punkt mózgu ma te same pola w tej samej kolejności, więc pętla klatek czyta je szybko
+  const punkt3 = (X: number, Y: number, Z: number, reg: number, r: () => number): any => ({ X, Y, Z, NX: 0, NY: 0, NZ: 1, k: 0, reg, szary: false, wn: 0, grp: 0,
+    u: 0, v: 0, d3: 0, nx: 0, ny: 0, nz: 1, vis: 1, j: 1, ex: 0, ey: 0, ea: 0, net: 1, col: GREY, tu: [] as number[], wg: null as any, wt: 0, zj: -1, sl: null as any,
+    a: r() * 6.28, s: .8 + r() * 1.2, sx: r(), sy: r(), d: r(), cr: Math.sqrt(r()), ln: (r() * 4) | 0, lx: r() });
+  const okta = (a: number, b: number) => { let x = i8(a) / 127, y = i8(b) / 127; const z = 1 - Math.abs(x) - Math.abs(y); if (z < 0) { const t = x; x = (1 - Math.abs(y)) * Math.sign(t || 1); y = (1 - Math.abs(t)) * Math.sign(y || 1); } const m = Math.hypot(x, y, z) || 1; return [x / m, y / m, z / m]; };
   for (let k = 0; k < NP; k++) {
-    const o = k * 6, pole = B[o] | (B[o + 1] << 8), nx = (B[o + 3] - 128) / 127, ny = (B[o + 4] - 128) / 127, c = B[o + 2] / 255;
-    const p: any = { u: pole % 240 + r(), v: ((pole / 240) | 0) + r(), c, j: .55 + .9 * c, nx, ny, nz: Math.sqrt(Math.max(0, 1 - nx * nx - ny * ny)), g: B[o + 5] - 128,
-      a: r() * 6.28, s: .8 + r() * 1.2, sx: r(), sy: r(), d: r(), cr: Math.sqrt(r()), ln: (r() * 4) | 0, lx: r() };
-    ziarnoPunktu(p, pole, r);
-    P.push(p);
+    const o = k * 12, [nx, ny, nz] = okta(B[o + 3], B[o + 4]), wg: number[][] = [];
+    if (B[o + 7]) wg.push([B[o + 7], B[o + 8] / 255]); if (B[o + 9]) wg.push([B[o + 9], B[o + 10] / 255]);
+    // lewa półkula i jej odbicie w prawej
+    for (const zn of [1, -1]) {
+      const p: any = punkt3(zn * i8(B[o]) + r() - .5, i8(B[o + 1]) + r() - .5, i8(B[o + 2]) + r() - .5, B[o + 11], r);
+      p.NX = zn * nx; p.NY = ny; p.NZ = nz; p.k = B[o + 5] / 255; p.szary = B[o + 6] === 1 || B[o + 6] === 11;
+      ziarnoPunktu(p, wg, r);
+      P.push(p); P3.push(p); if (p.wg) PW.push(p);
+    }
   }
-  // średnia jasność 1, więc mózg świeci tak jasno jak przedtem, a jasność tylko rozkłada się po fałdach
-  { const sj = P.reduce((t, p) => t + p.j, 0) / P.length; for (const p of P) p.j /= sj; }
+  // wnętrze: na telefonie połowa punktów
+  { const Wb = b64(MS.wnetrze), NW = Wb.length / 5, nW = innerWidth < 760 ? NW >> 1 : NW;
+    for (let k = 0; k < nW; k++) for (const zn of [1, -1]) {
+      const o = k * 5, grp = Wb[o + 4] - 1;
+      // rozrzut na całe pole objętości (1,5 mm), więc wnętrze nie układa się w kratkę
+      const p: any = punkt3(zn * i8(Wb[o]) + (r() - .5) * 1.5, i8(Wb[o + 1]) + (r() - .5) * 1.5, i8(Wb[o + 2]) + (r() - .5) * 1.5, Wb[o + 3], r);
+      p.wn = 1; p.grp = grp; p.net = 0; p.col = hex(KOL_WN[grp] || KOL_WN[0]);
+      P.push(p); P3.push(p);
+    } }
+  // średnia jasność widocznych punktów 1, więc mózg świeci tak jasno jak przedtem, a jasność tylko rozkłada się po fałdach
+  rzutuj();
+  { let sj = 0, n = 0; for (const p of P3) if (!p.wn && p.vis > .5) { sj += p.j; n++; } JN = n / sj; rzutuj(); }
+  // obszar pod kotwicą sieci: dotknięcie nazwy na telefonie otwiera dymek z obszarem, jak klik
+  for (const k in KOTW3) { const K = KOTW3[k]; if (!K) continue; let best = 1e9; for (const p of P3) { if (p.wn) continue; const d = Math.hypot(p.X - K[0], p.Y - K[1], p.Z - K[2]); if (d < best) { best = d; KOTW_REG[+k] = p.reg; } } }
   // Szare punkty roju układają litery zdań (strumień zdania bierze ich do 1500, na telefonie 900). Kora bez sieci zajmuje w mózgu z danych
   // mało miejsca, więc brakujące szare punkty czekają w mózgu niewidoczne, jak punkty kreski, i świecą w zdaniu i w rozproszonym roju.
-  const szareJuz = P.filter((p) => p.szary).length;
-  for (let k = 0, brak = Math.max(0, (NP === 3600 ? 900 : 1500) - szareJuz); k < brak; k++) {
-    const q = P[(r() * NP) | 0];
-    P.push({ ukr: 1, szary: 1, u: q.u + r() - .5, v: q.v + r() - .5, g: q.g, net: 1, col: hex(COL[1]), tu: [], a: r() * 6.28, s: .8 + r() * 1.2, sx: r(), sy: r(), d: r(), cr: Math.sqrt(r()), ln: (r() * 4) | 0, lx: r() });
+  const szareJuz = P.filter((p) => p.szary).length, wid3 = P3.filter((p) => !p.wn && p.vis > .5);
+  for (let k = 0, brak = Math.max(0, (innerWidth < 760 ? 900 : 1500) - szareJuz); k < brak; k++) {
+    const q = wid3[(r() * wid3.length) | 0];
+    P.push({ ukr: 1, szary: 1, u: q.u + r() - .5, v: q.v + r() - .5, net: 1, col: hex(COL[1]), tu: [], a: r() * 6.28, s: .8 + r() * 1.2, sx: r(), sy: r(), d: r(), cr: Math.sqrt(r()), ln: (r() * 4) | 0, lx: r() });
   }
   // granice mózgu z boku w siatce 240×180: nazwy sieci stoją nad nim i pod nim
   for (const p of P) if (!p.lonly && p.net >= 1) { BR_U[0] = Math.min(BR_U[0], p.u); BR_U[1] = Math.max(BR_U[1], p.u); BR_V[0] = Math.min(BR_V[0], p.v); BR_V[1] = Math.max(BR_V[1], p.v); }
@@ -2158,8 +2300,8 @@ function frame() {
   const cs: Record<number, number[]> = {};
   for (const p of P) if (p.net > 1 && !p.med) { cs[p.net] = cs[p.net] || [0, 0, 0]; cs[p.net][0] += p.u; cs[p.net][1] += p.v; cs[p.net][2]++; }
   for (const k in cs) CENT[k] = [cs[k][0] / cs[k][2], cs[k][1] / cs[k][2]];
-  // środek sieci to miejsce jej nazwy: istotności i brzuszna uwagi dzielą plamy, więc średnia ich punktów wypadałaby między nimi
-  for (const k in KOTWICA) if (KOTWICA[k]) CENT[+k] = [KOTWICA[k][0] + .5, KOTWICA[k][1] + .5];
+  // środek sieci to miejsce jej nazwy (rzutuj): istotności i brzuszna uwagi dzielą plamy, więc średnia ich punktów wypadałaby między nimi
+  rzutuj();
   size(); frame();
   document.fonts.ready.then(() => { NH = nagl.offsetHeight; przygotujSlowa(); kick(); });
 }
@@ -2211,6 +2353,8 @@ addEventListener('wheel', (ev) => {
 }, { passive: false });
 addEventListener('keydown', (ev) => {
   if (ev.ctrlKey || ev.metaKey || ev.altKey || (ev.target as HTMLElement).closest('input,textarea,select,[contenteditable]')) return;
+  // spacja na przycisku go naciska, jak w każdym przycisku (audyt 2026-11-18: przyciski sieci na telefonie nie reagowały na spację)
+  if (ev.key === ' ' && (ev.target as HTMLElement).closest('button')) return;
   const dol = ev.key === 'ArrowDown' || ev.key === 'PageDown' || ev.key === 'End' || (ev.key === ' ' && !ev.shiftKey);
   const gora = ev.key === 'ArrowUp' || ev.key === 'PageUp' || ev.key === 'Home' || (ev.key === ' ' && ev.shiftKey);
   if (!dol && !gora) return;
@@ -2218,10 +2362,36 @@ addEventListener('keydown', (ev) => {
   if (!wolne()) { ev.preventDefault(); return; }
   if (gora && wGore()) { ev.preventDefault(); jedzDo(0); } else if (dol && scrollY < 3) { ev.preventDefault(); logoTrzymaj(); jedzDo(LAND_Y()); }
 });
-let TY0 = 0, TGEST = false;
-addEventListener('touchstart', (ev) => { TY0 = ev.touches[0].clientY; TGEST = false; }, { passive: true });
+// Obracanie mózgu na ekranie startowym: mysz przeciąga po mózgu, palec przeciąga w bok (pionowe przesunięcie palca dalej prowadzi do Story);
+// przeciągnięcie nie zaznacza sieci, a puszczony mózg kręci się jeszcze chwilę
+const naMozgu = (x: number, y: number) => LD.w > .5 && Math.abs(x - BS.cx) < BS.bw * .5 && Math.abs(y - BS.cy) < BS.bw * .4;
+function obracaj(x: number, y: number) {
+  const d = OBROT.drag, now = performance.now(), dx = x - d.x, dy = y - d.y, dtm = Math.max(8, now - d.t), K = 1.6 * Math.PI / Math.max(320, BS.bw);
+  d.ruch += Math.hypot(dx, dy); if (d.ruch > 6) OBROT.przeciagnal = true;
+  OBROT.yaw += dx * K; OBROT.pitch = Math.max(-1.1, Math.min(1.1, OBROT.pitch - dy * K)); OBROT.tUser = now;
+  OBROT.vy = CICHO ? 0 : dx * K / dtm * 1000; OBROT.vp = CICHO ? 0 : -dy * K / dtm * 1000;
+  d.x = x; d.y = y; d.t = now; kick();
+}
+addEventListener('pointerdown', (ev) => {
+  OBROT.przeciagnal = false;
+  if (ev.pointerType !== 'mouse' || ev.button !== 0 || (ev.target as HTMLElement).closest('a,button,.roj-dymek') || !naMozgu(ev.clientX, ev.clientY)) return;
+  OBROT.drag = { x: ev.clientX, y: ev.clientY, t: performance.now(), ruch: 0 }; OBROT.vy = OBROT.vp = 0;
+});
+addEventListener('pointermove', (ev) => { if (OBROT.drag && ev.pointerType === 'mouse') { obracaj(ev.clientX, ev.clientY); document.body.style.cursor = OBROT.przeciagnal ? 'grabbing' : ''; } }, { passive: true });
+addEventListener('pointerup', () => { if (OBROT.drag) { OBROT.drag = null; document.body.style.cursor = ''; kick(); } });
+let TY0 = 0, TX0 = 0, TGEST = false;
+addEventListener('touchstart', (ev) => {
+  TY0 = ev.touches[0].clientY; TX0 = ev.touches[0].clientX; TGEST = false;
+  OBROT.drag = null; OBROT.przeciagnal = false; OBROT.dotyk = ev.touches.length === 1 && !(ev.target as HTMLElement).closest('a,button,.roj-dymek') && naMozgu(TX0, TY0);
+}, { passive: true });
+addEventListener('touchend', () => { if (OBROT.drag) { OBROT.drag = null; kick(); } OBROT.dotyk = false; }, { passive: true });
 addEventListener('touchmove', (ev) => {
   if (!ev.cancelable || ev.touches.length > 1) return;
+  if (OBROT.dotyk) {
+    const x = ev.touches[0].clientX, y = ev.touches[0].clientY;
+    if (!OBROT.drag && Math.abs(x - TX0) > 8 && Math.abs(x - TX0) > Math.abs(y - TY0)) { OBROT.drag = { x, y, t: performance.now(), ruch: 0 }; OBROT.vy = OBROT.vp = 0; }
+    if (OBROT.drag) { ev.preventDefault(); obracaj(x, y); return; }
+  }
   const dy = TY0 - ev.touches[0].clientY;
   if (BLOK) { ev.preventDefault(); if (dy > 6) przypomnij(); return; }
   if (SCR || TGEST) { ev.preventDefault(); return; }
@@ -2279,11 +2449,12 @@ addEventListener('scroll', () => { if (!tk) { tk = true; requestAnimationFrame((
 addEventListener('resize', () => { ZD.ok = false; SZER_MAX = 0; ZN_X.length = 0; SNOP_K.length = 0; size(); frame(); });
 addEventListener('click', (ev) => {
   const el = ev.target as HTMLElement;
+  if (OBROT.przeciagnal) { OBROT.przeciagnal = false; return; }
   if (el.closest('a,button,.roj-dymek')) return;
   const n = naSieci(ev.clientX, ev.clientY); if (!n) { dymekZamknij(); return; }
   KL.n = n; KL.med = NA_MED; KL.t = performance.now(); KL.x = KL.px = ev.clientX; KL.y = KL.py = ev.clientY; KL.pt = 0;
   KL.sx = null; KL.doszla = false; KL.mrugN = KL.t + 140; kick();
-  dymekPokaz(n, ev.clientX, ev.clientY, obszarPod(ev.clientX, ev.clientY));
+  dymekPokaz(n, ev.clientX, ev.clientY, NA_PKT ? NA_PKT.reg : 0);
 });
 // Dymek sieci (jego słowo, 2026-10-23): po kliknięciu sieci staje przy klikniętym miejscu, jak dymek splotu na Płótnie; sieć świeci,
 // dopóki dymek jest otwarty. Zamyka go krzyżyk, Escape, kliknięcie obok sieci i przewinięcie strony.
@@ -2325,17 +2496,16 @@ function dymekZamknij() {
 }
 DYM.querySelector('.roj-dymek-x')!.addEventListener('click', dymekZamknij);
 // Nazwy sieci pod mózgiem na telefonie: dotknięcie nazwy idzie tą samą drogą co kliknięcie sieci, w środek jej obszaru na rysunku
-const SRODEK: Record<number, number[]> = {};
 function srodekSieci(n: number) {
   if (!MOZG_AKT || !P.length) return null;
-  if (!SRODEK[n]) { const K = KOTWICA[n]; if (!K) return null; SRODEK[n] = [K[0] + .5, K[1] + .5]; }
-  const [cx, cy, bw] = brainB({ u: 120, v: 90 }), [u, v] = SRODEK[n];
+  const K = KOTWICA[n]; if (!K) return null;
+  const [cx, cy, bw] = brainB({ u: 120, v: 90 }), [u, v] = K;
   return [cx + (u - 120) * bw / 240, cy + (v - 90) * bw * .75 / 180];
 }
 $$('.roj-sieci-lista button').forEach((b) => b.addEventListener('click', () => {
   const n = +(b as HTMLElement).dataset.n!, pt = srodekSieci(n); if (!pt) return;
   KL.n = n; KL.med = false; KL.t = performance.now(); KL.x = KL.px = pt[0]; KL.y = KL.py = pt[1]; KL.pt = 0; KL.sx = null; KL.doszla = false; KL.mrugN = KL.t + 140;
-  const K = KOTWICA[n]; kick(); dymekPokaz(n, pt[0], pt[1], K ? OBSZ[K[1] * 240 + K[0]] : 0);
+  kick(); dymekPokaz(n, pt[0], pt[1], KOTW_REG[n] || 0);
 }));
 // Dymek da się chwycić i odsunąć na bok (jego słowo, 2026-11-02: *the box that opens after clicking a network... it should be possible
 // to move to the side. grab and move with the cursor*): myszą i palcem, w granicach okna; kółka biegną od klikniętego miejsca ku dymkowi.
@@ -2366,7 +2536,7 @@ DYM.addEventListener('pointercancel', puscChwyt);
 addEventListener('keydown', (ev) => { if (ev.key === 'Escape') dymekZamknij(); });
 addEventListener('scroll', () => { if (DYM_N && Math.abs(scrollY - DYM_Y) > 40) dymekZamknij(); }, { passive: true });
 addEventListener('resize', dymekZamknij);
-addEventListener('pointermove', (ev) => { if (ev.pointerType !== 'mouse') return; document.body.style.cursor = naSieci(ev.clientX, ev.clientY) && !(ev.target as HTMLElement).closest('a,button') ? 'pointer' : ''; }, { passive: true });
+addEventListener('pointermove', (ev) => { if (ev.pointerType !== 'mouse' || OBROT.drag) return; document.body.style.cursor = naSieci(ev.clientX, ev.clientY) && !(ev.target as HTMLElement).closest('a,button') ? 'pointer' : ''; }, { passive: true });
 addEventListener('pageshow', () => { PUSZCZ = 0; kick(); });
 const io = new IntersectionObserver((es) => es.forEach((e) => {
   if (e.isIntersecting) e.target.classList.add('in');
