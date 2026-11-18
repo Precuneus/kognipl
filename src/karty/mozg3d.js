@@ -10,6 +10,8 @@
 // `atlas-wybor` na siatce Atlasu).
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { wczytajPolaczenia, plasterParcel, razem, indeks, RAZEM, KREM, BIALE } from './polaczenia.js';
 
 const SZARY = '#57524a'; // ziarno sieci, która nie świeci
 const CIEMNY = '#3a352d'; // powierzchnia bez koloru
@@ -131,7 +133,22 @@ export async function mozg3d(el) {
   camera.add(lampa); lampa.position.set(80, 120, 0); scene.add(camera);
 
   // stan Atlasu: tryb, świecące sieci, zaznaczony obszar, położenie cięć
-  const stan = { tryb: 'sieci', lit: new Set(Object.keys(KOL)), obszar: 0, plat: '', hot: 0 };
+  const stan = { tryb: 'sieci', lit: new Set(Object.keys(KOL)), obszar: 0, plat: '', hot: 0, parcela: -1, hotPar: -1 };
+  // tryb Połączenia (jego słowa, 2026-11-18: *I want the connections on the atlas, not the landing page*, potem *ok, start preparing the
+  // first option*): parcele wczytują się przy pierwszym wejściu w tryb; vpar to parcela każdego punktu powierzchni (indeks w macierzy)
+  let D = null, vpar = null;
+  const POL_URL = siatka.dataset.polaczenia || '';
+  const nazwaParceli = (k) => { const m = D && D.meta.parcele[k]; if (!m) return ''; return k >= 400 ? D.meta.pod[(k - 400) % 7] : NAZWY[m[1]] || ''; };
+  const sieciParceli = (k) => { const m = D && D.meta.parcele[k]; return m && m[2] ? O.sieci[m[2] - 1][1] : []; };
+  function zPolaczeniami() {
+    if (!POL_URL || D) return;
+    wczytajPolaczenia(POL_URL).then((d) => {
+      if (D) return;
+      D = d; vpar = new Int16Array(nv);
+      for (let i = 0; i < nv; i++) vpar[i] = indeks(D.wierz[i], pos[i * 3] < 0 ? 0 : 1);
+      wszystko();
+    }).catch(() => {});
+  }
   // pudło cięć: na każdej osi mózg zostaje między dwiema gałkami; płaszczyzna zostawia punkty, których odległość jest nieujemna
   let P = siatka.__pudlo || { x: [-999, 999], y: [-999, 999], z: [-999, 999], tnie: { x: [false, false], y: [false, false], z: [false, false] } };
   const plaszczyzny = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]].map(([a, b, c]) => new THREE.Plane(new THREE.Vector3(a, b, c), 0));
@@ -172,9 +189,18 @@ export async function mozg3d(el) {
   // sieci punktu, kiedy świeci któraś z nich: miejsce, które świecąca sieć dzieli z inną, świeci kolorem każdej swojej sieci, jak
   // ziarno na rysunkach
   const swieci = (y) => (y && FAM[y - 1].some((k) => stan.lit.has(k)) ? FAM[y - 1] : []);
+  const krem = new THREE.Color(KREM);
   function koloruj() {
+    const pol = stan.tryb === 'polaczenia', sel = stan.parcela;
     for (let i = 0; i < nv; i++) {
-      if (stan.tryb === 'platy') {
+      if (pol) {
+        // parcela zaznaczona złotem, reszta w ciepłej bieli tym jaśniejszej, im bliżej jej aktywność idzie z zaznaczoną; bez zaznaczenia
+        // ciemna powierzchnia, parcela pod wskaźnikiem jaśniejsza
+        const p = vpar ? vpar[i] : -1;
+        if (p < 0) kol.copy(ciem);
+        else if (sel >= 0) { if (p === sel) kol.copy(zloto).lerp(ciem, 0.3); else kol.copy(ciem).lerp(krem, razem(D, sel, p) * 0.8); }
+        else kol.copy(p === stan.hotPar ? szary : ciem);
+      } else if (stan.tryb === 'platy') {
         const p = platPola(allen[i]), hp = stan.hot && REG[stan.hot - 1] ? REG[stan.hot - 1][2] : '';
         if (p && (!stan.plat || p === stan.plat || p === hp)) kol.set(PLAT_KOL[p]).lerp(ciem, 0.55); else kol.copy(ciem);
       } else if (stan.tryb === 'obszary') {
@@ -189,7 +215,12 @@ export async function mozg3d(el) {
     geo.getAttribute('color').needsUpdate = true;
     for (let j = 0; j < ng; j++) {
       const i = j * KROK;
-      if (stan.tryb === 'platy') { const p = platPola(allen[i]), hp = stan.hot && REG[stan.hot - 1] ? REG[stan.hot - 1][2] : ''; if (p && (!stan.plat || p === stan.plat || p === hp)) kol.set(PLAT_KOL[p]); else kol.copy(szary); }
+      if (pol) {
+        const p = vpar ? vpar[i] : -1;
+        if (p < 0) kol.copy(szary);
+        else if (sel >= 0) { if (p === sel) kol.copy(zloto); else kol.copy(szary).lerp(krem, razem(D, sel, p)); }
+        else kol.copy(p === stan.hotPar ? jasny : szary);
+      } else if (stan.tryb === 'platy') { const p = platPola(allen[i]), hp = stan.hot && REG[stan.hot - 1] ? REG[stan.hot - 1][2] : ''; if (p && (!stan.plat || p === stan.plat || p === hp)) kol.set(PLAT_KOL[p]); else kol.copy(szary); }
       else if (stan.tryb === 'obszary') kol.copy(stan.obszar && trafia(A2R[allen[i]], stan.obszar) ? (wprost(A2R[allen[i]], stan.obszar) ? zloto : blade) : stan.hot && trafia(A2R[allen[i]], stan.hot) ? jasny : szary);
       else { const f = swieci(yeo[i]); if (f.length) kol.set(KOL[f[Math.floor(los1[j] * f.length)]]); else kol.copy(szary); }
       gc[j * 3] = kol.r; gc[j * 3 + 1] = kol.g; gc[j * 3 + 2] = kol.b;
@@ -203,7 +234,8 @@ export async function mozg3d(el) {
   const plastry = {};
   function obraz(p, mm, id) {
     const T = plaster(vol, O, 0, p, mm), B = plaster(vol, O, 1, p, mm), A = plaster(vol, O, 2, p, mm), Y = plaster(vol, O, 3, p, mm);
-    plastry[id] = { T, B, A, Y };
+    const PAR = D ? plasterParcel(D, O, p, mm).v : null;
+    plastry[id] = { T, B, A, Y, PAR };
     const S = 8, cv = document.createElement('canvas'); cv.width = T.W * S; cv.height = T.H * S;
     const g = cv.getContext('2d');
     // komory też są ścianą: przez dziurę w ścianie widać było od środka ścianę komory na powierzchni 3D, a każdy jej punkt nosi strukturę,
@@ -234,7 +266,13 @@ export async function mozg3d(el) {
       if (T.v[i] <= 127) continue;
       const a = A.v[i], rodz = RODZAJ[a];
       let c = null;
-      if (stan.tryb === 'platy') {
+      if (stan.tryb === 'polaczenia') {
+        // jak w płaskich przekrojach: parcela zaznaczona złotem, reszta w barwie aktywności razem, partnerów włókien obrysowuje biała linia
+        const pk = PAR ? PAR[i] - 1 : -1, sel = stan.parcela;
+        if (pk < 0) continue;
+        if (sel >= 0) c = pk === sel ? ZLOTE : RAZEM[Math.round(razem(D, sel, pk) * (RAZEM.length - 1))];
+        else c = pk === stan.hotPar ? 'rgba(226,221,212,0.42)' : SZARY;
+      } else if (stan.tryb === 'platy') {
         const r = rodz === 'komora' ? 0 : A2R[a];
         if (!r || r === BIALA || JAK[r] === BIALA) continue;
         const pp = REG[r - 1] ? REG[r - 1][2] : '';
@@ -269,6 +307,11 @@ export async function mozg3d(el) {
       d += kontur(f, T.W, T.H, 0.5, X0, Y0, X1, Y1);
     }
     g.setTransform(S, 0, 0, S, 0, 0); g.strokeStyle = 'rgba(226,221,212,.7)'; g.lineWidth = 1.3 / S; g.stroke(new Path2D(d));
+    if (stan.tryb === 'polaczenia' && stan.parcela >= 0 && PAR) {
+      const s = D.sasiad[stan.parcela], m = new Float32Array(PAR.length);
+      for (let i = 0; i < PAR.length; i++) m[i] = PAR[i] && PAR[i] - 1 !== stan.parcela && s.has(PAR[i] - 1) ? 1 : 0;
+      g.strokeStyle = BIALE; g.lineWidth = 1.6 / S; g.stroke(new Path2D(kontur(m, T.W, T.H, 0.5)));
+    }
     const tx = new THREE.CanvasTexture(cv); tx.colorSpace = THREE.SRGBColorSpace; tx.anisotropy = 4;
     return tx;
   }
@@ -375,7 +418,39 @@ export async function mozg3d(el) {
   }
   const SCIANY = [['x', 0], ['x', 1], ['y', 0], ['y', 1], ['z', 0], ['z', 1]];
   const lica = (sila) => SCIANY.forEach(([os, j]) => postawLico(os, j, sila));
-  function wszystko() { koloruj(); lica(true); rysuj(); przypiete(); }
+  function wszystko() { koloruj(); lica(true); luki(); rysuj(); przypiete(); }
+
+  // łuki włókien: od środka zaznaczonej parceli do środka każdego partnera, wygięte ku środkowi mózgu, grubsze przy silniejszym połączeniu.
+  // Jasny łuk widać tam, gdzie tkankę zdjęło cięcie, a jego cień prześwituje przez korę, jak cień przypiętej bryły; złota kropka stoi
+  // w środku zaznaczonej parceli
+  const SRODEK = new THREE.Vector3(0, -18, 8);
+  let lukiGrupa = null;
+  function luki() {
+    if (lukiGrupa) { scene.remove(lukiGrupa); lukiGrupa.traverse((o) => { if (o.geometry) o.geometry.dispose(); if (o.material) o.material.dispose(); }); lukiGrupa = null; }
+    const sel = stan.parcela;
+    if (stan.tryb !== 'polaczenia' || sel < 0 || !D) return;
+    const C = D.cen, a = new THREE.Vector3(C[sel * 3], C[sel * 3 + 1], C[sel * 3 + 2]), b = new THREE.Vector3(), m = new THREE.Vector3();
+    const geos = [];
+    for (const [j, w] of D.wlokna[sel]) {
+      b.set(C[j * 3], C[j * 3 + 1], C[j * 3 + 2]);
+      m.copy(a).add(b).multiplyScalar(0.5).lerp(SRODEK, 0.35);
+      const krzywa = new THREE.QuadraticBezierCurve3(a.clone(), m.clone(), b.clone());
+      geos.push(new THREE.TubeGeometry(krzywa, 24, 0.22 + 0.7 * w * w, 5, false));
+    }
+    lukiGrupa = new THREE.Group();
+    if (geos.length) {
+      const g = mergeGeometries(geos);
+      geos.forEach((x) => x.dispose());
+      const jasny = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ color: 0xf7f4ee, transparent: true, opacity: 0.9 }));
+      const cien = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ color: 0xf7f4ee, transparent: true, opacity: 0.2, depthTest: false, depthWrite: false }));
+      cien.renderOrder = 9;
+      lukiGrupa.add(jasny, cien);
+    }
+    const kropka = new THREE.Mesh(new THREE.SphereGeometry(2.2, 16, 12), new THREE.MeshBasicMaterial({ color: ZLOTE, transparent: true, opacity: 0.9, depthTest: false, depthWrite: false }));
+    kropka.position.copy(a); kropka.renderOrder = 11;
+    lukiGrupa.add(kropka);
+    scene.add(lukiGrupa);
+  }
 
   // przypinanie (jego notatki, 2026-11-15: *User selects any structure (midbrain, basal ganglia, thalamic nucleus) and it stays as a 3D mesh
   // regardless of sagittal/coronal/axial slice positions. Not clipped by slice planes. Multiple pinned structures, each with its own
@@ -503,6 +578,8 @@ export async function mozg3d(el) {
     stan.lit = new Set(d.lit || []);
     stan.obszar = d.wybor && d.wybor.typ === 'obszar' ? d.wybor.n : 0;
     stan.plat = d.wybor && d.wybor.typ === 'plat' ? d.wybor.p : '';
+    stan.parcela = d.wybor && d.wybor.typ === 'parcela' ? d.wybor.k : -1;
+    if (stan.tryb === 'polaczenia') zPolaczeniami();
   };
   zStanu(siatka.__stan);
   siatka.addEventListener('atlas-wybor', (e) => {
@@ -527,7 +604,14 @@ export async function mozg3d(el) {
   const nazwa = el.querySelector('.at-3d-nazwa');
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   const zamknij = () => { if (nazwa) nazwa.hidden = true; };
-  function opis(a, y) {
+  function opis(a, y, p) {
+    // Połączenia: struktura pod wskaźnikiem albo struktura parceli, jej sieci i, przy zaznaczeniu, włókna do zaznaczonej parceli
+    if (stan.tryb === 'polaczenia') {
+      if (!p || !D) return '';
+      const k = p - 1, sel = stan.parcela, st = a && RODZAJ[a] !== 'biala' && RODZAJ[a] !== 'komora' ? NAZWY[a] : nazwaParceli(k);
+      return '<span><b>' + esc(st) + '</b></span>' + sieciParceli(k).map((c) => '<span class="wk-kod-dalej"><b style="color:' + KOL[c] + '">' + c + '</b> ' + esc(NAZWA[c] || '') + '</span>').join('')
+        + (sel >= 0 && sel !== k && D.sasiad[sel].has(k) ? '<span class="wk-kod-dalej wk-kod-wlokna">włókna</span>' : '');
+    }
     // jądro pod korą nazywa się w każdym widoku, bo w Sieciach i Płatach nie ma sieci ani płata (2026-11-16)
     const jadro = a && RODZAJ[a] === 'gleb' && A2R[a] && REG[A2R[a] - 1] ? A2R[a] : 0;
     if (jadro && stan.tryb !== 'obszary') return '<span><b>' + esc(REG[jadro - 1][0]) + '</b></span>';
@@ -543,7 +627,7 @@ export async function mozg3d(el) {
     return '<span class="wk-kod-yeo">' + esc(sie[0]) + '</span>' + sie[1].map((c, j) => '<span' + (j ? ' class="wk-kod-dalej"' : '') + '><b style="color:' + KOL[c] + '">' + c + '</b> ' + esc(NAZWA[c] || '') + '</span>').join('');
   }
   function nazwij(t, x, yy) {
-    const h = t ? opis(t[0], t[1]) : '';
+    const h = t ? opis(t[0], t[1], t[2]) : '';
     if (!h || !nazwa) { zamknij(); return; }
     nazwa.innerHTML = h;
     nazwa.hidden = false;
@@ -572,14 +656,14 @@ export async function mozg3d(el) {
           const v = vol[2 * NX * NY * NZ + (y * NZ + z) * NX + x];
           if (v && (v === n || wyzej(v, n))) a = v;
         }
-        return [a || n, 0];
+        return [a || n, 0, 0];
       }
       if (h.object === kora) {
         if (usuniete(h.point)) continue;
         const f = h.face;
         let best = f.a, bd = Infinity;
         for (const i of [f.a, f.b, f.c]) { const d = (pos[i * 3] - h.point.x) ** 2 + (pos[i * 3 + 1] - h.point.y) ** 2 + (pos[i * 3 + 2] - h.point.z) ** 2; if (d < bd) { bd = d; best = i; } }
-        return [allen[best], yeo[best]];
+        return [allen[best], yeo[best], vpar && vpar[best] >= 0 ? vpar[best] + 1 : 0];
       }
       const pl = plastry[h.object.userData.id];
       if (!pl || !h.uv) continue;
@@ -587,7 +671,7 @@ export async function mozg3d(el) {
       // poza tkanką ściana jest przezroczysta, ale komora ją zamyka: wskazanie w komorze nie sięga ściany komory za nią
       if (pl.T.v[i] <= 127) { if (RODZAJ[pl.A.v[i]] === 'komora' || (pl.K && pl.K[i])) return null; continue; }
       const czyKora = pl.B.v[i] < 128 && RODZAJ[pl.A.v[i]] === 'kora';
-      return [pl.A.v[i], czyKora ? pl.Y.v[i] : 0];
+      return [pl.A.v[i], czyKora ? pl.Y.v[i] : 0, pl.PAR ? pl.PAR[i] : 0];
     }
     return null;
   }
@@ -617,7 +701,8 @@ export async function mozg3d(el) {
       if (!t) return;
       let w = null;
       const jadro = t[0] && RODZAJ[t[0]] === 'gleb' && A2R[t[0]] ? A2R[t[0]] : 0;
-      if (jadro && stan.tryb !== 'obszary') w = { typ: 'obszar', n: jadro };
+      if (stan.tryb === 'polaczenia') { if (t[2]) w = { typ: 'parcela', k: t[2] - 1 }; }
+      else if (jadro && stan.tryb !== 'obszary') w = { typ: 'obszar', n: jadro };
       else if (stan.tryb === 'platy') { const p = platPola(t[0]); if (p) w = { typ: 'plat', p }; }
       else if (stan.tryb === 'obszary') { const r = t[0] ? A2R[t[0]] : 0; if (r) w = { typ: 'obszar', n: r }; }
       else if (t[1] && O.sieci[t[1] - 1][1].length) w = { typ: 'siec', kody: O.sieci[t[1] - 1][1].slice() };
@@ -631,11 +716,13 @@ export async function mozg3d(el) {
     if (e.buttons) { zamknij(); return; }
     ostatni = e;
     if (ruch) return;
-    ruch = requestAnimationFrame(() => { ruch = 0; const t = trafienie(ostatni); nazwij(t, ostatni.clientX, ostatni.clientY); naHot(t ? A2R[t[0]] || 0 : 0); });
+    ruch = requestAnimationFrame(() => { ruch = 0; const t = trafienie(ostatni); nazwij(t, ostatni.clientX, ostatni.clientY); if (stan.tryb === 'polaczenia') naHotPar(t && t[2] ? t[2] - 1 : -1); else naHot(t ? A2R[t[0]] || 0 : 0); });
   });
   // wskazana struktura jaśnieje w 3D jak w przekrojach (przegląd 2026-11-11), kolory liczą się na nowo tylko przy zmianie
-  function naHot(r) { if (stan.tryb === 'sieci') r = 0; if (r === stan.hot) return; stan.hot = r; koloruj(); rysuj(); }
-  renderer.domElement.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') { zamknij(); naHot(0); } });
+  function naHot(r) { if (stan.tryb === 'sieci' || stan.tryb === 'polaczenia') r = 0; if (r === stan.hot) return; stan.hot = r; koloruj(); rysuj(); }
+  // w Połączeniach bez zaznaczenia parcela pod wskaźnikiem jaśnieje; przy zaznaczeniu barwy stoją, a wskazanie tylko nazywa
+  function naHotPar(k) { if (k === stan.hotPar) return; stan.hotPar = k; if (stan.parcela < 0) { koloruj(); rysuj(); } }
+  renderer.domElement.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') { zamknij(); naHot(0); naHotPar(-1); } });
   addEventListener('keydown', (e) => { if (e.key === 'Escape') zamknij(); });
   controls.addEventListener('start', zamknij);
   controls.addEventListener('change', rysuj);

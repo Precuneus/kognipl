@@ -84,6 +84,13 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-tryb button{font:500 13px/1 Inter,sans-serif;color:#cfc8bb;background:none;border:0;border-radius:999px;padding:8px 14px;cursor:pointer;min-height:32px}
 .at-tryb button[aria-pressed="true"]{background:rgba(240,192,96,.16);color:#f0c060}
 .at-tryb button:focus-visible{outline:2px solid #f0c060;outline-offset:2px}
+/* tryb Połączenia (2026-11-18): klucz barw w wierszu zaznaczenia, biała kreska to włókna, ciepła biel to aktywność razem; we wskazaniu
+   partner włókien zaznaczonej parceli */
+.at-klucz{display:inline-flex;align-items:center;gap:6px;margin-left:12px;color:#b3ab9e;white-space:nowrap}
+.at-klucz i{display:inline-block;flex:none}
+.at-klucz-w{width:16px;height:2px;border-radius:1px;background:#f7f4ee}
+.at-klucz-r{width:8px;height:8px;border-radius:50%;background:#f6e7cf;margin-left:8px}
+.wk-kody .wk-kod-wlokna{color:#f7f4ee}
 /* Atlas: mózg w 3D, obok kolumna trzech przekrojów, każdy ze swoim suwakiem o dwóch gałkach (jego słowa, 2026-11-16: *make maybe 3 brains
    right to the 3d brain. And each brain... has a suwak to cut in either direction*, potem *execute as on the drawing*): góra i dół pionowo
    przy czołowym, lewa i prawa pod poziomym, przód i tył pod strzałkowym. Przekroje w jednej skali, --s pikseli na milimetr (`ciecia.js`):

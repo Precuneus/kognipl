@@ -14,6 +14,7 @@ const ZMIANA = 0.1; // część ziaren losowana na nowo w każdym takcie, więc 
 const TAKT = 100; // ms
 // sieć jest w miejscu, kiedy jej udział przekracza 1/7, jak u Yeo i in. 2014 (s:yeo2014-association-multi-network-sensorimotor-isolated)
 const PROG = 1 / 7;
+import { wczytajPolaczenia, plasterParcel, razem, RAZEM, BIALE } from './polaczenia.js';
 const SZARE = 'rgba(226,221,212,0.13)';
 const JASNE = 'rgba(226,221,212,0.42)'; // obszar pod wskaźnikiem w trybie obszarów
 const ZLOTE = '#f0c060'; // zaznaczony obszar, kolor Iskry i fokusu
@@ -147,8 +148,26 @@ export async function ziarno() {
   const objetosc = OBJ && mozg.querySelector('.wk-zywy') ? wczytajObjetosc(OBJ.url).catch(() => null) : null;
   const stoi = cicho();
   const hot = new Set();
-  let tryb = 'sieci', wybor = null, hotReg = 0, hotPlat = '';
+  let tryb = 'sieci', wybor = null, hotReg = 0, hotPlat = '', hotPar = -1;
   const widoki = [];
+  // tryb Połączenia: parcele i ich połączenia wczytują się przy pierwszym wejściu w tryb (`polaczenia.js`)
+  const POL_URL = mozg.dataset.polaczenia || '';
+  let D = null;
+  const wybranaPar = () => (wybor && wybor.typ === 'parcela' ? wybor.k : -1);
+  const sieciParceli = (k) => { const m = D && D.meta.parcele[k]; return m && m[2] ? OBJ.sieci[m[2] - 1][1] : []; };
+  const nazwaParceli = (k) => { const m = D && D.meta.parcele[k]; if (!m) return ''; return k >= 400 ? D.meta.pod[(k - 400) % 7] : OBJ.NAZWY[m[1]] || ''; };
+  function zPolaczeniami() {
+    if (!POL_URL || !OBJ) return Promise.resolve(null);
+    return wczytajPolaczenia(POL_URL).then((d) => {
+      if (!D) {
+        D = d;
+        widoki.forEach((v) => { if (v.zywy) v.par = plasterParcel(D, OBJ, v.zywy, v.mm).v; });
+        // zaznaczenie z adresu czekało na parcele: karta jego sieci i wiersz zaznaczenia stają teraz
+        if (wybor && wybor.typ === 'parcela') wybierz(wybor, true); else { panel(); rysujWszystko(); }
+      }
+      return D;
+    }).catch(() => null);
+  }
 
   // przekroje z objętości: mapy sieci i obszarów, linie i etykiety liczone z plastra, na nowo przy każdym przesunięciu cięcia
   const vol = objetosc ? await objetosc : null;
@@ -239,6 +258,7 @@ export async function ziarno() {
       for (let i = 0; i < L; i++) Z[i] = Math.max(Z[i], X[i]);
     }
     Object.assign(v, { FW, FH, lab, kora, rdzen, pl, reg: { W: FW, H: FH, v: rv }, yeo: Y.v, allen: A.v });
+    if (D) v.par = plasterParcel(D, OBJ, v.zywy, mm).v;
     // linie: brzeg mózgu, granica istoty szarej i białej, brzegi jąder i komór, każde po rozmyciu do gładkiej krawędzi
     let d = kontur(T.v, FW, FH, 127.5, OBJ.krok) + kontur(B.v, FW, FH, 127.5, OBJ.krok);
     const bb = new Map();
@@ -363,10 +383,19 @@ export async function ziarno() {
     g.clearRect(0, 0, v.cv.width, v.cv.height);
     const rr = PROMIEN * Math.min(2, devicePixelRatio || 1);
     const wybranyReg = wybor && wybor.typ === 'obszar' ? wybor.n : 0, wybranyPlat = wybor && wybor.typ === 'plat' ? wybor.p : '';
-    const grupy = new Map();
+    const grupy = new Map(), wp = wybranaPar();
     for (const z of v.ziarna) {
       let kolor;
-      if (tryb === 'platy') {
+      if (tryb === 'polaczenia') {
+        // parcela zaznaczona złotem, reszta w barwie tego, jak blisko jej aktywność idzie z zaznaczoną; partnerów włókien obrysowuje
+        // biała linia. Bez zaznaczenia ziarno szare, a parcela pod wskaźnikiem jaśnieje
+        const p = D && v.par ? v.par[z.i] - 1 : -1;
+        if (p < 0) continue;
+        if (wp >= 0) {
+          if (p === wp) kolor = ZLOTE;
+          else kolor = RAZEM[Math.round(razem(D, wp, p) * (RAZEM.length - 1))];
+        } else kolor = p === hotPar ? JASNE : SZARE;
+      } else if (tryb === 'platy') {
         // kora płata w jego barwie, przy zaznaczonym płacie tylko on i płat pod wskaźnikiem; struktury bez płata szare, istota biała bez ziarna
         if (!z.r || z.r === BIALA || JAK[z.r] === BIALA) continue;
         const p = platObszaru(z.r);
@@ -392,6 +421,18 @@ export async function ziarno() {
       g.fill();
     }
     g.globalAlpha = 1;
+    // partnerzy włókien zaznaczonej parceli: cienki biały obrys ich miejsc w przekroju (obwódka każdego ziarna zalewała przekrój bielą)
+    if (tryb === 'polaczenia' && wp >= 0 && v.par) {
+      const klucz = wp + ':' + v.mm;
+      if (!v.obrys || v.obrys.klucz !== klucz) {
+        const L = v.FW * v.FH, m = new Float32Array(L), s = D.sasiad[wp];
+        for (let i = 0; i < L; i++) m[i] = v.par[i] && v.par[i] - 1 !== wp && s.has(v.par[i] - 1) ? 1 : 0;
+        v.obrys = { klucz, d: new Path2D(kontur(rozmyj(m, v.FW, v.FH, 1), v.FW, v.FH, 0.5, OBJ.krok)) };
+      }
+      g.save(); g.setTransform(v.skala, 0, 0, v.skala, 0, 0);
+      g.strokeStyle = BIALE; g.lineWidth = (1.1 * Math.min(2, devicePixelRatio || 1)) / v.skala;
+      g.stroke(v.obrys.d); g.restore();
+    }
   }
   const rysujWszystko = () => widoki.forEach(rysuj);
 
@@ -463,13 +504,42 @@ export async function ziarno() {
   // jądro pod korą dokładnie pod wskaźnikiem (rodzaj gleb: jądra podstawy, wzgórze, pień, jądra móżdżku): w Sieciach i Płatach nie ma
   // ani sieci, ani płata, więc wskazanie je nazywa, a klik zaznacza je jako obszar i przełącza widok na Obszary (jego słowa, 2026-11-16:
   // *can we make the subcortical structures clickable?*)
-  const jadroPod = (v, e) => { if (!ATLAS || !v.zywy) return 0; const a = v.allen[komorka(v, e)]; return a && OBJ.RODZAJ[a] === 'gleb' && REG[OBJ.A2R[a] - 1] ? OBJ.A2R[a] : 0; };
+  // parcela pod wskaźnikiem: najbliższe pole z parcelą w promieniu trzech pól, jak przy obszarach; −1 bez parceli
+  function parcelaPod(v, e) {
+    if (!D || !v.par) return -1;
+    const [fx, fy] = pole(v, e);
+    let best = -1, bd = 99;
+    for (let dy = -3; dy <= 3; dy++) for (let dx = -3; dx <= 3; dx++) {
+      const x = fx + dx, y = fy + dy, d = dx * dx + dy * dy;
+      if (x < 0 || y < 0 || x >= v.FW || y >= v.FH || d > 9 || d >= bd) continue;
+      const p = v.par[y * v.FW + x];
+      if (p) { best = p - 1; bd = d; }
+    }
+    return best;
+  }
+  // nazwa parceli we wskazaniu: struktura pod wskaźnikiem albo struktura, w której leży parcela, jej sieci i, przy zaznaczeniu, włókna do
+  // zaznaczonej parceli
+  function opisParceli(k, st) {
+    const wp = wybranaPar(), kody = sieciParceli(k);
+    return '<span><b>' + esc(st || nazwaParceli(k)) + '</b></span>' + kody.map((n) => '<span class="wk-kod-dalej"><b style="color:' + KOL[n] + '">' + n + '</b> ' + esc(NAZWA[n] || '') + '</span>').join('')
+      + (wp >= 0 && wp !== k && D.sasiad[wp].has(k) ? '<span class="wk-kod-dalej wk-kod-wlokna">włókna</span>' : '');
+  }
+  const jadroPod = (v, e) => { if (!ATLAS || !v.zywy || tryb === 'polaczenia') return 0; const a = v.allen[komorka(v, e)]; return a && OBJ.RODZAJ[a] === 'gleb' && REG[OBJ.A2R[a] - 1] ? OBJ.A2R[a] : 0; };
   function pokaz(v, e, palec) {
     ostatni = { v, e: { clientX: e.clientX, clientY: e.clientY }, palec };
     const jadro = tryb !== 'obszary' ? jadroPod(v, e) : 0;
     if (jadro) {
       if (hot.size || hotPlat) { hot.clear(); hotPlat = ''; rysujWszystko(); }
       postaw(v, e, '<span><b>' + esc(REG[jadro - 1][0]) + '</b></span>');
+      v.pole.style.cursor = 'pointer';
+      return;
+    }
+    if (tryb === 'polaczenia') {
+      const k = parcelaPod(v, e);
+      if (k !== hotPar) { hotPar = k; if (wybranaPar() < 0) rysujWszystko(); }
+      if (k < 0) { v.kody.hidden = true; v.pole.style.cursor = ''; return; }
+      const a = v.zywy ? v.allen[komorka(v, e)] : 0;
+      postaw(v, e, opisParceli(k, a && OBJ.RODZAJ[a] !== 'biala' && OBJ.RODZAJ[a] !== 'komora' ? OBJ.NAZWY[a] : ''));
       v.pole.style.cursor = 'pointer';
       return;
     }
@@ -503,7 +573,7 @@ export async function ziarno() {
     postaw(v, e, (yeo ? '<span class="wk-kod-yeo">' + esc(yeo) + '</span>' : '') + lista.map((n, j) => '<span' + (j ? ' class="wk-kod-dalej"' : '') + '><b>' + n + '</b> ' + (NAZWA[n] || '') + '</span>').join(''));
     v.pole.style.cursor = ATLAS ? 'pointer' : '';
   }
-  function schowaj(v) { ostatni = null; hot.clear(); hotReg = 0; hotPlat = ''; v.kody.hidden = true; rysujWszystko(); }
+  function schowaj(v) { ostatni = null; hot.clear(); hotReg = 0; hotPlat = ''; hotPar = -1; v.kody.hidden = true; rysujWszystko(); }
 
   // --- atlas: przełącznik, zaznaczenie, panel nad tytułem, adres
   const tu = ATLAS ? document.querySelector('.wk-tu') : null;
@@ -550,7 +620,19 @@ export async function ziarno() {
     if (!tu) return;
     // wiersz nad tytułem ma zawsze swoją wysokość, pusty bez zaznaczenia, więc widoki nie skaczą (audyt Atlasu, 2026-11-10)
     if (!wybor) { tu.innerHTML = ''; if (karty) karty.hidden = true; return; }
-    if (wybor.typ === 'plat') {
+    if (wybor.typ === 'parcela') {
+      // parcela: struktura, w której leży, półkula i jej sieci jako linki do kart; pod nimi klucz barw. Karty jej sieci pod kartą
+      if (!D) { tu.innerHTML = ''; if (karty) karty.hidden = true; return; }
+      const kody = sieciParceli(wybor.k), polk = D.meta.parcele[wybor.k][0] ? 'prawa półkula' : 'lewa półkula';
+      tu.innerHTML = '<span>' + esc(nazwaParceli(wybor.k)) + ', ' + polk + '</span>' + kody.map((n) => ' · ' + link(URL[n], kodKrotki(n))).join('')
+        + '<span class="at-klucz"><i class="at-klucz-w" aria-hidden="true"></i>włókna<i class="at-klucz-r" aria-hidden="true"></i>aktywność razem</span>';
+      const lista = [];
+      kody.forEach((n) => (KARTY_SIECI[n] || []).forEach((x) => { if (!lista.some((y) => y[1] === x[1])) lista.push([x[0], x[1], n]); }));
+      if (karty) {
+        karty.querySelector('.wk-chips').innerHTML = lista.sort((a, b) => a[0].localeCompare(b[0], 'pl')).map(([h, u, n]) => '<a href="' + esc(u) + '" class="wk-chip" style="--c:' + KOL[n] + '">' + esc(h) + '</a>').join('');
+        karty.hidden = !lista.length;
+      }
+    } else if (wybor.typ === 'plat') {
       // płat: jego nazwa, pod kartą Płaty mózgu karty, których miejsce leży w jego obszarach
       tu.innerHTML = '<span>' + esc(wybor.p) + '</span>';
       const lista = REG.map((r, j) => [r, j + 1]).filter(([r]) => r[2] === wybor.p).flatMap(([, j]) => KARTY_OBSZARU[j] || []).filter((x, j, a) => a.findIndex((y) => y[1] === x[1]) === j);
@@ -591,11 +673,14 @@ export async function ziarno() {
   // strona zaznaczenia: sieć albo obszar z kartą ma swoją stronę, brak zaznaczenia przegląd trybu, reszta adres /atlas/#siec-…
   // albo /atlas/#obszar-…; zaznaczenie zmienia adres bez nowego wpisu w historii, jak dotąd
   // płat i oba przeglądy anatomii stoją na stronie Płaty mózgu: płat z adresem #plat-…, przegląd Obszarów z #obszary
-  const stronaWyboru = (w, t) => (!w ? (t === 'sieci' ? STRONY.sieci : STRONY.obszary) : w.typ === 'plat' ? STRONY.platy || STRONY.obszary : w.typ === 'siec' ? (w.kody.length === 1 ? STRONY.siec[w.kody[0]] : '') : STRONY.obszar[w.n]) || '';
-  const kartyWyboru = (w, t) => (w && w.typ === 'siec' && w.kody.length > 1 ? w.kody.map((n) => STRONY.siec[n]).filter(Boolean) : [stronaWyboru(w, t)].filter(Boolean));
+  // Połączenia stoją na stronie Sieci wielkoskalowe (/atlas/#polaczenia, parcela /atlas/#polaczenie-<numer>), pod widokami karta sieci
+  // zaznaczonej parceli
+  const stronaWyboru = (w, t) => (!w ? (t === 'sieci' || t === 'polaczenia' ? STRONY.sieci : STRONY.obszary) : w.typ === 'parcela' ? '' : w.typ === 'plat' ? STRONY.platy || STRONY.obszary : w.typ === 'siec' ? (w.kody.length === 1 ? STRONY.siec[w.kody[0]] : '') : STRONY.obszar[w.n]) || '';
+  const kartyWyboru = (w, t) => (w && w.typ === 'parcela' ? sieciParceli(w.k).map((n) => STRONY.siec[n]).filter(Boolean) : w && w.typ === 'siec' && w.kody.length > 1 ? w.kody.map((n) => STRONY.siec[n]).filter(Boolean) : [stronaWyboru(w, t)].filter(Boolean));
   function adres() {
     const p = stronaWyboru(wybor, tryb);
-    const h = wybor && wybor.typ === 'plat' ? '#plat-' + platAdres(wybor.p) : !wybor ? (tryb === 'obszary' && STRONY.platy ? '#obszary' : '')
+    const h = wybor && wybor.typ === 'plat' ? '#plat-' + platAdres(wybor.p) : !wybor ? (tryb === 'obszary' && STRONY.platy ? '#obszary' : tryb === 'polaczenia' ? '#polaczenia' : '')
+      : wybor.typ === 'parcela' ? '#polaczenie-' + (wybor.k + 1)
       : p ? '' : wybor.typ === 'siec' ? '#siec-' + wybor.kody.map((n) => n.toLowerCase()).join('+') : '#obszar-' + REG[wybor.n - 1][4];
     history.replaceState(null, '', (p || STRONY.sieci || location.pathname) + h);
   }
@@ -603,15 +688,19 @@ export async function ziarno() {
     tryb = t;
     przyciski.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tryb === t)));
     mozg.classList.toggle('at-obszary', t !== 'sieci');
-    listy.forEach((l) => l.classList.toggle('at-lista-off', l.dataset.tryb !== t));
+    // w Połączeniach w miejscu listy stoi szukanie obszaru: wybrany obszar zaznacza parcelę w swoim środku
+    listy.forEach((l) => l.classList.toggle('at-lista-off', !l.dataset.tryb.split(' ').includes(t)));
+    if (szukaj) szukaj.placeholder = t === 'polaczenia' ? 'szukaj miejsca' : 'szukaj obszaru';
+    if (t === 'polaczenia') zPolaczeniami();
   }
+  const nazwaWSzukaniu = () => (wybor && wybor.typ === 'obszar' ? REG[wybor.n - 1][0] : wybor && wybor.typ === 'parcela' ? nazwaParceli(wybor.k) : '');
   function wybierz(w, bezAdresu, przewin) {
     wybor = w;
     LIT.clear();
     (w && w.typ === 'siec' ? w.kody : WSZYSTKIE).forEach((n) => LIT.add(n));
     widoki.forEach(wspolnota);
     tagi(); panel(); if (!bezAdresu) adres();
-    if (szukaj && document.activeElement !== szukaj) szukaj.value = w && w.typ === 'obszar' ? REG[w.n - 1][0] : '';
+    if (szukaj && document.activeElement !== szukaj) szukaj.value = nazwaWSzukaniu();
     // kilka sieci naraz (z karty wiki) lista nazywa kodami (przegląd Atlasu 2026-11-11: lista mówiła *wybierz sieć* nad pięcioma
     // zaznaczonymi sieciami)
     if (wybierajSiec) {
@@ -625,18 +714,19 @@ export async function ziarno() {
     // network/region should be visible. And then below the other cards*)
     // stan zostaje też na siatce, żeby mózg w 3D, który wczytuje się dłużej, zaczął od bieżącego zaznaczenia
     if (ATLAS) {
-      const nazwa = !w ? '' : w.typ === 'obszar' ? REG[w.n - 1][0] : w.typ === 'plat' ? w.p : w.kody.join(' · ');
+      const nazwa = !w ? '' : w.typ === 'obszar' ? REG[w.n - 1][0] : w.typ === 'plat' ? w.p : w.typ === 'parcela' ? nazwaParceli(w.k) : w.kody.join(' · ');
       const detail = { karty: kartyWyboru(w, tryb), przewin: !!przewin, tryb, lit: [...LIT], wybor: w, nazwa };
       mozg.__stan = detail;
       mozg.dispatchEvent(new CustomEvent('atlas-wybor', { detail }));
     }
   }
-  const tenSam = (a, b) => a && b && a.typ === b.typ && (a.typ === 'obszar' ? a.n === b.n : a.typ === 'plat' ? a.p === b.p : a.kody.join() === b.kody.join());
+  const tenSam = (a, b) => a && b && a.typ === b.typ && (a.typ === 'obszar' ? a.n === b.n : a.typ === 'plat' ? a.p === b.p : a.typ === 'parcela' ? a.k === b.k : a.kody.join() === b.kody.join());
   function kliknij(v, e) {
     let w = null;
     const jadro = tryb !== 'obszary' ? jadroPod(v, e) : 0;
     if (jadro) { ustawTryb('obszary'); hot.clear(); hotPlat = ''; wybierz({ typ: 'obszar', n: jadro }); return; }
-    if (tryb === 'platy') { const p = platObszaru(obszarPod(v, e)); if (!p) return; w = { typ: 'plat', p }; }
+    if (tryb === 'polaczenia') { const k = parcelaPod(v, e); if (k < 0) return; w = { typ: 'parcela', k }; }
+    else if (tryb === 'platy') { const p = platObszaru(obszarPod(v, e)); if (!p) return; w = { typ: 'plat', p }; }
     else if (tryb === 'obszary') { const n = obszarPod(v, e); if (!n) return; w = { typ: 'obszar', n }; }
     else {
       const lista = podWskaznikiem(v, e);
@@ -661,7 +751,11 @@ export async function ziarno() {
     const zeStrony = (sciezka, hash) => {
       let h = '';
       try { h = decodeURIComponent(hash); } catch (e) {} // zepsuty adres niczego nie zaznacza (audyt Atlasu, 2026-11-10)
-      const ms = /^#siec-([a-z+]+)$/.exec(h), mo = /^#obszar-([a-z0-9-]+)$/.exec(h);
+      const ms = /^#siec-([a-z+]+)$/.exec(h), mo = /^#obszar-([a-z0-9-]+)$/.exec(h), mp = /^#polaczenie-(\d+)$/.exec(h);
+      if (sciezka === STRONY.sieci && (h === '#polaczenia' || mp)) {
+        const k = mp ? Number(mp[1]) - 1 : -1;
+        return { w: k >= 0 && k < 414 ? { typ: 'parcela', k } : null, t: 'polaczenia' };
+      }
       if (sciezka === STRONY.sieci && (ms || mo)) {
         if (ms) { const kody = ms[1].split('+').map((x) => x.toUpperCase()).filter((x) => WSZYSTKIE.includes(x)); if (kody.length) return { w: { typ: 'siec', kody }, t: 'sieci' }; }
         if (mo) { const n = REG.findIndex((r) => r[4] === mo[1]) + 1; if (n) return { w: { typ: 'obszar', n }, t: 'obszary' }; }
@@ -707,7 +801,7 @@ export async function ziarno() {
     // wstecz, dalej i link do Atlasu z samego Atlasu zmieniają tylko adres: zaznaczenie idzie za nim
     addEventListener('hashchange', zAdresu);
     // klik w mózg w 3D zaznacza jak klik w przekroju: drugi klik w to samo zdejmuje zaznaczenie; karta wczytuje się bez przewijania
-    mozg.addEventListener('atlas-klik', (e) => { const w = e.detail; hotReg = 0; if (w && w.typ === 'obszar' && tryb !== 'obszary') { ustawTryb('obszary'); hot.clear(); hotPlat = ''; } wybierz(tenSam(w, wybor) ? null : w); });
+    mozg.addEventListener('atlas-klik', (e) => { const w = e.detail; hotReg = 0; if (w && w.typ === 'obszar' && tryb !== 'obszary' && tryb !== 'polaczenia') { ustawTryb('obszary'); hot.clear(); hotPlat = ''; } wybierz(tenSam(w, wybor) ? null : w); });
     // wstecz po zmianie ścieżki na miejscu wraca do wpisu z innym adresem bez zdarzenia hashchange (przegląd Atlasu 2026-11-11)
     addEventListener('popstate', zAdresu);
     if (szukaj && wyniki) {
@@ -762,6 +856,25 @@ export async function ziarno() {
       const wez = (n) => {
         otworz(false);
         if (!n) { wybierz(null); szukaj.value = ''; return; }
+        // w Połączeniach obszar z listy zaznacza parcelę w swoim punkcie najbliższym środka (lewa półkula), a cięcia przechodzą przez ten punkt
+        if (tryb === 'polaczenia') {
+          doObszaru(n);
+          zPolaczeniami().then((d) => {
+            const p = PUNKT.get(n);
+            if (!d || !p) return;
+            const [NX, NY, NZ] = OBJ.wymiar, k = OBJ.krok, [X0, Y0, Z0] = OBJ.poczatek;
+            const xi = Math.round((p[0] - X0) / k), yi = Math.round((p[1] - Y0) / k), zi = Math.round((p[2] - Z0) / k);
+            let v = 0;
+            for (let r = 0; r <= 4 && !v; r++) for (let dy = -r; dy <= r && !v; dy++) for (let dz = -r; dz <= r && !v; dz++) for (let dx = -r; dx <= r && !v; dx++) {
+              const x = xi + dx, y = yi + dy, z = zi + dz;
+              if (x >= 0 && y >= 0 && z >= 0 && x < NX && y < NY && z < NZ) v = d.L[(y * NZ + z) * NX + x];
+            }
+            if (!v) return;
+            wybierz({ typ: 'parcela', k: v <= 200 ? v - 1 : 400 + v - 201 });
+            szukaj.value = nazwaWSzukaniu();
+          });
+          return;
+        }
         if (tryb !== 'obszary') ustawTryb('obszary');
         hotReg = 0;
         wybierz({ typ: 'obszar', n });
@@ -778,12 +891,12 @@ export async function ziarno() {
           e.preventDefault();
           const el = wyniki.querySelectorAll('[role="option"]'), o = el[aktywny] || (szukaj.value.trim() ? el[0] : null);
           if (o) wez(Number(o.dataset.n));
-        } else if (e.key === 'Escape') { otworz(false); szukaj.value = wybor && wybor.typ === 'obszar' ? REG[wybor.n - 1][0] : ''; }
+        } else if (e.key === 'Escape') { otworz(false); szukaj.value = nazwaWSzukaniu(); }
       });
       // klik w wynik nie zabiera fokusu polu, więc lista nie znika przed wyborem
       wyniki.addEventListener('mousedown', (e) => e.preventDefault());
       wyniki.addEventListener('click', (e) => { const o = e.target.closest('[role="option"]'); if (o) wez(Number(o.dataset.n)); });
-      szukaj.addEventListener('blur', () => { otworz(false); szukaj.value = wybor && wybor.typ === 'obszar' ? REG[wybor.n - 1][0] : ''; });
+      szukaj.addEventListener('blur', () => { otworz(false); szukaj.value = nazwaWSzukaniu(); });
     }
     if (wybierajSiec) wybierajSiec.addEventListener('change', () => { const k = wybierajSiec.value; if (k !== 'wiele') wybierz(k ? { typ: 'siec', kody: [k] } : null); });
     if (wybierajPlat) wybierajPlat.addEventListener('change', () => { const p = wybierajPlat.value; wybierz(p ? { typ: 'plat', p } : null); });
