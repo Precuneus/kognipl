@@ -960,6 +960,9 @@ const BUDZ_T: any = {
 const MW: any = { ...DW }, NW: any = { ...DN };
 // długość każdej zabawy w ms, zanim tempo dnia ją rozciągnie albo skróci; wycieczka liczy się po 600 ms na sieć
 const DLUG: any = { swieci: 2600, ciagnie: 3200, stuka: 2600, bada: 3400, siada: 3000, krazy: 3600, zbiera: 3800, dmucha: 2700, nurkuje: 7600, okraza: 6400, unosi: 5600, kreci: 3600, zapala: 4400, latarnia: 7600, laczy: 3000, drzemie: 3600, kolo: 6400, lupa: 5600 };
+// ile stuknięć albo fal w zabawie: losowane za każdym razem z wag (jego słowa, 2026-11-18: *vary also the number of ripples. now its
+// always 4, isnt it*)
+const losIle = (w: number[]) => { let u = Math.random(); for (let i = 0; i < w.length; i++) { u -= w[i]; if (u <= 0) return i + 1; } return w.length; };
 const dlugosc = (m: string, ns: number) => (m === 'wycieczka' ? 600 * ns + 500 : (DLUG[m] + Math.random() * 1400) * TEMPO);
 function losujZ(W: any, klucze: string[]) {
   let tot = 0; for (const k of klucze) tot += W[k] || 0;
@@ -1029,9 +1032,15 @@ function startTryb(now: number) {
     ST.pchnela = 0;
   }
   if (ST.mode === 'zapala') {
+    // jedna, dwie albo trzy fale, każda z innego miejsca sieci
     const L = P3.filter((p) => !p.wn && wSieci(p, ST.n) && p.vis > .8);
     if (L.length < 2) ST.mode = 'stuka';
-    else { ST.z1 = L[(Math.random() * L.length) | 0]; ST.z2 = L[(Math.random() * L.length) | 0]; ST.zap = 0; }
+    else { const k = losIle([.3, .45, .25]); ST.zc = Array.from({ length: k }, () => L[(Math.random() * L.length) | 0]); ST.z1 = ST.zc[0]; ST.zap = 0; ST.mt = now + (k * 2200 + Math.random() * 700) * TEMPO; }
+  }
+  if (ST.mode === 'stuka') {
+    // od jednego do sześciu stuknięć, każde w swoim rytmie: wolno, szybko albo nierówno
+    ST.ile = losIle([.12, .22, .24, .18, .14, .1]); ST.okr0 = ST.okr = 440 + Math.random() * 440; ST.tk = 0;
+    ST.mt = now + 650 + ST.ile * ST.okr0 * 1.3 + 500;
   }
   if (ST.mode === 'nurkuje' || ST.mode === 'latarnia') {
     // wejście: widoczny punkt sieci blisko środka mózgu na ekranie; trasa przez dwie albo trzy struktury wnętrza po stronie wejścia,
@@ -1066,7 +1075,7 @@ function startTryb(now: number) {
     }
   }
   // zabawa, która ustąpiła innej (kręcenie, kołowrotek albo nurkowanie zaraz po obrocie przez czytelnika), bierze długość tej innej
-  if (ST.mode !== wybrana) { ST.mt = now + dlugosc(ST.mode, ns.length); ST.poprz = ST.mode; }
+  if (ST.mode !== wybrana) { if (ST.mode !== 'stuka') ST.mt = now + dlugosc(ST.mode, ns.length); ST.poprz = ST.mode; }
   if (ST.mode === 'lupa') {
     // szkło i znacznik pod nim zostają nad dolnym brzegiem mózgu, więc na telefonie nie zachodzą na nazwy sieci pod mózgiem
     ST.kat = Math.random() * Math.PI * 2; ST.py = Math.min(ST.py, BS.cy + BS.bw * .375 - (MOB ? 38 : 50) - 48);
@@ -1145,10 +1154,10 @@ function startIskra(now: number): any {
       c = { id: 'start-ciagnie', tryb: 'lot', x, y, I: .85, ang: Math.atan2(ST.py - y, ST.px - x), len: odl + 26, half: .3, mood: { pd: 1.22, lid: 1, joy: .6 } };
     } else if (ST.mode === 'stuka') {
       // stuka w sieć kilka razy obok siebie; od każdego stuknięcia po sieci biegnie fala
-      const faza = (now - ST.stuk) / 700;
-      if (faza >= 1) { [ST.px, ST.py] = startPkt(ST.n, 40); ST.stuk = now; }
+      const faza = (now - ST.stuk) / (ST.okr || 700);
+      if (faza >= 1 && ST.tk < ST.ile) { [ST.px, ST.py] = startPkt(ST.n, 40); ST.stuk = now; ST.okr = ST.okr0 * (.75 + Math.random() * .5); }
       const w = Math.sin(Math.PI * cl(faza)), y = ST.py - 24 + 20 * Math.pow(w, 3), x = ST.px;
-      if (faza > .48 && faza < .56 && !ST.uderz) { ST.uderz = 1; STX.rip.push({ x: ST.px, y: ST.py, n: ST.n, t0: now }); IS.sq = .32; }
+      if (faza > .48 && !ST.uderz && ST.tk < ST.ile) { ST.uderz = 1; ST.tk++; STX.rip.push({ x: ST.px, y: ST.py, n: ST.n, t0: now }); IS.sq = .32; }
       if (faza < .3) ST.uderz = 0;
       c = { id: 'start-stuka', tryb: 'lot', x, y, I: .7, ang: Math.PI / 2, len: 40, half: .4, mood: { pd: 1.15, lid: 1, joy: .35 } };
     } else if (ST.mode === 'bada') {
@@ -1216,9 +1225,9 @@ function startIskra(now: number): any {
     } else if (ST.mode === 'zapala') {
       // zapala sieć: stuka w nią dwa razy, a od każdego stuknięcia fala światła biegnie po powierzchni mózgu w trzech wymiarach, mocno po tej
       // sieci i słabiej po reszcie, także po stronie, której nie widać
-      const pierwsza = u < .45, cel = pierwsza ? ST.z1 : ST.z2, q = pierwsza ? u / .45 : (u - .45) / .55;
+      const k = ST.zc.length, i = Math.min(k - 1, Math.floor(u * k)), cel = ST.zc[i], q = u * k - i;
       const [x0, y0] = brainS(cel), w = Math.sin(Math.PI * cl(q));
-      if (q > .5 && ST.zap < (pierwsza ? 1 : 2)) { ST.zap = pierwsza ? 1 : 2; STX.rip3.push({ X: cel.X, Y: cel.Y, Z: cel.Z, n: ST.n, t0: now }); IS.sq = .34; }
+      if (q > .5 && ST.zap < i + 1) { ST.zap = i + 1; STX.rip3.push({ X: cel.X, Y: cel.Y, Z: cel.Z, n: ST.n, t0: now }); IS.sq = .34; }
       c = { id: 'start-zapala', tryb: 'lot', x: x0, y: y0 - 24 + 20 * Math.pow(w, 3), I: .8, ang: Math.PI / 2, len: 40, half: .4, mood: { pd: 1.2, lid: 1, joy: .55 } };
     } else if (ST.mode === 'laczy') {
       // przeciąga świetlną nić od jednej sieci do drugiej
@@ -1404,6 +1413,7 @@ function klikNowa(now: number) {
   KL.zm = TRYBY[(Math.random() * TRYBY.length) | 0];
   KL.z0 = now; KL.zt = now + ({ ciagnie: 2800, chowa: 3200, stuka: 2400, krazy: 3000, bada: 2600 } as any)[KL.zm] + Math.random() * 600;
   // następna zabawa zaczyna się blisko miejsca, w którym Iskra jest, więc nie przeskakuje przez sieć
+  if (KL.zm === 'stuka') { KL.ile = losIle([.12, .22, .24, .18, .14, .1]); KL.okr0 = KL.okr = 440 + Math.random() * 440; KL.tk = 0; KL.zt = now + KL.ile * KL.okr0 * 1.3 + 450; }
   KL.px = IS.x; KL.py = IS.y; [KL.px, KL.py] = klikPkt(70); KL.kat = -Math.PI / 2 + (Math.random() - .5) * 1.2; KL.stuk = now; KL.uderz = 0; KL.wyjrz = 0; KL.krok = now + 500;
   if (KL.zm === 'chowa') {
     // punkty sieci najbliżej środka, które przykryją Iskrę
@@ -1440,10 +1450,10 @@ function klikZabawa(now: number): any {
   }
   if (KL.zm === 'stuka') {
     // stuka w sieć kilka razy obok siebie; od każdego stuknięcia po sieci biegnie fala
-    const faza = (now - KL.stuk) / 650;
-    if (faza >= 1) { [KL.px, KL.py] = klikPkt(40); KL.stuk = now; }
+    const faza = (now - KL.stuk) / (KL.okr || 650);
+    if (faza >= 1 && KL.tk < KL.ile) { [KL.px, KL.py] = klikPkt(40); KL.stuk = now; KL.okr = KL.okr0 * (.75 + Math.random() * .5); }
     const w = Math.sin(Math.PI * cl(faza)), y = KL.py - 24 + 20 * Math.pow(w, 3);
-    if (faza > .48 && faza < .56 && !KL.uderz) { KL.uderz = 1; STX.rip.push({ x: KL.px, y: KL.py, n: KL.n, t0: now }); IS.sq = .32; }
+    if (faza > .48 && !KL.uderz && KL.tk < KL.ile) { KL.uderz = 1; KL.tk++; STX.rip.push({ x: KL.px, y: KL.py, n: KL.n, t0: now }); IS.sq = .32; }
     if (faza < .3) KL.uderz = 0;
     return { id: 'klik-stuka', tryb: 'lot', x: KL.px, y, I: .7, ang: Math.PI / 2, len: 40, half: .4, mood: { pd: 1.15, lid: 1, joy: .5 } };
   }
