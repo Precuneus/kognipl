@@ -123,7 +123,7 @@ export async function mozg3d(el) {
   let tKlik = 0, tNazwa = 0;
   // widok startowy to też cały mózg: ↻ i dwuklik zdejmują cięcia (`ciecia.js`, zdarzenie `atlas-start`; przegląd 2026-11-16: po
   // cięciach ↻ wracał tylko kamerą, a mózg zostawał pocięty)
-  const odNowa = () => { clearTimeout(tKlik); controls.reset(); zamknij(); siatka.dispatchEvent(new CustomEvent('atlas-start')); };
+  const odNowa = () => { clearTimeout(tKlik); controls.reset(); zamknij(); mozdzek(true); siatka.dispatchEvent(new CustomEvent('atlas-start')); };
   renderer.domElement.addEventListener('dblclick', odNowa);
   const przyciskStart = el.querySelector('.at-3d-start');
   if (przyciskStart) przyciskStart.addEventListener('click', () => odNowa());
@@ -184,6 +184,28 @@ export async function mozg3d(el) {
   gg.setAttribute('position', new THREE.BufferAttribute(gp, 3));
   gg.setAttribute('color', new THREE.BufferAttribute(gc, 3));
   scene.add(new THREE.Points(gg, new THREE.PointsMaterial({ size: 2, sizeAttenuation: false, vertexColors: true, clippingPlanes: plaszczyzny, clipIntersection: false })));
+  // móżdżek do schowania (jego słowa, 2026-11-19: *we want to add a button to remove the cerebellum, as it covers the ventral part of
+  // the cerebrum*): powierzchnia i jej ziarno bez trójkątów i punktów móżdżku, grupy Allena CB z częściami; pień z konarami zostaje;
+  // widok startowy to cały mózg, więc ↻ móżdżek przywraca
+  const CB = REG.findIndex((r) => r[0] === 'móżdżek') + 1;
+  const wMozdzku = (a) => { const r = a ? A2R[a] : 0; return !!CB && !!r && (r === CB || wyzej(r, CB)); };
+  const indBez = [];
+  for (let f = 0; f < ind.length; f += 3) if (!wMozdzku(allen[ind[f]]) && !wMozdzku(allen[ind[f + 1]]) && !wMozdzku(allen[ind[f + 2]])) indBez.push(ind[f], ind[f + 1], ind[f + 2]);
+  const ziarnoCale = [], ziarnoBez = [];
+  for (let j = 0; j < ng; j++) { ziarnoCale.push(j); if (!wMozdzku(allen[j * KROK])) ziarnoBez.push(j); }
+  const korIdx = [geo.getIndex(), new THREE.BufferAttribute(new Uint16Array(indBez), 1)];
+  const ziaIdx = [new THREE.BufferAttribute(new Uint32Array(ziarnoCale), 1), new THREE.BufferAttribute(new Uint32Array(ziarnoBez), 1)];
+  gg.setIndex(ziaIdx[0]);
+  const przyciskMozdzek = el.querySelector('.at-mozdzek');
+  let bezMozdzku = false;
+  function mozdzek(widac) {
+    const zmiana = bezMozdzku === widac; bezMozdzku = !widac;
+    geo.setIndex(korIdx[widac ? 0 : 1]); gg.setIndex(ziaIdx[widac ? 0 : 1]);
+    if (przyciskMozdzek) przyciskMozdzek.setAttribute('aria-checked', String(widac));
+    if (zmiana && typeof lica === 'function') lica(true);
+    if (typeof rysuj === 'function') rysuj();
+  }
+  if (przyciskMozdzek) przyciskMozdzek.addEventListener('click', () => mozdzek(przyciskMozdzek.getAttribute('aria-checked') !== 'true'));
 
   const kol = new THREE.Color(), kol2 = new THREE.Color(), ciem = new THREE.Color(CIEMNY), szary = new THREE.Color(SZARY), zloto = new THREE.Color(ZLOTE), blade = new THREE.Color(ZLOTE).lerp(new THREE.Color(SZARY), 0.55), jasny = new THREE.Color('#bdb5a6');
   // sieci punktu, kiedy świeci któraś z nich: miejsce, które świecąca sieć dzieli z inną, świeci kolorem każdej swojej sieci, jak
@@ -232,9 +254,55 @@ export async function mozg3d(el) {
   const [NX, NY, NZ] = O.wymiar, k = O.krok, x0 = O.poczatek[0] - k / 2, Wmm = (2 * NX - 1) * k;
   const yTop = O.poczatek[1] + (NY - 0.5) * k, zTop = O.poczatek[2] + (NZ - 0.5) * k, zBot = O.poczatek[2] - k / 2, yBot = O.poczatek[1] - k / 2;
   const plastry = {};
+  // istota biała tyłomózgowia (Allen HWM) to i pień, i drzewo móżdżku (ponowny audyt 2026-11-19: przy wyłączonym móżdżku ściana rysowała
+  // jego rozgałęzioną istotę białą); pole HWM należy do móżdżku, kiedy przez samą istotę białą najbliżej mu do kory lub jąder móżdżku,
+  // a do pnia, kiedy najbliżej do istoty szarej pnia. Konary i komory nie są źródłem, więc podział wypada tam, gdzie konary wchodzą
+  // w móżdżek; liczone raz, przy pierwszym wyłączeniu
+  let MASKA_HWM = null;
+  function bialaMozdzku() {
+    if (MASKA_HWM) return MASKA_HWM;
+    const [nx, ny, nz] = O.wymiar, NV = nx * ny * nz, fA = 2 * NV;
+    const HWM = NAZWY.indexOf('istota biała tyłomózgowia');
+    const kto = new Int8Array(NV), q = new Int32Array(NV);
+    let h = 0, t = 0;
+    for (let i = 0; i < NV; i++) {
+      const a = vol[fA + i];
+      if (!a || a === HWM || RODZAJ[a] === 'komora' || /^konar/.test(NAZWY[a] || '')) continue;
+      kto[i] = wMozdzku(a) ? 1 : 2; q[t++] = i;
+    }
+    const kroki = [1, -1, nx, -nx, nx * nz, -nx * nz];
+    while (h < t) {
+      const i = q[h++], xi = i % nx;
+      for (const d of kroki) {
+        if ((d === 1 && xi === nx - 1) || (d === -1 && xi === 0)) continue;
+        const n = i + d;
+        if (n < 0 || n >= NV || kto[n] || vol[fA + n] !== HWM) continue;
+        kto[n] = kto[i]; q[t++] = n;
+      }
+    }
+    MASKA_HWM = new Uint8Array(NV);
+    for (let i = 0; i < NV; i++) if (kto[i] === 1 && vol[fA + i] === HWM) MASKA_HWM[i] = 1;
+    return MASKA_HWM;
+  }
   function obraz(p, mm, id) {
     const T = plaster(vol, O, 0, p, mm), B = plaster(vol, O, 1, p, mm), A = plaster(vol, O, 2, p, mm), Y = plaster(vol, O, 3, p, mm);
-    const PAR = D ? plasterParcel(D, O, p, mm).v : null;
+    const PAR = D ? plasterParcel(D, O, p, mm).v.slice() : null;
+    // ściany cięć idą za wyłącznikiem móżdżku (audyt 2026-11-19: po cięciu od tyłu ściana rysowała plaster móżdżku z całej objętości, a
+    // wskaźnik nazywał na niej część boczną półkuli): pola grupy CB i przylegająca do nich tkanka bez etykiety znikają z obrazu i ze
+    // wskazania; płaskie przekroje zostają całe, bo móżdżek niczego w nich nie zasłania
+    if (bezMozdzku) {
+      const kolejka = [];
+      const zgas = (i) => { T.v[i] = 0; B.v[i] = 0; A.v[i] = 0; Y.v[i] = 0; if (PAR) PAR[i] = 0; kolejka.push(i); };
+      const M = plaster(bialaMozdzku(), O, 0, p, mm).v;
+      for (let i = 0; i < T.v.length; i++) if (wMozdzku(A.v[i]) || M[i]) zgas(i);
+      while (kolejka.length) {
+        const i = kolejka.pop(), x = i % T.W, y = (i / T.W) | 0;
+        for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+          const xx = x + dx, yy = y + dy, n = yy * T.W + xx;
+          if (xx >= 0 && yy >= 0 && xx < T.W && yy < T.H && !A.v[n] && T.v[n] > 127) zgas(n);
+        }
+      }
+    }
     plastry[id] = { T, B, A, Y, PAR };
     const S = 8, cv = document.createElement('canvas'); cv.width = T.W * S; cv.height = T.H * S;
     const g = cv.getContext('2d');
@@ -393,15 +461,18 @@ export async function mozg3d(el) {
     const prawo = kr && kr.width ? rs.right - kr.left + 28 + 84 : rs.right - g.right;
     return [56, Math.max(0, prawo), 60, Math.max(0, g.left - rs.left + 56)];
   };
-  // poniżej 1000 px mózg wypełnia ramkę między pasami suwaków: kamera mierzy obrys powierzchni na ekranie, staje tak, żeby jego środek
-  // wypadł na środku tego pola, i odsuwa się, aż zajmie je bez 4% marginesu (jego słowa, 2026-11-13: *too small on the vertical view*)
+  // poniżej 1000 px mózg wypełnia ramkę między pasami suwaków: kamera mierzy obrys powierzchni na ekranie i odsuwa się, aż zajmie pole
+  // bez 4% marginesu (jego słowa, 2026-11-13: *too small on the vertical view*). Mózg obraca się w miejscu (jego słowa, 2026-11-19: *the
+  // rotating of the brain is somewhat odd*): środek obrotu zostaje w środku mózgu, a na środek pola przesuwa go przesunięcie obrazu
+  // kamery (setViewOffset); przesunięty środek obrotu kołysał mózgiem przez całą ramkę, pod suwak i w kolumnę przekrojów
   function wpasuj(w, h, pg, pp, pd, pl) {
-    const q = new THREE.Vector3(), pr = new THREE.Vector3(), gr = new THREE.Vector3(), pol = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    const q = new THREE.Vector3();
     const xL = -1 + 2 * pl / w, xR = 1 - 2 * pp / w, yG = 1 - 2 * pg / h, yD = -1 + 2 * pd / h;
     const icx = (xL + xR) / 2, icy = (yG + yD) / 2, ihw = (xR - xL) / 2, ihh = (yG - yD) / 2;
     controls.target.copy(T0);
-    let d = camera.position.distanceTo(controls.target) || 400;
-    for (let k = 0; k < 5; k++) {
+    camera.clearViewOffset();
+    let d = camera.position.distanceTo(controls.target) || 400, cx = 0, cy = 0;
+    for (let k = 0; k < 6; k++) {
       camera.position.copy(controls.target).addScaledVector(kierunek, d);
       camera.lookAt(controls.target); camera.updateMatrixWorld();
       let x0 = 9, x1 = -9, y0 = 9, y1 = -9;
@@ -409,12 +480,10 @@ export async function mozg3d(el) {
         q.set(pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2]).project(camera);
         if (q.x < x0) x0 = q.x; if (q.x > x1) x1 = q.x; if (q.y < y0) y0 = q.y; if (q.y > y1) y1 = q.y;
       }
-      const hh = d * pol, hw = hh * camera.aspect;
-      pr.setFromMatrixColumn(camera.matrixWorld, 0); gr.setFromMatrixColumn(camera.matrixWorld, 1);
-      controls.target.addScaledVector(pr, ((x0 + x1) / 2 - icx) * hw).addScaledVector(gr, ((y0 + y1) / 2 - icy) * hh);
-      d = Math.min(controls.maxDistance, Math.max(controls.minDistance, d * Math.max((x1 - x0) / 2 / ihw, (y1 - y0) / 2 / ihh) / 0.96));
+      cx = (x0 + x1) / 2; cy = (y0 + y1) / 2;
+      if (k < 5) d = Math.min(controls.maxDistance, Math.max(controls.minDistance, d * Math.max((x1 - x0) / 2 / ihw, (y1 - y0) / 2 / ihh) / 0.96));
     }
-    camera.position.copy(controls.target).addScaledVector(kierunek, d);
+    camera.setViewOffset(w, h, -(icx - cx) * w / 2, (icy - cy) * h / 2, w, h);
   }
   const SCIANY = [['x', 0], ['x', 1], ['y', 0], ['y', 1], ['z', 0], ['z', 1]];
   const lica = (sila) => SCIANY.forEach(([os, j]) => postawLico(os, j, sila));
@@ -746,23 +815,22 @@ export async function mozg3d(el) {
       if (sx < L) L = sx; if (sx > P) P = sx; if (sy < G) G = sy; if (sy > D) D = sy;
     }
     const R = (c) => [Number(c.dataset.lo), Number(c.dataset.hi)];
-    const [xl, xh] = R(cx), [yl, yh] = R(cy), [zl, zh] = R(cz), ys = (yl + yh) / 2, zs = (zl + zh) / 2;
+    const [yl, yh] = R(cy), [zl, zh] = R(cz), ys = (yl + yh) / 2, zs = (zl + zh) / 2;
     // z prawej granicą jest kolumna przekrojów, gdy stoi na scenie, inaczej brzeg ramki
     const gl = el.closest('.at-glowny'), kol = gl && gl.querySelector('.at-kol');
     const kr = kol && getComputedStyle(kol).position === 'absolute' ? kol.getBoundingClientRect() : null;
     const prawo = (kr && kr.width ? kr.left - rb.left : W) - 8, lewo = 6;
     // na telefonie nazwy końców stoją nad górnym torem i pod dolnym, więc mózg dostaje całą szerokość ramki
     const wys = cx.offsetHeight || 28, nad = matchMedia('(max-width:720px)').matches ? 13 : 0;
-    const poziomy = (c, a, b, y, min) => {
-      const na = nad ? 10 : c.querySelector('.at-koniec-a').offsetWidth + 14, nb = c.querySelector('.at-za').offsetWidth + 14;
-      let x0 = Math.min(a, b), x1 = Math.max(a, b);
-      if (x1 - x0 < min) { const sr = (x0 + x1) / 2; x0 = sr - min / 2; x1 = sr + min / 2; }
-      x0 = Math.max(lewo + na, x0); x1 = Math.min(prawo - nb, x1);
-      c.style.left = ox + x0 + 'px'; c.style.width = Math.max(48, x1 - x0) + 'px'; c.style.top = oy + y + 'px';
-    };
     const yD = Math.min(D + 8, H - wys - 6 - nad), yG = Math.max(6 + nad, G - 8 - wys);
-    poziomy(cy, ekr(0, yh, zs)[0], ekr(0, yl, zs)[0], yD, 120);
-    poziomy(cx, ekr(xh, ys, zs)[0], ekr(xl, ys, zs)[0], yG, 160);
+    // tor lewa–prawa tak długi jak tor przód–tył (jego słowa, 2026-11-19: *we want to expand the left-right suwak to the length of the
+    // przod-tyl one*): oba tory biorą jeden przedział, końce mózgu na osi przód–tył, przycięty nazwami końców obu torów
+    const zaY = cy.querySelector('.at-za').offsetWidth + 14, zaX = cx.querySelector('.at-za').offsetWidth + 14;
+    const naY = nad ? 10 : cy.querySelector('.at-koniec-a').offsetWidth + 14, naX = nad ? 10 : cx.querySelector('.at-koniec-a').offsetWidth + 14;
+    let t0 = Math.min(ekr(0, yh, zs)[0], ekr(0, yl, zs)[0]), t1 = Math.max(ekr(0, yh, zs)[0], ekr(0, yl, zs)[0]);
+    if (t1 - t0 < 160) { const sr = (t0 + t1) / 2; t0 = sr - 80; t1 = sr + 80; }
+    t0 = Math.max(lewo + Math.max(naY, naX), t0); t1 = Math.min(prawo - Math.max(zaY, zaX), t1);
+    for (const [c, y] of [[cy, yD], [cx, yG]]) { c.style.left = ox + t0 + 'px'; c.style.width = Math.max(48, t1 - t0) + 'px'; c.style.top = oy + y + 'px'; }
     // pionowy stoi tuż za tyłem mózgu; z nazwą dołu i wyłącznikiem pod nią kończy się nad dolnym suwakiem
     const za = cz.querySelector('.at-za').offsetHeight - 12, szer = 34 + cz.querySelector('.at-koniec-a').offsetWidth;
     const gora = Math.max(yG + wys + 18, ekr(0, ys, zh)[1]), dol = Math.min(ekr(0, ys, zl)[1], yD - 10 - za);

@@ -91,6 +91,8 @@ const opis = glowna || !k ? 'Atlas mózgu na kogni.pl to mózg do obracania i ci
             {/* powrót do widoku startowego, widoczny zawsze, przed suwakami w kolejności klawiatury (przegląd Atlasu 2026-11-11: po
                 przybliżeniu i obrocie student nie wiedział, jak wrócić; dwuklik robi to samo) */}
             <button type="button" class="at-3d-start" aria-label="Widok startowy" data-podpis="widok startowy">↻</button>
+            {/* móżdżek do schowania, bo zasłania brzuszną stronę kresomózgowia (jego słowa, 2026-11-19); wyłącznik jak przy przekrojach, obok ↻ */}
+            <button type="button" class="at-mozdzek" role="switch" aria-checked="true">móżdżek<span class="at-wl-tor" aria-hidden="true"></span><span class="at-podpis" aria-hidden="true"></span></button>
             <Fragment set:html={ciecie('x') + ciecie('z') + ciecie('y')} />
             <div class="wk-kody at-3d-nazwa" aria-hidden="true" hidden></div>
           </div>

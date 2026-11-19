@@ -119,6 +119,7 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-glowny:not(:has(.at-3d-brak)) .at-blok{pointer-events:auto}
 .at-glowny:not(:has(.at-3d-brak)) .at-3d-start{left:0;right:auto}
 .at-glowny:not(:has(.at-3d-brak)) .at-3d-start::after{left:0;right:auto}
+.at-glowny:not(:has(.at-3d-brak)) .at-mozdzek{left:44px;right:auto}
 }
 /* suwak cięcia: tor z dwiema gałkami, mózg zostaje między nimi i ten odcinek toru świeci; końce nazwane. Suwaki stoją wokół mózgu w 3D
    (jego słowa, 2026-11-16: *make the suwaki above, below, and to the right of the brain in 3d*): pudełko suwaka to jego tor od końca do
@@ -191,6 +192,24 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .at-3d-start:hover{color:#f0c060}
 .at-3d-start:focus-visible{outline:2px solid #f0c060;outline-offset:2px}
 .at-3d.at-3d-brak .at-3d-start{display:none}
+.at-mozdzek{position:absolute;right:54px;top:6px;z-index:3;height:34px;display:inline-flex;align-items:center;gap:8px;padding:0 10px 0 12px;font:500 12px/1 Inter,sans-serif;color:#cfc8bb;background:rgba(14,13,11,.75);border:1px solid rgba(226,200,150,.45);border-radius:999px;cursor:pointer}
+.at-mozdzek:hover{color:#f0c060}
+.at-mozdzek:focus-visible{outline:2px solid #f0c060;outline-offset:2px}
+.at-mozdzek[aria-checked="true"] .at-wl-tor{background:rgba(240,192,96,.16)}
+.at-mozdzek[aria-checked="true"] .at-wl-tor::after{transform:translateX(16px);background:#f0c060}
+.at-3d.at-3d-brak .at-mozdzek{display:none}
+/* podpis jak przy wyłącznikach przekrojów; pod pigułką, bo na komputerze stoi ona u góry sceny */
+.at-mozdzek .at-podpis{bottom:auto;top:calc(100% + 8px)}
+.at-mozdzek[aria-checked="true"] .at-podpis::before{content:'schowaj móżdżek'}
+.at-mozdzek[aria-checked="false"] .at-podpis::before{content:'pokaż móżdżek'}
+@media (hover:hover){.at-mozdzek:hover .at-podpis{opacity:1}}
+.at-mozdzek:focus-visible .at-podpis{opacity:1}
+/* poniżej 1000 px górny rząd zajmują górny tor z wyłącznikiem przekroju i nazwy jego końców, więc wyłącznik móżdżku stoi pod dolnym torem, między przodem a tyłem (render 2026-11-19) */
+@media (max-width:999px){.at-mozdzek{top:auto;bottom:0;right:auto;left:50%;transform:translateX(-50%);height:30px}.at-mozdzek .at-podpis{top:auto;bottom:calc(100% + 8px)}}
+/* na telefonie pole dotyku dolnego toru (40 px) sięgało o 1 px w pigułkę (audyt 2026-11-19) */
+@media (max-width:720px){.at-mozdzek{bottom:-6px}}
+/* od 721 px nazwy końców stoją przy torze, a dolny tor schodzi do brzegu sceny, więc wyłącznik stoi pod sceną */
+@media (min-width:721px) and (max-width:999px){.at-mozdzek{bottom:-36px}}
 /* przypięte struktury: chipy w kroju znaczników, kropka w barwie bryły; nowy obszar do przypięcia w przerywanej ramce */
 .at-przypiete{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;flex:0 0 100%;order:0}
 .at-przypiete[hidden],.at-glowny:has(.at-3d-brak) .at-przypiete{display:none}
