@@ -288,7 +288,8 @@ html.at-czeka .at-miejsce{visibility:hidden}
 .wk-kind ul{margin:0;padding:0 0 0 18px;font-size:14.5px;line-height:1.6}
 .wk-kind li{margin-bottom:8px}
 .wk-kind li a{color:var(--ink);text-decoration:underline dotted 1px;text-underline-offset:4px}
-.wk-meta{color:#a09888}
+/* Astro zjada spację między </a> a {…}, więc odstęp czasu filmu od tytułu daje margines (przegląd 2026-11-19) */
+.wk-meta{color:#a09888;margin-left:.4em}
 .wk-chips{display:flex;flex-wrap:wrap;gap:8px}
 .wk-chip{display:inline-flex;align-items:center;text-decoration:none;font-size:13px;min-height:36px;padding:6px 14px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);color:var(--c)}
 .wk-wstep{margin:0;padding:0 0 32px}
