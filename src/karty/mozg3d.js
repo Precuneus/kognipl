@@ -89,14 +89,31 @@ export async function mozg3d(el) {
   try { [vol, pow] = await Promise.all([gz(O.url), gz(el.dataset.powierzchnia)]); } catch (e) { el.classList.add('at-3d-brak'); return; }
 
   const dv = new DataView(pow.buffer);
-  const nv = dv.getUint32(0, true), nf = dv.getUint32(4, true);
+  const nv0 = dv.getUint32(0, true), nf = dv.getUint32(4, true);
   let o = 8;
-  const pos16 = new Int16Array(pow.buffer.slice(o, o + nv * 6)); o += nv * 6;
+  const pos16 = new Int16Array(pow.buffer.slice(o, o + nv0 * 6)); o += nv0 * 6;
   const ind = new Uint16Array(pow.buffer.slice(o, o + nf * 6)); o += nf * 6;
-  const yeo = pow.slice(o, o + nv); o += nv;
-  const allen = pow.slice(o, o + nv);
+  const yeo0 = pow.slice(o, o + nv0); o += nv0;
+  const allen0 = pow.slice(o, o + nv0); o += nv0;
+  // czapa pod móżdżkiem (jego zrzut, 2026-11-19: *removing the cerebellum leaves a hole in the cerebrum*): powierzchnia mózgu liczona
+  // z objętości, w której móżdżek, jego istota biała i przylegająca tkanka bez etykiety są zerem (`mozdzek.py --czapa`); ogon pliku zawiera
+  // jej punkty, których stara powierzchnia nie ma, i jej trójkąty, które biorą punkty starej powierzchni na szwie, więc szew jest szczelny;
+  // `blisko` to najbliższy punkt starej powierzchni poza móżdżkiem, od którego nowy punkt bierze parcelę połączeń
+  let nc = 0, capI = new Uint16Array(0), blisko = new Uint16Array(0), posC = new Int16Array(0), yeoC = new Uint8Array(0), allenC = new Uint8Array(0);
+  if (pow.length > o + 8) {
+    nc = dv.getUint32(o, true); const nt = dv.getUint32(o + 4, true); o += 8;
+    posC = new Int16Array(pow.buffer.slice(o, o + nc * 6)); o += nc * 6;
+    capI = new Uint16Array(pow.buffer.slice(o, o + nt * 6)); o += nt * 6;
+    yeoC = pow.slice(o, o + nc); o += nc;
+    allenC = pow.slice(o, o + nc); o += nc;
+    blisko = new Uint16Array(pow.buffer.slice(o, o + nc * 2));
+  }
+  const nv = nv0 + nc;
+  const yeo = new Uint8Array(nv), allen = new Uint8Array(nv);
+  yeo.set(yeo0); yeo.set(yeoC, nv0); allen.set(allen0); allen.set(allenC, nv0);
   const pos = new Float32Array(nv * 3);
-  for (let i = 0; i < nv * 3; i++) pos[i] = pos16[i] / 10;
+  for (let i = 0; i < nv0 * 3; i++) pos[i] = pos16[i] / 10;
+  for (let i = 0; i < nc * 3; i++) pos[nv0 * 3 + i] = posC[i] / 10;
 
   const scena = el.querySelector('.at-3d-scena');
   const scene = new THREE.Scene();
@@ -145,7 +162,7 @@ export async function mozg3d(el) {
     wczytajPolaczenia(POL_URL).then((d) => {
       if (D) return;
       D = d; vpar = new Int16Array(nv);
-      for (let i = 0; i < nv; i++) vpar[i] = indeks(D.wierz[i], pos[i * 3] < 0 ? 0 : 1);
+      for (let i = 0; i < nv; i++) vpar[i] = indeks(D.wierz[i < nv0 ? i : blisko[i - nv0]], pos[i * 3] < 0 ? 0 : 1);
       wszystko();
     }).catch(() => {});
   }
@@ -163,8 +180,21 @@ export async function mozg3d(el) {
 
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  // móżdżek do schowania (jego słowa, 2026-11-19: *we want to add a button to remove the cerebellum, as it covers the ventral part of
+  // the cerebrum*): powierzchnia i jej ziarno bez trójkątów i punktów móżdżku, grupy Allena CB z częściami, a na ich miejscu czapa;
+  // pień z konarami zostaje; widok startowy to cały mózg, więc ↻ móżdżek przywraca
+  const CB = REG.findIndex((r) => r[0] === 'móżdżek') + 1;
+  const wMozdzku = (a) => { const r = a ? A2R[a] : 0; return !!CB && !!r && (r === CB || wyzej(r, CB)); };
+  const indBez = [];
+  for (let f = 0; f < ind.length; f += 3) if (!wMozdzku(allen[ind[f]]) && !wMozdzku(allen[ind[f + 1]]) && !wMozdzku(allen[ind[f + 2]])) indBez.push(ind[f], ind[f + 1], ind[f + 2]);
+  for (let f = 0; f < capI.length; f++) indBez.push(capI[f]);
+  // normalne punktów czapy liczone na powierzchni bez móżdżku, reszta na całej
+  geo.setIndex(new THREE.BufferAttribute(new Uint16Array(indBez), 1));
+  geo.computeVertexNormals();
+  const nrmC = geo.getAttribute('normal').array.slice(nv0 * 3);
   geo.setIndex(new THREE.BufferAttribute(ind, 1));
   geo.computeVertexNormals();
+  geo.getAttribute('normal').array.set(nrmC, nv0 * 3);
   const vc = new Float32Array(nv * 3);
   geo.setAttribute('color', new THREE.BufferAttribute(vc, 3));
   const mat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.85, metalness: 0, clippingPlanes: plaszczyzny, clipIntersection: false, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
@@ -184,15 +214,8 @@ export async function mozg3d(el) {
   gg.setAttribute('position', new THREE.BufferAttribute(gp, 3));
   gg.setAttribute('color', new THREE.BufferAttribute(gc, 3));
   scene.add(new THREE.Points(gg, new THREE.PointsMaterial({ size: 2, sizeAttenuation: false, vertexColors: true, clippingPlanes: plaszczyzny, clipIntersection: false })));
-  // móżdżek do schowania (jego słowa, 2026-11-19: *we want to add a button to remove the cerebellum, as it covers the ventral part of
-  // the cerebrum*): powierzchnia i jej ziarno bez trójkątów i punktów móżdżku, grupy Allena CB z częściami; pień z konarami zostaje;
-  // widok startowy to cały mózg, więc ↻ móżdżek przywraca
-  const CB = REG.findIndex((r) => r[0] === 'móżdżek') + 1;
-  const wMozdzku = (a) => { const r = a ? A2R[a] : 0; return !!CB && !!r && (r === CB || wyzej(r, CB)); };
-  const indBez = [];
-  for (let f = 0; f < ind.length; f += 3) if (!wMozdzku(allen[ind[f]]) && !wMozdzku(allen[ind[f + 1]]) && !wMozdzku(allen[ind[f + 2]])) indBez.push(ind[f], ind[f + 1], ind[f + 2]);
   const ziarnoCale = [], ziarnoBez = [];
-  for (let j = 0; j < ng; j++) { ziarnoCale.push(j); if (!wMozdzku(allen[j * KROK])) ziarnoBez.push(j); }
+  for (let j = 0; j < ng; j++) { if (j * KROK < nv0) ziarnoCale.push(j); if (!wMozdzku(allen[j * KROK])) ziarnoBez.push(j); }
   const korIdx = [geo.getIndex(), new THREE.BufferAttribute(new Uint16Array(indBez), 1)];
   const ziaIdx = [new THREE.BufferAttribute(new Uint32Array(ziarnoCale), 1), new THREE.BufferAttribute(new Uint32Array(ziarnoBez), 1)];
   gg.setIndex(ziaIdx[0]);
