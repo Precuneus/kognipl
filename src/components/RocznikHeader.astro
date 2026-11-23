@@ -18,6 +18,8 @@ const MENU = [
   // Atlas obok wiki (jego słowa, 2026-11-10: *lets make an "Atlas" subpage, next to the wiki. And link between them!*), przed nią
   // (2026-11-11: *Swap the Atlas and the Wiki positions in the menu*)
   { label: 'Atlas', href: WIKI ? '/atlas/' : '', on: current === 'atlas', here: current === 'atlas' },
+  // Symulacje na prawo od Atlasu (jego słowa, 2026-11-20: *Maybe Symulacje subpage? Right to Atlas*)
+  { label: 'Symulacje', href: '/symulacje/', on: current === 'symulacje', here: current === 'symulacje' },
   { label: 'Wiki', href: WIKI ? '/wiki/' : '', on: current === 'wiki', here: current === 'wiki' },
   // Story w menu (jego słowo, 2026-11-01: *Move stories to the menu on top*): historia ze strony startowej
   { label: 'Story', href: '/#czesc', on: false, here: false },
