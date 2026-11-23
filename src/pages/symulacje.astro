@@ -30,7 +30,7 @@ const opis = 'W modelu predykcji i zaskoczenia postać idzie, sięga po kubek i 
       <button id="bView" aria-label="Widok od nowa">↻</button>
       <button id="bOsobno" aria-pressed="false" title="Obracaj mózg i postać osobno">Obrót osobno</button>
       <button id="bWolno" aria-pressed="false" aria-label="Tempo dziesięć razy wolniej">0,1×</button>
-      <button id="sChod" class="sc" aria-pressed="true">Chód</button><button id="sKubek" class="sc" aria-pressed="false">Kubek</button><button id="sKuchnia" class="sc" aria-pressed="false">Kuchnia</button>
+      <button id="sChod" class="sc" aria-pressed="true">Iść</button><button id="sKubek" class="sc" aria-pressed="false">Sięgać</button><button id="sKuchnia" class="sc" aria-pressed="false">Otwierać</button>
       <button id="bSeq" aria-pressed="false">Po kolei</button>
       <span class="seq" id="seq" hidden><button id="bPrev" aria-label="Poprzednia część">‹</button><span id="seqN" aria-live="polite"></span><button id="bNext" aria-label="Następna część">›</button></span>
     </div>
@@ -41,17 +41,21 @@ const opis = 'W modelu predykcji i zaskoczenia postać idzie, sięga po kubek i 
       <button class="chip" data-c="D" aria-pressed="false" hidden><i style="background:var(--dopa)"></i>dopamina</button>
     </div>
     <div class="ex" id="ex" aria-live="polite"></div>
-    <div class="foot">Ruch biegnie w czasie rzeczywistym i zwalnia w chwili zaskoczenia, żeby było widać, którędy zaskoczenie płynie. Kolory pokazują hipotezę Bastosa i współpracowników (2012), według której zaskoczenie płynie szybszymi rytmami niż predykcje.<!--[s:bastos2012-errors-higher-frequencies]--> Rytmy są pokazane wolniej, w tej samej proporcji; w korze wzrokowej makaka połączenia w stronę receptorów pracują w rytmie beta, około 14–18 Hz, a połączenia od receptorów w rytmie theta, około 4 Hz, oraz w rytmie gamma, około 60–80 Hz (Bastos i in. 2015)<!--[s:bastos2015-gamma-ff-beta-fb]-->. U ludzi przy chwycie precyzyjnym rytm beta, 15–30 Hz, płynie między korą a mięśniami dłoni w obu kierunkach, z opóźnieniem około 23 ms w każdą stronę (Witham i in. 2011)<!--[s:witham2011-beta-cmc-both-directions]--><!--[s:witham2011-loop-delays-each-way]-->, a włókna czuciowe wrzecion mięśniowych, jak się wydaje, szczególnie dobrze przewodzą go z mięśni do ośrodkowego układu nerwowego (Baker 2007)<!--[s:baker2007-spindles-expected-actual-beta]-->. Model przepływu według aktywnego wnioskowania, active inference (Adams, Shipp i Friston 2013)<!--[s:adams2013-proprioceptive-predictions-reflex-arc]-->. Pętle jąder podstawy według Alexandra, DeLonga i Stricka (1986)<!--[s:alexander1986-motor-loop-through-vlo]--><!--[s:alexander1986-prefrontal-loop-through-va-md]-->, projekcje kory i neuronów dopaminowych do prążkowia według Haber (2003)<!--[s:haber2003-frontal-gradient-into-striatum]--><!--[s:haber2003-ventral-tier-snc-to-dorsal-striatum]-->. Pętla móżdżku według Kelly i Stricka (2003)<!--[s:kelly2003-cerebrocerebellar-closed-loops]-->, uczenie się móżdżku z zaskoczenia czuciowego według Tsenga i współpracowników (2007)<!--[s:tseng2007-sensory-prediction-errors-drive-adaptation]-->, którzy badali adaptację sięgania u ludzi. Pęczek skośny czołowy według Cataniego i współpracowników (2012)<!--[s:catani2012-frontal-aslant-tract]-->, pęczek podłużny górny III według Thiebaut de Schotten i współpracowników (2011)<!--[s:thiebautdeschotten2011-slf-iii-ventral-right-lateralized]-->, obręcz według Bubb, Metzler-Baddeley i Aggletona (2018)<!--[s:bubb2018-cingulum-frontal-parietal-course]-->. Kora z szablonu MNI ICBM152 2009c (Fonov i in. 2011), obszary z Allen Human Reference Atlas 3D (CC BY 4.0), jądra pod korą z CIT168 (Pauli, Nili i Tyszka 2018, CC BY 4.0), sieci Yeo i in. 2011 w parcelacji Schaefera i in. 2018. Drogi, także korowo-prążkowiowe, z atlasu HCP-1065 (Yeh 2022, CC BY-SA 4.0), dane Human Connectome Project (WU-Minn, Van Essen i Ugurbil). Ruch postaci z bazy CMU Graphics Lab Motion Capture Database (mocap.cs.cmu.edu), powstałej ze środków NSF EIA-0196217.</div>
   </div>
 </div>
-<section aria-label="Karty sceny" class="wk-box sym-karty">
+<section aria-label="Scenariusze" class="wk-box sym-karty">
+  <h2>Scenariusze</h2>
+  <ol class="sym-scn" id="scn"></ol>
+  <div class="sym-kart" id="kart">
   <h2>Karty</h2>
   {Object.entries(chipy).filter(([, ks]) => ks.length).map(([sc, ks]) => (
     <div class="wk-chips" data-scena={sc} hidden={sc !== 'chod'}>
       {ks.map((k) => <a href={k.url} class="wk-chip" style={'--c:' + INK[k.g]}>{k.h}</a>)}
     </div>
   ))}
+  </div>
 </section>
+<div class="foot sym-zrodla">Ruch biegnie w czasie rzeczywistym i zwalnia w chwili zaskoczenia, żeby było widać, którędy zaskoczenie płynie. Kolory pokazują hipotezę Bastosa i współpracowników (2012), według której zaskoczenie płynie szybszymi rytmami niż predykcje.<!--[s:bastos2012-errors-higher-frequencies]--> Rytmy są pokazane wolniej, w tej samej proporcji; w korze wzrokowej makaka połączenia w stronę receptorów pracują w rytmie beta, około 14–18 Hz, a połączenia od receptorów w rytmie theta, około 4 Hz, oraz w rytmie gamma, około 60–80 Hz (Bastos i in. 2015)<!--[s:bastos2015-gamma-ff-beta-fb]-->. U ludzi przy chwycie precyzyjnym rytm beta, 15–30 Hz, płynie między korą a mięśniami dłoni w obu kierunkach, z opóźnieniem około 23 ms w każdą stronę (Witham i in. 2011)<!--[s:witham2011-beta-cmc-both-directions]--><!--[s:witham2011-loop-delays-each-way]-->, a włókna czuciowe wrzecion mięśniowych, jak się wydaje, szczególnie dobrze przewodzą go z mięśni do ośrodkowego układu nerwowego (Baker 2007)<!--[s:baker2007-spindles-expected-actual-beta]-->. Model przepływu według aktywnego wnioskowania, active inference (Adams, Shipp i Friston 2013)<!--[s:adams2013-proprioceptive-predictions-reflex-arc]-->. Pętle jąder podstawy według Alexandra, DeLonga i Stricka (1986)<!--[s:alexander1986-motor-loop-through-vlo]--><!--[s:alexander1986-prefrontal-loop-through-va-md]-->, projekcje kory i neuronów dopaminowych do prążkowia według Haber (2003)<!--[s:haber2003-frontal-gradient-into-striatum]--><!--[s:haber2003-ventral-tier-snc-to-dorsal-striatum]-->. Pętla móżdżku według Kelly i Stricka (2003)<!--[s:kelly2003-cerebrocerebellar-closed-loops]-->, uczenie się móżdżku z zaskoczenia czuciowego według Tsenga i współpracowników (2007)<!--[s:tseng2007-sensory-prediction-errors-drive-adaptation]-->, którzy badali adaptację sięgania u ludzi. Pęczek skośny czołowy według Cataniego i współpracowników (2012)<!--[s:catani2012-frontal-aslant-tract]-->, pęczek podłużny górny III według Thiebaut de Schotten i współpracowników (2011)<!--[s:thiebautdeschotten2011-slf-iii-ventral-right-lateralized]-->, obręcz według Bubb, Metzler-Baddeley i Aggletona (2018)<!--[s:bubb2018-cingulum-frontal-parietal-course]-->. Kora z szablonu MNI ICBM152 2009c (Fonov i in. 2011), obszary z Allen Human Reference Atlas 3D (CC BY 4.0), jądra pod korą z CIT168 (Pauli, Nili i Tyszka 2018, CC BY 4.0), sieci Yeo i in. 2011 w parcelacji Schaefera i in. 2018. Drogi, także korowo-prążkowiowe, z atlasu HCP-1065 (Yeh 2022, CC BY-SA 4.0), dane Human Connectome Project (WU-Minn, Van Essen i Ugurbil). Ruch postaci z bazy CMU Graphics Lab Motion Capture Database (mocap.cs.cmu.edu), powstałej ze środków NSF EIA-0196217.</div>
 </main>
 </Base>
 
@@ -77,7 +81,7 @@ const opis = 'W modelu predykcji i zaskoczenia postać idzie, sięga po kubek i 
 .sym .btns{flex-wrap:wrap}
 .sym .seq{display:flex;gap:6px;align-items:center}
 .sym .seq[hidden]{display:none}
-.sym #seqN{font-size:13px;color:var(--fg);min-width:10em;text-align:center}
+.sym #seqN{font-size:13px;color:var(--fg);min-width:10em;text-align:center;white-space:nowrap}
 .sym .chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .sym .chip{font-size:12px;color:var(--fg2);height:30px;padding:0 10px;display:inline-flex;align-items:center;gap:7px}
 .sym .chip i{width:8px;height:8px;border-radius:50%;display:inline-block}
@@ -117,7 +121,18 @@ const opis = 'W modelu predykcji i zaskoczenia postać idzie, sięga po kubek i 
 .sym .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .sym .ex{height:4.1em}   /* three lines on a wide screen, so no caption is cut */
 @media (max-width:760px){.sym .app{height:auto}.sym .stage{height:calc(100svh - var(--sym-gora,64px) - 24px)}.sym .ex{height:auto;min-height:5.4em}}   /* on a phone the model fills the screen and the controls follow on scroll */
-.sym .sym-karty{margin:6px 0 28px}
+.sym .sym-karty{margin:6px 0 18px}
+.sym .sym-zrodla{margin:0 0 28px}
+.sym .sym-scn{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.sym .sym-scn li{display:grid;grid-template-columns:minmax(0,22em) minmax(0,1fr);gap:4px 18px;align-items:baseline;padding:7px 0;border-top:1px solid rgba(180,155,100,.12)}
+.sym .sym-scn li:first-child{border-top:0}
+.sym .sym-scn button{height:auto;min-height:36px;padding:4px 0;border:0;background:none;text-align:left;font-family:var(--font-d);font-style:italic;font-weight:500;font-size:19px;line-height:1.25;color:var(--fg);white-space:normal;border-radius:6px}
+.sym .sym-scn button[aria-current=true]{color:var(--candle)}
+@media (hover:hover){.sym .sym-scn button:hover{color:var(--candle)}}
+.sym .sym-scn span{font-size:14px;line-height:1.5;color:var(--fg2)}
+.sym .sym-kart{margin-top:26px}
+.sym .sym-kart[hidden]{display:none}
+@media (max-width:760px){.sym .sym-scn li{grid-template-columns:1fr}}
 .sym .sym-karty[hidden],.sym .sym-karty [hidden]{display:none}
 
 </style>
@@ -1138,24 +1153,24 @@ const STACJE = {
   rdzen: ['rdzeń kręgowy', 'W rdzeniu predykcja położenia kończyny spotyka bioinformację z wrzecion mięśniowych. Według Adamsa, Shippa i Fristona (2013) zaskoczenie pobudza neurony ruchowe, aż ruch spełni predykcję.']   // [s:adams2013-proprioceptive-predictions-reflex-arc]
 };
 const CZESCI_K = [
-  { n: 'Sięganie', a: 1.2, b: 2.3, st: 'rekaR', e: 'Predykcja położenia dłoni, niebieski cień, biegnie przed ręką, a różnica między nimi to zaskoczenie, które pobudza w rdzeniu neurony ruchowe ręki. W mózgu, na mapie ciała, świeci obszar dłoni.' },
-  { n: 'Lżejszy kubek', a: 2.65, b: 3.35, st: 'rekaR', e: 'Kubek okazuje się lżejszy, niż zakładała predykcja, więc dłoń unosi się ponad niebieski cień, czyli predykcję swojego położenia. Zaskoczenie jest większe, niż rdzeń wyrównuje przy dłoni, łokciu i barku, przekracza ich zakresy i wspina się do obszaru dłoni w prawej półkuli.' },
-  { n: 'Nowa predykcja', a: 3.25, b: 5.0, st: 'cien', e: 'Predykcje reszty ruchu obejmują już lżejszy kubek, więc dłoń znów idzie za swoim cieniem, a zaskoczenie mieści się w zakresie dłoni albo łokcia.' }
+  { id: 'cien', n: 'Dłoń, która idzie za swoim cieniem', op: 'Niebieski cień, predykcja położenia dłoni, biegnie przed ręką, a różnica między nimi pobudza w rdzeniu neurony ruchowe.', a: 1.2, b: 2.3, st: 'rekaR', e: 'Predykcja położenia dłoni, niebieski cień, biegnie przed ręką, a różnica między nimi to zaskoczenie, które pobudza w rdzeniu neurony ruchowe ręki. W mózgu, na mapie ciała, świeci obszar dłoni.' },
+  { id: 'lzejszy', n: 'Kubek, który ważył mniej', op: 'Dłoń unosi się wyżej, niż zakładała predykcja, a zaskoczenie wspina się do obszaru dłoni w korze.', a: 2.65, b: 3.35, st: 'rekaR', e: 'Kubek okazuje się lżejszy, niż zakładała predykcja, więc dłoń unosi się ponad niebieski cień, czyli predykcję swojego położenia. Zaskoczenie jest większe, niż rdzeń wyrównuje przy dłoni, łokciu i barku, przekracza ich zakresy i wspina się do obszaru dłoni w prawej półkuli.' },
+  { id: 'dogonila', n: 'Predykcja, która dogoniła kubek', op: 'Predykcje obejmują już lżejszy kubek, a zaskoczenie jest znów tak małe, że rdzeń wyrównuje je przy dłoni albo łokciu.', a: 3.25, b: 5.0, st: 'cien', e: 'Predykcje reszty ruchu obejmują już lżejszy kubek, więc dłoń znów idzie za swoim cieniem, a zaskoczenie mieści się w zakresie dłoni albo łokcia.' }
 ];
 const CZESCI_KU = [
-  { n: 'Własna kuchnia', a: 1.2, b: 3.3, st: 'puR', e: 'Prawa ręka otwiera szafkę, a lewa bierze kubek z nawyku; w modelu ten nawyk prowadzi pętla ze skorupy przez gałkę bladą i jądro brzuszne boczne wzgórza. Kubek jest tam, gdzie zawsze, więc w modelu dopamina płynie równo; u małp nagroda zgodna z predykcją nie zmienia wyładowań neuronów dopaminowych (Schultz, Dayan i Montague 1997).' },   // [s:schultz1997-signed-error-few-aversive] [s:schultz1997-monkeys-juice-lever-light] [s:alexander1986-motor-loop-through-vlo]
-  { n: 'Ruszanie', a: 6.85, b: 7.75, st: 'stnR', e: OPIS_KU.start },
-  { n: 'Nowa kuchnia', a: 7.7, b: 8.5, st: 'cahR', e: 'Prawa ręka otwiera szafkę jak w domu, ale predykcje obejmują tu mniej, więc zaskoczenie częściej przekracza zakresy dłoni i łokcia. U naczelnych pętla celu biegnie z kory przedczołowej do głowy jądra ogoniastego i wraca przez jądra brzuszne przednie i przyśrodkowo-grzbietowe wzgórza (Alexander, DeLong i Strick 1986).' },   // [s:alexander1986-prefrontal-loop-through-va-md]
-  { n: 'Pusta szafka', a: 8.5, b: 9.5, st: 'sncR', e: OPIS_KU.szafka },
-  { n: 'Kubek wyżej', a: 10.6, b: 11.6, st: 'sncR', e: OPIS_KU.kubek2 }
+  { id: 'zawsze', n: 'Kubek, który jest tam, gdzie zawsze', op: 'Lewa ręka bierze kubek z nawyku, a w modelu dopamina płynie równo.', a: 1.2, b: 3.3, st: 'puR', e: 'Prawa ręka otwiera szafkę, a lewa bierze kubek z nawyku; w modelu ten nawyk prowadzi pętla ze skorupy przez gałkę bladą i jądro brzuszne boczne wzgórza. Kubek jest tam, gdzie zawsze, więc w modelu dopamina płynie równo; u małp nagroda zgodna z predykcją nie zmienia wyładowań neuronów dopaminowych (Schultz, Dayan i Montague 1997).' },   // [s:schultz1997-signed-error-few-aversive] [s:schultz1997-monkeys-juice-lever-light] [s:alexander1986-motor-loop-through-vlo]
+  { id: 'ruszanie', n: 'Ręka, która rusza do szafki', op: 'Zanim prawa ręka ruszy, jądra podstawy w modelu najpierw szeroko hamują wzgórze i korę, a potem uwalniają wybrany ruch.', a: 6.85, b: 7.75, st: 'stnR', e: OPIS_KU.start },
+  { id: 'nowa', n: 'Kuchnia, której ręka nie zna', op: 'Predykcje obejmują tu mniej, więc więcej zaskoczenia wspina się do mózgu, a w modelu przejmuje je pętla celu, czyli pętla działania celowego.', a: 7.7, b: 8.5, st: 'cahR', e: 'Prawa ręka otwiera szafkę jak w domu, ale predykcje obejmują tu mniej, więc zaskoczenie częściej przekracza zakresy dłoni i łokcia. U naczelnych pętla celu biegnie z kory przedczołowej do głowy jądra ogoniastego i wraca przez jądra brzuszne przednie i przyśrodkowo-grzbietowe wzgórza (Alexander, DeLong i Strick 1986).' },   // [s:alexander1986-prefrontal-loop-through-va-md]
+  { id: 'pusta', n: 'Szafka, w której kubka nie ma', op: 'Dłoń zwalnia przed pustą szafką, a w modelu dopamina na chwilę płynie słabiej.', a: 8.5, b: 9.5, st: 'sncR', e: OPIS_KU.szafka },
+  { id: 'polka', n: 'Kubek, który czekał w szafce wyżej', op: 'Kubek jest tam, gdzie predykcja go nie umieszczała, a w modelu dopamina płynie mocniej.', a: 10.6, b: 11.6, st: 'sncR', e: OPIS_KU.kubek2 }
 ];
 const CZ = () => (scena === 'kubek' ? CZESCI_K : scena === 'kuchnia' ? CZESCI_KU : CZESCI);
 const CZESCI = [
-  { n: 'Ścieranie', a: 1.1, b: 2.2, st: 'zakres', e: 'Niebieski cień kończyn to predykcja ich położenia, a czerwień wspina się po kończynie do stawu, do którego sięga zaskoczenie. Rdzeń wyrównuje zaskoczenie, które mieści się w zakresie stopy albo kolana, a do kory dociera niewiele.' },
-  { n: 'Niższa płyta', a: TD - 0.15, b: TD + 0.55, st: 'korL', e: 'Stopa schodzi niżej, niż zakładała predykcja. Zaskoczenie przekracza zakresy stopy, kolana i biodra, a jego reszta wspina się przez rdzeń i wzgórze do obszaru nogi w lewej półkuli.' },
-  { n: 'Pętla móżdżku', a: TD + 0.05, b: TD + 0.12, st: 'korL', e: OPIS.petla },
-  { n: 'Potknięcie', a: TT - 0.1, b: TT + 0.6, st: 'korR', e: 'Stopa zaczepia o przeszkodę. Zaskoczenie przekracza zakresy nogi i tułowia i biegnie nerwem i rdzeniem do kory prawej półkuli. Predykcje rąk wysuwają się do przodu, ręce idą za nimi, a reszta zaskoczenia płynie drogami bocznymi w stronę sieci brzusznej uwagi i istotności.' },
-  { n: 'Sieci', a: TT + 0.15, b: TT + 1.3, st: 'snL', e: 'Zaskoczenie płynie w stronę sieci brzusznej uwagi i istotności. Predykcje kolejnych kroków unoszą lewą stopę wyżej, a stopa je spełnia.' }
+  { id: 'krok', n: 'Krok, który zgadza się z predykcją', op: 'Stopa ląduje tam, gdzie zakładała predykcja, a rdzeń wyrównuje niewielkie zaskoczenie.', a: 1.1, b: 2.2, st: 'zakres', e: 'Niebieski cień kończyn to predykcja ich położenia, a czerwień wspina się po kończynie do stawu, do którego sięga zaskoczenie. Rdzeń wyrównuje zaskoczenie, które mieści się w zakresie stopy albo kolana, a do kory dociera niewiele.' },
+  { id: 'podloga', n: 'Podłoga, która była niżej', op: 'Stopa schodzi niżej, niż zakładała predykcja, a zaskoczenie wspina się do obszaru nogi w korze.', a: TD - 0.15, b: TD + 0.55, st: 'korL', e: 'Stopa schodzi niżej, niż zakładała predykcja. Zaskoczenie przekracza zakresy stopy, kolana i biodra, a jego reszta wspina się przez rdzeń i wzgórze do obszaru nogi w lewej półkuli.' },
+  { id: 'poprawka', n: 'Poprawka, która wraca przez móżdżek', op: 'Obszar nogi w korze wysyła do mięśni zmienioną predykcję, a zaskoczenie płynie też do móżdżku, skąd poprawka wraca do tego samego obszaru.', a: TD + 0.05, b: TD + 0.12, st: 'korL', e: OPIS.petla },
+  { id: 'przeszkoda', n: 'Przeszkoda, o którą zaczepiła stopa', op: 'Stopa zaczepia o przeszkodę, a zaskoczenie, większe, niż rdzeń wyrównuje przy nodze i tułowiu, biegnie do kory.', a: TT - 0.1, b: TT + 0.6, st: 'korR', e: 'Stopa zaczepia o przeszkodę. Zaskoczenie przekracza zakresy nogi i tułowia i biegnie nerwem i rdzeniem do kory prawej półkuli. Predykcje rąk wysuwają się do przodu, ręce idą za nimi, a reszta zaskoczenia płynie drogami bocznymi w stronę sieci brzusznej uwagi i istotności.' },
+  { id: 'wyzej', n: 'Krok, w którym stopa unosi się wyżej', op: 'Zaskoczenie płynie w stronę sieci brzusznej uwagi i istotności, a predykcje kolejnych kroków unoszą stopę wyżej.', a: TT + 0.15, b: TT + 1.3, st: 'snL', e: 'Zaskoczenie płynie w stronę sieci brzusznej uwagi i istotności. Predykcje kolejnych kroków unoszą lewą stopę wyżej, a stopa je spełnia.' }
 ];
 
 // ---------- tags, link ----------
@@ -1322,7 +1337,14 @@ function klatka(now) {
   if (zb > 0) { camF.position.copy(camF0); camF.lookAt(fT); camF.updateMatrixWorld(); }
 }
 function ustawGraj(v) { playing = v; $('bPlay').textContent = v ? '⏸' : '▶'; $('bPlay').setAttribute('aria-label', v ? 'Pauza' : 'Odtwórz'); dirty = true; }
+function rysujScenariusze() { const ol = $('scn'); ol.textContent = '';   // the scenarios of the scene playing: a press plays one, and it takes its own address
+  CZ().forEach((c, i) => { const li = document.createElement('li'), b = document.createElement('button'), sp = document.createElement('span'); b.type = 'button'; b.textContent = c.n; sp.textContent = c.op;
+    b.onclick = () => { ustawCzesc(czesc === i ? -1 : i); if (czesc >= 0) { ustawGraj(true); stage.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' }); } };
+    li.append(b, sp); ol.appendChild(li); }); }
+let adresy = false;
 function ustawCzesc(i) { czesc = i; tc = 0; const on = i >= 0; $('seq').hidden = !on; $('bSeq').setAttribute('aria-pressed', on);
+  [...$('scn').children].forEach((li, j) => { const b = li.firstChild; if (j === i) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+  if (adresy) { const h = '#' + scena + (on ? '/' + CZ()[i].id : ''); if (location.hash !== h && !(h === '#chod' && !location.hash)) history.replaceState(null, '', h); }
   if (on) $('seqN').textContent = `${CZ()[i].n} · ${i + 1}/${CZ().length}`; dirty = true; }
 $('bPlay').onclick = () => ustawGraj(!playing);
 $('bOsobno').onclick = () => { osobno = !osobno; $('bOsobno').setAttribute('aria-pressed', osobno); ustawF(); prowadzi = 'B'; dirty = true; };
@@ -1331,7 +1353,7 @@ $('bView').onclick = () => { ctl.target.copy(target); camB.position.copy(target)
 $('bSeq').onclick = () => { if (czesc >= 0) { const c = CZ()[czesc]; t = c.a + (tc % (c.b - c.a)); ustawCzesc(-1); } else { ustawCzesc(0); ustawGraj(true); } };
 $('bNext').onclick = () => ustawCzesc((czesc + 1) % CZ().length);
 $('bPrev').onclick = () => ustawCzesc((czesc - 1 + CZ().length) % CZ().length);
-function ustawScene(sc) { scena = sc; for (const e of document.querySelectorAll('.sym-karty [data-scena]')) e.hidden = e.dataset.scena !== sc; { const b = document.querySelector('.sym-karty'); if (b) b.hidden = !b.querySelector('[data-scena=' + sc + ']'); } LOOP = sc === 'kubek' ? LOOP_K : LOOP_W; t = 0; ustawCzesc(-1);
+function ustawScene(sc) { scena = sc; for (const e of document.querySelectorAll('.sym-karty [data-scena]')) e.hidden = e.dataset.scena !== sc; { const b = $('kart'); if (b) b.hidden = !b.querySelector('[data-scena=' + sc + ']'); } LOOP = sc === 'kubek' ? LOOP_K : LOOP_W; t = 0; rysujScenariusze(); ustawCzesc(-1);
   for (const [id, s] of [['sChod', 'chod'], ['sKubek', 'kubek'], ['sKuchnia', 'kuchnia']]) $(id).setAttribute('aria-pressed', sc === s);
   const chD = document.querySelector('.chip[data-c=D]'); if (sc !== 'kuchnia' && iso === 'D') chD.click(); chD.hidden = sc !== 'kuchnia';
   if (sc === 'kuchnia') wczytajKuchnie(); miejsceNapisu(); dirty = true; }
@@ -1340,11 +1362,12 @@ function miejsceNapisu() { const ex = $('ex'); if (innerWidth > 760) { ex.style.
   let h = 0; for (const tx of [...Object.values(scena === 'kubek' ? OPIS_K : scena === 'kuchnia' ? OPIS_KU : OPIS), ...Object.values(OPIS_ISO)]) { m.textContent = tx; h = Math.max(h, m.offsetHeight); }
   m.remove(); ex.style.minHeight = h + 'px'; }
 addEventListener('resize', miejsceNapisu); if (document.fonts && document.fonts.ready) document.fonts.ready.then(miejsceNapisu);
-addEventListener('hashchange', () => { const h = location.hash.slice(1); if (SCENY.includes(h) && h !== scena) ustawScene(h); });   // the address leads while the page is open
+addEventListener('hashchange', () => zAdresu());   // the address leads while the page is open
 const SCENY = ['chod', 'kubek', 'kuchnia'];   // each scene at its own address
-const idzDo = (sc) => { ustawScene(sc); history.replaceState(null, '', '#' + sc); };
+const idzDo = (sc) => { ustawScene(sc); };
+const zAdresu = () => { const [sc, id] = location.hash.slice(1).split('/'); if (!SCENY.includes(sc)) return; if (sc !== scena) ustawScene(sc); const i = id ? CZ().findIndex((c) => c.id === id) : -1; if (i !== czesc) { ustawCzesc(i); if (i >= 0 && !reduce) ustawGraj(true); } };
 $('sChod').onclick = () => idzDo('chod'); $('sKubek').onclick = () => idzDo('kubek'); $('sKuchnia').onclick = () => idzDo('kuchnia');
-{ const h = location.hash.slice(1); if (SCENY.includes(h) && h !== 'chod') ustawScene(h); }
+rysujScenariusze(); zAdresu(); adresy = true;
 for (const b of document.querySelectorAll('.chip')) b.onclick = () => { const c = b.dataset.c; iso = iso === c ? null : c;
   for (const x of document.querySelectorAll('.chip')) { x.setAttribute('aria-pressed', iso === x.dataset.c); x.classList.toggle('dim', iso !== null && iso !== x.dataset.c); } dirty = true; };
 addEventListener('keydown', (e) => { if (e.target.closest && e.target.closest('input, textarea, .cie')) return;
@@ -1352,6 +1375,8 @@ addEventListener('keydown', (e) => { if (e.target.closest && e.target.closest('i
   if (czesc >= 0 && e.code === 'ArrowRight') $('bNext').click(); if (czesc >= 0 && e.code === 'ArrowLeft') $('bPrev').click(); });
 ustawGraj(playing); miejsceNapisu();
 window.__model = { tnij(os, a, b) { wczytajObjetosc(); OSIE[os].t = [a, b]; OSIE[os].rys(); lica(); }, wybierz, traf, get wybor() { return wybor; }, objetosc: wczytajObjetosc, scena: (x) => ustawScene(x), get stacje() { return ekranStacji; }, get stageRect() { return SR; }, idz(x) { t = x; dirty = true; }, graj: ustawGraj, czesc: ustawCzesc, poza, stany, LOOP, TD, TT, get t() { return t; }, uMeas, uPred, get kuchnia() { return KUD; } };
-rozmiar(); requestAnimationFrame(klatka); { const zw = reduce ? 0 : 1; setTimeout(wczytajObjetosc, 1500 * zw); setTimeout(wczytajKuchnie, 2500 * zw); setTimeout(wczytajPetle, 3500 * zw); }
+rozmiar();
+if (reduce) Promise.race([Promise.all([wczytajObjetosc(), wczytajKuchnie(), wczytajPetle()]), new Promise((r) => setTimeout(r, 8000))]).then(() => requestAnimationFrame(klatka));   // for a reader who set less motion the first frame waits for the data, so nothing is painted late
+else { requestAnimationFrame(klatka); setTimeout(wczytajObjetosc, 1500); setTimeout(wczytajKuchnie, 2500); setTimeout(wczytajPetle, 3500); }
 })();
 </script>
