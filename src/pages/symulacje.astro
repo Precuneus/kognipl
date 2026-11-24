@@ -293,7 +293,7 @@ const kora = new THREE.Mesh(geo, new THREE.ShaderMaterial({
     varying vec3 vN; varying vec3 vV; varying vec3 vP; varying float vPr; varying float vMe; varying float vS; varying float vSN;
     float hash(vec3 p){ return fract(sin(dot(p, vec3(12.9898,78.233,37.719)))*43758.5453); }
     void main(){
-      if (vWsk < 0.5) {
+      if (vWsk < 0.5 && vRo < 0.01) {
       #include <clipping_planes_fragment>
       }
       float f = pow(1.0-abs(dot(normalize(vN),normalize(vV))),2.2);
