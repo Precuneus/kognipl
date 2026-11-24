@@ -499,6 +499,7 @@ function traf(cx, cy) {
     let vi = h.face.a, bd = Infinity; for (const q of [h.face.a, h.face.b, h.face.c]) { const d = (pos[q * 3] - h.point.x) ** 2 + (pos[q * 3 + 1] - h.point.y) ** 2 + (pos[q * 3 + 2] - h.point.z) ** 2; if (d < bd) { bd = d; vi = q; } }
     if (allen[vi] && NAZWY[allen[vi]]) best = { kod: allen[vi], h: pos[vi * 3] > 0 ? 1 : -1, p: h.point.clone(), d: h.distance }; break; }
   if (KUD && KUD.grupa.visible) { const h = ray.intersectObjects(KUD.siatki, false)[0]; if (h) best = { kod: h.object.userData.kod, h: h.object.userData.h, p: h.point.clone(), d: h.distance }; }
+  if (REGD && REGD.grupa.visible) { const h = ray.intersectObjects(REGD.siatki, false)[0]; if (h) best = { kod: h.object.userData.kod, h: h.object.userData.h, p: h.point.clone(), d: h.distance }; }
   const ms = Object.values(lico).map((L) => L.m);
   for (const h of ms.length ? ray.intersectObjects(ms, false) : []) { const im = lico[h.object.userData.id].im;
     const c = Math.min(im.W - 1, Math.floor(h.uv.x * im.W)), rr = Math.min(im.H - 1, Math.floor((1 - h.uv.y) * im.H)), i = rr * im.W + c;
@@ -1304,26 +1305,28 @@ const ciala = () => scena === 'kuchnia' ? KUD : REGD;   // the bodies of the sce
 function etZ(k) { if (!k) return [null, 0]; const et = RG[scena].et, ma = (id) => et.some((e) => e[0] === id);
   if (scena === 'kuchnia') return [ST_ET[k] || null, 0]; if (k === 'nts') return [ma('MoTg') ? 'MoTg' : null, 0];
   const m = /^(pm|kor|reka|sn|vpl|gr|cu)([LR])$/.exec(k); if (!m) return [null, 0]; const id = { vpl: 'VPL', gr: 'MoTg', cu: 'MoTg' }[m[1]] || (m[1] === 'sn' && scena === 'wstawac' ? 'wyspa' : m[1]); return ma(id) ? [id, m[2]] : [null, 0]; }
-function kotwice(krag, kragH) { const r = RECT.get(cB), k = {}, D = ciala(), sc = RG[scena]; let pelne = true;
+// wym: label id -> the hemisphere its line must lead to (a station or a touched structure of one side)
+function kotwice(wym) { const r = RECT.get(cB), k = {}, D = ciala(), sc = RG[scena]; let pelne = true;
   for (const [id, kol] of sc.et) { const a = KOTW[id] || (D ? { L: D.sr[id + 'L'], R: D.sr[id + 'R'] } : null); if (!a || !a.L) { pelne = false; continue; } let best = null;
     for (const h of ['L', 'R']) { const p3 = a[h]; if (!p3) continue; const e = naEkran(p3, camB, cB);
-      if (id === krag && kragH) { if (h === kragH) best = { e, p3, h }; }   // a station named in one hemisphere: the line leads there
+      if (wym && wym[id]) { if (h === wym[id]) best = { e, p3, h }; }
       else if (!best || (kol === 'L' ? e[0] < best.e[0] : e[0] > best.e[0])) best = { e, p3, h }; }
     if (best) k[id] = best; }
   // the slots are set once the scene's bodies have loaded; a region whose body an old or failed file did not bring is left out, and the names of the rest still stand
   if ((!sc.sloty || (pelne && !sc.pelne)) && (pelne || D || performance.now() - (sc.od || 0) > 4000)) { sc.pelne = pelne; sc.sloty = { L: [], R: [] }; for (const [id, kol] of sc.et) if (k[id]) sc.sloty[kol].push(id);
     for (const c of ['L', 'R']) sc.sloty[c].sort((x, y) => k[x].e[1] - k[y].e[1]); }   // top to bottom as the regions stand in the opening view, fixed from then on, so the lines fan without crossing
   sc.kot = k; }
-function kolumny(krag, kragH, akt, live) { const r = RECT.get(cB), cz = RECT.get('cz'), x0 = r.left - SR.left, y0 = r.top - SR.top, waski = innerWidth <= 760, sc = RG[scena], D = ciala(); let s = '';
+function kolumny(krag, kragH, zlote, ukryte, akt, live) { const r = RECT.get(cB), cz = RECT.get('cz'), x0 = r.left - SR.left, y0 = r.top - SR.top, waski = innerWidth <= 760, sc = RG[scena], D = ciala(); let s = '';
   const xl = x0 + (waski ? 5 : 12), xr = (cz ? cz.left - SR.left : x0 + r.width) - (waski ? 3 : 10), gora = y0 + (waski ? 38 : 60), dol = y0 + r.height - (waski ? 38 : 60);
   const txt = (id) => ((sc.et.find((e) => e[0] === id)[2]) || NAZWY[KOD_S[id]]).replace('niskowzg', 'nisko­wzg').replace('przedczo', 'przed­czo');   // a soft hyphen where a narrow column breaks the word
+  sc.zaj = { L: [], R: [] };
   if (nazwy && sc.sloty) for (const kol of ['L', 'R']) { const ids = sc.sloty[kol], els = ids.map((id) => tag('et' + sc.kl + id, 'kol' + (kol === 'R' ? ' pr' : '')));
     els.forEach((el, i) => { if (!el.dataset.et) { el.dataset.et = ids[i]; el.textContent = txt(ids[i]); } if (!el._sz) { el._sz = el.offsetWidth; el._sh = el.offsetHeight; } });
     const suma = els.reduce((a, el) => a + el._sh, 0), luz = dol - gora - suma, odst = ids.length > 1 ? Math.max(2, Math.min(waski ? 14 : 44, luz / (ids.length - 1))) : 0; let yy = gora + Math.max(0, (luz - odst * (ids.length - 1)) / 2);   // the tags stacked by their own heights, the block centred, each slot fixed
-    ids.forEach((id, i) => { const k = sc.kot[id], el = els[i]; const y = Math.round(yy + el._sh / 2); yy += el._sh + odst; if (!k) return;
+    ids.forEach((id, i) => { const k = sc.kot[id], el = els[i]; const y = Math.round(yy + el._sh / 2); yy += el._sh + odst; if (!k) return; sc.zaj[kol].push([y - el._sh / 2, y + el._sh / 2, id]); if (ukryte.has(id)) return;
       const x = Math.round(kol === 'L' ? xl : xr);
       const tr = `translate(${x}px,${y}px) translate(${kol === 'L' ? '0' : '-100%'},-50%)`; if (el._tr !== tr) { el.style.transform = tr; el._tr = tr; }
-      const on = id === krag, ww = on ? 1 : (akt[id] || 0), w2 = ww.toFixed(1); if (el._w2 !== w2) { el.style.setProperty('--w', w2); el._w2 = w2; }
+      const on = id === krag || zlote.includes(id), ww = on ? 1 : (akt[id] || 0), w2 = ww.toFixed(1); if (el._w2 !== w2) { el.style.setProperty('--w', w2); el._w2 = w2; }
       el.classList.toggle('krag', on); el.classList.add('on'); live.add('et' + sc.kl + id);
       const lx = kol === 'L' ? x + el._sz : x - el._sz, [ax, ay] = k.e, ex = Math.round(ax), ey = Math.round(ay), al = (on ? 0.9 : 0.12 + 0.4 * ww).toFixed(1);
       s += `<line x1="${lx}" y1="${y}" x2="${ex}" y2="${ey}" stroke="rgba(240,192,96,${al})" stroke-width="1"/>`;
@@ -1475,7 +1478,7 @@ function klatka(now) {
   if (scena === 'wstawac') { ekranStacji.nts = naEkran(ST.nts, camB, cB); ekranStacji.serce = naEkran(p.serce, camF, cF); ekranStacji.zatoka = naEkran(p.zatoka, camF, cF); }
   ekranStacji.zakres = naEkran(p.knR, camF, cF); ekranStacji.cien = naEkran(scena === 'chod' ? pp.toeL : pp.haL, camF, cF); ekranStacji.rdzen = naEkran(dr.top.clone().lerp(dr.bot, 0.5), camF, cF);
   const live = new Set(); let lines = '';
-  kotwice(null, 0); if (scena === 'kuchnia') for (const [id, k] of Object.entries(ET_ST)) { const c = RG.kuchnia.kot[id]; if (c) ekranStacji[k] = c.e; }   // a kitchen station is the copy its label leads to
+  kotwice(null); if (scena === 'kuchnia') for (const [id, k] of Object.entries(ET_ST)) { const c = RG.kuchnia.kot[id]; if (c) ekranStacji[k] = c.e; }   // a kitchen station is the copy its label leads to
   const pokaz = (id, txt, [x, y], dx = -34, dy = -44) => { const el = tag(id); el.textContent = txt; if (y + dy < 34) dy = 60; // a tag never leaves the top of its view
     const tx = Math.min(SR.width - 70, Math.max(70, x + dx)), ty = y + dy;
     el.style.transform = `translate(${Math.round(tx)}px,${Math.round(ty)}px) translate(-50%,-100%)`; el.classList.add('on'); live.add(id);
@@ -1501,7 +1504,9 @@ function klatka(now) {
   const ST_ = (k) => (scena === 'kubek' && STACJE_K[k]) || (scena === 'kuchnia' && STACJE_KU[k]) || (scena === 'wstawac' && STACJE_W[k]) || STACJE[k];
   if (wskazana) { nazwana = wskazana; opis = ST_(wskazana)[1]; }
   if (nazwana && !ekranStacji[nazwana]) nazwana = null;
-  const [kId, kH] = etZ(nazwana), krag = kId || wskazEt, kragH = kId ? kH : 0;   // the region itself, tinted, and its label at the side name the station
+  const zEt = (w) => { if (!w) return null; const id = SKROT[w.kod] || ((w.kod === 76 || w.kod === 83) ? 'kor' : null); return id && RG[scena].et.some((e) => e[0] === id) ? id : null; };   // the scene's own name for a structure touched on the brain
+  const dot = najechany && !wskazana ? najechany : null, eDot = zEt(dot), eWyb = zEt(wybor);
+  const [kId, kH] = etZ(nazwana), krag = kId || wskazEt || eDot || eWyb, kragH = kId ? kH : wskazEt ? 0 : eDot ? (dot.h < 0 ? 'L' : 'R') : eWyb ? (wybor.h < 0 ? 'L' : 'R') : 0;   // the region itself, tinted, and its label at the side name the station
   if (nazwana && !kId) { const wPostaci = /^(zakres|rdzen|cien|serce|zatoka)/.test(nazwana);
     if (wPostaci) pokaz('now', ST_(nazwana)[0], ekranStacji[nazwana], 44, -26);
     else { // a station's tag stands outside the brain's outline, clear of the fibres, a thin line back to the station
@@ -1510,11 +1515,24 @@ function klatka(now) {
       const k = Math.max(n + 64, R * 1.08), x0 = r.left - SR.left, y0 = r.top - SR.top;
       const tx = Math.min(x0 + r.width - 150, Math.max(x0 + 110, c[0] + vx * k)), ty = Math.min(y0 + r.height - 44, Math.max(y0 + 64, c[1] + vy * k + 12));
       pokaz('now', ST_(nazwana)[0], e, tx - e[0], ty - e[1]); } }
-  if (kragH) kotwice(krag, kragH);
-  lines += kolumny(krag, kragH, scena === 'kuchnia' ? (KUD ? KUD.akt : {}) : aktOgolne(M), live);
+  const strona = (w) => (w.h < 0 ? 'L' : 'R'), wym = {}, zlote = [eWyb, eDot].filter(Boolean);
+  if (eWyb) wym[eWyb] = strona(wybor); if (eDot) wym[eDot] = strona(dot); if (kId && kH) wym[kId] = kH;
+  if (Object.keys(wym).length) kotwice(wym);
+  const ukryte = new Set();   // scene names a side name lies over this frame
+  const wBok = (id, txt, [x, y]) => { const r = RECT.get(cB), cz = RECT.get('cz'), x0 = r.left - SR.left, y0 = r.top - SR.top, waski = innerWidth <= 760, lewa = x < x0 + r.width / 2;
+    const el = tag(id, 'kol'); el.className = 'tag kol krag' + (lewa ? '' : ' pr'); if (el.textContent !== txt) { el.textContent = txt; el._sz = 0; } if (!el._sz) { el._sz = el.offsetWidth; el._sh = el.offsetHeight; }
+    const g = y0 + (waski ? 38 : 60), d = y0 + r.height - (waski ? 38 : 60), h = el._sh, zaj = (RG[scena].zaj || { L: [], R: [] })[lewa ? 'L' : 'R'].slice().sort((a, b) => a[0] - b[0]), wolne = []; let pop = g - 26;
+    for (const [a, b] of zaj) { if (a - pop >= h + 6) wolne.push([pop + 3, a - 3]); pop = b; } if (d + 26 - pop >= h + 6) wolne.push([pop + 3, d + 23]);
+    let best = null; for (const [a, b] of wolne) { const c = Math.min(b - h / 2, Math.max(a + h / 2, y)); if (best === null || Math.abs(c - y) < Math.abs(best - y)) best = c; }
+    if (best === null) best = Math.min(d, Math.max(g, y));
+    for (const [a, b, eid] of zaj) if (best + h / 2 > a - 2 && best - h / 2 < b + 2) ukryte.add(eid);
+    const tx = Math.round(lewa ? x0 + (waski ? 5 : 12) : (cz ? cz.left - SR.left : x0 + r.width) - (waski ? 3 : 10)), ty = Math.round(best);
+    el.style.transform = `translate(${tx}px,${ty}px) translate(${lewa ? '0' : '-100%'},-50%)`; el._tr = ''; el.style.setProperty('--w', '1'); el.style.background = 'var(--tag)'; el.classList.add('on'); live.add(id);
+    const lx = lewa ? tx + el._sz : tx - el._sz; lines += `<line x1="${lx}" y1="${ty}" x2="${Math.round(x)}" y2="${Math.round(y)}" stroke="rgba(240,192,96,.9)" stroke-width="1"/><circle cx="${Math.round(x)}" cy="${Math.round(y)}" r="2.4" fill="rgba(240,192,96,.9)"/>`; };
+  if (wybor && !(nazwy && eWyb)) wBok('wyb', nazwa(wybor), naEkran(wybor.p, camB, cB));
+  if (najechany && !wskazana && !(wybor && najechany.kod === wybor.kod && najechany.h === wybor.h) && !(nazwy && eDot)) wBok('naj', nazwa(najechany), naEkran(najechany.p, camB, cB));
+  lines += kolumny(krag, kragH, zlote, ukryte, scena === 'kuchnia' ? (KUD ? KUD.akt : {}) : aktOgolne(M), live);
   const dyW = nazwana && !kId ? 56 : -40; // under a station's tag, never on it
-  if (wybor) pokaz('wyb', nazwa(wybor), naEkran(wybor.p, camB, cB), 30, dyW);
-  if (najechany && !wskazana && !(wybor && najechany.kod === wybor.kod && najechany.h === wybor.h)) pokaz('naj', nazwa(najechany), naEkran(najechany.p, camB, cB), 30, dyW);
   const marks = [['bL', naEkran(new THREE.Vector3(-58, -20, 58), camB, cB), 'L'], ['bR', naEkran(new THREE.Vector3(58, -20, 58), camB, cB), 'P'],
     ['fL', naEkran(p.hipL.clone().add(new THREE.Vector3(-14, 0, 0)), camF, cF), 'L'], ['fR', naEkran(p.hipR.clone().add(new THREE.Vector3(14, 0, 0)), camF, cF), 'P']];
   for (const [id, [x, y], txt] of marks) { const el = tag(id, 'side'); el.textContent = txt; el.style.transform = `translate(${Math.round(x)}px,${Math.round(y)}px) translate(-50%,-50%)`; el.classList.add('on'); live.add(id); }
