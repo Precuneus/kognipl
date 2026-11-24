@@ -32,7 +32,7 @@ const opis = 'W modelu predykcji i zaskoczenia postać idzie, sięga po kubek, o
       <button id="bOsobno" aria-pressed="false" title="Obracaj mózg i postać osobno">Obrót osobno</button>
       <button id="bWolno" aria-pressed="false" aria-label="Tempo dziesięć razy wolniej">0,1×</button>
       <button id="bNazwy" aria-pressed="true" title="Nazwy regionów przy mózgu">Nazwy</button>
-      <button id="sChod" class="sc" aria-pressed="true">Iść</button><button id="sKubek" class="sc" aria-pressed="false">Sięgać</button><button id="sKuchnia" class="sc" aria-pressed="false">Otwierać</button><button id="sWstawac" class="sc" aria-pressed="false">Wstawać</button>
+      <button id="sChod" class="sc" aria-pressed="true">Chodzenie</button><button id="sKubek" class="sc" aria-pressed="false">Sięganie</button><button id="sKuchnia" class="sc" aria-pressed="false">Otwieranie</button><button id="sWstawac" class="sc" aria-pressed="false">Wstawanie</button>
       <button id="bSeq" aria-pressed="false">Po kolei</button>
       <span class="seq" id="seq" hidden><button id="bPrev" aria-label="Poprzednia część">‹</button><span id="seqN" aria-live="polite"></span><button id="bNext" aria-label="Następna część">›</button></span>
     </div>
@@ -166,8 +166,9 @@ const DIM = new THREE.Color('#5d564b'), BONE = new THREE.Color('#d9d1c3');
 const smooth = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * (3 - 2 * u); };
 const clamp01 = (u) => Math.min(1, Math.max(0, u));
 const bump = (t, a, rise, fall) => (t < a ? 0 : t < a + rise ? smooth((t - a) / rise) : Math.exp(-(t - a - rise) / fall));
+const WERSJA = { kuchnia: '20261124', regiony: '20261124' };   // a file whose content changed takes a new address, so no browser keeps the old one
 async function gz(name) { // the data files are gzip, served beside the page
-  const r = await fetch('/images/symulacje/' + name + '.bin'); if (!r.ok) throw new Error(name);
+  const r = await fetch('/images/symulacje/' + name + '.bin' + (WERSJA[name] ? '?v=' + WERSJA[name] : '')); if (!r.ok) throw new Error(name);
   return new Uint8Array(await new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
 }
 function sciezka(pts) {
@@ -1306,7 +1307,8 @@ function kotwice(krag, kragH) { const r = RECT.get(cB), k = {}, D = ciala(), sc 
       if (id === krag && kragH) { if (h === kragH) best = { e, p3, h }; }   // a station named in one hemisphere: the line leads there
       else if (!best || (kol === 'L' ? e[0] < best.e[0] : e[0] > best.e[0])) best = { e, p3, h }; }
     if (best) k[id] = best; }
-  if (!sc.sloty && pelne) { sc.sloty = { L: [], R: [] }; for (const [id, kol] of sc.et) if (k[id]) sc.sloty[kol].push(id);
+  // the slots are set once the scene's bodies have loaded; a region whose body an old or failed file did not bring is left out, and the names of the rest still stand
+  if ((!sc.sloty || (pelne && !sc.pelne)) && (pelne || D || performance.now() - (sc.od || 0) > 4000)) { sc.pelne = pelne; sc.sloty = { L: [], R: [] }; for (const [id, kol] of sc.et) if (k[id]) sc.sloty[kol].push(id);
     for (const c of ['L', 'R']) sc.sloty[c].sort((x, y) => k[x].e[1] - k[y].e[1]); }   // top to bottom as the regions stand in the opening view, fixed from then on, so the lines fan without crossing
   sc.kot = k; }
 function kolumny(krag, kragH, akt, live) { const r = RECT.get(cB), cz = RECT.get('cz'), x0 = r.left - SR.left, y0 = r.top - SR.top, waski = innerWidth <= 760, sc = RG[scena], D = ciala(); let s = '';
@@ -1538,7 +1540,7 @@ $('bPrev').onclick = () => ustawCzesc((czesc - 1 + CZ().length) % CZ().length);
 // a scene's cortical patches are denser than the glass; the wide network of ventral attention and salience (code 6) a lighter veil than a single area
 const DAL = () => innerWidth <= 760 ? 1.3 : 1.15;   // every scene's brain stands back so the columns of names have room
 $('bNazwy').onclick = () => { nazwy = !nazwy; $('bNazwy').setAttribute('aria-pressed', nazwy); if (!nazwy) wskazEt = null; dirty = true; };
-function ustawScene(sc) { scena = sc; wskazEt = null; U.uReg.value.fill(0); for (const c of RG[sc].on) U.uReg.value[c] = c === 6 ? 0.45 : 1; if (U.uReg.value[6]) U.uReg.value[7] = 0.45; if (sc !== 'kuchnia') wczytajRegiony(); { const d = camB.position.clone().sub(ctl.target).normalize(); camB.position.copy(ctl.target).add(d.multiplyScalar(START.length() * DAL(sc))); ctl.update(); rozmiar(); } for (const e of document.querySelectorAll('.sym-karty [data-scena]')) e.hidden = e.dataset.scena !== sc; { const b = $('kart'); if (b) b.hidden = !b.querySelector('[data-scena=' + sc + ']'); } LOOP = sc === 'kubek' ? LOOP_K : sc === 'wstawac' ? LOOP_WS : LOOP_W; t = 0; rysujScenariusze(); ustawCzesc(-1);
+function ustawScene(sc) { scena = sc; wskazEt = null; RG[sc].od = performance.now(); U.uReg.value.fill(0); for (const c of RG[sc].on) U.uReg.value[c] = c === 6 ? 0.45 : 1; if (U.uReg.value[6]) U.uReg.value[7] = 0.45; if (sc !== 'kuchnia') wczytajRegiony(); { const d = camB.position.clone().sub(ctl.target).normalize(); camB.position.copy(ctl.target).add(d.multiplyScalar(START.length() * DAL(sc))); ctl.update(); rozmiar(); } for (const e of document.querySelectorAll('.sym-karty [data-scena]')) e.hidden = e.dataset.scena !== sc; { const b = $('kart'); if (b) b.hidden = !b.querySelector('[data-scena=' + sc + ']'); } LOOP = sc === 'kubek' ? LOOP_K : sc === 'wstawac' ? LOOP_WS : LOOP_W; t = 0; rysujScenariusze(); ustawCzesc(-1);
   for (const [id, s] of [['sChod', 'chod'], ['sKubek', 'kubek'], ['sKuchnia', 'kuchnia'], ['sWstawac', 'wstawac']]) $(id).setAttribute('aria-pressed', sc === s);
   const chD = document.querySelector('.chip[data-c=D]'); if (sc !== 'kuchnia' && iso === 'D') chD.click(); chD.hidden = sc !== 'kuchnia';
   if (sc === 'kuchnia') wczytajKuchnie(); miejsceNapisu(); dirty = true; }
