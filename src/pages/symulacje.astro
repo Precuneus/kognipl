@@ -39,7 +39,6 @@ const opis = 'W modelu predykcji i zaskoczenia postać idzie, sięga po kubek, o
     <div class="chips" id="chips">
       <button class="chip" data-c="P" aria-pressed="false"><i style="background:var(--beta)"></i>predykcje · wolniejszy rytm</button>
       <button class="chip" data-c="M" aria-pressed="false"><i style="background:var(--gamma)"></i>pomiar · szybszy rytm</button>
-      <button class="chip" data-c="B" aria-pressed="false"><i style="background:var(--bio)"></i>bioinformacja</button>
       <button class="chip" data-c="D" aria-pressed="false" hidden><i style="background:var(--dopa)"></i>dopamina</button>
     </div>
     <div class="ex" id="ex" aria-live="polite"></div>
@@ -62,7 +61,7 @@ const opis = 'W modelu predykcji i zaskoczenia postać idzie, sięga po kubek, o
 </Base>
 
 <style is:global>
-.sym{--bg:#0e0d0b;--panel:#16140f;--line:rgba(180,155,100,.22);--fg:#e2ddd4;--fg2:#a09888;--candle:#f0c060;--beta:#5f8fff;--gamma:#ff5340;--bio:#5fd3a8;--dopa:#b98cff;--tag:#1c1a14;--font-d:'Cormorant Garamond',Georgia,serif;--font-b:Inter,system-ui,-apple-system,sans-serif;color-scheme:dark}
+.sym{--bg:#0e0d0b;--panel:#16140f;--line:rgba(180,155,100,.22);--fg:#e2ddd4;--fg2:#a09888;--candle:#f0c060;--beta:#5f8fff;--gamma:#ff5340;--dopa:#b98cff;--tag:#1c1a14;--font-d:'Cormorant Garamond',Georgia,serif;--font-b:Inter,system-ui,-apple-system,sans-serif;color-scheme:dark}
 .sym .app{height:calc(100svh - var(--sym-gora,64px));display:grid;grid-template-rows:minmax(0,1fr) auto;gap:10px;padding-block:12px;box-sizing:border-box}
 .sym .stage{position:relative;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:12px;min-height:0}
 .sym .view{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:0}
@@ -161,7 +160,7 @@ gora(); addEventListener('resize', gora);
 (async () => {
 
 const $ = (i) => document.getElementById(i);
-const BETA = new THREE.Color('#5f8fff'), GAMMA = new THREE.Color('#ff5340'), BIO = new THREE.Color('#5fd3a8'), DOPA = new THREE.Color('#b98cff');
+const BETA = new THREE.Color('#5f8fff'), GAMMA = new THREE.Color('#ff5340'), DOPA = new THREE.Color('#b98cff');
 const DIM = new THREE.Color('#5d564b'), BONE = new THREE.Color('#d9d1c3');
 const smooth = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * (3 - 2 * u); };
 const clamp01 = (u) => Math.min(1, Math.max(0, u));
@@ -1232,7 +1231,7 @@ function rysujKuchnie(tl, p) {
 
 // ---------- the explanations ----------
 const OPIS = {
-  plyw: 'W modelu predykcje płyną w stronę receptorów wolniejszym rytmem, a pomiar od nich szybszym. Ścierają się bez przerwy w każdym regionie. Miejsce, gdzie pomiar wykracza poza predykcję, wędruje między stopą, kolanem i biodrem.',
+  plyw: 'W modelu bioinformacja płynie dwoma rytmami, predykcje w stronę receptorów wolniejszym, a pomiar od nich szybszym. Ścierają się bez przerwy w każdym regionie. Miejsce, gdzie pomiar wykracza poza predykcję, wędruje między stopą, kolanem i biodrem.',
   plyta: 'Płyta podłogi okazuje się niższa, niż zakładała predykcja, więc zaskoczenie wspina się do obszaru nogi w lewej półkuli. W modelu rytm beta, wspólny korze i mięśniowi nogi, słabnie na chwilę, przez analogię do chodu ludzi na bieżni po nagłym zróżnicowaniu prędkości jej dwóch taśm (Oshima i in. 2026).',   // [s:oshima2026-beta-cmc-drops-at-perturbation]
   potk: 'Stopa zaczepia o przeszkodę. Zaskoczenie biegnie nerwem i rdzeniem do wzgórza i kory prawej półkuli, a gdy jest duże, płynie dalej drogami po boku półkuli, między innymi pęczkiem podłużnym górnym III. U ludzi ten pęczek kończy się w obszarach aktywnych w innych badaniach wtedy, gdy uwaga przestrzenna sama przenosi się na nieoczekiwany bodziec (Thiebaut de Schotten i in. 2011).',   // [s:thiebautdeschotten2011-slf-iii-ventral-right-lateralized]
   petla: 'Obszar nogi w korze wysyła zmienioną predykcję w dół, do mięśni nogi. Zaskoczenie płynie też przez most w pniu mózgu do móżdżku, a poprawka wraca przez wzgórze do tego samego obszaru kory; u małp taka pętla zamyka się w obszarze swojego początku (Kelly i Strick 2003).'   // [s:kelly2003-cerebrocerebellar-closed-loops]
@@ -1252,8 +1251,7 @@ const OPIS_KU = {
 };
 const OPIS_ISO = {
   P: 'Predykcje płyną w stronę receptorów z każdego regionu po drodze, a niebieski cień kończyn to predykcja ich położenia. Przy chwycie precyzyjnym u ludzi rytm beta krąży między korą a mięśniami dłoni w obu kierunkach (Witham i in. 2011; Baker 2007), a to, czy płyną nim predykcje, pozostaje hipotezą.',   // [s:witham2011-beta-cmc-both-directions] [s:baker2007-spindles-expected-actual-beta]
-  M: 'Pomiar płynie od receptorów w górę, a do każdego regionu dociera tylko zaskoczenie regionu niżej, czyli to, czego jego predykcja nie objęła. W korze wzrokowej makaka połączenia w tym kierunku pracują w rytmie theta, około 4 Hz, oraz w rytmie gamma, około 60–80 Hz (Bastos i in. 2015). Zaskoczenie rdzenia płynie także w dół, nerwami ruchowymi do mięśni.',   // [s:bastos2015-gamma-ff-beta-fb]
-  B: 'Bioinformacja z wrzecion mięśniowych, ścięgien i skóry płynie nerwami do rdzenia, gdzie spotyka pierwsze predykcje, a sznurem tylnym dalej, do rdzenia przedłużonego.',
+  M: 'W modelu pomiar z wrzecion mięśniowych, ścięgien i skóry płynie nerwami do rdzenia, gdzie spotyka pierwsze predykcje, a sznurem tylnym dalej, do rdzenia przedłużonego. Do każdego regionu wyżej dociera tylko zaskoczenie regionu niżej, czyli to, czego jego predykcja nie objęła. W korze wzrokowej makaka połączenia od receptorów pracują w rytmie theta, około 4 Hz, oraz w rytmie gamma, około 60–80 Hz (Bastos i in. 2015). Zaskoczenie rdzenia płynie także w dół, nerwami ruchowymi do mięśni.',   // [s:bastos2015-gamma-ff-beta-fb]
   D: 'Z większości części zbitej istoty czarnej dopamina płynie do grzbietowej i bocznej części prążkowia (Haber 2003). U małp neurony dopaminowe wyładowują się częściej przy nagrodzie lepszej od przewidzianej i rzadziej, gdy przewidziana nagroda nie przychodzi (Schultz, Dayan i Montague 1997).'   // [s:haber2003-ventral-tier-snc-to-dorsal-striatum] [s:schultz1997-signed-error-few-aversive]
 };
 const STACJE_KU = {
@@ -1286,7 +1284,7 @@ const STACJE = {
   vplR: ['jądro VPL wzgórza, prawe', 'Jądro brzuszne tylno-boczne wzgórza. Z dołu dociera do niego pomiar, a z kory, promienistością wzgórza, predykcje.'],
   zakres: ['zakres stawu', 'Czerwień wspina się po kończynie od jej końca do stawu, dokąd sięga teraz zaskoczenie. Rdzeń wyrównuje ruchem przy stawie zaskoczenie mieszczące się w jego zakresie; większe zaskoczenie wspina się dalej, przez tułów w stronę mózgu. Zakres każdego stawu jest szerszy niż poprzedniego, od stopy do biodra i od dłoni do barku.'],
   cien: ['predykcja położenia', 'Niebieski cień kończyn to predykcja ich położenia. Biegnie odrobinę przed kończyną, a różnica między nimi to zaskoczenie pobudzające w rdzeniu neurony ruchowe.'],
-  rdzen: ['rdzeń kręgowy', 'W rdzeniu predykcja położenia kończyny spotyka bioinformację z wrzecion mięśniowych. Według Adamsa, Shippa i Fristona (2013) zaskoczenie pobudza neurony ruchowe, aż ruch spełni predykcję.']   // [s:adams2013-proprioceptive-predictions-reflex-arc]
+  rdzen: ['rdzeń kręgowy', 'W rdzeniu predykcja położenia kończyny spotyka pomiar z wrzecion mięśniowych. Według Adamsa, Shippa i Fristona (2013) zaskoczenie pobudza neurony ruchowe, aż ruch spełni predykcję.']   // [s:adams2013-proprioceptive-predictions-reflex-arc]
 };
 const CZESCI_K = [
   { id: 'cien', n: 'Dłoń za cieniem', op: 'Niebieski cień to predykcja położenia dłoni. Biegnie przed ręką, a różnica między nimi pobudza w rdzeniu neurony ruchowe.', a: 1.2, b: 2.3, st: 'rekaR', e: 'Predykcja położenia dłoni, niebieski cień, biegnie przed ręką. Różnica między nimi to zaskoczenie pobudzające w rdzeniu neurony ruchowe ręki. W mózgu, na mapie ciała, świeci obszar dłoni.' },
@@ -1304,7 +1302,7 @@ const CZESCI_KU = [
 const OPIS_W = {
   siedzi: 'Postać siedzi. W modelu predykcje stanu ciała płyną z kory przez pień mózgu do serca i naczyń. Bioinformacja z wnętrza ciała wraca do pnia mózgu między innymi nerwem błędnym i językowo-gardłowym (Khalsa i in. 2018).',   // [s:khalsa2018-afferent-pathways]
   wstaje: 'Postać wstaje i serce przyspiesza od razu. U ośmiu młodych mężczyzn wstających z pozycji leżącej tętno rosło gwałtownie w pierwszych 3 sekundach, wcześniej niż odpowiedź na spadek ciśnienia, zaczynająca się około 5. sekundy. Ten pierwszy skok można według autorów przypisać odruchowi z napinanych mięśni albo poleceniu z mózgu, biegnącemu razem z ruchem (Harms i in. 2021).',   // [s:harms2021-hr-abrupt-in-first-3s]
-  spadek: 'Opór naczyń spada bardziej, niż rośnie rzut serca, czyli ilość krwi pompowanej przez serce w ciągu minuty, więc ciśnienie spada. U ośmiu młodych mężczyzn wstających z pozycji leżącej średnie ciśnienie tętnicze było najniższe w 8. sekundzie, przeciętnie o 23 mmHg poniżej wyjściowego (Harms i in. 2021). W modelu bioinformacja z baroreceptorów różni się wtedy od predykcji, a zaskoczenie dociera do pnia mózgu.',   // [s:harms2021-pressure-nadir-at-8s-baroreflex-recovery]
+  spadek: 'Opór naczyń spada bardziej, niż rośnie rzut serca, czyli ilość krwi pompowanej przez serce w ciągu minuty, więc ciśnienie spada. U ośmiu młodych mężczyzn wstających z pozycji leżącej średnie ciśnienie tętnicze było najniższe w 8. sekundzie, przeciętnie o 23 mmHg poniżej wyjściowego (Harms i in. 2021). W modelu pomiar z baroreceptorów różni się wtedy od predykcji, a zaskoczenie dociera do pnia mózgu.',   // [s:harms2021-pressure-nadir-at-8s-baroreflex-recovery]
   mroczki: 'Większość ludzi miewa chwilowe zamroczenie i mroczki przed oczami, najczęściej 7–10 sekund po wstaniu. Zwykle mijają w ciągu 20–30 sekund, a autorzy tłumaczą je chwilowo słabszym ukrwieniem mózgu (Harms i in. 2021). W modelu pień mózgu nie wyrównuje wtedy całego zaskoczenia, a reszta płynie dalej, w stronę wyspy.',   // [s:harms2021-light-headedness-7-10s-after-standing]
   odruch: 'U ośmiu młodych mężczyzn wstających z pozycji leżącej ciśnienie wracało w ciągu 30 sekund. Autorzy przypisują to odruchowi z baroreceptorów, zwężającemu naczynia oporowe. Samo zwężanie naczyń zaczyna się po 2–3 sekundach i jest najsilniejsze po około 10 sekundach. Serce zwalnia, kiedy ciśnienie wraca (Harms i in. 2021).'   // [s:harms2021-pressure-nadir-at-8s-baroreflex-recovery] [s:harms2021-hr-abrupt-in-first-3s]
 };
@@ -1466,24 +1464,24 @@ function klatka(now) {
   if (scena !== 'kuchnia') skrzydla.visible = false;
   if (scena === 'kubek') rysujStol(tl, p); else if (scena === 'kuchnia') rysujKuchnie(tl, p); else if (scena === 'wstawac') rysujKrzeslo(); else { rysujPodloge(tl); stol.visible = kubek.visible = false; } rysujPostac(p); ustawSkore(p); ustaw(cien, konczyny(pp)); cien.material.opacity = 0.3 * W('P');
   // the streams in the body
-  const uT = tt, wB = W('B'), wP = W('P'), wM = W('M');
+  const uT = tt, wP = W('P'), wM = W('M');
   const ruchN = (f) => (f.swing ? Math.sin(Math.PI * f.u) : 0.25), nac = (f) => (f.swing ? 0.25 : 0.65);
   const staly = scena === 'kubek' ? 0.35 + 0.45 * (tl > KT.lift[1] && tl < KT.down[0] ? 1 : 0) : scena === 'kuchnia' ? 0.35 + 0.45 * (trzymaKU(tl) ? 1 : 0) : 0.3;   // beta loops strongest in a steady hold (Baker 2007)
   for (const s of ['R', 'L']) { const f = s === 'R' ? p.fR : p.fL, ms = st.m[s], mr = st.m['r' + s];
     const sprz = scena === 'chod' ? 1 - 0.6 * (s === 'R' ? bump(tl, TD, 0.05, 0.9) : bump(tl, TT, 0.05, 0.9)) : 1;   // the beta coupling to the leg's muscles dips when the walk is disturbed
     ustaw(nerw['cst' + s], rozbij(dr.C['cst' + s])); ustawKolory(nerw['cst' + s], pak('cst', s, kolory(BETA, 0.55, 0.25, 3.0, uT, false, wP * sprz))); 
-    ustaw(nerw['dc' + s], rozbij(dr.C['dc' + s])); ustawKolory(nerw['dc' + s], pak('dc', s, kolory(BIO, 0.35 + 0.4 * nac(f) + 0.06 * ms, 0.12, -0.72, uT, false, wB))); 
+    ustaw(nerw['dc' + s], rozbij(dr.C['dc' + s])); ustawKolory(nerw['dc' + s], pak('dc', s, kolory(GAMMA, 0.14 + 0.4 * nac(f) + 0.06 * ms, 0.0625, -12.0, uT, false, wM))); 
     ustaw(nerw['mot' + s], rozbij(dr.mot(s))); ustawKolory(nerw['mot' + s], pak('mot', s, kolory2(GAMMA, 0.25 + 0.5 * ruchN(f) + 0.1 * ms, 0.0625, 12.0, BETA, staly * 0.8, 0.25, 3.0, uT, wM, wP))); 
-    ustaw(nerw['sen' + s], rozbij(dr.sen(s))); ustawKolory(nerw['sen' + s], pak('sen', s, kolory2(BIO, 0.35 + 0.45 * nac(f) + 0.08 * ms, 0.12, 0.72, BETA, staly, 0.25, -3.0, uT, wB, wP))); 
+    ustaw(nerw['sen' + s], rozbij(dr.sen(s))); ustawKolory(nerw['sen' + s], pak('sen', s, kolory2(GAMMA, 0.14 + 0.45 * nac(f) + 0.08 * ms, 0.0625, 12.0, BETA, staly, 0.25, -3.0, uT, wM, wP))); 
     ustaw(nerw['motr' + s], rozbij(dr.motr(s))); ustawKolory(nerw['motr' + s], pak('motr', s, kolory2(GAMMA, 0.3 + 0.12 * mr, 0.0625, 12.0, BETA, staly, 0.25, 3.0, uT, wM, wP))); 
-    ustaw(nerw['senr' + s], rozbij(dr.senr(s))); ustawKolory(nerw['senr' + s], pak('senr', s, kolory2(BIO, 0.4 + 0.1 * mr, 0.14, 0.84, BETA, staly, 0.25, -3.0, uT, wB, wP))); }
+    ustaw(nerw['senr' + s], rozbij(dr.senr(s))); ustawKolory(nerw['senr' + s], pak('senr', s, kolory2(GAMMA, 0.16 + 0.1 * mr, 0.0625, 12.0, BETA, staly, 0.25, -3.0, uT, wM, wP))); }
   // the heart and the pressure: the prediction runs from the brainstem down to the heart, the bioinformation climbs from the baroreceptors of
   // the carotid artery, and the surprise rides it while the pressure is under the prediction
   for (const k of ['vpl', 'gr', 'cu', 'pm']) for (const h of ['L', 'R']) sfery[k + h].visible = false;   // the stations are bodies and patches of cortex now, named at the sides
   { const ws = scena === 'wstawac'; nerw.wagus.visible = nerw.baro.visible = SERCE.visible = ws; sfery.nts.visible = false;
     if (ws) { const te = wsTetno(tl), sp = M.sp, bije = Math.exp(-(((wsFaza(tl) % 1) + 1) % 1) / 0.16);
       ustaw(nerw.wagus, rozbij([dr.top, p.zatoka.clone().lerp(p.serce, 0.45).add(new THREE.Vector3(3, -2, 0)), p.serce])); ustawKolory(nerw.wagus, kolory(BETA, 0.45 + 0.9 * (te - 1), 0.25, 3.0, uT, false, wP));
-      ustaw(nerw.baro, rozbij([p.serce.clone().add(new THREE.Vector3(1.5, -1, 5)), p.zatoka, dr.top])); ustawKolory(nerw.baro, kolory2(BIO, 0.45, 0.14, 0.84, GAMMA, 1.1 * sp, 0.0625, 12.0, uT, wB, wM));
+      ustaw(nerw.baro, rozbij([p.serce.clone().add(new THREE.Vector3(1.5, -1, 5)), p.zatoka, dr.top])); ustawKolory(nerw.baro, kolory(GAMMA, 0.16 + 1.1 * sp, 0.0625, 12.0, uT, false, wM));
       SERCE.geometry.attributes.position.array.set([p.serce.x, p.serce.y, p.serce.z]); SERCE.geometry.attributes.position.needsUpdate = true; SERCE.material.size = 24 + 16 * bije; SERCE.material.opacity = 0.6 + 0.4 * bije;
       sfery.nts.material.color.copy(BETA).lerp(GAMMA, clamp01(sp * wM)); sfery.nts.material.opacity = 0.28 * wP + 0.6 * clamp01(sp * wM); } }
   // the border: red climbs each limb from its end to the joint that takes the misfit in now, brightest at the border
