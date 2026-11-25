@@ -18,6 +18,9 @@
   .td-w[hidden]{display:none}
   .td{position:fixed;z-index:60;width:min(320px,calc(100vw - 24px));background:#16140f;border:1px solid rgba(180,155,100,.32);border-radius:14px;padding:16px 18px 14px;box-shadow:0 10px 34px rgba(0,0,0,.55);animation:tdIn .18s ease-out}
   @keyframes tdIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  /* ustawienie ograniczenia ruchu i wyłączone Animacje: dymek pojawia się od razu, na każdej karcie, nie tylko tam, gdzie jest żywa rycina */
+  @media (prefers-reduced-motion: reduce){.td{animation:none}}
+  html.roj-cicho .td{animation:none}
   .td-x{position:absolute;top:6px;right:8px;background:none;border:0;color:#a09888;font-size:20px;line-height:1;cursor:pointer;padding:4px}
   .td-x:hover{color:#e2ddd4}
   .td-t{margin:0 22px 6px 0;font-family:var(--font-display);font-size:21px;font-weight:500;line-height:1.15;color:var(--c,#f0c060)}
