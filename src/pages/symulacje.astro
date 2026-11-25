@@ -299,8 +299,8 @@ const kora = new THREE.Mesh(geo, new THREE.ShaderMaterial({
       float beta = 0.55 + 0.45*sin(6.2832*(vS*2.5 - uFb*uT));
       float grain = hash(floor(vP*0.9) + floor(uT*uFg));
       float me = vMe*uWM*(0.55 + 0.45*grain), pr = max(vPr, 0.16)*uWP*beta*(1.0 - 0.7*clamp(vMe*uWM + vSN*uWM - 0.25, 0.0, 1.0)); // predictions in every area, stronger on the body map's active bands
-      vec3 c = uBase; c = mix(c, uBeta, clamp(pr*0.9,0.0,1.0)); c = mix(c, uGamma, clamp(me + vSN*(0.6+0.3*grain)*uWM,0.0,1.0));
-      float a = (0.035 + 0.40*f + 0.34*vFa*(1.0 - f))*0.2 + 0.28*pr*0.4 + 0.45*me + 0.38*vSN*uWM + 0.36*vRo; c = mix(c, mix(vec3(0.86, 0.78, 0.62), c, 0.45), 0.7*vRo);   // the crowns of the gyri a little denser
+      vec3 c = mix(uBase, vec3(0.86, 0.78, 0.62), 0.38*vRo); c = mix(c, uBeta, clamp(pr*0.9,0.0,1.0)); c = mix(c, uGamma, clamp(me + vSN*(0.6+0.3*grain)*uWM,0.0,1.0));
+      float a = (0.035 + 0.40*f + 0.34*vFa*(1.0 - f))*0.2 + 0.28*pr*0.4 + 0.45*me + 0.38*vSN*uWM + 0.36*vRo;   // the crowns of the gyri a little denser
       float s = clamp(vSel, 0.0, 1.0); c = mix(c, vec3(0.94, 0.75, 0.38), s*0.85); a = min(1.0, a + 0.55*s); c = mix(c, vec3(0.93, 0.76, 0.42), vWsk*0.5); a = min(1.0, a + 0.35*vWsk); // the selected region: a gold rim, the flow running inside it
       gl_FragColor = vec4(c, a); }`
 }));
@@ -959,7 +959,7 @@ function mozg(tl, st) {
     return { tp: 0, obie: 0, sn: 0 }; }
   const tp = potkn(tl);
   const zaMiar = (m) => clamp01((m - ZAKRES[3]) / 4);              // what the cord did not absorb climbs
-  const obie = clamp01((st.max - 12) / 8), sn = bump(tl, TT + 0.2, 0.35, 0.55), snp = bump(tl, TT + 0.65, 0.35, 1.4); // toward ventral attention and salience after the trip; the red fades as the changed predictions return there
+  const obie = clamp01((st.max - 12) / 8), sn = tl < TT + 0.07 ? 0 : smooth((tl - TT - 0.07) / 0.012) * Math.exp(-Math.max(0, tl - TT - 0.11) / 0.5), snp = bump(tl, TT + 0.3, 0.3, 1.4);   // the network reddens as the volley reaches the lateral tracts' ends, 20 to 32 ms after the cortex // toward ventral attention and salience after the trip; the red fades as the changed predictions return there
   for (let h = 0; h < 2; h++) { const nogaK = h === 0 ? 'R' : 'L', rekaK = h === 0 ? 'rR' : 'rL';  // each hemisphere, the opposite limbs
     for (let b = 0; b < 6; b++) uPred[h * 6 + b] = BAZA[b] * (0.85 + 0.15 * szum(tl, b + h * 7)) + 0.5 * tp + (h === 0 && b === 0 ? 0.45 * bump(tl, TD + 0.25, 0.2, 2.2) : 0);
     const mn = 0.2 + 0.25 * clamp01((st.m[nogaK] - ZAKRES[0]) / 3) + zaMiar(st.m[nogaK]), mr = 0.18 + 0.22 * clamp01((st.m[rekaK] - ZAKRES[0]) / 3) + zaMiar(st.m[rekaK]);   // at rest under the level the predictions cover, so in steady walking the blue leads
