@@ -78,7 +78,7 @@ const opis = 'W modelu predykcji i zaskoczenia postać idzie, sięga po kubek, o
 .sym .tag.kol.pr{text-align:right}
 .sym .tag.kol.on{opacity:calc(.6 + .4*var(--w,0));pointer-events:auto;cursor:default}
 .sym .tag.kol.krag{border-color:var(--candle);color:#fff6e0}
-@media (max-width:760px){.sym .tag.kol{max-width:84px;font-size:10px;line-height:1.15;padding:2px 4px;background:rgba(28,26,20,.82)}}
+@media (max-width:760px){.sym .tag.kol{max-width:84px;font-size:10px;line-height:1.15;padding:2px 4px;background:rgba(28,26,20,.82)}.sym .tag.kol:not(.pr){max-width:104px}}
 .sym .bar{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 14px;align-items:center}
 .sym .btns{display:flex;gap:6px;align-items:center}
 .sym button{font:inherit;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:10px;min-width:40px;height:36px;cursor:pointer;font-size:15px;padding:0 10px}
@@ -166,7 +166,7 @@ const DIM = new THREE.Color('#5d564b'), BONE = new THREE.Color('#d9d1c3');
 const smooth = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * (3 - 2 * u); };
 const clamp01 = (u) => Math.min(1, Math.max(0, u));
 const bump = (t, a, rise, fall) => (t < a ? 0 : t < a + rise ? smooth((t - a) / rise) : Math.exp(-(t - a - rise) / fall));
-const WERSJA = { kuchnia: '20261124', regiony: '20261124' };   // a file whose content changed takes a new address, so no browser keeps the old one
+const WERSJA = { kuchnia: '20261124b', regiony: '20261124b', tracts3: '20261124b', petle: '20261124b' };   // a file whose content changed takes a new address, so no browser keeps the old one
 async function gz(name) { // the data files are gzip, served beside the page
   const r = await fetch('/images/symulacje/' + name + '.bin' + (WERSJA[name] ? '?v=' + WERSJA[name] : '')); if (!r.ok) throw new Error(name);
   return new Uint8Array(await new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
@@ -217,7 +217,7 @@ const VPL = { L: new THREE.Vector3(-17.7, -21.3, 3.3), R: new THREE.Vector3(17.7
 // ---------- the clock-driven state the shaders read: per hemisphere (L 0..5, R 6..11) and band ----------
 const uPred = new Float32Array(12), uMeas = new Float32Array(12);
 const U = { uDz: { value: 330 }, uT: { value: 0 }, uPred: { value: uPred }, uMeas: { value: uMeas }, uBeta: { value: BETA }, uGamma: { value: GAMMA }, uDim: { value: new THREE.Color('#8a7d62') },
-  uWP: { value: 1 }, uWM: { value: 1 }, uSN: { value: 0 }, uFb: { value: 3.0 }, uFg: { value: 12.0 }, uCelP: { value: 0 }, uCelM: { value: 0 }, uNawP: { value: 0 }, uKu: { value: 0 }, uWskId: { value: 0 }, uWskH: { value: 0 }, uReg: { value: new Float32Array(8) },
+  uWP: { value: 1 }, uWM: { value: 1 }, uSN: { value: [0, 0] }, uLatS: { value: [0, 0] }, uWys: { value: 0 }, uFb: { value: 3.0 }, uFg: { value: 12.0 }, uCelP: { value: 0 }, uCelM: { value: 0 }, uNawP: { value: 0 }, uKu: { value: 0 }, uWskId: { value: 0 }, uWskH: { value: 0 }, uReg: { value: new Float32Array(8) },
   uZd: { value: [-1, -1] }, uZdA: { value: [0, 0] }, uZdB: { value: [-1, -1] }, uZdL: { value: [0, 0] }, uWz: { value: [-1, -1] }, uWc: { value: [0.05, 0.05] }, uWy: { value: [0.035, 0.035] } };   // per hemisphere: the time since a surprise arrived, how large, at which band, and what reached the lateral cortex
 
 // ---------- brain view ----------
@@ -272,21 +272,21 @@ function dojscia(konce, cel) {
 }
 { const konce = [];   // the corticospinal tract and the superior thalamic radiation reach the cortex; the lemniscus ends in the thalamus
   for (const [name, v] of Object.entries(T)) { if (name.startsWith('ML')) continue; let q = 0;
-    v.cnt.forEach((c, li) => { if (li % 2 === 0) { const a = q * 3, b = (q + c - 1) * 3, e = v.pts[a + 2] > v.pts[b + 2] ? a : b; konce.push(v.pts[e] / 10, v.pts[e + 1] / 10, v.pts[e + 2] / 10); } q += c; }); }
+    v.cnt.forEach((c, li) => { if (name.startsWith('TR_S') || li % 2 === 0) { const a = q * 3, b = (q + c - 1) * 3, e = v.pts[a + 2] > v.pts[b + 2] ? a : b; konce.push(v.pts[e] / 10, v.pts[e + 1] / 10, v.pts[e + 2] / 10); } q += c; }); }
   dojscia(konce, aDo); geo.attributes.aDo.needsUpdate = true; }
 // the cortex: predictions glow slowly along the body map; the measurement is a fine fast grain on the same bands; the salience network takes surprise on a trip
 const kora = new THREE.Mesh(geo, new THREE.ShaderMaterial({
   transparent: true, depthWrite: false, uniforms: { ...U, uBase: { value: new THREE.Color('#b9a888') } },
   vertexShader: `#include <clipping_planes_pars_vertex>
-    attribute float aB; attribute float aN; attribute float aFa; varying float vFa; attribute float aSel; attribute float aCel; attribute float aNaw; attribute float aDo; attribute float aDoK; attribute float aDoL; uniform float uKu; uniform float uZdL[2]; uniform float uPred[12]; uniform float uMeas[12]; uniform float uSN; uniform float uCelP; uniform float uCelM; uniform float uNawP; attribute float aReg; uniform float uWskId; uniform float uWskH; uniform float uReg[8]; varying float vWsk; varying float vRo; varying float vSel;
+    attribute float aB; attribute float aN; attribute float aFa; varying float vFa; attribute float aSel; attribute float aCel; attribute float aNaw; attribute float aDo; attribute float aDoK; attribute float aDoL; uniform float uKu; uniform float uZdL[2]; uniform float uLatS[2]; uniform float uPred[12]; uniform float uMeas[12]; uniform float uSN[2]; uniform float uWys; uniform float uCelP; uniform float uCelM; uniform float uNawP; attribute float aReg; uniform float uWskId; uniform float uWskH; uniform float uReg[8]; varying float vWsk; varying float vRo; varying float vSel;
     varying vec3 vN; varying vec3 vV; varying vec3 vP; varying float vPr; varying float vMe; varying float vS; varying float vSN;
     void main(){ vec4 mv = modelViewMatrix*vec4(position,1.0); vec4 mvPosition = mv;
       #include <clipping_planes_vertex>
       vN = normalize(normalMatrix*normal); vV = -mv.xyz; vP = position; vS = aB; vSel = aSel; vFa = aFa; vWsk = (aReg > 0.5 && (abs(aReg - uWskId) < 0.5 || (aReg > 6.5 && abs(uWskId - 6.0) < 0.5)) && (uWskH == 0.0 || uWskH*position.x > 0.0)) ? 1.0 : 0.0; vRo = uReg[int(aReg + 0.5)];
       int h = position.x > 0.0 ? 6 : 0; int b = aB < 0.0 ? -1 : aB < ${PASMA[0]} ? 0 : aB < ${PASMA[1]} ? 1 : aB < ${PASMA[2]} ? 2 : aB < ${PASMA[3]} ? 3 : 4;
-      vPr = b < 0 ? 0.0 : uPred[h + b]; vMe = b < 0 ? 0.0 : uMeas[h + b]; vSN = aN*uSN;
+      vPr = b < 0 ? 0.0 : uPred[h + b]; vMe = b < 0 ? 0.0 : uMeas[h + b]; vSN = aN*uSN[position.x > 0.0 ? 1 : 0];
       vPr += aNaw*uNawP + aCel*uCelP; vMe += aCel*uCelM;
-      float dociera = max(aDo, aDoK*uKu); vMe = vMe*dociera + aDoL*uZdL[position.x > 0.0 ? 1 : 0]; vSN *= max(dociera, aDoL);   // measurement only where a drawn fibre arrives; the lateral tracts bring the large surprise on
+      float dociera = max(aDo, aDoK*uKu); vMe = vMe*dociera + aDoL*(uZdL[position.x > 0.0 ? 1 : 0] + 0.6*uLatS[position.x > 0.0 ? 1 : 0]); vSN *= max(dociera, aDoL); if (aReg > 6.5) vSN += uWys;   // measurement only where a drawn fibre arrives; the lateral tracts bring the large surprise on
       gl_Position = projectionMatrix*mv; }`,
   fragmentShader: `#include <clipping_planes_pars_fragment>
     uniform float uKu; uniform vec3 uBase; uniform vec3 uBeta; uniform vec3 uGamma; uniform float uT; uniform float uWP; uniform float uWM; uniform float uFb; uniform float uFg; varying float vSel; varying float vFa; varying float vWsk; varying float vRo;
@@ -297,7 +297,7 @@ const kora = new THREE.Mesh(geo, new THREE.ShaderMaterial({
       #include <clipping_planes_fragment>
       }
       float f = pow(1.0-abs(dot(normalize(vN),normalize(vV))),2.2);
-      float beta = 0.55 + 0.45*sin(6.2832*(vS*2.5 - 0.25*uFb*uT));
+      float beta = 0.55 + 0.45*sin(6.2832*(vS*2.5 - uFb*uT));
       float grain = hash(floor(vP*0.9) + floor(uT*uFg));
       float me = vMe*uWM*(0.55 + 0.45*grain), pr = max(vPr, 0.16)*uWP*beta; // predictions in every area, stronger on the body map's active bands
       vec3 c = uBase; c = mix(c, uBeta, clamp(pr*0.9,0.0,1.0)); c = mix(c, uGamma, clamp(me + vSN*(0.6+0.3*grain)*uWM,0.0,1.0));
@@ -310,7 +310,7 @@ kora.renderOrder = 2; sB.add(kora);
 // fibres: one draw for all; beta runs down each fibre toward the receptors, gamma up it, each weighted by the fibre's band
 { const P = [], D = [], B = [], H = [], K = [], I = [], Ln = []; let base = 0;
   for (const [name, v] of Object.entries(T)) { const kind = name.startsWith('CST') ? 0 : name.startsWith('ML') ? 1 : 2, h = name.endsWith('_R') ? 1 : 0; let q = 0;
-    v.cnt.forEach((c, li) => { if (li % 2) { q += c; return; }   // every second fibre: the bundle stays a bundle, and a single fibre can be followed
+    v.cnt.forEach((c, li) => { if (kind < 2 && li % 2) { q += c; return; }   // every second fibre: the bundle stays a bundle, and a single fibre can be followed
       let d = 0, tot = 0; const b = v.body[li] === 255 ? 5 : pasmo(v.body[li] / 254);
       for (let i = 1; i < c; i++) { const a = (q + i) * 3, b0 = a - 3; tot += Math.hypot((v.pts[a] - v.pts[b0]) / 10, (v.pts[a + 1] - v.pts[b0 + 1]) / 10, (v.pts[a + 2] - v.pts[b0 + 2]) / 10); }
       for (let i = 0; i < c; i++) { const a = (q + i) * 3; const x = v.pts[a] / 10, y = v.pts[a + 1] / 10, z = v.pts[a + 2] / 10;
@@ -333,8 +333,9 @@ kora.renderOrder = 2; sB.add(kora);
       float obw(float u){ return u < 0.0 ? 0.0 : 1.45*(1.0 - exp(-u/0.003))*exp(-u/0.025); }   // a volley at one point: rising over a few milliseconds, fading over tens
       float paczka(float d, float L, float t, float t0, float t1, float kon){ if (d < 0.0 || d > L) return 0.0; return obw(t - (t0 + (t1 - t0)*d/L)); }   // it reaches each point of L millimetres in turn
       void main(){
+        if (vK > 0.5 && vK < 1.5 && vD > 57.0) discard;
         float b = 0.5 + 0.5*sin(6.2832*(vD/26.0 + uFb*uT));          // long, slow, toward the receptors
-        float g = pow(0.5 + 0.5*sin(6.2832*(vD/9.0 - 0.7*uFg*uT)), 9.0); // short separate pulses, fast, away from them
+        float g = pow(0.5 + 0.5*sin(6.2832*(vD/9.0 - uFg*uT)), 9.0); // short separate pulses, fast, away from them
         float pr = (vK > 0.5 && vK < 1.5) ? 0.0 : vPr*uWP;             // the lemniscus climbs only
         float me = vK < 0.5 ? 0.0 : vMe*uWM;                            // the corticospinal tract runs down only
         float mv = vK < 0.5 ? 0.0 : (0.03 + 1.4*max(me - 0.22*uWM, 0.0));   // every climbing fibre carries some measurement, little while the predictions cover it and more as the misfit grows past them
@@ -948,7 +949,7 @@ function mozg(tl, st) {
     for (let h = 0; h < 2; h++) { const nk = h === 0 ? 'R' : 'L';   // both legs and the trunk lift the body; the pressure's surprise reaches the bands outside the body map
       for (let b = 0; b < 6; b++) uPred[h * 6 + b] = BAZA_K[b] * (0.85 + 0.15 * szum(tl, b + h * 7)) + (b < 2 ? 0.45 * ra : 0) + (b === 5 ? 0.2 * ra + 0.25 * sp : 0);
       uMeas[h * 6] = 0.22 + 0.2 * clamp01((st.m[nk] - ZAKRES[0]) / 3) + 0.25 * ra; uMeas[h * 6 + 1] = 0.22 + 0.2 * ra; uMeas[h * 6 + 2] = uMeas[h * 6 + 3] = 0.24; uMeas[h * 6 + 4] = 0.05; uMeas[h * 6 + 5] = clamp01(0.15 + 0.3 * sp); }
-    return { tp: 0, obie: 0, sn: clamp01((sp - 0.55) / 0.35), sp }; }   // past what the brainstem evens out, the surprise flows on toward the insula
+    return { tp: 0, obie: 0, sn: clamp01((sp - 0.55) / 0.35), sp, te: wsTetno(tl) }; }   // past what the brainstem evens out, the surprise flows on toward the insula
   if (scena === 'kubek') { const ra = clamp01(smooth((tl - 1.0) / 0.4)) * (1 - smooth((tl - 6.0) / 0.5)), zaM = (m) => clamp01((m - ZAKRES[3]) / 4);
     for (let h = 0; h < 2; h++) { const nk = h === 0 ? 'R' : 'L', rk = h === 0 ? 'rR' : 'rL';
       for (let b = 0; b < 6; b++) uPred[h * 6 + b] = BAZA_K[b] * (0.85 + 0.15 * szum(tl, b + h * 7)) + (h === 1 && (b === 2 || b === 3) ? 0.45 * ra + 0.35 * bump(tl, KT.lift[0] + 0.27, 0.08, 1.0) : 0) + (h === 1 && b === 5 ? 0.2 * ra : 0);
@@ -963,7 +964,7 @@ function mozg(tl, st) {
     const mn = 0.2 + 0.25 * clamp01((st.m[nogaK] - ZAKRES[0]) / 3) + zaMiar(st.m[nogaK]), mr = 0.18 + 0.22 * clamp01((st.m[rekaK] - ZAKRES[0]) / 3) + zaMiar(st.m[rekaK]);   // at rest under the level the predictions cover, so in steady walking the blue leads
     uMeas[h * 6 + 0] = clamp01(mn + 0.6 * obie); uMeas[h * 6 + 1] = clamp01(0.22 + 0.7 * obie); uMeas[h * 6 + 2] = clamp01(mr + 0.6 * obie); uMeas[h * 6 + 3] = clamp01(0.6 * mr + 0.5 * obie);
     uMeas[h * 6 + 4] = 0.05 + 0.2 * obie; uMeas[h * 6 + 5] = clamp01(0.15 + 0.6 * Math.max(uMeas[h * 6], uMeas[h * 6 + 2]) + 0.4 * obie); }
-  return { tp, obie, sn };
+  return { tp, obie, sn, snH: 1 };
 }
 
 // ---------- the kitchen: the corticostriatal fibres, the nuclei as bodies, the loops, dopamine ----------
@@ -1036,45 +1037,71 @@ function pak(typ, s, arr) {
   return arr; }
 // the cerebellar loop and the lateral tracts, from petle.bin: every streamline starts where its flow starts
 function budujPetle(buf) {
-  const dv = new DataView(buf.buffer); let q = 4; const nb = dv.getUint32(0, true), P = [], S = [], SL = [], G = [], Hh = [], I = [], konce = []; let base = 0;
+  const dv = new DataView(buf.buffer); let q = 4; const nb = dv.getUint32(0, true), Wl = [], konce = [];
   for (let k = 0; k < nb; k++) {
     const ln = buf[q]; q += 1; const name = new TextDecoder().decode(buf.slice(q, q + ln)); q += ln;
     const nl = dv.getUint32(q, true), np = dv.getUint32(q + 4, true); q += 8;
     const cnt = new Uint16Array(buf.buffer.slice(q, q + nl * 2)); q += nl * 2; const hs = buf.slice(q, q + nl); q += nl;
     const pts = new Int16Array(buf.buffer.slice(q, q + np * 6)); q += np * 6 + 64 * 6;
     const g = /^CPT/.test(name) ? 0 : /^MCP/.test(name) ? 1 : /^(SCP|DRTT)/.test(name) ? 2 : 3; let o = 0;
-    cnt.forEach((c, li) => { const h = hs[li], xs = pts.subarray(o * 3, (o + c) * 3), d = [0];
-      for (let i = 1; i < c; i++) d.push(d[i - 1] + Math.hypot(xs[i * 3] - xs[i * 3 - 3], xs[i * 3 + 1] - xs[i * 3 - 2], xs[i * 3 + 2] - xs[i * 3 - 1]) / 10);
-      let d0 = 0;
-      if (g === 3) { let bd = 1e9; const C = [REKA_C[h ? 'R' : 'L'], NOGA_C[h ? 'R' : 'L']];   // a lateral tract carries the surprise outward from where it passes the body map
-        for (let i = 0; i < c; i++) for (const cc of C) { const dd = (xs[i * 3] / 10 - cc.x) ** 2 + (xs[i * 3 + 1] / 10 - cc.y) ** 2 + (xs[i * 3 + 2] / 10 - cc.z) ** 2; if (dd < bd) { bd = dd; d0 = d[i]; } }
-        konce.push(xs[0] / 10, xs[1] / 10, xs[2] / 10, xs[c * 3 - 3] / 10, xs[c * 3 - 2] / 10, xs[c * 3 - 1] / 10); }
-      const dm = Math.max(d0, d[c - 1] - d0) || 1;
-      for (let i = 0; i < c; i++) { P.push(xs[i * 3] / 10, xs[i * 3 + 1] / 10, xs[i * 3 + 2] / 10); S.push(Math.abs(d[i] - d0)); SL.push(dm); G.push(g); Hh.push(h); if (i) I.push(base + i - 1, base + i); }
-      base += c; o += c; }); }
+    cnt.forEach((c, li) => { const xs = Array.from(pts.subarray(o * 3, (o + c) * 3), (v) => v / 10), d = [0];
+      for (let i = 1; i < c; i++) d.push(d[i - 1] + Math.hypot(xs[i * 3] - xs[i * 3 - 3], xs[i * 3 + 1] - xs[i * 3 - 2], xs[i * 3 + 2] - xs[i * 3 - 1]));
+      Wl.push({ g, k, h: hs[li] & 1, pa: hs[li] >> 1, xs, d, c }); o += c; }); }
+  const P = [], S = [], S2 = [], SL = [], SL2 = [], G = [], Hh = [], Pa = [], I = []; let base = 0;
+  const dodaj = (xs, sa, sb, sl, sl2, g, h, pa) => { const n = xs.length / 3; for (let i = 0; i < n; i++) { P.push(xs[i * 3], xs[i * 3 + 1], xs[i * 3 + 2]); S.push(sa[i]); S2.push(sb[i]); SL.push(sl); SL2.push(sl2); G.push(g); Hh.push(h); Pa.push(pa); if (i) I.push(base + i - 1, base + i); } base += n; };
+  // a lateral tract carries the large surprise outward from where it passes nearest the body area the surprise reached;
+  // a drawn join leads from that area to the tract, one for the hand area and one for the leg area
+  const najbl = (w, C) => { let bd = 1e9, bi = 0; for (let i = 0; i < w.c; i++) { const dd = (w.xs[i * 3] - C.x) ** 2 + (w.xs[i * 3 + 1] - C.y) ** 2 + (w.xs[i * 3 + 2] - C.z) ** 2; if (dd < bd) { bd = dd; bi = i; } } return bi; };
+  const grupy = new Map();
+  for (const w of Wl) if (w.g === 3) { const hk = w.h ? 'R' : 'L'; w.i1 = najbl(w, REKA_C[hk]); w.i0 = najbl(w, NOGA_C[hk]); const key = w.k + '_' + w.h; if (!grupy.has(key)) grupy.set(key, []); grupy.get(key).push(w); }
+  const SRM = new THREE.Vector3(0, -20, 10);
+  for (const ws of grupy.values()) { const hk = ws[0].h ? 'R' : 'L';
+    for (const [reka, C, idx, pole] of [[true, REKA_C[hk], 'i1', 'La1'], [false, NOGA_C[hk], 'i0', 'La0']]) { const m = new THREE.Vector3();
+      for (const w of ws) m.add(new THREE.Vector3(w.xs[w[idx] * 3], w.xs[w[idx] * 3 + 1], w.xs[w[idx] * 3 + 2])); m.divideScalar(ws.length);
+      for (const w of ws) { w[idx] = najbl(w, m); w[pole + 'x'] = Math.hypot(w.xs[w[idx] * 3] - m.x, w.xs[w[idx] * 3 + 1] - m.y, w.xs[w[idx] * 3 + 2] - m.z) > 10; }
+      const mid = C.clone().lerp(m, 0.5); mid.add(mid.clone().sub(SRM).multiplyScalar(0.12));
+      const n = Math.max(4, Math.round(C.distanceTo(m) / 3)), xs = [], dd = [0], pop = new THREE.Vector3(), pt = new THREE.Vector3();
+      for (let j = 0; j <= n; j++) { const u = j / n; pt.copy(C).multiplyScalar((1 - u) ** 2).addScaledVector(mid, 2 * u * (1 - u)).addScaledVector(m, u * u); xs.push(pt.x, pt.y, pt.z); if (j) dd.push(dd[j - 1] + pop.distanceTo(pt)); pop.copy(pt); }
+      const La = dd[n], dalej = Math.max(...ws.map((w) => Math.max(w.d[w[idx]], w.d[w.c - 1] - w.d[w[idx]]))), nigdy = dd.map(() => 1e6);
+      for (const w of ws) w[pole] = La;
+      dodaj(xs, reka ? dd : nigdy, reka ? nigdy : dd, La + dalej, La + dalej, 3, ws[0].h, 2); } }
+  for (const w of Wl) { const n = w.c, sa = [], sb = []; let sl, sl2;
+    if (w.g === 3) { const d1 = w.d[w.i1], d0 = w.d[w.i0];
+      for (let i = 0; i < n; i++) { sa.push(w.La1x ? 1e6 : w.La1 + Math.abs(w.d[i] - d1)); sb.push(w.La0x ? 1e6 : w.La0 + Math.abs(w.d[i] - d0)); }
+      sl = w.La1 + Math.max(d1, w.d[n - 1] - d1); sl2 = w.La0 + Math.max(d0, w.d[n - 1] - d0);
+      konce.push(w.xs[0], w.xs[1], w.xs[2], w.xs[n * 3 - 3], w.xs[n * 3 - 2], w.xs[n * 3 - 1]); }
+    else { for (let i = 0; i < n; i++) { sa.push(w.d[i]); sb.push(w.d[i]); } sl = sl2 = w.d[n - 1] || 1; }
+    dodaj(w.xs, sa, sb, sl, sl2, w.g, w.h, w.pa); }
   const gg = new THREE.BufferGeometry(); gg.setAttribute('position', new THREE.Float32BufferAttribute(P, 3));
-  for (const [n, a] of [['aS', S], ['aSL', SL], ['aG', G], ['aH', Hh]]) gg.setAttribute(n, new THREE.Float32BufferAttribute(a, 1)); gg.setIndex(I);
+  for (const [n, a] of [['aS', S], ['aS2', S2], ['aSL', SL], ['aSL2', SL2], ['aG', G], ['aH', Hh], ['aPa', Pa]]) gg.setAttribute(n, new THREE.Float32BufferAttribute(a, 1)); gg.setIndex(I);
   const l = new THREE.LineSegments(gg, new THREE.ShaderMaterial({ transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: U,
-    vertexShader: `attribute float aS; attribute float aSL; attribute float aG; attribute float aH; uniform float uZd[2]; uniform float uZdA[2]; uniform float uDz; varying float vS; varying float vSL; varying float vG; varying float vZ; varying float vA; varying float vF;
-      void main(){ vS = aS; vSL = aSL; vG = aG; int hh = int(aH + 0.5); vZ = uZd[hh]; vA = uZdA[hh]; vec4 mv = modelViewMatrix*vec4(position,1.0);
+    vertexShader: `attribute float aS; attribute float aS2; attribute float aSL; attribute float aSL2; attribute float aG; attribute float aH; attribute float aPa; uniform float uZd[2]; uniform float uZdA[2]; uniform float uZdB[2]; uniform float uLatS[2]; uniform float uDz; varying float vS; varying float vSL; varying float vSh; varying float vLs; varying float vOk; varying float vG; varying float vZ; varying float vA; varying float vF;
+      void main(){ int hh = int(aH + 0.5); bool noga = uZdB[hh] < 1.5; vS = noga ? aS2 : aS; vSL = noga ? aSL2 : aSL; vSh = aS; vLs = uLatS[hh]; vOk = (aPa > 1.5 || (noga ? aPa < 0.5 : aPa > 0.5)) ? 1.0 : 0.0; vG = aG; vZ = uZd[hh]; vA = uZdA[hh]; vec4 mv = modelViewMatrix*vec4(position,1.0);
         vF = 1.0 - 0.7*smoothstep(uDz - 50.0, uDz + 60.0, -mv.z); gl_Position = projectionMatrix*mv; }`,
-    fragmentShader: `uniform vec3 uBeta; uniform vec3 uGamma; uniform vec3 uDim; uniform float uWP; uniform float uWM; varying float vS; varying float vSL; varying float vG; varying float vZ; varying float vA; varying float vF;
+    fragmentShader: `uniform vec3 uBeta; uniform vec3 uGamma; uniform vec3 uDim; uniform float uWP; uniform float uWM; uniform float uT; uniform float uFg; uniform float uKu; varying float vS; varying float vSL; varying float vSh; varying float vLs; varying float vOk; varying float vG; varying float vZ; varying float vA; varying float vF;
       void main(){
         float t0 = vG < 0.5 ? 0.002 : vG < 1.5 ? 0.008 : vG < 2.5 ? 0.013 : 0.005, t1 = vG < 0.5 ? 0.008 : vG < 1.5 ? 0.013 : vG < 2.5 ? 0.023 : 0.025;   // into the pons, across to the cerebellum, back to the thalamus; the lateral tracts outward
         float fr = clamp((vZ - t0)/(t1 - t0), 0.0, 1.0)*vSL, kon = vG > 2.5 ? 0.06 : 0.05;
         float uu = vZ - (t0 + (t1 - t0)*clamp(vS/vSL, 0.0, 1.0)), pk = uu < 0.0 ? 0.0 : 1.45*(1.0 - exp(-uu/0.003))*exp(-uu/0.025);   // the volley reaches each point in turn, rises and fades
-        float amp = vG > 2.5 ? 0.65*vA*smoothstep(0.6, 0.9, vA) : vA;               // only a large surprise climbs the lateral tracts
+        if (vS > 9.0e4) pk = 0.0;
+        float amp = (vG > 2.5 ? 0.65*vA*smoothstep(0.6, 0.9, vA) : vA)*vOk;
+        float st = (vG > 2.5 && vSh < 9.0e4) ? pow(0.5 + 0.5*sin(6.2832*(vSh/9.0 - uFg*uT)), 9.0)*vLs : 0.0;               // only a large surprise climbs the lateral tracts
         bool back = vG > 1.5 && vG < 2.5;                                       // what comes back out of the cerebellum is the correction
         vec3 col = back ? uBeta*1.3 + vec3(0.15) : uGamma*1.1;
-        gl_FragColor = vec4((uDim*0.08 + col*pk*amp*(back ? uWP : uWM))*vF, 1.0); }` }));
+        gl_FragColor = vec4((uDim*0.08 + col*pk*amp*(back ? uWP : uWM) + uGamma*st*0.6*uWM)*vF, 1.0); }` }));
   l.renderOrder = 1; l.frustumCulled = false; sB.add(l);
   dojscia(konce, aDoL); geo.attributes.aDoL.needsUpdate = true; dirty = true;
+  { const c = srodek((i) => aN[i] > 0 && aDoL[i] > 0.3);
+    for (const hk of ['L', 'R']) { let bd = 1e9, bi = -1; for (let i = 0; i < nv; i++) { if (!(aN[i] > 0 && aDoL[i] > 0.3) || (pos[i * 3] > 0) !== (hk === 'R')) continue;
+        const dd = (pos[i * 3] - WYSPA_C[hk].x) ** 2 + (pos[i * 3 + 1] - WYSPA_C[hk].y) ** 2 + (pos[i * 3 + 2] - WYSPA_C[hk].z) ** 2; if (dd < bd) { bd = dd; bi = i; } }
+      if (bi >= 0) c[hk].set(pos[bi * 3], pos[bi * 3 + 1], pos[bi * 3 + 2]); }
+    if (isFinite(c.L.x) && isFinite(c.R.x) && c.L.lengthSq() > 1 && c.R.lengthSq() > 1) { KOTW.sn = c; ST.snL = c.L.clone(); ST.snR = c.R.clone(); } }
 }
 const wczytajPetle = () => petP || (petP = gz('petle').then(budujPetle, () => { petP = null; }));
 const wczytajKuchnie = () => kuP || (kuP = gz('kuchnia').then(budujKuchnie, () => { kuP = null; }));
 const SOLID_KU = new Set(['CaH', 'Pu', 'GPe', 'GPi', 'STH', 'SNc', 'SNr', 'VA', 'VL', 'MD', 'VPL', 'MoTg']);   // the nuclei a drawn loop runs through, and the two bodies on the body's own pathway
-const KOL_J = { CaH: '#dcc48c', CaB: '#c4ad7a', Pu: '#d2b077', NAC: '#b39a68', GPe: '#aaa3ba', GPi: '#cbc4da', STH: '#d99f8c', SNc: '#9d8bc0', SNr: '#a79eac', VTA: '#9d8bc0', VA: '#a9b99b', VL: '#bccaa9', MD: '#93a888', VPL: '#cdd8bd', MoTg: '#c2b193' };   // light enough to read as bodies against the dark glass, a hue per group
-const SKROT = { 6: 'CaH', 7: 'CaB', 9: 'Pu', 10: 'NAC', 11: 'GPe', 12: 'GPi', 45: 'STH', 142: 'SNc', 143: 'SNr', 144: 'VTA', 36: 'VPL', 125: 'MoTg', 34: 'VA', 35: 'VL', 30: 'MD' };
+const KOL_J = { CaH: '#dcc48c', CaB: '#c4ad7a', Pu: '#d2b077', NAC: '#b39a68', GPe: '#aaa3ba', GPi: '#cbc4da', STH: '#d99f8c', SNc: '#9d8bc0', SNr: '#a79eac', VTA: '#9d8bc0', VA: '#a9b99b', VL: '#bccaa9', MD: '#93a888', VPL: '#cdd8bd', MoTg: '#c2b193', CbDN: '#b9c0a0', PnBa: '#cbbfa8' };   // light enough to read as bodies against the dark glass, a hue per group
+const SKROT = { 6: 'CaH', 7: 'CaB', 9: 'Pu', 10: 'NAC', 11: 'GPe', 12: 'GPi', 45: 'STH', 142: 'SNc', 143: 'SNr', 144: 'VTA', 36: 'VPL', 125: 'MoTg', 63: 'CbDN', 122: 'PnBa', 34: 'VA', 35: 'VL', 30: 'MD' };
 function czytajSiatki(buf, dv, q, SOLID) {   // bodies cut from the Atlas's volume: a count, then code, hemisphere, vertices and faces for each
   const nm = dv.getUint32(q, true); q += 4; const grupa = new THREE.Group(), siatki = [], sr = {}, rr = {};
   for (let k = 0; k < nm; k++) {
@@ -1105,7 +1132,20 @@ function czytajSiatki(buf, dv, q, SOLID) {   // bodies cut from the Atlas's volu
   sB.add(grupa);
   return { grupa, siatki, sr, rr }; }
 let REGD = null, regP = null;
-const wczytajRegiony = () => regP || (regP = gz('regiony').then((buf) => { REGD = czytajSiatki(buf, new DataView(buf.buffer), 0, new Set(['VPL', 'MoTg'])); dirty = true; }, () => { regP = null; }));
+// a drawn join between two places no atlas fibre joins: a gentle arc, bowed away from the middle of the brain or lifted by dz
+function lukB(a, b, wyp, dz) { const mid = a.clone().lerp(b, 0.5), sr = new THREE.Vector3(0, -20, 10); mid.add(mid.clone().sub(sr).multiplyScalar(wyp)); mid.z += dz; const pts = [];
+  for (let i = 0; i <= 12; i++) { const u = i / 12; pts.push(a.clone().multiplyScalar((1 - u) ** 2).add(mid.clone().multiplyScalar(2 * u * (1 - u))).add(b.clone().multiplyScalar(u * u))); } return pts; }
+// the travelling surprise at one place: zero before it arrives, rising over a few milliseconds, fading over tens
+const obwJ = (u) => (u < 0 ? 0 : 1.45 * (1 - Math.exp(-u / 0.003)) * Math.exp(-u / 0.025));
+const pulsWe = (h) => (U.uWz.value[h] < 0 ? 0 : obwJ(U.uWz.value[h] - U.uWy.value[h]) * U.uZdA.value[h]);
+const pulsWz = (h) => (U.uWz.value[h] < 0 ? 0 : obwJ(U.uWz.value[h] - 0.5 * (U.uWy.value[h] + U.uWc.value[h])) * U.uZdA.value[h]);
+const pulsZ = (h, t0) => (U.uZd.value[h] < 0 ? 0 : obwJ(U.uZd.value[h] - t0) * U.uZdA.value[h]);
+const wczytajRegiony = () => regP || (regP = gz('regiony').then((buf) => { REGD = czytajSiatki(buf, new DataView(buf.buffer), 0, new Set(['VPL', 'MoTg', 'CbDN', 'PnBa'])); REGD.luki = [];
+  const nitka = (k, h, pts) => { const l = linie(sB, rozbij(pts), new THREE.Color('#ffffff'), 1.8, 1, true); l.renderOrder = 3; l.material.depthTest = false; l.material.opacity = 0.9; REGD.luki.push({ k, h, l }); };
+  for (const h of ['L', 'R']) { const mo = REGD.sr['MoTg' + h], inny = REGD.sr['MoTg' + (h === 'L' ? 'R' : 'L')];
+    if (mo && WYSPA_C[h]) nitka('wys', h, lukB(WYSPA_C[h], mo, 0.1, 0));
+    if (mo && inny) nitka('krz', h, lukB(mo, inny, 0, h === 'L' ? 3 : -3)); }
+  dirty = true; }, () => { regP = null; }));
 function budujKuchnie(buf) {
   const dv = new DataView(buf.buffer); let q = 4; const nb = dv.getUint32(0, true), P = [], D = [], Kk = [], Hh = [], I = [], konceK = []; let base = 0;
   for (let k = 0; k < nb; k++) {
@@ -1123,10 +1163,10 @@ function budujKuchnie(buf) {
   for (const [n, a] of [['aD', D], ['aK', Kk], ['aH', Hh]]) g.setAttribute(n, new THREE.Float32BufferAttribute(a, 1)); g.setIndex(I);
   // each fibre starts in the striatum, so the slow blue wave runs from the cortex down into it
   const wlokna = new THREE.LineSegments(g, new THREE.ShaderMaterial({ transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: { ...U, uCS: { value: uCS } },
-    vertexShader: `attribute float aD; attribute float aK; attribute float aH; uniform float uCS[6]; varying float vD; varying float vW;
-      void main(){ vD = aD; vW = uCS[int(aH + 0.5)*3 + int(aK + 0.5)]; gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
-    fragmentShader: `uniform vec3 uBeta; uniform vec3 uDim; uniform float uT; uniform float uWP; uniform float uFb; varying float vD; varying float vW;
-      void main(){ float b = 0.5 + 0.5*sin(6.2832*(vD/26.0 + uFb*uT)); gl_FragColor = vec4(uDim*0.05 + uBeta*b*vW*uWP*0.34, 1.0); }` }));
+    vertexShader: `attribute float aD; attribute float aK; attribute float aH; uniform float uCS[6]; varying float vD; varying float vW; varying float vKk;
+      void main(){ vD = aD; vKk = aK; vW = uCS[int(aH + 0.5)*3 + int(aK + 0.5)]; gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+    fragmentShader: `uniform vec3 uBeta; uniform vec3 uGamma; uniform vec3 uDim; uniform float uT; uniform float uWP; uniform float uWM; uniform float uFb; uniform float uFg; uniform float uCelM; varying float vD; varying float vW; varying float vKk;
+      void main(){ float b = 0.5 + 0.5*sin(6.2832*(vD/26.0 + uFb*uT)); float g = vKk < 0.5 ? pow(0.5 + 0.5*sin(6.2832*(vD/9.0 + uFg*uT)), 9.0)*uCelM : 0.0; gl_FragColor = vec4(uDim*0.05 + uBeta*b*vW*uWP*0.34 + uGamma*g*uWM*1.4, 1.0); }` }));
   wlokna.renderOrder = 1; wlokna.frustumCulled = false; sB.add(wlokna);
   const { grupa, siatki, sr, rr } = czytajSiatki(buf, dv, q, SOLID_KU);
   // the loops' arms: a gentle arc from nucleus to nucleus, bowed away from the midline
@@ -1134,13 +1174,13 @@ function budujKuchnie(buf) {
   for (const h of ['L', 'R']) { const J = (s) => sr[s + h], SMA = SMA_C[h], DL = DLPFC_C[h];
     for (const [k, a, b] of [['naw', J('Pu'), J('GPi')], ['nawT', J('GPi'), J('VL')], ['nawK', J('VL'), SMA], ['cel', J('CaH'), J('GPi')], ['celT', J('GPi'), J('VA')], ['celK', J('VA'), DL],
       ['cel', J('CaH'), J('SNr')], ['celT', J('SNr'), J('MD')], ['celK', J('MD'), DL], ['hd', SMA, J('STH')], ['hdp', J('STH'), J('GPi')], ['ind', J('Pu'), J('GPe')], ['ind', J('GPe'), J('STH')],
-      ['dop', J('SNc'), J('Pu')], ['dop', J('SNc'), J('CaH')]]) {
+      ['dop', J('SNc'), J('Pu')], ['dop', J('SNc'), J('CaH')], ['dop', J('SNc'), J('CaB')]]) {
       if (!a || !b) continue; const l = linie(sB, rozbij(luk(a, b)), new THREE.Color('#ffffff'), k === 'dop' ? 2.0 : 1.6, 1, true); l.renderOrder = 3; l.material.depthTest = false; l.material.opacity = 0.9; ramiona.push({ k, l }); } }
   KUD = { wlokna, grupa, siatki, ramiona, uCS, sr, rr, akt: {}, kot: {}, sloty: null }; rozmiar(); dirty = true;
 }
 function kuchniaKlatka(M, uT) {
   const on = scena === 'kuchnia' && !!KUD;
-  U.uCelP.value = on ? 0.45 * M.cel : 0; U.uCelM.value = on ? 0.45 * M.celM : 0; U.uNawP.value = on ? 0.5 * M.hab : 0; U.uKu.value = on ? 1 : 0;
+  U.uCelP.value = on ? 0.45 * M.cel : 0; U.uCelM.value = on ? 0.45 * M.celM : 0; U.uNawP.value = on ? 0.5 * M.hab : 0; U.uKu.value = on ? 1 : 0; U.uLatS.value[0] = U.uLatS.value[1] = on ? 0.5 * M.celM : 0;
   if (!KUD) return; KUD.wlokna.visible = KUD.grupa.visible = on; for (const a of KUD.ramiona) a.l.visible = on;
   if (!on) return;
   const wP = W('P'), wM = W('M'), wD = W('D'), nw = M.nw;
@@ -1149,7 +1189,7 @@ function kuchniaKlatka(M, uT) {
     switch (a.k) {
       case 'naw': case 'nawT': c = kolory(BETA, 0.15 + 0.55 * M.hab + 0.9 * M.dd, 0.25, 3.0, uT, false, wP); break;
       case 'nawK': c = kolory2(BETA, 0.15 + 0.5 * M.hab, 0.25, 3.0, GAMMA, 0.12, 0.0625, 12.0, uT, wP, wM); break;
-      case 'cel': c = kolory(BETA, 0.08 + 0.6 * M.cel + 0.9 * M.dd * nw, 0.25, 3.0, uT, false, wP); break;
+      case 'cel': c = kolory2(BETA, 0.08 + 0.6 * M.cel + 0.9 * M.dd * nw, 0.25, 3.0, GAMMA, 0.6 * M.celM, 0.0625, 12.0, uT, wP, wM); break;
       case 'celT': c = kolory2(BETA, 0.08 + 0.55 * M.cel, 0.25, 3.0, GAMMA, 0.6 * M.celM, 0.0625, 12.0, uT, wP, wM); break;
       case 'celK': c = kolory2(BETA, 0.08 + 0.5 * M.cel, 0.25, 3.0, GAMMA, M.celM, 0.0625, 12.0, uT, wP, wM); break;
       case 'hd': c = kolory(BETA, 0.05 + M.hd, 0.25, 3.0, uT, false, wP); break;
@@ -1159,13 +1199,13 @@ function kuchniaKlatka(M, uT) {
     ustawKolory(a.l, c);
     if (a.k === 'naw' || a.k === 'nawT' || a.k === 'cel' || a.k === 'celT') a.l.material.linewidth = 1.2 + 2.4 * clamp01(M.dop); else if (a.k === 'ind') a.l.material.linewidth = 3.0 - 2.4 * clamp01(M.dop); }
   const zryw = 0.45 * clamp01((M.dop - 0.35) * 1.6) * wD;   // a tint on the striatum, the burst itself rides the arms
-  KUD.akt = { sma: clamp01((0.5 * M.hab + M.hd - 0.15) / 0.3) * wP, dl: clamp01((0.5 * M.cel - 0.15) / 0.3) * wP, pm: clamp01(Math.max(uMeas[5], uMeas[11]) * 2) * wM };
+  KUD.akt = { PnBa: clamp01(pulsZ(0, 0.008) + pulsZ(1, 0.008)), CbDN: clamp01(pulsZ(0, 0.013) + pulsZ(1, 0.013)), sma: clamp01((0.5 * M.hab + M.hd - 0.15) / 0.3) * wP, dl: clamp01((0.5 * M.cel - 0.15) / 0.3) * wP, pm: clamp01(Math.max(uMeas[5], uMeas[11]) * 2) * wM };
   for (const m of KUD.siatki) { const u = m.material.uniforms, s = m.userData.s;
-    const v = { CaH: [0.12 + 0.5 * M.cel + 0.6 * M.dd * nw, 0.5 * M.celM, zryw], CaB: [0.1 + 0.4 * M.cel, 0.3 * M.celM, zryw], Pu: [0.18 + 0.5 * M.hab + 0.6 * M.dd, 0, zryw], NAC: [0.12, 0, 0],
-      GPe: [0.12 + M.ii, 0, 0], GPi: [0.18 + 0.4 * Math.max(M.hab, M.cel) + M.hd + 0.5 * M.dd, 0, 0], STH: [0.1 + M.hd + M.ii, 0, 0], SNc: [0.1, 0, (0.15 + 0.85 * M.dop) * wD],
-      SNr: [0.1 + 0.4 * M.cel, 0, 0], VTA: [0.1, 0, 0.25 * wD], VA: [0.1 + 0.5 * M.cel, 0.4 * M.celM, 0], VL: [0.12 + 0.5 * M.hab, 0, 0], MD: [0.1 + 0.5 * M.cel, 0.5 * M.celM, 0],
-      VPL: [0.12, clamp01((Math.max(uMeas[m.userData.h < 0 ? 0 : 6], uMeas[(m.userData.h < 0 ? 0 : 6) + 2]) - 0.3) * 1.3), 0],   // the measurement from the opposite side of the body, as the stations of the walk read it
-      MoTg: [0.1, clamp01((Math.max(uMeas[m.userData.h < 0 ? 6 : 0], uMeas[(m.userData.h < 0 ? 6 : 0) + 2]) - 0.3) * 1.3), 0] }[s] || [0.1, 0, 0];   // VPL and MoTg above the resting level only, so the body reddens with a surprise and rests in its own colour
+    const v = { CaH: [0.12 + 0.5 * M.cel + 0.6 * M.dd * nw, 0.5 * M.celM, zryw], CaB: [0.1, 0, zryw], Pu: [0.18 + 0.5 * M.hab + 0.6 * M.dd, 0, zryw], NAC: [0.12, 0, 0],
+      GPe: [0.12 + M.ii, 0, 0], GPi: [0.18 + 0.4 * Math.max(M.hab, M.cel) + M.hd + 0.5 * M.dd, 0.4 * M.celM, 0], STH: [0.1 + M.hd + M.ii, 0, 0], SNc: [0.1, 0, (0.15 + 0.85 * M.dop) * wD],
+      SNr: [0.1 + 0.4 * M.cel, 0.4 * M.celM, 0], VTA: [0.1, 0, 0], VA: [0.1 + 0.5 * M.cel, 0.4 * M.celM, 0], VL: [0.12 + 0.5 * M.hab, 0, 0], MD: [0.1 + 0.5 * M.cel, 0.5 * M.celM, 0],
+      VPL: [0.12, Math.max(clamp01((Math.max(uMeas[m.userData.h < 0 ? 0 : 6], uMeas[(m.userData.h < 0 ? 0 : 6) + 2]) - 0.3) * 1.3), pulsWz(m.userData.h < 0 ? 0 : 1)), 0],   // the measurement from the opposite side of the body, as the stations of the walk read it
+      MoTg: [0.1, Math.max(clamp01((Math.max(uMeas[m.userData.h < 0 ? 6 : 0], uMeas[(m.userData.h < 0 ? 6 : 0) + 2]) - 0.3) * 1.3), pulsWe(m.userData.h < 0 ? 1 : 0), 0.7 * pulsWe(m.userData.h < 0 ? 0 : 1)), 0] }[s] || [0.1, 0, 0];   // VPL and MoTg above the resting level only, so the body reddens with a surprise and rests in its own colour
     u.uB.value = v[0]; u.uG.value = v[1]; u.uD.value = v[2]; KUD.akt[s] = Math.max(KUD.akt[s] || 0, clamp01((Math.max(v[0] * wP, v[1] * wM, v[2]) - 0.3) / 0.3)); u.uSel.value = wybor && wybor.kod === m.userData.kod && wybor.h === m.userData.h ? 1 : 0; }
 }
 // the kitchen holds only what the hand acts on: the cupboard's door it opens, the cupboard above in the new kitchen, the cup
@@ -1285,15 +1325,15 @@ const CZESCI = [
   { id: 'krok', n: 'Przewidziany krok', op: 'Stopa ląduje tam, gdzie zakładała predykcja, a rdzeń wyrównuje niewielkie zaskoczenie.', a: 1.1, b: 2.2, st: 'zakres', e: 'Niebieski cień kończyn to predykcja ich położenia, a czerwień wspina się po kończynie do stawu, dokąd sięga zaskoczenie. Rdzeń wyrównuje zaskoczenie mieszczące się w zakresie stopy albo kolana, a do kory dociera niewiele.' },
   { id: 'podloga', n: 'Niższa podłoga', op: 'Stopa schodzi niżej, niż zakładała predykcja, więc zaskoczenie wspina się do obszaru nogi w korze. Z kory płynie też do móżdżku, skąd poprawka wraca do tego samego obszaru.', a: TD - 0.15, b: TD + 0.55, st: 'korL', e: 'Stopa schodzi niżej, niż zakładała predykcja. Zaskoczenie przekracza zakresy stopy, kolana i biodra, a jego reszta wspina się przez rdzeń i wzgórze do obszaru nogi w lewej półkuli. Obszar nogi wysyła zmienioną predykcję w dół, do mięśni nogi. Z obszaru nogi zaskoczenie płynie też przez most w pniu mózgu do móżdżku, a poprawka wraca przez wzgórze do tego samego obszaru kory; u małp taka pętla zamyka się w obszarze swojego początku (Kelly i Strick 2003).' },   // [s:kelly2003-cerebrocerebellar-closed-loops]
   { id: 'przeszkoda', n: 'Przeszkoda', op: 'Stopa zaczepia o przeszkodę. Zaskoczenie jest większe, niż rdzeń wyrównuje przy nodze i tułowiu, więc biegnie do kory.', a: TT - 0.1, b: TT + 0.6, st: 'korR', e: 'Stopa zaczepia o przeszkodę. Zaskoczenie przekracza zakresy nogi i tułowia i biegnie nerwem i rdzeniem do kory prawej półkuli. Predykcje rąk wysuwają się do przodu, ręce idą za nimi, a reszta zaskoczenia płynie drogami bocznymi w stronę sieci brzusznej uwagi i istotności.' },
-  { id: 'wyzej', n: 'Wyższy krok', op: 'Zaskoczenie płynie dalej, w stronę sieci brzusznej uwagi i istotności, a predykcje kolejnych kroków unoszą stopę wyżej.', a: TT + 0.15, b: TT + 1.3, st: 'snL', e: 'Zaskoczenie płynie w stronę sieci brzusznej uwagi i istotności. Predykcje kolejnych kroków unoszą lewą stopę wyżej, a stopa je spełnia.' }
+  { id: 'wyzej', n: 'Wyższy krok', op: 'Zaskoczenie płynie dalej, w stronę sieci brzusznej uwagi i istotności, a predykcje kolejnych kroków unoszą stopę wyżej.', a: TT + 0.15, b: TT + 1.3, st: 'snR', e: 'Zaskoczenie płynie w stronę sieci brzusznej uwagi i istotności. Predykcje kolejnych kroków unoszą lewą stopę wyżej, a stopa je spełnia.' }
 ];
 
 // ---------- tags, link ----------
 const tagEls = {}; const tagBox = $('tags'), lead = $('lead'), stage = $('stage');
 function tag(id, cls) { if (!tagEls[id]) { const d = document.createElement('div'); d.className = 'tag ' + (cls || ''); tagBox.appendChild(d); tagEls[id] = d; } return tagEls[id]; }
 // a scene's regions, each named once: the left column leads to the copy of the region on the left of the screen, the right column to the one on the right
-const ET_KU = [['sma', 'L', 'dodatkowe pole ruchowe'], ['dl', 'L', 'grzbietowo-boczna kora przedczołowa'], ['pm', 'L', 'przednia kora przedruchowa'], ['MoTg', 'L'], ['VPL', 'R'], ['CaH', 'L'], ['Pu', 'L'], ['GPe', 'L'], ['GPi', 'L'], ['MD', 'R'], ['VA', 'R'], ['VL', 'R'], ['STH', 'R'], ['SNc', 'R'], ['SNr', 'R']];
-const ET_CH = [['pm', 'L', 'przednia kora przedruchowa'], ['kor', 'L', 'obszar nogi'], ['reka', 'L', 'obszar dłoni'], ['sn', 'R', 'sieć brzusznej uwagi i istotności'], ['VPL', 'R'], ['MoTg', 'R']];
+const ET_KU = [['sma', 'L', 'dodatkowe pole ruchowe'], ['dl', 'L', 'grzbietowo-boczna kora przedczołowa'], ['pm', 'L', 'przednia kora przedruchowa'], ['MoTg', 'L'], ['PnBa', 'L'], ['VPL', 'R'], ['CbDN', 'R'], ['CaH', 'L'], ['Pu', 'L'], ['GPe', 'L'], ['GPi', 'L'], ['MD', 'R'], ['VA', 'R'], ['VL', 'R'], ['STH', 'R'], ['SNc', 'R'], ['SNr', 'R']];
+const ET_CH = [['pm', 'L', 'przednia kora przedruchowa'], ['kor', 'L', 'obszar nogi'], ['reka', 'L', 'obszar dłoni'], ['sn', 'R', 'sieć brzusznej uwagi i istotności'], ['VPL', 'R'], ['PnBa', 'R'], ['CbDN', 'R'], ['MoTg', 'L']];
 const ET_WS = [['kor', 'L', 'obszar nogi'], ['wyspa', 'L', 'wyspa'], ['VPL', 'R'], ['MoTg', 'R']];
 const RG = { kuchnia: { et: ET_KU, on: [1, 2, 3], kl: 'ku' }, chod: { et: ET_CH, on: [3, 4, 5, 6], kl: 'ch' }, kubek: { et: ET_CH, on: [3, 4, 5, 6], kl: 'ch' }, wstawac: { et: ET_WS, on: [4, 7], kl: 'ws' } };
 const LATKA = { dl: 1, sma: 2, pm: 3, kor: 4, reka: 5, sn: 6, wyspa: 7 }, KOTW = { sma: SMA_C, dl: DLPFC_C, pm: { L: ST.pmL, R: ST.pmR }, kor: NOGA_C, reka: REKA_C, sn: WYSPA_C, wyspa: WYSPA_C };
@@ -1307,7 +1347,7 @@ function etZ(k) { if (!k) return [null, 0]; const et = RG[scena].et, ma = (id) =
   const m = /^(pm|kor|reka|sn|vpl|gr|cu)([LR])$/.exec(k); if (!m) return [null, 0]; const id = { vpl: 'VPL', gr: 'MoTg', cu: 'MoTg' }[m[1]] || (m[1] === 'sn' && scena === 'wstawac' ? 'wyspa' : m[1]); return ma(id) ? [id, m[2]] : [null, 0]; }
 // wym: label id -> the hemisphere its line must lead to (a station or a touched structure of one side)
 function kotwice(wym) { const r = RECT.get(cB), k = {}, D = ciala(), sc = RG[scena]; let pelne = true;
-  for (const [id, kol] of sc.et) { const a = KOTW[id] || (D ? { L: D.sr[id + 'L'], R: D.sr[id + 'R'] } : null); if (!a || !a.L) { pelne = false; continue; } let best = null;
+  for (const [id, kol] of sc.et) { const Dz = D && D.sr[id + 'L'] ? D : REGD, a = KOTW[id] || (Dz ? { L: Dz.sr[id + 'L'], R: Dz.sr[id + 'R'] } : null); if (!a || !a.L) { pelne = false; continue; } let best = null;
     for (const h of ['L', 'R']) { const p3 = a[h]; if (!p3) continue; const e = naEkran(p3, camB, cB);
       if (wym && wym[id]) { if (h === wym[id]) best = { e, p3, h }; }
       else if (!best || (kol === 'L' ? e[0] < best.e[0] : e[0] > best.e[0])) best = { e, p3, h }; }
@@ -1331,16 +1371,24 @@ function kolumny(krag, kragH, zlote, ukryte, akt, live) { const r = RECT.get(cB)
       const lx = kol === 'L' ? x + el._sz : x - el._sz, [ax, ay] = k.e, ex = Math.round(ax), ey = Math.round(ay), al = (on ? 0.9 : 0.12 + 0.4 * ww).toFixed(1);
       s += `<line x1="${lx}" y1="${y}" x2="${ex}" y2="${ey}" stroke="rgba(240,192,96,${al})" stroke-width="1"/>`;
       s += `<circle cx="${ex}" cy="${ey}" r="${on ? 2.4 : 1.6}" fill="rgba(240,192,96,${al})"/>`; }); }
-  if (D) for (const m of D.siatki) { const u = m.material.uniforms, t = m.userData.s === krag && (!kragH || (m.userData.h < 0 ? 'L' : 'R') === kragH); u.uWsk.value = t ? 1 : 0; u.uCien.value = krag && !t ? 1 : 0; }
+  for (const Dx of [D, D === REGD ? null : REGD]) if (Dx) for (const m of Dx.siatki) { const u = m.material.uniforms, t = m.userData.s === krag && (!kragH || (m.userData.h < 0 ? 'L' : 'R') === kragH); u.uWsk.value = t ? 1 : 0; u.uCien.value = krag && !t ? 1 : 0; }
   U.uWskId.value = LATKA[krag] || 0; U.uWskH.value = kragH === 'L' ? -1 : kragH === 'R' ? 1 : 0;
   return s; }
 // how much each region of the walk, the reach and the rise is in play, read off the bands of the body map
 function aktOgolne(M) { const mx = (...b) => Math.max(...b.map((i) => Math.max(uMeas[i], uMeas[i + 6]))), a = (x) => clamp01((x - 0.3) * 1.6);
-  return { pm: clamp01(mx(5) * 2), kor: a(mx(0, 1)), reka: a(mx(2, 3)), sn: clamp01(M.sn || 0), wyspa: clamp01(M.sn || 0), VPL: a(mx(0, 1, 2, 3)), MoTg: Math.max(a(mx(0, 1, 2, 3)), clamp01(M.sp || 0)) }; }
-function regionyKlatka(M) { if (!REGD) return; const on = scena !== 'kuchnia'; REGD.grupa.visible = on; if (!on) return;
-  for (const m of REGD.siatki) { const u = m.material.uniforms, h = m.userData.h < 0, s = m.userData.s, a = (x) => clamp01((x - 0.3) * 1.3);
-    u.uB.value = 0.12; u.uG.value = s === 'VPL' ? a(Math.max(uMeas[h ? 0 : 6], uMeas[(h ? 0 : 6) + 2])) : Math.max(a(Math.max(uMeas[h ? 6 : 0], uMeas[(h ? 6 : 0) + 2])), clamp01(M.sp || 0)); u.uD.value = 0;
-    u.uSel.value = wybor && wybor.kod === m.userData.kod && wybor.h === m.userData.h ? 1 : 0; } }
+  return { pm: clamp01(mx(5) * 2), kor: a(mx(0, 1)), reka: a(mx(2, 3)), sn: clamp01(M.sn || 0), wyspa: clamp01(M.sn || 0), VPL: a(mx(0, 1, 2, 3)), MoTg: Math.max(a(mx(0, 1, 2, 3)), clamp01(M.sp || 0)), PnBa: clamp01(pulsZ(0, 0.008) + pulsZ(1, 0.008)), CbDN: clamp01(pulsZ(0, 0.013) + pulsZ(1, 0.013)) }; }
+function regionyKlatka(M, uT) { if (!REGD) return; const ku = scena === 'kuchnia', ws = scena === 'wstawac', wP = W('P'), wM = W('M'); REGD.grupa.visible = true;
+  const a = (x) => clamp01((x - 0.3) * 1.3), cialo = (hem) => a(Math.max(uMeas[hem * 6], uMeas[hem * 6 + 2])), nieb = 0.45 + 0.9 * ((M.te || 1) - 1);
+  for (const { k, h, l } of REGD.luki) { const strona = h === 'L' ? 0 : 1;
+    if (k === 'wys') { l.visible = ws; if (ws) ustawKolory(l, kolory2(BETA, nieb, 0.25, 3.0, GAMMA, M.sn || 0, 0.0625, -12.0, uT, wP, wM)); }
+    else ustawKolory(l, kolory(GAMMA, Math.max(cialo(1 - strona), pulsWe(1 - strona)), 0.0625, 12.0, uT, false, wM)); }
+  for (const m of REGD.siatki) { const u = m.material.uniforms, hm = m.userData.h < 0 ? 0 : 1, s = m.userData.s; let b = 0.12, g = 0;
+    m.visible = RG[scena].et.some((e) => e[0] === s) && !(ku && KUD && KUD.sr[s + 'L']); if (!m.visible) continue;
+    if (s === 'VPL') g = Math.max(cialo(hm), pulsWz(hm));
+    else if (s === 'MoTg') { g = Math.max(cialo(1 - hm), pulsWe(1 - hm), 0.7 * cialo(hm), 0.7 * pulsWe(hm), clamp01(M.sp || 0)); if (ws) b = 0.12 + nieb * 0.5; }
+    else if (s === 'PnBa') g = pulsZ(hm, 0.008);
+    else if (s === 'CbDN') { g = pulsZ(1 - hm, 0.013); b = 0.12 + 0.9 * pulsZ(1 - hm, 0.014); }
+    u.uB.value = b; u.uG.value = g; u.uD.value = 0; u.uSel.value = wybor && wybor.kod === m.userData.kod && wybor.h === m.userData.h ? 1 : 0; } }
 let RECT = new Map(), SR = null; const TMP2 = new THREE.Vector3(), TMP3 = new THREE.Vector3();
 function czytajProstokaty() { SR = stage.getBoundingClientRect(); RECT.set(cB, cB.getBoundingClientRect()); RECT.set(cF, cF.getBoundingClientRect()); const cz = document.querySelector('.sym .cie-z'); if (cz) RECT.set('cz', cz.getBoundingClientRect()); }
 function naEkran(p, cam, canvas) { const v = TMP2.copy(p).project(cam), r = RECT.get(canvas); return [r.left - SR.left + (v.x + 1) / 2 * r.width, r.top - SR.top + (1 - v.y) / 2 * r.height]; }
@@ -1403,7 +1451,7 @@ function klatka(now) {
   const tt = C ? C.a + (tc % (C.b - C.a)) : t, tl = lt(tt);
   const p = poza(tt), pp = poza(tt + wyprz(), true), dr = drogiCiala(p), st = stany(p, pp), M = mozg(tl, pamiec(tt, st)); zdarzenia(tl);
   // the rhythms run on the scene's clock, slowed in the parts with everything else
-  U.uT.value = tt; U.uWP.value = W('P'); U.uWM.value = W('M'); U.uSN.value = M.sn;
+  U.uT.value = tt; U.uWP.value = W('P'); U.uWM.value = W('M'); { const ws = scena === 'wstawac'; U.uSN.value[0] = ws || M.snH === 1 ? 0 : M.sn; U.uSN.value[1] = ws || M.snH === 0 ? 0 : M.sn; U.uWys.value = ws ? M.sn : 0; }
   if (!osobno) {                                                               // together: the view not dragged takes the dragged one's direction, so left stays left
     if (prowadzi === 'F') { const d = camF.position.clone().sub(fT).normalize(), r = camB.position.distanceTo(ctl.target); camB.position.copy(ctl.target).add(d.multiplyScalar(r)); camB.lookAt(ctl.target); }
     else { const dir = camB.position.clone().sub(ctl.target).normalize();
@@ -1439,10 +1487,10 @@ function klatka(now) {
       SERCE.geometry.attributes.position.array.set([p.serce.x, p.serce.y, p.serce.z]); SERCE.geometry.attributes.position.needsUpdate = true; SERCE.material.size = 24 + 16 * bije; SERCE.material.opacity = 0.6 + 0.4 * bije;
       sfery.nts.material.color.copy(BETA).lerp(GAMMA, clamp01(sp * wM)); sfery.nts.material.opacity = 0.28 * wP + 0.6 * clamp01(sp * wM); } }
   // the border: red climbs each limb from its end to the joint that takes the misfit in now, brightest at the border
-  { const mid = dr.top.clone().lerp(dr.bot, 0.5), q0 = new THREE.Vector3(), q1 = new THREE.Vector3(), wm = W('M');
+  { const szyj = dr.top.clone().lerp(dr.bot, 0.18), q0 = new THREE.Vector3(), q1 = new THREE.Vector3(), wm = W('M');
     for (const k of GRAN) { const sd = k[k.length - 1], noga = k.length === 1;
       const kon = noga ? p['toe' + sd] : p['dl' + sd].tip;
-      const ch = noga ? [kon, p['an' + sd], p['kn' + sd], p['hip' + sd], mid, dr.top] : [kon, p['ha' + sd], p['el' + sd], p['sh' + sd], mid, dr.top];
+      const ch = noga ? [kon, p['an' + sd], p['kn' + sd], p['hip' + sd], dr.bot, dr.top] : [kon, p['ha' + sd], p['el' + sd], p['sh' + sd], szyj, dr.top];
       const h = wysokosc(st.m[k]), at = (x, out) => { const i = Math.min(4, Math.floor(x)); return out.copy(ch[i]).lerp(ch[i + 1], x - i); };
       const pos = [], col = [];
       for (let i = 0; i < NGR; i++) { const s0 = i / NGR * 5, s1 = Math.min((i + 1) / NGR * 5, h);
@@ -1455,19 +1503,19 @@ function klatka(now) {
     const tint = (m, red) => { m.material.color.copy(BETA).lerp(GAMMA, clamp01(red * wM)); m.material.opacity = 0.28 * wP + 0.6 * clamp01(red * wM); };
     tint(sfery['vpl' + h], Math.max(uMeas[hi], uMeas[hi + 2]) * 1.1); tint(sfery['gr' + h], uMeas[lo] * 1.2); tint(sfery['cu' + h], uMeas[lo + 2] * 1.2); tint(sfery['pm' + h], uMeas[hi + 5] * 0.6); }
 
-  kuchniaKlatka(M, uT); regionyKlatka(M);
+  kuchniaKlatka(M, uT); regionyKlatka(M, uT);
   // the link: the medulla in the brain view and the top of the cord in the figure view are the same cord at two scales
   const Aq = naEkran(MED, camB, cB), Bq = naEkran(dr.top, camF, cF), narrow = innerWidth <= 760;
   const c1 = narrow ? [Aq[0], Aq[1] + 60] : [Aq[0] + 60, Aq[1] + 40], c2 = narrow ? [Bq[0], Bq[1] - 60] : [Bq[0] - 60, Bq[1] - 30];
   if (narrow || !RECT.get('cz')) $('lp').setAttribute('d', `M${Aq[0]},${Aq[1]} C${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${Bq[0]},${Bq[1]}`);
   else { const z = RECT.get('cz'), X = Math.round(z.left + z.width / 2 - SR.left), Y = Math.round(Math.min(SR.height - 8, Math.max(z.bottom - SR.top + 14, Aq[1] + 6)));   // the link passes under the top–bottom track, never across it
     $('lp').setAttribute('d', `M${Aq[0]},${Aq[1]} C${Aq[0] + 90},${Aq[1] + 30} ${X - 150},${Y} ${X},${Y} S${Bq[0] - 110},${Bq[1] + 6} ${Bq[0]},${Bq[1]}`); }
-  const dP = $('lp').getAttribute('d'), lb = $('lb'), lr = $('lr'), mUp = Math.max(uMeas[0], uMeas[6], M.sp || 0);
+  const dP = $('lp').getAttribute('d'), lb = $('lb'), lr = $('lr'), mUp = Math.max(uMeas[0], uMeas[6], uMeas[2], uMeas[8], M.sp || 0);
   lb.setAttribute('d', dP); lr.setAttribute('d', dP);
-  lb.setAttribute('stroke-dashoffset', (-uT * 84).toFixed(1)); lb.setAttribute('opacity', (0.55 * wP).toFixed(2));   // 3 cycles a second, toward the cord
+  lb.setAttribute('stroke-dashoffset', (-uT * 84).toFixed(1)); lb.setAttribute('opacity', (Math.min(1, 0.55 + 0.4 * ((M.te || 1) - 1)) * wP).toFixed(2));   // 3 cycles a second, toward the cord
   { const pk = $('lpk'); let f = -1, kol = '#ff5340';                    // the packet crossing from the cord to the medulla, and the revision crossing back
     if (PAK) { const a0 = PAK.reka ? 0.0135 : 0.032, a1 = PAK.reka ? 0.015 : 0.035; if (PAK.x >= a0 && PAK.x <= a1) f = 1 - (PAK.x - a0) / (a1 - a0); else if (PAK.z >= 0.010 && PAK.z <= 0.012) { f = (PAK.z - 0.010) / 0.002; kol = '#8cb8ff'; }
-      if (PAK.x >= a0 && PAK.z < 0.03) lr.setAttribute('stroke-width', '3.4'); else lr.setAttribute('stroke-width', '2.2'); } else lr.setAttribute('stroke-width', '2.2');
+      lr.setAttribute('stroke-width', PAK.x >= a0 && PAK.x <= a1 + 0.006 ? '3.4' : '2.2'); lb.setAttribute('stroke-width', (PAK.z >= 0.010 && PAK.z <= 0.016) || (PAK.z >= 0.038 && PAK.z <= 0.044) ? '3.6' : '2.2'); } else { lr.setAttribute('stroke-width', '2.2'); lb.setAttribute('stroke-width', '2.2'); }
     pk.setAttribute('opacity', 0); }   // the link carries the volley as a brighter line, no bead
   lr.setAttribute('stroke-dashoffset', (uT * 84).toFixed(1)); lr.setAttribute('opacity', ((0.3 + 0.7 * mUp) * wM).toFixed(2)); // 12 a second, toward the brain
 
@@ -1562,7 +1610,7 @@ $('bPrev').onclick = () => ustawCzesc((czesc - 1 + CZ().length) % CZ().length);
 // a scene's cortical patches are denser than the glass; the wide network of ventral attention and salience (code 6) a lighter veil than a single area
 const DAL = () => innerWidth <= 760 ? 1.3 : 1.15;   // every scene's brain stands back so the columns of names have room
 $('bNazwy').onclick = () => { nazwy = !nazwy; $('bNazwy').setAttribute('aria-pressed', nazwy); if (!nazwy) wskazEt = null; dirty = true; };
-function ustawScene(sc) { scena = sc; wskazEt = null; RG[sc].od = performance.now(); U.uReg.value.fill(0); for (const c of RG[sc].on) U.uReg.value[c] = c === 6 ? 0.45 : 1; if (U.uReg.value[6]) U.uReg.value[7] = 0.45; if (sc !== 'kuchnia') wczytajRegiony(); { const d = camB.position.clone().sub(ctl.target).normalize(); camB.position.copy(ctl.target).add(d.multiplyScalar(START.length() * DAL(sc))); ctl.update(); rozmiar(); } for (const e of document.querySelectorAll('.sym-karty [data-scena]')) e.hidden = e.dataset.scena !== sc; { const b = $('kart'); if (b) b.hidden = !b.querySelector('[data-scena=' + sc + ']'); } LOOP = sc === 'kubek' ? LOOP_K : sc === 'wstawac' ? LOOP_WS : LOOP_W; t = 0; rysujScenariusze(); ustawCzesc(-1);
+function ustawScene(sc) { scena = sc; wskazEt = null; RG[sc].od = performance.now(); U.uReg.value.fill(0); for (const c of RG[sc].on) U.uReg.value[c] = c === 6 ? 0.45 : 1; if (U.uReg.value[6]) U.uReg.value[7] = 0.45; wczytajRegiony(); { const d = camB.position.clone().sub(ctl.target).normalize(); camB.position.copy(ctl.target).add(d.multiplyScalar(START.length() * DAL(sc))); ctl.update(); rozmiar(); } for (const e of document.querySelectorAll('.sym-karty [data-scena]')) e.hidden = e.dataset.scena !== sc; { const b = $('kart'); if (b) b.hidden = !b.querySelector('[data-scena=' + sc + ']'); } LOOP = sc === 'kubek' ? LOOP_K : sc === 'wstawac' ? LOOP_WS : LOOP_W; t = 0; rysujScenariusze(); ustawCzesc(-1);
   for (const [id, s] of [['sChod', 'chod'], ['sKubek', 'kubek'], ['sKuchnia', 'kuchnia'], ['sWstawac', 'wstawac']]) $(id).setAttribute('aria-pressed', sc === s);
   const chD = document.querySelector('.chip[data-c=D]'); if (sc !== 'kuchnia' && iso === 'D') chD.click(); chD.hidden = sc !== 'kuchnia';
   if (sc === 'kuchnia') wczytajKuchnie(); miejsceNapisu(); dirty = true; }
