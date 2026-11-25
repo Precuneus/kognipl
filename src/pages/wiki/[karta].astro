@@ -1,7 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
 import KartaWiki from '../../components/KartaWiki.astro';
-import IndeksWiki from '../../components/IndeksWiki.astro';
 import { KARTY } from '../../karty/data.js';
 export function getStaticPaths() {
   return KARTY.map((k) => ({ params: { karta: k.id }, props: { k } }));
@@ -25,7 +24,7 @@ const to = k.atlas ? k.url : '';
   </html>
 ) : (
   <Base title={k.h + ' · wiki · kogni.pl'} activePage="wiki" description={String(k.def || '').replace(/<!--\[[so]:[^\]]*\]-->/g, '').trim()}>
-    <KartaWiki k={k}>{k.h === 'kogni.pl' && <IndeksWiki slot="indeks" />}</KartaWiki>
+    <KartaWiki k={k} />
   </Base>
 )}
 <script>

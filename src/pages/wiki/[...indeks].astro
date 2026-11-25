@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import KartaWiki from '../../components/KartaWiki.astro';
+import IndeksWiki from '../../components/IndeksWiki.astro';
 import { INK, WIKI_ON, KARTY, NETN, card, netCard, segs } from '../../karty/data.js';
 import { KOLOR } from '../../karty/mozg.js';
 // pierwszy artykuł wiki: karta Kognitywistyka w szablonie karty (jego słowo, 2026-10-22)
@@ -29,6 +30,7 @@ export function getStaticPaths() {
     {/* lista sieci w prawym panelu pierwszego artykułu, w miejscu jego części Sieć mózgowa (jego słowo, 2026-10-23: *embed the sieci mozgowe in the wiki main page to the panel to the right*) */}
     {pierwsza ? (
       <KartaWiki k={pierwsza} wstep>
+        <IndeksWiki slot="indeks" />
         {SIECI.length > 0 && (
           <section slot="siec" class="wk-box wn" id="sieci" aria-labelledby="wn-h">
             <h2 id="wn-h">Sieci mózgu</h2>

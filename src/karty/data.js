@@ -14,9 +14,10 @@ export function slugify(t) {
 const unlink = (v) => String(v || '').replace(/^\[\[|\]\]$/g, '');
 const strip = (t) => String(t || '').replace(/<!--\[s:[^\]]*\]-->/g, '');
 
-// Indeks kart stoi na karcie kogni.pl (2026-11-02). Karta należy do dyscypliny, nazwanej wprost, i do rodzin w niej; osnowy, tematy
+// Indeks kart stoi na /wiki/, pod pierwszym artykułem, odkąd karta kogni.pl wyszła z wiki (jego słowo, 2026-11-25: *it is outside
+// the scope of the wiki*; wcześniej na karcie kogni.pl, 2026-11-02). Karta należy do dyscypliny, nazwanej wprost, i do rodzin w niej; osnowy, tematy
 // zajęć z Płótna, odeszły z wiki (jego słowo, 2026-11-24: *we remove the osnowa. we use disciplines and call them directly*).
-export const INDEKS = '/wiki/' + slugify('kogni.pl') + '/';
+export const INDEKS = '/wiki/';
 export const GRUPY = D.dyscypliny.map((g) => g.nazwa);
 const famOf = {};
 D.dyscypliny.forEach((g, gi) => g.rodziny.forEach((r) => { famOf[r] = gi; }));

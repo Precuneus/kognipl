@@ -1,15 +1,16 @@
 ---
-// Indeks wiki: dyscyplina › rodzina › karty. Stoi na karcie kogni.pl, pod jej opisem; z /wiki/ zniknął
+// Indeks wiki: dyscyplina › rodzina › karty. Stoi na /wiki/ pod pierwszym artykułem (2026-11-25); wcześniej na karcie kogni.pl, a jeszcze wcześniej jako lista na /wiki/
 // (jego słowo, 2026-11-02: *fold whatever is in this list into a card and remove the list*).
 // Indeks jest częścią opisu karty: akapity jak mapa, nie panel (jego słowo, 2026-11-02: *wrap this entire panel into the card. All the
 // keywords should be in the card, in paragraphs listing them like a readme/ map but in the card*). Dyscyplina, nazwana wprost i
 // prowadząca do swojej karty, otwiera swoje rodziny; każda rodzina to akapit z kartami (2026-11-24: osnowy odeszły).
 import { INDEX, INK, KARTY, segs, dyscyplinaUrl } from '../karty/data.js';
-// karty całej wiki, poza samą kartą indeksu, stoją na końcu pod Wiki, żeby indeks wymieniał każdą kartę
-const wiki = KARTY.filter((k) => k.g === 4 && k.h !== 'kogni.pl');
+// karty całej wiki, poza pierwszym artykułem, nad którym indeks stoi, zamykają go pod Wiki, żeby indeks wymieniał każdą kartę
+const wiki = KARTY.filter((k) => k.g === 4 && k.h !== 'Kognitywistyka');
 // tytuł kończący się kropką (Pacjent H.M.) zamyka listę sam
 const lista = (ks) => segs(ks.map((k) => '[[' + k.h + ']]').join(', ') + (ks[ks.length - 1].h.endsWith('.') ? '' : '.'));
 ---
+<h2 class="wi-tytul" id="indeks">Indeks kart</h2>
 {INDEX.filter((g) => g.rodziny.length || g.luzem.length).map((g) => (
   <Fragment>
     <h3 class="wi-g" id={g.id}><a href={dyscyplinaUrl(g.g)} style={'color:' + INK[g.g]}>{g.nazwa}</a></h3>
@@ -22,6 +23,7 @@ const lista = (ks) => segs(ks.map((k) => '[[' + k.h + ']]').join(', ') + (ks[ks.
 {wiki.length > 0 && <Fragment><h3 class="wi-g" id="wiki" style={'color:' + INK[4]}>Wiki</h3><p class="wk-p wi-os">{lista(wiki).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p></Fragment>}
 
 <style is:global>
+.wi-tytul{margin:44px 0 0;scroll-margin-top:90px}
 .wi-g{margin:30px 0 0;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;scroll-margin-top:90px}
 .wi-g a{text-decoration:none}
 .wi-g::first-letter{text-transform:uppercase}
