@@ -9,7 +9,7 @@ sieci:
 - kod: SN
   powód: 'Oceniasz, kiedy bije Twoje serce. To między innymi aktywność wyspy, a osoby z silniejszą aktywnością prawej przedniej wyspy oceniały trafniej (Critchley i in. 2004)<!--[s:critchley2004-heartbeat-right-anterior-insula]-->. Sieć istotności opiera się na grzbietowej części przedniego zakrętu obręczy i na oczodołowej korze czołowo-wyspowej (Seeley i in. 2007)<!--[s:seeley2007-salience-network-dacc-frontoinsula]-->.'
 - kod: DMN
-  powód: 'Regulujesz ciało z wyprzedzeniem. To aktywność jednego układu allostazy i interocepcji, który tworzą Twoja sieć istotności i sieć domyślna (Kleckner i in. 2017)<!--[s:kleckner2017-salience-default-system]-->.'
+  powód: 'Regulujesz ciało z wyprzedzeniem. Według Klecknera i współpracowników tę regulację wspiera jeden układ allostazy i interocepcji, złożony z sieci istotności i sieci domyślnej (Kleckner i in. 2017)<!--[s:kleckner2017-salience-default-system]-->.'
 - kod: SMN
   powód: 'W spoczynkowym funkcjonalnym rezonansie magnetycznym (ang. resting-state fMRI) tylna wyspa, do której dociera bioinformacja z narządów, należy do jednej sieci z korą sieci czuciowo-ruchowej, choć autorzy zastrzegają możliwe rozmycie sygnału między sąsiednimi zakrętami (Yeo i in. 2011)<!--[s:yeo2011-somatomotor-auditory-insula]-->.'
 bez_sieci: ''

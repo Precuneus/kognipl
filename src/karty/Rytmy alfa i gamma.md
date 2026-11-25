@@ -6,16 +6,13 @@ rodziny:
 - '[[Predykcja]]'
 - '[[Sygnał elektryczny]]'
 sieci: []
-bez_sieci: 'W spójnej kognitywistyce rytmy alfa i gamma dotyczą każdej sieci. W siedmiu obszarach wzrokowych człowieka w paśmie gamma przeważają wpływy biegnące połączeniami wstępującymi, a w paśmie alfa i beta wpływy biegnące połączeniami zwrotnymi (Michalareas i in. 2016)<!--[s:michalareas2016-human-meg-gamma-ff-alphabeta-fb]-->.'
+bez_sieci: 'Rytmy alfa i gamma mierzy się w każdej sieci, a kierunek wpływów w tych pasmach badano między innymi w obszarach wzrokowych. W siedmiu z nich u człowieka w paśmie gamma przeważają wpływy biegnące połączeniami wstępującymi, a w paśmie alfa i beta wpływy biegnące połączeniami zwrotnymi (Michalareas i in. 2016)<!--[s:michalareas2016-human-meg-gamma-ff-alphabeta-fb]-->.'
 obszary:
 - klinek
 - zakręt językowaty
 - biegun potyliczny
 ryciny: []
 materiały:
-- tytuł: 'Mr. Science, Nothing About Spiders Is Normal…Here''s Why'
-  url: https://youtu.be/fIWr69Rc9Dg?t=496
-  czas: 8:16–10:02 (1:46)
 - tytuł: 'Buzsáki i Draguhn 2004: Neuronal oscillations in cortical networks'
   url: https://doi.org/10.1126/science.1099745
 - tytuł: 'van Kerkoerle i in. 2014: Alpha and gamma oscillations characterize feedback and feedforward processing in monkey visual cortex'
@@ -30,7 +27,6 @@ rekordy:
 - michalareas_2016
 - bastos_2012
 - 2004_Buzsaki
-- mr-science_spiders-not-normal_fIWr69Rc9Dg
 stan: gotowa
 ---
 Rytmy alfa i gamma (ang. alpha and gamma rhythms) to wahania aktywności neuronalnej kory w dwóch pasmach częstotliwości, wolniejszym alfa i szybszym gamma. Rytm, czyli oscylacja (ang. oscillation), to wahanie aktywności wielu neuronów naraz, powtarzające się regularnie. Pasmo to zakres częstotliwości, a częstotliwość liczy się w hercach (Hz), czyli cyklach na sekundę. Zapis z jednej elektrody to suma wielu fal naraz, a obliczenie zwane transformatą Fouriera (ang. Fourier transform) rozkłada go na fale o różnych częstotliwościach.

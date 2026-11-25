@@ -29,8 +29,8 @@ export function getStaticPaths() {
   <div class="wi">
     {/* lista sieci w prawym panelu pierwszego artykułu, w miejscu jego części Sieć mózgowa (jego słowo, 2026-10-23: *embed the sieci mozgowe in the wiki main page to the panel to the right*) */}
     {pierwsza ? (
+      <Fragment>
       <KartaWiki k={pierwsza} wstep>
-        <IndeksWiki slot="indeks" />
         {SIECI.length > 0 && (
           <section slot="siec" class="wk-box wn" id="sieci" aria-labelledby="wn-h">
             <h2 id="wn-h">Sieci mózgu</h2>
@@ -50,6 +50,9 @@ export function getStaticPaths() {
           </section>
         )}
       </KartaWiki>
+      {/* indeks kart we własnym oknie pod artykułem, po jego panelach, żeby na telefonie artykuł kończył się swoimi materiałami (przegląd 2026-11-25) */}
+      <section class="wk wi-indeks" aria-labelledby="indeks"><div class="wk-box wk-opis"><IndeksWiki /></div></section>
+      </Fragment>
     ) : <h1 class="sr-only">kogni.pl/wiki</h1>}
   </div>
 </Base>

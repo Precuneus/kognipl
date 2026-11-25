@@ -9,6 +9,6 @@ materiały: []
 rekordy: []
 stan: gotowa
 ---
-Fizyka (ang. physics) to w [[Kognitywistyka|spójnej kognitywistyce]] grupa wyjaśnień energii docierającej do zmysłów i pomiaru aktywności mózgu.
+Fizyka (ang. physics) to w [[Kognitywistyka|spójnej kognitywistyce]] dyscyplina, grupa wyjaśnień energii docierającej do zmysłów i pomiaru aktywności mózgu.
 
-Na kogni.pl do fizyki należą między innymi karty [[Widmo elektromagnetyczne]], [[Skaner MRI|Skaner rezonansu magnetycznego (MRI)]] i [[EEG|Elektroencefalografia (EEG)]].
+Na kogni.pl do fizyki należą karty [[Widmo elektromagnetyczne]], [[Skaner MRI|Skaner rezonansu magnetycznego (MRI)]] i [[EEG|Elektroencefalografia (EEG)]].

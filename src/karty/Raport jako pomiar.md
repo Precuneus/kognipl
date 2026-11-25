@@ -24,7 +24,7 @@ rekordy:
 - 2026-10-11_cos-jak-doswiadczenie
 stan: gotowa
 ---
-Raport jako pomiar to ujęcie odpowiedzi osoby badanej na pytanie, czego doświadczyła, jako odczytu z przyrządu. Jak każdy [[Skaner MRI|przyrząd]], raport ma skalę, którą wybiera badaczka, rozdzielczość i próg. Słowa osoby badanej to jeden kanał pomiaru, a poprawność jej wyborów i czas reakcji to drugi. Kiedy oba kanały dają różne wyniki, ta rozbieżność to także wynik. Pokazuje, co dociera do raportu, a co kieruje działaniem inną drogą.
+Raport jako pomiar to ujęcie odpowiedzi osoby badanej na pytanie, czego doświadczyła, jako odczytu z przyrządu. Jak każdy przyrząd, raport ma skalę, którą wybiera badaczka, rozdzielczość i próg. Słowa osoby badanej to jeden kanał pomiaru, a poprawność jej wyborów i czas reakcji to drugi. Kiedy oba kanały dają różne wyniki, ta rozbieżność to także wynik. Pokazuje, co dociera do raportu, a co kieruje działaniem inną drogą.
 
 W [[Ślepowidzenie|ślepowidzeniu]] (ang. blindsight), po uszkodzeniu pierwszorzędowej kory wzrokowej (V1), słowa i wybory dają różne wyniki. Zapytana o bodziec w ślepej części pola widzenia, osoba badana odpowiada, że go nie widzi, ale w wymuszonym wyborze (ang. forced choice) wskazuje jego miejsce albo rodzaj poprawnie częściej, niż pozwala przypadek. Przy bodźcach ruchomych albo kontrastowych badacze opisywali nawet prawie 100% poprawnych wyborów (Cowey 2010)<!--[s:cowey2010-deny-seeing-forced-choice]-->.
 

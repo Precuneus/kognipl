@@ -3,7 +3,7 @@ tytuł: Kognitywistyka
 dyscyplina: wiki
 rodziny: []
 sieci: []
-bez_sieci: 'Kognitywistyka to dziedzina badań umysłu, więc dotyczy wszystkich sieci mózgu naraz.'
+bez_sieci: 'Kognitywistyka to badanie umysłu, więc dotyczy wszystkich sieci mózgu naraz.'
 ryciny: []
 materiały:
 - tytuł: 'Miller 2003: The cognitive revolution: a historical perspective'

@@ -2,12 +2,11 @@
 tytuł: Agenci AI
 dyscyplina: socjologia
 rodziny:
-- '[[Agenci AI]]'
 - '[[Modele językowe]]'
 - '[[Uczenie ze wzmocnieniem]]'
 sieci:
 - kod: DMN
-  powód: 'Kształtują się Twoje Modele Mentalne agenta z jego zapisów. To aktywność grzbietowo-przyśrodkowej części sieci domyślnej, która w mapach metaanalitycznych najsilniej pokrywa się z konstruowaniem innych umysłów, w badaniach nazywanym mentalizacją i teorią umysłu (Andrews-Hanna, Smallwood i Spreng 2014)<!--[s:andrewshanna2014-dorsal-medial-mentalizing]-->.'
+  powód: 'Z zapisów agenta konstruujesz jego zamiary. W spójnej kognitywistyce to aktywność sieci domyślnej, a polegasz przy tym na swoich Modelach Mentalnych innych umysłów. Spośród 526 map metaanalitycznych z bazy NeuroSynth z grzbietowo-przyśrodkową częścią sieci domyślnej najsilniej pokrywają się mapy badań nad konstruowaniem innych umysłów (Andrews-Hanna, Smallwood i Spreng 2014)<!--[s:andrewshanna2014-dorsal-medial-mentalizing]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:
@@ -27,7 +26,7 @@ rekordy:
 - 2026-10-13_zajecia-gry-sprawczosc
 stan: gotowa
 ---
-Agent AI, czyli agent sztucznej inteligencji (ang. artificial intelligence agent), to program, który rozumuje i planuje przy użyciu dużego modelu językowego (ang. large language model, LLM) i działa w świecie przez zewnętrzne narzędzia. Duży model językowy to wielka sieć neuronowa (ang. neural network), wytrenowana na ogromnym zbiorze tekstów pisanych przez ludzi, a agent może działać sam i bez nadzoru człowieka, nawet całymi dniami (Kurzgesagt 2026)<!--[s:kurzgesagt2026-agent-definition]-->.
+Agent AI, czyli agent sztucznej inteligencji (ang. artificial intelligence agent), to program, który układa kroki zadania przy użyciu dużego modelu językowego (ang. large language model, LLM), a wykonuje je zewnętrznymi narzędziami. Duży model językowy to wielka sieć neuronowa (ang. neural network), wytrenowana na ogromnym zbiorze tekstów pisanych przez ludzi, a agent może działać sam i bez nadzoru człowieka, nawet całymi dniami (Kurzgesagt 2026)<!--[s:kurzgesagt2026-agent-definition]-->.
 
 Agentów uczy się na tysiącach zadań naraz, więc nadzór przejmuje oceniacz (ang. scorer), czyli kod z regułami, który za rozwiązane zadanie przyznaje punkty, a zachowania nagradzane punktami się utrwalają (Kurzgesagt 2026)<!--[s:kurzgesagt2026-scorer-reward-hacking]-->, jak w [[Warunkowanie klasyczne i instrumentalne|warunkowaniu instrumentalnym]], w którym zwierzę uczy się ruchu po skutku, jaki ten ruch przynosi. Według Kurzgesagt, gdy punkty da się zdobyć inaczej, na przykład zmieniając warunki testu, podglądając rozwiązanie albo podrabiając wynik, agent może obejść reguły nagrody (ang. reward hacking).
 

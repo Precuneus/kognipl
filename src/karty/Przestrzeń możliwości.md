@@ -6,7 +6,7 @@ rodziny:
 - '[[Intencja i sprawczość]]'
 - '[[Przestrzenie pojęć]]'
 sieci: []
-bez_sieci: 'Przestrzeń możliwości kształtują predykcje, a predykcja to aktywność każdej sieci mózgu; komórki miejsca i komórki siatki zmierzono w hipokampie i w przyśrodkowej korze śródwęchowej.'
+bez_sieci: 'W spójnej kognitywistyce prawdopodobieństwo nadają możliwościom predykcje, a predykcja zachodzi w każdej komórce mózgu, więc dotyczy wszystkich sieci naraz. Komórki miejsca i komórki siatki zmierzono w hipokampie i w przyśrodkowej korze śródwęchowej.'
 obszary:
 - hipokamp
 ryciny: []
@@ -22,9 +22,9 @@ rekordy:
 - exurb1a_then-next-comes_o1OsDWT_DUc
 stan: gotowa
 ---
-Przestrzeń możliwości (ang. possibility space) to wszystko, co w danej chwili może się wydarzyć. Obejmuje działania, które możesz podjąć, oraz ich możliwe skutki. W [[Kognitywistyka|spójnej kognitywistyce]] kształtują ją Twoje [[Predykcja|predykcje]].
+Przestrzeń możliwości (ang. possibility space) to wszystko, co w danej chwili może się wydarzyć. Obejmuje działania, które możesz podjąć, oraz ich możliwe skutki. W [[Kognitywistyka|spójnej kognitywistyce]] jej ściany wyznaczają ciało, otoczenie i inni ludzie, a prawdopodobieństwo każdej możliwości wewnątrz ścian nadają [[Predykcja|predykcje]] Twoich [[Modele Mentalne|Modeli Mentalnych]].
 
-Ściany tej przestrzeni wyznaczają ciało, otoczenie i inni ludzie. Wewnątrz ścian leży to, co w ogóle jest możliwe, a prawdopodobieństwo każdej z tych możliwości nadają predykcje Twoich [[Modele Mentalne|Modeli Mentalnych]]. Wyobraź sobie dziecko w pokoju. Samo eksploruje pokój, zagląda do szuflad i wspina się na krzesło. Z rodzeństwem rozrabia i psoci. Kiedy w pokoju jest rodzic, to on wyznacza ściany. Ten sam pokój ma więc inną przestrzeń możliwości zależnie od tego, kto w nim jest.
+Wyobraź sobie dziecko w pokoju. Samo eksploruje pokój, zagląda do szuflad i wspina się na krzesło. Z rodzeństwem rozrabia i psoci. Kiedy w pokoju jest rodzic, to on wyznacza ściany. Ten sam pokój ma więc inną przestrzeń możliwości zależnie od tego, kto w nim jest.
 
 Buzsáki i Moser proponują, że mechanizmy pamięci i planowania wyewoluowały z mechanizmów nawigacji w świecie fizycznym, a algorytmy neuronów prowadzące nawigację w przestrzeni rzeczywistej i umysłowej są zasadniczo te same (Buzsáki i Moser 2013)<!--[s:buzsaki2013-navigation-memory-same-algorithms]-->. [[Komórki miejsca i komórki siatki|Komórki miejsca]] (ang. place cells) w hipokampie biorą udział w reprezentowaniu przestrzeni otoczenia w mózgu (Moser, Kropff i Moser 2008)<!--[s:moser2008-grid-cells-may-provide-map]-->. Komórki siatki (ang. grid cells) w przyśrodkowej korze śródwęchowej są u szczura aktywne, gdy jego położenie wypada w wierzchołku regularnej siatki trójkątów rozpiętej na otoczeniu (Hafting i in. 2005)<!--[s:hafting2005-grid-cell-vertices-path-integration]-->. Jeśli Buzsáki i Moser mają rację, to w spójnej kognitywistyce planowanie porusza się po przestrzeni możliwości tak jak ciało po pokoju.
 

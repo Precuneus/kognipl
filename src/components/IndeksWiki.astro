@@ -7,23 +7,27 @@
 import { INDEX, INK, KARTY, segs, dyscyplinaUrl } from '../karty/data.js';
 // karty całej wiki, poza pierwszym artykułem, nad którym indeks stoi, zamykają go pod Wiki, żeby indeks wymieniał każdą kartę
 const wiki = KARTY.filter((k) => k.g === 4 && k.h !== 'Kognitywistyka');
+// karty bez rodziny: karta samej dyscypliny wypada (nagłówek do niej prowadzi), a dziedziny kognitywistyki dostają swoją nazwę
+const DZIEDZINY = ['Psychologia', 'Filozofia', 'Lingwistyka', 'Sztuczna inteligencja', 'Neuronauka poznawcza', 'Antropologia'];
+const luzne = (g) => g.luzem.filter((k) => k.h.toLowerCase() !== g.nazwa.toLowerCase());
 // tytuł kończący się kropką (Pacjent H.M.) zamyka listę sam
 const lista = (ks) => segs(ks.map((k) => '[[' + k.h + ']]').join(', ') + (ks[ks.length - 1].h.endsWith('.') ? '' : '.'));
 ---
 <h2 class="wi-tytul" id="indeks">Indeks kart</h2>
-{INDEX.filter((g) => g.rodziny.length || g.luzem.length).map((g) => (
+{INDEX.filter((g) => g.rodziny.length || luzne(g).length).map((g) => (
   <Fragment>
     <h3 class="wi-g" id={g.id}><a href={dyscyplinaUrl(g.g)} style={'color:' + INK[g.g]}>{g.nazwa}</a></h3>
     {g.rodziny.map((r) => (
       <p class="wk-p wi-os" id={r.id}><span class="wi-on">{r.nazwa}.</span>{' '}{lista(r.karty).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>
     ))}
-    {g.luzem.length > 0 && <p class="wk-p wi-os">{lista(g.luzem).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>}
+    {luzne(g).length > 0 && <p class="wk-p wi-os">{luzne(g).every((k) => DZIEDZINY.includes(k.h)) && <Fragment><span class="wi-on">Dziedziny kognitywistyki.</span>{' '}</Fragment>}{lista(luzne(g)).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>}
   </Fragment>
 ))}
 {wiki.length > 0 && <Fragment><h3 class="wi-g" id="wiki" style={'color:' + INK[4]}>Wiki</h3><p class="wk-p wi-os">{lista(wiki).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p></Fragment>}
 
 <style is:global>
-.wi-tytul{margin:44px 0 0;scroll-margin-top:90px}
+.wi-indeks{padding-top:0}
+.wi-indeks .wi-tytul{margin:0 0 6px;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:500;letter-spacing:0;text-transform:none;color:#f3eee5;scroll-margin-top:90px}
 .wi-g{margin:30px 0 0;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;scroll-margin-top:90px}
 .wi-g a{text-decoration:none}
 .wi-g::first-letter{text-transform:uppercase}

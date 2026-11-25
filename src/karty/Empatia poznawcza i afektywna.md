@@ -2,7 +2,7 @@
 tytuł: Empatia poznawcza i afektywna
 dyscyplina: socjologia
 rodziny:
-- '[[Teoria umysłu]]'
+- '[[Umysły innych]]'
 - '[[Więź i przywiązanie]]'
 głębokość:
 - organizm

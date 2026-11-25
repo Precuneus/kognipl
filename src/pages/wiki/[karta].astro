@@ -8,7 +8,7 @@ export function getStaticPaths() {
 const { k } = Astro.props;
 // karta anatomii stoi w Atlasie (2026-11-11), więc jej stary adres w wiki przekierowuje tam, z ?zapytaniem i #kotwicą, jak stare adresy
 // strony; strona przekierowania nie trafia do mapy witryny
-const to = k.atlas ? k.url : '';
+const to = k.atlas || k.przekieruj ? k.url : '';
 ---
 {to ? (
   <html lang="pl">

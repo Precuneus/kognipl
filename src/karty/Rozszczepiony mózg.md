@@ -2,7 +2,6 @@
 tytuł: Rozszczepiony mózg
 dyscyplina: psychologia
 rodziny:
-- '[[Rozszczepiony mózg]]'
 - '[[Mózg języka]]'
 sieci: []
 bez_sieci: 'Przecięcie ciała modzelowatego rozdziela korę obu półkul, więc dotyczy wszystkich sieci naraz.'
@@ -28,7 +27,7 @@ rekordy:
 - Gazzaniga_2000
 stan: gotowa
 ---
-Rozszczepiony mózg (ang. split brain) to mózg po kalozotomii (ang. callosotomy), przecięciu ciała modzelowatego (ang. corpus callosum), pęku włókien łączącego lewą i prawą półkulę. Van Wagenen i Herren wprowadzili ją, żeby opanować napady u osób z padaczką lekooporną, a Philip Vogel i Joseph Bogen przecięli wszystkie spoidła kory u byłego spadochroniarza z ciężkimi, zagrażającymi życiu napadami. Przecięcie całego ciała modzelowatego odcina przepływ [[Bioinformacja|bioinformacji]] percepcyjnej, czuciowej i ruchowej między półkulami (Gazzaniga 2005)<!--[s:gazzaniga2005-callosotomy-epilepsy-transfer]-->.
+Rozszczepiony mózg (ang. split brain) to mózg po przecięciu ciała modzelowatego (ang. corpus callosum), pęku włókien łączącego lewą i prawą półkulę. Tę operację nazywa się kalozotomią (ang. callosotomy). Van Wagenen i Herren wprowadzili ją, żeby opanować napady u osób z padaczką lekooporną, a Philip Vogel i Joseph Bogen przecięli wszystkie spoidła kory u byłego spadochroniarza z ciężkimi, zagrażającymi życiu napadami. Przecięcie całego ciała modzelowatego odcina przepływ [[Bioinformacja|bioinformacji]] percepcyjnej, czuciowej i ruchowej między półkulami (Gazzaniga 2005)<!--[s:gazzaniga2005-callosotomy-epilepsy-transfer]-->.
 
 Gdy obraz błyśnie na ułamek sekundy z jednej strony punktu, w który patrzy osoba po kalozotomii, bioinformacja z prawej połówki pola widzenia (ang. visual field) płynie wyłącznie do lewej półkuli, a z lewej połówki wyłącznie do prawej; do obu półkul naraz płynie tylko bioinformacja z pasa szerokiego na 1–2 stopnie kąta widzenia wzdłuż pionowej linii środka pola (Gazzaniga 2000)<!--[s:gazzaniga2000-visual-field-to-opposite-hemisphere]--><!--[s:gazzaniga2000-chicken-claw-shovel]-->. U ogromnej większości ludzi mowę prowadzi wyłącznie lewa półkula (Gazzaniga 2005)<!--[s:gazzaniga2005-left-hemisphere-speech]-->, choć po wczesnym uszkodzeniu lewej półkuli [[Język w sieciach mózgu|język]] może [[Język w jednej półkuli|rozwinąć się w prawej]] (Fedorenko, Ivanova i Regev 2024)<!--[s:fedorenko2024nk-early-damage-right-hemisphere]-->. Jak opisuje Gazzaniga w artykule z 2000 roku, pacjent P.S. zobaczył lewą półkulą kurzą łapkę, a prawą zaśnieżoną scenę. Lewą ręką, którą porusza prawa półkula, wybrał łopatę, a prawą ręką kurę; mówiąca lewa półkula wytłumaczyła łopatę kurnikiem, do którego sprzątania potrzeba łopaty. Proces, który układa taką opowieść po fakcie, Gazzaniga i jego zespół nazwali [[Interpretator lewej półkuli|interpretatorem lewej półkuli]].
 

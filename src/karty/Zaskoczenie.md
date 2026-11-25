@@ -3,8 +3,12 @@ tytuł: Zaskoczenie
 dyscyplina: biologia
 rodziny:
 - '[[Predykcja]]'
-sieci: []
-bez_sieci: 'W spójnej kognitywistyce zaskoczenie powstaje w każdej komórce i płynie od obszarów najbliższych receptorom w stronę sieci brzusznej uwagi i sieci istotności, a dotyczy wszystkich sieci naraz.'
+sieci:
+- kod: VAN
+  powód: 'Coś nagle przerywa Twój plan. W spójnej kognitywistyce zaskoczenie, w którym przeważa bioinformacja z otoczenia oraz z położenia i ruchu ciała, biegnie w stronę sieci brzusznej uwagi, a jej aktywność to prawdopodobnie predykcja skutków tego zaskoczenia dla Twojego planu.'
+- kod: SN
+  powód: 'Coś w ciele dzieje się inaczej, niż zakładają Twoje predykcje. W spójnej kognitywistyce zaskoczenie, w którym przeważa bioinformacja z wnętrza ciała, biegnie w stronę sieci istotności, a jej aktywność to prawdopodobnie predykcja skutków tego zaskoczenia dla ciała.'
+bez_sieci: ''
 ryciny: []
 materiały:
 - tytuł: 'Rao i Ballard 1999: model kodowania predykcyjnego kory wzrokowej'
@@ -15,7 +19,7 @@ materiały:
   url: https://doi.org/10.1126/science.275.5306.1593
 - tytuł: 'Kutas i Hillyard 1980: fala N400 przy słowie semantycznie nieodpowiednim w zdaniu'
   url: https://doi.org/10.1126/science.7350657
-- tytuł: 'Kölbl i in. 2026: przewidywalność rzeczownika a fala N400'
+- tytuł: 'Kölbl i in. 2026: łatwość odgadnięcia rzeczownika a fala N400'
   url: https://doi.org/10.1016/j.neuroimage.2026.121966
 - tytuł: 'Kanai i in. 2015: wzmocnienie zaskoczenia i poduszka wzgórza'
   url: https://doi.org/10.1098/rstb.2014.0169

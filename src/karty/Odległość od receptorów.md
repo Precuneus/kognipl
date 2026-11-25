@@ -11,7 +11,7 @@ sieci:
 - kod: SMN
   powód: 'Dotykasz krawędzi stołu, a bioinformacja z zakończeń nerwowych w Twojej skórze dociera do kory somatosensorycznej (S1) w zakręcie zaśrodkowym po trzech synapsach, w rdzeniu przedłużonym, we wzgórzu i w samej korze (Betts i in. 2022)<!--[s:betts2022-dorsal-column-three-neurons]-->, a kora somatosensoryczna należy do rdzenia sieci czuciowo-ruchowej (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-pn-core-motor-somatosensory]-->.'
 - kod: DMN
-  powód: 'Odpoczywasz w skanerze rezonansu magnetycznego (MRI), a u dorosłych badanych w takim spoczynku sieć domyślna leży na głównym gradiencie łączności kory najdalej od sieci wzrokowej i czuciowo-ruchowej (Margulies i in. 2016)<!--[s:margulies2016-dmn-far-end-from-sensorimotor]-->.'
+  powód: 'Myślisz o jutrze, a bioinformacja docierająca teraz waży w tej aktywności najmniej. W spójnej kognitywistyce odległość od receptorów rośnie w stronę sieci domyślnej, która na głównym gradiencie spoczynkowej łączności kory dorosłych leży najdalej od sieci wzrokowej i czuciowo-ruchowej (Margulies i in. 2016)<!--[s:margulies2016-dmn-far-end-from-sensorimotor]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:
@@ -46,6 +46,6 @@ Według przeglądu de Gelder, Humphreya i Pegny [[Ślepowidzenie|ślepowidzenie]
 
 [[Gradient główny kory|Główny gradient łączności kory]] porządkuje obszary według podobieństwa ich spoczynkowej łączności, a [[Sieć domyślna|sieć domyślna]] (ang. default mode network) zajmuje na nim koniec najbardziej oddalony od [[Sieć wzrokowa|sieci wzrokowej]] i [[Sieć czuciowo-ruchowa|czuciowo-ruchowej]] (Margulies i in. 2016)<!--[s:margulies2016-dmn-far-end-from-sensorimotor]-->. W [[Kognitywistyka|spójnej kognitywistyce]] odległość od receptorów rośnie w stronę sieci domyślnej. Gradient mierzy łączność, więc liczbę synaps do sieci domyślnej można z niego tylko wnioskować. Najpewniej dzieli ją od receptorów najwięcej synaps.
 
-W spójnej kognitywistyce [[Predykcja|predykcja]] zachodzi w każdej komórce, a [[Zaskoczenie|zaskoczenie]] powstaje wszędzie tam, gdzie docierająca bioinformacja różni się od predykcji. Model [[Kodowanie predykcyjne|kodowania predykcyjnego]] Rao i Ballarda opisuje w symulacji kory wzrokowej, jak predykcja i zaskoczenie płyną między obszarami kory. [[Połączenia wstępujące i zwrotne|Połączeniami zwrotnymi]] płyną tam predykcje, a wstępującymi zaskoczenie (Rao i Ballard 1999)<!--[s:rao1999-feedback-predictions-feedforward-errors]-->.
+W spójnej kognitywistyce [[Predykcja|predykcja]] zachodzi w każdej komórce, a [[Kodowanie predykcyjne|model kodowania predykcyjnego]] Rao i Ballarda opisuje w symulacji kory wzrokowej jeden z jej strumieni (Rao i Ballard 1999)<!--[s:rao1999-feedback-predictions-feedforward-errors]-->.
 
 Kiedy sięgasz po kubek, bioinformacja z Twoich czopków dociera do V1 po czterech synapsach chemicznych, a z opuszek palców do kory somatosensorycznej po trzech. Każdy obszar Twojej kory leży bliżej albo dalej od siatkówki, ucha czy skóry. Z bioinformacji płynącej od receptorów kształtują się Twoje [[Modele Mentalne|Modele Mentalne]] kubka, a polegasz na nich, zanim go dotkniesz.

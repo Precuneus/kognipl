@@ -9,7 +9,7 @@ ryciny: []
 materiały:
 - tytuł: 'Hasson i in. 2008: okna czasowe kory przy oglądaniu filmu'
   url: https://doi.org/10.1523/JNEUROSCI.5487-07.2008
-- tytuł: 'Margulies i in. 2016: sieć domyślna na głównym gradiencie kory'
+- tytuł: 'Margulies i in. 2016: sieć domyślna na gradiencie głównym kory'
   url: https://doi.org/10.1073/pnas.1608282113
 - tytuł: 'Murray i in. 2014: skale czasowe aktywności w korze makaka'
   url: https://doi.org/10.1038/nn.3862

@@ -143,7 +143,7 @@ const postac = (id, swiatlo = '#ffc978') => `<svg class="postac" viewBox="0 0 10
   <section class="roj-st srodek ciag" data-k="dyscypliny">
     <div class="roj-t"><p class="roj-duze" set:html={md(T.dysc[0])} /><p set:html={dysc(T.dysc[1])} /></div>
   </section>
-  <section class="roj-st poziom" data-k="osnowy" aria-label="Osnowy: socjologia, psychologia, biologia, fizyka">
+  <section class="roj-st poziom" data-k="osnowy" aria-label="Dyscypliny: socjologia, psychologia, biologia, fizyka">
     <div class="roj-lepki"><div class="roj-tor">
       {GRUPY.map((g, k) => g.slowa.map((w, j) => <span class="roj-slowo-osn" data-k={k} style={'--k:' + g.kolor + ';left:' + (35 + 240 * (j + .5) / g.slowa.length).toFixed(1) + 'vw;top:calc(' + YN_VH[k] + 'vh - 24px - ' + WYS(k, j) + 'vh)'}>{[...w].map((z) => z === ' ' ? ' ' : <span class="zn">{z}</span>)}</span>))}
     </div>

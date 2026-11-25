@@ -7,10 +7,15 @@ rodziny:
 - '[[Rekonstrukcja i wyobrażanie]]'
 sieci:
 - kod: VAN
-  powód: 'Odwracasz głowę, kiedy coś nagle błyśnie z boku, a zaskoczenie aktualizuje Twoje Modele Mentalne sceny. To aktywność sieci brzusznej uwagi, wyspecjalizowanej w wykrywaniu bodźców ważnych dla zachowania, zwłaszcza niespodziewanych (Corbetta i Shulman 2002)<!--[s:corbetta2002-ventral-network-circuit-breaker]-->. Według Corbetty i Shulmana uszkodzenia brzuszne prawego płata ciemieniowego, skroniowego i czołowego, które dają zaniedbywanie, upośledzają przekierowanie uwagi, wykrywanie celu i czujność, funkcje nieprzestrzenne częściowo zależne od tej sieci (Corbetta i Shulman 2011)<!--[s:corbetta2011-ventral-lesions-dorsal-network]--><!--[s:corbetta2011-nonspatial-reorienting-arousal]-->.'
+  powód: 'Odwracasz głowę, kiedy coś nagle błyśnie z boku. Zaskoczenie, w którym przeważa bioinformacja z otoczenia, biegnie w stronę sieci brzusznej uwagi, a w spójnej kognitywistyce jej aktywność to prawdopodobnie predykcja skutków tego zaskoczenia dla Twojego bieżącego planu. Według Corbetty i Shulmana sieć ta obejmuje korę skroniowo-ciemieniową i dolną korę czołową, głównie prawej półkuli, i wykrywa bodźce ważne dla zachowania, zwłaszcza niespodziewane (Corbetta i Shulman 2002)<!--[s:corbetta2002-ventral-network-circuit-breaker]-->. W przeglądzie z 2011 roku ci sami autorzy piszą, że uszkodzenia brzuszne prawego płata ciemieniowego, skroniowego i czołowego, które dają zaniedbywanie, upośledzają przekierowanie uwagi, wykrywanie celu i czujność, a to funkcje nieprzestrzenne częściowo zależne od tej sieci (Corbetta i Shulman 2011)<!--[s:corbetta2011-ventral-lesions-dorsal-network]--><!--[s:corbetta2011-nonspatial-reorienting-arousal]-->.'
 - kod: DAN
   powód: 'Kierujesz uwagę na lewą stronę stołu, a Twoje Modele Mentalne stołu obejmują wtedy i tę stronę. To aktywność sieci grzbietowej uwagi, która kieruje uwagą przestrzenną. Uszkodzenie kory brzusznej zmienia jej aktywność w zadaniu i łączność funkcjonalną (Corbetta i Shulman 2011)<!--[s:corbetta2011-ventral-lesions-dorsal-network]-->.'
 bez_sieci: ''
+obszary:
+- zakręt nadbrzeżny
+- zakręt kątowy
+- zakręt skroniowy górny
+- zakręt czołowy dolny
 ryciny: []
 materiały:
 - tytuł: 'SciShow Psych, Hemispatial Neglect: When Half Your World Disappears'
@@ -31,7 +36,7 @@ rekordy:
 - corbetta_2011
 stan: gotowa
 ---
-Zaniedbywanie stronne (ang. unilateral spatial neglect, także hemispatial neglect) to pomijanie w uwadze i w raporcie bodźców po stronie przeciwnej do uszkodzenia mózgu, przy pozornie prawidłowym widzeniu. To częsty zespół, głównie po uszkodzeniach prawej półkuli (Corbetta i Shulman 2011)<!--[s:corbetta2011-neglect-right-hemisphere-lesions]--><!--[s:corbetta2011-neglect-attend-report-cue-modulated]-->. Według Corbetty i Shulmana wskazówka słowna kierująca uwagę na pomijaną stronę może te objawy zmniejszyć. Na zaniedbywanie nakładają się składniki [[Zespół Bálinta|zespołu Bálinta]] (Rizzo i Vecera 2002)<!--[s:rizzo2002-balint-components-dissociable]-->.
+Zaniedbywanie stronne (ang. unilateral spatial neglect, także hemispatial neglect) to pomijanie w uwadze i w raporcie bodźców po stronie przeciwnej do uszkodzenia mózgu. To częsty zespół, głównie po uszkodzeniach prawej półkuli (Corbetta i Shulman 2011)<!--[s:corbetta2011-neglect-right-hemisphere-lesions]--><!--[s:corbetta2011-neglect-attend-report-cue-modulated]-->. Według Corbetty i Shulmana wskazówka słowna kierująca uwagę na pomijaną stronę może te objawy zmniejszyć. Na zaniedbywanie nakładają się składniki [[Zespół Bálinta|zespołu Bálinta]] (Rizzo i Vecera 2002)<!--[s:rizzo2002-balint-components-dissociable]-->.
 
 Pacjentka P.S. po uszkodzeniu prawej półkuli oglądała dwa rysunki domu, w jednym lewa strona płonęła. Uznała rysunki za identyczne, ale zapytana, w którym domu wolałaby zamieszkać, konsekwentnie wybierała dom bez ognia. Miała też ubytek lewego pola widzenia, ale jej zaniedbywanie trwało przy swobodnym ruchu głowy i oczu, więc wynika z czegoś więcej niż utraty widzenia w lewym polu (Marshall i Halligan 1988)<!--[s:marshall1988-burning-house-preference]-->. W grupie osób z ciężkim zaniedbywaniem obrazek zwierzęcia albo owocu, pokazany w pomijanej połowie pola, przyspieszał kategoryzowanie obrazka w zdrowej połowie, także gdy przedstawiał inny okaz tej samej kategorii, choć chorzy zaprzeczali, że coś tam było (Berti i Rizzolatti 1992)<!--[s:berti1992-neglect-categorical-priming]-->. [[Bioinformacja|Bioinformacja]] z pominiętej strony wpływała więc na wybór P.S. i przyspieszała kategoryzowanie u chorych z grupy Berti i Rizzolattiego, podobnie jak w [[Ślepowidzenie|ślepowidzeniu]] wpływa na wymuszony wybór (Cowey 2010)<!--[s:cowey2010-deny-seeing-forced-choice]-->.
 

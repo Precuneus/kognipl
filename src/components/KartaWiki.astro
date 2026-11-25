@@ -10,6 +10,7 @@ import TerminDymek from './TerminDymek.astro';
 interface Props { k: any; wstep?: boolean; wAtlasie?: boolean }
 const { k, wstep = false, wAtlasie = false } = Astro.props;
 const ink = INK[k.g], base = BASE[k.g];
+const DOP = { socjologia: 'socjologii', psychologia: 'psychologii', biologia: 'biologii', fizyka: 'fizyki' };
 const group = GRUPY[k.g] ? GRUPY[k.g].charAt(0).toUpperCase() + GRUPY[k.g].slice(1) : 'Wiki';
 
 // Karta sieci pokazuje tylko swoją sieć (jego słowo, 2026-10-23: *the page is about dan so for the networks we use a single network*);
@@ -19,7 +20,7 @@ const ownKey = own;
 
 // Ryciny: te same rysunki co na karcie Rocznika (szablon karta.js), w kolorze karty.
 const CAPT = {
-  rp: 'Potencjał gotowości narasta przed wskazaną na zegarze chwilą decyzji, a ta wypada przed ruchem.',
+  rp: 'Potencjał gotowości narasta przed wskazaną na zegarze chwilą, w której osoba badana po raz pierwszy poczuła chęć ruchu (W), a ta wypada przed ruchem.',
   eeg: 'Droga sygnału z kory przez czaszkę i skórę głowy do elektrody.',
   przyciski: 'Czerwony daje pewne przeżycie, niebieski tylko wtedy, gdy naciśnie go ponad połowa.',
   karty: 'Karta pasuje do trzech kart wzorcowych naraz, więc regułę trzeba odkryć.',
@@ -28,7 +29,7 @@ const CAPT = {
 // Rycina żywa na karcie, ten sam moduł co na wpisie zajęć (jego słowo, 2026-11-02: *put the animation of the predictive brain into the
 // predykcje karta. Remember that updating one animation updates the other one also*): nazwa z ZYWE w `ryciny` karty.
 const ZYWE = {
-  mozg: 'W spójnej kognitywistyce sieci mózgu leżą według odległości od receptorów: najbliżej sieć wzrokowa i czuciowo-ruchowa, a na drugim końcu głównego gradientu kory sieć domyślna (Margulies i in. 2016)<!--[s:margulies2016-dmn-far-end-from-sensorimotor]-->. Predykcje płyną falą od sieci domyślnej ku receptorom. Zaskoczenie biegnie w drugą stronę, a każde kolejne kliknięcie „zaskoczenie” sięga o sieć wyżej. Przeciągnij mózg w bok, a zobaczysz jego przyśrodkową ścianę.',
+  mozg: 'W spójnej kognitywistyce sieci mózgu leżą według odległości od receptorów. Najbliżej leżą sieć wzrokowa i czuciowo-ruchowa, a na drugim końcu głównego gradientu kory sieć domyślna (Margulies i in. 2016)<!--[s:margulies2016-dmn-far-end-from-sensorimotor]-->. Złota fala to predykcje, które zachodzą w każdej sieci i płyną w stronę receptorów. Na rysunku fala przechodzi przez kolejne sieci, od najdalszej od receptorów do najbliższej. Zaskoczenie biegnie w drugą stronę, a każde kolejne kliknięcie „zaskoczenie” sięga o sieć wyżej. Przeciągnij mózg w bok, a zobaczysz jego przyśrodkową ścianę.',
 };
 const unmark = (t) => String(t || '').replace(/<!--\[s:[^\]]*\]-->/g, '');
 const FIGKEY = { rp: 'isRp', eeg: 'isEeg', przyciski: 'isPrzyciski', karty: 'isKarty', neuron: 'isNeuron' };
@@ -50,7 +51,7 @@ const back = backlinks(k);
 const kurs = items.some((b) => b.kurs);
 // „Na zajęciach” zeszło z kart razem z kursami (jego słowo, 2026-11-17: *Take off the kursy from kogni*)
 // rodzina o nazwie tej karty powtarzałaby tytuł nad sobą, więc wiersz rodzin pomija kartę samą (przegląd 2026-11-05: Predykcja, Interocepcja i cztery inne)
-const rodz = k.r2.filter((r) => card(r) !== k);
+const rodz = k.r2;
 const nets = k.nets.map(([kod, why]) => ({ kod, name: NETN[kod] || kod, why, to: netCard(kod) }))
   .filter((n) => !own || n.kod === ownKey);
 // Karty nie rysują mózgu: widoki stoją tylko w Atlasie, a karta prowadzi do niego linkiem pod listą sieci, a Atlas z powrotem do kart
@@ -90,6 +91,8 @@ const Owijka = wAtlasie ? 'section' : 'article';
           b.zywa ? <figure class="wk-fig"><div class="wz-zywa" data-zywa={b.zywa}><canvas role="img" aria-label={b.cap}></canvas><button type="button">zaskoczenie</button></div><figcaption>{b.cap}</figcaption></figure>
           : <figure class="wk-fig"><Fragment set:html={b.fig} /><figcaption>{b.cap}</figcaption></figure>
         ))}
+        {/* karta dyscypliny prowadzi do swojej części indeksu, która zbiera wszystkie jej karty (przegląd 2026-11-25) */}
+        {!wAtlasie && DOP[k.d] && k.d === k.h.toLowerCase() && <p class="wk-p">Wszystkie karty {DOP[k.d]} zbiera <a href={INDEKS + '#' + slugify(k.d)}>indeks kart</a>.</p>}
         {Astro.slots.has('indeks') && <slot name="indeks" />}
       </section>
     </div>

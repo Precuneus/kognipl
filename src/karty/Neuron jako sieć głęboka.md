@@ -4,7 +4,7 @@ dyscyplina: biologia
 rodziny:
 - '[[Budowa i elektryka neuronu]]'
 sieci: []
-bez_sieci: 'Zjawisko dotyczy pojedynczej komórki: neurony piramidowe występują w wielu obszarach ośrodkowego układu nerwowego (Spruston 2008)<!--[s:spruston2008-pyramidal-shape-dendritic-trees]-->, także w korze wszystkich sieci.'
+bez_sieci: 'Zjawisko dotyczy pojedynczej komórki, a neurony piramidowe występują w wielu obszarach ośrodkowego układu nerwowego (Spruston 2008)<!--[s:spruston2008-pyramidal-shape-dendritic-trees]-->, także w korze wszystkich sieci.'
 ryciny: []
 materiały:
 - tytuł: 'Artem Kirsanov, Dendrites: Why Biological Neurons Are Deep Neural Networks'
@@ -23,7 +23,7 @@ rekordy:
 - artem-kirsanov_dendrites-deep-networks_hmtQPrH-gC4
 stan: gotowa
 ---
-Neuron jako sieć głęboka to ujęcie neuronu piramidowego (ang. pyramidal neuron), komórki nerwowej kory o ciele w kształcie piramidy, jako całej sztucznej sieci głębokiej (ang. deep neural network). Taka sieć to program złożony z wielu warstw sztucznych neuronów. Sztuczny neuron sumuje pobudzenia od neuronów poprzedniej warstwy, każde pomnożone przez własny współczynnik. Sumę przepuszcza przez funkcję nieliniową, na przykład krzywą w kształcie litery S. Warstwy między pierwszą a ostatnią to warstwy ukryte (ang. hidden layers).
+Neuron jako sieć głęboka to wynik modelowania, w którym odtworzenie odpowiedzi szczegółowego modelu neuronu piramidowego z piątej warstwy kory wymagało sztucznej sieci głębokiej (Beniaguev, Segev i London 2021)<!--[s:beniaguev2021-five-to-eight-layers-nmda]-->. Według modeli gałąź dendrytu działa przy tym bardziej jak sztuczny neuron (Polsky, Mel i Schiller 2004)<!--[s:polsky2004-subunits-before-global-summation]-->. Neuron piramidowy (ang. pyramidal neuron) to komórka nerwowa o ciele w kształcie piramidy, występująca w korze i w innych obszarach ośrodkowego układu nerwowego (Spruston 2008)<!--[s:spruston2008-pyramidal-shape-dendritic-trees]-->, a sieć głęboka (ang. deep neural network) to program złożony z wielu warstw sztucznych neuronów. Sztuczny neuron sumuje pobudzenia od neuronów poprzedniej warstwy, każde pomnożone przez własny współczynnik. Sumę przepuszcza przez funkcję nieliniową, na przykład krzywą w kształcie litery S. Warstwy między pierwszą a ostatnią to warstwy ukryte (ang. hidden layers).
 
 Dendryty (ang. dendrites) to rozgałęzione wypustki neuronu, na których [[Synapsa chemiczna i elektryczna|synapsy]] innych komórek wywołują [[Potencjał stopniowany|potencjały stopniowane]], zmiany napięcia błony o wielkości zależnej od bodźca. Neuron piramidowy ma dwa drzewa dendrytów, szczytowe i podstawne (Spruston 2008)<!--[s:spruston2008-pyramidal-shape-dendritic-trees]-->. Kora mózgu też ma warstwy, ale to warstwy komórek numerowane od jej powierzchni.
 

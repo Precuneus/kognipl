@@ -7,9 +7,9 @@ rodziny:
 - '[[Zaburzenia widzenia]]'
 sieci:
 - kod: DAN
-  powód: 'Koordynujesz oko i rękę, a ta koordynacja to aktywność sieci grzbietowej uwagi. Do jej rdzenia należą górny płacik ciemieniowy z bruzdą śródciemieniową, obszar MT+ i przypuszczalne czołowe pole ruchów oczu (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-dfpn-core-spl-ips-fef]-->.'
+  powód: 'Koordynujesz oko i rękę. To aktywność sieci grzbietowej uwagi, do której rdzenia należą górny płacik ciemieniowy z bruzdą śródciemieniową, obszar MT+ i przypuszczalne czołowe pole ruchów oczu (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-dfpn-core-spl-ips-fef]-->.'
 - kod: VAN
-  powód: 'Kiedy coś przerywa Twój plan, sieć brzuszna uwagi przerywa bieżący wybór sieci grzbietowej i kieruje uwagę na istotne zdarzenie (Corbetta i Shulman 2002)<!--[s:corbetta2002-van-circuit-breaker]-->.'
+  powód: 'Kiedy coś wytrąca Cię z planu, sieć brzuszna uwagi przerywa bieżący wybór sieci grzbietowej uwagi i kieruje uwagę na istotne zdarzenie (Corbetta i Shulman 2002)<!--[s:corbetta2002-van-circuit-breaker]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:

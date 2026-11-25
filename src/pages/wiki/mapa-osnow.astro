@@ -1,5 +1,9 @@
 ---
+// stare kotwice osnów (zniesionych 2026-11-24) prowadzą do części indeksu ich dyscypliny
+import R from '../../rocznik/2026/rocznik.json';
+import { slugify } from '../../karty/data.js';
 const to = '/wiki/';
+const osnowy = Object.fromEntries(R.grupy.flatMap((g) => g.osnowy.map((o) => [slugify(o.nazwa), slugify(g.nazwa)])));
 ---
 <!doctype html>
 <html lang="pl">
@@ -9,7 +13,7 @@ const to = '/wiki/';
 <meta name="robots" content="noindex">
 <link rel="canonical" href={'https://kogni.pl' + to}>
 <meta http-equiv="refresh" content={'0; url=' + to}>
-<script is:inline define:vars={{ to }}>location.replace(to + location.search + location.hash);</script>
+<script is:inline define:vars={{ to, osnowy }}>var h=location.hash.slice(1);location.replace(to + location.search + (osnowy[h] ? '#' + osnowy[h] : location.hash));</script>
 </head>
 <body><p><a href={to}>{'kogni.pl' + to}</a></p></body>
 </html>

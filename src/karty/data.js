@@ -74,7 +74,8 @@ export const ALL = Object.entries(notes).map(([file, mod]) => {
 // bottom right to open a card in the wiki*): pierwsze jedno albo dwa zdania karty, bez cytowań i bez angielskich nazw
 const defOf = (body) => {
   const b = body.find((x) => x.t); if (!b) return '';
-  const s = b.t.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_, a, c) => c || a).replace(/\{\{#?([^}|]+)(?:\|([^}]+))?\}\}/g, (_, a, c) => c || a).replace(/\s*\(ang\.[^)]*\)/g, '').replace(/\s*\([^()]*\d{4}[^()]*\)/g, '');
+  // skrót podany po angielskiej nazwie zostaje w opisie (EEG, MRI), reszta glosy wypada
+  const s = b.t.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_, a, c) => c || a).replace(/\{\{#?([^}|]+)(?:\|([^}]+))?\}\}/g, (_, a, c) => c || a).replace(/\s*\(ang\.[^)]*?,\s*([A-Z][A-Za-z0-9+]{1,6})\)/g, ' ($1)').replace(/\s*\(ang\.[^)]*\)/g, '').replace(/\s*\([^()]*\d{4}[^()]*\)/g, '');
   // kropka bez spacji po niej (kogni.pl, 0,1 s zapisane 0.1) nie kończy zdania (audyt 2026-11-16: opis karty kogni.pl zaczynał się od „pl”)
   const z = s.match(/(?:[^.!?]|[.!?](?!\s|$))+[.!?](?=\s|$)/g) || [s];
   return (z[0].length < 150 && z[1] ? z[0] + z[1] : z[0]).trim();
@@ -87,7 +88,8 @@ const byName = {};
 KARTY.forEach((k) => { byName[k.h] = k; byName[k.stem] = k; });
 export const card = (name) => byName[name];
 // Rodzina na karcie prowadzi do karty o tej nazwie, gdy taka jest (Predykcja, Interocepcja), a inaczej do swojego akapitu w indeksie.
-export const rodzinaUrl = (r, k) => (byName[r] && byName[r] !== k ? byName[r].url : famOf[r] !== undefined && !byName[r] ? INDEKS + '#' + slugify(r) : '');
+// rodzina zawsze prowadzi do swojego akapitu w indeksie, także gdy nosi nazwę karty (przegląd 2026-11-25: jedna etykieta, jeden cel)
+export const rodzinaUrl = (r) => (famOf[r] !== undefined ? INDEKS + '#' + slugify(r) : '');
 // Dyscyplina nazwana wprost prowadzi do swojej karty (jego słowo, 2026-11-24: *call them directly*).
 export const dyscyplinaUrl = (gi) => { const k = GRUPY[gi] && byName[GRUPY[gi].charAt(0).toUpperCase() + GRUPY[gi].slice(1)]; return k ? k.url : INDEKS + '#' + slugify(GRUPY[gi] || ''); };
 export const netCard = (kod) => byName[NETCARD[kod]];
@@ -105,6 +107,9 @@ doAtlasu(byName['Sieci wielkoskalowe'], { sciezka: '/atlas/', tryb: 'sieci' });
 doAtlasu(byName['Płaty mózgu'], { sciezka: '/atlas/' + slugify('Płaty mózgu') + '/', tryb: 'platy' });
 Object.keys(NETN).forEach((kod) => { const k = netCard(kod); if (k) doAtlasu(k, { sciezka: '/atlas/' + k.id + '/', tryb: 'sieci', siec: kod }); });
 OBSZARY.forEach(({ nazwa }, i) => { const k = kartaObszaru(nazwa); if (k && !k.atlas) doAtlasu(k, { sciezka: '/atlas/' + k.id + '/', tryb: 'obszary', obszar: i + 1 }); });
+// pierwszy artykuł ma jeden adres, /wiki/, z indeksem kart pod sobą; jego adres karty przekierowuje tam (przegląd 2026-11-25)
+const PIERWSZY = byName['Kognitywistyka'];
+if (PIERWSZY) { PIERWSZY.wiki = PIERWSZY.url; PIERWSZY.url = INDEKS; PIERWSZY.przekieruj = true; }
 // adresy Atlasu dla skryptu: sieć i obszar ze swoją kartą, oba przeglądy
 export const STRONY = {
   sieci: '/atlas/', obszary: ATLAS[1].sciezka, platy: ATLAS[1].sciezka,
