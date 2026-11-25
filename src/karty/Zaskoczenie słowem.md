@@ -1,6 +1,6 @@
 ---
 tytuł: Zaskoczenie słowem
-osnowa: '[[Język]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Rozumienie i czytanie]]'
 głębokość:

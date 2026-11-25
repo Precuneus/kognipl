@@ -1,6 +1,6 @@
 ---
 tytuł: Wyczerpanie ego
-osnowa: '[[Decyzja i działanie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Luka między intencją a działaniem]]'
 głębokość:

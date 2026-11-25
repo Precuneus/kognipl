@@ -1,6 +1,6 @@
 ---
 tytuł: Ślepota z nieuwagi
-osnowa: '[[Percepcja i uwaga]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Uwaga]]'
 głębokość:

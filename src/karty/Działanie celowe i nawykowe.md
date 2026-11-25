@@ -1,6 +1,6 @@
 ---
 tytuł: Działanie celowe i nawykowe
-osnowa: '[[Nawyk i automatyzacja]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Cel a nawyk]]'
 głębokość:

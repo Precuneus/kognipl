@@ -1,13 +1,11 @@
 ---
 tytuł: Mózg dla ruchu
-osnowa: '[[Ciało i ruch]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Sterowanie ruchem]]'
 - '[[Fizjologia i zdrowie ciała]]'
 sieci: []
-bez_sieci: 'Propozycja Llinása i Roya obejmuje cały mózg (Llinás i Roy 2009)<!--[s:llinas2009-brain-for-intelligent-motricity]-->, więc dotyczy wszystkich sieci naraz.'
-obszary:
-- hipokamp
+bez_sieci: 'Propozycja Llinása i Roya dotyczy całego mózgu, a nie jednej z jego sieci (Llinás i Roy 2009)<!--[s:llinas2009-brain-for-intelligent-motricity]-->.'
 ryciny: []
 materiały:
 - tytuł: 'Kiana Docherty, What daily exercise does to your mind: myślenie wyewoluowało z ruchu'
@@ -20,8 +18,6 @@ materiały:
   url: https://doi.org/10.1098/rstb.2008.0309
 - tytuł: 'Anselmi i in. 2022: mózg larwy i mózg dorosłej żachwy'
   url: https://doi.org/10.1073/pnas.2203032119
-- tytuł: 'Erickson i in. 2011: Exercise training increases size of hippocampus and improves memory'
-  url: https://doi.org/10.1073/pnas.1015950108
 rekordy:
 - kiana-docherty_exercise-mind_Xxz_1MeXgwo
 - the-braining-club_systems-neuroscience-evolution_LWbqMPFOgLU
@@ -30,7 +26,5 @@ stan: gotowa
 Mózg dla ruchu to propozycja Llinása i Roya, według której cały mózg działa w służbie inteligentnego ruchu (ang. intelligent motricity). Poza wydzielaniem gruczołów i napięciem naczyń ruch to według nich jedyny zewnętrzny przejaw działania układu nerwowego. Inteligentny ruch wymaga według nich imperatywu [[Predykcja|predykcji]] (ang. prediction imperative), czyli predykcji skutków ruchu, który dopiero nastąpi (Llinás i Roy 2009)<!--[s:llinas2009-brain-for-intelligent-motricity]-->.
 
 Związek mózgu ze sposobem ruchu może ilustrować żachwa *Botryllus schlosseri*. Jej larwa wykluwa się jako kijanka z dwoma mózgami, czynnym mózgiem larwy i zawiązkiem (ang. rudiment) mózgu dorosłego. Ma też narząd zmysłu wyczuwający światło i grawitację, grzbietowy przewód nerwowy i strunę grzbietową (ang. notochord), elastyczny pręt usztywniający ciało. Pływa, aż znajdzie podłoże pod wodą, przytwierdza się do niego i przeobraża w osiadłe zwierzę, a mózg larwy zostaje wtedy wchłonięty razem ze struną grzbietową, mięśniami i ogonem (Anselmi i in. 2022)<!--[s:anselmi2022-larval-brain-absorbed]-->. Mózg larwy odchodzi więc razem z narządami, którymi larwa pływa, ale osiadła żachwa żyje dalej z mózgiem rozwiniętym z zawiązka. Czemu ten dorosły mózg służy w osiadłym zwierzęciu, zostaje w tym przykładzie pytaniem otwartym dla tezy Llinása i Roya.
-
-W badaniu Ericksona i współpracowników, z losowym przydziałem 120 starszych dorosłych, trening aerobowy zmienił też mózg, który według Llinása i Roya służy ruchowi. Polepszył pamięć przestrzenną i powiększył przednią część hipokampa (ang. hippocampus), obszaru [[Komórki miejsca i komórki siatki|komórek miejsca]]. W grupie ćwiczącej objętość hipokampa wzrosła o 2%, co cofa związany z wiekiem ubytek z 1–2 lat, ale w grupie kontrolnej malała (Erickson i in. 2011)<!--[s:erickson2011-aerobic-hippocampus-2-percent]-->.
 
 Kiedy idziesz po nierównym chodniku, [[Spojrzenie przed krokiem|Twój wzrok wyprzedza krok]] o mniej więcej półtorej sekundy (Matthis, Yates i Hayhoe 2018)<!--[s:matthis2018-two-steps-ahead-1-5s]-->, więc z [[Bioinformacja|bioinformacji]] o miejscu, gdzie postawisz stopę, kształtują się Twoje [[Modele Mentalne|Modele Mentalne]] kroku, zanim go zrobisz. Stawiając stopę, polegasz właśnie na nich, a ich predykcja skutków kroku to imperatyw predykcji, który Llinás i Roy stawiają u podstaw inteligentnego ruchu.

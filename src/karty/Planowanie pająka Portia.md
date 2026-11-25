@@ -1,6 +1,6 @@
 ---
 tytuł: Planowanie pająka Portia
-osnowa: '[[Myślenie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Rozwiązywanie problemów i planowanie]]'
 - '[[Poznanie zwierząt]]'

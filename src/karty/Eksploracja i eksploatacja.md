@@ -1,6 +1,6 @@
 ---
 tytuł: Eksploracja i eksploatacja
-osnowa: '[[Decyzja i działanie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Wybór i wartość]]'
 - '[[Uczenie ze wzmocnieniem]]'

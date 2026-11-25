@@ -1,27 +1,27 @@
 ---
 tytuł: Sieci wielkoskalowe
-osnowa: '[[Sieci mózgu i predykcja]]'
+dyscyplina: biologia
 rodziny:
 - '[[Sieci wielkoskalowe]]'
 - '[[Anatomia mózgu]]'
 - '[[Sygnał hemodynamiczny i magnetyczny]]'
 sieci:
 - kod: VIS
-  powód: 'Widzisz: to aktywność sieci wzrokowej.'
+  powód: 'Widzisz. To aktywność sieci wzrokowej.'
 - kod: SMN
-  powód: 'Czujesz ciało i się ruszasz: to aktywność sieci czuciowo-ruchowej.'
+  powód: 'Czujesz ciało i się ruszasz. To aktywność sieci czuciowo-ruchowej.'
 - kod: DAN
-  powód: 'Koordynujesz oko i rękę: to aktywność sieci grzbietowej uwagi.'
+  powód: 'Koordynujesz oko i rękę. To aktywność sieci grzbietowej uwagi.'
 - kod: VAN
-  powód: 'Coś nagle przerywa Twój plan: to aktywność sieci brzusznej uwagi.'
+  powód: 'Coś nagle przerywa Twój plan. To aktywność sieci brzusznej uwagi.'
 - kod: SN
-  powód: 'Coś zagraża Twojemu schematowi ciała i wyróżnia się spośród bodźców z ciała i z otoczenia: to aktywność sieci istotności.'
+  powód: 'Czujesz, że coś zagraża Twojemu schematowi ciała, i przewidujesz, czym to grozi. To aktywność sieci istotności.'
 - kod: CN
-  powód: 'Dążysz do celu: to aktywność sieci kontroli.'
+  powód: 'Dążysz do celu. To aktywność sieci kontroli.'
 - kod: DMN
-  powód: 'Myślisz o sobie, o przeszłości i przyszłości, o innych ludziach: to aktywność sieci domyślnej.'
+  powód: 'Myślisz o sobie, o przeszłości i przyszłości, o innych ludziach. To aktywność sieci domyślnej.'
 - kod: LIM
-  powód: 'Coś Cię przyciąga albo odpycha. W modelu sieci spójnej kognitywistyki to rola sieci limbicznej, kory okołooczodołowej i biegunów skroniowych (Girn i in. 2024)<!--[s:girn2024-limbic-part-of-extended-dn]-->.'
+  powód: 'Coś Cię przyciąga albo odpycha. To aktywność sieci limbicznej, którą tworzą kora okołooczodołowa i przednia część płatów skroniowych (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-mfpn-core-and-limbic]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:
@@ -41,16 +41,14 @@ rekordy:
 - margulies_et_al_2016
 stan: gotowa
 ---
-Sieci wielkoskalowe (ang. large-scale networks) to zbiory obszarów kory, których aktywność rośnie i spada zgodnie, także w spoczynku (Yeo i in. 2011)<!--[s:yeo2011-seven-network-parcellation]-->. Łączność strukturalna (ang. structural connectivity) to włókna istoty białej biegnące między obszarami, mierzone traktografią dyfuzyjną (ang. diffusion tractography). [[Łączność funkcjonalna|Łączność funkcjonalna]] (ang. functional connectivity) to zgodność w czasie aktywności dwóch obszarów, mierzonej [[Skaner MRI|funkcjonalnym rezonansem magnetycznym]] (ang. functional magnetic resonance imaging, fMRI). Łączność funkcjonalna w spoczynku często łączy obszary bez bezpośredniego połączenia strukturalnego, ale jej siłę, trwałość i rozkład ogranicza wielkoskalowa anatomiczna struktura kory (Honey i in. 2009)<!--[s:honey2009-fc-without-direct-sc]-->.
-
-Biswal i współpracownicy zaznaczyli w skanerze obszary kory ruchowej i somatosensorycznej aktywne przy ruchu dłoni. W spoczynku wolne wahania sygnału fMRI w tych obszarach szły zgodnie ze sobą i z kilkoma innymi obszarami, które można wiązać z ruchem (Biswal i in. 1995)<!--[s:biswal1995-resting-motor-correlation]-->. Autorzy uznali tę zgodność za przejaw łączności funkcjonalnej mózgu.
+Sieci wielkoskalowe (ang. large-scale networks) to zbiory obszarów kory, których aktywność rośnie i spada zgodnie, także w spoczynku (Yeo i in. 2011)<!--[s:yeo2011-seven-network-parcellation]-->. Łączność strukturalna (ang. structural connectivity) to włókna istoty białej biegnące między obszarami, mierzone traktografią dyfuzyjną (ang. diffusion tractography). [[Łączność funkcjonalna|Łączność funkcjonalna]] (ang. functional connectivity) to zgodność w czasie aktywności dwóch obszarów, mierzonej [[Skaner MRI|funkcjonalnym rezonansem magnetycznym]] (ang. functional magnetic resonance imaging, fMRI). W badaniu Biswala i współpracowników wolne wahania sygnału fMRI w spoczynku szły zgodnie w obszarach kory ruchowej i somatosensorycznej aktywnych przy ruchu dłoni, co autorzy uznali za przejaw łączności funkcjonalnej mózgu (Biswal i in. 1995)<!--[s:biswal1995-resting-motor-correlation]-->. Według Honeya i współpracowników łączność funkcjonalna w spoczynku często łączy obszary bez bezpośredniego połączenia strukturalnego, ale jej siłę, trwałość i rozkład ogranicza wielkoskalowa anatomiczna struktura kory (Honey i in. 2009)<!--[s:honey2009-fc-without-direct-sc]-->.
 
 Parcelacja (ang. parcellation) to podział kory na obszary albo sieci. Yeo i współpracownicy pogrupowali korę 1000 dorosłych według łączności funkcjonalnej w spoczynku na 7 sieci w podziale zgrubnym i na 17 w drobnym (Yeo i in. 2011)<!--[s:yeo2011-seven-network-parcellation]--><!--[s:yeo2011-sensory-motor-35-percent]-->. Sieć wzrokowa i czuciowo-ruchowa, połączone głównie lokalnie, zajmują w tym podziale 35% kory, a resztę tworzą sieci obszarów kojarzeniowych (ang. association areas). Autorzy nazwali je umownie wzrokowa, czuciowo-ruchowa, grzbietowa uwagi, brzuszna uwagi, limbiczna, kontroli (ang. frontoparietal) i domyślna (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-group-combines-van-salience]--><!--[s:uddin2019-six-network-taxonomy]-->. Według Uddin, Yeo i Sprenga nazwy sieci różnią się między zespołami badawczymi, więc proponują oni sześć nazw od anatomii jako wspólny punkt wyjścia.
 
-Model sieci [[Kognitywistyka|spójnej kognitywistyki]] bierze siedem sieci Yeo i współpracowników, a ich sieć brzuszną uwagi dzieli na dwie, sieć brzuszną uwagi i sieć istotności. Podziały kory setek osób łączą te dwie sieci, ale podziały z wielokrotnych pomiarów kilku osób je rozdzielają (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-group-combines-van-salience]-->. Role sieci tego modelu to [[Sieć wzrokowa]] „Widzę.”, [[Sieć czuciowo-ruchowa]] „Czuję ciało i się ruszam.”, [[Sieć grzbietowa uwagi]] „Koordynuję oko i rękę.”, [[Sieć brzuszna uwagi]] „Coś przerywa plan.”, [[Sieć istotności]] „Coś zagraża schematowi ciała.”, [[Sieć kontroli]] „Dążę do celu.”, [[Sieć domyślna]] „Ja, przeszłość i przyszłość, inni ludzie.” i [[Sieć limbiczna]] „Coś mnie przyciąga albo odpycha.” W jednym badaniu fMRI wieloechowym (ang. multi-echo fMRI), dającym lepszy sygnał w jej obszarach, większość kory okołooczodołowej i przedniej kory skroniowej łączyła się z siecią domyślną (Girn i in. 2024)<!--[s:girn2024-limbic-part-of-extended-dn]-->. W spójnej kognitywistyce sieć limbiczna jest jednak osobną siecią, na osi wartości biegnącej w poprzek odległości od receptorów. [[Język w sieciach mózgu|Język]] to w tym modelu aktywność rozłożona w wielu z tych sieci. Obszary wybiórcze dla języka Braga i współpracownicy wyznaczyli u każdej osoby osobno, a ich układ przypomina inne sieci kojarzeniowe, z którymi sąsiadują w wielu strefach kory (Braga i in. 2020)<!--[s:braga2020-lang-selective-default-adjacent]-->.
+Model sieci [[Kognitywistyka|spójnej kognitywistyki]] bierze siedem sieci Yeo i współpracowników, a ich sieć brzuszną uwagi dzieli na dwie, sieć brzuszną uwagi i sieć istotności. Podziały kory setek osób łączą te dwie sieci, ale podziały z wielokrotnych pomiarów kilku osób je rozdzielają (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-group-combines-van-salience]-->. Role sieci tego modelu to [[Sieć wzrokowa]] „Widzę.”, [[Sieć czuciowo-ruchowa]] „Czuję ciało i się ruszam.”, [[Sieć grzbietowa uwagi]] „Koordynuję oko i rękę.”, [[Sieć brzuszna uwagi]] „Coś przerywa plan.”, [[Sieć istotności]] „Coś zagraża schematowi ciała.”, [[Sieć kontroli]] „Dążę do celu.”, [[Sieć domyślna]] „Ja, przeszłość i przyszłość, inni ludzie.” i [[Sieć limbiczna]] „Coś mnie przyciąga albo odpycha.” W jednym badaniu fMRI wieloechowym (ang. multi-echo fMRI), dającym lepszy sygnał w jej obszarach, większość kory okołooczodołowej i przedniej kory skroniowej łączyła się z siecią domyślną (Girn i in. 2024)<!--[s:girn2024-limbic-part-of-extended-dn]-->. W spójnej kognitywistyce sieć limbiczna jest jednak osobną siecią, w której stronę biegnie wartość, czyli to, co przyciąga albo odpycha. [[Język w sieciach mózgu|Język]] to w tym modelu aktywność sieci językowej (ang. language network), obszarów kory wybiórczych dla języka, oraz sieci wielkoskalowych wokół niej. Według Fedorenko, Ivanovej i Regev sieć językowa prawdopodobnie wspiera wydobywanie z pamięci słów i konstrukcji oraz składanie ich w komunikat, kiedy go rozumiesz albo tworzysz (Fedorenko, Ivanova i Regev 2024)<!--[s:fedorenko2024nk-core-computations]-->. Obszary wybiórcze dla języka Braga i współpracownicy wyznaczyli u każdej osoby osobno, a ich układ przypomina inne sieci kojarzeniowe, z którymi sąsiadują w wielu strefach kory (Braga i in. 2020)<!--[s:braga2020-lang-selective-default-adjacent]-->.
 
 [[Gradient główny kory|Główny gradient kory]] (ang. principal gradient) to oś porządkująca obszary kory według ich wzorców łączności funkcjonalnej. Na jednym jej końcu leżą sieci percepcji i działania, wzrokowa i czuciowo-ruchowa, na drugim transmodalne obszary kojarzeniowe, łączące wiele zmysłów, czyli sieć domyślna, a w metaanalizie badań zadaniowych funkcje przypisywane obszarom stają się wzdłuż osi coraz bardziej abstrakcyjne (Margulies i in. 2016)<!--[s:margulies2016-principal-gradient-abstraction]--><!--[s:margulies2016-dmn-far-end-from-sensorimotor]-->. Gradient mierzy łączność, więc [[Odległość od receptorów|odległość od receptorów]], liczbę synaps chemicznych na głównej drodze od receptora zmysłowego, można z niego tylko wnioskować. W modelu sieci spójnej kognitywistyki najbliżej receptorów leżą sieć wzrokowa i czuciowo-ruchowa, dalej sieć grzbietowa uwagi i sieć kontroli, a najdalej sieć domyślna.
 
 W badaniu Seeleya i współpracowników pięć różnych zespołów neurodegeneracyjnych dawało zanik ograniczony do pięciu różnych sieci łączności funkcjonalnej zdrowego mózgu. Autorzy pokazali też, że u zdrowych osób większej objętości istoty szarej w jednym obszarze sieci zwykle towarzyszyła większa objętość w pozostałych obszarach tej sieci (Seeley i in. 2009)<!--[s:seeley2009-five-syndromes-five-networks]-->.
 
-Kiedy czytasz to zdanie, [[Bioinformacja|bioinformacja]] z Twoich oczu płynie przez sieć wzrokową. Wzrok przesuwający się po linijce to aktywność Twojej sieci grzbietowej uwagi. Słowa składające się w zdanie to aktywność obszarów językowych rozłożonych w kilku sieciach, a dążenie do celu to aktywność sieci kontroli. Twoje doświadczenie tej chwili to aktywność tych sieci, a z bioinformacji płynącej przez nie kształtują się Twoje [[Modele Mentalne|Modele Mentalne]] tekstu, pokoju i siebie, na których polegasz, czytając dalej.
+Kiedy czytasz to zdanie, [[Bioinformacja|bioinformacja]] z Twoich oczu płynie przez sieć wzrokową. Wzrok przesuwający się po linijce to aktywność Twojej sieci grzbietowej uwagi. Słowa składające się w zdanie to aktywność Twojej sieci językowej, a dążenie do celu to aktywność sieci kontroli. Twoje doświadczenie tej chwili to aktywność tych sieci, a z bioinformacji płynącej przez nie kształtują się Twoje [[Modele Mentalne|Modele Mentalne]] tekstu, pokoju i siebie, na których polegasz, czytając dalej.

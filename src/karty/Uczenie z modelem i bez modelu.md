@@ -1,6 +1,6 @@
 ---
 tytuł: Uczenie z modelem i bez modelu
-osnowa: '[[Nawyk i automatyzacja]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Uczenie ze wzmocnieniem]]'
 - '[[Cel a nawyk]]'

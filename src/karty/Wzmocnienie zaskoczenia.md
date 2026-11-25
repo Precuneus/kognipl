@@ -1,6 +1,6 @@
 ---
 tytuł: Wzmocnienie zaskoczenia
-osnowa: '[[Sieci mózgu i predykcja]]'
+dyscyplina: biologia
 rodziny:
 - '[[Predykcja]]'
 głębokość:

@@ -1,6 +1,6 @@
 ---
 tytuł: Pacjentka S.M.
-osnowa: '[[Emocje]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Strach i stres]]'
 głębokość:

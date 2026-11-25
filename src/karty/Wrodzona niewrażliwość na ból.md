@@ -1,6 +1,6 @@
 ---
 tytuł: Wrodzona niewrażliwość na ból
-osnowa: '[[Emocje]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Ból i placebo]]'
 głębokość:

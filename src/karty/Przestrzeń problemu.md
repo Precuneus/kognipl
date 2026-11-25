@@ -1,6 +1,6 @@
 ---
 tytuł: Przestrzeń problemu
-osnowa: '[[Myślenie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Rozwiązywanie problemów i planowanie]]'
 głębokość:

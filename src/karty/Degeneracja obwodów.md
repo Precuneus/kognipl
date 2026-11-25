@@ -1,6 +1,6 @@
 ---
 tytuł: Degeneracja obwodów
-osnowa: '[[Neuron i synapsa]]'
+dyscyplina: biologia
 rodziny:
 - '[[Plastyczność i połączenia]]'
 głębokość:

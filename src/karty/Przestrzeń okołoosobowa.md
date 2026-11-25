@@ -1,6 +1,6 @@
 ---
 tytuł: Przestrzeń okołoosobowa
-osnowa: '[[Ciało i ruch]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Schemat ciała i narzędzia]]'
 głębokość:

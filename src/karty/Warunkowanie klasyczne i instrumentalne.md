@@ -1,6 +1,6 @@
 ---
 tytuł: Warunkowanie klasyczne i instrumentalne
-osnowa: '[[Nawyk i automatyzacja]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Warunkowanie]]'
 - '[[Uczenie ze wzmocnieniem]]'

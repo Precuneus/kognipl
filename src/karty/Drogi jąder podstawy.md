@@ -1,6 +1,6 @@
 ---
 tytuł: Drogi jąder podstawy
-osnowa: '[[Nawyk i automatyzacja]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Jądra podstawy]]'
 - '[[Sterowanie ruchem]]'

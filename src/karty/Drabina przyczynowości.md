@@ -1,6 +1,6 @@
 ---
 tytuł: Drabina przyczynowości
-osnowa: '[[Myślenie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Rozumowanie i wnioskowanie]]'
 głębokość:

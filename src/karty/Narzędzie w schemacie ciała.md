@@ -1,6 +1,6 @@
 ---
 tytuł: Narzędzie w schemacie ciała
-osnowa: '[[Ciało i ruch]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Schemat ciała i narzędzia]]'
 głębokość:

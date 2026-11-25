@@ -1,6 +1,6 @@
 ---
 tytuł: Ruminacja
-osnowa: '[[Osobowość i zdrowie psychiczne]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Nastrój i lęk]]'
 głębokość:

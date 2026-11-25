@@ -1,6 +1,6 @@
 ---
 tytuł: Koregulacja
-osnowa: '[[Umysł społeczny]]'
+dyscyplina: socjologia
 rodziny:
 - '[[Więź i przywiązanie]]'
 - '[[Rozwój dziecka]]'

@@ -1,6 +1,6 @@
 ---
 tytuł: Neuron jako sieć głęboka
-osnowa: '[[Neuron i synapsa]]'
+dyscyplina: biologia
 rodziny:
 - '[[Budowa i elektryka neuronu]]'
 sieci: []

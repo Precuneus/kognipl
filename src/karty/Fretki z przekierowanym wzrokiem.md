@@ -1,6 +1,6 @@
 ---
 tytuł: Fretki z przekierowanym wzrokiem
-osnowa: '[[Percepcja i uwaga]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Kora wzrokowa i szlaki]]'
 głębokość:

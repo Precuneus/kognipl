@@ -1,11 +1,9 @@
 ---
 tytuł: Antropologia
-osnowa: '[[Kultura i społeczeństwo]]'
-rodziny:
-- '[[Nauka jako zbiorowość]]'
-grupa: socjologia
+dyscyplina: socjologia
+rodziny: []
 sieci: []
-bez_sieci: 'Antropologia to dyscyplina naukowa, więc sieci mózgu znajdziesz na kartach, do których prowadzi.'
+bez_sieci: 'Antropologia to dziedzina nauki, więc sieci mózgu znajdziesz na kartach, do których prowadzi.'
 ryciny: []
 materiały:
 - tytuł: 'Thagard 2023: Cognitive Science, Stanford Encyclopedia of Philosophy'
@@ -13,6 +11,6 @@ materiały:
 rekordy: []
 stan: gotowa
 ---
-Antropologia (ang. anthropology) to jedna z sześciu dyscyplin kognitywistyki, a jej gałąź, antropologia kognitywna (ang. cognitive anthropology), poszerza badanie ludzkiego myślenia o pytanie, jak myślenie działa w różnych kulturach (Thagard 2023)<!--[s:thagard2023-definition-six-fields]--><!--[s:thagard2023-anthropology-cultures]-->. Główną metodą antropologii kulturowej (ang. cultural anthropology) jest według Thagarda etnografia: życie wśród członków danej kultury i kontakt z nimi w takim stopniu, by ich systemy społeczne i poznawcze stały się widoczne. Jak podaje Thagard, w antropologii kognitywnej badano na przykład podobieństwa i różnice między kulturami w słowach na kolory.
+Antropologia (ang. anthropology) to jedna z sześciu dziedzin kognitywistyki (Thagard 2023)<!--[s:thagard2023-definition-six-fields]--><!--[s:thagard2023-anthropology-cultures]-->. Jej gałąź, antropologia kognitywna (ang. cognitive anthropology), według Thagarda poszerza badanie ludzkiego myślenia o pytanie, jak myślenie działa w różnych kulturach. Główną metodą antropologii kulturowej (ang. cultural anthropology) jest według Thagarda etnografia, która wymaga życia wśród członków danej kultury i kontaktu z nimi w takim stopniu, by ich systemy społeczne i poznawcze stały się widoczne. Jak podaje Thagard, w antropologii kognitywnej badano na przykład podobieństwa i różnice między kulturami w słowach na kolory.
 
-Na kogni.pl kultury i wspólnego myślenia dotyczą karty [[Słowa na śnieg]], [[Wspólna intencjonalność]] i [[Strefa najbliższego rozwoju]]. W [[Kognitywistyka|spójnej kognitywistyce]] antropologia należy do grupy wyjaśnień [[Socjologia|socjologii]], przy [[Mapa osnów|osnowie]] {{Kultura i społeczeństwo|Kultura i społeczeństwo}}. Karta jest zaczątkiem i rośnie z kolejnymi zajęciami.
+Na kogni.pl języka w różnych kulturach dotyczy karta [[Słowa na śnieg]]. W [[Kognitywistyka|spójnej kognitywistyce]] antropologia należy do [[Socjologia|socjologii]].

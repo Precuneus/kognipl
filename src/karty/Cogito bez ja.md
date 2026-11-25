@@ -1,6 +1,6 @@
 ---
 tytuł: Cogito bez ja
-osnowa: '[[Świadomość]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Oznaki świadomości]]'
 - '[[Stany zmienione]]'

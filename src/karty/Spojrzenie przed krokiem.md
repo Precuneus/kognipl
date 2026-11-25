@@ -1,6 +1,6 @@
 ---
 tytuł: Spojrzenie przed krokiem
-osnowa: '[[Ciało i ruch]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Sterowanie ruchem]]'
 głębokość:

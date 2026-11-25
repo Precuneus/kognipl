@@ -1,6 +1,6 @@
 ---
 tytuł: Obszar wzrokowy słów
-osnowa: '[[Język]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Rozumienie i czytanie]]'
 - '[[Mózg języka]]'

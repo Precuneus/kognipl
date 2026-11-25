@@ -1,6 +1,6 @@
 ---
 tytuł: Wspomnienia z zapachu
-osnowa: '[[Percepcja i uwaga]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Inne zmysły]]'
 - '[[Rekonstrukcja i wyobrażanie]]'

@@ -1,11 +1,9 @@
 ---
 tytuł: Lingwistyka
-osnowa: '[[Kultura i społeczeństwo]]'
-rodziny:
-- '[[Nauka jako zbiorowość]]'
-grupa: psychologia
+dyscyplina: psychologia
+rodziny: []
 sieci: []
-bez_sieci: 'Lingwistyka to dyscyplina naukowa, więc sieci mózgu znajdziesz na kartach, do których prowadzi.'
+bez_sieci: 'Lingwistyka to dziedzina nauki, więc sieci mózgu znajdziesz na kartach, do których prowadzi.'
 ryciny: []
 materiały:
 - tytuł: 'Thagard 2023: Cognitive Science, Stanford Encyclopedia of Philosophy'
@@ -15,4 +13,4 @@ stan: gotowa
 ---
 Lingwistyka (ang. linguistics) to nauka o języku. W tradycji Noama Chomsky'ego szuka zasad gramatycznych, które nadają ludzkim językom podstawową strukturę (Thagard 2023)<!--[s:thagard2023-linguistics-grammar]-->. Lingwistyka kognitywna (ang. cognitive linguistics), jak dodaje Thagard, kładzie mniejszy nacisk na składnię, a większy na znaczenie i pojęcia.
 
-Na kogni.pl język opisują karty [[Język w sieciach mózgu]], [[Słowa na śnieg]], [[Zaskoczenie słowem]], [[Obszar wzrokowy słów]] i [[Mowa wewnętrzna]]. W [[Kognitywistyka|spójnej kognitywistyce]] lingwistyka należy do grupy wyjaśnień [[Psychologia|psychologii]], przy [[Mapa osnów|osnowie]] {{Język|Język}}. Karta jest zaczątkiem i rośnie z kolejnymi zajęciami.
+Na kogni.pl język opisują karty [[Język w sieciach mózgu]], [[Słowa na śnieg]] i [[Słowa dla emocji]]. W [[Kognitywistyka|spójnej kognitywistyce]] lingwistyka należy do [[Psychologia|psychologii]].

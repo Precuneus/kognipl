@@ -1,6 +1,6 @@
 ---
 tytuł: Od uwagi do automatyzmu
-osnowa: '[[Nawyk i automatyzacja]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Wprawa i ekspertyza]]'
 głębokość:

@@ -1,6 +1,6 @@
 ---
 tytuł: Mapy poznawcze
-osnowa: '[[Pamięć i przestrzeń]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Mapy przestrzeni]]'
 głębokość:

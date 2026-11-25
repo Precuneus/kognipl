@@ -1,6 +1,6 @@
 ---
 tytuł: Atrybucja pobudzenia
-osnowa: '[[Emocje]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Konstruowanie emocji]]'
 głębokość:

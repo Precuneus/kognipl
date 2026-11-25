@@ -1,0 +1,105 @@
+{
+ "dyscypliny": [
+  {
+   "nazwa": "socjologia",
+   "rodziny": [
+    "Kultura",
+    "Nauka jako zbiorowość",
+    "Demografia rodziny",
+    "Teoria umysłu",
+    "Wspólna intencjonalność",
+    "Więź i przywiązanie",
+    "Współpraca i konflikt",
+    "Rozwój dziecka",
+    "Modele językowe",
+    "Agenci AI",
+    "AI w zatrudnieniu"
+   ]
+  },
+  {
+   "nazwa": "psychologia",
+   "rodziny": [
+    "Mózg języka",
+    "Język a myślenie",
+    "Rozumienie i czytanie",
+    "Oznaki świadomości",
+    "Stany zmienione",
+    "Rozszczepiony mózg",
+    "Rozumowanie i wnioskowanie",
+    "Rozwiązywanie problemów i planowanie",
+    "Odkrywanie reguł",
+    "Funkcje wykonawcze",
+    "Inteligencja",
+    "Twórczość",
+    "Intencja i sprawczość",
+    "Wybór i wartość",
+    "Luka między intencją a działaniem",
+    "Warunkowanie",
+    "Uczenie ze wzmocnieniem",
+    "Cel a nawyk",
+    "Wprawa i ekspertyza",
+    "Jądra podstawy",
+    "Mapy przestrzeni",
+    "Przestrzenie pojęć",
+    "Rekonstrukcja i wyobrażanie",
+    "Systemy pamięci",
+    "Utrwalanie śladu",
+    "Nastrój i lęk",
+    "Trauma i dysocjacja",
+    "Neuroróżnorodność",
+    "Osobowość",
+    "Konstruowanie emocji",
+    "Nagroda i przyjemność",
+    "Strach i stres",
+    "Regulacja emocji",
+    "Ból i placebo",
+    "Interocepcja",
+    "Propriocepcja i dotyk",
+    "Sterowanie ruchem",
+    "Schemat ciała i narzędzia",
+    "Fizjologia i zdrowie ciała",
+    "Światło",
+    "Oko i barwa",
+    "Kora wzrokowa i szlaki",
+    "Uwaga",
+    "Zaburzenia widzenia",
+    "Inne zmysły",
+    "Muzyka",
+    "Obrazy umysłowe"
+   ]
+  },
+  {
+   "nazwa": "biologia",
+   "rodziny": [
+    "Predykcja",
+    "Sieci wielkoskalowe",
+    "Anatomia mózgu",
+    "Rytmy i fale",
+    "Rozwój mózgu",
+    "Budowa i elektryka neuronu",
+    "Przekaźnictwo synaptyczne",
+    "Plastyczność i połączenia",
+    "Cząsteczki i geny",
+    "Energia komórki",
+    "Uczenie bez mózgu",
+    "Wspólnoty komórek",
+    "Umieranie",
+    "Ewolucja układu nerwowego",
+    "Człowiek w ewolucji",
+    "Poznanie zwierząt"
+   ]
+  },
+  {
+   "nazwa": "fizyka",
+   "rodziny": [
+    "Entropia i prawa fizyki",
+    "Elektryczność i fale elektromagnetyczne",
+    "Zjawiska kwantowe",
+    "Sygnał elektryczny",
+    "Sygnał hemodynamiczny i magnetyczny",
+    "Rozdzielczość pomiaru",
+    "Dyfuzja, przepływ, ciśnienie"
+   ]
+  }
+ ]
+}

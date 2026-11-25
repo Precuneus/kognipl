@@ -1,6 +1,6 @@
 ---
 tytuł: Dopaminowe zaskoczenie nagrodą
-osnowa: '[[Nawyk i automatyzacja]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Uczenie ze wzmocnieniem]]'
 głębokość:

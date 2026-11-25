@@ -1,6 +1,6 @@
 ---
 tytuł: Dotyk afektywny
-osnowa: '[[Ciało i ruch]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Propriocepcja i dotyk]]'
 - '[[Interocepcja]]'

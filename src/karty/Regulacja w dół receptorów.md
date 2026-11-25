@@ -1,6 +1,6 @@
 ---
 tytuł: Regulacja w dół receptorów
-osnowa: '[[Neuron i synapsa]]'
+dyscyplina: biologia
 rodziny:
 - '[[Przekaźnictwo synaptyczne]]'
 - '[[Plastyczność i połączenia]]'

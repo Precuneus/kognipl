@@ -1,6 +1,6 @@
 ---
 tytuł: Ukryta świadomość
-osnowa: '[[Świadomość]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Oznaki świadomości]]'
 głębokość:

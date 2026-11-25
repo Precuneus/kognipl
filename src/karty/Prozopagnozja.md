@@ -1,13 +1,13 @@
 ---
 tytuł: Prozopagnozja
-osnowa: '[[Percepcja i uwaga]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Zaburzenia widzenia]]'
 - '[[Kora wzrokowa i szlaki]]'
 - '[[Oznaki świadomości]]'
 sieci:
 - kod: VIS
-  powód: 'Rozpoznajesz twarz przyjaciółki i polegasz na Modelach Mentalnych tej osoby: to między innymi aktywność brzusznych obszarów potyliczno-skroniowych, wśród nich prawego obszaru twarzy w zakręcie wrzecionowatym. Wszystkie 44 opisane uszkodzenia, po których pojawiła się prozopagnozja, leżały w obszarach połączonych z tym obszarem (Cohen i in. 2019)<!--[s:cohen2019-prosopagnosia-ffa-network]-->, ale u czterech osób z prozopagnozją wrodzoną te obszary odpowiadały na twarze prawidłowo (Avidan i in. 2005)<!--[s:avidan2005-cp-normal-ventral-activation]-->. Rdzeń sieci wzrokowej tworzy kora płata potylicznego (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-on-core-occipital]-->.'
+  powód: 'Rozpoznajesz twarz przyjaciółki i polegasz na Modelach Mentalnych tej osoby. To między innymi aktywność brzusznych obszarów potyliczno-skroniowych, wśród nich prawego obszaru twarzy w zakręcie wrzecionowatym. Wszystkie 44 opisane uszkodzenia, po których pojawiła się prozopagnozja, leżały w obszarach połączonych z tym obszarem (Cohen i in. 2019)<!--[s:cohen2019-prosopagnosia-ffa-network]-->, ale u czterech osób z prozopagnozją wrodzoną te obszary odpowiadały na twarze prawidłowo (Avidan i in. 2005)<!--[s:avidan2005-cp-normal-ventral-activation]-->. Rdzeń sieci wzrokowej tworzy kora płata potylicznego (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-on-core-occipital]-->.'
 bez_sieci: ''
 obszary:
 - zakręt wrzecionowaty, część skroniowa
@@ -28,7 +28,7 @@ rekordy:
 - avidan_2005
 stan: gotowa
 ---
-Prozopagnozja (ang. prosopagnosia) to wybiórcza agnozja wzrokowa (ang. visual agnosia), czyli zaburzenie rozpoznawania tego, co widzisz, dotyczące tożsamości twarzy: osoba z prozopagnozją widzi twarz jako twarz i odróżnia ją od samochodu czy drzewa, ale nie umie powiedzieć, czy widziała ją wcześniej i do kogo należy (Corrow, Dalrymple i Barton 2016)<!--[s:corrow2016-faces-seen-identity-lost]-->.
+Prozopagnozja (ang. prosopagnosia) to wybiórcza agnozja wzrokowa (ang. visual agnosia), czyli zaburzenie rozpoznawania tego, co widzisz, dotyczące tożsamości twarzy. Osoba z prozopagnozją widzi twarz jako twarz i odróżnia ją od samochodu czy drzewa, ale nie umie powiedzieć, czy widziała ją wcześniej i do kogo należy (Corrow, Dalrymple i Barton 2016)<!--[s:corrow2016-faces-seen-identity-lost]-->.
 
 Postać nabyta (ang. acquired prosopagnosia) pojawia się po uszkodzeniu mózgu. Z 44 opisanych uszkodzeń, po których pojawiła się prozopagnozja, 29 obejmowało prawy obszar twarzy w zakręcie wrzecionowatym (ang. fusiform face area), a wszystkie 44 leżały w jednej sieci połączonej z tym obszarem (Cohen i in. 2019)<!--[s:cohen2019-prosopagnosia-ffa-network]-->. U czterech osób z postacią wrodzoną (ang. congenital prosopagnosia), przy prawidłowym wzroku i inteligencji i bez śladów uszkodzenia mózgu, obszar twarzy i inne brzuszne obszary potyliczno-skroniowe reagowały na twarze, budynki i przedmioty tak jak u innych osób, co według autorów wskazuje, że sama aktywność tych obszarów do rozpoznania twarzy nie wystarcza (Avidan i in. 2005)<!--[s:avidan2005-cp-normal-ventral-activation]-->.
 
@@ -36,4 +36,4 @@ Według Pitchera i Ungerleider obszar twarzy w zakręcie wrzecionowatym należy 
 
 Pacjent z prozopagnozją, patrząc uważnie na własne zdjęcie, mówi, że twarzy nie rozpoznaje i nie czuje, że ją zna, ale jego skóra odpowiada dużą reakcją skórno-galwaniczną (ang. skin conductance response), zmianą przewodnictwa skóry (Denburg, Jones i Tranel 2009)<!--[s:denburg2009-prosopagnosia-own-face-scr]--><!--[s:denburg2009-patient-2354-scr-without-recognition]-->. Autorzy nazywają to rozpoznaniem bez świadomości (ang. recognition without awareness) i taką samą reakcję skóry opisują u swojej pacjentki z [[Zespół Bálinta|zespołem Bálinta]].
 
-Kiedy w tłumie na dworcu wyławiasz twarz bliskiej osoby, Twoim szlakiem brzusznym płynie [[Bioinformacja|bioinformacja]] o rysach, a z niej kształtują się Twoje [[Modele Mentalne|Modele Mentalne]] tej osoby, na których polegasz, zanim przypomnisz sobie jej imię. W prozopagnozji twarz pojawia się jako twarz, ale Model Mentalny tej osoby nie dociera do raportu, więc pacjent mówi, że jej nie zna.
+Kiedy w tłumie na dworcu wyławiasz twarz bliskiej osoby, Twoim szlakiem brzusznym płynie [[Bioinformacja|bioinformacja]] o rysach, a z niej kształtują się Twoje [[Modele Mentalne|Modele Mentalne]] tej osoby, na których polegasz, zanim przypomnisz sobie jej imię. W prozopagnozji twarz pojawia się jako twarz, ale z bioinformacji o rysach nie kształtuje się Model Mentalny tej osoby, na którym pacjent mógłby polegać.

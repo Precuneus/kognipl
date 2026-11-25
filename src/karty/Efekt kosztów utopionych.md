@@ -1,6 +1,6 @@
 ---
 tytuł: Efekt kosztów utopionych
-osnowa: '[[Decyzja i działanie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Wybór i wartość]]'
 głębokość:

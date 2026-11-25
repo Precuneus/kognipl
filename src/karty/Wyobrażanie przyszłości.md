@@ -1,6 +1,6 @@
 ---
 tytuł: Wyobrażanie przyszłości
-osnowa: '[[Pamięć i przestrzeń]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Rekonstrukcja i wyobrażanie]]'
 - '[[Systemy pamięci]]'

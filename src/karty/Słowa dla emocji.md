@@ -1,12 +1,12 @@
 ---
 tytuł: Słowa dla emocji
-osnowa: '[[Emocje]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Konstruowanie emocji]]'
 - '[[Język a myślenie]]'
 - '[[Rozwój dziecka]]'
 sieci: []
-bez_sieci: 'W metaanalizie Lindquist i współpracowników niewiele wskazuje, że poszczególne emocje mają stałe, osobne obszary w mózgu: przy doświadczaniu i rozpoznawaniu emocji pracuje raczej zestaw współdziałających obszarów, aktywnych także w zadaniach nieemocjonalnych (Lindquist i in. 2012)<!--[s:lindquist2012-no-specific-localization]-->. Dlatego w spójnej kognitywistyce emocje przebiegają w poprzek sieci mózgu.'
+bez_sieci: 'W metaanalizie Lindquist i współpracowników niewiele wskazuje, że poszczególne emocje mają stałe, osobne obszary w mózgu, a przy doświadczaniu i rozpoznawaniu emocji uczestniczy raczej zestaw współdziałających obszarów, aktywnych także w zadaniach nieemocjonalnych (Lindquist i in. 2012)<!--[s:lindquist2012-no-specific-localization]-->. W spójnej kognitywistyce emocja nie ma więc własnej sieci, a wartość, czyli to, co przyciąga albo odpycha, biegnie w stronę sieci limbicznej, splecona z odległością od receptorów i zaskoczeniem.'
 ryciny: []
 materiały:
 - tytuł: 'Lindquist, Satpute i Gendron 2015: Does language do more than communicate emotion?'
@@ -22,11 +22,11 @@ rekordy:
 - 2026-11-01_probowanie-przesuwa-sciany-dziecko-w-pokoju
 stan: gotowa
 ---
-Słowa dla emocji (ang. emotion words) to słownictwo, którym nazywasz to, czego doświadczasz. Lindquist, Satpute i Gendron omawiają narastające dowody, że słowa dla emocji wykraczają poza porozumiewanie się: współtworzą to, jak emocje rozpoznajemy, a być może także to, jak ich doświadczamy (Lindquist, Satpute i Gendron 2015)<!--[s:lindquist2015-words-help-constitute-emotion]-->. Ten pogląd rozwija [[Teoria emocji konstruowanych|teoria emocji konstruowanych]] (ang. theory of constructed emotion).
+Słowa dla emocji (ang. emotion words) to słownictwo, którym nazywasz to, czego doświadczasz. Lindquist, Satpute i Gendron omawiają narastające dowody, że słowa dla emocji wykraczają poza porozumiewanie się i współtworzą to, jak emocje rozpoznajemy, a być może także to, jak ich doświadczamy (Lindquist, Satpute i Gendron 2015)<!--[s:lindquist2015-words-help-constitute-emotion]-->. Ten pogląd rozwija [[Teoria emocji konstruowanych|teoria emocji konstruowanych]] (ang. theory of constructed emotion) Lisy Feldman Barrett, według której pojedyncza emocja powstaje tak samo jak każda inna percepcja (Barrett 2017)<!--[s:barrett2017-emotion-constructed-like-perception]-->.
 
 Ludzie różnią się ziarnistością emocji (ang. emotional granularity), czyli tym, jak drobno rozróżniają swoje emocje. Jedni wyraźnie odróżniają od siebie wiele emocji przykrych i przyjemnych. Inni traktują jak wymienne słowa nazywające emocje równie przykre albo równie przyjemne (Barrett i in. 2001)<!--[s:barrett2001-differentiated-vs-interchangeable-emotion-terms]-->.
 
-W [[Kognitywistyka|spójnej kognitywistyce]] małe dziecko mówi, że się złości albo że jest mu smutno, a gdy doświadcza żałoby, melancholii czy zażenowania, brakuje mu słów, którymi zrozumiałoby siebie. Jego przestrzenie pojęć dopiero się rozwijają, a razem z nimi kontekst, w którym jego emocje mogą się ugruntować. W badaniach, których wyniki zestawiają Hoemann, Xu i Barrett, dzieci od dwóch do dziewięciu lat nazywały miny na zdjęciach albo wybierały dla nich nazwę z kilku podanych (Hoemann, Xu i Barrett 2019)<!--[s:hoemann2019-emotion-labels-added-with-age]-->. Już od wczesnego wieku nazywały stereotypowy uśmiech radością, zmarszczone brwi złością, a opuszczone kąciki ust smutkiem, ale nazwy pozostałych min dochodziły stopniowo z wiekiem. Sherri Widen opisuje tę drogę w rozumieniu min: od dwóch szerokich kategorii, „czuje się dobrze” i „czuje się źle”, do układu odrębnych kategorii, jaki mają dorośli, osiąganego prawdopodobnie w wieku nastoletnim (Widen 2013)<!--[s:widen2013-broad-valence-categories-differentiate-slowly]-->.
+Dzieci stopniowo dodają nazwy dla cudzych min. Hoemann, Xu i Barrett zestawiają wyniki 11 badań, w których dzieci od dwóch do dziewięciu lat nazywały stereotypowe miny albo wybierały dla nich nazwę z kilku podanych (Hoemann, Xu i Barrett 2019)<!--[s:hoemann2019-emotion-labels-added-with-age]-->. Już od wczesnego wieku nazywały uśmiech radością, zmarszczone brwi złością, a opuszczone kąciki ust smutkiem, ale nazwy pozostałych min dochodziły stopniowo z wiekiem. Sherri Widen opisuje tę drogę w rozumieniu min jako przejście od dwóch szerokich kategorii, „czuje się dobrze” i „czuje się źle”, do układu odrębnych kategorii, jaki mają dorośli, osiąganego prawdopodobnie w wieku nastoletnim (Widen 2013)<!--[s:widen2013-broad-valence-categories-differentiate-slowly]-->. [[Kognitywistyka|Spójna kognitywistyka]] przenosi tę drogę na własne emocje dziecka i stawia hipotezę, że małe dziecko nazywa swoją złość i smutek, ale przy żałobie, melancholii czy zażenowaniu brakuje mu jeszcze słów, którymi zrozumiałoby siebie.
 
 John Koenig w swoim słowniku wymyśla słowa dla emocji, które według niego wszyscy czujemy, a na które brakuje nam słów (Koenig 2021)<!--[s:koenig2021-made-up-words-for-emotions]-->. Kenopsja (ang. kenopsia) to u niego niesamowita, opuszczona atmosfera miejsca, które zwykle tętni ludźmi, a teraz jest puste i ciche (Koenig 2012)<!--[s:koenig2012-kenopsia]-->.
 

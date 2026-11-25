@@ -1,12 +1,12 @@
 ---
 tytuł: 'Makro: strategia z modeli'
-osnowa: '[[Myślenie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Rozwiązywanie problemów i planowanie]]'
 - '[[Wprawa i ekspertyza]]'
 sieci:
 - kod: CN
-  powód: 'Utrzymujesz plan i reguły gry przez kolejne ruchy: to aktywność sieci kontroli, której rdzeń tworzą boczna kora przedczołowa wzdłuż środkowego zakrętu czołowego i przednia część płacika ciemieniowego dolnego (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-lfpn-core-lateral-pfc]-->.'
+  powód: 'Utrzymujesz plan i reguły gry przez kolejne ruchy. To aktywność sieci kontroli, której rdzeń tworzą boczna kora przedczołowa wzdłuż środkowego zakrętu czołowego i przednia część płacika ciemieniowego dolnego (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-lfpn-core-lateral-pfc]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:
@@ -26,9 +26,9 @@ rekordy:
 - 2026-10-20_mikro-mezo-makro-sieci
 stan: gotowa
 ---
-Makro (ang. macro) to strategia oparta na nabytych [[Modele Mentalne|Modelach Mentalnych]] mechaniki: gdy znasz mechanikę, widzisz jasną drogę do wygranej. Surnex, autor eseju wideo o grach rywalizacyjnych, nazywa makro warstwą systemu: wyznaczaniem tras, gospodarowaniem zasobami i warunkiem zwycięstwa, czyli matematycznie poprawnym sposobem wygrania gry (Surnex)<!--[s:surnex-macro-engine-coach]-->.
+Makro (ang. macro) to strategia oparta na nabytych [[Modele Mentalne|Modelach Mentalnych]] mechaniki. Gdy znasz mechanikę, widzisz jasną drogę do wygranej. Surnex, autor eseju wideo o grach rywalizacyjnych, nazywa makro warstwą systemu, na którą składają się wyznaczanie tras, gospodarowanie zasobami i warunek zwycięstwa, i porównuje ją do matematycznie poprawnego sposobu wygrania gry (Surnex)<!--[s:surnex-macro-engine-coach]-->.
 
-Surnex proponuje test: cheat, czyli kod albo program, który czyni grę banalnie łatwą, mówi, co ta gra sprawdza (Surnex)<!--[s:surnex-cheat-test]--><!--[s:surnex-macro-engine-coach]--><!--[s:surnex-chess-human-mezo]-->. Według niego cheat makro to silnik szachowy, automatyczna ekonomia albo idealny trener, który mówi Ci dokładnie, co robić, a czyste gry makro, takie jak Factorio, Connect 4 czy kółko i krzyżyk, to niemal łamigłówki matematyczne: gra jest rozwiązana, gdy ktoś znajdzie optymalne rozwiązanie. Warcaby angielskie (ang. checkers), rozgrywane na planszy 8 × 8, mają około 500 trylionów możliwych pozycji. Od 1989 roku dziesiątki komputerów pracowały niemal bez przerwy nad rozwiązaniem gry, czyli nad ustaleniem jej wyniku przy idealnej grze obu stron, aż zespół Schaeffera ogłosił w 2007 roku, że gra jest rozwiązana: taka gra kończy się remisem (Schaeffer i in. 2007)<!--[s:schaeffer2007-checkers-solved-draw]-->. Szachy to według Surneksa w teorii czyste makro, ale w partii między ludźmi mają silny składnik [[Mezo - aktualizowanie modeli|mezo]], aktualizowania modeli o przeciwniku, bo grasz przeciw nawykom konkretnej osoby.
+Według testu, który proponuje Surnex, cheat, czyli kod albo program czyniący grę banalnie łatwą, mówi, co ta gra sprawdza (Surnex)<!--[s:surnex-cheat-test]--><!--[s:surnex-macro-engine-coach]--><!--[s:surnex-chess-human-mezo]-->. Cheat makro to w jego ujęciu silnik szachowy, automatyczna ekonomia albo idealny trener, który mówi Ci dokładnie, co robić, a czyste gry makro, takie jak Factorio, Connect 4 czy kółko i krzyżyk, to niemal łamigłówki matematyczne, bo gra jest rozwiązana, gdy ktoś znajdzie optymalne rozwiązanie. Warcaby angielskie (ang. checkers), rozgrywane na planszy 8 × 8, mają około 500 trylionów możliwych pozycji. Od 1989 roku dziesiątki komputerów pracowały niemal bez przerwy nad rozwiązaniem gry, czyli nad ustaleniem jej wyniku przy idealnej grze obu stron, aż zespół Schaeffera ogłosił w 2007 roku, że gra jest rozwiązana i przy idealnej grze kończy się remisem (Schaeffer i in. 2007)<!--[s:schaeffer2007-checkers-solved-draw]-->. Szachy to według Surneksa w teorii czyste makro, ale w partii między ludźmi mają silny składnik [[Mezo - aktualizowanie modeli|mezo]], aktualizowania modeli o przeciwniku, bo grasz przeciw nawykom konkretnej osoby.
 
 W [[Kognitywistyka|spójnej kognitywistyce]] człowiek dochodzi do makro przez Modele Mentalne nabyte w grze, a przejawiają się one w pamięci. Wyjątkowa zdolność ekspertek i ekspertów do przypominania sobie sensownego materiału z własnej dziedziny, na przykład pozycji szachowych, to klasyczny wynik psychologii poznawczej. Część przewagi nad nowicjuszami zostaje nawet przy pozycjach losowo przetasowanych, co autorzy metaanalizy tłumaczą większym zasobem małych struktur pamięciowych, obok struktur dużych, takich jak schematy (Sala i Gobet 2017)<!--[s:sala2017-experts-recall-chunks]-->.
 

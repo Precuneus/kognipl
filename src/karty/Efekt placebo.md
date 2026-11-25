@@ -1,6 +1,6 @@
 ---
 tytuł: Efekt placebo
-osnowa: '[[Emocje]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Ból i placebo]]'
 głębokość:

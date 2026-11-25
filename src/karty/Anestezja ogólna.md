@@ -1,6 +1,6 @@
 ---
 tytuł: Anestezja ogólna
-osnowa: '[[Świadomość]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Stany zmienione]]'
 głębokość:

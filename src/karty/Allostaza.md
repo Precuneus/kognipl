@@ -1,6 +1,6 @@
 ---
 tytuł: Allostaza
-osnowa: '[[Ciało i ruch]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Interocepcja]]'
 - '[[Fizjologia i zdrowie ciała]]'

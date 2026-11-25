@@ -1,6 +1,6 @@
 ---
 tytuł: Sieć grzbietowa uwagi
-osnowa: '[[Sieci mózgu i predykcja]]'
+dyscyplina: biologia
 rodziny:
 - '[[Sieci wielkoskalowe]]'
 - '[[Uwaga]]'

@@ -1,6 +1,6 @@
 ---
 tytuł: Ponowna ocena i tłumienie
-osnowa: '[[Emocje]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Regulacja emocji]]'
 głębokość:

@@ -1,6 +1,6 @@
 ---
 tytuł: Uzależnienie jako uczenie się
-osnowa: '[[Nawyk i automatyzacja]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Cel a nawyk]]'
 - '[[Uczenie ze wzmocnieniem]]'

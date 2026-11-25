@@ -1,6 +1,6 @@
 ---
 tytuł: Psychodeliki i rozpad ja
-osnowa: '[[Świadomość]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Stany zmienione]]'
 głębokość:

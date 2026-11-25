@@ -1,23 +1,23 @@
 ---
 tytuł: 'Mezo: aktualizowanie modeli'
-osnowa: '[[Sieci mózgu i predykcja]]'
+dyscyplina: biologia
 rodziny:
 - '[[Predykcja]]'
 - '[[Teoria umysłu]]'
 - '[[Uczenie ze wzmocnieniem]]'
 sieci:
 - kod: VAN
-  powód: 'Coś niespodziewanego przerywa Twój plan: to aktywność skrzyżowania skroniowo-ciemieniowego i dolnej kory czołowej, sieci wykrywającej bodźce istotne, zwłaszcza wyraziste albo niespodziewane, która działa jak bezpiecznik dla sieci grzbietowej uwagi (Corbetta i Shulman 2002)<!--[s:corbetta2002-ventral-network-circuit-breaker]-->.'
+  powód: 'Coś niespodziewanego przerywa Twój plan. To aktywność skrzyżowania skroniowo-ciemieniowego i dolnej kory czołowej, sieci wykrywającej bodźce istotne, zwłaszcza wyraziste albo niespodziewane, która działa jak bezpiecznik dla sieci grzbietowej uwagi (Corbetta i Shulman 2002)<!--[s:corbetta2002-ventral-network-circuit-breaker]-->.'
 - kod: SN
-  powód: 'Wyłapujesz w grze to, co ważne: sieć istotności ma rdzeń w przedniej wyspie i przedniej części środkowego zakrętu obręczy i bierze nazwę od szerokiej roli w wyłapywaniu tego, co ważne, czyli istotne (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-mcin-core-salience]-->.'
+  powód: 'Po przegranej niespodziewanie ściska Cię w żołądku i przewidujesz, czym to grozi. To aktywność sieci istotności, która ma rdzeń w przedniej wyspie i przedniej części środkowego zakrętu obręczy i bierze nazwę od szerokiej roli w wyłapywaniu tego, co ważne, czyli istotne (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-mcin-core-salience]-->.'
 - kod: DMN
-  powód: 'Kształtują się Twoje Modele Mentalne przeciwnika, jego zamiarów i nawyków: to aktywność sieci domyślnej, której grzbietowo-przyśrodkowa część pokrywa się w mapach metaanalitycznych z mentalizacją i teorią umysłu (Andrews-Hanna, Smallwood i Spreng 2014)<!--[s:andrewshanna2014-dorsal-medial-mentalizing]-->.'
+  powód: 'Kształtują się Twoje Modele Mentalne przeciwnika, jego zamiarów i nawyków. To aktywność sieci domyślnej, której grzbietowo-przyśrodkowa część pokrywa się w mapach metaanalitycznych z mentalizacją i teorią umysłu (Andrews-Hanna, Smallwood i Spreng 2014)<!--[s:andrewshanna2014-dorsal-medial-mentalizing]-->.'
 bez_sieci: ''
 obszary:
 - zakręt obręczy
 ryciny: []
 materiały:
-- tytuł: 'Surnex: warstwa mezo, prawdopodobieństwo i czytanie przeciwnika'
+- tytuł: 'Surnex: warstwa mezo, prawdopodobieństwo i czytanie ludzi'
   url: https://youtu.be/NgHvdCcmQ4o?t=142
   czas: 2:22–3:12 (0:50)
 - tytuł: 'Surnex: szachy między ludźmi i losowość, którą gracze mapują'
@@ -33,11 +33,11 @@ rekordy:
 - 2026-10-20_mikro-mezo-makro-sieci
 stan: gotowa
 ---
-Mezo (ang. meso) to reagowanie na zmianę: aktualizowanie [[Modele Mentalne|Modeli Mentalnych]] [[Bioinformacja|bioinformacją]] z tła, o ludziach i o losowości. Surnex, autor eseju wideo o grach rywalizacyjnych, nazywa mezo warstwą prawdopodobieństwa i gier umysłowych, w której reagujesz na zmienność ludzi (Surnex)<!--[s:surnex-mezo-knowing-what-you-shouldnt]-->. [[Kognitywistyka|Spójna kognitywistyka]] interpretuje tę warstwę jako aktualizowanie modeli, podobne do eksplorowania mapy: każda wskazówka o przeciwniku, o losowaniu i o regułach aktualizuje Twoje Modele Mentalne.
+Mezo (ang. meso) to reagowanie na zmianę, czyli aktualizowanie [[Modele Mentalne|Modeli Mentalnych]] [[Bioinformacja|bioinformacją]] z tła o ludziach i losowości. Surnex, autor eseju wideo o grach rywalizacyjnych, nazywa mezo warstwą prawdopodobieństwa i gier umysłowych, w której reagujesz na zmienność ludzi (Surnex)<!--[s:surnex-mezo-knowing-what-you-shouldnt]-->. [[Kognitywistyka|Spójna kognitywistyka]] interpretuje tę warstwę jako aktualizowanie modeli, podobne do eksplorowania mapy, w którym każda wskazówka o przeciwniku, o losowaniu i o regułach aktualizuje Twoje Modele Mentalne.
 
-Surnex proponuje test: cheat, czyli kod albo program, który czyni grę banalnie łatwą, mówi, co ta gra sprawdza (Surnex)<!--[s:surnex-cheat-test]--><!--[s:surnex-mezo-knowing-what-you-shouldnt]--><!--[s:surnex-chess-human-mezo]--><!--[s:surnex-rng-mapped-becomes-macro]-->. Jak tłumaczy autor, cheat mezo to wiedza, której nie powinno się mieć. W Among Us, grze o ukrytym zdrajcy w załodze statku, taką wiedzę daje oglądanie na żywo transmisji innego gracza, która zdradza, kto jest zdrajcą, a na giełdzie handel na podstawie poufnych wiadomości. Każdy z tych cheatów daje wiedzę, ale wykonanie zostawia takie samo. Autor zauważa, że szachy to w teorii czyste [[Makro - strategia z modeli|makro]], warstwa strategii z poznanej mechaniki, ale w partii między ludźmi mają silny składnik mezo, bo grasz przeciw nawykom konkretnej osoby. Przypuszcza też, że gra z losowością, w której gracze nie rywalizują ze sobą, z czasem zamienia się w czyste makro: gdy gracze w pełni zmapują losowość, zostaje problem szybkiego przejścia.
+Według testu, który proponuje Surnex, cheat, czyli kod albo program czyniący grę banalnie łatwą, mówi, co ta gra sprawdza (Surnex)<!--[s:surnex-cheat-test]--><!--[s:surnex-mezo-knowing-what-you-shouldnt]--><!--[s:surnex-chess-human-mezo]--><!--[s:surnex-rng-mapped-becomes-macro]-->. Jak tłumaczy autor, cheat mezo to wiedza, której nie powinno się mieć. W Among Us, grze o ukrytym zdrajcy w załodze statku, taką wiedzę daje oglądanie na żywo transmisji innego gracza, która zdradza, kto jest zdrajcą, a na giełdzie handel na podstawie poufnych wiadomości. Każdy z tych cheatów daje wiedzę, ale wykonanie zostawia takie samo. Autor zauważa, że szachy to w teorii czyste [[Makro - strategia z modeli|makro]], warstwa strategii z poznanej mechaniki, ale w partii między ludźmi mają silny składnik mezo, bo grasz przeciw nawykom konkretnej osoby. Przypuszcza też, że gra z losowością, w której gracze nie rywalizują ze sobą, z czasem zamienia się w czyste makro, bo gdy gracze w pełni zmapują losowość, zostaje problem szybkiego przejścia.
 
-Aktualizowanie modeli można ująć w ramach [[Kodowanie predykcyjne|kodowania predykcyjnego]] (ang. predictive coding), modelu kory wzrokowej sprawdzonego w symulacji, w którym [[Zaskoczenie|zaskoczenie]] (ang. prediction error), czyli różnica między [[Predykcja|predykcją]] a rzeczywistą aktywnością obszaru, aktualizuje predykcję (Rao i Ballard 1999)<!--[s:rao1999-feedback-predictions-feedforward-errors]-->. Gra z przeciwnikiem to w tej ramie analogia: Twoje predykcje o jego ruchach aktualizuje zaskoczenie, tak jak w modelu aktualizuje ono predykcję obszaru wzrokowego.
+Aktualizowanie modeli można ująć w ramach [[Kodowanie predykcyjne|kodowania predykcyjnego]] (ang. predictive coding), modelu kory wzrokowej sprawdzonego w symulacji, w którym [[Zaskoczenie|zaskoczenie]] (ang. prediction error), czyli różnica między [[Predykcja|predykcją]] a rzeczywistą aktywnością obszaru, aktualizuje predykcję (Rao i Ballard 1999)<!--[s:rao1999-feedback-predictions-feedforward-errors]-->. W spójnej kognitywistyce predykcja zachodzi w każdej komórce, więc to, czego spodziewasz się po przeciwniku, to predykcje Twoich komórek, a gdy zagra inaczej, zaskoczenie aktualizuje je jak każde inne.
 
 Tempo aktualizowania może się dopasowywać do zmienności otoczenia. W zadaniu z fazami stabilnymi i zmiennymi ludzie oceniali zmienność nagród zgodnie z optymalnym modelem bayesowskim autorów i dopasowywali do tej oceny decyzje (Behrens i in. 2007)<!--[s:behrens2007-volatility-acc-learning-rate]-->. W tym samym badaniu różnice między osobami w sygnale [[Skaner MRI|funkcjonalnego rezonansu magnetycznego]] (ang. functional magnetic resonance imaging, fMRI) z przedniej kory zakrętu obręczy (ang. anterior cingulate cortex, ACC) odpowiadały różnicom w tempie, w jakim się uczyły.
 

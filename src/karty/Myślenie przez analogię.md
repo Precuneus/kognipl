@@ -1,6 +1,6 @@
 ---
 tytuł: Myślenie przez analogię
-osnowa: '[[Myślenie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Twórczość]]'
 - '[[Rozumowanie i wnioskowanie]]'

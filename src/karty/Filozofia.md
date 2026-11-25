@@ -1,11 +1,9 @@
 ---
 tytuł: Filozofia
-osnowa: '[[Kultura i społeczeństwo]]'
-rodziny:
-- '[[Nauka jako zbiorowość]]'
-grupa: psychologia
+dyscyplina: psychologia
+rodziny: []
 sieci: []
-bez_sieci: 'Filozofia to dyscyplina naukowa, więc sieci mózgu znajdziesz na kartach, do których prowadzi.'
+bez_sieci: 'Filozofia to dziedzina nauki, więc sieci mózgu znajdziesz na kartach, do których prowadzi.'
 ryciny: []
 materiały:
 - tytuł: 'Thagard 2023: Cognitive Science, Stanford Encyclopedia of Philosophy'
@@ -15,6 +13,6 @@ materiały:
 rekordy: []
 stan: gotowa
 ---
-Filozofia (ang. philosophy) to w kognitywistyce namysł nad podstawowymi kwestiami, na których opiera się eksperymentalne i obliczeniowe badanie umysłu, takimi jak natura reprezentacji i obliczania (Thagard 2023)<!--[s:thagard2023-philosophy-fundamental]-->. Według Thagarda zajmuje się też ogólnymi pytaniami, takimi jak relacja umysłu i ciała, oraz pytaniami metodologicznymi, takimi jak natura wyjaśnień w kognitywistyce.
+Filozofia (ang. philosophy) to w kognitywistyce namysł nad podstawowymi kwestiami, na których opiera się eksperymentalne i obliczeniowe badanie umysłu (Thagard 2023)<!--[s:thagard2023-philosophy-fundamental]-->. Thagard podaje jako przykład naturę reprezentacji i obliczania. Według niego filozofia zajmuje się też ogólnymi pytaniami, takimi jak relacja umysłu i ciała, oraz pytaniami metodologicznymi, takimi jak natura wyjaśnień w kognitywistyce.
 
-Na kogni.pl pytania filozofii stawiają karty [[Jak to jest być nietoperzem]], [[Chiński pokój]] oraz [[Cogito bez ja]], a jej spory w samej kognitywistyce opisują [[Podejście obliczeniowe]], [[Poznanie ucieleśnione]] i [[Kryzys kognitywistyki]]. W [[Kognitywistyka|spójnej kognitywistyce]] filozofia należy do grupy wyjaśnień [[Psychologia|psychologii]]. Karta jest zaczątkiem i rośnie z kolejnymi zajęciami.
+Na kogni.pl pytanie filozofii stawia karta [[Jak to jest być nietoperzem]], a spory filozoficzne w samej kognitywistyce opisują [[Podejście obliczeniowe]], [[Poznanie ucieleśnione]] i [[Kryzys kognitywistyki]]. W [[Kognitywistyka|spójnej kognitywistyce]] filozofia należy do [[Psychologia|psychologii]].

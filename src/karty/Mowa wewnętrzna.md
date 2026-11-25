@@ -1,6 +1,6 @@
 ---
 tytuł: Mowa wewnętrzna
-osnowa: '[[Język]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Język a myślenie]]'
 - '[[Mózg języka]]'

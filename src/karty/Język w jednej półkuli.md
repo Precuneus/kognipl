@@ -1,6 +1,6 @@
 ---
 tytuł: Język w jednej półkuli
-osnowa: '[[Język]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Mózg języka]]'
 głębokość:

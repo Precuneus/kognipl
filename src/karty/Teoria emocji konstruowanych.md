@@ -1,6 +1,6 @@
 ---
 tytuł: Teoria emocji konstruowanych
-osnowa: '[[Emocje]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Konstruowanie emocji]]'
 głębokość:

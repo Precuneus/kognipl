@@ -1,6 +1,6 @@
 ---
 tytuł: Synapsa chemiczna i elektryczna
-osnowa: '[[Neuron i synapsa]]'
+dyscyplina: biologia
 rodziny:
 - '[[Przekaźnictwo synaptyczne]]'
 sieci: []

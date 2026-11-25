@@ -1,6 +1,6 @@
 ---
 tytuł: Receptory jako predykcja komórki
-osnowa: '[[Neuron i synapsa]]'
+dyscyplina: biologia
 rodziny:
 - '[[Plastyczność i połączenia]]'
 - '[[Przekaźnictwo synaptyczne]]'

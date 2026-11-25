@@ -1,6 +1,6 @@
 ---
 tytuł: Poznanie ucieleśnione
-osnowa: '[[Kultura i społeczeństwo]]'
+dyscyplina: socjologia
 rodziny:
 - '[[Nauka jako zbiorowość]]'
 - '[[Schemat ciała i narzędzia]]'
@@ -22,8 +22,8 @@ rekordy:
 - nunez_et_al_2019
 stan: gotowa
 ---
-Poznanie ucieleśnione (ang. embodied cognition) to ujęcie, według którego poznanie jest z natury zakorzenione w cechach ciała (Núñez i in. 2019)<!--[s:nunez2019-hard-core-challenges]-->. W historii [[Kognitywistyka|kognitywistyki]] było ono według tych autorów jednym z wyzwań dla jej podstaw, opisanych przez [[Podejście obliczeniowe|podejście obliczeniowe]]. Thagard zalicza ciało do wyzwań, które krytycy stawiają kognitywistyce: zarzucają jej, że pomija rolę ciała w myśleniu i działaniu oraz rolę fizycznego otoczenia, w którym myślenie jest osadzone i w które sięga (Thagard 2023)<!--[s:thagard2023-critique-challenges]-->. Według Núñeza i współpracowników takie wyzwania prowadziły kognitywistykę ku coraz bardziej rozbieżnym programom, a to rozejście [[Kognitywistyka|spójna kognitywistyka]] nazywa [[Kryzys kognitywistyki|kryzysem kognitywistyki]].
+Poznanie ucieleśnione (ang. embodied cognition) to ujęcie, według którego poznanie jest z natury zakorzenione w cechach ciała (Núñez i in. 2019)<!--[s:nunez2019-hard-core-challenges]-->. W historii [[Kognitywistyka|kognitywistyki]] było ono według tych autorów jednym z wyzwań dla jej podstaw, opisanych przez [[Podejście obliczeniowe|podejście obliczeniowe]]. Thagard zalicza ciało do wyzwań, które krytycy stawiają kognitywistyce. Zarzucają jej, że pomija rolę ciała w myśleniu i działaniu oraz rolę fizycznego otoczenia, w którym myślenie jest osadzone i w które sięga (Thagard 2023)<!--[s:thagard2023-critique-challenges]-->. Według Núñeza i współpracowników takie wyzwania prowadziły kognitywistykę ku coraz bardziej rozbieżnym programom, a to rozejście [[Kognitywistyka|spójna kognitywistyka]] nazywa [[Kryzys kognitywistyki|kryzysem kognitywistyki]].
 
-Patrzysz na kubek, a oczy skaczą po jego krawędziach. Kevin O'Regan i Alva Noë proponują, by widzenie rozumieć jako sposób działania, szczególny sposób eksplorowania otoczenia (O'Regan i Noë 2001)<!--[s:oregan2001-seeing-is-acting]-->. Doświadczenie widzenia pojawia się według nich wtedy, gdy organizm opanowuje prawa zależności czuciowo-ruchowych (ang. sensorimotor contingencies). Ujęcie enaktywne (ang. enactive approach) Evana Thompsona wiąże umysł z samym życiem: gdzie jest życie, tam jest umysł (Thompson 2007)<!--[s:thompson2007-life-mind-continuity]-->.
+Patrzysz na kubek, a oczy skaczą po jego krawędziach. Kevin O'Regan i Alva Noë proponują, by widzenie rozumieć jako sposób eksplorowania otoczenia, w którym świat służy za własną zewnętrzną reprezentację, a doświadczenie widzenia pojawia się wraz z opanowaniem praw zależności czuciowo-ruchowych (ang. sensorimotor contingencies) (O'Regan i Noë 2001)<!--[s:oregan2001-seeing-is-acting]-->. Ujęcie enaktywne (ang. enactive approach) Evana Thompsona wiąże umysł z samym życiem. Gdzie jest życie, tam jest umysł (Thompson 2007)<!--[s:thompson2007-life-mind-continuity]-->.
 
-W spójnej kognitywistyce doświadczanie to aktywność żywego ciała, w której opanowujesz te zależności: ruch Twojego oka i ręki zmienia [[Bioinformacja|bioinformację]] docierającą od receptorów, Twoje sieci mózgu wysyłają w stronę receptorów jej [[Predykcja|predykcje]], zanim nadejdzie, a [[Zaskoczenie|zaskoczenie]] aktualizuje Twoje [[Modele Mentalne|Modele Mentalne]].
+W spójnej kognitywistyce ruch Twojego oka i ręki także zmienia [[Bioinformacja|bioinformację]] docierającą od receptorów, ale widzenie to aktywność Twojego ciała, w której polegasz na swoich [[Modele Mentalne|Modelach Mentalnych]]. [[Predykcja|Predykcja]] zachodzi w każdej Twojej komórce, a [[Zaskoczenie|zaskoczenie]] powstaje wszędzie tam, gdzie docierająca bioinformacja różni się od predykcji. Zaskoczenie aktualizuje Twoje Modele Mentalne.

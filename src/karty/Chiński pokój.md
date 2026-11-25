@@ -1,6 +1,6 @@
 ---
 tytuł: Chiński pokój
-osnowa: '[[Język]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Rozumienie i czytanie]]'
 głębokość:

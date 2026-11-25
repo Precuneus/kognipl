@@ -1,6 +1,6 @@
 ---
 tytuł: Iluzja gumowej ręki
-osnowa: '[[Ciało i ruch]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Schemat ciała i narzędzia]]'
 - '[[Propriocepcja i dotyk]]'

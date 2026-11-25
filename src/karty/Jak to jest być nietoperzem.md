@@ -1,6 +1,6 @@
 ---
 tytuł: Jak to jest być nietoperzem
-osnowa: '[[Świadomość]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Oznaki świadomości]]'
 sieci: []
@@ -31,7 +31,7 @@ stan: gotowa
 
 Nagel opisuje nietoperza, który lata o zmierzchu i o świcie, łapie owady w locie, widzi słabo, a otoczenie odbiera z echa wysokich dźwięków; dzień spędza na strychu, zwisając głową w dół. Nagel zauważa, że wyobrażanie sobie błon na ramionach i takiego życia niewiele daje, bo materiałem wyobraźni jest nasze własne doświadczenie (Nagel 1974)<!--[s:nagel1974-imagined-bat-life]--><!--[s:nagel1974-imagination-from-own-experience]-->. Taka wyobraźnia mówi Ci tylko, jak byłoby Tobie zachowywać się jak nietoperz, ale Nagel chce wiedzieć, jak jest nietoperzowi być nietoperzem. To, co odbierają zmysły nietoperza, razem z tym, co nietoperz sam wywołuje, to w języku biologa Jakoba von Uexkülla jego [[Umwelt]].
 
-Fizykalizm (ang. physicalism) to pogląd, że stany umysłu to stany ciała. Nagel ostrzega przed wnioskiem, że fizykalizm musi być fałszywy: trafniej według niego powiedzieć, że to stanowisko, którego dziś nie rozumiemy, bo nie mamy pojęcia, jak mogłoby być prawdziwe. Zdanie „stan umysłu jest stanem ciała” brzmi jasno, ale zwodzi właśnie pozorna jasność słowa „jest”. Kiedy oba człony utożsamienia są bardzo różne, możemy nie mieć nawet ogólnego pojęcia, jak ich drogi odniesienia (ang. referential paths) miałyby się zbiec (Nagel 1974)<!--[s:nagel1974-physicalism-not-understood]-->. W [[Kognitywistyka|spójnej kognitywistyce]] jedna z tych dróg prowadzi do stanu umysłu od środka, a druga do stanu ciała z zewnątrz.
+Fizykalizm (ang. physicalism) to pogląd, że stany umysłu to stany ciała. Nagel ostrzega przed wnioskiem, że fizykalizm musi być fałszywy, bo trafniej według niego powiedzieć, że to stanowisko, którego dziś nie rozumiemy, bo nie mamy pojęcia, jak mogłoby być prawdziwe. Zdanie „stan umysłu jest stanem ciała” brzmi jasno, ale zwodzi właśnie pozorna jasność słowa „jest”. Kiedy oba człony utożsamienia są bardzo różne, możemy nie mieć nawet ogólnego pojęcia, jak ich drogi odniesienia (ang. referential paths) miałyby się zbiec (Nagel 1974)<!--[s:nagel1974-physicalism-not-understood]-->. W [[Kognitywistyka|spójnej kognitywistyce]] jedna z tych dróg prowadzi do stanu umysłu od środka, a druga do stanu ciała z zewnątrz.
 
 Spójna kognitywistyka odpowiada argumentem tożsamości. Wychodzi on od przesłanki, że zmiany w Twoim ciele biologicznym zmieniają Twoje doświadczenie, więc Twoje doświadczenie to aktywność Twojego ciała. Ludzie, zwierzęta i całe życie mają ciała podobne do Twojego, więc to, że one też doświadczają, argument przyjmuje jako wniosek [[Dedukcja, indukcja, abdukcja|indukcyjny]]. W tym ujęciu życie pociąga za sobą preferencje, a preferencje własną perspektywę, więc istnieje coś takiego, jak to jest być także komórką. Człowiek to wtedy życie doświadczające fizyki przez komórki ciała, które modelują się nawzajem [[Bioinformacja|bioinformacją]].
 

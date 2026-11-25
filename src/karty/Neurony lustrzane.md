@@ -1,6 +1,6 @@
 ---
 tytuł: Neurony lustrzane
-osnowa: '[[Umysł społeczny]]'
+dyscyplina: socjologia
 rodziny:
 - '[[Teoria umysłu]]'
 - '[[Wspólna intencjonalność]]'

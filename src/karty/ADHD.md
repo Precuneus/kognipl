@@ -1,6 +1,6 @@
 ---
 tytuł: ADHD
-osnowa: '[[Osobowość i zdrowie psychiczne]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Neuroróżnorodność]]'
 - '[[Uwaga]]'

@@ -1,6 +1,6 @@
 ---
 tytuł: Dojrzewanie wzdłuż gradientu
-osnowa: '[[Sieci mózgu i predykcja]]'
+dyscyplina: biologia
 rodziny:
 - '[[Rozwój mózgu]]'
 - '[[Sieci wielkoskalowe]]'

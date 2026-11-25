@@ -1,6 +1,6 @@
 ---
 tytuł: Potencjał spoczynkowy
-osnowa: '[[Neuron i synapsa]]'
+dyscyplina: biologia
 rodziny:
 - '[[Budowa i elektryka neuronu]]'
 sieci: []

@@ -1,6 +1,6 @@
 ---
 tytuł: Powidok
-osnowa: '[[Percepcja i uwaga]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Oko i barwa]]'
 głębokość:

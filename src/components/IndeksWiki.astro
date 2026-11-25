@@ -1,28 +1,30 @@
 ---
-// Indeks wiki: grupa › osnowa › rodzina › karty. Stoi na karcie kogni.pl, pod jej opisem; z /wiki/ zniknął
+// Indeks wiki: dyscyplina › rodzina › karty. Stoi na karcie kogni.pl, pod jej opisem; z /wiki/ zniknął
 // (jego słowo, 2026-11-02: *fold whatever is in this list into a card and remove the list*).
 // Indeks jest częścią opisu karty: akapity jak mapa, nie panel (jego słowo, 2026-11-02: *wrap this entire panel into the card. All the
-// keywords should be in the card, in paragraphs listing them like a readme/ map but in the card*). Każda osnowa to akapit, rodziny
-// stoją w nim z kartami po dwukropku; osnowy bez kart zamykają grupę jednym zdaniem.
-import { INDEX, INK, segs, slugify } from '../karty/data.js';
-const grupy = INDEX.map((g) => ({ ...g, id: slugify(g.nazwa), pelne: g.osnowy.filter((o) => o.n), puste: g.osnowy.filter((o) => !o.n) }));
+// keywords should be in the card, in paragraphs listing them like a readme/ map but in the card*). Dyscyplina, nazwana wprost i
+// prowadząca do swojej karty, otwiera swoje rodziny; każda rodzina to akapit z kartami (2026-11-24: osnowy odeszły).
+import { INDEX, INK, KARTY, segs, dyscyplinaUrl } from '../karty/data.js';
+// karty całej wiki, poza samą kartą indeksu, stoją na końcu pod Wiki, żeby indeks wymieniał każdą kartę
+const wiki = KARTY.filter((k) => k.g === 4 && k.h !== 'kogni.pl');
+// tytuł kończący się kropką (Pacjent H.M.) zamyka listę sam
+const lista = (ks) => segs(ks.map((k) => '[[' + k.h + ']]').join(', ') + (ks[ks.length - 1].h.endsWith('.') ? '' : '.'));
 ---
-{grupy.map((g) => (
+{INDEX.filter((g) => g.rodziny.length || g.luzem.length).map((g) => (
   <Fragment>
-    <h3 class="wi-g" id={g.id} style={'color:' + INK[g.g]}>{g.nazwa}</h3>
-    {g.pelne.map((o) => (
-      <p class="wk-p wi-os" id={o.id}><span class="wi-on">{o.nazwa}.</span>{' '}{o.rodziny.map((r, i) => [
-        i ? ' ' : '', r.nazwa + ': ', ...segs(r.karty.map((k) => '[[' + k.h + ']]').join(', ') + '.').map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t),
-      ])}</p>
+    <h3 class="wi-g" id={g.id}><a href={dyscyplinaUrl(g.g)} style={'color:' + INK[g.g]}>{g.nazwa}</a></h3>
+    {g.rodziny.map((r) => (
+      <p class="wk-p wi-os" id={r.id}><span class="wi-on">{r.nazwa}.</span>{' '}{lista(r.karty).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>
     ))}
-    {g.puste.length > 0 && <p class="wk-p wi-puste">{g.puste.length > 1 ? 'Na pierwszą kartę czekają osnowy ' : 'Na pierwszą kartę czeka osnowa '}{g.puste.map((o, i) => [i ? (i === g.puste.length - 1 ? ' i ' : ', ') : '', <span id={o.id}>{o.nazwa}</span>])}.</p>}
+    {g.luzem.length > 0 && <p class="wk-p wi-os">{lista(g.luzem).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p>}
   </Fragment>
 ))}
+{wiki.length > 0 && <Fragment><h3 class="wi-g" id="wiki" style={'color:' + INK[4]}>Wiki</h3><p class="wk-p wi-os">{lista(wiki).map((s) => s.url ? <a href={s.url} title={s.label} data-def={s.def} style={'color:' + s.color}>{s.t}</a> : s.t)}</p></Fragment>}
 
 <style is:global>
 .wi-g{margin:30px 0 0;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;scroll-margin-top:90px}
+.wi-g a{text-decoration:none}
 .wi-g::first-letter{text-transform:uppercase}
 .wi-os{scroll-margin-top:90px}
 .wi-on{color:#f3eee5;font-weight:500}
-.wi-puste{color:#8a8274}
 </style>

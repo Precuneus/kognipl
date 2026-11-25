@@ -1,6 +1,6 @@
 ---
 tytuł: Napięcie i rozwiązanie w muzyce
-osnowa: '[[Percepcja i uwaga]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Muzyka]]'
 głębokość:

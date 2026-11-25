@@ -1,6 +1,6 @@
 ---
 tytuł: Przywiązanie zdezorganizowane
-osnowa: '[[Umysł społeczny]]'
+dyscyplina: socjologia
 rodziny:
 - '[[Więź i przywiązanie]]'
 głębokość:

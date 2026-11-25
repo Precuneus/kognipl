@@ -1,6 +1,6 @@
 ---
 tytuł: Reguła Hebba
-osnowa: '[[Neuron i synapsa]]'
+dyscyplina: biologia
 rodziny:
 - '[[Plastyczność i połączenia]]'
 głębokość:

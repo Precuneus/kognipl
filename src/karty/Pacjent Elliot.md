@@ -1,6 +1,6 @@
 ---
 tytuł: Pacjent Elliot
-osnowa: '[[Decyzja i działanie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Wybór i wartość]]'
 głębokość:

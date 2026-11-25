@@ -1,11 +1,11 @@
 ---
 tytuł: Konstruowanie innych umysłów
-osnowa: '[[Umysł społeczny]]'
+dyscyplina: socjologia
 rodziny:
 - '[[Teoria umysłu]]'
 sieci:
 - kod: DMN
-  powód: 'Kształtują się Twoje Modele Mentalne drugiej osoby: to aktywność grzbietowo-przyśrodkowej części sieci domyślnej, która w mapach metaanalitycznych najsilniej pokrywa się z mentalizacją i teorią umysłu (Andrews-Hanna, Smallwood i Spreng 2014)<!--[s:andrewshanna2014-dorsal-medial-mentalizing]-->.'
+  powód: 'Kształtują się Twoje Modele Mentalne drugiej osoby. To aktywność grzbietowo-przyśrodkowej części sieci domyślnej, która w mapach metaanalitycznych najsilniej pokrywa się z konstruowaniem innych umysłów, w badaniach nazywanym mentalizacją i teorią umysłu (Andrews-Hanna, Smallwood i Spreng 2014)<!--[s:andrewshanna2014-dorsal-medial-mentalizing]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:
@@ -15,7 +15,7 @@ materiały:
 - tytuł: 'Lofi Cinema, There is acting, but then there is also this....: lampa z reklamy IKEA'
   url: https://youtu.be/-gitexWSLlg?t=1005
   czas: 16:45–18:16 (1:31)
-- tytuł: 'Surnex: warstwa mezo, Among Us i Liar''s Bar'
+- tytuł: 'Surnex: warstwa mezo, prawdopodobieństwo i czytanie ludzi'
   url: https://youtu.be/NgHvdCcmQ4o?t=142
   czas: 2:22–3:12 (0:50)
 - tytuł: 'Epley, Waytz i Cacioppo 2007: teoria antropomorfizacji'
@@ -31,12 +31,12 @@ rekordy:
 - andersen_2019
 stan: gotowa
 ---
-Konstruowanie innych umysłów (ang. constructing other minds) to kształtowanie się Twoich [[Modele Mentalne|Modeli Mentalnych]] drugiej istoty z jej zachowania, z kontekstu i z Twoich [[Predykcja|predykcji]]. Teoria umysłu (ang. theory of mind) to w tym ujęciu Twoje Modele Mentalne drugiej osoby: jej przekonań, zamiarów i nawyków. Starożytny żeglarz, widząc wzburzone morze, konstruował gniew Posejdona z fal tak, jak Ty konstruujesz zamiary postaci, która w grze skrada się za Tobą korytarzem. W grach spotykasz innych agentów, postacie sterowane przez program albo innych graczy, płytkich albo głębokich, a ich umysły konstruujesz Ty. Bohater serialu „The Mandalorian” chodzi w hełmie zakrywającym całą twarz, ale Ty i tak konstruujesz jego myśli z jednego ujęcia na hełm.
+Konstruowanie innych umysłów (ang. constructing other minds) to kształtowanie się Twoich [[Modele Mentalne|Modeli Mentalnych]] drugiej istoty z jej zachowania, kontekstu i Twoich [[Predykcja|predykcji]]. Psychologia nazywa ten proces teorią umysłu (ang. theory of mind) albo mentalizacją (ang. mentalizing), a kształtują się w nim Twoje Modele Mentalne przekonań, zamiarów i nawyków drugiej osoby. Starożytny żeglarz, widząc wzburzone morze, konstruował gniew Posejdona z fal tak, jak Ty konstruujesz zamiary postaci, która w grze skrada się za Tobą korytarzem. W grach spotykasz innych agentów, postacie sterowane przez program albo innych graczy, a ich umysły konstruujesz Ty. Bohater serialu „The Mandalorian” chodzi w hełmie zakrywającym całą twarz, ale Ty i tak konstruujesz jego myśli z jednego ujęcia na hełm.
 
 Psychologia opisuje część tego procesu jako antropomorfizację (ang. anthropomorphism), nadawanie prawdziwemu albo wyobrażonemu zachowaniu bytów nieludzkich ludzkich cech, motywacji, intencji i emocji. Według teorii Epleya, Waytza i Cacioppo ludzie robią to częściej, gdy mają pod ręką pasującą wiedzę o ludziach, gdy chcą zrozumieć zachowanie innych agentów i gdy brakuje im poczucia więzi z innymi ludźmi (Epley, Waytz i Cacioppo 2007)<!--[s:epley2007-anthropomorphism-three-determinants]-->. W ujęciu [[Kodowanie predykcyjne|kodowania predykcyjnego]] (ang. predictive coding) Marc Andersen tłumaczy sprawców dostrzeżonych w niejasnych bodźcach predykcjami płynącymi w stronę receptorów. Większość takich fałszywych alarmów wykrywania sprawców (ang. agency detection) można według niego ująć jako wynik predykcji, które przy niepewnych bodźcach mają wysokie prawdopodobieństwa a priori (ang. prior), czyli założone, zanim bodziec dotrze (Andersen 2019)<!--[s:andersen2019-false-positives-high-priors]--><!--[s:andersen2019-priors-not-agent-bias]-->. Andersen dodaje, że model wybierany dla niejasnego bodźca zależy od kontekstu i wcześniejszych predykcji.
 
 Modele cudzych przekonań kształtują się w dzieciństwie. W [[Test fałszywych przekonań|teście fałszywych przekonań]] (ang. false-belief task) lalka Sally chowa kulkę do koszyka i wychodzi, a Anne przekłada kulkę do pudełka; pytanie brzmi, gdzie Sally będzie jej szukać (Baron-Cohen, Leslie i Frith 1985)<!--[s:baroncohen1985-sally-anne-marble-procedure]-->. W metaanalizie 178 badań dzieci w wieku 30 miesięcy odpowiadały źle, wskazując miejsce, w którym kulka naprawdę jest, w ponad 80% przypadków, a w wieku 44 miesięcy trafnie w połowie, tyle, ile dałoby zgadywanie; starsze dzieci odpowiadały coraz trafniej (Wellman, Cross i Watson 2001)<!--[s:wellman2001-false-belief-50pct-44-months]-->.
 
-Kłamstwo to działanie na cudze Modele Mentalne. W badaniu Ding i współpracowników trzylatki, które wcześniej nie umiały kłamać, po treningu pojęć stanów umysłu zaczęły konsekwentnie oszukiwać, a trzylatki z treningu pojęć fizycznych kłamały istotnie rzadziej (Ding i in. 2015)<!--[s:ding2015-tom-training-children-lie]-->. Autorzy uznają ten wynik za pierwszy eksperymentalny dowód przyczynowej roli teorii umysłu w rozwoju kompetencji społecznych. Kłamstwo i manipulacja podają [[Bioinformacja|bioinformację]], z której Modele Mentalne drugiej osoby kształtują się w kierunku wybranym przez kłamcę. Surnex, autor eseju wideo o grach rywalizacyjnych, nazywa warstwę gry opartą na czytaniu ludzi [[Mezo - aktualizowanie modeli|mezo]]; zbudowane są na niej gry o ukrytym zdrajcy i blefie, jak Among Us i Liar's Bar (Surnex)<!--[s:surnex-mezo-knowing-what-you-shouldnt]-->.
+Kłamstwo to działanie na cudze Modele Mentalne. W badaniu Ding i współpracowników trzylatki, które wcześniej nie umiały kłamać, po treningu pojęć stanów umysłu zaczęły konsekwentnie oszukiwać, a trzylatki z treningu pojęć fizycznych kłamały istotnie rzadziej (Ding i in. 2015)<!--[s:ding2015-tom-training-children-lie]-->. Autorzy uznają ten wynik za pierwszy eksperymentalny dowód przyczynowej roli teorii umysłu, czyli konstruowania innych umysłów, w rozwoju kompetencji społecznych. Kłamstwo i manipulacja podają [[Bioinformacja|bioinformację]], z której Modele Mentalne drugiej osoby kształtują się w kierunku wybranym przez kłamcę. Surnex, autor eseju wideo o grach rywalizacyjnych, nazywa warstwę gry opartą na czytaniu ludzi [[Mezo - aktualizowanie modeli|mezo]]; zbudowane są na niej gry o ukrytym zdrajcy i blefie, jak Among Us i Liar's Bar (Surnex)<!--[s:surnex-mezo-knowing-what-you-shouldnt]-->.
 
-Pod koniec reklamy IKEA „Lamp” z 2002 roku lektor mówi widzom wprost, że wielu z nich współczuje wyrzuconej lampie, bo zwariowali. Smutek lampy kształtuje się w Twoich Modelach Mentalnych z kolejnych ujęć i z kontekstu, tak samo jak smutek przyjaciółki z jednego zdania na czacie. Kiedy pytasz, czy model językowy Cię rozumie, odpowiedź zaczyna się więc od Twoich predykcji: polegasz na Modelach Mentalnych rozmówcy, które kształtują się z jego słów w Tobie.
+Pod koniec reklamy IKEA „Lamp” z 2002 roku lektor mówi widzom wprost, że wielu z nich współczuje wyrzuconej lampie, bo zwariowali. Smutek lampy kształtuje się w Twoich Modelach Mentalnych z kolejnych ujęć i z kontekstu, tak samo jak smutek przyjaciółki z jednego zdania na czacie. Kiedy pytasz, czy model językowy Cię rozumie, odpowiedź zaczyna się więc od Twoich predykcji, bo polegasz na Modelach Mentalnych rozmówcy, które kształtują się z jego słów w Tobie.

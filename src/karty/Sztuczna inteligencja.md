@@ -1,11 +1,9 @@
 ---
 tytuł: Sztuczna inteligencja
-osnowa: '[[Kultura i społeczeństwo]]'
-rodziny:
-- '[[Nauka jako zbiorowość]]'
-grupa: socjologia
+dyscyplina: socjologia
+rodziny: []
 sieci: []
-bez_sieci: 'Sztuczna inteligencja to dyscyplina naukowa, więc sieci mózgu znajdziesz na kartach, do których prowadzi.'
+bez_sieci: 'Sztuczna inteligencja to dziedzina nauki, więc sieci mózgu znajdziesz na kartach, do których prowadzi.'
 ryciny: []
 materiały:
 - tytuł: 'Thagard 2023: Cognitive Science, Stanford Encyclopedia of Philosophy'
@@ -13,6 +11,6 @@ materiały:
 rekordy: []
 stan: gotowa
 ---
-Sztuczna inteligencja (ang. artificial intelligence, AI) to dział informatyki zajmujący się systemami inteligentnymi, którego główną metodą jest projektowanie i budowanie modeli obliczeniowych oraz eksperymentowanie z nimi (Thagard 2023)<!--[s:thagard2023-ai-models]-->. Według Thagarda najlepiej, gdy w kognitywistyce modele obliczeniowe i eksperymenty psychologiczne idą w parze.
+Sztuczna inteligencja (ang. artificial intelligence, AI) to dział informatyki zajmujący się systemami inteligentnymi (Thagard 2023)<!--[s:thagard2023-ai-models]-->. Według Thagarda jego główną metodą jest projektowanie i budowanie modeli obliczeniowych oraz eksperymentowanie z nimi. Najlepiej, jak dodaje, gdy w kognitywistyce modele obliczeniowe i eksperymenty psychologiczne idą w parze.
 
-Na kogni.pl sztucznej inteligencji dotyczą karty [[Agenci AI]], [[Podejście obliczeniowe]], [[Chiński pokój]], [[Neuron jako sieć głęboka]] i [[Drabina przyczynowości]]. W [[Kognitywistyka|spójnej kognitywistyce]] sztuczna inteligencja należy do grupy wyjaśnień [[Socjologia|socjologii]], przy [[Mapa osnów|osnowie]] {{Sztuczni agenci|Sztuczni agenci}}. Karta jest zaczątkiem i rośnie z kolejnymi zajęciami.
+Na kogni.pl sztucznej inteligencji dotyczą karty [[Agenci AI]], [[Podejście obliczeniowe]] i [[Neuron jako sieć głęboka]]. W [[Kognitywistyka|spójnej kognitywistyce]] sztuczna inteligencja należy do [[Socjologia|socjologii]].

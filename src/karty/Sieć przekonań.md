@@ -1,6 +1,6 @@
 ---
 tytuł: Sieć przekonań
-osnowa: '[[Myślenie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Rozumowanie i wnioskowanie]]'
 głębokość:

@@ -1,7 +1,7 @@
 ---
 // Karta wiki w jednym szablonie: strona karty i pierwszy artykuł na /wiki/ (2026-10-22).
 import { template } from '../rocznik/views/karta.js';
-import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, slugify, INDEKS, rodzinaUrl } from '../karty/data.js';
+import { GRUPY, BASE, INK, NETN, segs, netCard, card, backlinks, slugify, INDEKS, rodzinaUrl, dyscyplinaUrl } from '../karty/data.js';
 import { KOLOR } from '../karty/mozg.js';
 import '../styles/wiki.css';
 import TerminDymek from './TerminDymek.astro';
@@ -66,16 +66,10 @@ const Owijka = wAtlasie ? 'section' : 'article';
   {ruch && <aside aria-label="Animacje"><button type="button" class="wk-anim" role="switch" aria-checked="true"><span>Animacje</span><span class="wk-anim-tor" aria-hidden="true"></span></button></aside>}
   <Owijka class={'wk' + (wstep ? ' wk-wstep' : '') + (wAtlasie ? ' at-karta' : '')} style={'--ink:' + ink + ';--base:' + base} data-strona={wAtlasie ? k.url : undefined} aria-label={wAtlasie ? k.h : undefined}>
   {!wAtlasie && <nav aria-label="Ścieżka" class="wk-path">
-    {k.grupa ? (
-      // karta dyscypliny: ścieżka od jej grupy na mapie osnów; karta grupy stoi sama (2026-10-23)
-      k.grupa === 'wiki'
-        ? <Fragment><a href="/wiki/">Wiki</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
-        : k.grupa.toLowerCase() === k.h.toLowerCase()
-        ? <Fragment><a href="/wiki/mapa-osnow/">Mapa osnów</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
-        : <Fragment><a href={'/wiki/' + slugify(group) + '/'}>{group}</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
-    ) : (
-      <Fragment><a href={INDEKS + '#' + slugify(GRUPY[k.g])}>{group}</a><span aria-hidden="true"> › </span><a href={INDEKS + '#' + slugify(k.o)}>{k.o}</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
-    )}
+    {/* ścieżka: dyscyplina nazwana wprost, link do jej karty; karta samej dyscypliny i karty całej wiki stoją pod Wiki (2026-11-24) */}
+    {k.d === 'wiki' || k.d.toLowerCase() === k.h.toLowerCase()
+      ? <Fragment><a href={INDEKS}>Wiki</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>
+      : <Fragment><a href={dyscyplinaUrl(k.g)}>{group}</a><span aria-hidden="true"> › </span><span aria-current="page">{k.h}</span></Fragment>}
   </nav>}
   <div class="wk-grid wk-grid-karta">
     <div class="wk-col wk-lewa">

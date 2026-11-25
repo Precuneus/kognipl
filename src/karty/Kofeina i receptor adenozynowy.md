@@ -1,6 +1,6 @@
 ---
 tytuł: Kofeina i receptor adenozynowy
-osnowa: '[[Neuron i synapsa]]'
+dyscyplina: biologia
 rodziny:
 - '[[Przekaźnictwo synaptyczne]]'
 - '[[Energia komórki]]'

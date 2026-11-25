@@ -1,6 +1,6 @@
 ---
 tytuł: Efekt Kuleszowa
-osnowa: '[[Emocje]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Konstruowanie emocji]]'
 głębokość:

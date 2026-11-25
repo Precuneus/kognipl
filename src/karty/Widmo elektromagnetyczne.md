@@ -1,6 +1,6 @@
 ---
 tytuł: Widmo elektromagnetyczne
-osnowa: '[[Energia i jej przemiany]]'
+dyscyplina: fizyka
 rodziny:
 - '[[Elektryczność i fale elektromagnetyczne]]'
 - '[[Światło]]'

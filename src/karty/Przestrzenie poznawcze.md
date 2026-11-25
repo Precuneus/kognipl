@@ -1,6 +1,6 @@
 ---
 tytuł: Przestrzenie poznawcze
-osnowa: '[[Pamięć i przestrzeń]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Przestrzenie pojęć]]'
 - '[[Mapy przestrzeni]]'

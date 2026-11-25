@@ -1,6 +1,6 @@
 ---
 tytuł: Marzenia senne
-osnowa: '[[Świadomość]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Stany zmienione]]'
 głębokość:

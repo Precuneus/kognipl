@@ -1,6 +1,6 @@
 ---
 tytuł: Pamięć jako rekonstrukcja
-osnowa: '[[Pamięć i przestrzeń]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Rekonstrukcja i wyobrażanie]]'
 głębokość:

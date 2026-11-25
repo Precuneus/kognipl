@@ -1,6 +1,6 @@
 ---
 tytuł: Przestrzeń możliwości
-osnowa: '[[Decyzja i działanie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Wybór i wartość]]'
 - '[[Intencja i sprawczość]]'
@@ -22,12 +22,12 @@ rekordy:
 - exurb1a_then-next-comes_o1OsDWT_DUc
 stan: gotowa
 ---
-Przestrzeń możliwości (ang. possibility space) to wszystko, co w danej chwili może się wydarzyć: działania, które możesz podjąć, oraz ich możliwe skutki. W [[Kognitywistyka|spójnej kognitywistyce]] kształtują ją Twoje [[Predykcja|predykcje]]. Twoje [[Modele Mentalne|Modele Mentalne]] tworzą predykcje tego, co mieści się w jej ścianach. Każdej możliwości nadają prawdopodobieństwo.
+Przestrzeń możliwości (ang. possibility space) to wszystko, co w danej chwili może się wydarzyć. Obejmuje działania, które możesz podjąć, oraz ich możliwe skutki. W [[Kognitywistyka|spójnej kognitywistyce]] kształtują ją Twoje [[Predykcja|predykcje]].
 
-Ściany tej przestrzeni wyznaczają ciało, otoczenie i inni ludzie. Wyobraź sobie dziecko w pokoju. Samo eksploruje: zagląda do szuflad i wspina się na krzesło. Z rodzeństwem rozrabia i psoci. Kiedy w pokoju jest rodzic, to on wyznacza ściany. Ten sam pokój ma więc inną przestrzeń możliwości zależnie od tego, kto w nim jest.
+Ściany tej przestrzeni wyznaczają ciało, otoczenie i inni ludzie. Wewnątrz ścian leży to, co w ogóle jest możliwe, a prawdopodobieństwo każdej z tych możliwości nadają predykcje Twoich [[Modele Mentalne|Modeli Mentalnych]]. Wyobraź sobie dziecko w pokoju. Samo eksploruje pokój, zagląda do szuflad i wspina się na krzesło. Z rodzeństwem rozrabia i psoci. Kiedy w pokoju jest rodzic, to on wyznacza ściany. Ten sam pokój ma więc inną przestrzeń możliwości zależnie od tego, kto w nim jest.
 
 Buzsáki i Moser proponują, że mechanizmy pamięci i planowania wyewoluowały z mechanizmów nawigacji w świecie fizycznym, a algorytmy neuronów prowadzące nawigację w przestrzeni rzeczywistej i umysłowej są zasadniczo te same (Buzsáki i Moser 2013)<!--[s:buzsaki2013-navigation-memory-same-algorithms]-->. [[Komórki miejsca i komórki siatki|Komórki miejsca]] (ang. place cells) w hipokampie biorą udział w reprezentowaniu przestrzeni otoczenia w mózgu (Moser, Kropff i Moser 2008)<!--[s:moser2008-grid-cells-may-provide-map]-->. Komórki siatki (ang. grid cells) w przyśrodkowej korze śródwęchowej są u szczura aktywne, gdy jego położenie wypada w wierzchołku regularnej siatki trójkątów rozpiętej na otoczeniu (Hafting i in. 2005)<!--[s:hafting2005-grid-cell-vertices-path-integration]-->. Jeśli Buzsáki i Moser mają rację, to w spójnej kognitywistyce planowanie porusza się po przestrzeni możliwości tak jak ciało po pokoju.
 
-Każda decyzja to drzwi. Drzwi dwukierunkowe pozwalają wrócić, a za jednokierunkowymi skutki toczą się już w nowej przestrzeni możliwości, jak po przeprowadzce do innego kraju. Wolną wolę można tu ująć jako rozszerzenie przestrzeni możliwości w chwili wyboru, po którym przychodzi determinizm. To propozycja do sprawdzenia.
+Każda decyzja to drzwi. Drzwi dwukierunkowe pozwalają wrócić, a za jednokierunkowymi skutki toczą się już w nowej przestrzeni możliwości, jak po przeprowadzce do innego kraju. W spójnej kognitywistyce wolną wolę można ująć jako rozszerzenie przestrzeni możliwości w chwili wyboru, po którym przychodzi determinizm. To propozycja do sprawdzenia.
 
 Próbując, sprawdzasz, gdzie leżą ściany Twojej przestrzeni możliwości. [[Eksploracja i eksploatacja|Eksplorowanie]] może przesunąć prawdopodobieństwa, które Twoje Modele Mentalne nadają możliwościom, a czasem nawet ścianę, za którą leży coś dotąd niemożliwego. Dlatego czasem samo próbowanie wystarczy, by przestrzeń możliwości się zmieniła.

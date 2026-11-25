@@ -1,6 +1,6 @@
 ---
 tytuł: Strefa najbliższego rozwoju
-osnowa: '[[Umysł społeczny]]'
+dyscyplina: socjologia
 rodziny:
 - '[[Rozwój dziecka]]'
 głębokość:

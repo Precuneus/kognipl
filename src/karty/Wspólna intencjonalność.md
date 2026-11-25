@@ -1,6 +1,6 @@
 ---
 tytuł: Wspólna intencjonalność
-osnowa: '[[Umysł społeczny]]'
+dyscyplina: socjologia
 rodziny:
 - '[[Wspólna intencjonalność]]'
 - '[[Rozwój dziecka]]'

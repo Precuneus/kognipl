@@ -1,6 +1,6 @@
 ---
 tytuł: Aleksytymia
-osnowa: '[[Osobowość i zdrowie psychiczne]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Neuroróżnorodność]]'
 - '[[Konstruowanie emocji]]'
@@ -30,10 +30,10 @@ rekordy:
 - healthygamergg_love-autism_KlSsI2CKYaQ
 - 2026-10-11_cos-jak-doswiadczenie
 ---
-Autystyczna rozmówczyni psychiatry Aloka Kanojii czuje czasem przy bliskich przyjaciołach falę uczucia i zastanawia się, czy się w kimś z nich zakochała, choć wie, że kocha ich jako przyjaciół (rozmowa z Kanojią)<!--[s:kanojia-love-autism-welling-feeling]-->. Każda emocja jest dla niej trochę niewyraźna, a Kanojia nazywa to ślepotą na barwy własnych stanów emocjonalnych (rozmowa z Kanojią)<!--[s:kanojia-colorblind-internal-state]-->.
+Autystyczna rozmówczyni psychiatry Aloka Kanojii czuje czasem przy bliskich przyjaciołach falę uczucia i zastanawia się, czy się w kimś z nich zakochała, choć wie, że kocha ich jako przyjaciół (Kanojia, 2026)<!--[s:kanojia-love-autism-welling-feeling]-->. Każda emocja jest dla niej trochę niewyraźna, a Kanojia nazywa to ślepotą na barwy własnych stanów emocjonalnych (Kanojia, 2026)<!--[s:kanojia-colorblind-internal-state]-->.
 
 Aleksytymia (ang. alexithymia) to trudność w rozpoznaniu i opisaniu własnych emocji (Brewer i in. 2016)<!--[s:brewer2016-general-interoception]-->. W metaanalizie 15 badań z Torontońską Skalą Aleksytymii, kwestionariuszem samoopisu, aleksytymię miało 49,93% osób autystycznych i 4,89% osób neurotypowych (Kinnaird i in. 2019)<!--[s:kinnaird2019-prevalence-half]-->. Geoffrey Bird i Richard Cook proponują hipotezę aleksytymii, według której trudności emocjonalne, tam gdzie występują u osób ze [[Spektrum autyzmu|spektrum autyzmu]], należą do często współwystępującej aleksytymii (Bird i Cook 2013)<!--[s:bird2013-alexithymia-hypothesis]-->.
 
 Emocję rozpoznajesz między innymi przez [[Interocepcja|interocepcję]] (ang. interoception), odczyt stanu własnego ciała (Brewer i in. 2016)<!--[s:brewer2016-general-interoception]-->. W dwóch eksperymentach nietypowa trafność interocepcji szła za poziomem aleksytymii, więc autorzy przypisują trudności interoceptywne w autyzmie współwystępującej aleksytymii (Shah i in. 2016)<!--[s:shah2016-alexithymia-not-autism-ia]-->. W próbie 105 osób bez rozpoznania i 103 osób zgłaszających rozpoznanie psychiatryczne osoby z silniejszą aleksytymią słabiej oceniały własny odczyt stanów ciała poza emocjami i widziały więcej podobieństwa między stanami emocjonalnymi a innymi stanami ciała (Brewer i in. 2016)<!--[s:brewer2016-general-interoception]-->.
 
-Jeśli odczyt ciała jest słabszy, fala uczucia może zostać bez nazwy, a przyjaźń i zakochanie mogą przeżywać się podobnie. Jak emocję składa się ze stanu ciała i z sytuacji, opisuje [[Teoria emocji konstruowanych|teoria emocji konstruowanych]]. Według Kanojii rozpoznawania własnych emocji uczysz się od dziecka, kiedy czujesz coś, czego jeszcze nie rozumiesz, a potem widzisz tę emocję wyolbrzymioną na twarzy rodzica (rozmowa z Kanojią)<!--[s:kanojia-emotional-mirroring]-->.
+Jeśli odczyt ciała jest słabszy, fala uczucia może zostać bez nazwy, a przyjaźń i zakochanie mogą przeżywać się podobnie. Jak emocję składa się ze stanu ciała i z sytuacji, opisuje [[Teoria emocji konstruowanych|teoria emocji konstruowanych]]. Według Kanojii rozpoznawania własnych emocji uczysz się od dziecka, kiedy czujesz coś, czego jeszcze nie rozumiesz, a potem widzisz tę emocję wyolbrzymioną na twarzy rodzica (Kanojia, 2026)<!--[s:kanojia-emotional-mirroring]-->.

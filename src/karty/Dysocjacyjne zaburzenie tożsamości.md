@@ -1,6 +1,6 @@
 ---
 tytuł: Dysocjacyjne zaburzenie tożsamości
-osnowa: '[[Osobowość i zdrowie psychiczne]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Trauma i dysocjacja]]'
 głębokość:
@@ -33,7 +33,7 @@ rekordy:
 - vissia_et_al_2022
 - 2026-09-26_gry-konstruowanie-innych
 ---
-B., kobieta, która w wywiadzie opowiada o życiu z dysocjacyjnym zaburzeniem tożsamości (ang. dissociative identity disorder, DID), usłyszała w szkole od przyjaciół o swoich słowach i zachowaniach, których sama nie pamiętała. Swoje stany tożsamości nazywa częściami siebie, fragmentami pamięci, których jej mózg nie chce pamiętać (B., OMG Stories)<!--[s:omgstories-did-parts-of-me]-->. Przejścia między nimi wywołuje u niej to, co przypomina traumę, na przykład muzyka albo zapach, które przenoszą ją do dawnej sytuacji (B., OMG Stories)<!--[s:omgstories-did-triggers-friends]-->, tak jak zapach potrafi przywołać [[Wspomnienia z zapachu|dawne wspomnienia]]. Chce, żeby ludzie wiedzieli, że osoby z DID są bezpieczne dla otoczenia i mówią prawdę o swoich objawach (B., OMG Stories)<!--[s:omgstories-did-not-dangerous]-->.
+B., kobieta, która w wywiadzie opowiada o życiu z dysocjacyjnym zaburzeniem tożsamości (ang. dissociative identity disorder, DID), usłyszała w szkole od przyjaciół o swoich słowach i zachowaniach, których sama nie pamiętała. Swoje stany tożsamości nazywa częściami siebie, fragmentami pamięci, których jej mózg nie chce pamiętać (OMG Stories, 2025)<!--[s:omgstories-did-parts-of-me]-->. Przejścia między nimi wywołuje u niej to, co przypomina traumę, na przykład muzyka albo zapach, które przenoszą ją do dawnej sytuacji (OMG Stories, 2025)<!--[s:omgstories-did-triggers-friends]-->, tak jak zapach potrafi przywołać [[Wspomnienia z zapachu|dawne wspomnienia]]. Chce, żeby ludzie wiedzieli, że osoby z DID są bezpieczne dla otoczenia i mówią prawdę o swoich objawach (OMG Stories, 2025)<!--[s:omgstories-did-not-dangerous]-->.
 
 Rozpoznanie DID zastąpiło w ICD-11 rozpoznanie osobowości mnogiej. Opisuje dwa albo więcej odrębnych stanów tożsamości, zwykle z niepamięcią między nimi, a z tymi stanami wiążą się wyraźne nieciągłości w przeżywaniu siebie i w kierowaniu własnym działaniem (Roepke i in. 2026)<!--[s:roepke2026-did-definition]-->.
 

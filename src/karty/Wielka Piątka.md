@@ -1,10 +1,10 @@
 ---
 tytuł: Wielka Piątka
-osnowa: '[[Osobowość i zdrowie psychiczne]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Osobowość]]'
 sieci: []
-bez_sieci: 'Cecha osobowości to wzorzec zachowania i doświadczeń mierzony kwestionariuszem, a w próbie 1107 studentek i studentów, największej do 2020 roku, jej związki ze strukturą istoty szarej i białej są, jeśli w ogóle istnieją, prawdopodobnie bardzo małe (Avinun i in. 2020)<!--[s:avinun2020-little-brain-structure-evidence]-->.'
+bez_sieci: 'Cecha osobowości to wynik kwestionariusza, który streszcza zachowanie i doświadczenia z wielu lat, czyli aktywność wielu sieci w wielu sytuacjach. Avinun i współpracownicy badali samą strukturę mózgu, bez aktywności i sieci, a w próbie 1107 studentek i studentów, największej do tego czasu próbie osób niespokrewnionych, związki cech ze strukturą istoty szarej i białej są, jeśli w ogóle istnieją, prawdopodobnie bardzo małe (Avinun i in. 2020)<!--[s:avinun2020-little-brain-structure-evidence]-->.'
 ryciny: []
 materiały:
 - tytuł: 'Vukasović i Bratko 2015: Heritability of personality, a meta-analysis of behavior genetic studies'
@@ -22,7 +22,7 @@ rekordy:
 - 2026-09-30_otwarcie-niewiedza
 stan: gotowa
 ---
-Wielka Piątka (ang. Big Five) to opis osobowości szerokimi cechami mierzonymi kwestionariuszem: otwartością na doświadczenie (ang. openness), sumiennością (ang. conscientiousness), ekstrawersją (ang. extraversion), ugodowością (ang. agreeableness) i neurotycznością (ang. neuroticism). Każda cecha ma dwa bieguny, na przykład sumienność biegnie od chaotyczności, niedbałości i impulsywności do porządku, staranności i dyscypliny. Gra Crusader Kings 3 nadaje postaciom własną listę cech osobowości, oznaczonych ikonami, ale psychologia opisuje osobowość cechami Wielkiej Piątki.
+Wielka Piątka (ang. Big Five) to opis osobowości szerokimi cechami mierzonymi kwestionariuszem. Należą do nich otwartość na doświadczenie (ang. openness), sumienność (ang. conscientiousness), ekstrawersja (ang. extraversion), ugodowość (ang. agreeableness) i neurotyczność (ang. neuroticism). Każda cecha ma dwa bieguny, na przykład sumienność biegnie od chaotyczności, niedbałości i impulsywności do porządku, staranności i dyscypliny. Gra Crusader Kings 3 nadaje postaciom własną listę cech osobowości, oznaczonych ikonami, ale psychologia opisuje osobowość cechami Wielkiej Piątki. Obok cech psychologia mierzy [[Umiejscowienie kontroli|umiejscowienie kontroli]], konstrukt wprowadzony przez Juliana Rottera, czyli przekonanie o tym, od czego zależy to, co Cię spotyka (Carton, Ries i Nowicki 2021)<!--[s:carton2021-rotter-internal-external-control]-->.
 
 Cechy Wielkiej Piątki korelują ze sobą, więc układają się w czynniki wyższego rzędu (ang. higher-order factors), czyli grupy cech, które u różnych osób razem rosną i maleją. W próbie 490 osób, z opisami każdej od czterech informatorów (ang. informants), odwrócona neurotyczność, ugodowość i sumienność złożyły się na czynnik nazwany stabilnością (ang. Stability), a ekstrawersja z otwartością na czynnik nazwany plastycznością (ang. Plasticity) (DeYoung 2006)<!--[s:deyoung2006-stability-plasticity]-->.
 

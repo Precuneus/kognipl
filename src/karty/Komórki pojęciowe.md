@@ -1,6 +1,6 @@
 ---
 tytuł: Komórki pojęciowe
-osnowa: '[[Pamięć i przestrzeń]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Przestrzenie pojęć]]'
 - '[[Systemy pamięci]]'

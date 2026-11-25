@@ -1,6 +1,6 @@
 ---
 tytuł: Interpretator lewej półkuli
-osnowa: '[[Świadomość]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Rozszczepiony mózg]]'
 głębokość:

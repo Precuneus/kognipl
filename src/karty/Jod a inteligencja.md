@@ -1,6 +1,6 @@
 ---
 tytuł: Jod a inteligencja
-osnowa: '[[Myślenie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Inteligencja]]'
 głębokość:

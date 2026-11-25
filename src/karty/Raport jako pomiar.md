@@ -1,10 +1,10 @@
 ---
 tytuł: Raport jako pomiar
-osnowa: '[[Świadomość]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Oznaki świadomości]]'
 sieci: []
-bez_sieci: 'To pomiar zachowania: słów, wyborów i czasu reakcji osoby badanej.'
+bez_sieci: 'Raport to zachowanie osoby badanej, jej słowa, wybory i czas reakcji, a samo zachowanie to aktywność jej sieci.'
 ryciny: []
 materiały:
 - tytuł: 'Overgaard i in. 2008: Seeing without Seeing? Degraded Conscious Vision in a Blindsight Patient'
@@ -28,11 +28,13 @@ Raport jako pomiar to ujęcie odpowiedzi osoby badanej na pytanie, czego doświa
 
 W [[Ślepowidzenie|ślepowidzeniu]] (ang. blindsight), po uszkodzeniu pierwszorzędowej kory wzrokowej (V1), słowa i wybory dają różne wyniki. Zapytana o bodziec w ślepej części pola widzenia, osoba badana odpowiada, że go nie widzi, ale w wymuszonym wyborze (ang. forced choice) wskazuje jego miejsce albo rodzaj poprawnie częściej, niż pozwala przypadek. Przy bodźcach ruchomych albo kontrastowych badacze opisywali nawet prawie 100% poprawnych wyborów (Cowey 2010)<!--[s:cowey2010-deny-seeing-forced-choice]-->.
 
-Overgaard i współpracownicy powtórzyli ten wynik przy raporcie „widziałam albo nie” u pacjentki GR z uszkodzoną częścią V1. Potem dali jej skalę czterech odpowiedzi: „wyraźny obraz”, „prawie wyraźny obraz”, „słaby przebłysk”, czyli „coś tam było, ale nie wiem co”, oraz „niewidziane”. Rozdzielczość raportu to liczba stopni, które daje skala: dwa przy „widziałam albo nie”, cztery tutaj. Na tej skali jej raporty ze ślepej części pola zapowiadały poprawność wyborów podobnie jak raporty z pola zdrowego (Overgaard i in. 2008)<!--[s:overgaard2008-graded-report-degraded-vision]-->.
+Overgaard i współpracownicy powtórzyli ten wynik przy raporcie „widziałam albo nie” u pacjentki GR z uszkodzoną częścią V1. Potem dali jej skalę czterech odpowiedzi, od „wyraźnego obrazu” przez „prawie wyraźny obraz” i „słaby przebłysk”, czyli „coś tam było, ale nie wiem co”, po „niewidziane”. Rozdzielczość raportu to liczba stopni, które daje skala, dwa przy „widziałam albo nie” i cztery tutaj. Na tej skali jej raporty ze ślepej części pola zapowiadały poprawność wyborów podobnie jak raporty z pola zdrowego (Overgaard i in. 2008)<!--[s:overgaard2008-graded-report-degraded-vision]-->.
 
 Próg świadomości to punkt skali, od którego badaczka liczy odpowiedź jako świadomą. Od jego położenia zależy, czy wynik brzmi „nieświadome widzenie”, czy „słabe widzenie”. Jeśli postawić próg między „prawie wyraźnym obrazem” a „słabym przebłyskiem”, raporty GR liczone wtedy jako świadome idą w parze z poprawnymi wyborami ze ślepej części pola. Dlatego według autorów GR jest w dużej mierze świadoma bodźców w tej części pola, a jej widzenie interpretują jako zdegradowane, ale świadome (Overgaard i in. 2008)<!--[s:overgaard2008-graded-report-degraded-vision]-->.
 
 Osoba z [[Zaniedbywanie stronne|zaniedbywaniem stronnym]] (ang. unilateral neglect), najczęściej po uszkodzeniu prawej półkuli, pomija w raporcie bodźce po stronie przeciwnej do uszkodzenia, choć jej widzenie wydaje się prawidłowe (Corbetta i Shulman 2011)<!--[s:corbetta2011-neglect-right-hemisphere-lesions]--><!--[s:corbetta2011-neglect-attend-report-cue-modulated]-->. Anna Berti i Giacomo Rizzolatti pokazywali osobom z ciężkim zaniedbywaniem rysunek owocu albo zwierzęcia po pomijanej stronie. Po stronie zdrowej pojawiał się wtedy rysunek, który trzeba było jak najszybciej przypisać przyciskiem do jednej z tych kategorii. Odpowiedź przyspieszała, kiedy oba rysunki należały do tej samej kategorii, także wtedy, gdy rysunki się różniły. Autorzy wnioskują stąd, że pominięty rysunek docierał aż do kategorii, choć osoba badana przeczyła, że coś tam było (Berti i Rizzolatti 1992)<!--[s:berti1992-neglect-categorical-priming]-->. Słowa mówią „nic”, czas reakcji mówi „owoc”.
+
+W [[Rozszczepiony mózg|rozszczepionym mózgu]] pacjent P.S. wybrał lewą ręką łopatę pasującą do zaśnieżonej sceny, którą widziała tylko jego prawa półkula, a jego mówiąca lewa półkula wytłumaczyła ten wybór sprzątaniem kurnika, w procesie, który Gazzaniga nazwał interpretatorem (Gazzaniga 2000)<!--[s:gazzaniga2000-chicken-claw-shovel]-->.
 
 Skalę raportu wyznacza pytanie badaczki, a w [[Eksperyment Libeta|eksperymencie Libeta]] skala to tarcza zegara. Osoba badana po swobodnym ruchu podaje z pamięci, gdzie na tarczy była krążąca plamka, kiedy poczuła chęć ruchu. U pięciu osób badanych początek aktywności mózgu przed ruchem wyprzedzał tak podaną chwilę średnio o kilkaset milisekund (Libet i in. 1983)<!--[s:libet1983-rp-precedes-w]-->.
 

@@ -1,6 +1,6 @@
 ---
 tytuł: Test fałszywych przekonań
-osnowa: '[[Umysł społeczny]]'
+dyscyplina: socjologia
 rodziny:
 - '[[Teoria umysłu]]'
 - '[[Rozwój dziecka]]'

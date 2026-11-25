@@ -1,6 +1,6 @@
 ---
 tytuł: Utrwalanie pamięci we śnie
-osnowa: '[[Pamięć i przestrzeń]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Utrwalanie śladu]]'
 głębokość:

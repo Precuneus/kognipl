@@ -1,6 +1,6 @@
 ---
 tytuł: Empatia poznawcza i afektywna
-osnowa: '[[Umysł społeczny]]'
+dyscyplina: socjologia
 rodziny:
 - '[[Teoria umysłu]]'
 - '[[Więź i przywiązanie]]'

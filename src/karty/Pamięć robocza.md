@@ -1,6 +1,6 @@
 ---
 tytuł: Pamięć robocza
-osnowa: '[[Myślenie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Funkcje wykonawcze]]'
 głębokość:

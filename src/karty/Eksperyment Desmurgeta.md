@@ -1,6 +1,6 @@
 ---
 tytuł: Eksperyment Desmurgeta
-osnowa: '[[Decyzja i działanie]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Intencja i sprawczość]]'
 głębokość:

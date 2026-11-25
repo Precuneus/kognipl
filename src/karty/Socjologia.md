@@ -1,9 +1,7 @@
 ---
 tytuł: Socjologia
-osnowa: '[[Kultura i społeczeństwo]]'
-rodziny:
-- '[[Nauka jako zbiorowość]]'
-grupa: socjologia
+dyscyplina: socjologia
+rodziny: []
 sieci: []
 bez_sieci: 'Socjologia to grupa wyjaśnień, więc sieci mózgu znajdziesz na kartach, do których prowadzi.'
 ryciny: []
@@ -11,6 +9,6 @@ materiały: []
 rekordy: []
 stan: gotowa
 ---
-Socjologia (ang. sociology) to w [[Kognitywistyka|spójnej kognitywistyce]] grupa wyjaśnień doświadczania innych ludzi i wspólnot, od {{Umysł społeczny|umysłu społecznego}} przez {{Kultura i społeczeństwo|kulturę}} po {{Sztuczni agenci|sztucznych agentów}}.
+Socjologia (ang. sociology) to w [[Kognitywistyka|spójnej kognitywistyce]] grupa wyjaśnień doświadczania innych ludzi i wspólnot, od umysłu społecznego przez kulturę po sztucznych agentów.
 
-Z dyscyplin kognitywistyki mieszczą się w niej [[Sztuczna inteligencja|sztuczna inteligencja (AI)]] i [[Antropologia|antropologia]]. Na kogni.pl do socjologii należą między innymi karty [[Konstruowanie innych umysłów]], [[Dylemat dwóch przycisków]], [[Problem gapowicza]] i [[Agenci AI]]. Karta jest zaczątkiem i rośnie z kolejnymi zajęciami.
+Z dziedzin kognitywistyki mieszczą się w niej [[Sztuczna inteligencja|sztuczna inteligencja (AI)]] i [[Antropologia|antropologia]]. Na kogni.pl do socjologii należą między innymi karty [[Konstruowanie innych umysłów]], [[Dylemat dwóch przycisków]], [[Problem gapowicza]] i [[Agenci AI]].

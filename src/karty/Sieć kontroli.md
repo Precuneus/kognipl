@@ -1,6 +1,6 @@
 ---
 tytuł: Sieć kontroli
-osnowa: '[[Sieci mózgu i predykcja]]'
+dyscyplina: biologia
 rodziny:
 - '[[Sieci wielkoskalowe]]'
 - '[[Funkcje wykonawcze]]'

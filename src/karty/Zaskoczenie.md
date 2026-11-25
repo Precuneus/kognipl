@@ -1,10 +1,10 @@
 ---
 tytuł: Zaskoczenie
-osnowa: '[[Sieci mózgu i predykcja]]'
+dyscyplina: biologia
 rodziny:
 - '[[Predykcja]]'
 sieci: []
-bez_sieci: 'W spójnej kognitywistyce zaskoczenie powstaje w każdej komórce i w każdym obszarze, więc dotyczy wszystkich sieci naraz.'
+bez_sieci: 'W spójnej kognitywistyce zaskoczenie powstaje w każdej komórce i płynie od obszarów najbliższych receptorom w stronę sieci brzusznej uwagi i sieci istotności, a dotyczy wszystkich sieci naraz.'
 ryciny: []
 materiały:
 - tytuł: 'Rao i Ballard 1999: model kodowania predykcyjnego kory wzrokowej'
@@ -26,11 +26,11 @@ rekordy:
 - 2026_Kolbl
 stan: gotowa
 ---
-Zaskoczenie (ang. prediction error) to różnica między [[Predykcja|predykcją]] a tym, co nadeszło, a ta różnica aktualizuje predykcję. W [[Kognitywistyka|spójnej kognitywistyce]] zaskoczenie powstaje już w pojedynczej komórce. Gina Turrigiano i współpracownicy zablokowali hamowanie w hodowli neuronów kory: częstość [[Potencjał czynnościowy|potencjałów czynnościowych]] najpierw wzrosła, ale w ciągu 48 godzin neurony osłabiły odpowiedź na pojedyncze porcje przekaźnika, a częstość wróciła blisko wartości kontrolnych (Turrigiano i in. 1998)<!--[s:turrigiano1998-synaptic-scaling]-->. W tym ujęciu wzrost częstości to zaskoczenie komórki, a osłabienie odpowiedzi to aktualizacja jej [[Receptory jako predykcja komórki|predykcji]].
+Zaskoczenie (ang. prediction error) to różnica między [[Predykcja|predykcją]] a tym, co nadeszło, a ta różnica aktualizuje predykcję. W [[Kognitywistyka|spójnej kognitywistyce]] zaskoczenie powstaje już w pojedynczej komórce. Gdy w hodowli neuronów kory zablokowano hamowanie, częstość [[Potencjał czynnościowy|potencjałów czynnościowych]] najpierw wzrosła, a w ciągu 48 godzin neurony osłabiły odpowiedź na pojedyncze porcje przekaźnika i częstość wróciła blisko wartości kontrolnych (Turrigiano i in. 1998)<!--[s:turrigiano1998-synaptic-scaling]-->. W spójnej kognitywistyce wzrost częstości to zaskoczenie komórek, a osłabienie odpowiedzi to aktualizacja ich predykcji.
 
 W modelu [[Kodowanie predykcyjne|kodowania predykcyjnego]] Rao i Ballarda, opisującym obszary kory wzrokowej, połączeniami wstępującymi płynie różnica między predykcją a rzeczywistą aktywnością obszaru bliższego receptorom, a ta różnica aktualizuje oszacowanie bodźca w każdym obszarze (Rao i Ballard 1999)<!--[s:rao1999-feedback-predictions-feedforward-errors]--><!--[s:rao1999-long-bar-predicted-from-context]-->. W symulacji autorów, gdy kreska wychodziła poza wycinek pola widzenia komórki, predykcja z obszaru dalszego od receptorów obejmowała ją dzięki reszcie kreski, więc zaskoczenie było bliskie zera.
 
-[[Dopaminowe zaskoczenie nagrodą|Zaskoczenie nagrodą]] bywa dodatnie albo ujemne. Schultz, Dayan i Montague opisują neurony dopaminowe zwierzęcia, które po zapaleniu światła naciska dźwignię po nagrodę: po treningu pobudza je już światło zapowiadające nagrodę w miejsce samej nagrody. Gdy nagroda nie nadchodzi, ich aktywność spada poniżej podstawowej dokładnie w chwili, w której miała nadejść (Schultz i in. 1997)<!--[s:schultz1997-response-transfers-to-cs]--><!--[s:schultz1997-signed-error-few-aversive]-->. Według autorów zwiększają aktywność, gdy nagroda jest lepsza od predykcji, nie zmieniają jej, gdy jest taka, jak w predykcji, a zmniejszają, gdy jest gorsza.
+[[Dopaminowe zaskoczenie nagrodą|Zaskoczenie nagrodą]] bywa dodatnie albo ujemne. Schultz, Dayan i Montague opisują neurony dopaminowe zwierzęcia, które po zapaleniu światła naciska dźwignię po nagrodę. Po treningu pobudza je już światło zapowiadające nagrodę w miejsce samej nagrody. Gdy nagroda nie nadchodzi, ich aktywność spada poniżej podstawowej dokładnie w chwili, w której miała nadejść (Schultz i in. 1997)<!--[s:schultz1997-response-transfers-to-cs]--><!--[s:schultz1997-signed-error-few-aversive]-->. Według autorów zwiększają aktywność, gdy nagroda jest lepsza od predykcji, nie zmieniają jej, gdy jest taka, jak w predykcji, a zmniejszają, gdy jest gorsza.
 
 W spójnej kognitywistyce słowo trudniejsze do odgadnięcia wywołuje większe [[Zaskoczenie słowem|zaskoczenie słowem]]. Z tym ujęciem zgadza się późna ujemna fala potencjałów wywołanych (ang. event-related potentials) po słowie, nazwana N400. Wywołało ją słowo semantycznie nieodpowiednie w czytanym zdaniu (Kutas i Hillyard 1980)<!--[s:kutas1980-n400-semantic-incongruity]-->. U 29 osób słuchających około 50 minut audiobooka im łatwiejszy do odgadnięcia był rzeczownik według modeli językowych, tym mniejsza była po nim fala N400, a tym większa aktywność mózgu przed nim (Kölbl i in. 2026)<!--[s:kolbl2026-predictability-n400-preactivation]-->. Czy N400 mierzy samo zaskoczenie, pozostaje hipotezą.
 

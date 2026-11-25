@@ -1,6 +1,6 @@
 ---
 tytuł: Spektrum autyzmu
-osnowa: '[[Osobowość i zdrowie psychiczne]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Neuroróżnorodność]]'
 głębokość:

@@ -1,6 +1,6 @@
 ---
 tytuł: Chcenie i lubienie
-osnowa: '[[Emocje]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Nagroda i przyjemność]]'
 głębokość:

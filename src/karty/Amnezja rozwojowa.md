@@ -1,6 +1,6 @@
 ---
 tytuł: Amnezja rozwojowa
-osnowa: '[[Pamięć i przestrzeń]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Systemy pamięci]]'
 głębokość:

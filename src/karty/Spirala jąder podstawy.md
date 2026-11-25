@@ -1,6 +1,6 @@
 ---
 tytuł: Spirala jąder podstawy
-osnowa: '[[Nawyk i automatyzacja]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Jądra podstawy]]'
 głębokość:

@@ -1,6 +1,6 @@
 ---
 tytuł: Afantazja
-osnowa: '[[Percepcja i uwaga]]'
+dyscyplina: psychologia
 rodziny:
 - '[[Obrazy umysłowe]]'
 głębokość:
