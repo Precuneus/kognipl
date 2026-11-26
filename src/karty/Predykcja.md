@@ -25,8 +25,8 @@ Predykcja (ang. prediction) to w [[Kognitywistyka|spójnej kognitywistyce]] wszy
 
 ![[mozg.svg]]
 
-Gdy nadchodzi coś innego, niż zakłada predykcja, w komórce pojawia się [[Zaskoczenie|zaskoczenie]] (ang. prediction error), a zaskoczenie aktualizuje predykcję. Neurony kory w hodowli po zablokowaniu hamowania w ciągu 48 godzin osłabiły odpowiedź na pojedyncze porcje przekaźnika (Turrigiano i in. 1998)<!--[s:turrigiano1998-synaptic-scaling]-->, a to aktualizacja ich predykcji.
+Gdy nadchodzi coś innego, niż zakłada predykcja, w komórce pojawia się [[Zaskoczenie|zaskoczenie]] (ang. prediction error), a zaskoczenie aktualizuje predykcję. Neurony kory w hodowli po zablokowaniu hamowania najpierw wyładowywały się częściej, ale w ciągu 48 godzin osłabiły odpowiedź na pojedyncze porcje przekaźnika, a częstość wyładowań wróciła blisko wartości wyjściowych (Turrigiano i in. 1998)<!--[s:turrigiano1998-synaptic-scaling]-->. W spójnej kognitywistyce częstsze wyładowania to zaskoczenie komórki, a osłabienie odpowiedzi to aktualizacja jej predykcji.
 
-W spójnej kognitywistyce predykcja zachodzi w każdej komórce, a [[Kodowanie predykcyjne|model kodowania predykcyjnego]] Rao i Ballarda opisuje w symulacji kory wzrokowej jeden z jej strumieni (Rao i Ballard 1999)<!--[s:rao1999-feedback-predictions-feedforward-errors]-->.
+W spójnej kognitywistyce predykcja zachodzi w każdej komórce. [[Kodowanie predykcyjne|Model kodowania predykcyjnego]] Rao i Ballarda opisuje w symulacji kory wzrokowej, jak obszary dalsze od receptorów wysyłają połączeniami zwrotnymi predykcje aktywności obszarów bliższych, a połączenia wstępujące odsyłają zaskoczenia (Rao i Ballard 1999)<!--[s:rao1999-feedback-predictions-feedforward-errors]-->.
 
 Kiedy sięgasz po kubek, Twoja dłoń jest gotowa na jego ciężar, zanim go podniesiesz. Predykcje Twoich [[Modele Mentalne|Modeli Mentalnych]] to predykcje wielu Twoich komórek naraz. Gdy kubek okazuje się lżejszy, zaskoczenie aktualizuje je, zanim zdążysz o tym pomyśleć.

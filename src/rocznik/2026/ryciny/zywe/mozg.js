@@ -263,7 +263,7 @@ export function mozg(root) {
     }
     etykiety(kot);
     const lvl = bursts.length ? bursts[bursts.length - 1].reach : 0;
-    tag(W / 2, FS * 1.6, w.zA > 0.15 ? (lvl >= 3 ? 'zaskoczenie sięga sieci domyślnej' : lvl >= 2 ? 'zaskoczenie sięga sieci kontroli' : 'zaskoczenie sięga sieci grzbietowej uwagi') : 'predykcje płyną od sieci domyślnej ku receptorom', 'middle');
+    tag(W / 2, FS * 1.6, w.zA > 0.15 ? (lvl >= 3 ? 'zaskoczenie sięga sieci domyślnej' : lvl >= 2 ? 'zaskoczenie sięga sieci kontroli' : 'zaskoczenie sięga sieci grzbietowej uwagi') : 'predykcje w każdej sieci płyną ku receptorom', 'middle');
     ctx.font = '500 ' + FS + 'px ' + font;
     STR.forEach((s, i) => { const y = HB - FS * 5 + i * FS * 1.7; ctx.setLineDash(s.d); ctx.strokeStyle = s.c; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(4, y); ctx.lineTo(4 + FS * 2, y); ctx.stroke(); ctx.setLineDash([]); ctx.fillStyle = '#cfc8bb'; ctx.fillText(s.n, 4 + FS * 2.6, y + FS * 0.35); });
     graf(w);
