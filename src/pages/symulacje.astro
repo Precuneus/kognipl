@@ -11,7 +11,7 @@ const KARTY_SCEN = {
   kubek: ['Propriocepcja', 'Predykcja', 'Zaskoczenie', 'Bioinformacja'],
   kuchnia: ['Drogi jąder podstawy', 'Działanie celowe i nawykowe', 'Dopaminowe zaskoczenie nagrodą'],
   wstawac: ['Predykcja', 'Zaskoczenie', 'Bioinformacja'],
-  mysl: ['Sieć domyślna', 'Sieć kontroli', 'Sieć grzbietowa uwagi', 'Sieć istotności', 'Spirala jąder podstawy', 'Eksperyment Libeta', 'Dopaminowe zaskoczenie nagrodą'],
+  mysl: ['Sieć domyślna', 'Sieć kontroli', 'Sieć grzbietowa uwagi', 'Sieć istotności', 'Spirala jąder podstawy', 'Eksperyment Libeta', 'Dopaminowe zaskoczenie nagrodą'],   // the networks the cascade runs through and the decision; the two drafts show once they are public
 };
 const chipy = Object.fromEntries(Object.entries(KARTY_SCEN).map(([sc, h]) => [sc, h.map((n) => KARTY.find((k) => k.h === n)).filter(Boolean)]));
 const opis = 'W modelu predykcji i zaskoczenia postać idzie, sięga po kubek, otwiera szafkę, wstaje z krzesła i myśli o kawie, a mózg obok pokazuje, jak płyną w nim predykcje, pomiar i zaskoczenie.';
@@ -57,7 +57,7 @@ const opis = 'W modelu predykcji i zaskoczenia postać idzie, sięga po kubek, o
   ))}
   </div>
 </section>
-<div class="foot sym-zrodla">Ruch biegnie w czasie rzeczywistym i zwalnia w chwili zaskoczenia, żeby było widać, którędy zaskoczenie płynie. Kolory pokazują hipotezę Bastosa i współpracowników (2012) o zaskoczeniu płynącym szybszymi rytmami niż predykcje.<!--[s:bastos2012-errors-higher-frequencies]--> Rytmy są pokazane wolniej, w tej samej proporcji; w korze wzrokowej makaka połączenia w stronę receptorów pracują w rytmie beta, około 14–18 Hz, a połączenia od receptorów w rytmie theta, około 4 Hz, oraz w rytmie gamma, około 60–80 Hz (Bastos i in. 2015)<!--[s:bastos2015-gamma-ff-beta-fb]-->. U ludzi przy chwycie precyzyjnym rytm beta, 15–30 Hz, płynie między korą a mięśniami dłoni w obu kierunkach, z opóźnieniem około 23 ms w każdą stronę (Witham i in. 2011)<!--[s:witham2011-beta-cmc-both-directions]--><!--[s:witham2011-loop-delays-each-way]-->, a włókna czuciowe wrzecion mięśniowych, jak się wydaje, szczególnie dobrze przewodzą go z mięśni do ośrodkowego układu nerwowego (Baker 2007)<!--[s:baker2007-spindles-expected-actual-beta]-->. Model przepływu według aktywnego wnioskowania, active inference (Adams, Shipp i Friston 2013)<!--[s:adams2013-proprioceptive-predictions-reflex-arc]-->. Pętle jąder podstawy według Alexandra, DeLonga i Stricka (1986)<!--[s:alexander1986-motor-loop-through-vlo]--><!--[s:alexander1986-prefrontal-loop-through-va-md]-->, projekcje kory i neuronów dopaminowych do prążkowia według Haber (2003)<!--[s:haber2003-frontal-gradient-into-striatum]--><!--[s:haber2003-ventral-tier-snc-to-dorsal-striatum]-->. Pętla móżdżku według Kelly i Stricka (2003)<!--[s:kelly2003-cerebrocerebellar-closed-loops]-->, uczenie się móżdżku z zaskoczenia czuciowego według Tsenga i współpracowników (2007)<!--[s:tseng2007-sensory-prediction-errors-drive-adaptation]-->, badających adaptację sięgania u ludzi. Pęczek skośny czołowy według Cataniego i współpracowników (2012)<!--[s:catani2012-frontal-aslant-tract]-->, pęczek podłużny górny III według Thiebaut de Schotten i współpracowników (2011)<!--[s:thiebautdeschotten2011-slf-iii-ventral-right-lateralized]-->, obręcz według Bubb, Metzler-Baddeley i Aggletona (2018)<!--[s:bubb2018-cingulum-frontal-parietal-course]-->. Aktywność aksonów dopaminowych przed początkiem biegu u myszy według badania (Howe i Dombeck 2016)<!--[s:howe2016-transients-lead-locomotion-initiation]-->, wpływ pobudzania neuronów dopaminowych na chwilę ruchu według badania (Hamilos i in. 2021)<!--[s:hamilos2021-activation-earlier-inhibition-later]-->, działanie dopaminy na drogi prążkowia według przeglądu (Gerfen i Surmeier 2011)<!--[s:gerfen2011-d1-raises-d2-lowers-spn-excitability]-->. Pierwsza minuta po wstaniu według przeglądu (Harms i in. 2021)<!--[s:harms2021-hr-abrupt-in-first-3s]--><!--[s:harms2021-pressure-nadir-at-8s-baroreflex-recovery]-->, drogi bioinformacji z wnętrza ciała i model EPIC, Embodied Predictive Interoception Coding, według przeglądu (Khalsa i in. 2018)<!--[s:khalsa2018-afferent-pathways]--><!--[s:khalsa2018-epic-predictions-insula]-->. Kora z szablonu MNI ICBM152 2009c (Fonov i in. 2011), obszary z Allen Human Reference Atlas 3D (CC BY 4.0), jądra pod korą z CIT168 (Pauli, Nili i Tyszka 2018, CC BY 4.0), sieci Yeo i in. 2011 w parcelacji Schaefera i in. 2018. Drogi, także korowo-prążkowiowe, z atlasu HCP-1065 (Yeh 2022, CC BY-SA 4.0), dane Human Connectome Project (WU-Minn, Van Essen i Ugurbil). Predykcje hamujące drogi przewidzianej bioinformacji według modelu trasowania predykcyjnego, predictive routing (Bastos i in. 2020)<!--[s:bastos2020-predictions-inhibit-prepared-pathways]-->. Cienkie łuki łączą obszary bez wspólnej drogi w atlasie i pochodzą z modelu. W scenie Myślenie sieć domyślna po falach ostrych hipokampa u makaków według badania (Kaplan i in. 2016)<!--[s:kaplan2016-ripples-increase-dmn-selectively]--><!--[s:kaplan2016-dmn-rise-lags-ripple-onset]-->, fale ostre według przeglądu (Buzsáki 2015)<!--[s:buzsaki2015-spw-duration-replay-compression]-->, rytm theta hipokampa przy planowaniu drogi według badania (Kaplan i in. 2020)<!--[s:kaplan2020-theta-planning-novel-mazes]-->, planowanie w sieciach domyślnej, kontroli i grzbietowej uwagi według badania (Spreng i in. 2010)<!--[s:spreng2010-autobiographical-planning-dmn]-->, wyobrażanie ruchu według metaanalizy (Hétu i in. 2013)<!--[s:hetu2013-mi-fronto-parietal-m1-not-consistent]-->, spirala prążkowia według Haber, Fudge i McFarland (2000)<!--[s:haber2000-shell-core-central-dorsolateral]-->, sieci w prążkowiu według Choi, Yeo i Bucknera (2012)<!--[s:choi2012-seven-network-striatal-zones]-->, przełączanie sieci według modelu Menona i Uddin (2010)<!--[s:menon2010-salience-network-switching]-->, hamowanie w jądrach podstawy według hipotezy Minka (1996)<!--[s:mink1996-inhibit-competing-programs]-->, rytm beta przy ruchu według przeglądu (Kilavik i in. 2013)<!--[s:kilavik2013-beta-low-during-movement-rebounds-after]-->, chwila zgłaszanej chęci ruchu, około 150 ms przed nim, według badania (Schurger, Sitt i Dehaene 2012)<!--[s:schurger2012-neural-decision-distinct]-->. Ruch postaci z bazy CMU Graphics Lab Motion Capture Database (mocap.cs.cmu.edu), powstałej ze środków NSF EIA-0196217.</div>
+<div class="foot sym-zrodla">Ruch biegnie w czasie rzeczywistym i zwalnia w chwili zaskoczenia, żeby było widać, którędy zaskoczenie płynie. Kolory pokazują hipotezę Bastosa i współpracowników (2012) o zaskoczeniu płynącym szybszymi rytmami niż predykcje.<!--[s:bastos2012-errors-higher-frequencies]--> Rytmy są pokazane wolniej, w tej samej proporcji; w korze wzrokowej makaka połączenia w stronę receptorów pracują w rytmie beta, około 14–18 Hz, a połączenia od receptorów w rytmie theta, około 4 Hz, oraz w rytmie gamma, około 60–80 Hz (Bastos i in. 2015)<!--[s:bastos2015-gamma-ff-beta-fb]-->. U ludzi przy chwycie precyzyjnym rytm beta, 15–30 Hz, płynie między korą a mięśniami dłoni w obu kierunkach, z opóźnieniem około 23 ms w każdą stronę (Witham i in. 2011)<!--[s:witham2011-beta-cmc-both-directions]--><!--[s:witham2011-loop-delays-each-way]-->, a włókna czuciowe wrzecion mięśniowych, jak się wydaje, szczególnie dobrze przewodzą go z mięśni do ośrodkowego układu nerwowego (Baker 2007)<!--[s:baker2007-spindles-expected-actual-beta]-->. U zdrowych młodych mężczyzn na bieżni z dwoma pasami o różnej prędkości sprzężenie rytmu beta między okolicą czuciowo-ruchową a mięśniem piszczelowym przednim, mierzone przy kontakcie pięty z podłożem, słabło na początku przystosowania (Oshima i in. 2026)<!--[s:oshima2026-beta-cmc-drops-at-perturbation]-->. Model przepływu według aktywnego wnioskowania, active inference (Adams, Shipp i Friston 2013)<!--[s:adams2013-proprioceptive-predictions-reflex-arc]-->. Pętle jąder podstawy według Alexandra, DeLonga i Stricka (1986)<!--[s:alexander1986-motor-loop-through-vlo]--><!--[s:alexander1986-prefrontal-loop-through-va-md]-->, projekcje kory i neuronów dopaminowych do prążkowia według Haber (2003)<!--[s:haber2003-frontal-gradient-into-striatum]--><!--[s:haber2003-ventral-tier-snc-to-dorsal-striatum]-->, spirala prążkowia i neuronów dopaminowych według Haber, Fudge i McFarland (2000)<!--[s:haber2000-shell-core-central-dorsolateral]-->, podział prążkowia na sieci, z jego sprzężenia z korą w spoczynku, według Choi, Yeo i Bucknera (2012)<!--[s:choi2012-seven-network-striatal-zones]-->, kolejność dróg jąder podstawy według modelu Nambu i współpracowników (2002)<!--[s:nambu2002-hyperdirect-first-then-direct]-->, hamowanie w jądrach podstawy według hipotezy Minka (1996)<!--[s:mink1996-inhibit-competing-programs]-->. Pętla móżdżku według Kelly i Stricka (2003)<!--[s:kelly2003-cerebrocerebellar-closed-loops]-->, uczenie się móżdżku z zaskoczenia czuciowego według Tsenga i współpracowników (2007)<!--[s:tseng2007-sensory-prediction-errors-drive-adaptation]-->, badających adaptację sięgania u ludzi. Pęczek skośny czołowy według Cataniego i współpracowników (2012)<!--[s:catani2012-frontal-aslant-tract]-->, pęczek podłużny górny III według Thiebaut de Schotten i współpracowników (2011)<!--[s:thiebautdeschotten2011-slf-iii-ventral-right-lateralized]-->, obręcz według Bubb, Metzler-Baddeley i Aggletona (2018)<!--[s:bubb2018-cingulum-frontal-parietal-course]-->. Aktywność aksonów dopaminowych przed początkiem biegu u myszy według badania (Howe i Dombeck 2016)<!--[s:howe2016-transients-lead-locomotion-initiation]-->, wpływ pobudzania neuronów dopaminowych na chwilę ruchu według badania (Hamilos i in. 2021)<!--[s:hamilos2021-activation-earlier-inhibition-later]-->, działanie dopaminy na drogi prążkowia według przeglądu (Gerfen i Surmeier 2011)<!--[s:gerfen2011-d1-raises-d2-lowers-spn-excitability]-->, odpowiedź neuronów dopaminowych na nagrodę i jej zapowiedź u małp według Schultza, Dayana i Montague'a (1997)<!--[s:schultz1997-response-transfers-to-cs]--><!--[s:schultz1997-monkeys-juice-lever-light]-->. Pierwsza minuta po wstaniu według przeglądu (Harms i in. 2021)<!--[s:harms2021-hr-abrupt-in-first-3s]--><!--[s:harms2021-pressure-nadir-at-8s-baroreflex-recovery]-->, drogi bioinformacji z wnętrza ciała i model EPIC, Embodied Predictive Interoception Coding, według przeglądu (Khalsa i in. 2018)<!--[s:khalsa2018-afferent-pathways]--><!--[s:khalsa2018-epic-predictions-insula]-->. Kora z szablonu MNI ICBM152 2009c (Fonov i in. 2011), obszary z Allen Human Reference Atlas 3D (CC BY 4.0), jądra pod korą z CIT168 (Pauli, Nili i Tyszka 2018, CC BY 4.0), sieci Yeo i in. 2011 w parcelacji Schaefera i in. 2018. Drogi, także korowo-prążkowiowe, z atlasu HCP-1065 (Yeh 2022, CC BY-SA 4.0), dane Human Connectome Project (WU-Minn, Van Essen i Ugurbil). Predykcje hamujące drogi przewidzianej bioinformacji według modelu trasowania predykcyjnego, predictive routing (Bastos i in. 2020)<!--[s:bastos2020-predictions-inhibit-prepared-pathways]-->. Cienkie łuki łączą obszary bez wspólnej drogi w atlasie i pochodzą z modelu. Sieć domyślna po falach ostrych hipokampa u makaków według badania (Kaplan i in. 2016)<!--[s:kaplan2016-ripples-increase-dmn-selectively]--><!--[s:kaplan2016-dmn-rise-lags-ripple-onset]-->, fale ostre według przeglądu (Buzsáki 2015)<!--[s:buzsaki2015-spw-duration-replay-compression]-->, rytm theta hipokampa przy planowaniu drogi według badania (Kaplan i in. 2020)<!--[s:kaplan2020-theta-planning-novel-mazes]-->, planowanie w sieciach domyślnej, kontroli i grzbietowej uwagi według badania (Spreng i in. 2010)<!--[s:spreng2010-autobiographical-planning-dmn]-->, wyobrażanie ruchu według metaanalizy (Hétu i in. 2013)<!--[s:hetu2013-mi-fronto-parietal-m1-not-consistent]-->, przełączanie sieci według modelu Menona i Uddin (2010)<!--[s:menon2010-salience-network-switching]-->, rytm beta przy ruchu według przeglądu (Kilavik i in. 2013)<!--[s:kilavik2013-beta-low-during-movement-rebounds-after]-->, chwila zgłaszanej chęci ruchu, około 150 ms przed nim, według badania (Schurger, Sitt i Dehaene 2012)<!--[s:schurger2012-neural-decision-distinct]-->. Ruch postaci z bazy CMU Graphics Lab Motion Capture Database (mocap.cs.cmu.edu), powstałej ze środków NSF EIA-0196217.</div>
 </main>
 </Base>
 
@@ -91,7 +91,7 @@ const opis = 'W modelu predykcji i zaskoczenia postać idzie, sięga po kubek, o
 .sym .seq[hidden]{display:none}
 .sym #seqN{font-size:13px;color:var(--fg);min-width:10em;text-align:center;white-space:nowrap}
 .sym .chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.sym .chip{font-size:12px;color:var(--fg2);height:30px;padding:0 10px;display:inline-flex;align-items:center;gap:7px}
+.sym .chip{font-size:12px;color:var(--fg2);height:30px;padding:0 10px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}   /* a pill wraps whole onto the next line, its text inside it */
 .sym .chip i{width:8px;height:8px;border-radius:50%;display:inline-block}
 .sym .chip.dim{border-color:rgba(180,155,100,.1)}
 .sym .chip.dim i{opacity:.3}
@@ -310,7 +310,7 @@ const kora = new THREE.Mesh(geo, new THREE.ShaderMaterial({
       float me = vMe*uWM*(0.55 + 0.45*grain), pr = max(vPr, 0.16)*uWP*beta*(1.0 - 0.7*clamp(vMe*uWM + vSN*uWM - 0.25, 0.0, 1.0)); // predictions in every area, stronger on the body map's active bands
       vec3 c = mix(uBase, vec3(0.86, 0.78, 0.62), 0.38*vRo); c = mix(c, vec3(0.86, 0.78, 0.62), 0.18*vMyP); c = mix(c, vMyK, clamp(vMyA, 0.0, 1.0)*0.38); c = mix(c, uBeta, clamp(pr*0.9,0.0,1.0)); c = mix(c, uGamma, clamp(me + vSN*(0.6+0.3*grain)*uWM,0.0,1.0));
       float a = (0.035 + 0.40*f + 0.34*vFa*(1.0 - f))*0.2 + 0.28*pr*0.4 + 0.45*me + 0.38*vSN*uWM + 0.36*vRo + 0.06*vMyP + 0.2*clamp(vMyA, 0.0, 1.0);   // the crowns of the gyri a little denser
-      float s = clamp(vSel, 0.0, 1.0); c = mix(c, vec3(0.94, 0.75, 0.38), s*0.85); a = min(1.0, a + 0.55*s); c = mix(c, vec3(0.93, 0.76, 0.42), vWsk*0.5); a = min(1.0, a + 0.35*vWsk); c = mix(c, vec3(0.93, 0.76, 0.42), vMyG*0.65); a = min(1.0, a + 0.4*vMyG); // the selected region: a gold rim, the flow running inside it
+      float s = clamp(vSel, 0.0, 1.0); c = mix(c, vec3(0.94, 0.75, 0.38), s*0.85); a = min(1.0, a + 0.55*s); c = mix(c, vec3(0.93, 0.76, 0.42), vWsk*0.5); a = min(1.0, a + 0.35*vWsk); c = mix(c, vec3(0.93, 0.76, 0.42), vMyG*0.5); a = min(1.0, a + 0.3*vMyG); // the selected region: a gold rim, the flow running inside it
       gl_FragColor = vec4(c, a); }`
 }));
 kora.renderOrder = 2; sB.add(kora);
@@ -1005,7 +1005,7 @@ function tempo(tl) {                                                         // 
   let k = 1; for (const e of ZDARZ[scena]) { const x = tl - e[0], c = DOJ(e), wy = WEJ(e) - 0.004;
     const v = x < 0 ? 1 : x < wy ? 0.1 : x < c + 0.054 ? 0.02 : x < c + 0.07 ? 0.1 : x < c + 0.22 ? 0.1 + 0.9 * smooth((x - c - 0.07) / 0.15) : 1;
     k = Math.min(k, v); }
-  if (scena === 'mysl') k = Math.min(k, 1 - 0.92 * smooth((tl - 20.76) / 0.05) * (1 - smooth((tl - 21.02) / 0.05)));   // Myślenie slows where the gate opens and the rise starts, so the order reads
+  if (scena === 'mysl') k = Math.min(k, 1 - 0.85 * smooth((tl - 20.8) / 0.04) * (1 - smooth((tl - 21.0) / 0.04)));   // Myślenie slows where the gate opens and the rise starts, so the order reads
   return k; }
 function zdarzenia(tl) {
   const e = ostatnie(tl); U.uZd.value[0] = U.uZd.value[1] = -1; U.uWz.value[0] = U.uWz.value[1] = -1; U.uZdL.value[0] = U.uZdL.value[1] = 0; PAK = null;
@@ -1274,13 +1274,16 @@ for (const c of Object.values(MYKOD)) U.uMyK.value[c].set('#efe2c4');   // a pat
 const naKorze = (test) => { const c = srodek(test), o = { L: null, R: null }, d = { L: 1e9, R: 1e9 };
   for (let i = 0; i < nv; i++) if (test(i)) { const s = pos[i * 3] > 0 ? 'R' : 'L', dd = (pos[i * 3] - c[s].x) ** 2 + (pos[i * 3 + 1] - c[s].y) ** 2 + (pos[i * 3 + 2] - c[s].z) ** 2; if (dd < d[s]) { d[s] = dd; o[s] = new THREE.Vector3(pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2]); } }
   return o; };
+let MY_C = null, SIATKA_KORY = null;   // built on the first visit to Myślenie, so a visitor of the other scenes pays nothing for them
+function przygotujMy() { if (MY_C) return;
 const DMN_ = (i) => siec[i] >= 15 && siec[i] <= 17, AX = (i) => Math.abs(pos[i * 3]);
-const MY_C = { vis: naKorze((i) => (siec[i] === 1 || siec[i] === 2) && pos[i * 3 + 1] < -80), pcc: naKorze((i) => DMN_(i) && AX(i) < 14 && pos[i * 3 + 1] > -70 && pos[i * 3 + 1] < -25 && pos[i * 3 + 2] > 5),
+MY_C = { vis: naKorze((i) => (siec[i] === 1 || siec[i] === 2) && pos[i * 3 + 1] < -80), pcc: naKorze((i) => DMN_(i) && AX(i) < 14 && pos[i * 3 + 1] > -70 && pos[i * 3 + 1] < -25 && pos[i * 3 + 2] > 5),
   mpfc: naKorze((i) => DMN_(i) && AX(i) < 14 && pos[i * 3 + 1] > 30), ang: naKorze((i) => DMN_(i) && AX(i) > 32 && pos[i * 3 + 1] < -45),
   dl: naKorze((i) => siec[i] >= 11 && siec[i] <= 13 && pos[i * 3 + 1] > 15 && AX(i) > 20), ips: naKorze((i) => (siec[i] === 5 || siec[i] === 6) && pos[i * 3 + 1] < -40),
   acc: naKorze((i) => (siec[i] === 7 || siec[i] === 8) && AX(i) < 14 && pos[i * 3 + 1] > 0), ofc: naKorze((i) => siec[i] === 9), phg: naKorze((i) => allen[i] === 102 || allen[i] === 103) };
 // the patch a point of the cortex belongs to, within 13 mm: a coarse grid over the surface
-const SIATKA_KORY = new Map(); for (let i = 0; i < nv; i++) { const k = Math.floor(pos[i * 3] / 8) + ',' + Math.floor(pos[i * 3 + 1] / 8) + ',' + Math.floor(pos[i * 3 + 2] / 8); if (!SIATKA_KORY.has(k)) SIATKA_KORY.set(k, []); SIATKA_KORY.get(k).push(i); }
+SIATKA_KORY = new Map(); for (let i = 0; i < nv; i++) { const k = Math.floor(pos[i * 3] / 8) + ',' + Math.floor(pos[i * 3 + 1] / 8) + ',' + Math.floor(pos[i * 3 + 2] / 8); if (!SIATKA_KORY.has(k)) SIATKA_KORY.set(k, []); SIATKA_KORY.get(k).push(i); }
+  Object.assign(KOTW, { vis: MY_C.vis, smn: SMA_C, dan: MY_C.ips, cn: MY_C.dl, dmn: MY_C.pcc, sal: WYSPA_C, lim: MY_C.ofc }); }
 function latkaPrzy(x, y, z) { const a = geo.attributes.aMy.array; let bd = 169, bc = 0; const cx = Math.floor(x / 8), cy = Math.floor(y / 8), cz = Math.floor(z / 8);
   for (let i = -2; i <= 2; i++) for (let j = -2; j <= 2; j++) for (let k = -2; k <= 2; k++) { const L = SIATKA_KORY.get((cx + i) + ',' + (cy + j) + ',' + (cz + k)); if (L) for (const v of L) { const d = (pos[v * 3] - x) ** 2 + (pos[v * 3 + 1] - y) ** 2 + (pos[v * 3 + 2] - z) ** 2; if (d < bd) { bd = d; bc = a[v]; } } }
   return bc; }
@@ -1288,7 +1291,7 @@ function latkaPrzy(x, y, z) { const a = geo.attributes.aMy.array; let bd = 169, 
 const MY = { rise: 21.0, kroki: 22.4, kawa: 27.0, pije: 27.5, kon: 35.0 };
 MY.lyk = MY.pije + PIJE.szczyt / PIJE.fps;   // the sip: the frame the recorded hand comes nearest the head
 const LOOP_M = MY.kon;
-ZDARZ.mysl = [[MY.rise + 0.05, 0, 0, 0.5, 'R', 0], [MY.rise + 0.09, 1, 0, 0.45, 'L', 0]];   // the rise: both legs' measurement climbs as in the other scenes
+ZDARZ.mysl = [[MY.rise + 0.05, 0, 0, 0.5, 'R', 0]];   // the rise: the leg's measurement climbs as in the other scenes, once, so the slow motion stays short
 const ramaT = (q) => { const up = q.shC.clone().sub(q.P).normalize(), right = q.shR.clone().sub(q.shL); right.sub(up.clone().multiplyScalar(right.dot(up))).normalize(); return { right, fwd: up.clone().cross(right), up }; };
 const PIJE_N = PIJE.d.length / 9, PIJE_DL = (PIJE_N - 1) / PIJE.fps;
 const pijeKl = (x) => { const i0 = Math.max(0, Math.min(PIJE_N - 2, Math.floor(x))), w = clamp01(x - i0), v = (k) => PIJE.d[i0 * 9 + k] + (PIJE.d[(i0 + 1) * 9 + k] - PIJE.d[i0 * 9 + k]) * w;
@@ -1299,10 +1302,10 @@ const PIJE_D = Array.from({ length: PIJE_N }, (_, i) => Math.hypot(PIJE.d[i * 9 
 const PIJE_DMIN = Math.min(...PIJE_D), PIJE_D0 = PIJE_D[0];
 const pijeAkt = (tl) => (tl < MY.pije ? 0 : smooth((tl - MY.pije) / 0.4) * (1 - smooth((tl - MY.pije - PIJE_DL - 0.2) / 0.8)));
 function pozaM(t, przew) {
-  const tl = lt(t), n1 = WSTAJE.siedzi, n2 = WSTAJE.wstaje, tri = (u) => (u < 1 ? u : u < 2 ? 2 - u : u - 2), r0 = MY.rise - (przew ? 0.1 : 0);   // the prediction leads the rise
+  const tl = lt(t), n1 = WSTAJE.siedzi, n2 = WSTAJE.wstaje, tri = (u) => (u < 1 ? u : u < 2 ? 2 - u : u - 2), r0 = MY.rise - (przew ? 0.05 : 0);   // the prediction leads the rise
   const miesz = (a, b, w) => { for (const k of WS_K) a[k].lerp(b[k], w); return a; };
   let q, chod = null;
-  if (tl < r0 || tl >= MY.kawa) { const ts = tl < r0 ? tl : tl - MY.kawa; q = wstKl(n1[0] + (n1[1] - n1[0]) * tri(3 * ts / 21)); }   // seated, the recorded sitting played forth and back
+  if (tl < r0 || tl >= MY.kawa) { const ts = tl < r0 ? tl : MY.kon - tl; q = wstKl(n1[0] + (n1[1] - n1[0]) * tri(3 * ts / 21)); }   // seated, the recorded sitting played forth and back; the coffee runs it toward the loop's first frame
   else if (tl < MY.kroki) { q = wstKl(Math.min(n2[0] + 41, n2[0] + (tl - r0) * 30)); const w = smooth((tl - (r0 + 41 / 30 - 0.25)) / 0.6); if (w > 0) q = miesz(q, stoiW(t), w); }   // the rise, as recorded (CMU 113_15)
   else { const tw = tl - MY.kroki, ph = ((tw / G) % 1 + 1) % 1; q = chodRuch(ph);   // the walk, as recorded (CMU 02_01), from the standing pose into its stride
     const w = 1 - smooth(tw / 0.6); if (w > 0) { const s = stoiW(t); for (const k of WS_K) q[k].lerp(s[k], w); }
@@ -1318,9 +1321,11 @@ function pozaM(t, przew) {
   // seated, the hands lie on the thighs; into the rise they take the recorded arms
   const naUdzie = (s, kn) => { const x = s === 'R' ? 1 : -1, ha = q['hip' + s].clone().lerp(kn, 0.62).add(new THREE.Vector3(-x * 1.5, 0, 4.5)), sh = q['sh' + s];
     return [ikR(sh, ha, Dm.up, Dm.fore, sh.clone().add(new THREE.Vector3(x * 8, -12, -28))), ha]; };
-  const wRek = chod ? 1 : tl >= MY.kawa ? 0 : smooth((tl - (r0 - 0.4)) / 0.4);
+  const zwis = (s) => { const x = s === 'R' ? 1 : -1, sh = q['sh' + s], rest = sh.clone().add(new THREE.Vector3(-x * 3.5, 6, -(Dm.up + Dm.fore) + 2)); return [ikR(sh, rest, Dm.up, Dm.fore, sh.clone().add(new THREE.Vector3(x * 5, -6, -40))), rest]; };   // the arms hanging, as stoiW sets them
+  const wRek = chod || tl >= MY.kawa ? 0 : smooth((tl - (r0 + 0.9)) / 0.45);   // the hands push off the thighs through the rise, then hang
   let [elR, haR] = naUdzie('R', knR), [elL, haL] = naUdzie('L', knL), ot = 0.35, kubekP = null;
-  if (wRek > 0) { elR = elR.lerp(q.elR, wRek); haR = haR.lerp(q.haR, wRek); elL = elL.lerp(q.elL, wRek); haL = haL.lerp(q.haL, wRek); }
+  if (chod) { elR = q.elR; haR = q.haR; elL = q.elL; haL = q.haL; }
+  else if (wRek > 0) { const [eR, hR] = zwis('R'), [eL, hL] = zwis('L'); elR = elR.lerp(eR, wRek); haR = haR.lerp(hR, wRek); elL = elL.lerp(eL, wRek); haL = haL.lerp(hL, wRek); }
   if (tl >= MY.kawa) {   // the coffee: the right hand lifts the mug at the recorded timing (CMU 137_26), and the mug tilts at the lips
     const R = ramaT(q), sh = q.shR, sw = (v) => sh.clone().add(R.right.clone().multiplyScalar(v.x)).add(R.fwd.clone().multiplyScalar(v.y)).add(R.up.clone().multiplyScalar(v.z));
     const [, h, hd] = pijeKl((tl - MY.pije) * PIJE.fps), w = pijeAkt(tl), blisko = smooth(clamp01((PIJE_D0 - h.distanceTo(hd)) / (PIJE_D0 - PIJE_DMIN)));
@@ -1356,7 +1361,7 @@ const TRASY = [['v1hip', 'vis', 'Hip', 'j', 'phg'], ['s1pcc', 's1', 'pcc', 'fp']
   ['smastn', 'sma', 'STH', 'j'], ['stngpi', 'STH', 'GPi', 'j'], ['pugpe', 'Pu', 'GPe', 'j'], ['gpestn', 'GPe', 'STH', 'j'], ['vlsma', 'VL', 'sma', 'j']];
 const TR_I = Object.fromEntries(TRASY.map((r, i) => [r[0], i]));
 // the events: [route, start, duration, kind, amplitude, against the route]; kinds 0 red (the measurement), 1 blue (the predictions), 2 purple (dopamine),
-// 3 white (a sharp-wave ripple), 4 red gathered in theta, 5 a held blue (the pallidum holding the thalamus), 6 a steady faint red (a loop running).
+// 3 white (a sharp-wave ripple), 4 red gathered in theta, 5 a held blue (the pallidum holding the thalamus), 6 a steady faint red (a loop running), 7 a steady purple (dopamine at its level).
 // Every red climb gets its blue front back down the same route (Bastos et al. 2020, the page's rule).
 const EV_M = [['v1hip', 0.5, 0.9, 0, 0.8], ['s1pcc', 1.0, 0.6, 0, 0.7], ['pcchip', 1.6, 0.5, 0, 0.7]];
 for (const r of [2.0, 4.6, 7.1]) EV_M.push(['pcchip', r, 0.35, 3, 1, 1], ['pccmpfc', r + 0.35, 0.35, 3, 0.9], ['v1hip', r + 0.05, 0.6, 3, 0.5, 1], ['s1pcc', r + 0.35, 0.4, 3, 0.5, 1]);
@@ -1368,7 +1373,7 @@ EV_M.push(['ntsins', 9.3, 0.4, 0, 0.9], ['insacc', 9.7, 0.35, 0, 0.8], ['insofc'
   ['vadl', 20.85, 0.12, 0, 0.9], ['bandsnv', 20.85, 0.06, 0, 0.7], ['snvlpp', 20.86, 0.1, 2, 1], ['smastn', 20.9, 0.03, 0, 0.9], ['stngpi', 20.92, 0.03, 0, 0.8], ['pugpi', 20.93, 0.04, 0, 0.9],
   ['pugpe', 20.93, 0.03, 0, 0.6], ['gpestn', 20.95, 0.03, 0, 0.6], ['vlsma', 20.97, 0.04, 0, 1],
   ['smapu', 22.6, 4.2, 6, 0.4, 1], ['pugpi', 22.7, 4.1, 6, 0.35], ['gpivl', 22.8, 4.0, 6, 0.35], ['vlsma', 22.9, 3.9, 6, 0.35], ['v1hip', 24.0, 0.8, 0, 0.6],
-  ['ntsins', MY.lyk + 0.1, 0.4, 0, 0.8], ['v1hip', 33.2, 0.8, 0, 0.7]);
+  ['ntsins', MY.lyk + 0.1, 0.4, 0, 0.8], ['v1hip', 33.2, 0.8, 0, 0.7], ['vtashell', MY.lyk - 0.6, 2.2, 7, 0.55], ['snvlpp', MY.lyk - 0.6, 2.2, 7, 0.45]);   // the dopamine level through the sip
 for (const r of [MY.lyk + 0.7, MY.lyk + 1.6]) EV_M.push(['pcchip', r, 0.35, 3, 1, 1], ['pccmpfc', r + 0.35, 0.35, 3, 0.9]);
 for (const e of EV_M.slice()) if (e[3] === 0) EV_M.push([e[0], e[1] + e[2] + 0.35, Math.max(0.3, e[2] * 1.3), 1, e[4] * 0.8, e[5] ? 0 : 1, 1]);   // the return
 const EV_A = TRASY.map(() => []), EV_B = TRASY.map(() => []);
@@ -1377,14 +1382,15 @@ for (const L of [...EV_A, ...EV_B]) L.sort((a, b) => a[1] - b[1]);
 const biezace = (L, tl) => { let b = null; for (const e of L) if (e[1] <= tl) b = e; return b; };
 function natez(e, u, tl) {   // how strongly an event shows at u along its route now
   if (!e) return 0; const k = e[3], uu = e[5] ? 1 - u : u, x = tl - e[1], f = x / e[2];
-  if (k === 5 || k === 6 || k === 4) { const w = smooth(x / 0.3) * (1 - smooth((x - e[2]) / 0.3)); return k === 4 ? e[4] * w * (0.3 + 0.7 * Math.pow(0.5 + 0.5 * Math.sin(2 * Math.PI * 0.7 * tl - uu * 3), 2)) : e[4] * w * 0.6; }
+  if (k >= 4) { const w = smooth(x / 0.3) * (1 - smooth((x - e[2]) / 0.3)); return k === 4 ? e[4] * w * (0.3 + 0.7 * Math.pow(0.5 + 0.5 * Math.sin(2 * Math.PI * 0.7 * tl - uu * 3), 2)) : e[4] * w * 0.6; }
   if (f < 0) return 0;
   if (k === 3) return f > 1.4 ? 0 : e[4] * 1.6 * Math.exp(-(((f - uu) / 0.07) ** 2));
   const fr = Math.min(f, 1); let w = uu <= fr ? Math.exp(-(fr - uu) * 2.2) : uu - fr < 0.03 ? 1 - (uu - fr) / 0.03 : 0;
   if (f > 1) w *= Math.exp(-(x - e[2]) / 1.1); return e[4] * w; }
 const BIEL = new THREE.Color(1, 0.97, 0.92);
 let MYR = null, HIPD = null, myP = null, MYD = null;
-const wczytajMysl = () => myP || (myP = gz('myslenie').then((buf) => { HIPD = czytajSiatki(buf, new DataView(buf.buffer), 0, new Set(['Hip'])); HIPD.grupa.visible = false; zbudujMysl(); }, () => { myP = null; }));
+const wczytajMysl = () => myP || (myP = gz('myslenie').then((buf) => { HIPD = czytajSiatki(buf, new DataView(buf.buffer), 0, new Set(['Hip'])); HIPD.grupa.visible = false; zbudujMysl(); }).catch(() => { myP = null; }));   // a failed load is tried again on the next visit
+setTimeout(() => { if (!PETLE_W) bezPetli = true; zbudujMysl(); }, 8000);   // the cingulum's fibres wait for petle.bin; past 8 s the routes take arcs and a late file rebuilds them
 function miejsceM(k) {   // a place of the routes, in the right hemisphere
   const J = (s) => (HIPD && HIPD.sr[s + 'R']) || (KUD && KUD.sr[s + 'R']), v = (x, y, z) => new THREE.Vector3(x, y, z);
   switch (k) {
@@ -1395,8 +1401,10 @@ function miejsceM(k) {   // a place of the routes, in the right hemisphere
     case 'lpp': { const c = J('Pu'); return c && c.clone().add(v(3, -8, 0)); }
     default: return MY_C[k] ? MY_C[k].R : J(k); } }
 const lukJ = (a, b) => { const mid = a.clone().lerp(b, 0.5); mid.x *= 1.18; mid.z += 4; const pts = []; for (let i = 0; i <= 12; i++) { const u = i / 12; pts.push(a.clone().multiplyScalar((1 - u) ** 2).add(mid.clone().multiplyScalar(2 * u * (1 - u))).add(b.clone().multiplyScalar(u * u))); } return pts; };
+let bezPetli = false;
 function zbudujMysl() {
-  if (MYR || !KUD || !HIPD || !KUD.csLin) return;
+  if (MYR && MYR.bezP && PETLE_W) { for (const r of MYR) { sB.remove(r.l); r.l.geometry.dispose(); r.l.material.dispose(); } MYR = null; }   // petle.bin came after the arcs: rebuild with its fibres
+  if (MYR || !KUD || !HIPD || !KUD.csLin || !MY_C || (!PETLE_W && !bezPetli)) return;
   MYD = { sr: { ...KUD.sr, ...HIPD.sr }, siatki: [...KUD.siatki, ...HIPD.siatki] };
   MYR = TRASY.map(([id, a, b, jak, przez]) => {
     const A = miejsceM(a), B = miejsceM(b); let lin = [];
@@ -1413,7 +1421,7 @@ function zbudujMysl() {
     const l = linie(sB, P, new THREE.Color('#ffffff'), luk ? 1.8 : 1.2, 1, true); l.renderOrder = 3; l.material.depthTest = false; l.material.opacity = 0.9; l.visible = false;
     return { id, l, U: Uu, C: new Float32Array(P.length), luk, dokad: b, skad: a };
   });
-  rozmiar(); dirty = true; }
+  MYR.bezP = !PETLE_W; rozmiar(); dirty = true; }
 // which body or patch a place lights
 const CEL_M = { vis: 'vis', s1: 'smn', pm: 'smn', sma: 'smn', ips: 'dan', acc: 'sal', ins: 'sal', ofc: 'lim', dl: 'cn', pcc: 'dmn', mpfc: 'dmn', ang: 'dmn', nts: 'MoTg', shell: 'NAC', core: 'NAC', sncD: 'SNc', sncX: 'SNc', sncV: 'SNc', band: 'CaH', mcau: 'CaH', lpp: 'Pu' };
 const TLO_M = { dmn: [[0, 0.3], [1.6, 0.55], [9, 0.5], [9.8, 0.3], [13, 0.3], [15.4, 0.5], [17, 0.35], [19, 0.25], [21, 0.1], [24, 0.15], [25, 0.3], [27, 0.25], [31, 0.45], [35, 0.3]],   // how much each network is in play beside its arrivals
@@ -1422,8 +1430,8 @@ const TLO_M = { dmn: [[0, 0.3], [1.6, 0.55], [9, 0.5], [9.8, 0.3], [13, 0.3], [1
   smn: [[0, 0.15], [17.2, 0.15], [17.6, 0.3], [20.9, 0.3], [21.1, 0.65], [22.4, 0.4], [27, 0.35], [27.2, 0.15], [27.5, 0.35], [31, 0.3], [33, 0.15], [35, 0.15]], vis: [[0, 0.2], [35, 0.2]] };
 const kf = (tab, x) => { if (x <= tab[0][0]) return tab[0][1]; for (let i = 1; i < tab.length; i++) if (x < tab[i][0]) { const [a0, v0] = tab[i - 1], [a1, v1] = tab[i]; return v0 + (v1 - v0) * smooth((x - a0) / (a1 - a0)); } return tab[tab.length - 1][1]; };
 // the thoughts: [from, to, drawing, network]; each in the frame its network lights
-const DYMKI = [[2.3, 4.4, 'wsp', 'dmn'], [4.9, 6.9, 'twarz', 'dmn'], [7.4, 9.4, 'jutro', 'dmn'], [10.2, 13.0, 'kubek', 'lim'], [16.0, 17.4, 'droga', 'cn'], [17.6, 20.7, 'wstanie', 'smn'],
-  [20.85, 21.0, 'teraz', 'cn'], [24.6, 26.8, 'kubek', 'dmn'], [33.9, 35.0, 'jutro', 'dmn']];
+const DYMKI = [[2.3, 4.4, 'wsp', 'dmn'], [4.9, 6.9, 'twarz', 'dmn'], [7.4, 9.4, 'jutro', 'dmn'], [10.2, 13.0, 'kubek', 'lim'], [16.0, 17.3, 'droga', 'cn'], [17.6, 20.5, 'wstanie', 'smn'],
+  [20.85, 20.97, 'teraz', 'cn'], [24.6, 26.8, 'kubek', 'dmn'], [33.9, 35.0, 'jutro', 'dmn']];
 const RYS = { wsp: '<path d="M13 26 L32 11 L51 26"/><path d="M18 23 V40 H46 V23"/><rect x="28" y="30" width="8" height="10"/><rect x="21" y="27" width="5" height="5"/><rect x="38" y="27" width="5" height="5"/>',
   twarz: '<circle cx="32" cy="24" r="15"/><circle cx="26.5" cy="21" r="1.3"/><circle cx="37.5" cy="21" r="1.3"/><path d="M25 29 Q32 34 39 29"/>',
   jutro: '<line x1="10" y1="33" x2="54" y2="33"/><path d="M21 33 A11 11 0 0 1 43 33"/><line x1="32" y1="11" x2="32" y2="17"/><line x1="18" y1="17" x2="21.5" y2="20.5"/><line x1="46" y1="17" x2="42.5" y2="20.5"/>',
@@ -1434,8 +1442,8 @@ const RYS = { wsp: '<path d="M13 26 L32 11 L51 26"/><path d="M18 23 V40 H46 V23"
 const dymek = document.createElement('div'); dymek.className = 'dymek'; dymek.setAttribute('aria-hidden', 'true'); dymek.innerHTML = '<i class="dk2"></i><i class="dk1"></i><div class="dk"></div>'; $('stage').appendChild(dymek);
 let dymekRys = null;
 function dymkiKlatka(tl, p) {
-  let d = null; for (const x of DYMKI) if (tl >= x[0] - 0.3 && tl < x[1] + 0.3) d = x;
-  const on = scena === 'mysl' && d; dymek.style.opacity = on ? (reduce ? 1 : Math.min(smooth((tl - d[0] + 0.3) / 0.3), 1 - smooth((tl - d[1]) / 0.3))).toFixed(2) : '0'; if (!on) return;
+  let d = null; for (const x of DYMKI) if (tl >= x[0] && tl < x[1] + 0.3) d = x;   // a thought rises in the frame its network lights and fades after it
+  const on = scena === 'mysl' && d; dymek.style.opacity = on ? (reduce ? 1 : Math.min(smooth((tl - d[0]) / (d[2] === 'teraz' ? 0.03 : 0.25)), 1 - smooth((tl - d[1]) / 0.3))).toFixed(2) : '0'; if (!on) return;
   if (dymekRys !== d[2]) { dymekRys = d[2]; dymek.lastChild.innerHTML = '<svg viewBox="0 0 64 48" fill="none" stroke="#efe8dc" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + RYS[d[2]] + '</svg>'; }
   const [hx, hy] = naEkran(p.head, camF, cF), r = RECT.get(cF), waski = innerWidth <= 760, bw = waski ? 72 : 96, bh = waski ? 54 : 72;
   const bx = Math.min(r.right - SR.left - bw / 2 - 8, Math.max(r.left - SR.left + bw / 2 + 8, hx + (waski ? 46 : 64))), by = Math.max(r.top - SR.top + bh / 2 + 8, hy - (waski ? 64 : 84));
@@ -1443,9 +1451,10 @@ function dymkiKlatka(tl, p) {
   dymek.lastChild.style.transform = `translate(${Math.round(bx)}px,${Math.round(by)}px) translate(-50%,-50%)`;
   a.style.transform = `translate(${Math.round(hx + (bx - hx) * 0.3)}px,${Math.round(hy + (by - hy) * 0.3)}px) translate(-50%,-50%)`;
   b.style.transform = `translate(${Math.round(hx + (bx - hx) * 0.58)}px,${Math.round(hy + (by - hy) * 0.58)}px) translate(-50%,-50%)`; }
-const MYA = { akt: {} };
+const MYA = { akt: {} }; let myBylo = false;
 function myslKlatka(M, tl, p, uT) {
   const on = scena === 'mysl';
+  if (!on && !myBylo) return; myBylo = on;   // leaving Myślenie resets its parts once
   U.uMyOn.value = on ? 1 : 0; if (HIPD) HIPD.grupa.visible = on;
   if (MYR) for (const r of MYR) r.l.visible = on;
   if (!on) { dymek.style.opacity = '0'; if (KUD) for (const m of KUD.siatki) m.material.uniforms.uW.value = 0; return; }   // no thought outside Myślenie
@@ -1454,7 +1463,7 @@ function myslKlatka(M, tl, p, uT) {
   const dodaj = (k, kanal, v) => { if (!k || v <= 0) return; const o = bod[k] || (bod[k] = [0, 0, 0, 0]); o[kanal] = Math.max(o[kanal], v); };
   // arrivals and holds: a place lights as an event reaches it
   for (const e of EV_M) { const r = TRASY[TR_I[e[0]]], cel = e[5] ? r[1] : r[2], z = e[5] ? r[2] : r[1], k = e[3], a = e[1] + e[2];
-    if (k >= 4) { if (tl >= e[1] && tl <= a) { const v = e[4] * 0.7 * smooth((tl - e[1]) / 0.3); for (const c of [cel, z]) dodaj(CEL_M[c] || c, k === 5 ? 0 : 1, v); } continue; }
+    if (k >= 4) { if (tl >= e[1] && tl <= a) { const v = e[4] * 0.7 * smooth((tl - e[1]) / 0.3); for (const c of [cel, z]) dodaj(CEL_M[c] || c, k === 5 ? 0 : k === 7 ? 2 : 1, v); } continue; }
     if (tl < a - 0.02 || tl > a + 2.5) continue; const v = bump(tl, a, 0.06, k === 3 ? 0.5 : 1.0) * e[4];
     dodaj(CEL_M[cel] || cel, k === 0 ? 1 : k === 1 ? 0 : k === 2 ? 2 : 3, v); if (cel === 'band') dodaj('Pu', k === 2 ? 2 : 1, v); }
   for (const k of Object.keys(MYKOD)) { const b = bod[k] || [0, 0, 0, 0]; akt[k] = clamp01(kf(TLO_M[k], tl) + 0.8 * Math.max(b[0], b[1], b[3])); U.uMyA.value[MYKOD[k]] = akt[k]; }
@@ -1472,7 +1481,7 @@ function myslKlatka(M, tl, p, uT) {
       if (a > 0.003) { const k = eA[3];
         if (k === 0 || k === 4 || k === 6) { const g = 0.25 + 0.75 * Math.pow(0.5 + 0.5 * Math.sin(2 * Math.PI * (dd / 9 - 12 * uT)), 9), v = Math.min(1.4, a * g * 1.6) * wM; R += GAMMA.r * v; Gc += GAMMA.g * v; Bc += GAMMA.b * v; }
         else if (k === 1 || k === 5) { const v = Math.min(1.2, a * (0.5 + 0.5 * Math.sin(2 * Math.PI * (dd / 26 - 3 * uT))) * 1.4) * wP; R += BETA.r * v; Gc += BETA.g * v; Bc += BETA.b * v; }
-        else if (k === 2) { const v = Math.min(1.3, a * (0.6 + 0.4 * Math.sin(2 * Math.PI * (dd / 40 - 1.5 * uT))) * 1.5) * wD; R += DOPA.r * v; Gc += DOPA.g * v; Bc += DOPA.b * v; }
+        else if (k === 2 || k === 7) { const v = Math.min(1.3, a * (0.6 + 0.4 * Math.sin(2 * Math.PI * (dd / 40 - 1.5 * uT))) * 1.5) * wD; R += DOPA.r * v; Gc += DOPA.g * v; Bc += DOPA.b * v; }
         else { const v = Math.min(1.5, a) * Math.max(wP, wM); R += BIEL.r * v; Gc += BIEL.g * v; Bc += BIEL.b * v; } }
       if (b > 0.003) { const db = eB[5] ? L - d : d, v = Math.min(1.2, b * (0.5 + 0.5 * Math.sin(2 * Math.PI * (db / 26 - 3 * uT))) * 1.4) * wP; R += BETA.r * v; Gc += BETA.g * v; Bc += BETA.b * v; }
       C[o] = R; C[o + 1] = Gc; C[o + 2] = Bc; }
@@ -1493,15 +1502,16 @@ function kubekOs(k, { c, os, bok }) {   // a mug along its axis, a handle on the
   for (let i = 0; i < 4; i++) L(P(0, i / 4 * 2 * Math.PI + 0.4), P(H, i / 4 * 2 * Math.PI + 0.4));
   const uch = [P(2.5, 0), P(3, 0, R + 2.2), P(7, 0, R + 2.2), P(7.5, 0)]; for (let i = 1; i < uch.length; i++) L(uch[i - 1], uch[i]); }
 const OPIS_M = {
-  bladzenie: 'Postać siedzi. W modelu obraz pokoju i nacisk krzesła płyną czerwienią do hipokampa, a sieć domyślna rozświetla się po drodze. Co kilka sekund hipokamp wysyła tymi samymi drogami biały błysk fali ostrej, a nad głową pojawia się myśl.',
-  chec: 'Drogi bioinformacji z wnętrza ciała biegną przez nerw błędny i jądro pasma samotnego do wyspy (Khalsa i in. 2018), a w modelu płynie nimi czerwień. W modelu zaskoczenie z wnętrza ciała płynie w stronę sieci istotności i odrywa postać od błądzenia myśli. Kiedy czerwień dociera do kory oczodołowej, w myśli pojawia się kubek, a pole brzuszne nakrywki odpowiada na niego dopaminą.',   // [s:khalsa2018-afferent-pathways]
-  plan: 'W modelu predykcje wracają z hipokampa błękitem przez sieć domyślną i sieć kontroli do sieci grzbietowej uwagi, a myśl układa się w drogę do kuchni. W modelu wyobrażone wstanie biegnie już w korze przedruchowej i dodatkowym polu ruchowym, a predykcje postawy siedzącej wciąż płyną do mięśni, więc postać siedzi.',
-  decyzja: 'W modelu najpierw otwiera się pętla przedczołowa, a chwilę później ruchowa, kiedy słabnie hamowanie z gałki bladej. „Teraz” pojawia się w tej samej chwili co czoło fali aktywności w korze przedczołowej, dopamina płynie do skorupy, a predykcje postawy stojącej biegną do mięśni i postać wstaje.',
-  kroki: 'W modelu chód płynie pętlą nawyku przez skorupę, a błękit predykcji wyprzedza słabą czerwień. Po kilku krokach obraz drogi znów płynie do hipokampa i wraca myśl o kawie.',
-  kawa: 'Postać siedzi z kubkiem i pije. U małp nagroda zgodna z predykcją nie zmienia częstości wyładowań neuronów dopaminowych (Schultz, Dayan i Montague 1997), więc w modelu dopamina płynie przy łyku równo. W modelu po łyku wracają fale ostre, a potem kolejna myśl.'   // [s:schultz1997-response-transfers-to-cs]
+  bladzenie: 'Postać siedzi, a nad jej głową pojawiają się myśli. W modelu obraz pokoju i nacisk krzesła płyną czerwienią do hipokampa, a co kilka sekund hipokamp odsyła tymi samymi drogami biały błysk fali ostrej.',
+  chec: 'W myśli pojawia się kubek kawy. Bioinformacja z wnętrza ciała dociera między innymi nerwem błędnym, a przetwarzają ją między innymi jądro pasma samotnego i wyspa (Khalsa i in. 2018). W modelu płynie nimi czerwień odrywająca postać od błądzenia myśli, a pole brzuszne nakrywki odpowiada na kubek dopaminą.',   // [s:khalsa2018-afferent-pathways]
+  plan: 'Postać układa w myśli drogę do kuchni i wstanie. W modelu predykcje wracają z hipokampa błękitem przez sieć domyślną i sieć kontroli do sieci grzbietowej uwagi. W modelu wyobrażone wstanie biegnie już w korze przedruchowej, ale predykcje postawy siedzącej wciąż płyną do mięśni, więc postać siedzi.',
+  decyzja: 'Postać wstaje. W modelu „Teraz” pojawia się w tej samej chwili co czoło fali aktywności w korze przedczołowej, a chwilę później otwiera się pętla ruchowa i predykcje postawy stojącej biegną do mięśni. U myszy biegnących po bieżni z unieruchomioną głową aktywność aksonów dopaminowych w grzbietowej części prążkowia rosła średnio 100–150 ms przed przyspieszeniem (Howe i Dombeck 2016).',   // [s:howe2016-transients-lead-locomotion-initiation]
+  kroki: 'Postać idzie do kuchni. W modelu chód płynie pętlą nawyku przez skorupę, a błękit predykcji wyprzedza słabą czerwień. Po kilku krokach obraz drogi znów płynie do hipokampa i wraca myśl o kawie.',
+  kawa: 'Postać siedzi z kubkiem i pije. U małp nagroda zgodna z predykcją nie zmienia częstości wyładowań neuronów dopaminowych (Schultz, Dayan i Montague 1997), więc w modelu dopamina płynie przy łyku równo, a potem wracają fale ostre i kolejna myśl.'   // [s:schultz1997-response-transfers-to-cs] [s:schultz1997-monkeys-juice-lever-light]
 };
 const BEAT_M = (tl) => (tl < 9 ? 'bladzenie' : tl < 13 ? 'chec' : tl < 19 ? 'plan' : tl < MY.kroki ? 'decyzja' : tl < MY.kawa ? 'kroki' : 'kawa');
-const STAC_BEAT = { bladzenie: 'Hip', chec: 'sal', plan: 'cn', decyzja: 'smn', kroki: 'Pu', kawa: 'VTA' };   // in Decyzja the gold moves from the control network, with „Teraz”, to the sensorimotor network as he rises
+const zlotoM = (tl) => { const dd = DYMKI.find((x) => tl >= x[0] + 0.1 && tl < x[1] + 0.15); if (dd) return dd[3];
+  const b = BEAT_M(tl); return b === 'plan' ? (tl < 15.0 ? 'Hip' : 'dmn') : b === 'decyzja' ? (tl < 20.97 ? 'cn' : 'smn') : { bladzenie: 'Hip', chec: 'sal', kroki: 'Pu', kawa: 'VTA' }[b]; };   // the plan's gold follows the return from the hippocampus; the decision's moves from prefrontal to motor   // in Decyzja the gold moves from the control network, with „Teraz”, to the sensorimotor network as he rises
 const STACJE_M = {
   dmn: ['sieć domyślna', 'W modelu tu dociera to, co postać widzi i czuje, a stąd predykcje wracają przez sieć kontroli i sieć grzbietową uwagi do kory ruchowej. Kiedy nad głową pojawia się myśl, ta sieć świeci złotem.'],
   cn: ['sieć kontroli', 'Planowanie własnej przyszłości i planowanie przestrzenne angażowały sieć kontroli, pierwsze razem z siecią domyślną, drugie z siecią grzbietową uwagi (Spreng i in. 2010). W spoczynku sieć kontroli łączy się z pasem biegnącym przez jądro ogoniaste i skorupę (Choi, Yeo i Buckner 2012).'],   // [s:spreng2010-autobiographical-planning-dmn] [s:choi2012-frontoparietal-central-band]
@@ -1514,15 +1524,16 @@ const STACJE_M = {
   VTA: ['pole brzuszne nakrywki', 'U naczelnych powłoka jądra półleżącego otrzymuje włókna głównie z pola brzusznego nakrywki (Haber, Fudge i McFarland 2000). Tu zaczyna się spirala wznosząca się przez prążkowie.'],   // [s:haber2000-shell-vta-dorsal-tier]
   NAC: ['jądro półleżące', 'Jądro półleżące zaliczono do sieci limbicznej w podziale na siedem sieci (Choi, Yeo i Buckner 2012). U naczelnych powłoka wpływa na rdzeń, a rdzeń na środkową część prążkowia, przez neurony dopaminowe śródmózgowia (Haber, Fudge i McFarland 2000).'],   // [s:choi2012-limbic-nucleus-accumbens] [s:haber2000-shell-core-central-dorsolateral]
   SNc: ['istota czarna, część zbita', 'U naczelnych prążkowie i neurony dopaminowe śródmózgowia tworzą spiralę wznoszącą się od powłoki przez rdzeń i środek prążkowia do jego części grzbietowo-bocznej (Haber, Fudge i McFarland 2000).'],   // [s:haber2000-shell-core-central-dorsolateral]
+  Pu: ['skorupa', 'W modelu chód i wstanie płyną pętlą ruchową przez skorupę, gałkę bladą i wzgórze do dodatkowego pola ruchowego (Alexander, DeLong i Strick 1986).'],   // [s:alexander1986-motor-loop-through-vlo]
   GPi: ['gałka blada, część wewnętrzna', 'Według hipotezy Minka jądra podstawy hamują konkurencyjne programy ruchowe (Mink 1996). W modelu hamowanie z gałki bladej słabnie najpierw w pętli przedczołowej, a chwilę później w ruchowej.']   // [s:mink1996-inhibit-competing-programs]
 };
 const CZESCI_M = [
-  { id: 'bladzenie', n: 'Błądzenie myśli', op: 'U dwóch znieczulonych makaków aktywność sieci domyślnej rosła kilka sekund po falach ostrych z szybkimi oscylacjami (ang. sharp-wave ripples) w hipokampie (Kaplan i in. 2016). W modelu taka fala to myśl nad głową postaci.', a: 0.3, b: 8.8, st: 'Hip', e: OPIS_M.bladzenie },   // [s:kaplan2016-ripples-increase-dmn-selectively] [s:kaplan2016-dmn-rise-lags-ripple-onset]
-  { id: 'chec', n: 'Chęć kawy', op: 'U małp, które nauczyły się, że światło zapowiada nagrodę, odpowiedź neuronów dopaminowych przenosi się z nagrody na to światło (Schultz, Dayan i Montague 1997), więc w modelu dopamina płynie już przy kubku w myśli.', a: 8.8, b: 13, st: 'sal', e: OPIS_M.chec },   // [s:schultz1997-response-transfers-to-cs]
-  { id: 'plan', n: 'Plan drogi', op: 'Planowanie własnej przyszłości angażowało sieć domyślną, planowanie przestrzenne sieć grzbietową uwagi, a oba sieć kontroli (Spreng i in. 2010). Wyobrażanie sobie ruchu angażuje rozległą sieć czołowo-ciemieniową (Hétu i in. 2013).', a: 13, b: 19, st: 'cn', e: OPIS_M.plan },   // [s:spreng2010-autobiographical-planning-dmn] [s:hetu2013-mi-fronto-parietal-m1-not-consistent]
-  { id: 'decyzja', n: 'Decyzja', op: 'Olgierd stawia hipotezę, że decyzja o wstaniu i pierwszy ruch nóg to jedna operacja w dwóch miejscach kory czołowej. U myszy aktywność aksonów dopaminowych w grzbietowej części prążkowia rośnie 100–150 ms przed początkiem biegu (Howe i Dombeck 2016).', a: 19.5, b: 22.6, st: 'GPi', e: OPIS_M.decyzja },   // [s:howe2016-transients-lead-locomotion-initiation]
-  { id: 'kroki', n: 'Pierwsze kroki', op: 'W modelu chód płynie pętlą nawyku przez skorupę (Alexander, DeLong i Strick 1986), a po kilku krokach wraca myśl.', a: 22.4, b: 27, st: 'Pu', e: OPIS_M.kroki },   // [s:alexander1986-motor-loop-through-vlo]
-  { id: 'kawa', n: 'Kawa', op: 'U gryzoni fale ostre z szybkimi oscylacjami pojawiają się, kiedy mózg jest odłączony od bieżącego działania, między innymi przy jedzeniu i piciu oraz we śnie bez szybkich ruchów gałek ocznych (NREM) (Buzsáki 2015).', a: 27, b: 35, st: 'VTA', e: OPIS_M.kawa }   // [s:buzsaki2015-spw-duration-replay-compression]
+  { id: 'bladzenie', n: 'Błądzenie myśli', op: 'Postać siedzi, a nad jej głową pojawiają się myśli. U dwóch znieczulonych makaków aktywność sieci domyślnej w rezonansie magnetycznym rosła po falach ostrych hipokampa (Kaplan i in. 2016).', a: 0.3, b: 8.8, st: 'Hip', e: OPIS_M.bladzenie },   // [s:kaplan2016-ripples-increase-dmn-selectively] [s:kaplan2016-dmn-rise-lags-ripple-onset]
+  { id: 'chec', n: 'Chęć kawy', op: 'W myśli pojawia się kubek kawy. U małp odpowiedź neuronów dopaminowych przenosi się z nagrody na jej zapowiedź (Schultz, Dayan i Montague 1997).', a: 8.8, b: 13, st: 'sal', e: OPIS_M.chec },   // [s:schultz1997-response-transfers-to-cs] [s:schultz1997-monkeys-juice-lever-light]
+  { id: 'plan', n: 'Plan drogi', op: 'Postać układa w myśli drogę do kuchni. U zdrowych dorosłych planowanie własnej przyszłości angażowało sieć domyślną, a przestrzenne sieć grzbietową uwagi, oba także sieć kontroli (Spreng i in. 2010).', a: 13, b: 19, st: 'cn', e: OPIS_M.plan },   // [s:spreng2010-autobiographical-planning-dmn]
+  { id: 'decyzja', n: 'Decyzja', op: 'Postać wstaje. W modelu decyzja o wstaniu i pierwszy ruch nóg to jedna operacja w dwóch miejscach kory czołowej.', a: 19.5, b: 22.6, st: 'smn', e: OPIS_M.decyzja },
+  { id: 'kroki', n: 'Pierwsze kroki', op: 'Postać idzie do kuchni. W modelu chód płynie pętlą nawyku przez skorupę (Alexander, DeLong i Strick 1986).', a: 22.4, b: 27, st: 'Pu', e: OPIS_M.kroki },   // [s:alexander1986-motor-loop-through-vlo]
+  { id: 'kawa', n: 'Kawa', op: 'Postać pije kawę. Fale ostre hipokampa, opisane głównie u gryzoni, pojawiają się między innymi przy jedzeniu i piciu (Buzsáki 2015).', a: 27, b: 35, st: 'VTA', e: OPIS_M.kawa }   // [s:buzsaki2015-spw-duration-replay-compression]
 ];
 
 // ---------- the explanations ----------
@@ -1633,8 +1644,8 @@ const RG = { kuchnia: { et: ET_KU, on: [1, 2, 3], kl: 'ku' }, chod: { et: ET_CH,
 const LATKA = { dl: 1, sma: 2, pm: 3, kor: 4, reka: 5, sn: 6, wyspa: 7 }, KOTW = { sma: SMA_C, dl: DLPFC_C, pm: { L: ST.pmL, R: ST.pmR }, kor: NOGA_C, reka: REKA_C, sn: WYSPA_C, wyspa: WYSPA_C };
 const ET_ST = { Pu: 'puR', CaH: 'cahR', GPi: 'gpiR', VL: 'vlR', MD: 'mdR', SNc: 'sncR', STH: 'stnR', VPL: 'vplR', pm: 'pmR' }, ST_ET = Object.fromEntries(Object.entries(ET_ST).map(([a, b]) => [b, a]));
 const ET_MY = [['vis', 'L', 'sieć wzrokowa'], ['smn', 'L', 'sieć czuciowo-ruchowa'], ['dan', 'L', 'sieć grzbietowa uwagi'], ['dmn', 'L', 'sieć domyślna'], ['Hip', 'L', 'hipokamp'], ['SNc', 'L'], ['VTA', 'L'], ['MoTg', 'L'], ['PnBa', 'L'], ['CbDN', 'L'],   // the back of the brain at the left, the front at the right, as the opening view faces
-  ['cn', 'R', 'sieć kontroli'], ['lim', 'R', 'sieć limbiczna'], ['sal', 'R', 'sieć istotności'], ['CaH', 'R'], ['Pu', 'R'], ['NAC', 'R'], ['GPe', 'R'], ['GPi', 'R'], ['STH', 'R'], ['VL', 'R', 'wzgórze']];
-RG.mysl = { et: ET_MY, on: [], kl: 'my' }; Object.assign(KOTW, { vis: MY_C.vis, smn: SMA_C, dan: MY_C.ips, cn: MY_C.dl, dmn: MY_C.pcc, sal: WYSPA_C, lim: MY_C.ofc });
+  ['cn', 'R', 'sieć kontroli'], ['lim', 'R', 'sieć limbiczna'], ['sal', 'R', 'sieć istotności'], ['CaH', 'R'], ['Pu', 'R'], ['NAC', 'R'], ['GPe', 'R'], ['GPi', 'R'], ['STH', 'R'], ['VL', 'R', 'wzgórze']];   // the thalamus once, its VA, MD and VL under one name, so the scene names twenty regions and not twenty-two; every region a step uses keeps its name (DESIGN.md)
+RG.mysl = { et: ET_MY, on: [], kl: 'my' };
 const KOD_S = Object.fromEntries(Object.entries(SKROT).map(([a, b]) => [b, +a]));
 let wskazEt = null, nazwy = true;   // the columns of names, switched by the Nazwy button
 const ciala = () => scena === 'kuchnia' ? KUD : scena === 'mysl' ? MYD : REGD;   // the bodies of the scene playing
@@ -1850,9 +1861,10 @@ function klatka(now) {
   if (scena === 'wstawac') { const x = tl - WS.t0; opis = OPIS_W.siedzi;
     if (x >= -0.1 && x < 4.5) { opis = OPIS_W.wstaje; nazwana = 'serce'; } else if (x >= 4.5 && x < 7) { opis = OPIS_W.spadek; nazwana = 'zatoka'; }
     else if (x >= 7 && x < 10.5) { opis = OPIS_W.mroczki; nazwana = 'snR'; } else if (x >= 10.5 && x < 20) { opis = OPIS_W.odruch; nazwana = 'nts'; } }
-  if (scena === 'mysl') { const b = BEAT_M(tl), dd = DYMKI.find((x) => tl >= x[0] && tl < x[1]); opis = OPIS_M[b]; nazwana = dd ? dd[3] : STAC_BEAT[b]; }   // in a thought's frame the gold names its network
+  if (scena === 'mysl') opis = OPIS_M[BEAT_M(tl)];
   if (iso) { opis = OPIS_ISO[iso]; if (iso === 'P' && !nazwana) nazwana = 'cien'; }
   if (C) { nazwana = C.st; opis = C.e; }
+  if (scena === 'mysl') nazwana = zlotoM(tl);   // in Myślenie the gold names the network of the thought on screen, else the place the beat is about, in the loop and in a scenario alike
   const ST_ = (k) => (scena === 'mysl' && STACJE_M[k]) || (scena === 'kubek' && STACJE_K[k]) || (scena === 'kuchnia' && STACJE_KU[k]) || (scena === 'wstawac' && STACJE_W[k]) || STACJE[k];
   if (wskazana) { nazwana = wskazana; opis = ST_(wskazana)[1]; }
   if (nazwana && !ekranStacji[nazwana]) nazwana = null;
@@ -1917,7 +1929,7 @@ $('bNazwy').onclick = () => { nazwy = !nazwy; $('bNazwy').setAttribute('aria-pre
 function ustawScene(sc) { scena = sc; wskazEt = null; RG[sc].od = performance.now(); U.uReg.value.fill(0); for (const c of RG[sc].on) U.uReg.value[c] = c === 6 ? 0.45 : 1; if (U.uReg.value[6]) U.uReg.value[7] = 0.45; wczytajRegiony(); { const d = camB.position.clone().sub(ctl.target).normalize(); camB.position.copy(ctl.target).add(d.multiplyScalar(START.length() * DAL(sc))); ctl.update(); rozmiar(); } for (const e of document.querySelectorAll('.sym-karty [data-scena]')) e.hidden = e.dataset.scena !== sc; { const b = $('kart'); if (b) b.hidden = !b.querySelector('[data-scena=' + sc + ']'); } LOOP = sc === 'kubek' ? LOOP_K : sc === 'wstawac' ? LOOP_WS : sc === 'mysl' ? LOOP_M : LOOP_W; t = 0; rysujScenariusze(); ustawCzesc(-1);
   for (const [id, s] of [['sChod', 'chod'], ['sKubek', 'kubek'], ['sKuchnia', 'kuchnia'], ['sWstawac', 'wstawac'], ['sMysl', 'mysl']]) $(id).setAttribute('aria-pressed', sc === s);
   const chD = document.querySelector('.chip[data-c=D]'); const dop = sc === 'kuchnia' || sc === 'mysl'; if (!dop && iso === 'D') chD.click(); chD.hidden = !dop;
-  if (sc === 'kuchnia' || sc === 'mysl') wczytajKuchnie(); if (sc === 'mysl') { wczytajPetle(); wczytajMysl(); } miejsceNapisu(); dirty = true; }
+  if (sc === 'kuchnia' || sc === 'mysl') wczytajKuchnie(); if (sc === 'mysl') { przygotujMy(); wczytajPetle(); wczytajMysl(); } miejsceNapisu(); dirty = true; }
 function miejsceNapisu() { const ex = $('ex'); if (innerWidth > 760) { ex.style.minHeight = ''; return; }
   const m = document.createElement('div'); m.className = 'ex'; m.style.cssText = 'position:absolute;visibility:hidden;height:auto;min-height:0;left:0;width:' + ex.clientWidth + 'px'; ex.parentNode.appendChild(m);
   let h = 0; for (const tx of [...Object.values(scena === 'kubek' ? OPIS_K : scena === 'kuchnia' ? OPIS_KU : scena === 'wstawac' ? OPIS_W : scena === 'mysl' ? OPIS_M : OPIS), ...Object.values(OPIS_ISO)]) { m.textContent = tx; h = Math.max(h, m.offsetHeight); }
