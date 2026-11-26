@@ -8,9 +8,9 @@ sieci:
 - kod: DMN
   powód: 'Zastanawiasz się, co naciśną inni. Konstruowanie ich celów i przekonań to w spójnej kognitywistyce aktywność sieci domyślnej, a polegasz przy tym na swoich Modelach Mentalnych innych graczy. Spośród 526 map metaanalitycznych z bazy NeuroSynth z grzbietowo-przyśrodkową częścią sieci domyślnej najsilniej pokrywają się mapy badań nad konstruowaniem innych umysłów (Andrews-Hanna, Smallwood i Spreng 2014)<!--[s:andrewshanna2014-dorsal-medial-mentalizing]-->.'
 - kod: SN
-  powód: 'Przed wyborem coś niespodziewanie ściska Cię w środku, czujesz niepokój, a Twoje predykcje obejmują skutki Twojego wyboru. Ten niepokój to aktywność sieci istotności. U zdrowych dorosłych ocena niepokoju przed badaniem wiązała się z łącznością funkcjonalną grzbietowego przedniego zakrętu obręczy (ang. dorsal anterior cingulate cortex), obszaru tej sieci (Seeley i in. 2007)<!--[s:seeley2007-anxiety-dacc-executive-parietal]-->.'
+  powód: 'Przed wyborem coś niespodziewanie ściska Cię w środku, czujesz niepokój, a Twoje predykcje obejmują skutki Twojego wyboru. W spójnej kognitywistyce ten niepokój to aktywność sieci istotności. U zdrowych dorosłych ocena niepokoju przed badaniem wiązała się z łącznością funkcjonalną grzbietowego przedniego zakrętu obręczy (ang. dorsal anterior cingulate cortex), obszaru tej sieci (Seeley i in. 2007)<!--[s:seeley2007-anxiety-dacc-executive-parietal]-->.'
 - kod: CN
-  powód: 'Liczysz, ilu graczy musi nacisnąć niebieski. To aktywność sieci kontroli. U zdrowych dorosłych sprawność w zadaniach wykonawczych wiązała się z łącznością funkcjonalną obszarów tej sieci w bocznej korze ciemieniowej (Seeley i in. 2007)<!--[s:seeley2007-anxiety-dacc-executive-parietal]-->.'
+  powód: 'Liczysz, ilu graczy musi nacisnąć niebieski. W spójnej kognitywistyce to aktywność sieci kontroli. U zdrowych dorosłych sprawność w zadaniach wykonawczych wiązała się z łącznością funkcjonalną obszarów tej sieci w bocznej korze ciemieniowej (Seeley i in. 2007)<!--[s:seeley2007-anxiety-dacc-executive-parietal]-->.'
 bez_sieci: ''
 ryciny:
 - przyciski.svg

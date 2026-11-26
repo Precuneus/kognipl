@@ -7,11 +7,11 @@ rodziny:
 - '[[Rozwój dziecka]]'
 sieci:
 - kod: SMN
-  powód: 'Celujesz i ruszasz w samą porę. To aktywność kory ruchowej i somatosensorycznej po obu stronach bruzdy środkowej, rdzenia sieci czuciowo-ruchowej (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-pn-core-motor-somatosensory]-->.'
+  powód: 'Celujesz i ruszasz w samą porę. W spójnej kognitywistyce to aktywność kory ruchowej i somatosensorycznej po obu stronach bruzdy środkowej, rdzenia sieci czuciowo-ruchowej (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-pn-core-motor-somatosensory]-->.'
 - kod: DAN
-  powód: 'Wybierasz cel i ruch, którym go dosięgniesz. To aktywność sieci grzbietowej uwagi, która przygotowuje i stosuje wybór bodźców i odpowiedzi kierowany celem (Corbetta i Shulman 2002)<!--[s:corbetta2002-van-circuit-breaker]-->.'
+  powód: 'Wybierasz cel i ruch, którym go dosięgniesz. W spójnej kognitywistyce to aktywność sieci grzbietowej uwagi, która przygotowuje i stosuje wybór bodźców i odpowiedzi kierowany celem (Corbetta i Shulman 2002)<!--[s:corbetta2002-van-circuit-breaker]-->.'
 - kod: VIS
-  powód: 'Widzisz cel i jego ruch. To aktywność płata potylicznego, z pierwszorzędową korą wzrokową (V1) i dalszymi obszarami wzrokowymi (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-on-core-occipital]-->.'
+  powód: 'Widzisz cel i jego ruch. W spójnej kognitywistyce to aktywność płata potylicznego, z pierwszorzędową korą wzrokową (V1) i dalszymi obszarami wzrokowymi (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-on-core-occipital]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:

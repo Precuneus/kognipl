@@ -6,7 +6,7 @@ rodziny:
 - '[[Odkrywanie reguł]]'
 sieci:
 - kod: CN
-  powód: 'Porównujesz każdą ocenę z poprzednimi ruchami, a każde zaskoczenie aktualizuje Twoje Modele Mentalne reguły. To aktywność sieci kontroli z rdzeniem w bocznej korze przedczołowej (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-lfpn-core-lateral-pfc]-->, a środkowa część grzbietowo-bocznej kory przedczołowej zwiększa aktywność przy każdej ocenie ruchu w teście sortowania kart (Monchi i in. 2001)<!--[s:monchi2001-dlpfc-feedback-vlpfc-shift]-->.'
+  powód: 'Porównujesz każdą ocenę z poprzednimi ruchami, a każde zaskoczenie aktualizuje Twoje Modele Mentalne reguły. W spójnej kognitywistyce to aktywność sieci kontroli z rdzeniem w bocznej korze przedczołowej (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-lfpn-core-lateral-pfc]-->. Monchi i współpracownicy znaleźli, że środkowa część grzbietowo-bocznej kory przedczołowej zwiększa aktywność przy każdej ocenie ruchu w teście sortowania kart (Monchi i in. 2001)<!--[s:monchi2001-dlpfc-feedback-vlpfc-shift]-->.'
 bez_sieci: ''
 obszary:
 - zakręt czołowy środkowy

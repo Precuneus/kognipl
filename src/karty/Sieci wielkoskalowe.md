@@ -7,21 +7,21 @@ rodziny:
 - '[[Sygnał hemodynamiczny i magnetyczny]]'
 sieci:
 - kod: VIS
-  powód: 'Widzisz. To aktywność sieci wzrokowej.'
+  powód: 'Widzisz. W spójnej kognitywistyce to aktywność sieci wzrokowej.'
 - kod: SMN
-  powód: 'Czujesz ciało i się ruszasz. To aktywność sieci czuciowo-ruchowej.'
+  powód: 'Czujesz ciało i się ruszasz. W spójnej kognitywistyce to aktywność sieci czuciowo-ruchowej.'
 - kod: DAN
-  powód: 'Koordynujesz oko i rękę. To aktywność sieci grzbietowej uwagi.'
+  powód: 'Koordynujesz oko i rękę. W spójnej kognitywistyce to aktywność sieci grzbietowej uwagi.'
 - kod: VAN
-  powód: 'Coś nagle przerywa Twój plan. To aktywność sieci brzusznej uwagi.'
+  powód: 'Coś nagle przerywa Twój plan. W spójnej kognitywistyce to aktywność sieci brzusznej uwagi.'
 - kod: SN
-  powód: 'Czujesz, że coś zagraża Twojemu schematowi ciała, a Twoje predykcje obejmują skutki tego zagrożenia. To aktywność sieci istotności.'
+  powód: 'Czujesz, że coś zagraża Twojemu schematowi ciała, a Twoje predykcje obejmują skutki tego zagrożenia. W spójnej kognitywistyce to aktywność sieci istotności.'
 - kod: CN
-  powód: 'Dążysz do celu. To aktywność sieci kontroli.'
+  powód: 'Dążysz do celu. W spójnej kognitywistyce to aktywność sieci kontroli.'
 - kod: DMN
-  powód: 'Myślisz o sobie, o przeszłości i przyszłości, o innych ludziach. To aktywność sieci domyślnej.'
+  powód: 'Myślisz o sobie, o przeszłości i przyszłości, o innych ludziach. W spójnej kognitywistyce to aktywność sieci domyślnej.'
 - kod: LIM
-  powód: 'Coś Cię przyciąga albo odpycha. To aktywność sieci limbicznej, którą tworzą kora okołooczodołowa i przednia część płatów skroniowych (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-mfpn-core-and-limbic]-->.'
+  powód: 'Coś Cię przyciąga albo odpycha. W spójnej kognitywistyce to aktywność sieci limbicznej, którą tworzą kora okołooczodołowa i przednia część płatów skroniowych (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-mfpn-core-and-limbic]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:

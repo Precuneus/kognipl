@@ -6,7 +6,7 @@ rodziny:
 - '[[Plastyczność i połączenia]]'
 sieci:
 - kod: VIS
-  powód: 'Patrzysz na świat. To aktywność Twojej sieci wzrokowej. U kociąt zaszycie jednego oka od urodzenia zmienia, na które oko odpowiadają komórki kory wzrokowej, ale wiele komórek ciała kolankowatego bocznego odpowiada na to oko normalnie (Wiesel i Hubel 1965)<!--[s:wiesel1965-monocular-few-cells-deprived-eye]--><!--[s:wiesel1965-geniculate-normal-cortex-not]-->.'
+  powód: 'Patrzysz na świat. W spójnej kognitywistyce to aktywność Twojej sieci wzrokowej. U kociąt zaszycie jednego oka od urodzenia zmienia, na które oko odpowiadają komórki kory wzrokowej, ale wiele komórek ciała kolankowatego bocznego odpowiada na to oko normalnie (Wiesel i Hubel 1965)<!--[s:wiesel1965-monocular-few-cells-deprived-eye]--><!--[s:wiesel1965-geniculate-normal-cortex-not]-->.'
 bez_sieci: ''
 obszary:
 - klinek

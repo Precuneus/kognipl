@@ -7,7 +7,7 @@ rodziny:
 - '[[Kora wzrokowa i szlaki]]'
 sieci:
 - kod: VIS
-  powód: 'Patrzysz na przeszkodę. Widzenie przeszkody to aktywność sieci wzrokowej, której rdzeń tworzą pierwszorzędowa kora wzrokowa (V1) i dalsze obszary wzrokowe płata potylicznego (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-on-core-occipital]-->, a polegasz przy tym na swoich Modelach Mentalnych sceny. Ślepowidzenie pojawia się po uszkodzeniu V1 (Cowey 2010)<!--[s:cowey2010-deny-seeing-forced-choice]-->.'
+  powód: 'Patrzysz na przeszkodę. W spójnej kognitywistyce widzenie przeszkody to aktywność sieci wzrokowej, której rdzeń tworzą pierwszorzędowa kora wzrokowa (V1) i dalsze obszary wzrokowe płata potylicznego (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-on-core-occipital]-->, a polegasz przy tym na swoich Modelach Mentalnych sceny. Ślepowidzenie pojawia się po uszkodzeniu V1 (Cowey 2010)<!--[s:cowey2010-deny-seeing-forced-choice]-->.'
 - kod: DAN
   powód: 'Śledzisz wzrokiem toczącą się piłkę. Widzenie jej ruchu to także aktywność obszaru MT+ (ang. middle temporal complex), należącego do rdzenia sieci grzbietowej uwagi (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-dfpn-core-spl-ips-fef]-->, a polegasz przy tym na swoich Modelach Mentalnych jej ruchu. U każdej osoby ze ślepowidzeniem w badaniu Ajiny i współpracowników połączenie ciała kolankowatego bocznego z MT+ było zachowane (Ajina i in. 2015)<!--[s:ajina2015-v1-damage-residual-vision]-->.'
 bez_sieci: ''

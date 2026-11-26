@@ -7,7 +7,7 @@ rodziny:
 - '[[Sygnał hemodynamiczny i magnetyczny]]'
 sieci:
 - kod: LIM
-  powód: 'Coś Cię przyciąga albo odpycha, a od tego zależy, dokąd zmierzasz. To aktywność sieci limbicznej, którą tworzą kora okołooczodołowa, bieguny skroniowe i brzuszna przednia część płatów skroniowych obu półkul (Girn i in. 2024)<!--[s:girn2024-limbic-part-of-extended-dn]-->. W przeglądzie badań Rudebeck i Murray opisują aktywność kory okołooczodołowej jako predykcje konkretnych skutków wyborów i ich bieżącej wartości (Rudebeck i Murray 2014)<!--[s:rudebeck2014-ofc-predicts-specific-outcomes]-->.'
+  powód: 'Coś Cię przyciąga albo odpycha, a od tego zależy, dokąd zmierzasz. W spójnej kognitywistyce to aktywność sieci limbicznej, którą tworzą kora okołooczodołowa, bieguny skroniowe i brzuszna przednia część płatów skroniowych obu półkul (Girn i in. 2024)<!--[s:girn2024-limbic-part-of-extended-dn]-->. W przeglądzie badań Rudebeck i Murray opisują aktywność kory okołooczodołowej jako predykcje konkretnych skutków wyborów i ich bieżącej wartości (Rudebeck i Murray 2014)<!--[s:rudebeck2014-ofc-predicts-specific-outcomes]-->.'
 - kod: DMN
   powód: 'W jednym badaniu fMRI wieloechowym większość kory okołooczodołowej i przedniej kory skroniowej łączyła się z siecią domyślną (Girn i in. 2024)<!--[s:girn2024-limbic-part-of-extended-dn]-->.'
 bez_sieci: ''

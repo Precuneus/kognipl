@@ -6,7 +6,7 @@ rodziny:
 - '[[Wprawa i ekspertyza]]'
 sieci:
 - kod: CN
-  powód: 'Utrzymujesz plan i reguły gry przez kolejne ruchy. To aktywność sieci kontroli, której rdzeń tworzą boczna kora przedczołowa wzdłuż środkowego zakrętu czołowego i przednia część płacika ciemieniowego dolnego (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-lfpn-core-lateral-pfc]-->.'
+  powód: 'Utrzymujesz plan i reguły gry przez kolejne ruchy. W spójnej kognitywistyce to aktywność sieci kontroli, której rdzeń tworzą boczna kora przedczołowa wzdłuż środkowego zakrętu czołowego i przednia część płacika ciemieniowego dolnego (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-lfpn-core-lateral-pfc]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:

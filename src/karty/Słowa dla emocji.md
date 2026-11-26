@@ -6,7 +6,7 @@ rodziny:
 - '[[Język a myślenie]]'
 - '[[Rozwój dziecka]]'
 sieci: []
-bez_sieci: 'W metaanalizie Lindquist i współpracowników niewiele wskazuje, że poszczególne emocje mają stałe, osobne obszary w mózgu, a przy doświadczaniu i rozpoznawaniu emocji uczestniczy raczej zestaw współdziałających obszarów, aktywnych także w zadaniach nieemocjonalnych (Lindquist i in. 2012)<!--[s:lindquist2012-no-specific-localization]-->. W spójnej kognitywistyce emocja nie ma więc własnej sieci, a wartość, czyli to, co przyciąga albo odpycha, biegnie w stronę sieci limbicznej, splecona z odległością od receptorów i zaskoczeniem.'
+bez_sieci: 'W metaanalizie Lindquist i współpracowników niewiele wskazuje, że poszczególne emocje mają stałe, osobne obszary w mózgu, a przy doświadczaniu i rozpoznawaniu emocji uczestniczy raczej zestaw współdziałających obszarów, aktywnych także w zadaniach nieemocjonalnych (Lindquist i in. 2012)<!--[s:lindquist2012-no-specific-localization]-->. Metaanaliza Vytala i Hamanna znalazła jednak dla pięciu emocji podstawowych stałe i dające się rozróżnić wzorce aktywności mózgu (Vytal i Hamann 2010)<!--[s:vytal2010-basic-emotions-consistent-discriminable]-->. W spójnej kognitywistyce emocja nie ma własnej sieci, a wartość, czyli to, co przyciąga albo odpycha, biegnie w stronę sieci limbicznej, splecona z odległością od receptorów i zaskoczeniem.'
 ryciny: []
 materiały:
 - tytuł: 'Lindquist, Satpute i Gendron 2015: Does language do more than communicate emotion?'

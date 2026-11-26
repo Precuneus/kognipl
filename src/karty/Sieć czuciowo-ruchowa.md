@@ -7,9 +7,9 @@ rodziny:
 - '[[Sterowanie ruchem]]'
 sieci:
 - kod: SMN
-  powód: 'Czujesz ciało i się ruszasz. To aktywność sieci czuciowo-ruchowej, kory ruchowej i somatosensorycznej po obu stronach bruzdy środkowej (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-pn-core-motor-somatosensory]-->.'
+  powód: 'Czujesz ciało i się ruszasz. W spójnej kognitywistyce to aktywność sieci czuciowo-ruchowej, kory ruchowej i somatosensorycznej po obu stronach bruzdy środkowej (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-pn-core-motor-somatosensory]-->.'
 - kod: DAN
-  powód: 'Koordynujesz oko i rękę. To aktywność sieci grzbietowej uwagi, z górnym płacikiem ciemieniowym w rdzeniu (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-dfpn-core-spl-ips-fef]-->.'
+  powód: 'Koordynujesz oko i rękę. W spójnej kognitywistyce to aktywność sieci grzbietowej uwagi, z górnym płacikiem ciemieniowym w rdzeniu (Uddin, Yeo i Spreng 2019)<!--[s:uddin2019-dfpn-core-spl-ips-fef]-->.'
 bez_sieci: ''
 ryciny: []
 materiały:
@@ -35,7 +35,7 @@ W spoczynku wolne wahania sygnału fMRI w obszarach kory ruchowej i somatosensor
 [[Propriocepcja]] (ang. proprioception) to [[Bioinformacja|bioinformacja]] o tym, gdzie jest ciało i jak się rusza, płynąca od receptorów w skórze, mięśniach i stawach (Proske i Gandevia 2012)<!--[s:proske2012-receptors-populations-force]-->. [[Ian Waterman]] stracił w dorosłym życiu grube włókna czuciowe nerwów (Miall i in. 2021)<!--[s:miall2021-iw-large-fibre-no-pps-bias]--><!--[s:miall2021-iw-below-collar-conscious-control]-->. Jak podają Miall i współpracownicy, od linii kołnierzyka w dół Waterman nie ma czucia delikatnego dotyku ani propriocepcji. Według nich badania kliniczne w takich przypadkach sugerują, że włókna ruchowe działają. Miall i współpracownicy przytaczają też opis Gallaghera i Cole’a, według którego Waterman kierował większością swoich działań bardziej świadomie. W spójnej kognitywistyce do jego mięśni docierają więc [[Predykcja|predykcje]] proprioceptywne, ale bioinformacja o tym, gdzie jest ręka, od ciała już nie płynie.
 
 > [!kurs]
-> Badania opisują sieć czuciowo-ruchową przez pomiar aktywności kory ruchowej i somatosensorycznej przy ruchu dłoni i w spoczynku. Ta sama aktywność od środka to czucie ciała i ruch w oparciu o jego [[Modele Mentalne|Modele Mentalne]], których [[Predykcja|predykcje]] proprioceptywne docierają do mięśni. Gdy bioinformacja z receptorów w skórze, mięśniach i stawach nie zgadza się z tymi predykcjami, [[Zaskoczenie|zaskoczenie]] aktualizuje Model Mentalny ciała. Gdy bioinformacja o położeniu i ruchu ciała przestaje płynąć, ruch może wymagać predykcji opartych na bioinformacji od siatkówki, jak u Iana Watermana, który prowadzi ruchy wzrokiem.
+> Badania opisują sieć czuciowo-ruchową przez pomiar aktywności kory ruchowej i somatosensorycznej przy ruchu dłoni i w spoczynku. W spójnej kognitywistyce ta sama aktywność od środka to czucie ciała i ruch w oparciu o jego [[Modele Mentalne|Modele Mentalne]], których [[Predykcja|predykcje]] proprioceptywne docierają do mięśni. Gdy bioinformacja z receptorów w skórze, mięśniach i stawach nie zgadza się z tymi predykcjami, [[Zaskoczenie|zaskoczenie]] aktualizuje Model Mentalny ciała. Gdy bioinformacja o położeniu i ruchu ciała przestaje płynąć, ruch może wymagać predykcji opartych na bioinformacji od siatkówki, jak u Iana Watermana, który prowadzi ruchy wzrokiem.
 
 > [!przykład]
 > Sięgasz po karton z napisem „książki”. Twoje [[Modele Mentalne|Modele Mentalne]] ciała kształtowały się przy dźwiganiu wielu pełnych kartonów, więc ich predykcje obejmują ciężar i napięcie mięśni, zanim dotkniesz tego kartonu. Karton jest pusty i ręce podrywają się w górę. Bioinformacja z mięśni i stawów odbiega od predykcji, więc zaskoczenie aktualizuje Model Mentalny ciężaru kartonów. Następny karton podnosisz ostrożnie i czujesz w dłoniach, ile waży.

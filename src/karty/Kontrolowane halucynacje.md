@@ -6,7 +6,7 @@ rodziny:
 - '[[Zaburzenia widzenia]]'
 sieci:
 - kod: VIS
-  powód: 'Widzisz barwę, twarz albo wzór. To aktywność sieci wzrokowej, a u osób z zespołem Charlesa Bonneta ffytche i współpracownicy zmierzyli w czasie halucynacji barw, twarzy i tekstur aktywność brzusznej kory wzrokowej poza pierwszorzędową korą wzrokową (ffytche i in. 1998)<!--[s:ffytche1998-cbs-ventral-extrastriate]-->.'
+  powód: 'Widzisz barwę, twarz albo wzór. W spójnej kognitywistyce to aktywność sieci wzrokowej. U osób z zespołem Charlesa Bonneta ffytche i współpracownicy zmierzyli w czasie halucynacji barw, twarzy i tekstur aktywność brzusznej kory wzrokowej poza pierwszorzędową korą wzrokową (ffytche i in. 1998)<!--[s:ffytche1998-cbs-ventral-extrastriate]-->.'
 bez_sieci: ''
 obszary: []
 ryciny: []
